@@ -14,8 +14,8 @@ window.STAGES = {
        blurb: 'เฟเซอร์ อิมพีแดนซ์ กำลังไฟฟ้าและตัวประกอบกำลัง และระบบสามเฟส ตอนนี้พร้อมครบทั้งบทที่ 6–9',
        blurb_en: 'Phasors, impedance, power and power factor, and three-phase systems. Chapters 6–9 are all ready.' },
   4: { title: 'บทที่ 10–12 วงจรแม่เหล็กและเครื่องจักรกลไฟฟ้า', title_en: 'Chapters 10–12 — Magnetic circuits and machines', short: 'บทที่ 10–12 เครื่องจักร', short_en: 'Ch. 10–12 machines',
-       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ (กำลังสร้าง)',
-       blurb_en: 'Magnetic circuits, transformers, DC and AC machines (in preparation).' }
+       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ ตอนนี้บทที่ 10 (วงจรแม่เหล็กและหม้อแปลง) พร้อมแล้ว บทที่ 11–12 กำลังสร้าง',
+       blurb_en: 'Magnetic circuits, transformers, DC and AC machines. Chapter 10 (magnetic circuits and transformers) is ready; chapters 11–12 are in preparation.' }
 };
 
 window.STOPS = [
@@ -352,8 +352,51 @@ window.STOPS = [
     book: 'สไลด์บทที่ 9 หน้า 19–20 · Hayt §12.3–12.4, ตาราง 12.1', book_en: 'Chapter 9 slides, pp. 19–20 · Hayt §12.3–12.4, Table 12.1',
     tags: ['P = √3 V_L I_L cos θ', 'ทีละเฟส 5 ขั้น', 'การบ้าน'], tags_en: ['P = √3 V_L I_L cos θ', 'five per-phase steps', 'homework'] },
 
-  { soon: true, step: '10', stage: 4, ch: 10, title: 'วงจรแม่เหล็กและหม้อแปลง', en: 'Magnetic circuits and transformers',
-    blurb: 'รีลักแตนซ์ ช่องอากาศ อัตราส่วนรอบ และอิมพีแดนซ์สะท้อน', blurb_en: 'Reluctance, air gaps, turns ratio and reflected impedance' },
+  { file: 'ch10_1_magnetic_field.html', step: '10.1', stage: 4, ch: 10, type: 'sim',
+    title: 'สนามแม่เหล็ก เส้นโค้ง B–H และวงจรแม่เหล็ก', en: 'Magnetic field, the B–H curve and magnetic circuits',
+    blurb: 'กระแสในลวดสร้าง H ตามกฎวงจรของแอมแปร์ H = Σi/(2πr) ทั้งลวดเส้นเดียวและสองเส้น (ส่วน A) เส้นโค้ง B–H สามเส้นของสไลด์หน้า 7 กับความซึมซาบที่ลดลงเมื่อเหล็กอิ่มตัว (ส่วน B) และทอรอยด์ที่กลายเป็นวงจรแม่เหล็ก F = Φℛ ซึ่งตัวแก้วงจรแก้เหมือนวงจรกระแสตรง จุดที่วิ่งคือฟลักซ์ (ส่วน C) แบบทดสอบสไลด์หน้า 20 ทีละขั้น (H = 442.1 At/m, B ≈ 1.225 T, L = 0.24 H) และแผ่นทบทวนข้อ 3 ทอรอยด์เหล็กกล้าหล่อที่เจาะช่องอากาศ 2 mm แล้วกระแสเพิ่มจาก 2.51 A เป็น 12.06 A',
+    blurb_en: 'A current produces H by Ampère\'s circuit law, H = Σi/(2πr), for one wire and for two (section A); the three B–H curves of slide p. 7 and the permeability that falls as iron saturates (section B); and a toroid turned into the magnetic circuit F = Φℛ, which the solver handles like a DC circuit with the dots showing the flux (section C). The quiz of slide p. 20 step by step (H = 442.1 At/m, B ≈ 1.225 T, L = 0.24 H) and review-sheet problem 3, a cast-steel toroid whose 2 mm air gap raises the current from 2.51 A to 12.06 A.',
+    outcome: 'หา H จากกฎวงจรของแอมแปร์ อ่าน B จากเส้นโค้ง B–H และคำนวณฟลักซ์ รีลักแตนซ์ และความเหนี่ยวนำของทอรอยด์',
+    outcome_en: 'find H with Ampère\'s circuit law, read B from a B–H curve, and compute the flux, reluctance and inductance of a toroid',
+    book: 'สไลด์วงจรแม่เหล็กหน้า 2–10, 20 · แผ่นทบทวนข้อ 3 · P. C. Sen บทที่ 1', book_en: 'Magnetic-circuits slides pp. 2–10, 20 · review sheet, problem 3 · P. C. Sen, chapter 1',
+    tags: ['H = Σi/(2πr)', 'เส้นโค้ง B–H', 'F = Φℛ'], tags_en: ['H = Σi/(2πr)', 'B–H curve', 'F = Φℛ'] },
+
+  { file: 'ch10_2_air_gap.html', step: '10.2', stage: 4, ch: 10, type: 'sim',
+    title: 'ช่องอากาศ ความเหนี่ยวนำ และวงจรแม่เหล็กหลายเส้นทาง', en: 'Air gaps, inductance and magnetic circuits with several paths',
+    blurb: 'ช่องอากาศยาวเพียง 1 mm แต่มีรีลักแตนซ์มากกว่าแกนเหล็กยาว 50 cm หลายเท่า จึงกิน mmf เกือบทั้งหมดและกำหนดความเหนี่ยวนำ L = N²/ℛ (ส่วน A) Example 10.2 สไลด์หน้า 14 ทีละขั้น (Φ = 6.46×10⁻⁴ Wb, B = 0.43 T, L = 0.2585 H ซึ่งเฉลยในห้องตัดเหลือ 0.25 H) รีเลย์ของสไลด์ปี 2560 แกนขาหนาขาบางของแผ่นทบทวน ฟลักซ์ที่แยกไปสองขาเหมือนตัวแบ่งกระแส (ส่วน B) และแกนสามขาที่มีขดลวดสองชุด ซึ่งแก้ด้วยสมการลูปเหมือนวิธีเมช',
+    blurb_en: 'An air gap only 1 mm long has many times the reluctance of 50 cm of iron, so it takes almost all the mmf and sets the inductance L = N²/ℛ (section A). Example 10.2 of slide p. 14 step by step (Φ = 6.46×10⁻⁴ Wb, B = 0.43 T, L = 0.2585 H, which the class solution truncates to 0.25 H), the relay of the 2017 slides, the thick-and-thin core of the review sheet, flux splitting between two legs like a current divider (section B), and a three-leg core with two coils solved with loop equations, like mesh analysis.',
+    outcome: 'วิเคราะห์วงจรแม่เหล็กที่มีช่องอากาศ แกนหลายช่วง และหลายเส้นทาง และหาความเหนี่ยวนำของขดลวด',
+    outcome_en: 'analyse magnetic circuits with air gaps, several sections and several paths, and find the inductance of a coil',
+    book: 'สไลด์วงจรแม่เหล็กหน้า 11–14 · สไลด์ปี 2560 · แผ่นทบทวนข้อ 2 และ 4 · P. C. Sen บทที่ 1', book_en: 'Magnetic-circuits slides pp. 11–14 · the 2017 slides · review sheet, problems 2 and 4 · P. C. Sen, chapter 1',
+    tags: ['ℛ_g = l_g/(μ₀A)', 'L = N²/ℛ', 'สมการลูป'], tags_en: ['ℛ_g = l_g/(μ₀A)', 'L = N²/ℛ', 'loop equations'] },
+
+  { file: 'ch10_3_core_loss.html', step: '10.3', stage: 4, ch: 10, type: 'sim',
+    title: 'การสูญเสียในแกนและการกระตุ้นด้วยไฟสลับ', en: 'Core losses and sinusoidal excitation',
+    blurb: 'วงฮิสเทอรีซิสที่จุดทำงานวิ่งรอบวง B ตามหลัง H และพื้นที่ในวงคือพลังงานที่เสียไปทุกรอบ (ส่วน A) กระแสไหลวนในแกนตันเทียบกับแกนแผ่นบางที่ลดการสูญเสียลงตามกำลังสองของจำนวนแผ่น (ส่วน B) ที่มาของ E_rms = 4.44 f N Φmax (ส่วน C) และ Example 10.4 ของสไลด์ปี 2560 ทีละขั้น ขดลวดบนไฟ 120 V 60 Hz ได้ B = 1.126 sin(2π60t) T และ i = 1.79 sin(2π60t) A (เฉลยในห้องถือ 120 V เป็นค่ายอด)',
+    blurb_en: 'A hysteresis loop with the operating point running round it, B lagging H, and the loop area as the energy lost every cycle (section A); eddy currents in a solid core against a laminated one, whose loss falls with the square of the number of sheets (section B); where E_rms = 4.44 f N Φmax comes from (section C); and Example 10.4 of the 2017 slides step by step, a coil on 120 V, 60 Hz giving B = 1.126 sin(2π60t) T and i = 1.79 sin(2π60t) A (the class solution took 120 V as a peak value).',
+    outcome: 'อธิบายการสูญเสียฮิสเทอรีซิสและกระแสไหลวน และหาฟลักซ์กับกระแสของขดลวดที่ต่อกับแรงดันไซน์',
+    outcome_en: 'explain hysteresis and eddy-current losses, and find the flux and current of a coil on a sinusoidal voltage',
+    book: 'สไลด์วงจรแม่เหล็กหน้า 15–19 · สไลด์ปี 2560 หน้า 21–23 · P. C. Sen บทที่ 1', book_en: 'Magnetic-circuits slides pp. 15–19 · 2017 slides pp. 21–23 · P. C. Sen, chapter 1',
+    tags: ['P_h = K_h B^n f', 'P_e = K_e B² f²', 'E = 4.44 f N Φmax'], tags_en: ['P_h = K_h B^n f', 'P_e = K_e B² f²', 'E = 4.44 f N Φmax'] },
+
+  { file: 'ch10_4_transformer.html', step: '10.4', stage: 4, ch: 10, type: 'sim',
+    title: 'หม้อแปลงอุดมคติและการโอนอิมพีแดนซ์', en: 'The ideal transformer and impedance transfer',
+    blurb: 'ขดลวดสองชุดบนแกนเดียวกันมีฟลักซ์ร่วมกัน V₁/V₂ = N₁/N₂ = a และ mmf ของสองขดลวดหักล้างกันจึงได้ I₁/I₂ = 1/a ภาพจำลองแสดงแกน ฟลักซ์ และวงจรที่ตัวแก้วงจรแก้พร้อมกัน (ส่วน A) Ex 1 ลำโพง 9 Ω ที่ได้ 9 W เมื่อต่อตรง และ 25 W เมื่อใช้หม้อแปลง 1 : 3 ซึ่งโอนลำโพงเป็น 1 Ω พอดีกับความต้านทานภายในของแหล่งจ่าย และ Ex 2 หม้อแปลง 220/110 V กับโหลด 3 + j4 Ω ที่รับ 2420 VA',
+    blurb_en: 'Two coils on one core share one flux, so V₁/V₂ = N₁/N₂ = a, and their mmfs cancel, so I₁/I₂ = 1/a. The simulation shows the core, the flux and the circuit solved together (section A). Ex 1, a 9 Ω speaker that gets 9 W connected directly and 25 W through a 1 : 3 transformer, which turns it into 1 Ω, matching the internal resistance of the source; and Ex 2, a 220/110 V transformer feeding 3 + j4 Ω, which takes 2420 VA.',
+    outcome: 'ใช้อัตราส่วนรอบหาแรงดัน กระแส และกำลังของหม้อแปลงอุดมคติ และโอนอิมพีแดนซ์ข้ามหม้อแปลงด้วย Z₁ = a²Z₂',
+    outcome_en: 'use the turns ratio to find the voltages, currents and power of an ideal transformer, and transfer impedances across it with Z₁ = a²Z₂',
+    book: 'สไลด์หม้อแปลงหน้า 2–9, 16 · P. C. Sen บทที่ 2', book_en: 'Transformer slides pp. 2–9, 16 · P. C. Sen, chapter 2',
+    tags: ['a = N₁/N₂', 'Z₁ = a²Z₂', 'P_in = P_out'], tags_en: ['a = N₁/N₂', 'Z₁ = a²Z₂', 'P_in = P_out'] },
+
+  { file: 'ch10_5_polarity.html', step: '10.5', stage: 4, ch: 10, type: 'sim',
+    title: 'ขั้วของหม้อแปลง การต่อขนาน และประสิทธิภาพ', en: 'Transformer polarity, parallel connection and efficiency',
+    blurb: 'การทดสอบขั้วด้วยโวลต์มิเตอร์สามตัว: 100 V กับ 10 V อ่านได้ 110 V หรือ 90 V ตามตำแหน่งจุด (ส่วน A) Ex 2 สไลด์หน้า 15 (Hayt Example 13.7) ทีละขั้น ซึ่งจุดด้านทุติยภูมิอยู่ล่างจึงได้ V₂ = 250∠180° V (เฉลยในห้องเขียน 250∠0°) หม้อแปลงสองตัวต่อขนานถูกและผิดขั้ว ซึ่งต่อผิดแล้วกระแสไหลวนมหาศาล (ส่วน B) และประสิทธิภาพที่สูงสุดเมื่อการสูญเสียในทองแดงเท่ากับการสูญเสียในแกน (ส่วน C)',
+    blurb_en: 'The polarity test with three voltmeters: 100 V and 10 V read 110 V or 90 V depending on the dots (section A). Ex 2 of slide p. 15 (Hayt Example 13.7) step by step, where the secondary dot is at the bottom, so V₂ = 250∠180° V (the class solutions write 250∠0°); two transformers in parallel, connected right and wrong, where the wrong way drives a huge circulating current (section B); and the efficiency, highest when the copper loss equals the core loss (section C).',
+    outcome: 'อ่านจุดขั้วของหม้อแปลง ใช้จุดหาเครื่องหมายของแรงดันและกระแส ต่อหม้อแปลงขนานให้ถูก และคำนวณประสิทธิภาพ',
+    outcome_en: 'read transformer dots, use them for the signs of voltages and currents, connect transformers in parallel correctly and compute the efficiency',
+    book: 'สไลด์หม้อแปลงหน้า 10–15 · Hayt §13.4 · P. C. Sen บทที่ 2', book_en: 'Transformer slides pp. 10–15 · Hayt §13.4 · P. C. Sen, chapter 2',
+    tags: ['จุดขั้ว', 'V₁₃ = V₁₂ ± V₃₄', 'η = P_out/P_in'], tags_en: ['dot convention', 'V₁₃ = V₁₂ ± V₃₄', 'η = P_out/P_in'] },
+
   { soon: true, step: '11', stage: 4, ch: 11, title: 'เครื่องจักรกลไฟฟ้ากระแสตรง', en: 'DC machines',
     blurb: 'แรงเคลื่อนไฟฟ้าต้าน คอมมิวเตเตอร์ และแรงบิด–ความเร็ว', blurb_en: 'Back-emf, commutator and torque–speed' },
   { soon: true, step: '12', stage: 4, ch: 12, title: 'เครื่องจักรกลไฟฟ้ากระแสสลับ', en: 'AC machines',

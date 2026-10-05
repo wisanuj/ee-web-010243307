@@ -85,7 +85,8 @@ CH8.Board = class {
     ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, this.W, this.H);
     if (this.clk.run) this.view.advance(dt); this.view.draw(); if (o.after) o.after(this.view, this);
     if (this.box.side && o.side) o.side(ctx, this.box.side, this);
-    (o.waves || []).forEach((w, k) => CH6.waves(ctx, this.box.waves[k], w.sigs(this), Object.assign({ now: this.clk.ph, title: tt(typeof w.title === 'function' ? w.title(this) : w.title) }, w.opts ? w.opts(this) : {})));
+    (o.waves || []).forEach((w, k) => { if (!this.box.waves[k]) return; if (w.draw) { w.draw(ctx, this.box.waves[k], this); return; }   // draw: any other picture in a wave panel (chapter 10)
+      CH6.waves(ctx, this.box.waves[k], w.sigs(this), Object.assign({ now: this.clk.ph, title: tt(typeof w.title === 'function' ? w.title(this) : w.title) }, w.opts ? w.opts(this) : {})); });
     const bd = o.badge ? o.badge(this) : null;   // [text, kind] from the page (e.g. "solved: the current flows"), else the clock state
     if (bd) CK.badge(ctx, tt(bd[0]), bd[1]); else CK.badge(ctx, this.clk.run ? MC.t(`▶ เล่นช้า: 1 รอบใช้ ${this.clk.T} วินาที`, `▶ slow motion: one cycle takes ${this.clk.T} s`) : MC.t('❚❚ หยุดชั่วคราว', '❚❚ paused'), this.clk.run ? 'ok' : 'wait');
   }
@@ -177,14 +178,17 @@ CH8.flow = (v, from, to, p, o = {}) => { const A = v.P(from), B = v.P(to), u = v
       solvedAt (k from which the dots run, default 0), glow(k, self) → part ids, after(view, k, self), side(ctx, box, board, k, self),
       waves: [{ title(board, k, self), sigs(board, k, self), opts(board, k, self) }], badge(k, self) → [text, kind], vo(self) (extra View
       options for set), shortSpec(spec, self), tick(dt, self), init(self) (state in self.st), controls(el, self), onSet(k, self),
-      layout: pad, cktFrac, topAsp, cktAspM, rowAsp, rowMin, cktAspN, sideAspN, waveAsp, waveMin, midMin } */
+      layout: pad, cktFrac, topAsp, cktAspM, rowAsp, rowMin, cktAspN, sideAspN, waveAsp, waveMin, midMin; Board (another board class with the same
+      interface, e.g. CH10.MagBoard), core(ctx, box, board, k, self) and boardOpts (extra options for that board) } */
 CH8.Prob = class {
   constructor(cv, o) { this.cv = cv; this.o = o; this.k = 0; this.colW = o.colW || 0; this.st = {}; if (o.init) o.init(this); const self = this;
-    this.B = new CH8.Board(cv, { T: 4, mid: true, midMin: o.midMin ?? 420, cktAspM: o.cktAspM, rowAsp: o.rowAsp, rowMin: o.rowMin, pad: o.pad ?? 1.35,
+    this.B = new (o.Board || CH8.Board)(cv, { ...(o.boardOpts || {}), T: 4, mid: true, midMin: o.midMin ?? 420, cktAspM: o.cktAspM, rowAsp: o.rowAsp, rowMin: o.rowMin, pad: o.pad ?? 1.35,
+      core: o.core ? (ctx, b, bd) => o.core(ctx, b, bd, self.k, self) : undefined,
       cktFrac: o.cktFrac ?? 0.52, topAsp: o.topAsp ?? 0.42, wideAt: o.wideAt, cktAspN: o.cktAspN, sideAspN: o.sideAspN, waveAsp: o.waveAsp, waveMin: o.waveMin, dotSpeed: o.dotSpeed,
       view: Object.assign({ glowColor: 'rgba(255,126,182,.4)' }, o.view || {}), shortSpec: o.shortSpec ? sp => o.shortSpec(sp, self) : undefined,
       side: o.side ? (ctx, b, bd) => o.side(ctx, b, bd, self.k, self) : undefined,
-      waves: (o.waves || []).map(w => ({ title: bd => (w.title ? w.title(bd, self.k, self) : ''), sigs: bd => w.sigs(bd, self.k, self), opts: w.opts ? bd => w.opts(bd, self.k, self) : undefined })),
+      waves: (o.waves || []).map(w => ({ title: bd => (w.title ? w.title(bd, self.k, self) : ''), sigs: bd => w.sigs(bd, self.k, self), opts: w.opts ? bd => w.opts(bd, self.k, self) : undefined,
+        draw: w.draw ? (ctx, b, bd) => w.draw(ctx, b, bd, self.k, self) : undefined })),
       after: v => { if (o.after) o.after(v, self.k, self); },
       badge: () => o.badge ? o.badge(self.k, self) : self.solved ? [['แก้แล้ว: กระแสไหล', 'solved: the current flows'], 'ok'] : [['ยังไม่ได้แก้วงจร', 'not solved yet'], 'wait'] });
     this.B.resize(); this.build(true); window.addEventListener('resize', () => this.B.resize());

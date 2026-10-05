@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="10.5 — Polarity, Parallel Transformers and Efficiency">10.5 — ขั้วของหม้อแปลง การต่อขนาน และประสิทธิภาพ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script><script src="assets/lesson.js?v=112"></script><script src="assets/ch6.js?v=112"></script>
+<script src="assets/ch8.js?v=112"></script><script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ขั้วของหม้อแปลง การต่อขนาน และประสิทธิภาพ <span class="en">The dots on a transformer, and what they decide</span></h1>
+<h1 data-l="en">Transformer polarity, parallel connection and efficiency <span class="en">The dots on a transformer, and what they decide</span></h1>
+
+<p class="sub" data-l="th">ขดลวดของหม้อแปลงมีเครื่องหมายบอกขั้วที่มีขั้วเดียวกัน (like polarity) ปกติเป็นจุด (สไลด์หม้อแปลงหน้า 10) ขณะที่ขั้วที่มีจุดของขดลวดหนึ่งเป็นบวก ขั้วที่มีจุดของอีกขดลวดก็เป็นบวกด้วย จุดจึงบอกเครื่องหมายของแรงดันและกระแสด้านทุติยภูมิ หน้านี้มีการทดสอบขั้วด้วยโวลต์มิเตอร์ที่อ่านได้ 110 V หรือ 90 V (ส่วน A) Ex 2 สไลด์หน้า 15 ซึ่งจุดด้านทุติยภูมิอยู่ล่างจนแรงดันกลับเครื่องหมาย (ข้อ 1) หม้อแปลงสองตัวต่อขนานที่ต้องต่อให้ถูกขั้ว (ส่วน B) และประสิทธิภาพของหม้อแปลงจริงที่มีการสูญเสียในแกนและในทองแดง (ส่วน C) ค่าทุกตัวเป็นค่ายังผล</p>
+<p class="sub" data-l="en">Transformer windings carry marks for the terminals of like polarity, usually dots (transformer slide p. 10): whenever the dotted terminal of one winding is positive, the dotted terminal of the other is positive too, so the dots set the signs of the secondary voltage and current. This page has the polarity test, where a voltmeter reads 110 V or 90 V (section A), Ex 2 of slide p. 15, whose secondary dot is at the bottom so the voltage changes sign (problem 1), two transformers in parallel, which must be connected with the right polarity (section B), and the efficiency of a real transformer with core and copper losses (section C). All values are rms.</p>
+<div class="equation-box">$$ \begin{aligned} V_{13} &= V_{12} - V_{34} &&\text{(1, 3 same polarity)} \\ V_{13} &= V_{12} + V_{34} &&\text{(1, 4 same polarity)} \\ \eta &= \frac{P_{out}}{P_{out} + P_c + P_{cu}} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>จุดบอกขั้วเดียวกัน</b> (สไลด์หน้า 10): แรงดันที่วัดจากขั้วมีจุดไปขั้วไม่มีจุดของทั้งสองขดลวดเฟสเดียวกัน ถ้ากำหนดเครื่องหมาย + ของ \(V_2\) ไว้ที่ขั้วไม่มีจุด ต้องใส่เครื่องหมายลบ: \(\mathbf{V}_2 = -\mathbf{V}_1/a\) (ข้อ 1)</li>
+  <li><b>ทดสอบขั้ว</b> (สไลด์หน้า 11–12): ต่อขั้ว 2 กับ 4 แล้ววัด \(V_{13}\) ถ้าได้ผลต่าง \(V_{12} - V_{34}\) ขั้ว 1 กับ 3 มีขั้วเดียวกัน ถ้าได้ผลบวก \(V_{12} + V_{34}\) ขั้ว 1 กับ 4 มีขั้วเดียวกัน (ส่วน A)</li>
+  <li><b>ต่อขนาน</b> (สไลด์หน้า 13): แรงดันด้านทุติยภูมิของสองตัวต้องหักล้างกันภายในวงของสองขดลวด ถ้าต่อกลับขั้ว แรงดันจะเสริมกันและมีแต่ความต้านทานของขดลวดซึ่งต่ำมากจำกัดกระแส กระแสไหลวนจึงสูงมากจนหม้อแปลงเสียหาย (ส่วน B)</li>
+  <li><b>ประสิทธิภาพ</b> (สไลด์หน้า 14): \(\eta = P_{out}/(P_{out} + P_c + P_{cu})\) การสูญเสียในแกน \(P_c\) คงที่ ส่วนการสูญเสียในทองแดง \(P_{cu} = I_2^2R_{eq2}\) แปรตามกำลังสองของโหลด ประสิทธิภาพสูงสุดเมื่อ \(P_{cu} = P_c\) (ส่วน C)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Dots mark like polarity</b> (slide p. 10): the voltages measured from the dotted to the undotted terminal of the two windings are in phase. If \(V_2\) is marked + at the undotted terminal, a minus sign appears: \(\mathbf{V}_2 = -\mathbf{V}_1/a\) (problem 1).</li>
+  <li><b>Polarity test</b> (slides pp. 11–12): join terminals 2 and 4 and measure \(V_{13}\). The difference \(V_{12} - V_{34}\) means 1 and 3 have like polarity; the sum \(V_{12} + V_{34}\) means 1 and 4 do (section A).</li>
+  <li><b>Parallel connection</b> (slide p. 13): the two secondary voltages must oppose each other around the loop of the two windings. Connected the wrong way they add, and only the very small winding resistances limit the current, so a huge circulating current flows and damages the transformers (section B).</li>
+  <li><b>Efficiency</b> (slide p. 14): \(\eta = P_{out}/(P_{out} + P_c + P_{cu})\). The core loss \(P_c\) is constant, while the copper loss \(P_{cu} = I_2^2R_{eq2}\) follows the square of the load; the efficiency is highest when \(P_{cu} = P_c\) (section C).</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ทดสอบขั้ว</a><a href="#ex1"><b>1</b>สไลด์หน้า 15</a><a href="#tB"><b>B</b>ต่อขนาน</a><a href="#tC"><b>C</b>ประสิทธิภาพ</a><a href="#tD"><b>D</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Polarity test</a><a href="#ex1"><b>1</b>Slide p. 15</a><a href="#tB"><b>B</b>Parallel connection</a><a href="#tC"><b>C</b>Efficiency</a><a href="#tD"><b>D</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ทดสอบขั้วด้วยโวลต์มิเตอร์สามตัว: 110 V หรือ 90 V</h2><h2 data-l="en">The polarity test with three voltmeters: 110 V or 90 V</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 10–12 · ค่า 100 V กับ 10 V ตามที่ผู้สอนเขียนในห้องปี 2568</div><div class="src" data-l="en">Transformer slides pp. 10–12 · 100 V and 10 V as the instructor wrote in class (2025)</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/t10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 10, Polarity: windings on transformers or other electrical machines are marked to indicate terminals of like polarity; a core with two windings, terminals 1–2 with the current i1 and the voltage e12, terminals 3–4 with i2 and e34, the fluxes Φ1 and Φ2; and the symbols with dots at terminals 1 and 3, or with + marks at 1 and 3">
+      <figcaption data-l="th">สไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 11, Polarity: a 1φ supply across terminals 1–2 with a voltmeter V12, a voltmeter V34 across terminals 3–4, terminals 2 and 4 joined, and a voltmeter V13 between terminals 1 and 3. If a voltmeter reading V13 is the sum of voltmeter readings V12 and V34, V13 = V12 + V34, it means that at any instant when the potential of terminal 1 is positive with respect to terminal 2, the potential of terminal 4 is positive with respect to terminal 3">
+      <figcaption data-l="th">สไลด์หน้า 11</figcaption><figcaption data-l="en">Slide p. 11</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 12, Polarity: the same test; if the voltmeter reading V13 is the difference between voltmeter readings V12 and V34, V13 = V12 − V34, then 1 and 3 are terminals of the same polarity">
+      <figcaption data-l="th">สไลด์หน้า 12</figcaption><figcaption data-l="en">Slide p. 12</figcaption></figure></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 11–12 ที่ผู้สอนเขียนในห้อง (ปี 2568)</span><span data-l="en">See slides pp. 11–12 as written in class (2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/ti13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11 with handwriting: 100 V across terminals 1–2 and 10 V across 3–4, dots at terminals 1 and 4 with + and − marked, and V13 = V12 + V34 = 110 V">
+        <figcaption data-l="th">จุดอยู่ที่ขั้ว 1 และ 4: \(V_{13} = 100 + 10 = 110\) V</figcaption><figcaption data-l="en">Dots at terminals 1 and 4: \(V_{13} = 100 + 10 = 110\) V</figcaption></figure>
+      <figure class="slide"><img src="slides/ch10/ti14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12 with handwriting: 100 V across terminals 1–2 and 10 V across 3–4, dots at terminals 1 and 3, and V13 = V12 − V34 = 90 V; then 1 and 3 are terminals of the same polarity highlighted">
+        <figcaption data-l="th">จุดอยู่ที่ขั้ว 1 และ 3: \(V_{13} = 100 - 10 = 90\) V</figcaption><figcaption data-l="en">Dots at terminals 1 and 3: \(V_{13} = 100 - 10 = 90\) V</figcaption></figure></div></details>
+  <p class="lead" data-l="th">ไฟเฟสเดียว 100 V ต่อขั้ว 1–2 ของหม้อแปลง 10 : 1 ขั้ว 2 ต่อกับขั้ว 4 แล้วโวลต์มิเตอร์สามตัวอ่าน \(V_{12}\), \(V_{34}\) และ \(V_{13}\) เพราะขั้ว 2 กับ 4 เป็นจุดเดียวกัน \(\mathbf{V}_{13} = \mathbf{V}_{12} + \mathbf{V}_{43} = \mathbf{V}_{12} - \mathbf{V}_{34}\) แผงข้างภาพต่อเฟเซอร์แบบหัวต่อหาง สลับตำแหน่งจุดของขดลวดที่สอง: ถ้าจุดอยู่ที่ขั้ว 3 \(\mathbf{V}_{34}\) เฟสเดียวกับ \(\mathbf{V}_{12}\) จึงหักออกได้ 90 V ถ้าจุดอยู่ที่ขั้ว 4 \(\mathbf{V}_{34}\) กลับเฟส จึงบวกเข้าได้ 110 V</p>
+  <p class="lead" data-l="en">A single-phase 100 V supply feeds terminals 1–2 of a 10 : 1 transformer, terminal 2 is joined to terminal 4, and three voltmeters read \(V_{12}\), \(V_{34}\) and \(V_{13}\). Since terminals 2 and 4 are one point, \(\mathbf{V}_{13} = \mathbf{V}_{12} + \mathbf{V}_{43} = \mathbf{V}_{12} - \mathbf{V}_{34}\); the side panel adds the phasors head to tail. Move the dot of the second winding: with the dot at terminal 3, \(\mathbf{V}_{34}\) is in phase with \(\mathbf{V}_{12}\) and is taken away, giving 90 V; with the dot at terminal 4, \(\mathbf{V}_{34}\) is reversed and adds, giving 110 V.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 2: หาแรงดัน V₁, V₂ กระแส I₁, I₂ และกำลังเฉลี่ยในตัวต้านทาน 10 kΩ</h2><h2 data-l="en">Ex 2: find the voltages V₁, V₂, the currents I₁, I₂ and the average power in the 10 kΩ resistor</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 15 · Hayt Example 13.7 · เฉลยในห้องปี 2568 และ 2566</div><div class="src" data-l="en">Transformer slide p. 15 · Hayt Example 13.7 · 2025 and 2023 class solutions</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/t15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 15, headed The Delta (Δ) Connection, Practice, Ex 2: refer to figure Transformer, determine (a) voltage V1 and V2, (b) current I1 and I2, (c) average power dissipated in the 10 kΩ resistor. A 50 V rms source with 100 Ω feeding the primary of a 1 : 10 transformer whose secondary feeds 10 kΩ; V1 marked + at the top with the primary dot at the top, V2 marked + at the top with the secondary dot at the bottom, and clockwise mesh currents I1 and I2">
+    <figcaption data-l="th">สไลด์หน้า 15 · ดูให้ดี: จุดด้านทุติยภูมิอยู่<b>ล่าง</b> · หัวสไลด์ติดมาจากบทที่ 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · look closely: the secondary dot is at the <b>bottom</b> · the heading is left over from chapter 9 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แหล่งจ่าย 50 V มีความต้านทาน 100 Ω ต่อด้านปฐมภูมิของหม้อแปลง 1 : 10 ด้านทุติยภูมิต่อ 10 kΩ ขนาดของทุกค่าหาได้ด้วยการโอนอิมพีแดนซ์ของหน้า 10.4 แต่<b>เครื่องหมาย</b>ต้องดูจุด: \(V_2\) กำหนด + ไว้ด้านบน แต่จุดด้านทุติยภูมิอยู่ด้านล่าง ภาพจำลองแสดงจุดตามสไลด์ แผงข้างภาพและกราฟแสดงว่า \(v_2\) กลับเฟสกับ \(v_1\) <b>ลองตอบก่อน</b> (ใส่ขนาดและมุมของ \(V_2\))</p>
+  <p class="lead" data-l="en">A 50 V source with 100 Ω feeds the primary of a 1 : 10 transformer whose secondary feeds 10 kΩ. Every size follows from the impedance transfer of page 10.4, but the <b>signs</b> come from the dots: \(V_2\) is marked + at the top while the secondary dot is at the bottom. The simulation draws the dots as on the slide, and the side panel and the graph show \(v_2\) in opposite phase to \(v_1\). <b>Try it first</b> (enter the size and the angle of \(V_2\)).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2568 และ 2566)</span><span data-l="en">See the solutions written in class (2025 and 2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/ti18.webp" width="1100" height="1523" loading="lazy" decoding="async" alt="Handwritten 2025 solution of Ex 2: find Z2′ = a²Z2 = (1/10)²(10k), Z2′ = 100 Ω; from KVL, −50∠0 + 100I1 + 100I1 = 0, I1 = 0.25∠0 Arms; V1 from I1Z2′, V1 = (0.25∠0)(100) = 25∠0 Vrms; V2 = V1/a = 25∠0/(1/10) = 250∠0 Vrms; I2 = aI1 = (1/10)(0.25∠0) = 0.025∠0 Arms; average power at 10 kΩ, P = |Vrms||Irms|cos(θ − φ) = |V2||I2|cos(θ − φ) = (250)(0.025)cos(0 − 0) = 6.25 watt">
+        <figcaption data-l="th">ปี 2568: โอน 10 kΩ เป็น 100 Ω แล้วใช้กฎแรงดันของเคียร์ชอฟฟ์ได้ \(I_1 = 0.25\) A, \(V_1 = 25\) V แล้วเขียน \(\mathbf{V}_2 = 250\angle 0^\circ\) V และ \(\mathbf{I}_2 = 0.025\angle 0^\circ\) A (ดูคำอธิบายด้านล่าง)</figcaption><figcaption data-l="en">2025: 10 kΩ transferred to 100 Ω, then Kirchhoff's voltage law gives \(I_1 = 0.25\) A and \(V_1 = 25\) V, then \(\mathbf{V}_2 = 250\angle 0^\circ\) V and \(\mathbf{I}_2 = 0.025\angle 0^\circ\) A are written (see below)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch10/tk09.webp" width="1100" height="1542" loading="lazy" decoding="async" alt="Handwritten 2023 solution of the same problem: Vs = Vx + V1; a = N1/N2 = 1/10 = 0.1 and a = V1/V2 = I2/I1 = N1/N2; from the ideal transformer, Z1 = a²Z2 = (0.1)²(10 kΩ) = 100 Ω; considering the primary side, V1 by the voltage divider, V1 = [Z1/(Z1 + 100)]Vs = [100/(100 + 100)](50∠0) = 25∠0 Vrms; V2 = V1/a = 25∠0/0.1 = 250∠0 Vrms; I1 = V1/Z1 = 25∠0/100 = 0.25∠0 Arms; I2 = aI1 = (0.1)(0.25∠0) = 0.025∠0 Arms; P(10 kΩ) = |V2rms||I2rms|cos(θ − φ) = (250)(0.025)cos(0) = 6.25 watt">
+        <figcaption data-l="th">ปี 2566: ใช้ตัวแบ่งแรงดันหา \(V_1 = 25\angle 0^\circ\) V ได้ขนาดเท่ากัน และเขียน \(\mathbf{V}_2 = 250\angle 0^\circ\) V เช่นกัน</figcaption><figcaption data-l="en">2023: the voltage divider gives \(V_1 = 25\angle 0^\circ\) V, the same sizes, and \(\mathbf{V}_2 = 250\angle 0^\circ\) V again</figcaption></figure></div>
+    <div class="warnbox" data-l="th"><b>เฉลยในห้องทั้งสองปีเขียน \(\mathbf{V}_2 = 250\angle 0^\circ\) V และ \(\mathbf{I}_2 = 0.025\angle 0^\circ\) A</b> โดยไม่ได้ดูจุดขั้ว ในรูปของสไลด์ จุดด้านปฐมภูมิอยู่บน (ด้านเดียวกับ + ของ \(V_1\)) แต่จุดด้านทุติยภูมิอยู่ล่าง ขณะที่ + ของ \(V_2\) อยู่บน แรงดันจากขั้วมีจุดไปขั้วไม่มีจุดเฟสเดียวกัน จึงได้ \(\mathbf{V}_2 = -\mathbf{V}_1/a = 250\angle 180^\circ\) V และ \(\mathbf{I}_2 = 0.025\angle 180^\circ\) A (ตรวจ: \(\mathbf{V}_2 = (10\ \text{k}\Omega)\mathbf{I}_2\)) ขนาด 250 V, 0.025 A และกำลัง 6.25 W ในห้องถูกต้อง เพราะเครื่องหมายลบสองตัวคูณกันเป็นบวก Hayt Example 13.7 ถามเฉพาะขนาด</div>
+    <div class="warnbox" data-l="en"><b>Both class solutions write \(\mathbf{V}_2 = 250\angle 0^\circ\) V and \(\mathbf{I}_2 = 0.025\angle 0^\circ\) A</b> without reading the dots. In the slide's figure the primary dot is at the top (with the + of \(V_1\)) but the secondary dot is at the bottom while \(V_2\) is marked + at the top. The voltages from dotted to undotted terminals are in phase, so \(\mathbf{V}_2 = -\mathbf{V}_1/a = 250\angle 180^\circ\) V and \(\mathbf{I}_2 = 0.025\angle 180^\circ\) A (check: \(\mathbf{V}_2 = (10\ \text{k}\Omega)\mathbf{I}_2\)). The class sizes, 250 V and 0.025 A, and the 6.25 W are right, since the two minus signs cancel. Hayt Example 13.7 asks for sizes only.</div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">หม้อแปลงสองตัวต่อขนาน: ถูกขั้วและผิดขั้ว</h2><h2 data-l="en">Two transformers in parallel: right and wrong polarity</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 13 · P. C. Sen บทที่ 2</div><div class="src" data-l="en">Transformer slide p. 13 · P. C. Sen, chapter 2</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/t13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 13, Polarity: polarities of windings must be known if transformers are connected in parallel to share a common load. Figure a shows the parallel connection of two single-phase (1φ) transformers. This is the correct connection because secondary voltages e21 and e22 oppose each other internally. The connection shown in Figure b is wrong, because e21 and e22 aid each other (and a circulating current icir flows around the two secondaries). Figure a: two transformers fed from a 1φ supply with their secondaries in parallel feeding a load; figure b: the same with one secondary reversed and the circulating current drawn">
+      <figcaption data-l="th">สไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 13 · tap to enlarge</figcaption></figure></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 13 ที่ผู้สอนเขียนในห้อง (ปี 2568)</span><span data-l="en">See slide p. 13 as written in class (2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/ti15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13 with handwriting: in figure a, 2 A from the supply, 1 A into each primary, 1 A out of each secondary and 2 A to the load, ticked as correct; in figure b, a circulating current of 100 A drawn around the two secondaries, crossed out as wrong">
+        <figcaption data-l="th">ต่อถูก: หม้อแปลงแต่ละตัวรับภาระครึ่งหนึ่ง (1 A + 1 A = 2 A) ต่อผิด: กระแสไหลวน 100 A ในวงของขดลวดทุติยภูมิทั้งสอง</figcaption><figcaption data-l="en">Right: each transformer carries half the load (1 A + 1 A = 2 A). Wrong: 100 A circulates around the two secondaries</figcaption></figure></div></details>
+  <p class="lead" data-l="th">ไฟ 220 V จ่ายหม้อแปลง 2 : 1 สองตัวที่ต่อขนานกันจ่ายโหลด 10 Ω ขดลวดทุติยภูมิแต่ละชุดมีความต้านทาน r เพียงเล็กน้อย ต่อถูก: แรงดันด้านทุติยภูมิทั้งสอง (110 V) หักล้างกันในวงของสองขดลวด จึงไม่มีกระแสวน และแต่ละตัวจ่ายกระแสครึ่งหนึ่งของโหลด ต่อผิด: แรงดันเสริมกันเป็น 220 V รอบวงที่มีแต่ r + r จำกัด กระแสวนพุ่งเป็นหลายร้อยแอมแปร์ ขณะที่โหลดแทบไม่ได้อะไรเลย</p>
+  <p class="lead" data-l="en">A 220 V supply feeds two 2 : 1 transformers in parallel, which feed a 10 Ω load; each secondary has only a small resistance r. Connected right, the two secondary voltages (110 V) cancel around the loop of the two windings, so nothing circulates and each transformer supplies half the load current. Connected wrong, they add to 220 V around a loop limited only by r + r: the circulating current shoots to hundreds of amperes while the load gets almost nothing.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ประสิทธิภาพของหม้อแปลงจริง</h2><h2 data-l="en">The efficiency of a real transformer</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 14 · P. C. Sen บทที่ 2</div><div class="src" data-l="en">Transformer slide p. 14 · P. C. Sen, chapter 2</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/t14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 14, Efficiency: equipment is desired to operate at a high efficiency. Fortunately, losses in transformers are small. Because the transformer is a static device, there are no rotational losses such as windage and friction losses in a rotating machine. In a well-designed transformer the efficiency can be as high as 99%. The efficiency is defined as η = output power (Pout)/input power (Pin). The losses in the transformer are the core loss (Pc) and copper loss (Pcu). Therefore η = Pout/(Pout + Pc + Pcu) = V2I2 cos θ2/(V2I2 cos θ2 + Pc + I2²Req2)">
+      <figcaption data-l="th">สไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 14 · tap to enlarge</figcaption></figure></div>
+  <p class="lead" data-l="th">หม้อแปลงจริงขนาด 10 kVA การสูญเสียในแกน \(P_c\) (หน้า 10.3) ขึ้นกับแรงดันและความถี่ซึ่งคงที่ จึงคงที่ทุกโหลด ส่วนการสูญเสียในทองแดง \(P_{cu} = I_2^2R_{eq2}\) แปรตามกำลังสองของกระแส ถ้าโหลดเป็น x เท่าของพิกัด \(P_{cu} = x^2P_{cu,FL}\) (FL: full load, พิกัดเต็ม) เลื่อนโหลดแล้วดูว่าประสิทธิภาพสูงสุดเกิดที่จุดซึ่งเส้นสองเส้นในกราฟขวาตัดกัน คือ \(P_{cu} = P_c\)</p>
+  <p class="lead" data-l="en">A real 10 kVA transformer. Its core loss \(P_c\) (page 10.3) depends on the voltage and frequency, which are fixed, so it is the same at every load, while the copper loss \(P_{cu} = I_2^2R_{eq2}\) follows the square of the current: at x times the rating, \(P_{cu} = x^2P_{cu,FL}\) (FL: full load). Move the load and see that the efficiency peaks where the two lines of the right-hand graph cross, at \(P_{cu} = P_c\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvC"></canvas></div><div class="card solve"><div class="panel" id="pC"></div><div id="wC" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tD">
+  <div class="prob-head"><span class="prob-no">D</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ทุกค่าเป็นค่ายังผล · มุมเป็นองศา</div><div class="src" data-l="en">Give at least 3 decimal places · all values rms · angles in degrees</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — จุดขั้ว</h3>
+    <ol><li>ส่วน A สลับจุดระหว่างขั้ว 3 กับ 4: โวลต์มิเตอร์ \(V_{13}\) เปลี่ยนระหว่าง 90 V กับ 110 V ส่วน \(V_{12}\) และ \(V_{34}\) เท่าเดิม</li>
+    <li>ข้อ 1 ขั้นที่ 3: ในกราฟ \(v_2/10\) กลับเฟสกับ \(v_1\) ถ้าย้ายจุดด้านทุติยภูมิขึ้นไปด้านบน \(\mathbf{V}_2\) จะเป็น \(250\angle 0^\circ\) V ตามเฉลยในห้อง</li>
+    <li>คำถาม: ในข้อ 1 ถ้ากลับทิศของ \(I_2\) ให้ทวนเข็มนาฬิกา \(\mathbf{I}_2\) เป็นเท่าใด และกำลังยังเป็น 6.25 W หรือไม่</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ต่อขนาน</h3>
+    <ol><li>ส่วน B ต่อถูก: หม้อแปลงแต่ละตัวจ่าย 5.45 A รวม 10.89 A ให้โหลด ต่อผิด: 550 A วนในขดลวด และโหลดได้ศูนย์</li>
+    <li>ลดความต้านทานขดลวด r ลงครึ่งหนึ่งในกรณีต่อผิด: กระแสวนเพิ่มเป็นสองเท่า หม้อแปลงที่ดี (r ต่ำ) ยิ่งต่อผิดยิ่งเสียหายมาก</li>
+    <li>เทียบกับที่ผู้สอนเขียนในห้อง: 1 A + 1 A = 2 A เมื่อต่อถูก และ 100 A เมื่อต่อผิด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ประสิทธิภาพ</h3>
+    <ol><li>ส่วน C ตั้ง \(P_c = 100\) W, \(P_{cu,FL} = 300\) W: ประสิทธิภาพสูงสุดที่โหลด 57.7 % ของพิกัด ไม่ใช่ที่พิกัดเต็ม</li>
+    <li>ลดตัวประกอบกำลังจาก 1 เป็น 0.6: กำลังออกลดลงแต่การสูญเสียเท่าเดิม ประสิทธิภาพจึงลดลง</li>
+    <li>หม้อแปลงจำหน่ายที่เปิดตลอดวันแต่มีโหลดเต็มเพียงบางช่วง ควรออกแบบให้ \(P_c\) ต่ำ เพราะ \(P_c\) เสียตลอด 24 ชั่วโมง</li></ol>
+    <div class="book">สไลด์หม้อแปลงหน้า 10–15 · Hayt §13.4 (Example 13.7) · P. C. Sen บทที่ 2</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the dots</h3>
+    <ol><li>In section A move the dot between terminals 3 and 4: the voltmeter \(V_{13}\) switches between 90 V and 110 V while \(V_{12}\) and \(V_{34}\) stay the same.</li>
+    <li>Problem 1, step 3: in the graph \(v_2/10\) is in opposite phase to \(v_1\). With the secondary dot moved to the top, \(\mathbf{V}_2\) would be \(250\angle 0^\circ\) V, as in the class solutions.</li>
+    <li>Question: in problem 1, if \(I_2\) were taken counter-clockwise, what would \(\mathbf{I}_2\) be, and would the power still be 6.25 W?</li></ol></div>
+  <div class="card"><h3>Try this 2 — parallel connection</h3>
+    <ol><li>In section B, connected right, each transformer supplies 5.45 A, 10.89 A in all to the load; connected wrong, 550 A circulates in the windings and the load gets nothing.</li>
+    <li>Halve the winding resistance r in the wrong connection: the circulating current doubles. The better the transformer (low r), the worse the damage when it is connected wrong.</li>
+    <li>Compare with the instructor's notes: 1 A + 1 A = 2 A when right, 100 A when wrong.</li></ol></div>
+  <div class="card"><h3>Try this 3 — efficiency</h3>
+    <ol><li>In section C set \(P_c = 100\) W and \(P_{cu,FL} = 300\) W: the efficiency peaks at 57.7 % of the rating, not at full load.</li>
+    <li>Lower the power factor from 1 to 0.6: the output falls but the losses stay, so the efficiency drops.</li>
+    <li>A distribution transformer is energized all day but fully loaded only part of the time, so it should have a low \(P_c\), which is lost for all 24 hours.</li></ol>
+    <div class="book">Transformer slides pp. 10–15 · Hayt §13.4 (Example 13.7) · P. C. Sen, chapter 2</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, T = CH6.text, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const Cx = CK.Cx, cx = Cx.c, RT2 = Math.SQRT2, GREEN = '#7ee787', PINK = '#ff7eb6', PURPLE = '#c792ea', ORANGE = '#ffa552';
+  const rms = z => Cx.scale(z, 1 / RT2);
+  CH10.problem(1, 'hayt');
+
+  /* =================================================================== A: the polarity test */
+  const SA = { dot: '3', n: 10 };
+  const TL = { t1: { text: '1', dx: -0.32, dy: -0.3, color: '#e8ecf7' }, t2: { text: '2', dx: -0.32, dy: 0.32, color: '#e8ecf7' }, t3: { text: '3', dx: 0.32, dy: -0.3, color: '#e8ecf7' }, t4: { text: '4', dx: 0.32, dy: 0.32, color: '#e8ecf7' } };   // terminal numbers of slides pp. 10–12
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, wideAt: 1e9, cktAspM: 0.5, rowAsp: 0.46, pad: 1.0, view: { acPeak: false, nodeLabels: TL },
+    side: (ctx, b, bd) => { const c = bd.ckt, V12 = rms(c.Vab('V12')), V34 = rms(c.Vab('V34')), V13 = rms(c.Vab('V13'));
+      /* V₁₂ and −V₃₄ head to tail on the axis; the resultant V₁₃ drawn just below them so that the three collinear arrows stay readable */
+      CH6.plane(ctx, b, [{ z: V12, color: COL.V, label: 'V_12', g: 'v', w: 3, lmid: 1 }, { z: Cx.neg(V34), from: V12, color: PURPLE, label: '−V_34', g: 'v', w: 3.4, lmid: 1 }, { z: V13, from: cx(0, -0.2 * Cx.abs(V12)), color: PINK, label: 'V_13', g: 'v', w: 3, lmid: -1 }],
+        { title: bd.short ? 'V₁₃ = V₁₂ − V₃₄' : t('V₁₃ = V₁₂ + (−V₃₄) ต่อหัวต่อหาง', 'V₁₃ = V₁₂ + (−V₃₄) head to tail') }); },
+    waves: [{ title: bd => bd.short ? '' : t('v₁₂, v₃₄ และ v₁₃', 'v₁₂, v₃₄ and v₁₃'), sigs: bd => { const c = bd.ckt;
+      return [['V12', COL.V, 'v_{12}'], ['V34', PURPLE, 'v_{34}'], ['V13', PINK, 'v_{13}']].map(([id, col, lb]) => { const z = c.Vab(id); return { mag: Cx.abs(z), ang: CH6.deg(z), color: col, label: lb, unit: 'V', g: 'v', w: 2.4 }; }); } }],
+    badge: () => { const v = Cx.abs(rms(BA.ckt.Vab('V13'))); return [[`V₁₃ = ${fd(v, 1)} V`, `V₁₃ = ${fd(v, 1)} V`], 'ok']; } });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('จุดของขดลวดที่สอง', 'Dot of the second winding')); ui.radio(pA, [{ id: 'dA_3', label: t('ที่ขั้ว 3', 'at terminal 3'), on: true }, { id: 'dA_4', label: t('ที่ขั้ว 4', 'at terminal 4') }], id => { SA.dot = id.slice(3); buildA(); });
+  ui.h2(pA, t('อัตราส่วนรอบ N₁ : N₂', 'Turns ratio N₁ : N₂')); ui.slider(pA, { id: 'sAn', label: 'a', min: 2, max: 20, step: 1, value: SA.n, fmt: v => `${fd(v, 0)} : 1`, oninput: v => { SA.n = v; buildA(); } });
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, BA.clk);
+  pA.appendChild(mA); mA.className = 'metrics';
+  function buildA() { BA.set(CH10C.polSpec({ V: 100, n: SA.n, dot2: SA.dot })); const c = BA.ckt, v = id => Cx.abs(rms(c.Vab(id))), V13 = v('V13'), V12 = v('V12'), V34 = v('V34');
+    mA.innerHTML = ui.kv([['V₁₂', `${fd(V12, 2)} V`], ['V₃₄', `${fd(V34, 2)} V`], ['V₁₃', `${fd(V13, 2)} V`], [t('ขั้วเดียวกับขั้ว 1', 'like polarity with 1'), t(`ขั้ว ${SA.dot}`, `terminal ${SA.dot}`)]]);
+    $('wA').innerHTML = `<div class="answer">${SA.dot === '3' ? t(`\\(V_{13} = V_{12} - V_{34} = ${fd(V12, 0)} - ${fd(V34, 2)} = ${fd(V13, 2)}\\) V เป็นผลต่าง: ขั้ว 1 และ 3 มีขั้วเดียวกัน (สไลด์หน้า 12)`, `\\(V_{13} = V_{12} - V_{34} = ${fd(V12, 0)} - ${fd(V34, 2)} = ${fd(V13, 2)}\\) V, a difference: terminals 1 and 3 have like polarity (slide p. 12).`)
+      : t(`\\(V_{13} = V_{12} + V_{34} = ${fd(V12, 0)} + ${fd(V34, 2)} = ${fd(V13, 2)}\\) V เป็นผลบวก: ขณะที่ขั้ว 1 เป็นบวกเทียบกับขั้ว 2 ขั้ว 4 ก็เป็นบวกเทียบกับขั้ว 3 คือขั้ว 1 และ 4 มีขั้วเดียวกัน (สไลด์หน้า 11)`, `\\(V_{13} = V_{12} + V_{34} = ${fd(V12, 0)} + ${fd(V34, 2)} = ${fd(V13, 2)}\\) V, a sum: whenever terminal 1 is positive with respect to 2, terminal 4 is positive with respect to 3, so 1 and 4 have like polarity (slide p. 11).`)}</div>`;
+    MC.renderMath($('wA')); }
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => BA.resize());
+
+  /* =================================================================== B: two transformers in parallel */
+  const SB = { wrong: false, r: 0.2 };
+  const curB = c => { const i1 = rms(c.I('r1')), i2 = rms(c.I('r2')), iL = rms(c.I('RL')); return { i1, i2, iL, cir: Cx.abs(Cx.sub(i1, i2)) / 2 }; };
+  const BB = new CH8.Board('cvB', { T: 4, mid: true, wideAt: 1e9, cktAspM: 0.62, rowAsp: 0.4, pad: 1.0, view: { acPeak: false },
+    side: (ctx, b, bd) => { const o = curB(bd.ckt), sh = bd.short;
+      CH8.bars(ctx, b, [{ label: 'T_1', v: Cx.abs(o.i1), color: COL.I, sub: t('ขดลวดทุติยภูมิ', 'secondary') }, { label: 'T_2', v: Cx.abs(o.i2), color: COL.I, sub: t('ขดลวดทุติยภูมิ', 'secondary') }, { label: t('โหลด', 'load'), v: Cx.abs(o.iL), color: GREEN, sub: '10 Ω' }, { label: t('กระแสวน', 'circulating'), v: o.cir, color: '#ff6b6b', sub: 'i_cir' }],
+        { title: sh ? t('กระแส (A)', 'current (A)') : SB.wrong ? t('กระแส (A): ต่อผิด กระแสวนมหาศาล', 'current (A): wrong, a huge circulating current') : t('กระแส (A): ต่อถูก แบ่งกันคนละครึ่ง', 'current (A): right, each takes half'), fmt: v => fd(v, v >= 100 ? 0 : 2), sub: !sh }); },
+    badge: () => SB.wrong ? [['ต่อผิดขั้ว: กระแสวนสูงมาก', 'wrong polarity: huge circulating current'], 'wait'] : [['ต่อถูกขั้ว', 'right polarity'], 'ok'] });
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('การต่อขดลวดทุติยภูมิของ T₂', 'Secondary of T₂')); ui.radio(pB, [{ id: 'cB_ok', label: t('ถูก (รูป a)', 'right (figure a)'), on: true }, { id: 'cB_wrong', label: t('ผิด (รูป b)', 'wrong (figure b)') }], id => { SB.wrong = id === 'cB_wrong'; buildB(); });
+  ui.h2(pB, t('ความต้านทานของขดลวดทุติยภูมิแต่ละชุด', 'Resistance of each secondary')); ui.slider(pB, { id: 'sBr', label: 'r', min: 0.05, max: 1, step: 0.05, value: SB.r, fmt: v => `${fd(v, 2)} Ω`, oninput: v => { SB.r = v; buildB(); } });
+  pB.appendChild(mB); mB.className = 'metrics';
+  function buildB() { BB.set(CH10C.parXfSpec({ wrong: SB.wrong, r: SB.r })); const o = curB(BB.ckt);
+    mB.innerHTML = ui.kv([['I_T1', `${fd(Cx.abs(o.i1), 3)} A`], ['I_T2', `${fd(Cx.abs(o.i2), 3)} A`], [t('I โหลด', 'I load'), `${fd(Cx.abs(o.iL), 3)} A`], [t('กระแสวน', 'circulating'), `${fd(o.cir, 3)} A`]]);
+    $('wB').innerHTML = SB.wrong ? `<div class="warnbox">${t(`แรงดันด้านทุติยภูมิ 110 V สองตัวเสริมกันเป็น 220 V รอบวงของสองขดลวด มีแต่ \\(r + r = ${fd(2 * SB.r, 2)}\\ \\Omega\\) จำกัด: \\(i_{cir} = 220/${fd(2 * SB.r, 2)} = ${fd(220 / (2 * SB.r), 0)}\\) A ขณะที่แรงดันที่โหลดหักล้างกันเป็นศูนย์ ฟิวส์ต้องขาด ไม่เช่นนั้นขดลวดไหม้`, `The two 110 V secondaries add to 220 V around the loop of the windings, limited only by \\(r + r = ${fd(2 * SB.r, 2)}\\ \\Omega\\): \\(i_{cir} = 220/${fd(2 * SB.r, 2)} = ${fd(220 / (2 * SB.r), 0)}\\) A, while the load voltage cancels to zero. The fuses must blow, or the windings burn.`)}</div>`
+      : `<div class="answer">${t(`แรงดันด้านทุติยภูมิทั้งสองหักล้างกันในวงของสองขดลวด ไม่มีกระแสวน หม้อแปลงแต่ละตัวจ่าย \\(${fd(Cx.abs(o.i1), 3)}\\) A ครึ่งหนึ่งของโหลด \\(${fd(Cx.abs(o.iL), 3)}\\) A`, `The two secondary voltages cancel around the loop of the windings, so nothing circulates; each transformer supplies \\(${fd(Cx.abs(o.i1), 3)}\\) A, half of the load's \\(${fd(Cx.abs(o.iL), 3)}\\) A.`)}</div>`;
+    MC.renderMath($('wB')); }
+  BB.resize(); buildB(); LS.anim($('cvB'), dt => BB.frame(dt)); window.addEventListener('resize', () => BB.resize());
+
+  /* =================================================================== C: efficiency against load */
+  const SC = { S: 10000, pf: 0.8, Pc: 100, Pcu: 300, x: 1 }, PC = CH10.pane($('cvC'), W => W >= 560 ? W * 0.48 : W * 1.4);
+  const etaOf = x => { const Po = x * SC.S * SC.pf; return Po <= 0 ? 0 : Po / (Po + SC.Pc + x * x * SC.Pcu); };
+  const axes = (ctx, b, ym, o) => { const ml = 50, mr = 14, mt = 34, mb = 36, gx = x => b.x + ml + (b.w - ml - mr) * x / 1.25, gy = y => b.y + mt + (b.h - mt - mb) * (1 - (y - o.y0) / (ym - o.y0));
+    ctx.save(); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; [0, 0.25, 0.5, 0.75, 1, 1.25].forEach(x => { ctx.beginPath(); ctx.moveTo(gx(x), gy(o.y0)); ctx.lineTo(gx(x), gy(ym)); ctx.stroke(); }); o.yt.forEach(y => { ctx.beginPath(); ctx.moveTo(gx(0), gy(y)); ctx.lineTo(gx(1.25), gy(y)); ctx.stroke(); });
+    ctx.strokeStyle = COL.axis; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(gx(0), gy(ym)); ctx.lineTo(gx(0), gy(o.y0)); ctx.lineTo(gx(1.25), gy(o.y0)); ctx.stroke(); ctx.restore();
+    [0, 0.5, 1].forEach(x => T(ctx, `${fd(100 * x, 0)} %`, gx(x), gy(o.y0) + 13, { color: COL.muted, size: 11.5 })); o.yt.forEach(y => T(ctx, o.fmt(y), gx(0) - 6, gy(y), { align: 'right', color: COL.muted, size: 11.5 }));
+    T(ctx, t('โหลด (x ของพิกัด)', 'load (x of rating)'), gx(1.25), gy(o.y0) + 28, { align: 'right', color: COL.ink, size: 12.5, weight: '600' }); return { gx, gy }; };
+  function drawC() {
+    const { ctx, W, H } = PC, two = W >= 560; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const b1 = two ? { x: 0, y: 0, w: Math.floor((W - 6) / 2), h: H } : { x: 0, y: 0, w: W, h: Math.round((H - 6) / 2) }, b2 = two ? { x: b1.w + 6, y: 0, w: W - b1.w - 6, h: H } : { x: 0, y: b1.h + 6, w: W, h: H - b1.h - 6 };
+    const xm = Math.sqrt(SC.Pc / SC.Pcu), em = etaOf(xm), e = etaOf(SC.x), lo = Math.floor(Math.min(etaOf(0.1), e) * 100 / 5) * 5 / 100;
+    CH6.bg(ctx, b1); T(ctx, t('ประสิทธิภาพ η (%)', 'efficiency η (%)'), b1.x + 10, b1.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const y0 = Math.max(0, Math.min(lo, 0.9)), yts = [0, 1, 2, 3, 4].map(k => y0 + (1 - y0) * k / 4), A1 = axes(ctx, b1, 1, { y0, yt: yts, fmt: y => fd(100 * y, 1) });
+    ctx.save(); ctx.strokeStyle = GREEN; ctx.lineWidth = 2.6; ctx.beginPath(); for (let j = 1; j <= 200; j++) { const x = 1.25 * j / 200, y = Math.max(y0, etaOf(x)); j > 1 ? ctx.lineTo(A1.gx(x), A1.gy(y)) : ctx.moveTo(A1.gx(x), A1.gy(y)); } ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.strokeStyle = PINK; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(A1.gx(xm), A1.gy(y0)); ctx.lineTo(A1.gx(xm), A1.gy(em)); ctx.stroke(); ctx.restore();
+    if (xm <= 1.25) CH6.tag(ctx, `η_max = ${fd(100 * em, 2)} %`, Math.min(A1.gx(xm) + 8, b1.x + b1.w - 120), A1.gy(em) - 16, PINK, { align: 'left', size: 12 });
+    ctx.save(); ctx.fillStyle = '#e8ecf7'; ctx.beginPath(); ctx.arc(A1.gx(SC.x), A1.gy(Math.max(y0, e)), 6, 0, 2 * Math.PI); ctx.fill(); ctx.restore();
+    CH6.bg(ctx, b2); T(ctx, t('การสูญเสีย (W)', 'losses (W)'), b2.x + 10, b2.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const lm = CH10.nice(Math.max(SC.Pc, 1.5625 * SC.Pcu) * 1.05), A2 = axes(ctx, b2, lm, { y0: 0, yt: [0, lm / 4, lm / 2, 3 * lm / 4, lm], fmt: y => fd(y, 0) });
+    ctx.save(); ctx.lineWidth = 2.6; ctx.strokeStyle = CH10.COL.flux; ctx.beginPath(); ctx.moveTo(A2.gx(0), A2.gy(SC.Pc)); ctx.lineTo(A2.gx(1.25), A2.gy(SC.Pc)); ctx.stroke();
+    ctx.strokeStyle = ORANGE; ctx.beginPath(); for (let j = 0; j <= 120; j++) { const x = 1.25 * j / 120; j ? ctx.lineTo(A2.gx(x), A2.gy(x * x * SC.Pcu)) : ctx.moveTo(A2.gx(x), A2.gy(0)); } ctx.stroke(); ctx.restore();
+    T(ctx, 'P_c', A2.gx(0.06), A2.gy(SC.Pc) - 11, { align: 'left', color: CH10.COL.flux, size: 13, weight: '700' }); T(ctx, 'P_cu = x²P_cu,FL', A2.gx(1.22), A2.gy(1.5625 * SC.Pcu) + 4, { align: 'right', color: ORANGE, size: 12.5, weight: '700' });
+    if (xm <= 1.25) { ctx.save(); ctx.fillStyle = PINK; ctx.beginPath(); ctx.arc(A2.gx(xm), A2.gy(SC.Pc), 5.5, 0, 2 * Math.PI); ctx.fill(); ctx.restore(); }
+    ctx.save(); ctx.strokeStyle = '#e8ecf7'; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.moveTo(A2.gx(SC.x), A2.gy(0)); ctx.lineTo(A2.gx(SC.x), A2.gy(lm)); ctx.stroke(); ctx.restore(); }
+  const pC = $('pC'), mC = document.createElement('div');
+  ui.h2(pC, t('โหลด', 'Load')); ui.slider(pC, { id: 'sCx', label: 'x', min: 0.05, max: 1.25, step: 0.01, value: SC.x, fmt: v => t(`${fd(100 * v, 0)} % ของพิกัด`, `${fd(100 * v, 0)} % of rating`), oninput: v => { SC.x = v; showC(); } });
+  ui.slider(pC, { id: 'sCpf', label: 'PF', min: 0.5, max: 1, step: 0.01, value: SC.pf, fmt: v => fd(v, 2), oninput: v => { SC.pf = v; showC(); } });
+  ui.h2(pC, t('การสูญเสียของหม้อแปลง 10 kVA', 'Losses of the 10 kVA transformer')); ui.slider(pC, { id: 'sCc', label: 'P_c', min: 20, max: 400, step: 10, value: SC.Pc, fmt: v => `${fd(v, 0)} W`, oninput: v => { SC.Pc = v; showC(); } });
+  ui.slider(pC, { id: 'sCu', label: 'P_cu,FL', min: 50, max: 800, step: 10, value: SC.Pcu, fmt: v => `${fd(v, 0)} W`, oninput: v => { SC.Pcu = v; showC(); } });
+  pC.appendChild(mC); mC.className = 'metrics';
+  function showC() { const Po = SC.x * SC.S * SC.pf, Pcu = SC.x * SC.x * SC.Pcu, e = etaOf(SC.x), xm = Math.sqrt(SC.Pc / SC.Pcu);
+    mC.innerHTML = ui.kv([['P_out = xS·PF', `${fd(Po, 1)} W`], ['P_c', `${fd(SC.Pc, 0)} W`], ['P_cu = x²P_cu,FL', `${fd(Pcu, 1)} W`], ['η', `${fd(100 * e, 3)} %`], [t('η สูงสุดที่โหลด', 'η highest at'), `x = ${fd(xm, 4)}`], ['η_max', `${fd(100 * etaOf(xm), 3)} %`]]);
+    $('wC').innerHTML = `<div class="answer">${t(`\\(\\eta = \\dfrac{${fd(Po, 1)}}{${fd(Po, 1)} + ${fd(SC.Pc, 0)} + ${fd(Pcu, 1)}} = ${fd(100 * e, 2)}\\,\\%\\) ประสิทธิภาพสูงสุดเมื่อ \\(x^2P_{cu,FL} = P_c\\) คือ \\(x = \\sqrt{${fd(SC.Pc, 0)}/${fd(SC.Pcu, 0)}} = ${fd(xm, 3)}\\)`, `\\(\\eta = \\dfrac{${fd(Po, 1)}}{${fd(Po, 1)} + ${fd(SC.Pc, 0)} + ${fd(Pcu, 1)}} = ${fd(100 * e, 2)}\\,\\%\\). The efficiency is highest where \\(x^2P_{cu,FL} = P_c\\), at \\(x = \\sqrt{${fd(SC.Pc, 0)}/${fd(SC.Pcu, 0)}} = ${fd(xm, 3)}\\).`)}</div>`;
+    MC.renderMath($('wC')); }
+  showC(); LS.anim($('cvC'), () => drawC());
+
+  /* =================================================================== D: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const Z1q = 0.04 * 1250, I1q = 40 / (50 + Z1q), V1q = I1q * Z1q, eFL = 8000 / 8400, xmq = Math.sqrt(100 / 300), emq = xmq * 8000 / (xmq * 8000 + 200);
+  CH6.quiz('quiz', [
+    { q: t('1) ทดสอบขั้วหม้อแปลง 230/23 V ด้วยไฟ 230 V โดยต่อขั้ว 2 กับ 4 ถ้าขั้ว 1 กับ 4 มีขั้วเดียวกัน โวลต์มิเตอร์ \\(V_{13}\\) อ่านได้เท่าใด', '1) A 230/23 V transformer is polarity-tested on 230 V with terminals 2 and 4 joined. If terminals 1 and 4 have like polarity, what does the voltmeter \\(V_{13}\\) read?'),
+      fields: [{ key: 'x', lab: 'V<sub>13</sub> =', ans: 253, unit: 'V' }],
+      work: work(R`V_{13} = V_{12} + V_{34} = 230 + 23 = 253\ \text{V}`, `<p>${t('ถ้าได้ 207 V (= 230 − 23) แปลว่าขั้ว 1 กับ 3 มีขั้วเดียวกัน', 'A reading of 207 V (= 230 − 23) would mean that 1 and 3 have like polarity.')}</p>`) },
+    { q: t('2) วงจรแบบข้อ 1 แต่แหล่งจ่าย 40 V ความต้านทาน 50 Ω หม้อแปลง 1 : 5 (จุดด้านทุติยภูมิอยู่ล่าง) และโหลด 1250 Ω จงหา \\(\\mathbf{V}_2\\) (ขนาดและมุม) และกำลังที่โหลด', '2) The circuit of problem 1 with a 40 V source, 50 Ω, a 1 : 5 transformer (secondary dot at the bottom) and a 1250 Ω load. Find \\(\\mathbf{V}_2\\) (size and angle) and the load power.'),
+      cz: cx(-V1q * 5), fields: [{ key: 'm', lab: 'V<sub>2</sub> =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }, { key: 'p', lab: 'P =', ans: V1q * 5 * (I1q / 5), unit: 'W' }],
+      work: work(R`\begin{aligned} Z_1 &= (0.2)^2(1250) = 50\ \Omega \\ \mathbf{I}_1 &= \frac{40}{50 + 50} = 0.4\ \text{A} \\ \mathbf{V}_1 &= (0.4)(50) = 20\ \text{V} \\ \mathbf{V}_2 &= -\frac{\mathbf{V}_1}{a} = -100\ \text{V} = 100\angle 180^\circ\ \text{V} \\ P &= \frac{100^2}{1250} = 8\ \text{W} \end{aligned}`) },
+    { q: t('3) หม้อแปลง 10 kVA มี \\(P_c = 100\\) W และ \\(P_{cu,FL} = 300\\) W จ่ายโหลดเต็มพิกัดที่ตัวประกอบกำลัง 0.8 จงหาประสิทธิภาพ', '3) A 10 kVA transformer has \\(P_c = 100\\) W and \\(P_{cu,FL} = 300\\) W. Find its efficiency at full load and a power factor of 0.8.'),
+      fields: [{ key: 'x', lab: 'η =', ans: 100 * eFL, unit: '%' }],
+      work: work(R`\eta = \frac{(10\,000)(0.8)}{8000 + 100 + 300} = ${fd(100 * eFL, 3)}\,\%`) },
+    { q: t('4) หม้อแปลงของข้อ 3 มีประสิทธิภาพสูงสุดที่โหลดกี่เท่าของพิกัด และประสิทธิภาพสูงสุดเป็นเท่าใด (PF 0.8)', '4) At what fraction of its rating is the transformer of question 3 most efficient, and what is that efficiency (PF 0.8)?'),
+      fields: [{ key: 'x', lab: 'x =', ans: xmq }, { key: 'y', lab: 'η<sub>max</sub> =', ans: 100 * emq, unit: '%' }],
+      work: work(R`\begin{aligned} x &= \sqrt{\frac{100}{300}} = ${fd(xmq, 4)} \\ \eta_{max} &= \frac{(${fd(xmq, 4)})(8000)}{${fd(xmq * 8000, 1)} + 100 + 100} = ${fd(100 * emq, 3)}\,\% \end{aligned}`) },
+    { q: t('5) หม้อแปลงสองตัวด้านทุติยภูมิ 110 V ขดลวดละ 0.1 Ω ต่อขนานกันผิดขั้ว (ไม่คิดโหลด) กระแสวนเป็นเท่าใด', '5) Two transformers with 110 V secondaries of 0.1 Ω each are paralleled with the wrong polarity (ignore the load). What current circulates?'),
+      fields: [{ key: 'x', lab: 'i<sub>cir</sub> =', ans: 1100, unit: 'A' }],
+      work: work(R`i_{cir} = \frac{110 + 110}{0.1 + 0.1} = 1100\ \text{A}`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

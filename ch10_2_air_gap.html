@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="10.2 — Air Gaps, Inductance and Several Paths">10.2 — ช่องอากาศ ความเหนี่ยวนำ และวงจรแม่เหล็กหลายเส้นทาง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script><script src="assets/lesson.js?v=112"></script><script src="assets/ch6.js?v=112"></script>
+<script src="assets/ch8.js?v=112"></script><script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ช่องอากาศ ความเหนี่ยวนำ และวงจรแม่เหล็กหลายเส้นทาง <span class="en">A millimetre of air, a coil's inductance, and flux that splits</span></h1>
+<h1 data-l="en">Air gaps, inductance and magnetic circuits with several paths <span class="en">A millimetre of air, a coil's inductance, and flux that splits</span></h1>
+
+<p class="sub" data-l="th">เครื่องจักรกลไฟฟ้าที่หมุนได้ต้องมีช่องอากาศคั่นระหว่างส่วนอยู่กับที่ (stator) กับส่วนหมุน (rotor) (สไลด์หน้า 11) ช่องอากาศคือรีลักแตนซ์อีกตัวที่ต่ออนุกรมกับแกนเหล็ก และเพราะอากาศมี \(\mu_r = 1\) ช่องอากาศยาวเพียงมิลลิเมตรเดียวก็มีรีลักแตนซ์มากกว่าแกนเหล็กทั้งแท่ง สไลด์หน้า 13 นิยามความเหนี่ยวนำ \(L = \lambda/i = N^2/\mathcal{R}\) ซึ่งช่องอากาศเป็นตัวกำหนด หน้านี้มี Example 10.2 สไลด์หน้า 14 (ข้อ 1) ภาพจำลองให้ลองเปลี่ยนช่องอากาศของโจทย์ข้อนั้น (ส่วน A) รีเลย์ของสไลด์ปี 2560 (ข้อ 2) แกนขาหนาขาบางของแผ่นทบทวน (ข้อ 3) ฟลักซ์ที่แยกไปสองทางเหมือนตัวแบ่งกระแส (ส่วน B) และแกนสามขาที่มีขดลวดสองชุด (ข้อ 4)</p>
+<p class="sub" data-l="en">A rotating machine needs an air gap between the stationary part (stator) and the rotating part (rotor) (slide p. 11). The gap is one more reluctance in series with the iron core, and because air has \(\mu_r = 1\), a gap only a millimetre long has more reluctance than the whole iron core. Slide p. 13 defines the inductance \(L = \lambda/i = N^2/\mathcal{R}\), which the gap sets. This page has Example 10.2 of slide p. 14 (problem 1), a simulation for changing the gap of that problem (section A), the relay of the 2017 slides (problem 2), the thick-and-thin core of the review sheet (problem 3), flux splitting into two paths like a current divider (section B) and a three-leg core with two coils (problem 4).</p>
+<div class="equation-box">$$ \begin{aligned} \mathcal{R}_c &= \frac{l_c}{\mu_r\mu_0A_c} \\ \mathcal{R}_g &= \frac{l_g}{\mu_0A_g} \\ Ni &= \Phi(\mathcal{R}_c + \mathcal{R}_g) = H_cl_c + H_gl_g \\ L &= \frac{\lambda}{i} = \frac{N\Phi}{i} = \frac{N^2}{\mathcal{R}} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ช่องอากาศคือรีลักแตนซ์อนุกรม</b> \(\mathcal{R}_g = l_g/(\mu_0A_g)\): ฟลักซ์เดียวกันผ่านทั้งเหล็กและอากาศ (ถ้าไม่คิดการแผ่ของฟลักซ์ที่ขอบช่อง หรือ fringing ก็ได้ \(B_g = B_c\)) และ mmf แบ่งกันตามรีลักแตนซ์เหมือนตัวแบ่งแรงดัน \(Ni = H_cl_c + H_gl_g\) (สไลด์หน้า 11)</li>
+  <li>เพราะอากาศมี \(\mu_r = 1\) ช่องอากาศ 1 mm ใน Example 10.2 จึงมีรีลักแตนซ์ 6 เท่าของแกนเหล็กยาว 50 cm และกิน mmf ไป 86 % (ข้อ 1 และส่วน A)</li>
+  <li><b>ความเหนี่ยวนำ</b> \(L = N^2/\mathcal{R}\) (สไลด์หน้า 13): จำนวนรอบเท่าเดิม รีลักแตนซ์ยิ่งต่ำ L ยิ่งสูง ช่องอากาศทำให้ L ต่ำลงแต่คงที่ขึ้น เพราะรีลักแตนซ์ของอากาศไม่ขึ้นกับการอิ่มตัว</li>
+  <li><b>หลายเส้นทาง</b>: ฟลักซ์ที่ถึงจุดแยกแบ่งกันตามรีลักแตนซ์ เหมือนกฎกระแสของเคียร์ชอฟฟ์และตัวแบ่งกระแส (ส่วน B) ถ้ามีขดลวดสองชุด ให้ตั้งสมการลูปเหมือนวิธีเมชของบทที่ 4 (ข้อ 4)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>An air gap is a series reluctance</b>, \(\mathcal{R}_g = l_g/(\mu_0A_g)\): the same flux crosses the iron and the air (neglecting the spreading of flux at the gap edges, or fringing, \(B_g = B_c\)), and the mmf divides in proportion to the reluctances like a voltage divider, \(Ni = H_cl_c + H_gl_g\) (slide p. 11).</li>
+  <li>Because air has \(\mu_r = 1\), the 1 mm gap of Example 10.2 has 6 times the reluctance of 50 cm of iron and takes 86 % of the mmf (problem 1 and section A).</li>
+  <li><b>Inductance</b> \(L = N^2/\mathcal{R}\) (slide p. 13): for the same number of turns, the lower the reluctance, the higher L. An air gap lowers L but makes it steadier, since the reluctance of air does not depend on saturation.</li>
+  <li><b>Several paths</b>: flux reaching a junction divides in proportion to the reluctances, like Kirchhoff's current law and the current divider (section B). With two coils, write loop equations as in the mesh method of chapter 4 (problem 4).</li></ul></section>
+
+<div class="slides"><figure class="slide"><img src="slides/ch10/m11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11, Magnetic Circuit with Air Gap: in electric machines, the rotor is physically isolated from the stator by the air gap; a cross-sectional view of a dc machine with stator, poles and rotor; a core with a coil of N turns and an air gap of length lg in one leg, mean core length lc; its equivalent circuit, the mmf Ni driving Φ through ℛc and ℛg in series; ℛc = lc/μcAc, ℛg = lg/μ0Ag, Φ = Ni/(ℛc + ℛg), Ni = Hclc + Hglg, Bc = Φc/Ac, Bg = Φg/Ag, where lc is the mean length of the core and lg is the length of the air gap">
+    <figcaption data-l="th">สไลด์วงจรแม่เหล็กหน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Magnetic-circuits slide p. 11 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch10/m13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13, Inductance: a coil wound on a magnetic core, such as that shown in the figure, is frequently used in electric circuits. This coil may be represented by an ideal circuit element, called inductance, which is defined as the flux linkage of the coil per ampere of its current. A core of cross section A and mean length l with a coil of N turns carrying i, drawn as an inductor L; flux linkage λ = NΦ, inductance L = λ/i; L = NΦ/i = NBA/i = NμHA/i = NμHA/(Hl/N) = N²/(l/μA), so L = N²/ℛ">
+    <figcaption data-l="th">สไลด์หน้า 13 (เอกสารปี 2566 ไม่มีหน้า 12)</figcaption><figcaption data-l="en">Slide p. 13 (the 2023 handout has no p. 12)</figcaption></figure></div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 11 ที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See slide p. 11 as written in class (2023)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/mi12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11 with handwriting: the air gap coloured on the dc machine and on the core, Φ drawn through the core, Φg = Φc boxed; ℛc = lc/μ0μrcAc and ℛg = lg/μ0μrgAg with μrg = 1 and μc = μ0μrc; the mmf drops Fc and Fg marked across ℛc and ℛg, and KVL: F = Fc + Fg, Ni = Hclc + Hglg boxed">
+      <figcaption data-l="th">ผู้สอนเขียน \(\Phi_g = \Phi_c\) (ฟลักซ์เดียวกัน) และกำกับ mmf ที่ใช้ \(F_c\), \(F_g\) คร่อมรีลักแตนซ์แต่ละตัว แล้วใช้กฎแรงดันของเคียร์ชอฟฟ์ (KVL) ฉบับแม่เหล็ก: \(Ni = H_cl_c + H_gl_g\)</figcaption><figcaption data-l="en">The instructor writes \(\Phi_g = \Phi_c\) (one flux), marks the mmf drops \(F_c\) and \(F_g\) across the reluctances, and applies Kirchhoff's voltage law (KVL) in its magnetic form: \(Ni = H_cl_c + H_gl_g\)</figcaption></figure></div></details>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>สไลด์หน้า 14</a><a href="#tA"><b>A</b>ลองเปลี่ยนช่องอากาศ</a><a href="#ex2"><b>2</b>รีเลย์ (ปี 2560)</a><a href="#ex3"><b>3</b>แผ่นทบทวนข้อ 2</a><a href="#tB"><b>B</b>ฟลักซ์แยกสองทาง</a><a href="#ex4"><b>4</b>แกนสามขา</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Slide p. 14</a><a href="#tA"><b>A</b>Change the air gap</a><a href="#ex2"><b>2</b>The relay (2017)</a><a href="#ex3"><b>3</b>Review sheet 2</a><a href="#tB"><b>B</b>Flux in two paths</a><a href="#ex4"><b>4</b>Three-leg core</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Example 10.2: หาฟลักซ์และความหนาแน่นฟลักซ์ในช่องอากาศ และความเหนี่ยวนำของขดลวด</h2><h2 data-l="en">Example 10.2: find the flux and flux density in the air gap, and the inductance of the coil</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 14 · P. C. Sen Example 1.4 · เฉลยในห้องปี 2566</div><div class="src" data-l="en">Magnetic-circuits slide p. 14 · P. C. Sen Example 1.4 · 2023 class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/m14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14, Inductance, EXAMPLE 10.2: for the magnetic circuit of the figure, N = 400 turns, mean core length lc = 50 cm, air gap length lg = 1.0 mm, cross-sectional area Ac = Ag = 15 cm², relative permeability of the core μr = 3000, i = 1.0 A. Find (a) the flux and flux density in the air gap; (b) the inductance of the coil. A core with a coil of N turns and an air gap lg in the right leg, and its equivalent circuit, Ni driving Φ through ℛc and ℛg">
+    <figcaption data-l="th">สไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 14 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แกนเหล็ก \(\mu_r = 3000\) เส้นทางเฉลี่ย 50 cm หน้าตัด 15 cm² มีช่องอากาศ 1 mm ขดลวด 400 รอบ กระแส 1 A (สไลด์เขียน "=1.0 A" โดยตกตัว i ไป) ภาพจำลองเปลี่ยนตามขั้น: ขดลวด แกนเหล็ก และช่องอากาศเรืองแสงทีละส่วนพร้อมตัวในวงจรสมมูล แผงข้างภาพเทียบรีลักแตนซ์สองตัว แล้วเมื่อหาฟลักซ์ได้ (ขั้นที่ 4) จุดเริ่มวิ่งและแผงเปลี่ยนเป็น mmf ที่แต่ละช่วงใช้ <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">An iron core with \(\mu_r = 3000\), a 50 cm mean path and a 15 cm² cross section, a 1 mm air gap, 400 turns and 1 A (the slide writes "=1.0 A", dropping the i). The simulation follows the steps: the coil, the iron and the gap light up one by one together with their parts in the equivalent circuit, and the side panel compares the two reluctances; once the flux is found (step 4) the dots start and the panel turns into the mmf each part uses. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See the solution written in class (2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/mi15.webp" width="1100" height="1546" loading="lazy" decoding="async" alt="Handwritten solution of Example 10.2: F = Ni = Hl, F = (1)(400) = 400 At; ℛc = lc/(μ0μrcAc) = 50×10⁻²/((4π×10⁻⁷)(3000)(15×10⁻⁴)) = 88419.41 At/Wb; ℛg = lg/(μ0μrgAg) = 1×10⁻³/((4π×10⁻⁷)(1)(15×10⁻⁴)) = 530516.47 At/Wb; from the circuit F = Fc + Fg with Φ = Φc = Φg, Ni = Φℛc + Φℛg, 400 = Φ(ℛc + ℛg), Φ = 400/618935.88 = 6.46×10⁻⁴ Wb = Φc = Φg; Bg = Φg/Ag = 6.46×10⁻⁴/15×10⁻⁴ = 0.43 tesla; inductance of the coil L = N²/Σℛ = (400)²/618935.88, L = 0.25 H; confirmed from L = NΦ/i = (400)(6.46×10⁻⁴)/(1) = 0.25 H">
+      <figcaption data-l="th">รีลักแตนซ์ 88 419.41 และ 530 516.47 At/Wb ฟลักซ์ \(6.46\times10^{-4}\) Wb และ \(B_g = 0.43\) T ตรงกับขั้นที่ 2–4 แต่ความเหนี่ยวนำเขียนเป็น 0.25 H (ดูคำอธิบายด้านล่าง)</figcaption><figcaption data-l="en">The reluctances 88 419.41 and 530 516.47 At/Wb, the flux \(6.46\times10^{-4}\) Wb and \(B_g = 0.43\) T match steps 2–4, but the inductance is written as 0.25 H (see below)</figcaption></figure></div>
+    <div class="warnbox" data-l="th"><b>เฉลยในห้องเขียน L = 0.25 H ทั้งสองวิธี</b> แต่ \(400^2/618\,935.88 = 0.2585\) H และ \((400)(6.46\times10^{-4})/1 = 0.2584\) H ค่า 0.25 H เกิดจากการตัดทศนิยมทิ้ง ถ้าปัดสองตำแหน่งจะได้ 0.26 H (P. C. Sen ตอบ 258.52 mH)</div>
+    <div class="warnbox" data-l="en"><b>The class solution writes L = 0.25 H both ways</b>, but \(400^2/618\,935.88 = 0.2585\) H and \((400)(6.46\times10^{-4})/1 = 0.2584\) H. The 0.25 H comes from cutting the decimals off; rounded to two places it is 0.26 H (P. C. Sen gives 258.52 mH).</div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ลองเปลี่ยนช่องอากาศ: ใครกิน mmf และ L เปลี่ยนอย่างไร</h2><h2 data-l="en">Change the air gap: who takes the mmf, and how L changes</h2>
+    <div class="src" data-l="th">ต่อจากข้อ 1 · สไลด์วงจรแม่เหล็กหน้า 11 และ 13</div><div class="src" data-l="en">Continuing problem 1 · magnetic-circuits slides pp. 11 and 13</div></div></div>
+  <p class="lead" data-l="th">แกนเดียวกับข้อ 1 แต่ปรับความยาวช่องอากาศ \(\mu_r\) ของเหล็ก จำนวนรอบ และกระแสได้ แท่งด้านข้างคือ mmf ที่เหล็กกับช่องอากาศใช้ (รวมกันเท่ากับ Ni เสมอ) ลองลดช่องอากาศเป็นศูนย์: รีลักแตนซ์เหลือแต่ของเหล็ก ฟลักซ์และ L เพิ่มหลายเท่า แล้วลองเปลี่ยน \(\mu_r\) ขณะที่มีช่องอากาศ 1 mm: L แทบไม่เปลี่ยน เพราะช่องอากาศเป็นตัวกำหนด</p>
+  <p class="lead" data-l="en">The core of problem 1, with the gap length, the iron's \(\mu_r\), the number of turns and the current adjustable. The bars beside it are the mmf used by the iron and by the gap (they always add up to Ni). Close the gap to zero: only the iron's reluctance is left, and the flux and L grow several times. Then change \(\mu_r\) with a 1 mm gap: L hardly changes, because the gap sets it.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">รีเลย์: หากระแสในขดลวด ความซึมซาบของแกน และกระแสเมื่อไม่มีช่องอากาศ</h2><h2 data-l="en">The relay: find the coil current, the core permeability, and the current with no air gap</h2>
+    <div class="src" data-l="th">Example 10.1 ของสไลด์ปี 2560 (หน้า 12 ของปีนั้น) · P. C. Sen Example 1.1 · เอกสารปี 2566 ข้ามเลขหน้า 12 ไป · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Example 10.1 of the 2017 slides (that year's p. 12) · P. C. Sen Example 1.1 · the 2023 handout skips page number 12 · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/k07a.webp" width="760" height="540" loading="lazy" decoding="async" alt="2017 slide 12, Magnetic Circuit with Air Gap, EXAMPLE 10.1: the figure represents the magnetic circuit of a primitive relay. The coil has 500 turns and the mean core path is lc = 360 mm. When the air gap lengths are 1.5 mm each, a flux density of 0.8 tesla is required to actuate the relay. The core is cast steel. (a) Find the current in the coil. (b) Compute the values of permeability and relative permeability of the core. (c) If the air gap is zero, find the current in the coil for the same flux density (0.8 T) in the core. A C-shaped core with the coil of N turns, an armature held by a spring across two gaps, and the mean path dashed">
+    <figcaption data-l="th">สไลด์ปี 2560 หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2017 slide p. 12 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">รีเลย์ 500 รอบ แกนเหล็กกล้าหล่อเส้นทางเฉลี่ย 360 mm ชิ้นเหล็กที่ขยับได้ (armature) อยู่ห่างแกน 1.5 mm ทั้งสองด้าน ต้องการ 0.8 T จึงจะดูดชิ้นเหล็กได้ โจทย์ไม่ให้พื้นที่หน้าตัด จึงหาฟลักซ์เป็นเวเบอร์ไม่ได้ แต่ไม่จำเป็น เพราะรู้ B แล้ว วงจรสมมูลของข้อนี้ใช้ฟลักซ์หนึ่งหน่วยและให้รีลักแตนซ์แต่ละตัวมีค่าเท่ากับ mmf ที่ช่วงนั้นใช้ (ชี้ดูค่าได้) ขั้นที่ 5 ปิดช่องอากาศ (ชิ้นเหล็กแนบแกน) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A 500-turn relay, a cast-steel core with a 360 mm mean path and a movable piece of iron (the armature) 1.5 mm away from the core on both sides; 0.8 T is needed to pull the armature in. The problem gives no cross-sectional area, so the flux in webers cannot be found, but it is not needed, since B is known. The equivalent circuit of this problem carries one unit of flux and gives each reluctance the value of the mmf its part uses (point at them to read it). Step 5 closes the gaps (the armature against the core). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">แกนขาหนาขาบาง: หาฟลักซ์ในแกนและความหนาแน่นฟลักซ์ในแต่ละช่วง</h2><h2 data-l="en">Thick and thin sides: find the core flux and the flux density in each part</h2>
+    <div class="src" data-l="th">ข้อ 2 ของแผ่นทบทวนวงจรแม่เหล็ก · P. C. Sen Problem 1.2 (ใช้ 500 รอบ) · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Problem 2 of the magnetic-circuits review sheet · P. C. Sen Problem 1.2 (with 500 turns) · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/rv2q.webp" width="1344" height="695" loading="lazy" decoding="async" alt="Review sheet problem 2: in the magnetic system of Fig. two sides are thicker than the other two sides. The depth of the core is 10 cm, the relative permeability of the core μr = 2000, the number of turns N = 300, and the current flowing through the coil is i = 1 A. (a) Determine the flux in the core. (b) Determine the flux densities in the parts of the core. A square core 15 cm, 25 cm, 15 cm across and 10 cm, 25 cm, 10 cm down, with the coil of N turns on the left side">
+    <figcaption data-l="th">แผ่นทบทวนข้อ 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Review sheet, problem 2 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ขาซ้ายและขวากว้าง 15 cm ส่วนบนและล่างกว้าง 10 cm ช่องกลาง 25 × 25 cm แกนลึก 10 cm ทั้งก้อน แกนนี้คือรีลักแตนซ์สองตัวต่ออนุกรม (ช่วงหนาและช่วงบาง) ฟลักซ์เดียวกันไหลผ่านทุกช่วง แต่ช่วงบางมีพื้นที่น้อยกว่า B จึงสูงกว่า <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The left and right sides are 15 cm wide, the top and bottom 10 cm, the window 25 × 25 cm, and the whole core is 10 cm deep. The core is two reluctances in series (the thick and the thin parts); the same flux runs through every part, but the thin part has less area, so its B is higher. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฟลักซ์แยกสองทาง: ตัวแบ่งฟลักซ์</h2><h2 data-l="en">Flux in two paths: the flux divider</h2>
+    <div class="src" data-l="th">แกนของข้อ 4 ที่มีขดลวดชุดเดียว · P. C. Sen บทที่ 1</div><div class="src" data-l="en">The core of problem 4 with one coil · P. C. Sen, chapter 1</div></div></div>
+  <p class="lead" data-l="th">แกนสามขาของข้อ 4 แต่มีขดลวดเฉพาะขาซ้าย ฟลักซ์ \(\Phi_1\) ขึ้นขาซ้ายแล้วแยกที่จุด b: ส่วนหนึ่งลงขากลาง (\(\Phi_c\)) อีกส่วนไปทางขาขวา (\(\Phi_r\)) เหมือนกระแสที่แยกเข้าตัวต้านทานสองตัวที่ต่อขนาน \(\Phi_c = \Phi_1\,\mathcal{R}_{r}/(\mathcal{R}_c + \mathcal{R}_r)\) ลองเพิ่มช่องอากาศในขากลาง: รีลักแตนซ์ของขากลางพุ่งขึ้น ฟลักซ์ส่วนใหญ่จึงเลี่ยงไปทางขาขวาแม้จะยาวกว่าสามเท่า</p>
+  <p class="lead" data-l="en">The three-leg core of problem 4, with a coil on the left leg only. The flux \(\Phi_1\) rises in the left leg and splits at point b: part goes down the centre leg (\(\Phi_c\)), the rest towards the right leg (\(\Phi_r\)), like a current dividing between two resistors in parallel, \(\Phi_c = \Phi_1\,\mathcal{R}_{r}/(\mathcal{R}_c + \mathcal{R}_r)\). Widen the gap in the centre leg: its reluctance shoots up, so most of the flux goes round through the right leg, although that path is three times longer.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แกนสามขาที่มีขดลวดสองชุด: หาฟลักซ์ ความหนาแน่นฟลักซ์ และความเข้มสนามในช่องอากาศ</h2><h2 data-l="en">A three-leg core with two coils: find the air-gap flux, flux density and field intensity</h2>
+    <div class="src" data-l="th">Example 10.2 ของสไลด์ปี 2560 (หน้า 13 ของปีนั้น) = ข้อ 4 ของแผ่นทบทวน · P. C. Sen Example 1.3 · ผู้สอนเขียนตั้งต้นไว้บนสไลด์ปี 2560</div><div class="src" data-l="en">Example 10.2 of the 2017 slides (that year's p. 13) = review sheet problem 4 · P. C. Sen Example 1.3 · the instructor's set-up on the 2017 slide</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/rv4q.webp" width="1628" height="701" loading="lazy" decoding="async" alt="Review sheet problem 4: in the magnetic circuit of Figure, the relative permeability of the ferromagnetic material is 1200. Neglect magnetic leakage and fringing. All dimensions are in centimeters, and the magnetic material has a square cross-sectional area. Determine the air gap flux, the air gap flux density, and the magnetic field intensity in the air gap. A three-leg core 2 + 50 + 2 + 50 + 2 cm wide and 50 cm high between 2 cm bars, corners a, b, c on top and f, e, d at the bottom; coils N1 of 500 turns at 10 A on the left leg and N2 of 500 turns on the right leg; a 0.5 cm air gap in the centre leg; the equivalent circuit with F1 = 5000 At, ℛbafe, ℛbe(core), ℛg, ℛbcde and F2 = 5000 At and the fluxes Φ1 and Φ2">
+    <figcaption data-l="th">แผ่นทบทวนข้อ 4 (ภาพเดียวกับ Example 10.2 ของสไลด์ปี 2560) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Review sheet, problem 4 (the figure of Example 10.2 in the 2017 slides) · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">โจทย์นี้ชื่อ Example 10.2 ในสไลด์ปี 2560 แต่ไม่ใช่ข้อเดียวกับ Example 10.2 ของข้อ 1 แกนสามขา \(\mu_r = 1200\) หน้าตัด 2 × 2 cm ขดลวด 500 รอบ 10 A บนขาซ้ายและขาขวา ขากลางมีช่องอากาศ 0.5 cm ภาพจำลองระบายขดลวด ขาด้านนอก และขากลางทีละขั้น แล้วเมื่อแก้สมการลูปได้ (ขั้นที่ 5) ฟลักซ์จากสองขดลวดไหลมารวมกันลงขากลาง <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The 2017 slides call this Example 10.2, but it is not the Example 10.2 of problem 1. A three-leg core with \(\mu_r = 1200\) and a 2 × 2 cm cross section, 500-turn coils at 10 A on the left and right legs, and a 0.5 cm air gap in the centre leg. The simulation lights up the coils, the outer paths and the centre leg step by step; once the loop equations are solved (step 5), the fluxes of the two coils come together down the centre leg. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูที่ผู้สอนเขียนบนสไลด์ในห้อง (ปี 2560)</span><span data-l="en">See what the instructor wrote on the slide in class (2017)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/k07b.webp" width="1065" height="590" loading="lazy" decoding="async" alt="2017 slide 13, EXAMPLE 10.2, with handwriting: μc = μ0μrc = (4π×10⁻⁷)(1200), μrc = 1200, Ac = (2×2)×10⁻⁴ m², F1 = N1I1 = 5000 At; the left loop b-a-f-e and the right loop b-c-d-e coloured on the core and labelled lbafe and lbcde; ℛbafe = lbafe/μcAc and ℛbcde = lbcde/μcAc, ℛbe = lbe/μcAc with lbe = 52 − 0.5 = 51.5×10⁻² m, and ℛg = lg/μ0Ag">
+      <figcaption data-l="th">ผู้สอนระบายเส้นทาง b-a-f-e และ b-c-d-e เขียนรีลักแตนซ์ของแต่ละช่วง และหักช่องอากาศออกจากความยาวขากลาง \(l_{be} = 52 - 0.5 = 51.5\) cm ตรงกับขั้นที่ 2–3</figcaption><figcaption data-l="en">The instructor colours the paths b-a-f-e and b-c-d-e, writes the reluctance of each part, and removes the gap from the centre leg, \(l_{be} = 52 - 0.5 = 51.5\) cm, as in steps 2–3</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ไม่คิดฟลักซ์รั่วและการแผ่ของฟลักซ์ที่ขอบช่องอากาศ</div><div class="src" data-l="en">Give at least 3 decimal places · neglect leakage and fringing</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ช่องอากาศ</h3>
+    <ol><li>ส่วน A ตั้งช่องอากาศ 1 mm: แท่ง mmf ของช่องอากาศสูงกว่าของเหล็กราว 6 เท่า ลดเป็น 0: ฟลักซ์เพิ่มราว 7 เท่า และ L จาก 0.26 H เป็น 1.81 H</li>
+    <li>ที่ช่องอากาศ 1 mm เปลี่ยน \(\mu_r\) จาก 3000 เป็น 1000: L ลดเพียงราว 20 % แต่ถ้าไม่มีช่องอากาศ L ลดลงสามเท่า</li>
+    <li>คำถาม: ทำไมตัวเหนี่ยวนำแกนเหล็กที่ต้องการค่า L คงที่จึงจงใจเว้นช่องอากาศไว้</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — รีเลย์</h3>
+    <ol><li>ข้อ 2 ชี้ที่รีลักแตนซ์ในวงจรสมมูลทีละตัว: ช่องอากาศสองช่องรวมกันใช้ 1909.9 At ส่วนเหล็กใช้เพียง 183.6 At</li>
+    <li>ขั้นที่ 5 ชิ้นเหล็กแนบแกน: กระแสที่ต้องใช้ลดจาก 4.19 A เหลือ 0.367 A รีเลย์จึงต้องใช้กระแสสูงตอนดึงแต่ใช้กระแสน้อยตอนค้างไว้</li>
+    <li>ฝึกเพิ่มข้อ 2: ลดช่องอากาศเหลือข้างละ 1 mm แล้วดูว่ากระแสลดเหลือเท่าใด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — หลายเส้นทาง</h3>
+    <ol><li>ส่วน B ตั้งช่องอากาศ 0: ขากลางสั้นกว่าเส้นทางขาขวาสามเท่า จึงรับฟลักซ์ 3 ใน 4 ส่วน</li>
+    <li>เพิ่มช่องอากาศเป็น 5 mm: ขากลางเหลือราว 1 ใน 5 ฟลักซ์เลือกเส้นทางที่รีลักแตนซ์ต่ำ ไม่ใช่เส้นทางที่สั้น</li>
+    <li>ข้อ 4 ขั้นสุดท้าย: \(\Phi_g = \Phi_1 + \Phi_2\) เหมือนกระแสเมชสองวงที่ไหลทางเดียวกันในกิ่งร่วม</li></ol>
+    <div class="book">สไลด์วงจรแม่เหล็กหน้า 11–14 · สไลด์ปี 2560 หน้า 12–13 · แผ่นทบทวนข้อ 2 และ 4 · P. C. Sen บทที่ 1 (Examples 1.1, 1.3, 1.4, Problem 1.2)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the air gap</h3>
+    <ol><li>In section A set the gap to 1 mm: the gap's mmf bar is about 6 times the iron's. Set it to 0: the flux grows about 7 times and L goes from 0.26 H to 1.81 H.</li>
+    <li>With the 1 mm gap, change \(\mu_r\) from 3000 to 1000: L drops by only about 20 %, but without a gap L falls to a third.</li>
+    <li>Question: why do iron-core inductors that need a steady L have a deliberate air gap?</li></ol></div>
+  <div class="card"><h3>Try this 2 — the relay</h3>
+    <ol><li>In problem 2 point at the reluctances of the equivalent circuit one by one: the two gaps together use 1909.9 At, the iron only 183.6 At.</li>
+    <li>At step 5 the armature touches the core: the current needed drops from 4.19 A to 0.367 A, so a relay needs a large current to pull in but little to hold.</li>
+    <li>Practice problem 2: shrink each gap to 1 mm and see how far the current drops.</li></ol></div>
+  <div class="card"><h3>Try this 3 — several paths</h3>
+    <ol><li>In section B set the gap to 0: the centre leg is three times shorter than the path through the right leg, so it takes 3/4 of the flux.</li>
+    <li>Widen the gap to 5 mm: the centre leg keeps only about 1/5. Flux takes the path of low reluctance, not the short one.</li>
+    <li>Problem 4, last step: \(\Phi_g = \Phi_1 + \Phi_2\), like two mesh currents flowing the same way through a shared branch.</li></ol>
+    <div class="book">Magnetic-circuits slides pp. 11–14 · 2017 slides pp. 12–13 · review sheet, problems 2 and 4 · P. C. Sen, chapter 1 (Examples 1.1, 1.3, 1.4, Problem 1.2)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const MU0 = CH10.MU0, CY = CH10.COL.flux, PINK = '#ff7eb6', sci = (x, d = 4) => CH10.sci(x, d), sciT = (x, d = 4) => CH10.sciTex(x, d), G = CH10C.G;
+  CH10.problem(1, 'ex102'); CH10.problem(2, 'relay'); CH10.problem(3, 'thick'); CH10.problem(4, 'twin');
+  const magBoard = (id, o) => new CH10.MagBoard(id, { T: 4, pad: 0.9, view: CH10.mview, shortSpec: sp => CH8.margins(sp, 0.9), cktTitle: ['วงจรสมมูลแม่เหล็ก', 'magnetic equivalent circuit'], coreAsp: 0.44, coreAspN: 0.78, ...o });
+
+  /* =================================================================== A: the air gap of problem 1 */
+  const SA = { lg: 1, mur: 3000, N: 400, i: 1 }, E = CH10C.ex102, stA = {}, REFA = E.A;   // dots at full speed for 1 T
+  const opA = () => { const Rc = E.lc / (SA.mur * MU0 * E.A), Rg = SA.lg * 1e-3 / (MU0 * E.A), F = SA.N * SA.i, Rt = Rc + Rg, Phi = F / Rt; return { Rc, Rg, F, Rt, Phi, B: Phi / E.A, Fc: Phi * Rc, Fg: Phi * Rg, L: SA.N * SA.N / Rt }; };
+  const geoA = () => G.rect({ W: 12, H: 9, t: 2, gap: SA.lg > 0 ? 0.25 + 0.45 * SA.lg : 0, gapLabel: `l_g = ${fd(SA.lg, 1)} mm`, turns: 5, cur: `i = ${fd(SA.i, 2)} A`, name: `N = ${SA.N}`, phiLabel: 'Φ', mL: 5, mR: 4.4,
+    labels: [{ x: 6, y: 4.6, text: `μr = ${SA.mur}`, color: '#9aa3c7', size: 13 }] });
+  const BA = magBoard('cvA', {
+    core: (ctx, b, bd) => { const o = opA(); stA.dt = bd.dt; stA.run = bd.clk.run; CH10.core(ctx, b, geoA(), Object.assign(stA, { flux: { m: o.Phi }, ref: REFA, title: bd.short ? '' : `B = ${fd(o.B, 3)} T` })); },
+    side: (ctx, b, bd) => { const o = opA(); CH8.bars(ctx, b, [{ label: t('เหล็ก', 'iron'), v: o.Fc, color: CY, sub: 'Φℛ_c' }, { label: t('ช่องอากาศ', 'air gap'), v: o.Fg, color: PINK, sub: 'Φℛ_g' }], { title: bd.short ? 'mmf (At)' : t('mmf ที่แต่ละช่วงใช้ (At)', 'mmf used by each part (At)'), unit: 'At', sum: true, fmt: v => fd(v, 1), sub: !bd.short }); },
+    badge: () => [[`L = N²/ℛ = ${fd(opA().L, 4)} H`, `L = N²/ℛ = ${fd(opA().L, 4)} H`], 'ok'] });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('ช่องอากาศ', 'Air gap')); ui.slider(pA, { id: 'sAg', label: 'l_g', min: 0, max: 3, step: 0.1, value: SA.lg, fmt: v => `${fd(v, 1)} mm`, oninput: v => { SA.lg = v; buildA(); } });
+  ui.h2(pA, t('เหล็ก', 'Iron')); ui.slider(pA, { id: 'sAm', label: 'μr', min: 500, max: 6000, step: 100, value: SA.mur, fmt: v => fd(v, 0), oninput: v => { SA.mur = v; buildA(); } });
+  ui.h2(pA, t('ขดลวด', 'Coil')); ui.slider(pA, { id: 'sAN', label: 'N', min: 100, max: 800, step: 20, value: SA.N, fmt: v => t(`${fd(v, 0)} รอบ`, `${fd(v, 0)} turns`), oninput: v => { SA.N = v; buildA(); } });
+  ui.slider(pA, { id: 'sAi', label: 'i', min: 0.1, max: 2, step: 0.05, value: SA.i, fmt: v => `${fd(v, 2)} A`, oninput: v => { SA.i = v; buildA(); } });
+  pA.appendChild(mA); mA.className = 'metrics';
+  function buildA() { const o = opA(), rs = [{ id: 'Rc', name: 'ℛ_c', value: o.Rc }]; if (SA.lg > 0) rs.push({ id: 'Rg', name: 'ℛ_g', value: o.Rg });
+    BA.set(CH10C.series(o.F, rs, { fText: `${fd(o.F, 0)} At` }), { speed: 80 / REFA, dotRef: REFA });
+    mA.innerHTML = ui.kv([['ℛ_c', `${sci(o.Rc, 4)} At/Wb`], ['ℛ_g', SA.lg > 0 ? `${sci(o.Rg, 4)} At/Wb` : '0'], ['Φ = Ni/ℛ', `${sci(o.Phi, 4)} Wb`], ['B', `${fd(o.B, 4)} T`], [t('mmf ที่ช่องอากาศใช้', 'mmf share of the gap'), `${fd(100 * o.Fg / o.F, 1)} %`], ['L = N²/ℛ', `${fd(o.L, 4)} H`]]);
+    $('wA').innerHTML = `<div class="answer">${SA.lg > 0 ? t(`ช่องอากาศ ${fd(SA.lg, 1)} mm มีรีลักแตนซ์ ${fd(o.Rg / o.Rc, 2)} เท่าของแกนเหล็กยาว 50 cm และใช้ mmf ไป ${fd(100 * o.Fg / o.F, 1)} % ของ \\(Ni = ${fd(o.F, 0)}\\) At ${o.B > 1.4 ? ' (แต่ B = ' + fd(o.B, 2) + ' T สูงจนเหล็กจริงอิ่มตัว: \\(\\mu_r\\) คงที่ใช้ไม่ได้แล้ว)' : ''}`, `A ${fd(SA.lg, 1)} mm gap has ${fd(o.Rg / o.Rc, 2)} times the reluctance of the 50 cm iron core and uses ${fd(100 * o.Fg / o.F, 1)} % of \\(Ni = ${fd(o.F, 0)}\\) At.${o.B > 1.4 ? ' (But B = ' + fd(o.B, 2) + ' T would saturate real iron: a constant \\(\\mu_r\\) no longer holds.)' : ''}`)
+      : t(`ไม่มีช่องอากาศ: รีลักแตนซ์เหลือแต่ของเหล็ก \\(L = ${fd(o.L, 3)}\\) H ${o.B > 1.4 ? 'แต่ B = ' + fd(o.B, 2) + ' T สูงเกินกว่าเหล็กจริงจะรับได้ (อิ่มตัว) ลดกระแสลง' : ''}`, `No gap: only the iron's reluctance is left, \\(L = ${fd(o.L, 3)}\\) H. ${o.B > 1.4 ? 'But B = ' + fd(o.B, 2) + ' T is more than real iron can carry (saturation): lower the current.' : ''}`)}</div>`;
+    MC.renderMath($('wA')); }
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => BA.resize());
+
+  /* =================================================================== B: the flux divider (the core of problem 4, one coil) */
+  const SB = { lg: 0, I: 10 }, TW = CH10C.twin, stB = {}, REFB = TW.A * 1.2;
+  const opB = () => { const lg = SB.lg / 1000, F = 500 * SB.I, R0 = TW.Ro, Rbe = (0.52 - lg) / (TW.mur * MU0 * TW.A), Rg = lg / (MU0 * TW.A), Rc = Rbe + Rg, Rr = TW.Ro, Rp = Rc * Rr / (Rc + Rr), P1 = F / (R0 + Rp);
+    return { F, R0, Rbe, Rg, Rc, Rr, Rp, P1, Pc: P1 * Rr / (Rc + Rr), Pr: P1 * Rc / (Rc + Rr) }; };
+  const geoB = () => { const g = G.twin({ gap: SB.lg > 0 ? 0.25 + 0.2 * SB.lg : 0, gapLabel: `l_g = ${fd(SB.lg, 1)} mm`, cur1: `I = ${fd(SB.I, 1)} A`, pcLabel: 'Φ_c' });
+    g.coils = g.coils.filter(c => c.id === 'c1'); g.coils[0].name = 'N = 500'; g.paths[1].label = 'Φ_r'; return g; };
+  const BB = magBoard('cvB', { cktFrac: 0.5,
+    core: (ctx, b, bd) => { const o = opB(); stB.dt = bd.dt; stB.run = bd.clk.run; CH10.core(ctx, b, geoB(), Object.assign(stB, { flux: { p1: o.P1, p2: -o.Pr, pc: o.Pc }, ref: REFB, title: bd.short ? '' : t('ขดลวดเฉพาะขาซ้าย', 'one coil, on the left leg') })); },
+    side: (ctx, b, bd) => { const o = opB(); CH8.bars(ctx, b, [{ label: 'Φ_1', v: o.P1 * 1e4, color: CY, sub: t('ขาซ้าย', 'left leg') }, { label: 'Φ_c', v: o.Pc * 1e4, color: PINK, sub: t('ขากลาง', 'centre') }, { label: 'Φ_r', v: o.Pr * 1e4, color: '#ffd166', sub: t('ขาขวา', 'right leg') }],
+      { title: bd.short ? 'Φ (×10⁻⁴ Wb)' : t('ฟลักซ์ (×10⁻⁴ Wb): Φ₁ = Φc + Φr', 'flux (×10⁻⁴ Wb): Φ₁ = Φc + Φr'), fmt: v => fd(v, 3), sub: !bd.short }); },
+    badge: () => { const o = opB(); return [[`Φc/Φ₁ = ${fd(100 * o.Pc / o.P1, 1)} %`, `Φc/Φ₁ = ${fd(100 * o.Pc / o.P1, 1)} %`], 'ok']; } });
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('ช่องอากาศในขากลาง', 'Gap in the centre leg')); ui.slider(pB, { id: 'sBg', label: 'l_g', min: 0, max: 6, step: 0.1, value: SB.lg, fmt: v => `${fd(v, 1)} mm`, oninput: v => { SB.lg = v; buildB(); } });
+  ui.h2(pB, t('กระแสในขดลวด (500 รอบ)', 'Coil current (500 turns)')); ui.slider(pB, { id: 'sBI', label: 'I', min: 1, max: 15, step: 0.5, value: SB.I, fmt: v => `${fd(v, 1)} A`, oninput: v => { SB.I = v; buildB(); } });
+  pB.appendChild(mB); mB.className = 'metrics';
+  function buildB() { const o = opB(); BB.set(CH10C.parSpec(o.F, o.R0, o.Rc, o.Rr, { n0: 'ℛ_bafe', na: SB.lg > 0 ? 'ℛ_be + ℛ_g' : 'ℛ_be', nb: 'ℛ_bcde' }), { speed: 80 / REFB, dotRef: REFB });
+    mB.innerHTML = ui.kv([['ℛ_bafe', `${sci(o.R0, 4)} At/Wb`], [t('ℛ ขากลาง', 'ℛ centre'), `${sci(o.Rc, 4)} At/Wb`], ['ℛ_bcde', `${sci(o.Rr, 4)} At/Wb`], ['Φ₁', `${sci(o.P1, 4)} Wb`], ['Φc', `${sci(o.Pc, 4)} Wb`], ['Φr', `${sci(o.Pr, 4)} Wb`]]);
+    $('wB').innerHTML = `<div class="answer">${t(`ตัวแบ่งฟลักซ์: \\(\\Phi_c = \\Phi_1\\dfrac{\\mathcal{R}_{bcde}}{\\mathcal{R}_c + \\mathcal{R}_{bcde}} = ${fd(100 * o.Pc / o.P1, 1)}\\,\\%\\) ของ \\(\\Phi_1\\) ${SB.lg > 0 ? 'ช่องอากาศทำให้ขากลางมีรีลักแตนซ์ ' + fd(o.Rc / o.Rr, 2) + ' เท่าของเส้นทางขาขวา' : 'ขากลางยาวหนึ่งในสามของเส้นทางขาขวา จึงรับฟลักซ์สามในสี่ส่วน'}`, `Flux divider: \\(\\Phi_c = \\Phi_1\\dfrac{\\mathcal{R}_{bcde}}{\\mathcal{R}_c + \\mathcal{R}_{bcde}} = ${fd(100 * o.Pc / o.P1, 1)}\\,\\%\\) of \\(\\Phi_1\\). ${SB.lg > 0 ? 'The gap gives the centre leg ' + fd(o.Rc / o.Rr, 2) + ' times the reluctance of the right-leg path.' : 'The centre leg is a third as long as the right-leg path, so it takes three quarters of the flux.'}`)}</div>`;
+    MC.renderMath($('wB')); }
+  BB.resize(); buildB(); LS.anim($('cvB'), dt => BB.frame(dt)); window.addEventListener('resize', () => BB.resize());
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const Rg2 = 2e-3 / (MU0 * E.A), Rt2 = E.Rc + Rg2, P2 = 400 / Rt2, Fg1 = 0.8 / MU0 * 2e-3, i2 = (183.6 + Fg1) / 500, TK = CH10C.thick, P5 = 500 / TK.R;
+  CH6.quiz('quiz', [
+    { q: t('1) Example 10.2 แต่ช่องอากาศยาว 2 mm จงหาฟลักซ์และความเหนี่ยวนำ (ตรวจกับส่วน A)', '1) Example 10.2 with a 2 mm air gap. Find the flux and the inductance (check with section A).'),
+      fields: [{ key: 'x', lab: t('Φ (×10⁻⁴ Wb) =', 'Φ (×10⁻⁴ Wb) ='), ans: P2 * 1e4 }, { key: 'y', lab: 'L =', ans: 160000 / Rt2, unit: 'H' }],
+      work: work(R`\begin{aligned} \mathcal{R}_g &= \frac{2\times10^{-3}}{(4\pi\times10^{-7})(15\times10^{-4})} = ${fd(Rg2, 1)}\ \text{At/Wb} \\ \Phi &= \frac{400}{${fd(E.Rc, 1)} + ${fd(Rg2, 1)}} = ${sciT(P2, 4)}\ \text{Wb} \\ L &= \frac{400^2}{${fd(Rt2, 1)}} = ${fd(160000 / Rt2, 4)}\ \text{H} \end{aligned}`) },
+    { q: t('2) รีเลย์ของข้อ 2 แต่ช่องอากาศเหลือข้างละ 1 mm (ยังต้องการ 0.8 T) จงหากระแส', '2) The relay of problem 2 with each gap shrunk to 1 mm (still 0.8 T). Find the current.'),
+      fields: [{ key: 'x', lab: 'i =', ans: i2, unit: 'A' }],
+      work: work(R`\begin{aligned} F_g &= \frac{0.8}{4\pi\times10^{-7}}(2)(1\times10^{-3}) = ${fd(Fg1, 2)}\ \text{At} \\ i &= \frac{183.6 + ${fd(Fg1, 2)}}{500} = ${fd(i2, 4)}\ \text{A} \end{aligned}`) },
+    { q: t('3) ขดลวด 400 รอบมีความเหนี่ยวนำ 0.5 H จงหารีลักแตนซ์ของแกน', '3) A 400-turn coil has an inductance of 0.5 H. Find the reluctance of its core.'),
+      fields: [{ key: 'x', lab: 'ℛ =', ans: 320000, unit: 'At/Wb' }],
+      work: work(R`\mathcal{R} = \frac{N^2}{L} = \frac{400^2}{0.5} = 320\,000\ \text{At/Wb}`) },
+    { q: t('4) ฟลักซ์ 3 mWb แยกเข้าสองเส้นทางที่มีรีลักแตนซ์ \\(2\\times10^5\\) และ \\(6\\times10^5\\) At/Wb ซึ่งต่อขนานกัน จงหาฟลักซ์ในแต่ละเส้นทาง', '4) A flux of 3 mWb splits between two parallel paths of \\(2\\times10^5\\) and \\(6\\times10^5\\) At/Wb. Find the flux in each path.'),
+      fields: [{ key: 'x', lab: t('Φ_a (mWb) =', 'Φ_a (mWb) ='), ans: 2.25 }, { key: 'y', lab: t('Φ_b (mWb) =', 'Φ_b (mWb) ='), ans: 0.75 }],
+      work: work(R`\begin{aligned} \Phi_a &= 3\,\frac{6\times10^5}{2\times10^5 + 6\times10^5} = 2.25\ \text{mWb} \\ \Phi_b &= 3 - 2.25 = 0.75\ \text{mWb} \end{aligned}`) },
+    { q: t('5) แกนขาหนาขาบางของข้อ 3 แต่ใช้ 500 รอบตามเฉลยของ P. C. Sen (Problem 1.2) จงหาฟลักซ์', '5) The thick-and-thin core of problem 3 with 500 turns, as in P. C. Sen\'s solution (Problem 1.2). Find the flux.'),
+      fields: [{ key: 'x', lab: t('Φ (mWb) =', 'Φ (mWb) ='), ans: P5 * 1e3 }],
+      work: work(R`\Phi = \frac{(500)(1)}{${fd(TK.R, 1)}} = ${sciT(P5, 4)}\ \text{Wb}`, `<p>${t('ตรงกับ 9.92 mWb ของ P. C. Sen ฟลักซ์แปรตามจำนวนรอบ: 500/300 × 5.95 mWb', 'This matches P. C. Sen\'s 9.92 mWb; the flux scales with the turns: 500/300 × 5.95 mWb.')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

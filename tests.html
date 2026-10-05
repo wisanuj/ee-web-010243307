@@ -5,16 +5,17 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=110">
-<script src="assets/stops.js?v=110"></script><script src="assets/shell.js?v=110"></script>
-<script src="assets/circuit.js?v=110"></script><script src="assets/alg.js?v=110"></script>
-<script src="assets/ana.js?v=110"></script><script src="assets/ch4_circuits.js?v=110"></script><script src="assets/ch4ui.js?v=110"></script>
-<script src="assets/ch5.js?v=110"></script><script src="assets/ch5_circuits.js?v=110"></script>
-<script src="assets/ch6.js?v=110"></script><script src="assets/ch6_circuits.js?v=110"></script>
-<script src="assets/ch7_circuits.js?v=110"></script><script src="assets/ch7.js?v=110"></script>
-<script src="assets/ch8_circuits.js?v=110"></script><script src="assets/ch8.js?v=110"></script><script src="assets/ch8ui.js?v=110"></script>
-<script src="assets/ch9_circuits.js?v=110"></script><script src="assets/ch9.js?v=110"></script>
-<script src="assets/lesson.js?v=110"></script><script src="assets/ch6ui.js?v=110"></script><script src="assets/ch7ui.js?v=110"></script><script src="assets/ch1.js?v=110"></script><script src="assets/draw.js?v=110"></script><script src="assets/ch2.js?v=110"></script><script src="assets/ch9ui.js?v=110"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script>
+<script src="assets/ana.js?v=112"></script><script src="assets/ch4_circuits.js?v=112"></script><script src="assets/ch4ui.js?v=112"></script>
+<script src="assets/ch5.js?v=112"></script><script src="assets/ch5_circuits.js?v=112"></script>
+<script src="assets/ch6.js?v=112"></script><script src="assets/ch6_circuits.js?v=112"></script>
+<script src="assets/ch7_circuits.js?v=112"></script><script src="assets/ch7.js?v=112"></script>
+<script src="assets/ch8_circuits.js?v=112"></script><script src="assets/ch8.js?v=112"></script><script src="assets/ch8ui.js?v=112"></script>
+<script src="assets/ch9_circuits.js?v=112"></script><script src="assets/ch9.js?v=112"></script>
+<script src="assets/lesson.js?v=112"></script><script src="assets/ch6ui.js?v=112"></script><script src="assets/ch7ui.js?v=112"></script><script src="assets/ch1.js?v=112"></script><script src="assets/draw.js?v=112"></script><script src="assets/ch2.js?v=112"></script><script src="assets/ch9ui.js?v=112"></script>
+<script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -652,6 +653,52 @@ T('9 Hayt Practice 12.5 / 12.7 / 12.8: 97.53 A, 83.02 kW, PF 0.983 · 1.1576 A, 
 { const keys = Object.keys(CH9.DEF), bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; };
   const bad = keys.filter(k => { const p = new CH8.Prob(cv8n(), CH9.DEF[k]); return p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body))); });
   T('9 new: all eight chapter 9 problems build their steps, and every step formula and note has balanced braces', `${keys.length} ${bad.join(',') || 'none'}`, '8 none'); }
+
+/* --- chapter 10: magnetic circuits and transformers (ch10.js, ch10_circuits.js) against the slides, the class answers and P. C. Sen --- */
+const h10 = CH10C, s10 = sp => { const c = new Circuit(sp); c.solve(); return c; }, f10 = (x, d = 4) => CH6.fd(x, d), r10 = z => Cx.scale(z, 1 / Math.SQRT2), p10 = (z, d = 4, ad = 2) => CH6.pol(z, d, ad);
+T('10 B–H curves (slide p. 7): silicon steel gives 1.225 T at 442.1 At/m (quiz reading)', CH10.B('si', 442.097), 1.225, 0.004);
+T('10 B–H curves: cast steel needs 510, 800 and 1000 At/m for 0.8, 1.1 and 1.2 T (P. C. Sen readings)', `${f10(CH10.H('cs', 0.8), 0)} ${f10(CH10.H('cs', 1.1), 0)} ${f10(CH10.H('cs', 1.2), 0)}`, '511 800 1000');
+T('10 B–H curves: all three are monotone over 0–1000 At/m, and CH10.H inverts CH10.B', (() => { let ok = true; ['si', 'cs', 'ci'].forEach(m => { let p = -1; for (let h = 0; h <= 1000; h += 2) { const b = CH10.B(m, h); if (b < p - 1e-12) ok = false; p = b; } if (Math.abs(CH10.H(m, CH10.B(m, 357)) - 357) > 1e-6) ok = false; }); return ok; })(), 'true');
+T('10 hysteresis loop model closes at ±Hm (Hm 100, Hc 20, a 15, Bs 1.4: Br = 1.218 T, area 112 J/m³); the square loop of slide p. 16 has area 4·10·1.2 = 48 J/m³', (() => { const L = CH10.loop({ Hm: 100, Hc: 20, a: 15, Bs: 1.4 }), Q = CH10.loop({ Hm: 100, Hc: 10, Bs: 1.2, rect: true });
+  return `${Math.abs(L.up(100) - L.down(100)) < 1e-12 && Math.abs(L.up(-100) - L.down(-100)) < 1e-12} ${f10(L.Br, 3)} ${f10(L.area, 0)} ${f10(Q.area, 1)}`; })(), 'true 1.218 112 48');
+T('10.1 quiz (P. C. Sen Ex 1.5): l = 1.4137 m, A = 1.9635×10⁻³ m², H = 442.0971 At/m, Φ = 2.4053×10⁻³ Wb, L = λ/i = N²/ℛ = 0.2405 H (class 0.24 H)', `${f10(h10.toroid.l)} ${CH10.sci(h10.toroid.A, 4)} ${f10(h10.toroid.H)} ${CH10.sci(h10.toroid.Phi, 4)} ${f10(h10.toroid.L)} ${f10(h10.toroid.Lr)}`, '1.4137 1.9635×10⁻³ 442.0971 2.4053×10⁻³ 0.2405 0.2405');
+T('10.1 review sheet 3 (P. C. Sen P1.9): i = 2.5133 A, Φ = 1.508×10⁻³ Wb; a 2 mm gap adds 1909.86 At → i = 12.063 A', `${f10(h10.cast.i)} ${CH10.sci(h10.cast.Phi, 4)} ${f10(h10.cast.Fg, 2)} ${f10(h10.cast.ig, 3)}`, '2.5133 1.508×10⁻³ 1909.86 12.063');
+T('10.2 Example 10.2 (P. C. Sen Ex 1.4): ℛc = 88419.41, ℛg = 530516.48 At/Wb, Φ = 6.4627×10⁻⁴ Wb, Bg = 0.4308 T, L = 0.2585 H (class wrote 0.25 H)', `${f10(h10.ex102.Rc, 2)} ${f10(h10.ex102.Rg, 2)} ${CH10.sci(h10.ex102.Phi, 4)} ${f10(h10.ex102.B)} ${f10(h10.ex102.L)}`, '88419.41 530516.48 6.4627×10⁻⁴ 0.4308 0.2585');
+T('10.2 engine solves the magnetic circuit of Example 10.2 as a DC circuit: flux 6.4627×10⁻⁴ Wb, mmf drops 57.14 + 342.86 = 400 At', (() => { const c = s10(h10.series(400, [{ id: 'Rc', value: h10.ex102.Rc }, { id: 'Rg', value: h10.ex102.Rg }])), P = Math.abs(c.I('Rc').re);
+  return `${CH10.sci(P, 4)} ${f10(P * h10.ex102.Rc, 2)} ${f10(P * h10.ex102.Rg, 2)}`; })(), '6.4627×10⁻⁴ 57.14 342.86');
+T('10.2 relay (2017 Ex 10.1 = P. C. Sen Ex 1.1): Fc = 183.6, Fg = 1909.86 At, i = 4.1869 A, μr = 1248.3, no gap 0.3672 A', `${f10(h10.relay.Fc, 1)} ${f10(h10.relay.Fg, 2)} ${f10(h10.relay.i)} ${f10(h10.relay.mur, 1)} ${f10(h10.relay.i0)}`, '183.6 1909.86 4.1869 1248.3 0.3672');
+T('10.2 review sheet 2 (N = 300): ℛ = 18568.1 + 31831 At/Wb, Φ = 5.9525×10⁻³ Wb, B = 0.3968 and 0.5952 T; with P. C. Sen\'s 500 turns Φ = 9.9208×10⁻³ Wb', `${f10(h10.thick.RT, 1)} ${f10(h10.thick.RN, 1)} ${CH10.sci(h10.thick.Phi, 4)} ${f10(h10.thick.BT)} ${f10(h10.thick.BN)} ${CH10.sci(500 / h10.thick.R, 4)}`, '18568.1 31831 5.9525×10⁻³ 0.3968 0.5952 9.9208×10⁻³');
+T('10.2 three-leg core (P. C. Sen Ex 1.3): ℛbafe = 2.5863×10⁶, ℛbe = 8.538×10⁵, ℛg = 9.9472×10⁶ At/Wb; Φ1 = Φ2 = 2.0671×10⁻⁴, Φg = 4.1342×10⁻⁴ Wb, Bg = 1.0336 T, Hg = 8.2248×10⁵ At/m', `${CH10.sci(h10.twin.Ro, 4)} ${CH10.sci(h10.twin.Rbe, 4)} ${CH10.sci(h10.twin.Rg, 4)} ${CH10.sci(h10.twin.P1, 4)} ${CH10.sci(h10.twin.Pg, 4)} ${f10(h10.twin.Bg)} ${CH10.sci(h10.twin.Hg, 4)}`, '2.5863×10⁶ 8.538×10⁵ 9.9472×10⁶ 2.0671×10⁻⁴ 4.1342×10⁻⁴ 1.0336 8.2248×10⁵');
+T('10.2 engine: the two-source equivalent circuit carries Φg in the gap and Φ1 = Φ2 in the outer legs (loop equations = solver; largest relative difference, the solver\'s 1e-12 S node leak at 5000 At)', (() => { const c = s10(h10.twinSpec()), Tw = h10.twin; return Math.max(Math.abs(Math.abs(c.I('Rg').re) / Tw.Pg - 1), Math.abs(Math.abs(c.I('Ro1').re) / Tw.P1 - 1), Math.abs(Math.abs(c.I('Ro2').re) / Tw.P2 - 1)); })(), 0, 1e-4);
+T('10.2 flux divider (parSpec): without a gap the centre leg takes 3/4 of the flux, with a 5 mm gap 19.3 %', (() => { const Tw = h10.twin, fr = lg => { const Rc = (0.52 - lg) / (Tw.mur * CH10.MU0 * Tw.A) + lg / (CH10.MU0 * Tw.A), c = s10(h10.parSpec(5000, Tw.Ro, Rc, Tw.Ro)); return Math.abs(c.I('Ra').re) / Math.abs(c.I('R0').re); };
+  return `${f10(fr(0), 4)} ${f10(100 * fr(0.005), 1)}`; })(), '0.75 19.3');
+T('10.3 Example 10.4 (P. C. Sen Ex 1.6): Φmax = 2.2523×10⁻³ Wb, Bmax = 1.1261 T, imax = 1.7923 A; the class took 120 V as peak: 1.5926×10⁻³ Wb, 0.7963 T, 1.2673 A', `${CH10.sci(h10.sine.Pm, 4)} ${f10(h10.sine.Bm)} ${f10(h10.sine.im)} · ${CH10.sci(h10.sine.cls.Pm, 4)} ${f10(h10.sine.cls.Bm)} ${f10(h10.sine.cls.im)}`, '2.2523×10⁻³ 1.1261 1.7923 · 1.5926×10⁻³ 0.7963 1.2673');
+T('10.3 engine: the coil as L = N²/ℛ = 0.2513 H on 120 V, 60 Hz draws a peak current √2·120/(ωL) = 1.7911 A, lagging the voltage by 90°', (() => { const c = s10(CH10.DEF.sine.spec), I = c.I('L'); return `${f10(h10.sine.L)} ${f10(Cx.abs(I))} ${f10(CH6.wrap(CH6.deg(c.Vab('L')) - CH6.deg(I)), 2)}`; })(), '0.2513 1.7911 90');
+T('10.4 Ex 1 speaker (P. C. Sen Ex 2.1): 9 W connected directly, 25 W through the 1 : 3 transformer (engine, both cases)', (() => { const d = s10(h10.xfSpec({ Vs: 10, Rs: 1, direct: true, load: { type: 'R', value: 9 } })), x = s10(h10.xfSpec({ Vs: 10, Rs: 1, n: 1 / 3, load: { type: 'R', value: 9 } }));
+  return `${f10(d.P('ZL'), 4)} ${f10(x.P('ZL'), 4)} ${f10(x.P('Rs'), 4)}`; })(), '9 25 25');
+T('10.4 Ex 2 220/110 V: I2 = 22∠−53.13°, Iin = 11∠−53.13° A, S = 2420∠53.13° = 1452 + j1936 VA; the engine source delivers the same S', (() => { const c = s10(h10.xfSpec({ Vs: 220, n: 2, load: { type: 'Z', value: Cx.c(3, 4) } })), S = Cx.neg(c.S('Vs'));
+  return `${p10(h10.s220.I2)} ${p10(h10.s220.I1)} ${CH6.rect(h10.s220.S, 1)} ${p10(S, 4, 2)}`; })(), '22\\angle{-53.13^\\circ} 11\\angle{-53.13^\\circ} 1452 + j1936 2420\\angle{53.13^\\circ}');
+T('10.4 ideal transformer: power in = power out and I1 = I2/a for five turns ratios and loads (engine)', [[2, 10], [0.5, 4], [10, 1000], [1 / 3, 9], [4.4, 3.3]].reduce((m, [n, RL]) => { const c = s10(h10.xfSpec({ Vs: 220, n, load: { type: 'R', value: RL } }));
+  return Math.max(m, Math.abs(-c.P('Vs') - c.P('ZL')) / c.P('ZL'), Math.abs(Cx.abs(c.I('XF')) - Cx.abs(c.I('ZL')) / n) / Cx.abs(c.I('XF'))); }, 0), 0, 1e-6);   // relative (the solver's 1e-12 S node leak)
+T('10.5 Ex 2 (Hayt Ex 13.7) engine: secondary dot at the bottom → V1 = 25∠0°, V2 = 250∠180° V, I2 = 0.025∠180° A, P = 6.25 W; with the dot at the top V2 = 250∠0°', (() => { const b = s10(h10.xfSpec({ Vs: 50, Rs: 100, n: 0.1, dot2: 'bottom', load: { type: 'R', value: 10e3 } })), t = s10(h10.xfSpec({ Vs: 50, Rs: 100, n: 0.1, dot2: 'top', load: { type: 'R', value: 10e3 } }));
+  return `${p10(r10(b.Vab('XF')), 4, 0)} ${p10(r10(b.Vab('ZL')), 4, 0)} ${p10(r10(b.I('ZL')), 4, 0)} ${f10(b.P('ZL'), 4)} ${p10(r10(t.Vab('ZL')), 4, 0)}`; })(), '25\\angle{0^\\circ} 250\\angle{180^\\circ} 0.025\\angle{180^\\circ} 6.25 250\\angle{0^\\circ}');
+T('10.5 polarity test (slides pp. 11–12, 100 V on 10 : 1): dots at 1, 3 → V13 = 90 V; dots at 1, 4 → V13 = 110 V; V12 = 100, V34 = 10', ['3', '4'].map(d => { const c = s10(h10.polSpec({ dot2: d })); return ['V12', 'V34', 'V13'].map(id => f10(Cx.abs(r10(c.Vab(id))), 3)).join(','); }).join(' | '), '100,10,90 | 100,10,110');
+T('10.5 parallel transformers (slide p. 13): right → 5.4455 A each, 10.8911 A to the load, nothing circulates; wrong → 550 A circulates (220 V / 0.4 Ω) and the load gets 0', (() => { const ok = s10(h10.parXfSpec({})), wr = s10(h10.parXfSpec({ wrong: true })), a = c => ['r1', 'r2', 'RL'].map(id => f10(Cx.abs(r10(c.I(id))), 4)).join(','), cir = c => f10(Cx.abs(Cx.sub(r10(c.I('r1')), r10(c.I('r2')))) / 2, 2);
+  return `${a(ok)} ${cir(ok)} | ${a(wr)} ${cir(wr)}`; })(), '5.4455,5.4455,10.8911 0 | 550,550,0 550');
+T('10 E = 4.44 f N Φmax: 2π/√2 = 4.4429; 220 V, 50 Hz on 500 turns gives Φmax = 1.982 mWb', `${f10(2 * Math.PI / Math.SQRT2)} ${f10(220 / (4.44 * 50 * 500) * 1e3, 3)}`, '4.4429 1.982');
+T('10 CH10.sci / sciTex: 6.4627×10⁻⁴, 9.9472×10⁶, 0.4308, 1909.9; TeX 6.4627\\times10^{-4}', `${CH10.sci(6.46268e-4, 4)} ${CH10.sci(9.94718e6, 4)} ${CH10.sci(0.430845, 3)} ${CH10.sci(1909.86, 4)} ${CH10.sciTex(6.46268e-4, 4)}`, '6.4627×10⁻⁴ 9.9472×10⁶ 0.4308 1909.9 6.4627\\times10^{-4}');
+{ const B = new CH10.MagBoard(cv8n(790), { core: () => {}, side: () => {}, waves: [{ sigs: () => [] }] }); B.resize(); const b = B.box, B2 = new CH10.MagBoard(cv8n(372), { core: () => {}, side: () => {} }); B2.resize(); const c = B2.box;
+  T('10 MagBoard: at 778 px the core spans the width, the circuit and the side panel sit side by side under it, the wave panel below; at 360 px everything stacks', `${b.core.w === B.W} ${b.cktPanel.y === b.side.y && b.side.x > b.cktPanel.x} ${b.waves[0].y > b.side.y} | ${c.cktPanel.w === B2.W && c.side.y > c.cktPanel.y}`, 'true true true | true'); }
+/* chapter 10 (Oct 2026): the problems of ch10ui.js on CH8.Prob (magnetic ones on CH10.MagBoard) */
+{ const want = { toroid: [5, 3], cast: [5, 2], ex102: [5, 4], relay: [5, 3], thick: [4, 3], twin: [6, 5], sine: [5, 2], speaker: [5, 1], s220: [5, 2], hayt: [5, 2] }, got = [], bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; }, bad = [];
+  Object.keys(want).forEach(k => { const d = CH10.DEF[k], p = new CH8.Prob(cv8n(), d), n = p.steps.length, at = (p.set(want[k][1] - 1), p.solved) === false && (p.set(want[k][1]), p.solved) === true;
+    if (p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body)))) bad.push(k); got.push(`${k}:${n}${at ? '' : '!'}`); });
+  T('10 new: all ten chapter 10 problems build their steps (count), the dots start at the step that finds the flux or current, and every formula has balanced braces', `${got.join(' ')} ${bad.join(',') || 'none'}`, 'toroid:5 cast:5 ex102:5 relay:5 thick:4 twin:6 sine:5 speaker:5 s220:5 hayt:5 none'); }
+{ const D = CH10.DEF, ok = (d, v) => { const a = d.ask(); return a.fields.every((f, i) => f.ok(v[i], v)); }, chk = (d, v) => !!d.ask().check(v);
+  T('10 new: try-first boxes: quiz B = 1.225 T, L = 0.2405 H accepted, B = μ₀H named; Example 10.2 accepts 6.4627, 0.4308, 0.2585 and names 0.25 H; Example 10.4 names the 120 V-as-peak flux', `${ok(D.toroid, [1.225, 0.2405])} ${chk(D.toroid, [0.000556, 0.24])} ${ok(D.ex102, [6.4627, 0.4308, 0.2585])} ${chk(D.ex102, [6.4627, 0.4308, 0.25])} ${chk(D.sine, [1.5926, 0.7963, 1.2673])}`, 'true true true true true');
+  T('10 new: try-first boxes: speaker 9 W, 25 W accepted and a = 3 named; 220/110 V names the load current 22 A; Hayt V2 = 250∠180° (or −250∠0°) accepted, 250∠0° rejected and named', `${ok(D.speaker, [9, 25])} ${chk(D.speaker, [9, 100 / 82])} ${chk(D.s220, [2420, 1452, 1936, 22, 2])} ${ok(D.hayt, [25, 250, 180, 6.25])} ${ok(D.hayt, [25, -250, 0, 6.25])} ${ok(D.hayt, [25, 250, 0, 6.25])} ${chk(D.hayt, [25, 250, 0, 6.25])}`, 'true true true true true false true'); }
+{ const d = CH10.DEF.ex102, p = new CH8.Prob(cv8n(), d), g = k => (d.glow(k) || []).join(',');
+  T('10 new: Example 10.2 glows the mmf source, then ℛc, then ℛg, one per step; the relay closes its gaps at step 5 (one reluctance left)', `${g(1)} ${g(2)} ${g(3)} ${(p.set(4), g(4)) || '-'} ${CH10.DEF.relay.spec(5).parts.filter(x => x.type === 'R').length}`, 'F Rc Rg - 1'); }
 
 /* --- formatting regressions --- */
 T('fmtDec(40, 0)', C.fmtDec(40, 0), '40'); T('fmtDec(2.10, 2)', C.fmtDec(2.1, 2), '2.1'); T('eng(0.0024 A)', CK.eng(0.0024, 'A'), '2.4 mA'); T('eng(3 Ω)', CK.eng(3, 'Ω'), '3 Ω');

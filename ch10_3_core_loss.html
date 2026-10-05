@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="10.3 — Core Losses and Sinusoidal Excitation">10.3 — การสูญเสียในแกนและการกระตุ้นด้วยไฟสลับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script><script src="assets/lesson.js?v=112"></script><script src="assets/ch6.js?v=112"></script>
+<script src="assets/ch8.js?v=112"></script><script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การสูญเสียในแกนและการกระตุ้นด้วยไฟสลับ <span class="en">Why an iron core warms up, and how an AC voltage sets its flux</span></h1>
+<h1 data-l="en">Core losses and sinusoidal excitation <span class="en">Why an iron core warms up, and how an AC voltage sets its flux</span></h1>
+
+<p class="sub" data-l="th">เมื่อกระแสในขดลวดเป็นไฟสลับ ฟลักซ์ในแกนกลับทิศไปมาตลอดเวลา และแกนเหล็กเสียพลังงานเป็นความร้อนสองทาง (สไลด์หน้า 15–19) ทางแรกคือฮิสเทอรีซิส (hysteresis): B ตามหลัง H จึงวนเป็นวง และพื้นที่ในวงคือพลังงานที่เสียไปทุกรอบ (ส่วน A) ทางที่สองคือกระแสไหลวน (eddy current) ที่ฟลักซ์ซึ่งเปลี่ยนแปลงเหนี่ยวนำให้ไหลวนในเนื้อเหล็กเอง แก้ได้ด้วยการทำแกนเป็นแผ่นบาง (ส่วน B) สองอย่างรวมกันเรียกว่าการสูญเสียในแกน (core loss) จากนั้นเป็นสไลด์ปี 2560 หน้า 21–23 ซึ่งไม่มีในเอกสารปี 2566: ฟลักซ์ไซน์เหนี่ยวนำแรงดัน \(E_{rms} = 4.44fN\Phi_{max}\) (ส่วน C) และ Example 10.4 ขดลวดบนไฟ 120 V 60 Hz (ข้อ 1)</p>
+<p class="sub" data-l="en">When the coil current is AC, the core flux reverses all the time and the iron loses energy as heat in two ways (slides pp. 15–19). The first is hysteresis: B lags H, so it runs round a loop, and the loop area is the energy lost every cycle (section A). The second is eddy currents, which the changing flux induces in the iron itself; making the core of thin sheets cures it (section B). Together they are called the core loss. Then come slides pp. 21–23 of the 2017 deck, which the 2023 handout does not have: a sinusoidal flux induces the voltage \(E_{rms} = 4.44fN\Phi_{max}\) (section C), and Example 10.4, a coil on 120 V, 60 Hz (problem 1).</p>
+<div class="equation-box">$$ \begin{aligned} P_h &= K_hB_{max}^n\,f \\ P_e &= K_eB_{max}^2\,f^2 \\ P_c &= P_h + P_e \\ E_{rms} &= 4.44\,fN\Phi_{max} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ฮิสเทอรีซิส</b>: เมื่อลดกระแสเป็นศูนย์ เหล็กยังมีความหนาแน่นฟลักซ์คงค้าง \(B_r\) (residual) ต้องใช้ H กลับทิศเท่ากับ \(H_c\) (coercive force) จึงจะลบได้ พื้นที่ในวงต่อปริมาตรคือพลังงานที่เสียไปต่อรอบ จึงได้ \(P_h = K_hB_{max}^n f\) โดย n อยู่ระหว่าง 1.5–2.5 (สไลด์หน้า 15–16, ส่วน A)</li>
+  <li><b>กระแสไหลวน</b>: ฟลักซ์ที่เปลี่ยนแปลงเหนี่ยวนำกระแสวนในเนื้อเหล็ก \(P_e = K_eB_{max}^2 f^2\) ลดได้สองทาง คือเติมซิลิคอนราว 4 % ให้เหล็กมีความต้านทานสูงขึ้น และทำแกนเป็นแผ่นบางที่ฉนวนคั่น: แบ่งเป็น n แผ่นการสูญเสียเหลือราว \(1/n^2\) (สไลด์หน้า 17–18, ส่วน B)</li>
+  <li><b>การสูญเสียในแกน</b> \(P_c = P_h + P_e\) กลายเป็นความร้อน (สไลด์หน้า 19) เพิ่มความถี่สองเท่า: \(P_h\) เพิ่มสองเท่า แต่ \(P_e\) เพิ่มสี่เท่า</li>
+  <li><b>การกระตุ้นด้วยไฟสลับ</b>: \(\Phi = \Phi_{max}\sin\omega t\) เหนี่ยวนำ \(e = N\,d\Phi/dt = N\omega\Phi_{max}\cos\omega t\) จึงได้ \(E_{rms} = 4.44fN\Phi_{max}\) แรงดัน ความถี่ และจำนวนรอบเป็นตัวกำหนดฟลักซ์ ส่วนกระแสปรับตัวตามรีลักแตนซ์ของแกน (ส่วน C, ข้อ 1)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Hysteresis</b>: with the current brought back to zero the iron keeps a residual flux density \(B_r\), and a reversed H of size \(H_c\) (the coercive force) is needed to remove it. The loop area per volume is the energy lost per cycle, hence \(P_h = K_hB_{max}^n f\) with n between 1.5 and 2.5 (slides pp. 15–16, section A).</li>
+  <li><b>Eddy currents</b>: the changing flux induces circulating currents in the iron, \(P_e = K_eB_{max}^2 f^2\). Two cures: about 4 % silicon raises the iron's resistivity, and a core of thin insulated sheets: n sheets leave about \(1/n^2\) of the loss (slides pp. 17–18, section B).</li>
+  <li><b>Core loss</b> \(P_c = P_h + P_e\) turns into heat (slide p. 19). Doubling the frequency doubles \(P_h\) but quadruples \(P_e\).</li>
+  <li><b>Sinusoidal excitation</b>: \(\Phi = \Phi_{max}\sin\omega t\) induces \(e = N\,d\Phi/dt = N\omega\Phi_{max}\cos\omega t\), so \(E_{rms} = 4.44fN\Phi_{max}\). The voltage, frequency and turns set the flux; the current adjusts to the core's reluctance (section C, problem 1).</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>วงฮิสเทอรีซิส</a><a href="#tB"><b>B</b>กระแสไหลวนและแกนแผ่นบาง</a><a href="#tC"><b>C</b>ที่มาของ 4.44 f N Φ</a><a href="#ex1"><b>1</b>Example 10.4 (ปี 2560)</a><a href="#tD"><b>D</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>The hysteresis loop</a><a href="#tB"><b>B</b>Eddy currents and laminations</a><a href="#tC"><b>C</b>Where 4.44 f N Φ comes from</a><a href="#ex1"><b>1</b>Example 10.4 (2017)</a><a href="#tD"><b>D</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">วงฮิสเทอรีซิส: B ตามหลัง H และพื้นที่ในวงคือการสูญเสีย</h2><h2 data-l="en">The hysteresis loop: B lags H, and the loop area is the loss</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 15–16 · P. C. Sen บทที่ 1</div><div class="src" data-l="en">Magnetic-circuits slides pp. 15–16 · P. C. Sen, chapter 1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/m15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 15, Hysteresis Loss: a toroid with a coil of N turns fed by a voltage e, its current i varying sinusoidally between i1 and −i1; note that at point c the iron is magnetized, although the current in the coil is made zero. Throughout the whole cycle of magnetization, the flux density lags behind the magnetic intensity. This lagging phenomenon in the magnetic core is called hysteresis. A B–H loop with points marked around it between −H1 and H1, the residual flux density on the B axis and −Hc on the H axis">
+      <figcaption data-l="th">สไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 16, Hysteresis Loss: the hysteresis loops in the figure are obtained by slowly varying the current i of the coil over a cycle. When i is varied through a cycle, during some interval of time energy flows from the source to the coil–core assembly, and during some other interval of time energy (returns to the source). A square loop between B = ±1.2 T switching at H = ±10 At/m. Ph = Kh Bmax^n f, where Bmax is the maximum flux density, n varies in the range 1.5 to 2.5, f is the frequency of variation of the current, and Kh is a constant whose value depends on the ferromagnetic material and the volume of the core">
+      <figcaption data-l="th">สไลด์หน้า 16</figcaption><figcaption data-l="en">Slide p. 16</figcaption></figure></div>
+  <p class="lead" data-l="th">ภาพจำลองให้ H แกว่งแบบไซน์ \(H = H_{max}\sin\omega t\) (แปรตามกระแส \(i = Hl/N\)) จุดสีชมพูวิ่งรอบวง: ขาขึ้น (H เพิ่ม) เดินตามเส้นล่าง ขาลงเดินตามเส้นบน เมื่อ H กลับเป็นศูนย์ (กระแสเป็นศูนย์) B ยังเหลือ \(B_r\) ตามที่สไลด์หน้า 15 บอก กราฟขวาแสดงว่า B ผ่านศูนย์ทีหลัง H เสมอ คือ B ตามหลัง H เลือกวัสดุ: เหล็กอ่อน (แกนหม้อแปลง) วงแคบ เหล็กแข็ง (แม่เหล็กถาวร) วงกว้าง และวงสี่เหลี่ยมของสไลด์หน้า 16 พื้นที่สีชมพูในวงคือพลังงานที่เสียไปต่อรอบต่อลูกบาศก์เมตร</p>
+  <p class="lead" data-l="en">The simulation swings H sinusoidally, \(H = H_{max}\sin\omega t\) (in step with the current \(i = Hl/N\)), and the pink point runs round the loop: going up (H rising) along the lower curve, coming back along the upper one. When H returns to zero (zero current), B still has \(B_r\) left, as slide p. 15 says. The right-hand graph shows B always crossing zero after H: B lags H. Choose the material: soft iron (transformer cores) has a narrow loop, hard iron (permanent magnets) a wide one, and the square loop of slide p. 16. The pink area inside the loop is the energy lost per cycle per cubic metre.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">กระแสไหลวนและแกนแผ่นบาง</h2><h2 data-l="en">Eddy currents and laminated cores</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 17–19 · P. C. Sen บทที่ 1</div><div class="src" data-l="en">Magnetic-circuits slides pp. 17–19 · P. C. Sen, chapter 1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/m17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 17, Eddy Current Loss: another power loss occurs in a magnetic core when the flux density changes rapidly in the core. The cross section of a core through which the flux density B is rapidly changing is shown in the figure: a solid bar with B along it and a circulating eddy current ie in its cross section">
+      <figcaption data-l="th">สไลด์หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 17 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m18.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 18, Eddy Current Loss: the eddy current loss can be reduced in two ways. 1. A high-resistivity core material may be used; addition of a few percent of silicon (say 4%) to iron will increase the resistivity significantly. 2. A laminated core may be used. The thin laminations are insulated from each other. The lamination is made in the plane of the flux. In transformers and electric machines, the parts that are made of magnetic core and carry time-varying flux are normally laminated. The laminated core structure is shown in the figure, a bar of thin sheets with a small eddy current in one sheet; Pe = Ke Bmax² f², where Ke is a constant whose value depends on the type of material and its lamination thickness">
+      <figcaption data-l="th">สไลด์หน้า 18</figcaption><figcaption data-l="en">Slide p. 18</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m19.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 19, Core Loss: the hysteresis loss and the eddy current loss are lumped together as the core loss of the coil–core assembly, Pc = Ph + Pe. In electrical machines that have a magnetic core and a time-varying flux, core loss occurs and the loss appears as heat in the core. This loss will be taken into account while discussing the behavior of electric machines. Photographs of E- and I-shaped laminations and of a small transformer core stacked from them">
+      <figcaption data-l="th">สไลด์หน้า 19: แผ่นเหล็กรูปตัว E และตัว I ที่ซ้อนเป็นแกนหม้อแปลง</figcaption><figcaption data-l="en">Slide p. 19: E- and I-shaped sheets stacked into a transformer core</figcaption></figure></div>
+  <p class="lead" data-l="th">ภาพจำลองมองหน้าตัดของแกนที่ฟลักซ์พุ่งเข้าและออกจากจอสลับกัน (× คือพุ่งเข้า • คือพุ่งออก) ฟลักซ์ที่เปลี่ยนแปลงเหนี่ยวนำแรงดันรอบทุกวงในเนื้อเหล็ก จึงมีกระแสไหลวน (จุดสีส้ม) และกลับทิศทุกครึ่งรอบตามกฎของเลนซ์ (Lenz's law) แบ่งแกนเป็นแผ่นบางที่มีฉนวนคั่น: วงกระแสถูกจำกัดอยู่ในแผ่นที่บางลง แรงดันเหนี่ยวนำต่อวงลดลงตามความหนา การสูญเสียต่อปริมาตรจึงลดตามความหนายกกำลังสอง กราฟขวาเทียบกับแกนตัน</p>
+  <p class="lead" data-l="en">The simulation looks at the cross section of a core whose flux points into and out of the screen in turn (× into, • out). The changing flux induces a voltage around every loop in the iron, so eddy currents circulate (orange dots), reversing every half cycle by Lenz's law. Split the core into thin insulated sheets: each current loop is confined to a thinner sheet, the voltage induced per loop falls with the thickness, so the loss per volume falls with the square of the thickness. The right-hand graph compares with the solid core.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ที่มาของ \(E_{rms} = 4.44fN\Phi_{max}\)</h2><h2 data-l="en">Where \(E_{rms} = 4.44fN\Phi_{max}\) comes from</h2>
+    <div class="src" data-l="th">สไลด์ปี 2560 หน้า 21–22 (ไม่มีในเอกสารปี 2566) · P. C. Sen บทที่ 1</div><div class="src" data-l="en">2017 slides pp. 21–22 (not in the 2023 handout) · P. C. Sen, chapter 1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/k12b.webp" width="760" height="570" loading="lazy" decoding="async" alt="2017 slide 21, Sinusoidal Excitation: in ac electric machines as well as many other applications, the voltages and fluxes vary sinusoidally with time. Consider the coil–core assembly of the figure. Assume that the core flux Φ(t) varies sinusoidally with time. A core with a coil of N turns and the voltage e, the waveforms of e and Φ with e ahead of Φ, and a phasor diagram with E at 90° to Φ">
+      <figcaption data-l="th">สไลด์ปี 2560 หน้า 21 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2017 slide p. 21 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/k13a.webp" width="940" height="555" loading="lazy" decoding="async" alt="2017 slide 22 with handwriting: Φ(t) = Φmax sin ωt; e(t) = N dΦ/dt = NΦmax ω cos ωt = Emax cos ωt; Erms = Emax/√2 = NωΦmax/√2 = 4.44 N f Φmax, with ω written as 2πf and 4.44 circled, the frequency noted as 50 Hz in Thailand, and Erms = 4.44 N f Φmax written again in large letters. This is an important equation and will be referred to frequently in the theory of ac machines">
+      <figcaption data-l="th">สไลด์ปี 2560 หน้า 22 ที่ผู้สอนเขียนในห้อง: \(\omega = 2\pi f\) และวงเลข 4.44 ไว้ พร้อมหมายเหตุว่าไฟในประเทศไทย 50 Hz</figcaption><figcaption data-l="en">2017 slide p. 22 as written in class: \(\omega = 2\pi f\), the 4.44 circled, and a note that the supply in Thailand is 50 Hz</figcaption></figure></div>
+  <p class="lead" data-l="th">เปิดทีละขั้นเพื่อดูว่า 4.44 มาจากไหน และทำไมแรงดันจึงเป็นตัวกำหนดฟลักซ์ สมการนี้คือหัวใจของหม้อแปลงในหน้า 10.4: ขดลวดสองชุดบนฟลักซ์เดียวกันได้ \(E_1/E_2 = N_1/N_2\)</p>
+  <p class="lead" data-l="en">Open the steps to see where the 4.44 comes from and why the voltage sets the flux. This equation is the heart of the transformer on page 10.4: two coils on one flux give \(E_1/E_2 = N_1/N_2\).</p>
+  <div class="card solve"><div id="stC"></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Example 10.4: หาความหนาแน่นฟลักซ์และกระแสของขดลวดที่ต่อกับไฟ 120 V 60 Hz</h2><h2 data-l="en">Example 10.4: find the flux density and the current of a coil on a 120 V, 60 Hz supply</h2>
+    <div class="src" data-l="th">Example 10.4 ของสไลด์ปี 2560 (หน้า 23 ของปีนั้น) · P. C. Sen Example 1.6 · เฉลยในห้องปี 2560 (ถือ 120 V เป็นค่ายอด)</div><div class="src" data-l="en">Example 10.4 of the 2017 slides (that year's p. 23) · P. C. Sen Example 1.6 · 2017 class solution (took 120 V as a peak value)</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/k13q.webp" width="740" height="220" loading="lazy" decoding="async" alt="2017 slide 23, Sinusoidal Excitation, EXAMPLE 10.4, with the instructor's highlights: a 1Φ 120 V, 60 Hz supply is connected to the coil of Figure. The coil has 200 turns. The parameters of the core are as follows: length of core = 100 cm, cross-sectional area of core = 20 cm², relative permeability of core = 2500. (a) Obtain an expression for the flux density in the core. (b) Obtain an expression for the current in the coil. Notes: 120 V circled, N = 200, lc = 1 m, Ac = 20×10⁻⁴ m²">
+    <figcaption data-l="th">สไลด์ปี 2560 หน้า 23 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2017 slide p. 23 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ไฟเฟสเดียว 120 V 60 Hz ต่อกับขดลวด 200 รอบ แกนยาว 100 cm หน้าตัด 20 cm² \(\mu_r = 2500\) ภาพจำลองบนสุดคือแกนที่ฟลักซ์ (สีม่วง เพราะสีฟ้าใช้กับแรงดัน) วิ่งกลับไปมาตามไฟสลับ ด้านล่างคือวงจรไฟฟ้า: ขดลวดบนแกนนี้คือตัวเหนี่ยวนำ \(L = N^2/\mathcal{R}\) (หน้า 10.2) แผงข้างภาพแสดงเฟเซอร์ และกราฟด้านล่างแสดงว่าแรงดันนำหน้าฟลักซ์ 90° ส่วนกระแสเฟสเดียวกับฟลักซ์ <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A single-phase 120 V, 60 Hz supply feeds a 200-turn coil on a core 100 cm long, 20 cm² in cross section, \(\mu_r = 2500\). The simulation shows the core on top, its flux (purple, since cyan is used for voltage) running back and forth with the AC, and below it the electric circuit: the coil on this core is an inductor, \(L = N^2/\mathcal{R}\) (page 10.2). The side panel shows the phasors, and the graph below shows the voltage leading the flux by 90° while the current is in phase with the flux. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2560)</span><span data-l="en">See the solution written in class (2017)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/k13b.webp" width="1100" height="710" loading="lazy" decoding="async" alt="2017 slide 23 with the class solution written around it: Vmax ⇒ Erms = 120/√2 Vrms, N = 200, lc = 1 m, Ac = 20×10⁻⁴ m²; from Erms = 4.44 N f Φmax, 120/√2 = 4.44(200)(60)Φmax, Φmax = 1.59×10⁻³ Wb; Bmax = Φmax/Ac = 1.59×10⁻³/20×10⁻⁴ = 0.79 T; ℛc = lc/(μ0μrcAc) = 1/((4π×10⁻⁷)(2500)(20×10⁻⁴)) = 159154.94; Φℛc = F = Ni, i = (1.59×10⁻³)(159154.94)/200 = 1.26 A; the circuit drawn as an mmf source Ni = F driving Φ through ℛc">
+      <figcaption data-l="th">ในห้องเขียน "Vmax ⇒ \(E_{rms} = 120/\sqrt2\)" คือถือ 120 V เป็นค่ายอด จึงได้ \(\Phi_{max} = 1.59\times10^{-3}\) Wb, \(B_{max} = 0.79\) T และ \(i = 1.26\) A รีลักแตนซ์ 159 154.94 At/Wb ถูกต้อง</figcaption><figcaption data-l="en">The class wrote "Vmax ⇒ \(E_{rms} = 120/\sqrt2\)", taking 120 V as a peak value, hence \(\Phi_{max} = 1.59\times10^{-3}\) Wb, \(B_{max} = 0.79\) T and \(i = 1.26\) A; the reluctance 159 154.94 At/Wb is right</figcaption></figure></div>
+    <div class="warnbox" data-l="th"><b>เฉลยปี 2560 ถือ 120 V เป็นค่ายอด</b> จึงหารด้วย \(\sqrt2\) ก่อนใช้สมการ 4.44 แต่สมการ \(E_{rms} = 4.44fN\Phi_{max}\) รับค่ายังผลอยู่แล้ว และไฟ "120 V, 60 Hz" (ไฟบ้านของสหรัฐอเมริกา) หมายถึงค่ายังผลเหมือน "220 V, 50 Hz" ของไทย P. C. Sen Example 1.6 ใช้ 120 V เป็นค่ายังผล ได้ \(\Phi_{max} = 2.25\times10^{-3}\) Wb, \(B = 1.126\sin\omega t\) T และ \(i = 1.79\sin\omega t\) A ทุกค่าของเฉลยในห้องจึงต่ำไป \(\sqrt2\) เท่า</div>
+    <div class="warnbox" data-l="en"><b>The 2017 solution took 120 V as a peak value</b> and divided by \(\sqrt2\) before using the 4.44 equation. But \(E_{rms} = 4.44fN\Phi_{max}\) already takes the rms value, and a "120 V, 60 Hz" supply (the US household supply) means rms, just as Thailand's "220 V, 50 Hz" does. P. C. Sen Example 1.6 uses 120 V as rms and gets \(\Phi_{max} = 2.25\times10^{-3}\) Wb, \(B = 1.126\sin\omega t\) T and \(i = 1.79\sin\omega t\) A, so every class value is \(\sqrt2\) times too small.</div></details>
+</section>
+
+<section class="prob" id="tD">
+  <div class="prob-head"><span class="prob-no">D</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · แรงดันทุกตัวเป็นค่ายังผล</div><div class="src" data-l="en">Give at least 3 decimal places · every voltage is rms</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ฮิสเทอรีซิส</h3>
+    <ol><li>ส่วน A เลือกเหล็กอ่อนแล้วดูจุดที่ H = 0 (กระแสเป็นศูนย์): B ยังเหลือ \(B_r\) นี่คือเหตุที่แกนเหล็กกลายเป็นแม่เหล็กได้หลังปิดไฟ</li>
+    <li>เปลี่ยนเป็นเหล็กแข็ง: \(H_c\) และพื้นที่ในวงโตขึ้นหลายเท่า เหมาะกับแม่เหล็กถาวร แต่ถ้าใช้ทำแกนหม้อแปลงจะร้อนมาก</li>
+    <li>เพิ่มความถี่จาก 50 เป็น 100 Hz: พื้นที่ในวงเท่าเดิม แต่การสูญเสียต่อวินาทีเพิ่มสองเท่า</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — กระแสไหลวน</h3>
+    <ol><li>ส่วน B แกนตัน: วงกระแสใหญ่หนึ่งวง แบ่งเป็น 4 แผ่น: การสูญเสียเหลือ 1/16 (6.25 %)</li>
+    <li>ที่ 16 แผ่น เพิ่มความถี่เป็นสองเท่า: \(P_e\) เพิ่มสี่เท่า แต่ยังน้อยกว่าแกนตันที่ความถี่เดิมมาก</li>
+    <li>คำถาม: ทำไมแผ่นเหล็กต้องเรียงขนานกับทิศของฟลักซ์ (สไลด์หน้า 18 "in the plane of the flux") ถ้าเรียงขวางฟลักซ์จะเกิดอะไรขึ้น</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แรงดันกำหนดฟลักซ์</h3>
+    <ol><li>ข้อ 1 ขั้นสุดท้าย: ในกราฟ e มียอดก่อน Φ หนึ่งในสี่รอบ (90°) และกระแสเฟสเดียวกับฟลักซ์</li>
+    <li>ฝึกเพิ่มข้อ 5: ขดลวดเดิมบนไฟ 50 Hz ที่แรงดันเท่าเดิม ฟลักซ์สูงขึ้น 20 % หม้อแปลงที่ออกแบบไว้สำหรับ 60 Hz จึงอาจอิ่มตัวเมื่อนำมาใช้กับไฟ 50 Hz</li>
+    <li>ถ้าใช้ค่า 120 V เป็นค่ายอดเหมือนเฉลยปี 2560 ทุกค่าจะต่ำไป \(\sqrt2\) เท่า ลองใส่ 1.59 mWb ในช่องลองตอบเพื่อดูคำเตือน</li></ol>
+    <div class="book">สไลด์วงจรแม่เหล็กหน้า 15–19 · สไลด์ปี 2560 หน้า 21–23 · P. C. Sen บทที่ 1 (Example 1.6)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — hysteresis</h3>
+    <ol><li>In section A choose soft iron and watch the point at H = 0 (zero current): B keeps \(B_r\), which is why an iron core can stay magnetized after the power is switched off.</li>
+    <li>Switch to hard iron: \(H_c\) and the loop area grow several times; good for permanent magnets, but a transformer core made of it would run very hot.</li>
+    <li>Raise the frequency from 50 to 100 Hz: the loop area stays the same, but the loss per second doubles.</li></ol></div>
+  <div class="card"><h3>Try this 2 — eddy currents</h3>
+    <ol><li>In section B a solid core has one large current loop; four sheets leave 1/16 of the loss (6.25 %).</li>
+    <li>With 16 sheets, double the frequency: \(P_e\) quadruples, yet stays far below the solid core at the original frequency.</li>
+    <li>Question: why must the sheets lie along the flux (slide p. 18, "in the plane of the flux")? What would happen if they lay across it?</li></ol></div>
+  <div class="card"><h3>Try this 3 — the voltage sets the flux</h3>
+    <ol><li>Problem 1, last step: in the graph e peaks a quarter cycle (90°) before Φ, and the current is in phase with the flux.</li>
+    <li>Practice problem 5: the same coil on 50 Hz at the same voltage has 20 % more flux, so a transformer designed for 60 Hz may saturate on a 50 Hz supply.</li>
+    <li>Taking 120 V as a peak value, as the 2017 solution did, makes every value \(\sqrt2\) times too small; type 1.59 mWb into the try-first box to see the warning.</li></ol>
+    <div class="book">Magnetic-circuits slides pp. 15–19 · 2017 slides pp. 21–23 · P. C. Sen, chapter 1 (Example 1.6)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, T = CH6.text, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const CY = CH10.COL.flux, PINK = '#ff7eb6', ORANGE = '#ffa552', sci = (x, d = 4) => CH10.sci(x, d), sciT = (x, d = 4) => CH10.sciTex(x, d);
+  CH10.problem(1, 'sine');
+  const D2R = Math.PI / 180;
+  /* axes of a symmetric plane in box b: x in [−xm, xm], y in [−ym, ym] */
+  const plane = (ctx, b, xm, ym, o = {}) => { const ml = 46, mr = 14, mt = o.title ? 34 : 14, mb = 32, pw = b.w - ml - mr, ph = b.h - mt - mb;
+    const X = x => b.x + ml + pw * (x + xm) / (2 * xm), Y = y => b.y + mt + ph * (1 - (y + ym) / (2 * ym));
+    ctx.save(); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; (o.xt || []).forEach(x => { ctx.beginPath(); ctx.moveTo(X(x), Y(-ym)); ctx.lineTo(X(x), Y(ym)); ctx.stroke(); }); (o.yt || []).forEach(y => { ctx.beginPath(); ctx.moveTo(X(-xm), Y(y)); ctx.lineTo(X(xm), Y(y)); ctx.stroke(); });
+    ctx.strokeStyle = COL.axis; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(X(-xm), Y(0)); ctx.lineTo(X(xm), Y(0)); ctx.moveTo(X(0), Y(-ym)); ctx.lineTo(X(0), Y(ym)); ctx.stroke(); ctx.restore();
+    (o.xt || []).forEach(x => { if (x) T(ctx, fd(x, 0).replace('-', '−'), X(x), Y(0) + 13, { color: COL.muted, size: 11.5 }); }); (o.yt || []).forEach(y => { if (y) T(ctx, fd(y, 1).replace('-', '−'), X(0) - 6, Y(y), { align: 'right', color: COL.muted, size: 11.5 }); });
+    if (o.xl) T(ctx, o.xl, X(xm), Y(0) + 28, { align: 'right', color: COL.ink, size: 12.5, weight: '600' }); if (o.yl) T(ctx, o.yl, X(0) + 6, Y(ym) + 2, { align: 'left', color: COL.ink, size: 12.5, weight: '600' });
+    return { X, Y }; };
+  const dot = (ctx, x, y, col, r = 5.5) => { ctx.save(); ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill(); ctx.restore(); };
+
+  /* =================================================================== A: the hysteresis loop */
+  const MATA = { soft: { Hc: 15, a: 25, Bs: 1.45, name: ['เหล็กอ่อน', 'soft iron'] }, hard: { Hc: 60, a: 25, Bs: 1.25, name: ['เหล็กแข็ง', 'hard iron'] }, rect: { Hc: 10, Bs: 1.2, rect: true, name: ['วงสี่เหลี่ยม', 'square loop'] } };
+  const SA = { mat: 'soft', Hm: 100, f: 50 }, clkA = CH6.clock({ T: 5 }), PA = CH10.pane($('cvA'), W => W >= 560 ? W * 0.52 : W * 1.55);
+  const loopA = () => { const m = MATA[SA.mat], Hm = Math.max(SA.Hm, m.Hc + 12); return { Hm, m, ...CH10.loop({ Hm, Hc: m.Hc, a: m.a, Bs: m.Bs, rect: m.rect }) }; };
+  const Bat = (L, d) => { const H = L.Hm * Math.sin(d * D2R); return Math.cos(d * D2R) > 0 ? L.up(H) : L.down(H); };
+  function drawA(dt) {
+    clkA.tick(dt); const { ctx, W, H } = PA, two = W >= 560; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const b1 = two ? { x: 0, y: 0, w: Math.floor((W - 6) / 2), h: H } : { x: 0, y: 0, w: W, h: Math.round(W * 0.9) }, b2 = two ? { x: b1.w + 6, y: 0, w: W - b1.w - 6, h: H } : { x: 0, y: b1.h + 6, w: W, h: H - b1.h - 6 };
+    const L = loopA(), deg = (clkA.ph / D2R) % 360, Hn = L.Hm * Math.sin(clkA.ph), Bn = Bat(L, deg), xm = L.Hm * 1.18;
+    CH6.bg(ctx, b1); T(ctx, t(`วงฮิสเทอรีซิส: ${L.m.name[0]}`, `hysteresis loop: ${L.m.name[1]}`), b1.x + 10, b1.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const { X, Y } = plane(ctx, b1, xm, 1.6, { title: true, xt: [-L.Hm, -L.Hm / 2, 0, L.Hm / 2, L.Hm], yt: [-1.2, -0.6, 0, 0.6, 1.2], xl: 'H (At/m)', yl: 'B (T)' });
+    const n = 160, up = [], dn = []; for (let j = 0; j <= n; j++) { const h = -L.Hm + 2 * L.Hm * j / n; up.push([X(h), Y(L.up(h))]); dn.push([X(h), Y(L.down(h))]); }
+    ctx.save(); ctx.fillStyle = 'rgba(255,126,182,.16)'; ctx.beginPath(); up.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); [...dn].reverse().forEach(q => ctx.lineTo(q[0], q[1])); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = CY; ctx.lineWidth = 2.4; ctx.beginPath(); up.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); ctx.beginPath(); dn.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); ctx.restore();
+    CH10.arrowHead(ctx, X(L.Hm * 0.35), Y(L.up(L.Hm * 0.35)), Math.atan2(Y(L.up(L.Hm * 0.37)) - Y(L.up(L.Hm * 0.33)), X(L.Hm * 0.37) - X(L.Hm * 0.33)), CY, 9);
+    CH10.arrowHead(ctx, X(-L.Hm * 0.35), Y(L.down(-L.Hm * 0.35)), Math.atan2(Y(L.down(-L.Hm * 0.37)) - Y(L.down(-L.Hm * 0.33)), X(-L.Hm * 0.37) - X(-L.Hm * 0.33)), CY, 9);
+    dot(ctx, X(0), Y(L.Br), '#e8ecf7', 4); dot(ctx, X(-L.Hc), Y(0), '#e8ecf7', 4);
+    CH6.tag(ctx, `B_r = ${fd(L.Br, 2)} T`, X(0) + 8, Y(L.Br) - 12, '#e8ecf7', { align: 'left', size: 11.5 });
+    CH6.tag(ctx, `−H_c = −${fd(L.Hc, 1)}`, X(-L.Hc) - 8, Y(0) + 14, '#e8ecf7', { align: 'right', size: 11.5 });
+    ctx.save(); ctx.strokeStyle = PINK; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(Hn), Y(Bn)); ctx.lineTo(X(Hn), Y(0)); ctx.moveTo(X(Hn), Y(Bn)); ctx.lineTo(X(0), Y(Bn)); ctx.stroke(); ctx.restore(); dot(ctx, X(Hn), Y(Bn), PINK, 6.5);
+    /* right: H (∝ i) and B against ωt */
+    CH6.waves(ctx, b2, [{ f: d => L.Hm * Math.sin(d * D2R), mag: L.Hm, color: ORANGE, label: 'H', unit: 'At/m', g: 'h', w: 2.4 }, { f: d => Bat(L, d), mag: 1.6, color: CY, label: 'B', unit: 'T', g: 'b', w: 2.6 }],
+      { now: clkA.ph, title: b2.w < 520 ? t('H (∝ i) และ B', 'H (∝ i) and B') : t('H (แปรตาม i) และ B: B ผ่านศูนย์ทีหลัง', 'H (follows i) and B: B crosses zero later'), max: { h: L.Hm * 1.12, b: 1.6 } }); }
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('วัสดุ', 'Material')); ui.radio(pA, [{ id: 'mA_soft', label: t('เหล็กอ่อน', 'soft iron'), on: true }, { id: 'mA_hard', label: t('เหล็กแข็ง', 'hard iron') }, { id: 'mA_rect', label: t('วงสี่เหลี่ยม (หน้า 16)', 'square loop (p. 16)') }], id => { SA.mat = id.slice(3); showA(); });
+  ui.h2(pA, t('H สูงสุด (แปรตามกระแสสูงสุด)', 'Peak H (follows the peak current)')); ui.slider(pA, { id: 'sAH', label: 'H_max', min: 30, max: 200, step: 5, value: SA.Hm, fmt: v => `${fd(v, 0)} At/m`, oninput: v => { SA.Hm = v; showA(); } });
+  ui.h2(pA, t('ความถี่', 'Frequency')); ui.slider(pA, { id: 'sAf', label: 'f', min: 25, max: 400, step: 5, value: SA.f, fmt: v => `${fd(v, 0)} Hz`, oninput: v => { SA.f = v; showA(); } });
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, clkA);
+  pA.appendChild(mA); mA.className = 'metrics';
+  function showA() { const L = loopA(), P = L.area * SA.f;
+    mA.innerHTML = ui.kv([['B_max', `${fd(L.Bmax, 3)} T`], ['B_r', `${fd(L.Br, 3)} T`], ['H_c', `${fd(L.Hc, 2)} At/m`], [t('พื้นที่ในวง', 'loop area'), `${fd(L.area, 1)} J/m³`], ['P_h = (area)·f', `${fd(P, 0)} W/m³`], [t('แกน 1 ลิตร (1000 cm³)', 'a 1-litre core (1000 cm³)'), `${fd(P / 1000, 2)} W`]]);
+    $('wA').innerHTML = `<div class="answer">${t(`พื้นที่ในวง ${fd(L.area, 1)} J/m³ คือพลังงานที่กลายเป็นความร้อนในเหล็กทุกรอบ ที่ ${fd(SA.f, 0)} Hz วงถูกวน ${fd(SA.f, 0)} รอบต่อวินาที: \\(P_h = ${fd(L.area, 1)}\\times${fd(SA.f, 0)} = ${fd(P, 0)}\\) W/m³ ${SA.mat === 'rect' ? '(วงสี่เหลี่ยม: พื้นที่ = 4H_cB_s = 48 J/m³)' : ''}`, `The loop area, ${fd(L.area, 1)} J/m³, is the energy turned into heat in the iron every cycle; at ${fd(SA.f, 0)} Hz the loop is run ${fd(SA.f, 0)} times a second: \\(P_h = ${fd(L.area, 1)}\\times${fd(SA.f, 0)} = ${fd(P, 0)}\\) W/m³ ${SA.mat === 'rect' ? '(square loop: area = 4H_cB_s = 48 J/m³)' : ''}`)}</div>`;
+    MC.renderMath($('wA')); }
+  showA(); LS.anim($('cvA'), dt => drawA(dt));
+
+  /* =================================================================== B: eddy currents in a solid and a laminated core */
+  const SB = { n: 1, f: 60, B: 1.2 }, clkB = CH6.clock({ T: 3 }), fB = {}, PB = CH10.pane($('cvB'), W => W >= 560 ? W * 0.5 : W * 1.5);
+  function drawB(dt) {
+    clkB.tick(dt); fB.dt = dt; fB.run = clkB.run; const { ctx, W, H } = PB, two = W >= 560; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const b1 = two ? { x: 0, y: 0, w: Math.floor((W - 6) / 2), h: H } : { x: 0, y: 0, w: W, h: Math.round(W * 0.9) }, b2 = two ? { x: b1.w + 6, y: 0, w: W - b1.w - 6, h: H } : { x: 0, y: b1.h + 6, w: W, h: H - b1.h - 6 };
+    CH6.bg(ctx, b1); T(ctx, t('หน้าตัดของแกน: × ฟลักซ์พุ่งเข้า • พุ่งออก', 'core cross section: × flux in, • flux out'), b1.x + 10, b1.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const Bt = Math.sin(clkB.ph), dB = Math.cos(clkB.ph), S = Math.min(b1.w - 40, b1.h - 70), x0 = b1.x + (b1.w - S) / 2, y0 = b1.y + 36 + (b1.h - 50 - S) / 2, n = SB.n, sw = S / n;
+    for (let k = 0; k < n; k++) { const xs = x0 + k * sw; ctx.save(); ctx.fillStyle = CH10.COL.iron; ctx.fillRect(xs + (n > 1 ? 1 : 0), y0, sw - (n > 1 ? 2 : 0), S); ctx.restore(); }
+    ctx.save(); ctx.strokeStyle = CH10.COL.ironEdge; ctx.lineWidth = 1.2; ctx.strokeRect(x0 + 0.5, y0 + 0.5, S - 1, S - 1); ctx.restore();
+    if (n > 1) { ctx.save(); ctx.strokeStyle = '#f5f0c8'; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.4; for (let k = 1; k < n; k++) { ctx.beginPath(); ctx.moveTo(x0 + k * sw, y0); ctx.lineTo(x0 + k * sw, y0 + S); ctx.stroke(); } ctx.restore(); }
+    const g = 5, a = Math.abs(Bt); ctx.save(); ctx.globalAlpha = 0.25 + 0.6 * a; ctx.strokeStyle = CY; ctx.fillStyle = CY; ctx.lineWidth = 1.6;
+    for (let i = 0; i < g; i++) for (let j = 0; j < g; j++) { const cx0 = x0 + S * (i + 0.5) / g, cy0 = y0 + S * (j + 0.5) / g, r = Math.max(3, S / g * 0.12);
+      if (Bt >= 0) { ctx.beginPath(); ctx.moveTo(cx0 - r, cy0 - r); ctx.lineTo(cx0 + r, cy0 + r); ctx.moveTo(cx0 + r, cy0 - r); ctx.lineTo(cx0 - r, cy0 + r); ctx.stroke(); } else { ctx.beginPath(); ctx.arc(cx0, cy0, r * 0.6, 0, 2 * Math.PI); ctx.fill(); } }
+    ctx.restore();
+    for (let k = 0; k < n; k++) { const m = Math.min(sw * 0.22, S * 0.08), xa = x0 + k * sw + m, xb = x0 + (k + 1) * sw - m, ya = y0 + S * 0.08, yb = y0 + S * 0.92;
+      const pts = [[xa, ya], [xb, ya], [xb, yb], [xa, yb], [xa, ya]];
+      ctx.save(); ctx.strokeStyle = 'rgba(255,165,82,.35)'; ctx.lineWidth = 1.2; ctx.beginPath(); pts.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); ctx.restore();
+      CH10.dots(ctx, pts, 'e' + n + '_' + k, -90 * dB * (SB.f / 60) * (1 / n) * (SB.B / 1.2), fB, { sp: Math.max(12, Math.min(18, sw * 0.4)), r: n > 8 ? 2.2 : 3, color: ORANGE }); }
+    T(ctx, n === 1 ? t('แกนตัน: กระแสไหลวนวงใหญ่', 'solid core: one large eddy loop') : t(`${n} แผ่น: วงกระแสอยู่ในแต่ละแผ่น`, `${n} sheets: a current loop in each sheet`), b1.x + b1.w / 2, y0 + S + 18, { color: ORANGE, size: 13, weight: '600' });
+    /* right: P_e against the number of sheets */
+    CH6.bg(ctx, b2); T(ctx, t('P_e เทียบกับแกนตัน (%) ∝ 1/n²', 'P_e against the solid core (%) ∝ 1/n²'), b2.x + 10, b2.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const ml = 46, mr = 16, mt = 36, mb = 36, gx = q => b2.x + ml + (b2.w - ml - mr) * (q - 1) / 15, gy = p => b2.y + mt + (b2.h - mt - mb) * (1 - p / 100);
+    ctx.save(); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; [1, 4, 8, 12, 16].forEach(q => { ctx.beginPath(); ctx.moveTo(gx(q), gy(0)); ctx.lineTo(gx(q), gy(100)); ctx.stroke(); }); [0, 25, 50, 75, 100].forEach(p => { ctx.beginPath(); ctx.moveTo(gx(1), gy(p)); ctx.lineTo(gx(16), gy(p)); ctx.stroke(); });
+    ctx.strokeStyle = COL.axis; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(gx(1), gy(100)); ctx.lineTo(gx(1), gy(0)); ctx.lineTo(gx(16), gy(0)); ctx.stroke(); ctx.restore();
+    [1, 4, 8, 12, 16].forEach(q => T(ctx, fd(q, 0), gx(q), gy(0) + 13, { color: COL.muted, size: 11.5 })); [0, 25, 50, 75, 100].forEach(p => T(ctx, fd(p, 0), gx(1) - 6, gy(p), { align: 'right', color: COL.muted, size: 11.5 }));
+    T(ctx, t('จำนวนแผ่น n', 'number of sheets n'), gx(16), gy(0) + 28, { align: 'right', color: COL.ink, size: 12.5, weight: '600' });
+    ctx.save(); ctx.strokeStyle = ORANGE; ctx.lineWidth = 2.6; ctx.beginPath(); for (let j = 0; j <= 150; j++) { const q = 1 + 15 * j / 150; j ? ctx.lineTo(gx(q), gy(100 / (q * q))) : ctx.moveTo(gx(q), gy(100 / (q * q))); } ctx.stroke(); ctx.restore();
+    [1, 2, 4, 8, 16].forEach(q => dot(ctx, gx(q), gy(100 / (q * q)), q === n ? PINK : ORANGE, q === n ? 6.5 : 3.5));
+    CH6.tag(ctx, `${fd(100 / (n * n), 2)} %`, Math.min(gx(n) + 12, b2.x + b2.w - 80), Math.max(gy(100 / (n * n)) - 16, b2.y + mt + 14), PINK, { align: 'left', size: 12 }); }
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('จำนวนแผ่น', 'Number of sheets')); ui.radio(pB, [1, 2, 4, 8, 16].map(q => ({ id: 'nB_' + q, label: q === 1 ? t('แกนตัน', 'solid') : `${q}`, on: q === 1 })), id => { SB.n = +id.slice(3); showB(); });
+  ui.h2(pB, t('ความถี่และความหนาแน่นฟลักซ์สูงสุด', 'Frequency and peak flux density'));
+  ui.slider(pB, { id: 'sBf', label: 'f', min: 25, max: 400, step: 5, value: SB.f, fmt: v => `${fd(v, 0)} Hz`, oninput: v => { SB.f = v; showB(); } });
+  ui.slider(pB, { id: 'sBB', label: 'B_max', min: 0.4, max: 1.6, step: 0.05, value: SB.B, fmt: v => `${fd(v, 2)} T`, oninput: v => { SB.B = v; showB(); } });
+  ui.h2(pB, t('การเล่น', 'Playback')); CH6.playBtns(pB, clkB);
+  pB.appendChild(mB); mB.className = 'metrics';
+  function showB() { const kf = SB.f / 60, kb = SB.B / 1.2, pe = 100 / (SB.n * SB.n), peR = pe * kf * kf * kb * kb, phR = 100 * kf * Math.pow(kb, 1.6);
+    mB.innerHTML = ui.kv([[t('ความหนาต่อแผ่น', 'sheet thickness'), SB.n === 1 ? t('ทั้งแกน', 'whole core') : `1/${SB.n} ${t('ของแกน', 'of the core')}`], [t('P_e เทียบแกนตัน (f, B เดียวกัน)', 'P_e vs solid (same f, B)'), `${fd(pe, 2)} %`],
+      [t('P_e เทียบแกนตันที่ 60 Hz, 1.2 T', 'P_e vs solid at 60 Hz, 1.2 T'), `${fd(peR, 2)} %`], [t('P_h เทียบค่าที่ 60 Hz, 1.2 T (n = 1.6)', 'P_h vs 60 Hz, 1.2 T (n = 1.6)'), `${fd(phR, 1)} %`]]);
+    const fTh = SB.f === 60 ? 'ลองเปลี่ยนความถี่: \\(P_e\\) เปลี่ยนตามความถี่ยกกำลังสอง ส่วน \\(P_h\\) เปลี่ยนตามความถี่' : `ที่ ${fd(SB.f, 0)} Hz \\(P_e\\) เป็น \\((${fd(SB.f, 0)}/60)^2 = ${fd(kf * kf, 3)}\\) เท่าของที่ 60 Hz แต่ \\(P_h\\) เป็นเพียง \\(${fd(kf, 3)}\\) เท่า`;
+    const fEn = SB.f === 60 ? 'Change the frequency: \\(P_e\\) follows the square of the frequency, \\(P_h\\) the frequency itself.' : `At ${fd(SB.f, 0)} Hz, \\(P_e\\) is \\((${fd(SB.f, 0)}/60)^2 = ${fd(kf * kf, 3)}\\) times the 60 Hz value, but \\(P_h\\) only \\(${fd(kf, 3)}\\) times.`;
+    $('wB').innerHTML = `<div class="answer">${t(`\\(P_e = K_eB_{max}^2f^2\\) โดย \\(K_e\\) แปรตามความหนาของแผ่นยกกำลังสอง: ${SB.n === 1 ? 'แกนตันมีวงกระแสวงเดียวที่ใหญ่ที่สุด' : `แบ่งเป็น ${SB.n} แผ่นเหลือ \\(1/${SB.n}^2 = ${fd(pe, 2)}\\,\\%\\)`} ${fTh}`, `\\(P_e = K_eB_{max}^2f^2\\), where \\(K_e\\) grows with the square of the sheet thickness: ${SB.n === 1 ? 'the solid core has the single largest current loop.' : `${SB.n} sheets leave \\(1/${SB.n}^2 = ${fd(pe, 2)}\\,\\%\\).`} ${fEn}`)}</div>`;
+    MC.renderMath($('wB')); }
+  showB(); LS.anim($('cvB'), dt => drawB(dt));
+
+  /* =================================================================== C: E_rms = 4.44 f N Φmax, step by step */
+  let listC = null;
+  const stepsC = () => listC || (listC = LS.withCol($('stC').clientWidth, () => [
+    LS.step(t('<b>ฟลักซ์ในแกนเป็นไซน์</b> (สไลด์ปี 2560 หน้า 21)', '<b>The core flux is sinusoidal</b> (2017 slide p. 21)'), LS.block([R`\Phi(t) &= \Phi_{max}\sin\omega t`])),
+    LS.step(t('<b>กฎของฟาราเดย์</b> (Faraday\'s law): แรงดันเหนี่ยวนำในขดลวด N รอบคือ N คูณอัตราการเปลี่ยนแปลงของฟลักซ์', '<b>Faraday\'s law</b>: the voltage induced in an N-turn coil is N times the rate of change of the flux'),
+      LS.block([R`e(t) &= N\frac{d\Phi}{dt} = N\omega\Phi_{max}\cos\omega t`, R`&= E_{max}\cos\omega t = E_{max}\sin(\omega t + 90^\circ)`]), t('อ้างอิงไซน์: e นำหน้า Φ อยู่ 90° (ยอดของ e มาก่อนยอดของ Φ หนึ่งในสี่รอบ) ตรงกับกราฟของสไลด์หน้า 21', 'Sine reference: e leads Φ by 90° (the peak of e comes a quarter cycle before the peak of Φ), as in the graph of slide p. 21.')),
+    LS.step(t('<b>ค่ายอดของแรงดัน</b> ด้วย \\(\\omega = 2\\pi f\\)', '<b>The peak voltage</b>, with \\(\\omega = 2\\pi f\\)'), LS.block([R`E_{max} &= N\omega\Phi_{max} = 2\pi fN\Phi_{max}`])),
+    LS.step(t('<b>ค่ายังผล</b> (บทที่ 6): หารค่ายอดด้วย \\(\\sqrt2\\)', '<b>The rms value</b> (chapter 6): divide the peak by \\(\\sqrt2\\)'),
+      LS.block([R`E_{rms} &= \frac{E_{max}}{\sqrt2} = \frac{2\pi}{\sqrt2}\,fN\Phi_{max}`, R`&= \boxed{4.44\,fN\Phi_{max}}`]), t('\\(2\\pi/\\sqrt2 = \\sqrt2\\,\\pi = 4.4429\\) สไลด์ปัดเป็น 4.44', '\\(2\\pi/\\sqrt2 = \\sqrt2\\,\\pi = 4.4429\\); the slide rounds it to 4.44.')),
+    LS.step(t('<b>กลับสมการ</b>: แรงดัน ความถี่ และจำนวนรอบเป็นตัวกำหนดฟลักซ์', '<b>Turn it round</b>: the voltage, the frequency and the turns set the flux'),
+      LS.block([R`\Phi_{max} &= \frac{E_{rms}}{4.44\,fN}`]), t('แกนและช่องอากาศไม่อยู่ในสมการนี้เลย ฟลักซ์จึงเท่าเดิมไม่ว่าแกนจะเป็นอะไร สิ่งที่เปลี่ยนคือกระแสที่ต้องใช้ \\(i = \\Phi\\mathcal{R}/N\\) (ข้อ 1) ไฟบ้านไทย 220 V, 50 Hz ต่อกับขดลวด 500 รอบ ได้ \\(\\Phi_{max} = 1.98\\) mWb', 'Neither the core nor any gap appears in this equation, so the flux is the same whatever the core; what changes is the current needed, \\(i = \\Phi\\mathcal{R}/N\\) (problem 1). Thailand\'s 220 V, 50 Hz on a 500-turn coil gives \\(\\Phi_{max} = 1.98\\) mWb.')) ]));
+  const stC = LS.stepper($('stC'), { steps: stepsC, answer: () => t('สไลด์ปี 2560 หน้า 22 เขียนว่าสมการนี้ "สำคัญและจะถูกใช้บ่อยในทฤษฎีของเครื่องจักรกลไฟฟ้ากระแสสลับ" หน้า 10.4 ใช้มันกับหม้อแปลง: ขดลวดสองชุดบนฟลักซ์ \\(\\Phi_{max}\\) เดียวกัน \\(E_1 = 4.44fN_1\\Phi_{max}\\) และ \\(E_2 = 4.44fN_2\\Phi_{max}\\) จึงได้ \\(E_1/E_2 = N_1/N_2\\)', '2017 slide p. 22 calls this "an important equation" that "will be referred to frequently in the theory of ac machines". Page 10.4 uses it for the transformer: two coils on the same flux \\(\\Phi_{max}\\) give \\(E_1 = 4.44fN_1\\Phi_{max}\\) and \\(E_2 = 4.44fN_2\\Phi_{max}\\), so \\(E_1/E_2 = N_1/N_2\\).'), onStep: () => {} });
+  LS.onFonts(() => { listC = null; stC.refresh(true); }); LS.watchWidth($('stC'), () => { listC = null; stC.refresh(true); });
+
+  /* =================================================================== D: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const P3 = 230 / (4.44 * 50 * 500), P4 = 230 / (4.44 * 60 * 500), SN = CH10C.sine, P5 = 120 / (4.44 * 50 * 200);
+  CH6.quiz('quiz', [
+    { q: t('1) แกนเหล็กมีการสูญเสียฮิสเทอรีซิส 100 W และกระแสไหลวน 40 W ที่ 50 Hz ถ้าเปลี่ยนเป็น 60 Hz โดย \\(B_{max}\\) เท่าเดิม แต่ละค่าเป็นเท่าใด', '1) A core has 100 W of hysteresis loss and 40 W of eddy-current loss at 50 Hz. At 60 Hz with the same \\(B_{max}\\), what are they?'),
+      fields: [{ key: 'x', lab: 'P_h =', ans: 120, unit: 'W' }, { key: 'y', lab: 'P_e =', ans: 57.6, unit: 'W' }],
+      work: work(R`\begin{aligned} P_h &= 100\cdot\frac{60}{50} = 120\ \text{W} \\ P_e &= 40\cdot\left(\frac{60}{50}\right)^2 = 57.6\ \text{W} \end{aligned}`) },
+    { q: t('2) เปลี่ยนแกนจากแผ่นหนา 1 mm เป็นแผ่นหนา 0.35 mm การสูญเสียจากกระแสไหลวนเหลือกี่เปอร์เซ็นต์', '2) A core of 1 mm sheets is rebuilt with 0.35 mm sheets. What percentage of the eddy-current loss is left?'),
+      fields: [{ key: 'x', lab: 'P_e =', ans: 12.25, unit: '%' }],
+      work: work(R`\frac{P_e'}{P_e} = \left(\frac{0.35}{1}\right)^2 = 0.1225 = 12.25\,\%`) },
+    { q: t('3) ขดลวด 500 รอบต่อกับไฟ 230 V 50 Hz จงหาฟลักซ์สูงสุดในแกน', '3) A 500-turn coil is connected to 230 V, 50 Hz. Find the peak core flux.'),
+      fields: [{ key: 'x', lab: t('Φ_max (mWb) =', 'Φ_max (mWb) ='), ans: P3 * 1e3 }],
+      work: work(R`\Phi_{max} = \frac{230}{(4.44)(50)(500)} = ${sciT(P3, 4)}\ \text{Wb}`) },
+    { q: t('4) ขดลวดของข้อ 3 ต่อกับไฟ 230 V แต่ 60 Hz ฟลักซ์สูงสุดเป็นเท่าใด', '4) The coil of question 3 on 230 V but 60 Hz. What is the peak flux?'),
+      fields: [{ key: 'x', lab: t('Φ_max (mWb) =', 'Φ_max (mWb) ='), ans: P4 * 1e3 }],
+      work: work(R`\Phi_{max} = \frac{230}{(4.44)(60)(500)} = ${sciT(P4, 4)}\ \text{Wb}`, `<p>${t('ความถี่สูงขึ้น ฟลักซ์ที่ต้องใช้สร้างแรงดันเท่าเดิมจึงน้อยลง', 'At a higher frequency less flux is needed for the same voltage.')}</p>`) },
+    { q: t('5) ขดลวดและแกนของข้อ 1 ต่อกับไฟ 120 V แต่ 50 Hz จงหา \\(B_{max}\\) และค่ายอดของกระแส', '5) The coil and core of problem 1 on 120 V but 50 Hz. Find \\(B_{max}\\) and the peak current.'),
+      fields: [{ key: 'x', lab: 'B_max =', ans: P5 / SN.A, unit: 'T' }, { key: 'y', lab: 'i_max =', ans: P5 * SN.R / SN.N, unit: 'A' }],
+      work: work(R`\begin{aligned} \Phi_{max} &= \frac{120}{(4.44)(50)(200)} = ${sciT(P5, 4)}\ \text{Wb} \\ B_{max} &= \frac{\Phi_{max}}{20\times10^{-4}} = ${fd(P5 / SN.A, 4)}\ \text{T} \\ i_{max} &= \frac{\Phi_{max}\mathcal{R}}{N} = \frac{(${sciT(P5, 4)})(${fd(SN.R, 1)})}{200} = ${fd(P5 * SN.R / SN.N, 4)}\ \text{A} \end{aligned}`, `<p>${t('ฟลักซ์และกระแสเพิ่ม 20 % จากที่ 60 Hz B = 1.35 T ใกล้จุดอิ่มตัวของเหล็กแผ่นซิลิคอนแล้ว', 'The flux and current grow by 20 % over 60 Hz; B = 1.35 T is already close to silicon steel\'s saturation.')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

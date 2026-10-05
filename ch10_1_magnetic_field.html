@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="10.1 — Magnetic Field, the B–H Curve and Magnetic Circuits">10.1 — สนามแม่เหล็ก เส้นโค้ง B–H และวงจรแม่เหล็ก</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script><script src="assets/lesson.js?v=112"></script><script src="assets/ch6.js?v=112"></script>
+<script src="assets/ch8.js?v=112"></script><script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">สนามแม่เหล็ก เส้นโค้ง B–H และวงจรแม่เหล็ก <span class="en">From the current in a coil to the flux in its core</span></h1>
+<h1 data-l="en">Magnetic field, the B–H curve and magnetic circuits <span class="en">From the current in a coil to the flux in its core</span></h1>
+
+<p class="sub" data-l="th">บทที่ 10 มีสองส่วน คือวงจรแม่เหล็ก (เอกสารประกอบการสอนปี 2566) และหม้อแปลง (เอกสารปี 2568) หน้านี้เริ่มจากคำถามว่ากระแสในขดลวดทำให้เกิดฟลักซ์ในแกนเหล็กได้เท่าใด สไลด์หน้า 2 บอกว่าในเครื่องจักรกลไฟฟ้าเกือบทุกชนิด (ยกเว้นเครื่องที่ใช้แม่เหล็กถาวร) สนามแม่เหล็กเกิดจากกระแสที่ไหลในขดลวดซึ่งพันบนวัสดุเฟอร์โรแมกเนติก (ferromagnetic) คำตอบมีสามขั้น: กระแสสร้างความเข้มสนามแม่เหล็ก H ตามกฎวงจรของแอมแปร์ (ส่วน A) H ทำให้เกิดความหนาแน่นฟลักซ์ B ตามเส้นโค้ง B–H ของวัสดุ (ส่วน B) และเมื่อรวมสองขั้นจะได้วงจรแม่เหล็กที่คล้ายกฎของโอห์ม \(F = \Phi\mathcal{R}\) ซึ่งตัวแก้วงจรของเว็บนี้แก้ได้เหมือนวงจรกระแสตรง โดยจุดที่วิ่งคือฟลักซ์ (ส่วน C) โจทย์ของหน้านี้คือแบบทดสอบสไลด์หน้า 20 (ข้อ 1) และข้อ 3 ของแผ่นทบทวนวงจรแม่เหล็ก (ข้อ 2)</p>
+<p class="sub" data-l="en">Chapter 10 has two parts: magnetic circuits (the 2023 handout) and transformers (the 2025 handout). This page starts from one question: how much flux does the current in a coil drive through its iron core? Slide p. 2 notes that in almost every electrical machine (except permanent-magnet machines) the magnetic field is produced by a current in coils wound on ferromagnetic material. The answer takes three steps: the current produces a magnetic field intensity H by Ampère's circuit law (section A), H produces a flux density B according to the material's B–H curve (section B), and together they give a magnetic circuit that works like Ohm's law, \(F = \Phi\mathcal{R}\), which the circuit solver of this site solves like a DC circuit, with the moving dots showing the flux (section C). The problems of this page are the quiz of slide p. 20 (problem 1) and problem 3 of the magnetic-circuits review sheet (problem 2).</p>
+<div class="equation-box">$$ \begin{aligned} \oint H\,dl &= \textstyle\sum i \\ B &= \mu H = \mu_r\mu_0H \\ F &= Ni = Hl \\ \Phi &= BA = \frac{F}{\mathcal{R}} \\ \mathcal{R} &= \frac{l}{\mu A} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>กฎวงจรของแอมแปร์</b> (Ampère's circuit law): ผลรวมของ \(H\,dl\) รอบเส้นทางปิดเท่ากับกระแสทั้งหมดที่เส้นทางนั้นล้อมไว้ รอบลวดตรงยาว \(H = i/(2\pi r)\) หน่วยแอมแปร์ต่อเมตร (A/m หรือ At/m) (ส่วน A)</li>
+  <li><b>\(B = \mu H\)</b>: ความหนาแน่นฟลักซ์ B มีหน่วยเทสลา (T = Wb/m²) ในอากาศ \(\mu = \mu_0 = 4\pi\times10^{-7}\) H/m แต่ในเหล็ก \(\mu = \mu_r\mu_0\) สูงกว่าหลายพันเท่าและ<b>ไม่คงที่</b> ต้องอ่าน B จากเส้นโค้ง B–H (สไลด์หน้า 7) เมื่อ H สูงเหล็กจะอิ่มตัว (saturation) (ส่วน B)</li>
+  <li><b>วงจรแม่เหล็ก</b>: ขดลวด N รอบที่มีกระแส i คือแหล่งแรงเคลื่อนแม่เหล็ก (magnetomotive force, mmf) \(F = Ni\) หน่วยแอมแปร์-รอบ (At) ขับฟลักซ์ \(\Phi = F/\mathcal{R}\) ผ่านรีลักแตนซ์ (reluctance) \(\mathcal{R} = l/(\mu A)\) เหมือนแรงดันขับกระแสผ่านความต้านทาน (สไลด์หน้า 10, ส่วน C)</li>
+  <li>แกนเหล็กที่มีเส้นโค้ง B–H: หา \(H = Ni/l\) ก่อน อ่าน B จากเส้นโค้ง แล้ว \(\Phi = BA\) (ข้อ 1) หรือกลับทาง: รู้ B ที่ต้องการ อ่าน H แล้วหากระแส \(i = Hl/N\) (ข้อ 2)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Ampère's circuit law</b>: the sum of \(H\,dl\) around a closed path equals the total current the path encloses. Around a long straight wire \(H = i/(2\pi r)\), in amperes per metre (A/m, or At/m) (section A).</li>
+  <li><b>\(B = \mu H\)</b>: the flux density B is in tesla (T = Wb/m²). In air \(\mu = \mu_0 = 4\pi\times10^{-7}\) H/m, but in iron \(\mu = \mu_r\mu_0\) is thousands of times larger and <b>not constant</b>: read B from the B–H curve (slide p. 7). At high H the iron saturates (section B).</li>
+  <li><b>Magnetic circuit</b>: a coil of N turns carrying i is a source of magnetomotive force (mmf) \(F = Ni\) in ampere-turns (At); it drives a flux \(\Phi = F/\mathcal{R}\) through the reluctance \(\mathcal{R} = l/(\mu A)\), as a voltage drives a current through a resistance (slide p. 10, section C).</li>
+  <li>An iron core with a B–H curve: find \(H = Ni/l\) first, read B from the curve, then \(\Phi = BA\) (problem 1); or the other way round: from the B wanted, read H and find the current \(i = Hl/N\) (problem 2).</li></ul></section>
+
+<div class="slides"><figure class="slide"><img src="slides/ch10/m02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2, Introduction: in electrical machines, the magnetic circuits may be formed by ferromagnetic materials only (as in transformers) or by ferromagnetic materials in conjunction with an air medium (as in rotating machines). In most electrical machines, except permanent magnet machines, the magnetic field (or flux) is produced by passing an electrical current through coils wound on ferromagnetic materials">
+    <figcaption data-l="th">สไลด์วงจรแม่เหล็กหน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Magnetic-circuits slide p. 2 · tap to enlarge</figcaption></figure></div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See the slides as written in class (2023)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/mi01.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Title slide of chapter 10, Magnetic Circuits, written on in class: F = Φℛ boxed, with arrows naming F the mmf, Φ the flux and ℛ the reluctance, and the note Ohm's law">
+      <figcaption data-l="th">ผู้สอนเขียนสมการหลักของบทไว้บนหน้าปก: \(F = \Phi\mathcal{R}\) คู่กับกฎของโอห์ม โดย F คือแรงเคลื่อนแม่เหล็ก (mmf) Φ คือฟลักซ์ และ ℛ คือรีลักแตนซ์</figcaption><figcaption data-l="en">The instructor wrote the main equation of the chapter on the title slide: \(F = \Phi\mathcal{R}\), the counterpart of Ohm's law, with F the mmf, Φ the flux and ℛ the reluctance</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/mi03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2 with handwriting: the key phrases highlighted; two sketches of a coil carrying a current I wound on a core, with the flux Φ (Wb) leaving the north pole N and returning to the south pole S around the core">
+      <figcaption data-l="th">ขดลวดที่มีกระแส I พันบนแกน (core) ทำให้ปลายข้างหนึ่งเป็นขั้วเหนือ (N) อีกข้างเป็นขั้วใต้ (S) ฟลักซ์ Φ มีหน่วยเวเบอร์ (Wb) และวนเป็นวงปิดเสมอ</figcaption><figcaption data-l="en">A coil carrying I on a core makes one end a north pole (N) and the other a south pole (S); the flux Φ, in webers (Wb), always closes on itself</figcaption></figure></div></details>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>กฎวงจรของแอมแปร์</a><a href="#tB"><b>B</b>เส้นโค้ง B–H</a><a href="#tC"><b>C</b>วงจรแม่เหล็กของทอรอยด์</a><a href="#ex1"><b>1</b>แบบทดสอบสไลด์หน้า 20</a><a href="#ex2"><b>2</b>แผ่นทบทวนข้อ 3</a><a href="#tD"><b>D</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Ampère's circuit law</a><a href="#tB"><b>B</b>The B–H curve</a><a href="#tC"><b>C</b>The toroid's magnetic circuit</a><a href="#ex1"><b>1</b>Quiz, slide p. 20</a><a href="#ex2"><b>2</b>Review sheet 3</a><a href="#tD"><b>D</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">กฎวงจรของแอมแปร์: กระแสสร้างความเข้มสนามแม่เหล็ก H</h2><h2 data-l="en">Ampère's circuit law: a current produces the field intensity H</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 3–6 · P. C. Sen บทที่ 1</div><div class="src" data-l="en">Magnetic-circuits slides pp. 3–6 · P. C. Sen, chapter 1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/m03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3, i-H Relation: we shall first study how the current in a coil is related to the magnetic field intensity (or flux) it produces. When a conductor carries current, a magnetic field is produced around it, as shown in the figure: a right hand grips a wire carrying the current I upward, the thumb along I and the fingers curling with the red circles of H">
+      <figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4, i-H Relation: illustration of Ampère's circuit law, a closed path around the currents i1, i2 and i3, with H at an angle θ to the path element dl; ∮H·dl = Σi = i1 + i2 − i3, then ∮H dl cos θ = Σi. The relationship between current and field intensity can be obtained by using Ampère's circuit law, which states that the line integral of the magnetic field intensity H around a closed path is equal to the total current linked by the contour">
+      <figcaption data-l="th">สไลด์หน้า 4</figcaption><figcaption data-l="en">Slide p. 4</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5, i-H Relation: determination of the magnetic field intensity H due to a current-carrying conductor; a circle of radius r around a wire carrying i, with H tangent to the circle; ∮H·dl = i, H 2πr = i, H = i/2πr">
+      <figcaption data-l="th">สไลด์หน้า 5</figcaption><figcaption data-l="en">Slide p. 5</figcaption></figure></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 5 ที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See slide p. 5 as written in class (2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/mi06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5 with handwriting: the wire coloured, Σi written into ∮H·dl = Σi, the result H = i/2πr boxed, and 2πr labelled length, giving the unit A/m">
+        <figcaption data-l="th">ผู้สอนวงตัวส่วน \(2\pi r\) ว่าเป็น "ความยาว" ของเส้นทาง H จึงมีหน่วยแอมแปร์ต่อเมตร (A/m)</figcaption><figcaption data-l="en">The instructor marks the denominator \(2\pi r\) as the "length" of the path, so H is in amperes per metre (A/m)</figcaption></figure></div></details>
+  <p class="lead" data-l="th">มือขวากำลวดโดยให้นิ้วโป้งชี้ตามทิศกระแส นิ้วที่เหลือวนตามทิศของ H (สไลด์หน้า 3) กฎวงจรของแอมแปร์บอกว่าผลรวมของ \(H\cos\theta\,dl\) รอบเส้นทางปิดใด ๆ เท่ากับกระแสที่เส้นทางนั้นล้อมไว้ (สไลด์หน้า 4) เมื่อเลือกเส้นทางเป็นวงกลมรัศมี r รอบลวด H มีขนาดเท่ากันตลอดวงและขนานกับเส้นทาง จึงได้ \(H(2\pi r) = i\) (สไลด์หน้า 5) ภาพจำลองมองลวดจากด้านบน: ● คือกระแสพุ่งออกจากจอ จุดสีฟ้าวนทวนเข็มนาฬิกาตามทิศของ H และวิ่งช้าลงเมื่อห่างลวด เพราะ H ลดลงแบบ \(1/r\) วงสีชมพูคือเส้นทางปิด ลองเพิ่มลวดเส้นที่สองตามที่ผู้สอนเขียนในห้อง (ส่วน B): กระแสทิศเดียวกันรวมกัน กระแสสวนทางหักล้างกัน</p>
+  <p class="lead" data-l="en">Grip the wire with the right hand, thumb along the current: the fingers curl the way H goes (slide p. 3). Ampère's circuit law says that the sum of \(H\cos\theta\,dl\) around any closed path equals the current the path encloses (slide p. 4). Taking the path as a circle of radius r around the wire, H has the same size all the way round and runs along the path, so \(H(2\pi r) = i\) (slide p. 5). The simulation looks down on the wire: ● is a current coming out of the screen; the cyan dots circle counter-clockwise, the way H goes, and slow down farther out because H falls as \(1/r\). The pink circle is the closed path. Add a second wire, as the instructor drew in class (section B): currents in the same direction add, opposite currents cancel.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">เส้นโค้ง B–H: ความซึมซาบของเหล็กไม่คงที่</h2><h2 data-l="en">The B–H curve: the permeability of iron is not constant</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 6–7 · เส้นโค้งของสไลด์หน้า 7 มาจาก P. C. Sen รูป 1.7</div><div class="src" data-l="en">Magnetic-circuits slides pp. 6–7 · the curves of slide p. 7 are P. C. Sen's Fig. 1.7</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/m06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6, B-H Relation: the magnetic field intensity H produces a magnetic flux density B everywhere it exists. These quantities are functionally related by B = μH weber/m² or tesla, B = μrμ0H Wb/m² or T, where μ is a characteristic of the medium and is called the permeability of the medium, μ0 is the permeability of free space and is 4π×10⁻⁷ henry/meter, and μr is the relative permeability of the medium">
+      <figcaption data-l="th">สไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 6 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m07.webp" width="2000" height="1125" loading="lazy" decoding="async" alt="Slide 7, B-H Relation: a sketch of a B–H curve rising steeply where the reluctance is low and bending over into saturation where it is high; and the B–H curves of silicon sheet steel, cast steel and cast iron, flux density B from 0 to 1.4 tesla against field intensity H from 0 to 1000 At/m">
+      <figcaption data-l="th">สไลด์หน้า 7: เส้นโค้งที่ใช้ทั้งบท</figcaption><figcaption data-l="en">Slide p. 7: the curves used throughout the chapter</figcaption></figure></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 6 ที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See slide p. 6 as written in class (2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/mi07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6 with handwriting: two wires carrying I1 and I2 inside a dashed closed path, H = (I1 + I2)/2πr when the currents are in the same direction and H = (I1 − I2)/2πr when they are opposite; μ = μ0μr, and μr of air = 1">
+        <figcaption data-l="th">ลวดสองเส้นในเส้นทางเดียวกัน: กระแสทิศเดียวกันได้ \(H = (I_1 + I_2)/2\pi r\) กระแสสวนทางได้ \(H = (I_1 - I_2)/2\pi r\) (ลองในส่วน A) และอากาศมี \(\mu_r = 1\)</figcaption><figcaption data-l="en">Two wires inside one path: currents in the same direction give \(H = (I_1 + I_2)/2\pi r\), opposite currents \(H = (I_1 - I_2)/2\pi r\) (try it in section A), and air has \(\mu_r = 1\)</figcaption></figure></div></details>
+  <p class="lead" data-l="th">สไลด์หน้า 6 เขียน \(B = \mu H = \mu_r\mu_0H\) ซึ่งดูเหมือนเส้นตรง แต่สไลด์หน้า 7 แสดงว่าในเหล็กเป็นเส้นโค้ง: ช่วง H ต่ำ B ขึ้นชัน (รีลักแตนซ์ต่ำ, low ℛ) แล้วโค้งลงเข้าสู่การอิ่มตัว (รีลักแตนซ์สูง, high ℛ) ภาพจำลองวาดเส้นโค้งทั้งสามตามสไลด์ เลื่อน H แล้วดูจุดทำงาน: ความชันของเส้นสีม่วงจากจุดกำเนิดถึงจุดทำงานคือ \(\mu = B/H\) ซึ่งลดลงเมื่อเหล็กอิ่มตัว (กราฟขวา) ส่วนอากาศมี \(\mu_r = 1\) ที่ H = 1000 At/m ได้ B เพียง 0.0013 T เส้นของอากาศจึงทับแกน H</p>
+  <p class="lead" data-l="en">Slide p. 6 writes \(B = \mu H = \mu_r\mu_0H\), which looks like a straight line, but slide p. 7 shows that in iron it is a curve: at low H, B rises steeply (low reluctance, low ℛ), then bends over into saturation (high reluctance, high ℛ). The simulation draws the three curves of the slide. Move H and watch the operating point: the slope of the purple line from the origin to the point is \(\mu = B/H\), which falls as the iron saturates (right-hand graph). Air has \(\mu_r = 1\): at H = 1000 At/m it gives only 0.0013 T, so its line lies on the H axis.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">วงจรแม่เหล็กของทอรอยด์: \(F = \Phi\mathcal{R}\)</h2><h2 data-l="en">The magnetic circuit of a toroid: \(F = \Phi\mathcal{R}\)</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 8–10 · P. C. Sen บทที่ 1</div><div class="src" data-l="en">Magnetic-circuits slides pp. 8–10 · P. C. Sen, chapter 1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/m08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8, Magnetic Equivalent Circuit: the figure shows a simple magnetic circuit having a ring-shaped magnetic core, called a toroid, and a coil that extends around the entire circumference. ∮H·dl = Ni, Hl = Ni, H 2πr = Ni. The quantity Ni is called the magnetomotive force (mmf) F, and its unit is ampere-turn; Hl = Ni = F, H = (N/l)i At/m, B = μNi/l T. A toroid with a coil of N turns, mean radius r and current i">
+      <figcaption data-l="th">สไลด์หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 8 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9, Magnetic Equivalent Circuit: if we assume that all the fluxes are confined in the toroid, that is, there is no magnetic leakage, the flux crossing the cross section of the toroid is Φ = ∫B dA = BA Wb = (μNi/l)A = Ni/(l/μA) = Ni/ℛ = F/ℛ, with ℛ = l/μA = 1/P, where ℛ is called the reluctance of the magnetic path and P is called the permeance of the magnetic path">
+      <figcaption data-l="th">สไลด์หน้า 9</figcaption><figcaption data-l="en">Slide p. 9</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/m10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10, Magnetic Equivalent Circuit: an electric circuit, a battery E driving the current i through R, beside its magnetic equivalent, an mmf source F driving the flux Φ through ℛ; a table: the driving force is the emf E or the mmf F; it produces the current i = E/R or the flux Φ = F/ℛ; it is limited by the resistance R = l/σA or the reluctance ℛ = l/μA, with σ the conductivity and μ the permeability">
+      <figcaption data-l="th">สไลด์หน้า 10</figcaption><figcaption data-l="en">Slide p. 10</figcaption></figure></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 8–9 ที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See slides pp. 8–9 as written in class (2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/mi09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8 with handwriting: H 2πr = Ni circled and solved as H = Ni/2πr; Hl = Ni = F boxed">
+        <figcaption data-l="th">จาก \(H(2\pi r) = Ni\) ได้ \(H = Ni/(2\pi r)\) ความยาวเส้นทางของทอรอยด์คือเส้นรอบวงที่รัศมีเฉลี่ย</figcaption><figcaption data-l="en">From \(H(2\pi r) = Ni\), \(H = Ni/(2\pi r)\): the path length of a toroid is the circumference at the mean radius</figcaption></figure>
+      <figure class="slide"><img src="slides/ch10/mi10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9 with handwriting: the electric resistance R = ρl/A with the length l and the cross-section area A circled, beside the reluctance ℛ = l/μA; Φ = BA with B = μNi/l substituted to give Φ = Ni/ℛ = F/ℛ; electric circuit V = IR boxed beside magnetic circuit F = Φℛ">
+        <figcaption data-l="th">ผู้สอนเทียบรีลักแตนซ์ \(\mathcal{R} = l/(\mu A)\) กับความต้านทาน \(R = \rho l/A\): ยาวขึ้นต้านมากขึ้น หน้าตัดโตขึ้นต้านน้อยลง และเขียน \(F = \Phi\mathcal{R}\) คู่กับ \(V = IR\)</figcaption><figcaption data-l="en">The instructor compares the reluctance \(\mathcal{R} = l/(\mu A)\) with the resistance \(R = \rho l/A\): longer means more opposition, a larger cross section less; \(F = \Phi\mathcal{R}\) is written beside \(V = IR\)</figcaption></figure></div></details>
+  <p class="lead" data-l="th">ทอรอยด์คือแกนรูปวงแหวนที่มีขดลวดพันรอบ เส้นทางเฉลี่ยยาว \(l = 2\pi r\) กฎของแอมแปร์ให้ \(Hl = Ni\) (สไลด์หน้า 8) ถ้าฟลักซ์อยู่ในแกนทั้งหมด (ไม่รั่วออก) \(\Phi = BA = \mu NiA/l = Ni/(l/\mu A) = F/\mathcal{R}\) (สไลด์หน้า 9) ตารางในสไลด์หน้า 10 จับคู่วงจรไฟฟ้ากับวงจรแม่เหล็ก: แรงดัน ↔ mmf, กระแส ↔ ฟลักซ์, ความต้านทาน ↔ รีลักแตนซ์ ภาพจำลองด้านบนคือทอรอยด์ของข้อ 1 ด้านล่างคือวงจรสมมูลที่ตัวแก้วงจรแก้เหมือนวงจรกระแสตรง: จุดสีฟ้าคือฟลักซ์ (ชี้ที่แหล่งหรือรีลักแตนซ์เพื่อดูค่า) เลือกแกนที่ \(\mu_r = 3000\) คงที่ ฟลักซ์แปรตามกระแสเป็นเส้นตรง แต่แกนเหล็กแผ่นซิลิคอนจริงอิ่มตัว: เพิ่มกระแสเป็นสองเท่า ฟลักซ์เพิ่มไม่ถึงสองเท่า</p>
+  <p class="lead" data-l="en">A toroid is a ring-shaped core with a coil wound around it; its mean path is \(l = 2\pi r\) long and Ampère's law gives \(Hl = Ni\) (slide p. 8). If all the flux stays in the core (no leakage), \(\Phi = BA = \mu NiA/l = Ni/(l/\mu A) = F/\mathcal{R}\) (slide p. 9). The table of slide p. 10 pairs the electric and the magnetic circuit: voltage ↔ mmf, current ↔ flux, resistance ↔ reluctance. The simulation shows the toroid of problem 1 on top and, below it, the equivalent circuit, which the solver handles like a DC circuit: the cyan dots are the flux (point at the source or the reluctance to read the values). With a constant \(\mu_r = 3000\) the flux grows in proportion to the current, but a real silicon-steel core saturates: double the current and the flux grows by less than double.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvC"></canvas></div><div class="card solve"><div class="panel" id="pC"></div><div id="wC" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">แบบทดสอบ: หาความหนาแน่นฟลักซ์ที่รัศมีเฉลี่ยและความเหนี่ยวนำของขดลวดบนทอรอยด์เหล็กแผ่นซิลิคอน</h2><h2 data-l="en">Quiz: find the flux density at the mean radius and the inductance of a coil on a silicon-steel toroid</h2>
+    <div class="src" data-l="th">สไลด์วงจรแม่เหล็กหน้า 20 (แบบทดสอบ) · P. C. Sen Example 1.5 · เฉลยในห้องปี 2566</div><div class="src" data-l="en">Magnetic-circuits slide p. 20 (quiz) · P. C. Sen Example 1.5 · 2023 class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/m20.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 20, Quiz: 1) The coil in Figure has 250 turns and is wound on a silicon sheet steel. The inner and outer radii are 20 and 25 cm, respectively, and the toroidal core has a circular cross section. For a coil current of 2.5 A, find (a) the magnetic flux density at the mean radius of the toroid; (b) the inductance of the coil, assuming that the flux density within the core is uniform and equal to that at the mean radius. A toroid with a coil of N turns, the current i and the mean radius r">
+    <figcaption data-l="th">สไลด์หน้า 20 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 20 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ขดลวด 250 รอบบนทอรอยด์เหล็กแผ่นซิลิคอน รัศมีใน 20 cm รัศมีนอก 25 cm หน้าตัดกลม กระแส 2.5 A ภาพจำลองบนสุดคือทอรอยด์ ด้านล่างคือวงจรสมมูล (แหล่ง mmf กับรีลักแตนซ์ของแกน) และเส้นโค้ง B–H ของเหล็กแผ่นซิลิคอน ขั้นที่ 2 ทำเครื่องหมาย H บนเส้นโค้ง ขั้นที่ 3 อ่าน B แล้วฟลักซ์เริ่มไหล <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A 250-turn coil on a silicon-steel toroid, inner radius 20 cm, outer radius 25 cm, circular cross section, 2.5 A. The simulation shows the toroid on top, the equivalent circuit (the mmf source and the core reluctance) and the B–H curve of silicon sheet steel. Step 2 marks H on the curve; step 3 reads B and the flux starts. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2566)</span><span data-l="en">See the solution written in class (2023)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/mi22.webp" width="1100" height="1546" loading="lazy" decoding="async" alt="Handwritten solution of the quiz: A = π(0.025)² = 1.963×10⁻³ m², r = (0.2 + 0.25)/2 = 0.225 m, i = 2.5 A; F = Hl = Ni, H(2π)(0.225) = (250)(2.5), H = 442.097 At/m; from the B–H curve, pasted beside it with the silicon sheet steel curve highlighted, B ≈ 1.225 tesla; L = NΦ/i = NBA/i = (250)(1.225)(π)(0.025)²/2.5, L = 0.24 H">
+      <figcaption data-l="th">หา H = 442.097 At/m จาก \(H(2\pi r) = Ni\) อ่าน B ≈ 1.225 T จากเส้นโค้งที่แปะไว้ข้าง ๆ แล้ว \(L = NBA/i = 0.24\) H ตรงกับขั้นที่ 5</figcaption><figcaption data-l="en">H = 442.097 At/m from \(H(2\pi r) = Ni\), B ≈ 1.225 T read from the curve pasted alongside, then \(L = NBA/i = 0.24\) H, as in step 5</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">หากระแสที่ทำให้ B = 1.2 T ในทอรอยด์เหล็กกล้าหล่อ ฟลักซ์ในแกน และกระแสใหม่เมื่อเจาะช่องอากาศ 2 mm</h2><h2 data-l="en">Find the current for 1.2 T in a cast-steel toroid, the core flux, and the new current with a 2 mm air gap</h2>
+    <div class="src" data-l="th">ข้อ 3 ของแผ่นทบทวนวงจรแม่เหล็ก · P. C. Sen Problem 1.9 · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Problem 3 of the magnetic-circuits review sheet · P. C. Sen Problem 1.9 · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/rv3q.webp" width="1302" height="963" loading="lazy" decoding="async" alt="Review sheet problem 3: the toroidal (circular cross section) core shown in Fig. is made from cast steel. (a) Calculate the coil current required to produce a core flux density of 1.2 tesla at the mean radius of the toroid. (b) What is the core flux? Assume uniform flux density in the core. (c) If a 2 mm-wide air gap is made in the toroid (across A–A′), determine the new coil current required to maintain a core flux density of 1.2 tesla. A toroid with 200 turns, inner radius 6 cm and outer radius 10 cm, with the cut A–A′ marked">
+    <figcaption data-l="th">แผ่นทบทวนข้อ 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Review sheet, problem 3 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ทอรอยด์เหล็กกล้าหล่อ 200 รอบ รัศมีใน 6 cm รัศมีนอก 10 cm หน้าตัดกลม ข้อ (a)–(b) ใช้เส้นโค้ง B–H แบบกลับทาง: รู้ B แล้วอ่าน H ข้อ (c) เจาะช่องอากาศ 2 mm ที่ A–A′ ภาพจำลองเปิดช่องอากาศในขั้นที่ 4 และแผงข้างภาพเปลี่ยนเป็นแท่ง mmf ของเหล็กกับช่องอากาศ (เรื่องช่องอากาศอยู่ในหน้า 10.2) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A 200-turn cast-steel toroid, inner radius 6 cm, outer radius 10 cm, circular cross section. Parts (a)–(b) use the B–H curve the other way round: B is known, so read H. Part (c) cuts a 2 mm air gap across A–A′: the simulation opens the gap at step 4 and the side panel turns into the mmf bars of the iron and the gap (air gaps are the topic of page 10.2). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="tD">
+  <div class="prob-head"><span class="prob-no">D</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ค่าที่อ่านจากเส้นโค้ง B–H ยอมให้คลาดได้เล็กน้อย</div><div class="src" data-l="en">Give at least 3 decimal places · values read from a B–H curve may be slightly off</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กฎของแอมแปร์</h3>
+    <ol><li>ส่วน A ลากรัศมีจาก 3 cm ไป 6 cm: เส้นทางยาวขึ้นสองเท่า H จึงลดลงครึ่งหนึ่ง (กราฟขวาเป็นไฮเพอร์โบลา \(1/r\))</li>
+    <li>เลือกลวดสองเส้นสวนทาง: \(\sum i = 0\) จุดบนเส้นทางหยุด สายไฟที่ไปและกลับวางคู่กันจึงแทบไม่มีสนามแม่เหล็กภายนอก</li>
+    <li>คำถาม: ลวดเส้นเดียวมีกระแส 20 A ที่ระยะเท่าใด H จะเท่ากับ 100 At/m</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เส้นโค้ง B–H</h3>
+    <ol><li>ส่วน B เลือกเหล็กแผ่นซิลิคอน เลื่อน H จาก 100 ไป 1000 At/m: B เพิ่มจาก 0.72 เป็น 1.345 T เท่านั้น แต่ \(\mu_r\) ลดจากราว 5700 เหลือราว 1070</li>
+    <li>เลือกเหล็กหล่อ: \(\mu_r\) ต่ำกว่าเหล็กแผ่นซิลิคอนกว่าสิบเท่า แกนหม้อแปลงจึงใช้เหล็กแผ่นซิลิคอน</li>
+    <li>ที่ H เดียวกัน เทียบ B ของเหล็กกับของอากาศในแผงตัวเลข: อัตราส่วนคือ \(\mu_r\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — วงจรแม่เหล็ก</h3>
+    <ol><li>ส่วน C เลือก \(\mu_r = 3000\) คงที่ แล้วเพิ่มกระแสเป็นสองเท่า: ฟลักซ์และ B เพิ่มเป็นสองเท่าพอดี ที่ 2.5 A ได้ B = 1.67 T ซึ่งเหล็กจริงทำไม่ได้</li>
+    <li>เปลี่ยนเป็นเหล็กแผ่นซิลิคอนที่ 2.5 A แล้วลดเหลือ 1.25 A: ฟลักซ์ลดลงไม่ถึงครึ่ง และความเหนี่ยวนำ \(L = N^2/\mathcal{R}\) เพิ่มขึ้น (ฝึกเพิ่มข้อ 5)</li>
+    <li>ชี้ที่รีลักแตนซ์ในวงจรสมมูล: mmf ที่ใช้เท่ากับ F ทั้งหมด เพราะมีรีลักแตนซ์ตัวเดียว (หน้า 10.2 จะมีช่องอากาศมาแบ่ง mmf)</li></ol>
+    <div class="book">สไลด์วงจรแม่เหล็กหน้า 2–10, 20 · แผ่นทบทวนวงจรแม่เหล็กข้อ 3 · P. C. Sen บทที่ 1 (Example 1.5, Problem 1.9)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — Ampère's law</h3>
+    <ol><li>In section A drag the radius from 3 cm to 6 cm: the path doubles in length, so H halves (the right-hand graph is the hyperbola \(1/r\)).</li>
+    <li>Choose two wires with opposite currents: \(\sum i = 0\) and the dots on the path stop. A go and a return lead laid side by side therefore have almost no magnetic field outside.</li>
+    <li>Question: a single wire carries 20 A; at what distance is H = 100 At/m?</li></ol></div>
+  <div class="card"><h3>Try this 2 — the B–H curve</h3>
+    <ol><li>In section B choose silicon sheet steel and move H from 100 to 1000 At/m: B grows only from 0.72 to 1.345 T, while \(\mu_r\) falls from about 5700 to about 1070.</li>
+    <li>Choose cast iron: its \(\mu_r\) is more than ten times lower than silicon steel's, which is why transformer cores use silicon sheet steel.</li>
+    <li>At the same H, compare the B of iron with that of air in the values panel: the ratio is \(\mu_r\).</li></ol></div>
+  <div class="card"><h3>Try this 3 — the magnetic circuit</h3>
+    <ol><li>In section C choose the constant \(\mu_r = 3000\) and double the current: the flux and B double exactly; at 2.5 A it gives B = 1.67 T, which real iron cannot reach.</li>
+    <li>Switch to silicon sheet steel at 2.5 A, then lower it to 1.25 A: the flux drops by less than half and the inductance \(L = N^2/\mathcal{R}\) grows (practice problem 5).</li>
+    <li>Point at the reluctance in the equivalent circuit: its mmf drop is the whole F, since there is only one reluctance (on page 10.2 an air gap shares the mmf).</li></ol>
+    <div class="book">Magnetic-circuits slides pp. 2–10, 20 · magnetic-circuits review sheet, problem 3 · P. C. Sen, chapter 1 (Example 1.5, Problem 1.9)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, T = CH6.text, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const MU0 = CH10.MU0, CY = CH10.COL.flux, PINK = '#ff7eb6', PURPLE = '#c792ea', sci = (x, d = 4) => CH10.sci(x, d), sciT = (x, d = 4) => CH10.sciTex(x, d);
+  CH10.problem(1, 'toroid'); CH10.problem(2, 'cast');
+
+  /* =================================================================== A: Ampère's circuit law around one or two wires */
+  const SA = { i: 10, r: 6, mode: 'one' }, fA = {}, PA = CH10.pane($('cvA'), W => W >= 560 ? W * 0.5 : W * 1.5), OFF = 1.6;
+  const sumA = () => SA.mode === 'one' ? SA.i : SA.mode === 'same' ? 2 * SA.i : 0;
+  const ring = (cx0, cy0, rp, n = 72) => { const pts = []; for (let j = 0; j <= n; j++) { const a = -j / n * 2 * Math.PI; pts.push([cx0 + rp * Math.cos(a), cy0 + rp * Math.sin(a)]); } return pts; };
+  const wire = (ctx, x, y, out) => { ctx.save(); ctx.fillStyle = '#1b2038'; ctx.strokeStyle = COL.I; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); ctx.fillStyle = COL.I;
+    if (out) { ctx.beginPath(); ctx.arc(x, y, 2.4, 0, 2 * Math.PI); ctx.fill(); } else { ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(x - 4, y - 4); ctx.lineTo(x + 4, y + 4); ctx.moveTo(x + 4, y - 4); ctx.lineTo(x - 4, y + 4); ctx.stroke(); } ctx.restore(); };
+  function drawA(dt) {
+    const { ctx, W, H } = PA, two = W >= 560; fA.dt = dt; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const b1 = two ? { x: 0, y: 0, w: Math.floor((W - 6) / 2), h: H } : { x: 0, y: 0, w: W, h: Math.round(W * 0.9) }, b2 = two ? { x: b1.w + 6, y: 0, w: W - b1.w - 6, h: H } : { x: 0, y: b1.h + 6, w: W, h: H - b1.h - 6 };
+    CH6.bg(ctx, b1); T(ctx, b1.w < 400 ? t('มองจากด้านบน: ● พุ่งออก ⊗ พุ่งเข้า', 'top view: ● out, ⊗ in') : t('มองจากด้านบน: ● กระแสพุ่งออก ⊗ พุ่งเข้า', 'top view: ● current out, ⊗ into the screen'), b1.x + 10, b1.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const top = 30, bot = 28, cx0 = b1.x + b1.w / 2, cy0 = b1.y + top + (b1.h - top - bot) / 2, k = Math.min(b1.w / 2 - 14, (b1.h - top - bot) / 2 - 4) / 20, S = sumA();
+    if (S !== 0) [4, 8, 12, 16, 20].forEach(r => { if (Math.abs(r - SA.r) < 0.8) return; const pts = ring(cx0, cy0, r * k);
+      ctx.save(); ctx.strokeStyle = 'rgba(90,209,255,.22)'; ctx.setLineDash([4, 5]); ctx.beginPath(); pts.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); ctx.restore();
+      CH10.dots(ctx, pts, 'c' + r, 170 * (S / 40) * (4 / r), fA, { sp: 22, r: 2.6, alpha: 0.75 }); });
+    const Hp = S / (2 * Math.PI * SA.r / 100), pts = ring(cx0, cy0, SA.r * k);
+    ctx.save(); ctx.strokeStyle = PINK; ctx.lineWidth = 2.2; ctx.beginPath(); pts.forEach((q, j) => j ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); ctx.restore();
+    if (S !== 0) CH10.dots(ctx, pts, 'path', 170 * (S / 40) * (4 / SA.r), fA, { sp: 20, r: 3.2, color: CY });
+    const L = S ? 72 * 3 / SA.r : 0, ya = cy0 - SA.r * k;   // arrow length ∝ 1/r (the graph shows the size)
+    if (L > 3) { CH6.arrow(ctx, cx0 + L / 2 * Math.sign(S), ya, cx0 - L / 2 * Math.sign(S), ya, CY, 3); CH6.tag(ctx, `H = ${fd(Math.abs(Hp), 2)} At/m`, cx0, ya - 18, CY, { size: 12 }); }
+    const ar = 0.62, rx = cx0 + SA.r * k * Math.cos(ar), ry = cy0 + SA.r * k * Math.sin(ar);
+    ctx.save(); ctx.strokeStyle = COL.muted; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(cx0, cy0); ctx.lineTo(rx, ry); ctx.stroke(); ctx.restore(); CH10.arrowHead(ctx, rx, ry, ar, COL.muted, 7);
+    const rt = rx + 100 < b1.x + b1.w; CH6.tag(ctx, `r = ${fd(SA.r, 1)} cm`, rt ? rx + 8 : rx - 8, ry + 12, PINK, { align: rt ? 'left' : 'right', size: 12 });
+    if (SA.mode === 'one') wire(ctx, cx0, cy0, true); else { wire(ctx, cx0 - OFF * k, cy0, true); wire(ctx, cx0 + OFF * k, cy0, SA.mode === 'same'); }
+    T(ctx, SA.mode === 'opp' ? `∮H dl = ${fd(SA.i, 1)} − ${fd(SA.i, 1)} = 0` : `∮H dl = Σi = ${fd(S, 1)} A`, cx0, b1.y + b1.h - 14, { color: PINK, size: 13, weight: '700' });
+    /* right: H against r */
+    CH6.bg(ctx, b2); T(ctx, t('H บนเส้นทาง = Σi/(2πr)', 'H on the path = Σi/(2πr)'), b2.x + 10, b2.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const ml = 50, mr = 14, mt = 34, mb = 36, Hm = CH10.nice(Math.max(1, Math.abs(S)) / (2 * Math.PI * 0.03)), gx = r => b2.x + ml + (b2.w - ml - mr) * r / 20, gy = h => b2.y + mt + (b2.h - mt - mb) * (1 - h / Hm);
+    ctx.save(); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; for (let r = 0; r <= 20; r += 5) { ctx.beginPath(); ctx.moveTo(gx(r), gy(0)); ctx.lineTo(gx(r), gy(Hm)); ctx.stroke(); } for (let q = 0; q <= 4; q++) { ctx.beginPath(); ctx.moveTo(gx(0), gy(Hm * q / 4)); ctx.lineTo(gx(20), gy(Hm * q / 4)); ctx.stroke(); }
+    ctx.strokeStyle = COL.axis; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(gx(0), gy(Hm)); ctx.lineTo(gx(0), gy(0)); ctx.lineTo(gx(20), gy(0)); ctx.stroke(); ctx.restore();
+    for (let r = 0; r <= 20; r += 5) T(ctx, fd(r, 0), gx(r), gy(0) + 13, { color: COL.muted, size: 11.5 }); for (let q = 0; q <= 4; q++) T(ctx, fd(Hm * q / 4, Hm >= 100 ? 0 : 1), gx(0) - 6, gy(Hm * q / 4), { align: 'right', color: COL.muted, size: 11.5 });
+    T(ctx, 'r (cm)', gx(20), gy(0) + 28, { align: 'right', color: COL.ink, size: 12.5, weight: '600' }); T(ctx, 'H (At/m)', gx(0) + 6, gy(Hm) + 2, { align: 'left', color: COL.ink, size: 12.5, weight: '600' });
+    ctx.save(); ctx.strokeStyle = CY; ctx.lineWidth = 2.6; ctx.beginPath(); for (let j = 0; j <= 100; j++) { const r = 3 + 17 * j / 100, h = Math.abs(S) / (2 * Math.PI * r / 100); j ? ctx.lineTo(gx(r), gy(h)) : ctx.moveTo(gx(r), gy(h)); } ctx.stroke(); ctx.restore();
+    const px = gx(SA.r), py = gy(Math.abs(Hp)); ctx.save(); ctx.strokeStyle = PINK; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, gy(0)); ctx.moveTo(px, py); ctx.lineTo(gx(0), py); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.fillStyle = PINK; ctx.beginPath(); ctx.arc(px, py, 5.5, 0, 2 * Math.PI); ctx.fill(); ctx.restore();
+    CH6.tag(ctx, `${fd(Math.abs(Hp), 2)} At/m`, Math.min(px + 12, b2.x + b2.w - 70), py - 14, PINK, { align: 'left', size: 12 }); }
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('กระแสในลวดแต่ละเส้น', 'Current in each wire')); ui.slider(pA, { id: 'sAi', label: 'i', min: 1, max: 20, step: 0.5, value: SA.i, fmt: v => `${fd(v, 1)} A`, oninput: v => { SA.i = v; showA(); } });
+  ui.h2(pA, t('รัศมีของเส้นทางปิด', 'Radius of the closed path')); ui.slider(pA, { id: 'sAr', label: 'r', min: 3, max: 20, step: 0.5, value: SA.r, fmt: v => `${fd(v, 1)} cm`, oninput: v => { SA.r = v; showA(); } });
+  ui.h2(pA, t('ลวด', 'Wires')); ui.radio(pA, [{ id: 'wA_one', label: t('เส้นเดียว', 'one wire'), on: true }, { id: 'wA_same', label: t('สองเส้น ทิศเดียวกัน', 'two, same direction') }, { id: 'wA_opp', label: t('สองเส้น สวนทาง', 'two, opposite') }], id => { SA.mode = id.slice(3); showA(); });
+  pA.appendChild(mA); mA.className = 'metrics';
+  function showA() { const S = sumA(), l = 2 * Math.PI * SA.r / 100, Hp = S / l;
+    mA.innerHTML = ui.kv([['Σi', `${fd(S, 1)} A`], [t('l = 2πr', 'l = 2πr'), `${fd(l, 4)} m`], ['H = Σi/l', `${fd(Hp, 3)} At/m`], [t('B ในอากาศ = μ₀H', 'B in air = μ₀H'), `${fd(MU0 * Hp * 1e6, 3)} μT`]]);
+    $('wA').innerHTML = `<div class="answer">${SA.mode === 'opp' ? t('กระแสสวนทางกัน: \\(\\oint H\\,dl = i - i = 0\\) เส้นทางที่ล้อมลวดทั้งสองเส้นจึงไม่มี H สุทธิ (ใกล้ลวดยังมีสนาม แต่หักล้างกันเมื่อรวมรอบวง)', 'Opposite currents: \\(\\oint H\\,dl = i - i = 0\\), so a path around both wires has no net H (there is still a field near the wires, but it cancels around the loop).')
+      : t(`\\(H = \\dfrac{\\sum i}{2\\pi r} = \\dfrac{${fd(S, 1)}}{2\\pi(${fd(SA.r / 100, 3)})} = ${fd(Hp, 3)}\\) At/m${SA.mode === 'same' ? ' (สองเส้นห่างกันเพียง 3.2 cm เมื่อมองจากเส้นทางจึงเกือบเหมือนลวดเส้นเดียวที่มีกระแส 2i)' : ''}`, `\\(H = \\dfrac{\\sum i}{2\\pi r} = \\dfrac{${fd(S, 1)}}{2\\pi(${fd(SA.r / 100, 3)})} = ${fd(Hp, 3)}\\) At/m${SA.mode === 'same' ? ' (the two wires are only 3.2 cm apart, so seen from the path they act almost like one wire carrying 2i)' : ''}`)}</div>`;
+    MC.renderMath($('wA')); }
+  showA(); LS.anim($('cvA'), dt => drawA(dt));
+
+  /* =================================================================== B: the B–H curves, the secant permeability and μr(H) */
+  const SB = { mat: 'si', H: 300 }, PB = CH10.pane($('cvB'), W => W >= 560 ? W * 0.52 : W * 1.55);
+  const murOf = (m, h) => CH10.B(m, Math.max(h, 1)) / (MU0 * Math.max(h, 1));
+  function drawB() {
+    const { ctx, W, H } = PB, two = W >= 560; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const b1 = two ? { x: 0, y: 0, w: Math.floor((W - 6) * 0.56), h: H } : { x: 0, y: 0, w: W, h: Math.round(W * 0.88) }, b2 = two ? { x: b1.w + 6, y: 0, w: W - b1.w - 6, h: H } : { x: 0, y: b1.h + 6, w: W, h: H - b1.h - 6 };
+    const B = CH10.B(SB.mat, SB.H), mu = B / SB.H, sh = b1.w < 420;
+    const ax = CH10.bh(ctx, b1, { mats: ['si', 'cs', 'ci'], hi: SB.mat, short: sh, op: { H: SB.H, B, label: [`H = ${fd(SB.H, 0)}`, `B = ${fd(B, 3)} T`] }, lin: { mu, label: 'μ = B/H', color: PURPLE }, title: t('เส้นโค้ง B–H (สไลด์หน้า 7)', 'B–H curves (slide p. 7)') });
+    ctx.save(); ctx.strokeStyle = '#e8ecf7'; ctx.lineWidth = 2.4; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(ax.X(0), ax.Y(0)); ctx.lineTo(ax.X(1000), ax.Y(MU0 * 1000)); ctx.stroke(); ctx.restore();
+    T(ctx, t('อากาศ', 'air'), ax.X(1000) - 2, ax.Y(0) - 24, { align: 'right', color: '#e8ecf7', size: 12, weight: '600' });
+    CH6.bg(ctx, b2); T(ctx, b2.w < 380 ? 'μr = B/(μ₀H)' : t('μr = B/(μ₀H) ของวัสดุที่เลือก', 'μr = B/(μ₀H) of the chosen material'), b2.x + 10, b2.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    let mmax = 0; for (let h = 5; h <= 1000; h += 5) mmax = Math.max(mmax, murOf(SB.mat, h)); mmax = CH10.nice(mmax * 1.08);
+    const ml = 52, mr = 14, mt = 34, mb = 36, gx = h => b2.x + ml + (b2.w - ml - mr) * h / 1000, gy = m => b2.y + mt + (b2.h - mt - mb) * (1 - m / mmax), col = CH10.MAT[SB.mat].color;
+    ctx.save(); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; for (let h = 0; h <= 1000; h += 200) { ctx.beginPath(); ctx.moveTo(gx(h), gy(0)); ctx.lineTo(gx(h), gy(mmax)); ctx.stroke(); } for (let q = 0; q <= 4; q++) { ctx.beginPath(); ctx.moveTo(gx(0), gy(mmax * q / 4)); ctx.lineTo(gx(1000), gy(mmax * q / 4)); ctx.stroke(); }
+    ctx.strokeStyle = COL.axis; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(gx(0), gy(mmax)); ctx.lineTo(gx(0), gy(0)); ctx.lineTo(gx(1000), gy(0)); ctx.stroke(); ctx.restore();
+    for (let h = 0; h <= 1000; h += 200) if (!(b2.w < 330 && (h / 200) % 2)) T(ctx, fd(h, 0), gx(h), gy(0) + 13, { color: COL.muted, size: 11.5 });
+    for (let q = 0; q <= 4; q++) T(ctx, fd(mmax * q / 4, 0), gx(0) - 6, gy(mmax * q / 4), { align: 'right', color: COL.muted, size: 11.5 });
+    T(ctx, 'H (At/m)', gx(1000), gy(0) + 28, { align: 'right', color: COL.ink, size: 12.5, weight: '600' }); T(ctx, 'μr', gx(0) + 6, gy(mmax) + 2, { align: 'left', color: COL.ink, size: 12.5, weight: '600' });
+    ctx.save(); ctx.strokeStyle = col; ctx.lineWidth = 2.6; ctx.beginPath(); for (let j = 0; j <= 200; j++) { const h = 5 + 995 * j / 200; j ? ctx.lineTo(gx(h), gy(murOf(SB.mat, h))) : ctx.moveTo(gx(h), gy(murOf(SB.mat, h))); } ctx.stroke(); ctx.restore();
+    const m = murOf(SB.mat, SB.H), px = gx(SB.H), py = gy(m); ctx.save(); ctx.fillStyle = PURPLE; ctx.beginPath(); ctx.arc(px, py, 5.5, 0, 2 * Math.PI); ctx.fill(); ctx.restore();
+    CH6.tag(ctx, `μr = ${fd(m, 0)}`, px > b2.x + b2.w * 0.6 ? px - 10 : px + 10, py - 16, PURPLE, { align: px > b2.x + b2.w * 0.6 ? 'right' : 'left', size: 12 }); }
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('วัสดุ', 'Material')); ui.radio(pB, [{ id: 'mB_si', label: t('เหล็กแผ่นซิลิคอน', 'silicon sheet steel'), on: true }, { id: 'mB_cs', label: t('เหล็กกล้าหล่อ', 'cast steel') }, { id: 'mB_ci', label: t('เหล็กหล่อ', 'cast iron') }], id => { SB.mat = id.slice(3); showB(); });
+  ui.h2(pB, t('ความเข้มสนามแม่เหล็ก', 'Field intensity')); ui.slider(pB, { id: 'sBH', label: 'H', min: 10, max: 1000, step: 5, value: SB.H, fmt: v => `${fd(v, 0)} At/m`, oninput: v => { SB.H = v; showB(); } });
+  pB.appendChild(mB); mB.className = 'metrics';
+  function showB() { const B = CH10.B(SB.mat, SB.H), mu = B / SB.H, Ba = MU0 * SB.H;
+    mB.innerHTML = ui.kv([[t('B (อ่านจากเส้นโค้ง)', 'B (from the curve)'), `${fd(B, 3)} T`], ['μ = B/H', `${sci(mu, 4)} H/m`], ['μr = μ/μ₀', fd(mu / MU0, 0)], [t('B ของอากาศ = μ₀H', 'B of air = μ₀H'), `${sci(Ba, 3)} T`]]);
+    $('wB').innerHTML = `<div class="answer">${t(`ที่ \\(H = ${fd(SB.H, 0)}\\) At/m ${CH10.MAT[SB.mat].name[0]}ให้ \\(B = ${fd(B, 3)}\\) T มากกว่าอากาศ \\(\\mu_r = ${fd(mu / MU0, 0)}\\) เท่า ${SB.H >= 600 && SB.mat !== 'ci' ? 'ช่วงนี้เส้นโค้งเริ่มแบน (อิ่มตัว): เพิ่ม H อีกมาก B เพิ่มน้อย' : 'ความชัน \\(\\mu = B/H\\) เปลี่ยนไปตาม H จึงต้องอ่านจากเส้นโค้งทุกครั้ง'}`, `At \\(H = ${fd(SB.H, 0)}\\) At/m, ${CH10.MAT[SB.mat].name[1]} gives \\(B = ${fd(B, 3)}\\) T, \\(\\mu_r = ${fd(mu / MU0, 0)}\\) times as much as air. ${SB.H >= 600 && SB.mat !== 'ci' ? 'Here the curve flattens (saturation): a lot more H gives little more B.' : 'The slope \\(\\mu = B/H\\) changes with H, so it must be read from the curve every time.'}`)}</div>`;
+    MC.renderMath($('wB')); }
+  showB(); LS.anim($('cvB'), () => drawB());
+
+  /* =================================================================== C: the toroid of problem 1 as a magnetic circuit */
+  const SC = { mat: 'si', N: 250, i: 2.5 }, TO = CH10C.toroid, AC = TO.A, LC = TO.l, PREF = AC * 1.4, stC = {};
+  const opC = () => { const H = SC.N * SC.i / LC, B = SC.mat === 'lin' ? 3000 * MU0 * H : CH10.B('si', H), mu = B / H, R = LC / (mu * AC); return { F: SC.N * SC.i, H, B, mu, R, Phi: B * AC, L: SC.N * SC.N / R }; };
+  const BC = new CH10.MagBoard('cvC', { T: 4, pad: 0.9, view: CH10.mview, shortSpec: sp => CH8.margins(sp, 0.9), cktTitle: ['วงจรสมมูลแม่เหล็ก', 'magnetic equivalent circuit'], coreAsp: 0.46, coreAspN: 0.8,
+    core: (ctx, b, bd) => { const o = opC(); stC.dt = bd.dt; stC.run = bd.clk.run; CH10.toroid(ctx, b, { r1: 20, r2: 25, turns: 14, flux: o.Phi, ref: PREF, st: stC, labels: { N: `N = ${SC.N}`, i: `i = ${fd(SC.i, 1)} A`, r: 'r = 22.5 cm', phi: 'Φ' }, wf: 0.3, cxf: 0.56,
+      title: bd.short ? '' : SC.mat === 'lin' ? t('แกน μr = 3000 คงที่', 'core with a constant μr = 3000') : t('แกนเหล็กแผ่นซิลิคอน', 'silicon sheet steel core') }); },
+    side: (ctx, b, bd) => { const o = opC(); CH10.bh(ctx, b, { mats: ['si'], hi: 'si', Bmax: 1.8, short: bd.short, names: !bd.short, op: { H: o.H, B: o.B, label: [`H = ${fd(o.H, 1)}`, `B = ${fd(o.B, 3)} T`] },
+      lin: SC.mat === 'lin' ? { mu: o.mu, label: 'μr = 3000', color: PURPLE } : null, title: bd.short ? '' : t('จุดทำงานบนเส้นโค้ง B–H', 'operating point on the B–H curve') }); },
+    badge: () => [[`Φ = ${sci(opC().Phi, 4)} Wb`, `Φ = ${sci(opC().Phi, 4)} Wb`], 'ok'] });
+  const pC = $('pC'), mC = document.createElement('div');
+  ui.h2(pC, t('แกน', 'Core')); ui.radio(pC, [{ id: 'kC_si', label: t('เหล็กแผ่นซิลิคอน (เส้นโค้ง)', 'silicon steel (curve)'), on: true }, { id: 'kC_lin', label: t('μr = 3000 คงที่', 'constant μr = 3000') }], id => { SC.mat = id.slice(3); buildC(); });
+  ui.h2(pC, t('ขดลวด', 'Coil')); ui.slider(pC, { id: 'sCN', label: 'N', min: 50, max: 400, step: 10, value: SC.N, fmt: v => t(`${fd(v, 0)} รอบ`, `${fd(v, 0)} turns`), oninput: v => { SC.N = v; buildC(); } });
+  ui.slider(pC, { id: 'sCi', label: 'i', min: 0.1, max: 3.5, step: 0.05, value: SC.i, fmt: v => `${fd(v, 2)} A`, oninput: v => { SC.i = v; buildC(); } });
+  pC.appendChild(mC); mC.className = 'metrics';
+  function buildC() { const o = opC(); BC.set(CH10C.series(o.F, [{ id: 'R', name: 'ℛ', value: o.R }], { fText: `${fd(o.F, 0)} At` }), { speed: 80 / PREF, dotRef: PREF });
+    mC.innerHTML = ui.kv([['F = Ni', `${fd(o.F, 1)} At`], ['H = F/l', `${fd(o.H, 2)} At/m`], ['B', `${fd(o.B, 4)} T`], ['Φ = BA', `${sci(o.Phi, 4)} Wb`], ['μr', fd(o.mu / MU0, 0)], ['ℛ = l/(μA)', `${sci(o.R, 4)} At/Wb`], ['L = N²/ℛ', `${fd(o.L, 4)} H`]]);
+    $('wC').innerHTML = `<div class="answer">${t(`\\(\\Phi = \\dfrac{F}{\\mathcal{R}} = \\dfrac{${fd(o.F, 1)}}{${sciT(o.R, 4)}} = ${sciT(o.Phi, 4)}\\) Wb ${SC.mat === 'lin' ? (o.B > 1.4 ? 'แต่ B = ' + fd(o.B, 2) + ' T สูงเกินกว่าเหล็กจริงจะทำได้ (เส้นสีม่วงอยู่เหนือเส้นโค้ง)' : 'แกนที่ μr คงที่: ฟลักซ์แปรตามกระแสเป็นเส้นตรง') : 'ℛ คำนวณจาก μ = B/H ที่จุดทำงาน จึงเปลี่ยนไปเมื่อกระแสเปลี่ยน'}`, `\\(\\Phi = \\dfrac{F}{\\mathcal{R}} = \\dfrac{${fd(o.F, 1)}}{${sciT(o.R, 4)}} = ${sciT(o.Phi, 4)}\\) Wb. ${SC.mat === 'lin' ? (o.B > 1.4 ? 'But B = ' + fd(o.B, 2) + ' T is beyond what real iron can reach (the purple line runs above the curve).' : 'A constant-μr core: the flux grows in proportion to the current.') : 'ℛ comes from μ = B/H at the operating point, so it changes with the current.'}`)}</div>`;
+    MC.renderMath($('wC')); }
+  BC.resize(); buildC(); LS.anim($('cvC'), dt => BC.frame(dt)); window.addEventListener('resize', () => BC.resize());
+
+  /* =================================================================== D: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const H1 = 10 / (2 * Math.PI * 0.05), H2 = 5 / (2 * Math.PI * 0.1), Rq = 0.6 / (2000 * MU0 * 4e-4), Pq = 250 / Rq, H5 = 250 * 1.25 / TO.l, B5 = CH10.B('si', H5), L5 = 250 * B5 * TO.A / 1.25;
+  CH6.quiz('quiz', [
+    { q: t('1) ลวดตรงยาวมีกระแส 10 A จงหา H ที่ระยะ 5 cm จากลวด และ B ในอากาศ ณ จุดนั้น', '1) A long straight wire carries 10 A. Find H at 5 cm from the wire and B in air at that point.'),
+      fields: [{ key: 'x', lab: 'H =', ans: H1, unit: 'At/m' }, { key: 'y', lab: 'B =', ans: MU0 * H1 * 1e6, unit: 'μT' }],
+      work: work(R`\begin{aligned} H &= \frac{i}{2\pi r} = \frac{10}{2\pi(0.05)} = ${fd(H1, 3)}\ \text{At/m} \\ B &= \mu_0H = (4\pi\times10^{-7})(${fd(H1, 3)}) = 40\ \mu\text{T} \end{aligned}`) },
+    { q: t('2) ลวดสองเส้นวางชิดกัน มีกระแส 8 A และ 3 A ไหลสวนทางกัน เส้นทางวงกลมรัศมี 10 cm ล้อมลวดทั้งสองเส้น จงหา \\(\\oint H\\,dl\\) และ H เฉลี่ยบนเส้นทาง', '2) Two wires side by side carry 8 A and 3 A in opposite directions. A circular path of radius 10 cm encloses both. Find \\(\\oint H\\,dl\\) and the average H on the path.'),
+      fields: [{ key: 'x', lab: '∮H dl =', ans: 5, unit: 'A' }, { key: 'y', lab: 'H =', ans: H2, unit: 'At/m' }],
+      work: work(R`\begin{aligned} \oint H\,dl &= \textstyle\sum i = 8 - 3 = 5\ \text{A} \\ H &= \frac{5}{2\pi(0.1)} = ${fd(H2, 4)}\ \text{At/m} \end{aligned}`) },
+    { q: t('3) จากเส้นโค้งของสไลด์หน้า 7 เหล็กกล้าหล่อที่ B = 1.1 T ต้องใช้ H เท่าใด และมี \\(\\mu_r\\) เท่าใด', '3) From the curves of slide p. 7, what H does cast steel need for B = 1.1 T, and what is its \\(\\mu_r\\)?'),
+      fields: [{ key: 'x', lab: 'H =', ans: 800, unit: 'At/m', tol: 20 }, { key: 'y', lab: 'μ<sub>r</sub> =', ans: 1.1 / (MU0 * 800), tol: 30 }],
+      work: work(R`\begin{aligned} H &\approx 800\ \text{At/m} \\ \mu_r &= \frac{B}{\mu_0H} = \frac{1.1}{(4\pi\times10^{-7})(800)} = ${fd(1.1 / (MU0 * 800), 1)} \end{aligned}`) },
+    { q: t('4) ทอรอยด์แกน \\(\\mu_r = 2000\\) คงที่ เส้นทางเฉลี่ยยาว 60 cm หน้าตัด 4 cm² ขดลวด 500 รอบ กระแส 0.5 A จงหารีลักแตนซ์ ฟลักซ์ และความหนาแน่นฟลักซ์', '4) A toroid with a constant \\(\\mu_r = 2000\\), mean path 60 cm, cross section 4 cm², 500 turns, 0.5 A. Find the reluctance, the flux and the flux density.'),
+      fields: [{ key: 'x', lab: t('ℛ (×10⁵ At/Wb) =', 'ℛ (×10⁵ At/Wb) ='), ans: Rq / 1e5 }, { key: 'y', lab: t('Φ (×10⁻⁴ Wb) =', 'Φ (×10⁻⁴ Wb) ='), ans: Pq * 1e4 }, { key: 'z', lab: 'B =', ans: Pq / 4e-4, unit: 'T' }],
+      work: work(R`\begin{aligned} \mathcal{R} &= \frac{0.6}{(2000)(4\pi\times10^{-7})(4\times10^{-4})} = ${sciT(Rq, 4)}\ \text{At/Wb} \\ \Phi &= \frac{Ni}{\mathcal{R}} = \frac{250}{${sciT(Rq, 4)}} = ${sciT(Pq, 4)}\ \text{Wb} \\ B &= \frac{\Phi}{A} = ${fd(Pq / 4e-4, 4)}\ \text{T} \end{aligned}`) },
+    { q: t('5) ทอรอยด์ของข้อ 1 แต่ลดกระแสเหลือ 1.25 A (ครึ่งหนึ่ง) จงหา H อ่าน B จากเส้นโค้ง แล้วหาความเหนี่ยวนำ เทียบกับข้อ 1 (ตรวจกับส่วน C)', '5) The toroid of problem 1 with the current halved to 1.25 A. Find H, read B from the curve and find the inductance; compare with problem 1 (check with section C).'),
+      fields: [{ key: 'x', lab: 'H =', ans: H5, unit: 'At/m' }, { key: 'y', lab: 'B =', ans: B5, unit: 'T', tol: 0.03 }, { key: 'z', lab: 'L =', ans: L5, unit: 'H', tol: 0.012 }],
+      work: work(R`\begin{aligned} H &= \frac{(250)(1.25)}{${fd(TO.l, 4)}} = ${fd(H5, 2)}\ \text{At/m} \\ B &\approx ${fd(B5, 2)}\ \text{T} \\ L &= \frac{NBA}{i} = \frac{(250)(${fd(B5, 3)})(${sciT(TO.A, 4)})}{1.25} = ${fd(L5, 3)}\ \text{H} \end{aligned}`,
+        `<p>${t('กระแสลดครึ่งหนึ่งแต่ B ลดจาก 1.225 T เหลือราว 1.02 T เท่านั้น เพราะจุดทำงานเดิมอยู่ในช่วงอิ่มตัว ความเหนี่ยวนำจึงเพิ่มจาก 0.24 H เป็นราว 0.40 H: ขดลวดบนแกนเหล็กไม่ใช่ตัวเหนี่ยวนำเชิงเส้น', 'The current halves but B only drops from 1.225 T to about 1.02 T, because the first operating point was in saturation; the inductance grows from 0.24 H to about 0.40 H. A coil on an iron core is not a linear inductor.')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

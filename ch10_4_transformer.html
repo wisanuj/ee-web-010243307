@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="10.4 — The Ideal Transformer and Impedance Transfer">10.4 — หม้อแปลงอุดมคติและการโอนอิมพีแดนซ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=112">
+<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
+<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script><script src="assets/lesson.js?v=112"></script><script src="assets/ch6.js?v=112"></script>
+<script src="assets/ch8.js?v=112"></script><script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">หม้อแปลงอุดมคติและการโอนอิมพีแดนซ์ <span class="en">Two coils on one core: voltages by the turns ratio, currents the other way round</span></h1>
+<h1 data-l="en">The ideal transformer and impedance transfer <span class="en">Two coils on one core: voltages by the turns ratio, currents the other way round</span></h1>
+
+<p class="sub" data-l="th">หม้อแปลง (transformer) คือเครื่องจักรกลไฟฟ้าที่อยู่นิ่ง ไม่ได้แปลงพลังงานไฟฟ้าเป็นพลังงานกล แต่ขาดไม่ได้ในระบบไฟฟ้ากำลัง ประกอบด้วยวงจรไฟฟ้าสองวงที่ต่อถึงกันด้วยวงจรแม่เหล็กวงเดียว (สไลด์หม้อแปลงหน้า 2–3) หน้านี้ใช้สิ่งที่ได้จากหน้า 10.1–10.3: ฟลักซ์ในแกนเดียวกันคล้องขดลวดทั้งสองชุด แรงดันของแต่ละขดลวดจึงแปรตามจำนวนรอบ \(V_1/V_2 = N_1/N_2 = a\) และถ้าแกนมีความซึมซาบสูงมาก mmf ของสองขดลวดต้องหักล้างกัน จึงได้ \(I_1/I_2 = 1/a\) (ส่วน A) ผลที่ตามมาคือการโอนอิมพีแดนซ์ \(Z_1 = a^2Z_2\) ซึ่งใช้ในโจทย์ Ex 1 ลำโพงกับหม้อแปลง 1 : 3 (ข้อ 1) และ Ex 2 หม้อแปลง 220/110 V (ข้อ 2) ค่าทุกตัวเป็นค่ายังผล</p>
+<p class="sub" data-l="en">A transformer is a static machine: it does not convert electrical energy into mechanical energy, yet power systems cannot do without it. It is two electric circuits coupled by one magnetic circuit (transformer slides pp. 2–3). This page uses what pages 10.1–10.3 built: one core flux links both coils, so each coil's voltage follows its turns, \(V_1/V_2 = N_1/N_2 = a\), and if the core's permeability is very high the two mmfs must cancel, so \(I_1/I_2 = 1/a\) (section A). It follows that impedances transfer as \(Z_1 = a^2Z_2\), used in Ex 1, a speaker with a 1 : 3 transformer (problem 1), and Ex 2, a 220/110 V transformer (problem 2). All values are rms.</p>
+<div class="equation-box">$$ \begin{aligned} \frac{V_1}{V_2} &= \frac{N_1}{N_2} = a \\ \frac{I_1}{I_2} &= \frac{N_2}{N_1} = \frac{1}{a} \\ V_1I_1 &= V_2I_2 \\ Z_1 &= a^2Z_2 \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>หม้อแปลงอุดมคติ</b> (สไลด์หน้า 4): ความต้านทานของขดลวดเป็นศูนย์ ไม่มีฟลักซ์รั่วและไม่มีการสูญเสียในแกน และแกนมีความซึมซาบเป็นอนันต์ จึงไม่ต้องใช้กระแสสร้างฟลักซ์เลย</li>
+  <li><b>แรงดัน</b> (สไลด์หน้า 5): \(v_1 = N_1\,d\phi/dt\) และ \(v_2 = N_2\,d\phi/dt\) ด้วยฟลักซ์ตัวเดียวกัน จึงได้ \(V_1/V_2 = N_1/N_2 = a\) เรียก a ว่าอัตราส่วนรอบ (turns ratio) a > 1 คือหม้อแปลงลดแรงดัน</li>
+  <li><b>กระแส</b> (สไลด์หน้า 6): mmf สุทธิเป็นศูนย์ \(N_1i_1 - N_2i_2 = 0\) จึงได้ \(I_1/I_2 = 1/a\) และ \(V_1I_1 = V_2I_2\): กำลังเข้าเท่ากับกำลังออก ฝั่งแรงดันสูงมีกระแสน้อย</li>
+  <li><b>การโอนอิมพีแดนซ์</b> (สไลด์หน้า 7–8): ด้านปฐมภูมิมองเห็นโหลด \(Z_2\) เป็น \(Z_1 = a^2Z_2\) โอนจากด้านปฐมภูมิไปด้านทุติยภูมิให้หารด้วย \(a^2\) หม้อแปลงจึงใช้ปรับอิมพีแดนซ์ให้ส่งกำลังได้สูงสุด (ข้อ 1)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>The ideal transformer</b> (slide p. 4): the winding resistances are zero, there is no leakage flux and no core loss, and the core's permeability is infinite, so no current at all is needed to set up the flux.</li>
+  <li><b>Voltages</b> (slide p. 5): \(v_1 = N_1\,d\phi/dt\) and \(v_2 = N_2\,d\phi/dt\) with one and the same flux, so \(V_1/V_2 = N_1/N_2 = a\), the turns ratio; a > 1 is a step-down transformer.</li>
+  <li><b>Currents</b> (slide p. 6): the net mmf is zero, \(N_1i_1 - N_2i_2 = 0\), so \(I_1/I_2 = 1/a\) and \(V_1I_1 = V_2I_2\): power in equals power out, and the high-voltage side carries the small current.</li>
+  <li><b>Impedance transfer</b> (slides pp. 7–8): the primary sees a load \(Z_2\) as \(Z_1 = a^2Z_2\); going from the primary to the secondary, divide by \(a^2\). A transformer can therefore match impedances for maximum power transfer (problem 1).</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<div class="slides"><figure class="slide"><img src="slides/ch10/t02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 2, Introduction: a transformer is a static machine. Although it is not an energy conversion device, it is indispensable in many energy conversion systems. It is a simple device, having two or more electric circuits coupled by a common magnetic circuit. Analysis of transformers involves many principles that are basic to the understanding of electric machines. Transformers are so widely used as electrical apparatus that they are treated along with other electric machines in most books on electric machines">
+    <figcaption data-l="th">สไลด์หม้อแปลงหน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Transformer slide p. 2 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch10/t03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 3, Ideal Transformer: consider a transformer with two windings, a primary winding of N1 turns and a secondary winding of N2 turns; a drawing of a laminated core with a winding on each leg, labelled in Thai iron core, primary winding and secondary winding, and its symbol, a core with the primary on the left and the secondary on the right">
+    <figcaption data-l="th">สไลด์หน้า 3</figcaption><figcaption data-l="en">Slide p. 3</figcaption></figure></div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง (ปี 2568)</span><span data-l="en">See the slides as written in class (2025)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/ti02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 1 (the outline) with handwriting: turn ratio a = V1/V2 = I2/I1 = N1/N2 beside Ideal Transformer; Z1 (primary side) and Z2 (secondary side) beside Impedance Transfer; η = Pout/Pin × 100 beside Efficiency">
+      <figcaption data-l="th">ผู้สอนสรุปทั้งบทไว้บนหน้าสารบัญ: \(a = V_1/V_2 = I_2/I_1 = N_1/N_2\), อิมพีแดนซ์ด้านปฐมภูมิ \(Z_1\) และด้านทุติยภูมิ \(Z_2\), และประสิทธิภาพ \(\eta = P_{out}/P_{in}\times100\) (หน้า 10.5)</figcaption><figcaption data-l="en">The instructor sums up the chapter on the outline slide: \(a = V_1/V_2 = I_2/I_1 = N_1/N_2\), the primary-side impedance \(Z_1\) and secondary-side \(Z_2\), and the efficiency \(\eta = P_{out}/P_{in}\times100\) (page 10.5)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/ti04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 3 with handwriting: primary winding, secondary winding, core, N1 and N2 labelled on the drawing; the flux path dashed around the core; I1 into the primary with V1 and I2 out of the secondary with V2; a = N1/N2 = V1/V2 = I2/I1 boxed; Pin = Pout and Ploss = 0">
+      <figcaption data-l="th">ฟลักซ์วนรอบแกนผ่านขดลวดทั้งสองชุด \(I_1\) ไหลเข้าด้านปฐมภูมิ \(I_2\) ไหลออกด้านทุติยภูมิ หม้อแปลงอุดมคติไม่มีการสูญเสีย: \(P_{in} = P_{out}\)</figcaption><figcaption data-l="en">The flux runs round the core through both coils; \(I_1\) flows into the primary and \(I_2\) out of the secondary. An ideal transformer has no loss: \(P_{in} = P_{out}\)</figcaption></figure></div></details>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>หม้อแปลงอุดมคติ</a><a href="#ex1"><b>1</b>Ex 1 ลำโพง</a><a href="#ex2"><b>2</b>Ex 2 หม้อแปลง 220/110 V</a><a href="#tB"><b>B</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>The ideal transformer</a><a href="#ex1"><b>1</b>Ex 1, the speaker</a><a href="#ex2"><b>2</b>Ex 2, 220/110 V</a><a href="#tB"><b>B</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">หม้อแปลงอุดมคติ: ฟลักซ์เดียว แรงดันตามจำนวนรอบ และ mmf ที่หักล้างกัน</h2><h2 data-l="en">The ideal transformer: one flux, voltages by the turns, and mmfs that cancel</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 4–8 · P. C. Sen บทที่ 2</div><div class="src" data-l="en">Transformer slides pp. 4–8 · P. C. Sen, chapter 2</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch10/t04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 4, Ideal Transformer: let us consider an ideal transformer that has the following properties: 1. the winding resistances are negligible; 2. fluxes are confined to the core and link both windings, that is, no leakage fluxes are present; core losses are negligible; 3. permeability of the core is infinite (i.e., μ = ∞); therefore, the exciting current required to establish flux in the core is negligible, that is, the net mmf required to establish a flux in the core is zero. A core with N1 and N2, a dot at the top of each winding, V1, E1 and I1 on the primary and E2, V2 and I2 on the secondary">
+      <figcaption data-l="th">สไลด์หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 4 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 5, Ideal Transformer: when the primary winding is connected to a time-varying voltage v1, a time-varying flux φ is established in the core. A voltage e1 will be induced in the winding and will equal the applied voltage if resistance of the winding is neglected: v1 = e1 = N1 dφ/dt. The core flux also links the secondary winding and induces a voltage e2, which is the same as the terminal voltage v2: v2 = e2 = N2 dφ/dt. a is the turns ratio: v1/v2 = N1/N2 = a">
+      <figcaption data-l="th">สไลด์หน้า 5</figcaption><figcaption data-l="en">Slide p. 5</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 6, Ideal Transformer: note in the figure that the current directions are shown such that their mmfs oppose each other. Because the net mmf required to establish a flux in the ideal core (is zero): N1i1 − N2i2 = net mmf = 0, N1i1 = N2i2, i1/i2 = N2/N1 = 1/a; V1/V2 = N1/N2 = a, I1/I2 = N2/N1 = 1/a, V1I1 = V2I2, input volt-amperes = output volt-amperes. A core with N1 and N2, and a switch and a load ZL on the secondary">
+      <figcaption data-l="th">สไลด์หน้า 6</figcaption><figcaption data-l="en">Slide p. 6</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 7, Impedance Transfer: consider the case of a sinusoidal applied voltage and a secondary impedance Z2 = V2/I2. The input impedance is Z1 = V1/I1 = aV2/(I2/a) = a²V2/I2 = a²Z2">
+      <figcaption data-l="th">สไลด์หน้า 7</figcaption><figcaption data-l="en">Slide p. 7</figcaption></figure>
+    <figure class="slide"><img src="slides/ch10/t08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 8, Impedance Transfer: a transformer N1:N2 with Z2 on the secondary is replaced by Z2′ = a²Z2 connected directly to V1; Z1 = a²Z2 = Z2′. An impedance from the primary side can also be transferred to the secondary side, and in that case its value has to be divided by the square of the turns ratio: Z1′ = Z1/a²">
+      <figcaption data-l="th">สไลด์หน้า 8</figcaption><figcaption data-l="en">Slide p. 8</figcaption></figure></div>
+  <p class="lead" data-l="th">ไฟ 220 V 50 Hz ต่อกับขดลวดปฐมภูมิ \(N_1\) รอบ ขดลวดทุติยภูมิ \(N_2\) รอบจ่ายโหลด \(R_L\) ภาพจำลองบนสุดคือแกนที่ฟลักซ์วิ่งกลับไปมา ขนาดของฟลักซ์ \(\Phi_{max} = V_1/(4.44fN_1)\) ขึ้นกับแรงดันและ \(N_1\) เท่านั้น (หน้า 10.3) ด้านล่างคือวงจรที่ตัวแก้วงจรแก้พร้อมหม้อแปลงอุดมคติ แผงข้างภาพเทียบกำลังเข้ากับกำลังออก และ mmf \(N_1I_1\) กับ \(N_2I_2\) ซึ่งเท่ากันเสมอ ลองเปิดสวิตช์โหลด (สไลด์หน้า 6): \(I_2 = 0\) แล้ว \(I_1\) ก็เป็นศูนย์ด้วย แต่ฟลักซ์ยังอยู่ เลือก "วงจรสมมูล" เพื่อโอนโหลดไปด้านปฐมภูมิเป็น \(a^2R_L\): กระแส \(I_1\) และกำลังเท่าเดิมทุกค่า</p>
+  <p class="lead" data-l="en">A 220 V, 50 Hz supply feeds the primary of \(N_1\) turns; the secondary of \(N_2\) turns feeds a load \(R_L\). The simulation shows the core on top with its flux running back and forth; its size \(\Phi_{max} = V_1/(4.44fN_1)\) depends only on the voltage and \(N_1\) (page 10.3). Below is the circuit, solved with an ideal transformer; the side panel compares the power in with the power out, and the mmfs \(N_1I_1\) and \(N_2I_2\), which are always equal. Open the load switch (slide p. 6): \(I_2 = 0\) and \(I_1\) is zero too, but the flux is still there. Choose "equivalent circuit" to transfer the load to the primary as \(a^2R_L\): \(I_1\) and the power stay exactly the same.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 1: กำลังที่ลำโพงได้รับ เมื่อต่อตรงและเมื่อใช้หม้อแปลง 1 : 3</h2><h2 data-l="en">Ex 1: the power taken by a speaker, connected directly and through a 1 : 3 transformer</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 9 · P. C. Sen Example 2.1 · เฉลยในห้องปี 2568</div><div class="src" data-l="en">Transformer slide p. 9 · P. C. Sen Example 2.1 · 2025 class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/t09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 9, Impedance Transfer, Practice, Ex 1: a speaker of 9 Ω resistive impedance is connected to a supply of 10 V with internal resistive impedance of 1 Ω, as shown in Figure a. (a) Determine the power absorbed by the speaker. (b) To maximize the power transfer to the speaker, a transformer of 1 : 3 turns ratio is used between source and speaker as shown in Figure b. Determine the power taken by the speaker. Figure a: a 10 V source with 1 Ω feeding the speaker R2 = 9 Ω; figure b: the same with a 1 : 3 transformer">
+    <figcaption data-l="th">สไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 9 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แหล่งจ่าย 10 V มีความต้านทานภายใน 1 Ω ลำโพง 9 Ω ขั้นที่ 1 ต่อตรง: จุดวิ่งและแท่งกำลังแสดงว่าลำโพงได้ 9 W ส่วนความต้านทานภายในกินไป 1 W ขั้นที่ 2 ใส่หม้อแปลง 1 : 3 (\(a = 1/3\)) แล้วกราฟแสดงว่าแรงดันที่ลำโพงเป็นสามเท่าของด้านปฐมภูมิ บทที่ 5 สอนว่ากำลังสูงสุดเกิดเมื่อโหลดเท่ากับความต้านทานภายใน หม้อแปลงทำให้แหล่งจ่าย "มองเห็น" ลำโพงเป็น 1 Ω พอดี <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A 10 V source with 1 Ω inside, and a 9 Ω speaker. Step 1 connects it directly: the dots and the power bars show 9 W in the speaker and 1 W lost inside the source. Step 2 adds the 1 : 3 transformer (\(a = 1/3\)), and the graph shows the speaker voltage at three times the primary voltage. Chapter 5 taught that maximum power flows when the load equals the internal resistance; the transformer makes the source "see" the speaker as exactly 1 Ω. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2568)</span><span data-l="en">See the solution written in class (2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/ti11.webp" width="1100" height="1521" loading="lazy" decoding="async" alt="Handwritten solution of Ex 1: (a) find the power at the speaker (9 Ω): the current Ix by KVL (ΣV = 0), −10 + 1(Ix) + 9(Ix) = 0, Ix = 1 A; Pabs(speaker) = Ix²R = (1)²(9) = 9 watt. (b) the circuit with the 1 : 3 transformer, all components transformed to the primary side: Z2′ = a²Z2 = (1/3)²(9) = 1 Ω; I1 = 10 V/(1 + 1) = 5 A; V1 = I1(1) = 5 V; P = (5)(5) = 25 W">
+      <figcaption data-l="th">(a) กฎแรงดันของเคียร์ชอฟฟ์ได้ 1 A และ 9 W (b) โอนลำโพงไปด้านปฐมภูมิ \(Z_2' = (1/3)^2(9) = 1\ \Omega\) ได้ \(I_1 = 5\) A, \(V_1 = 5\) V และ \(P = 25\) W ตรงกับขั้นที่ 1–5</figcaption><figcaption data-l="en">(a) Kirchhoff's voltage law gives 1 A and 9 W; (b) the speaker transferred to the primary, \(Z_2' = (1/3)^2(9) = 1\ \Omega\), gives \(I_1 = 5\) A, \(V_1 = 5\) V and \(P = 25\) W, as in steps 1–5</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 2: หม้อแปลงอุดมคติ 220/110 V จ่ายโหลด 3 + j4 Ω หากำลังปรากฏ กำลังเฉลี่ย กำลังรีแอกทีฟ กระแสด้านเข้า และอัตราส่วนรอบ</h2><h2 data-l="en">Ex 2: an ideal 220/110 V transformer feeding 3 + j4 Ω; find the apparent, average and reactive power in, the input current and the turns ratio</h2>
+    <div class="src" data-l="th">สไลด์หม้อแปลงหน้า 16 · คำตอบที่ผู้สอนเขียนบนสไลด์ในห้องปี 2568</div><div class="src" data-l="en">Transformer slide p. 16 · the answers the instructor wrote on the slide in class (2025)</div></div></div>
+  <figure class="slide q"><img src="slides/ch10/t16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 16, headed The Delta (Δ) Connection, Practice, Ex 2: the ideal transformer 1φ, 220/110 V 50 Hz is shown in the figure. Calculate the apparent power input (Sin), the average power input (Pin), the reactive power input (Qin), the input current (Iin) and the turns ratio (a). A 220 Vrms source feeding the transformer, whose secondary feeds a load ZL = 3 + 4j Ω">
+    <figcaption data-l="th">สไลด์หน้า 16 · หัวสไลด์ "The Delta (Δ) Connection" ติดมาจากบทที่ 9 (ผู้สอนขีดฆ่าในห้อง) และสไลด์หน้า 15 กับ 16 ใช้ชื่อ "Ex 2" ซ้ำกัน · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 16 · the heading "The Delta (Δ) Connection" is left over from chapter 9 (crossed out in class), and slides pp. 15 and 16 are both called "Ex 2" · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ไฟ 220 V 50 Hz เข้าหม้อแปลงอุดมคติ 220/110 V ด้านทุติยภูมิต่อโหลด \(Z_L = 3 + j4\ \Omega\) ภาพจำลองบนสุดคือแกนที่ฟลักซ์วิ่ง ด้านล่างคือวงจร เมื่อหากระแสได้ (ขั้นที่ 2) จุดเริ่มวิ่ง และขั้นที่ 4 แผงข้างภาพแสดงสามเหลี่ยมกำลังด้านเข้า ชี้ที่ตัวต่าง ๆ บนวงจรเพื่อดูค่า (ค่ายังผล) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A 220 V, 50 Hz supply feeds an ideal 220/110 V transformer whose secondary feeds \(Z_L = 3 + j4\ \Omega\). The simulation shows the core with its flux on top and the circuit below. Once the current is found (step 2) the dots start, and at step 4 the side panel shows the input power triangle. Point at the parts of the circuit to read their values (rms). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูคำตอบที่ผู้สอนเขียนในห้อง (ปี 2568)</span><span data-l="en">See the answers written in class (2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch10/ti19.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Transformer slide 16 with handwriting: the heading crossed out; ANS Sin = 2420∠53.13 VA, Pin = 1452 watt, Qin = 1936j VAR, Iin = 11∠−53.13 Arms; V1/V2 = a written above the ratings; Iin = I1 and I2 marked on the figure with V1 and V2">
+      <figcaption data-l="th">ผู้สอนเขียนคำตอบ \(S_{in} = 2420\angle 53.13^\circ\) VA, \(P_{in} = 1452\) W, \(Q_{in} = 1936\) VAR และ \(I_{in} = 11\angle{-53.13^\circ}\) A ตรงกับขั้นที่ 3–4</figcaption><figcaption data-l="en">The instructor's answers, \(S_{in} = 2420\angle 53.13^\circ\) VA, \(P_{in} = 1452\) W, \(Q_{in} = 1936\) VAR and \(I_{in} = 11\angle{-53.13^\circ}\) A, match steps 3–4</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · หม้อแปลงอุดมคติ · ทุกค่าเป็นค่ายังผล</div><div class="src" data-l="en">Give at least 3 decimal places · ideal transformers · all values rms</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — อัตราส่วนรอบ</h3>
+    <ol><li>ส่วน A ตั้ง \(N_1 = 400\), \(N_2 = 200\): \(V_2 = 110\) V และ \(I_1\) เป็นครึ่งหนึ่งของ \(I_2\) แท่ง mmf สองแท่งสูงเท่ากันเสมอ</li>
+    <li>เพิ่ม \(N_1\) โดยไม่เปลี่ยนอย่างอื่น: ฟลักซ์ในแกนวิ่งช้าลง (\(\Phi_{max}\) ลดลง) และ \(V_2\) ลดลง</li>
+    <li>เปิดสวิตช์โหลด: กระแสทั้งสองด้านเป็นศูนย์ แต่ฟลักซ์ยังวิ่ง หม้อแปลงจริงจะมีกระแสกระตุ้น (exciting current) เล็กน้อยเพราะแกนมีความซึมซาบจำกัด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — การโอนอิมพีแดนซ์</h3>
+    <ol><li>ส่วน A เลือก "วงจรสมมูล": หม้อแปลงหายไป โหลดกลายเป็น \(a^2R_L\) แต่ \(I_1\) และกำลังเท่าเดิมทุกค่า</li>
+    <li>ข้อ 1: ลองหาอัตราส่วนอื่น เช่น 1 : 2 หรือ 1 : 4 จะได้กำลังน้อยกว่า 25 W เพราะ \(a^2(9)\) ไม่เท่ากับ 1 Ω</li>
+    <li>ข้อ 2: โอนโหลดไปด้านเข้าได้ \(Z_{in} = 12 + j16\ \Omega\) แล้ว \(S_{in} = |V_1|^2/Z_{in}^*\) ให้ 2420∠53.13° VA เท่าเดิม</li></ol>
+    <div class="book">สไลด์หม้อแปลงหน้า 2–9, 16 · P. C. Sen บทที่ 2 (Example 2.1)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the turns ratio</h3>
+    <ol><li>In section A set \(N_1 = 400\), \(N_2 = 200\): \(V_2 = 110\) V and \(I_1\) is half of \(I_2\); the two mmf bars are always the same height.</li>
+    <li>Raise \(N_1\) and leave the rest: the core flux runs slower (\(\Phi_{max}\) falls) and \(V_2\) drops.</li>
+    <li>Open the load switch: both currents are zero, but the flux still runs. A real transformer draws a small exciting current, since its core's permeability is finite.</li></ol></div>
+  <div class="card"><h3>Try this 2 — impedance transfer</h3>
+    <ol><li>In section A choose "equivalent circuit": the transformer disappears and the load becomes \(a^2R_L\), yet \(I_1\) and the power stay exactly the same.</li>
+    <li>Problem 1: try other ratios such as 1 : 2 or 1 : 4; they give less than 25 W, because \(a^2(9)\) is no longer 1 Ω.</li>
+    <li>Problem 2: transferring the load to the input gives \(Z_{in} = 12 + j16\ \Omega\), and \(S_{in} = |V_1|^2/Z_{in}^*\) gives the same 2420∠53.13° VA.</li></ol>
+    <div class="book">Transformer slides pp. 2–9, 16 · P. C. Sen, chapter 2 (Example 2.1)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const Cx = CK.Cx, cx = Cx.c, RT2 = Math.SQRT2, GREEN = '#7ee787', PINK = '#ff7eb6', PURPLE = '#c792ea', ORANGE = '#ffa552', sci = (x, d = 4) => CH10.sci(x, d);
+  CH10.problem(1, 'speaker'); CH10.problem(2, 's220');
+
+  /* =================================================================== A: the ideal transformer on 220 V, 50 Hz */
+  const SA = { N1: 400, N2: 200, RL: 10, load: true, eq: false }, V1 = 220, F50 = 50, stA = {}, PHREF = V1 / (4.44 * F50 * 100);
+  const opA = () => { const a = SA.N1 / SA.N2, V2 = V1 / a, I2 = SA.load ? V2 / SA.RL : 0, I1 = I2 / a; return { a, V2, I2, I1, P: V1 * I1, Zin: a * a * SA.RL, Pm: V1 / (4.44 * F50 * SA.N1) }; };
+  const nT = N => Math.round(Math.max(2, Math.min(10, N / 50)));
+  const specA = () => { const o = opA(), R = SA.load ? SA.RL : 1e9;
+    if (SA.eq) return CH10C.xfSpec({ Vs: V1, direct: true, load: { type: 'R', value: o.a * o.a * R }, loadName: 'a²R_L', loadText: SA.load ? `${fd(o.Zin, 1)} Ω` : '∞', srcText: '220 V, 50 Hz', srcName: 'V_1' });
+    return CH10C.xfSpec({ Vs: V1, n: o.a, load: { type: 'R', value: R }, loadName: 'R_L', loadText: SA.load ? `${fd(SA.RL, 1)} Ω` : t('เปิดวงจร', 'open'), srcText: '220 V, 50 Hz', srcName: 'V_1', xfName: `${SA.N1} : ${SA.N2}` }); };
+  const BA = new CH10.MagBoard('cvA', { T: 4, pad: 1.2, view: { acPeak: false, acPower: true }, cktTitle: () => SA.eq ? ['วงจรสมมูล: โหลดโอนไปด้านปฐมภูมิ', 'equivalent circuit: load moved to the primary'] : ['วงจรไฟฟ้า (ค่ายังผล)', 'electric circuit (rms)'], coreAsp: 0.42, coreAspN: 0.8,
+    core: (ctx, b, bd) => { const o = opA(); stA.dt = bd.dt; stA.run = bd.clk.run;
+      CH10.core(ctx, b, CH10C.G.xf({ n1: nT(SA.N1), n2: nT(SA.N2), name1: `N₁ = ${SA.N1}`, name2: `N₂ = ${SA.N2}`, cur1: 'i₁', cur2: SA.load ? 'i₂' : '' }), Object.assign(stA, { flux: { m: Math.sin(bd.clk.ph - Math.PI / 2) * o.Pm / PHREF }, ref: 1, dots: true,
+        title: bd.short ? '' : `Φmax = V₁/(4.44 f N₁) = ${fd(o.Pm * 1e3, 3)} mWb` })); },
+    side: (ctx, b, bd) => { const o = opA(), sh = bd.short, gap = 6, w = Math.floor((b.w - gap) / 2), b1 = { x: b.x, y: b.y, w, h: b.h }, b2 = { x: b.x + w + gap, y: b.y, w: b.w - w - gap, h: b.h };
+      CH8.bars(ctx, b1, [{ label: 'P_1', v: o.P, color: GREEN, sub: 'V₁I₁' }, { label: 'P_2', v: o.P, color: GREEN, sub: 'V₂I₂' }], { title: t('กำลัง (W)', 'power (W)'), fmt: v => fd(v, 1), sub: !sh, max: Math.max(1, o.P) });
+      CH8.bars(ctx, b2, [{ label: 'N_1I_1', v: SA.N1 * o.I1, color: PINK, sub: t('ปฐมภูมิ', 'primary') }, { label: 'N_2I_2', v: SA.N2 * o.I2, color: PINK, sub: t('ทุติยภูมิ', 'secondary') }], { title: 'mmf (At)', fmt: v => fd(v, 0), sub: !sh, max: Math.max(1, SA.N1 * o.I1) }); },
+    /* real circuit: v₁ and v₂ = v₁/a on one scale (in phase); equivalent circuit: v₁ and i₁ (i₁ drawn at 60 % height so the two curves do not coincide) */
+    waves: [{ title: bd => bd.short ? '' : SA.eq ? t('v₁ และ i₁: เท่ากับในวงจรจริง', 'v₁ and i₁: as in the real circuit') : t('v₁ และ v₂ = v₁/a (เฟสเดียวกัน)', 'v₁ and v₂ = v₁/a (in phase)'),
+      sigs: bd => { const o = opA(), s = [{ mag: V1 * RT2, ang: 0, color: COL.V, label: 'v_1', unit: 'V', g: 'v', w: 2.4 }];
+        if (SA.eq) s.push({ mag: o.I1 * RT2, ang: 0, color: COL.I, label: 'i_1', unit: 'A', g: 'i', w: 2.6 }); else s.push({ mag: o.V2 * RT2, ang: 0, color: PURPLE, label: 'v_2', unit: 'V', g: 'v', w: 2.6 }); return s; },
+      opts: () => ({ max: { v: V1 * RT2 * Math.max(1, 1 / opA().a) * 1.04, i: Math.max(1e-9, opA().I1 * RT2 / 0.6) } }) }],
+    badge: () => { const o = opA(); return [[SA.load ? `Z_in = a²R_L = ${fd(o.Zin, 2)} Ω` : t('เปิดวงจร: I₁ = I₂ = 0', 'open: I₁ = I₂ = 0'), SA.load ? `Z_in = a²R_L = ${fd(o.Zin, 2)} Ω` : 'open: I₁ = I₂ = 0'], 'ok']; } });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('จำนวนรอบ', 'Turns')); ui.slider(pA, { id: 'sAN1', label: 'N₁', min: 100, max: 500, step: 10, value: SA.N1, fmt: v => fd(v, 0), oninput: v => { SA.N1 = v; buildA(); } });
+  ui.slider(pA, { id: 'sAN2', label: 'N₂', min: 20, max: 500, step: 10, value: SA.N2, fmt: v => fd(v, 0), oninput: v => { SA.N2 = v; buildA(); } });
+  ui.h2(pA, t('โหลด', 'Load')); ui.slider(pA, { id: 'sAR', label: 'R_L', min: 1, max: 100, step: 1, value: SA.RL, fmt: v => `${fd(v, 0)} Ω`, oninput: v => { SA.RL = v; buildA(); } });
+  ui.radio(pA, [{ id: 'lA_on', label: t('ต่อโหลด', 'load on'), on: true }, { id: 'lA_off', label: t('เปิดสวิตช์ (ไม่มีโหลด)', 'switch open (no load)') }], id => { SA.load = id === 'lA_on'; buildA(); });
+  ui.h2(pA, t('มุมมอง', 'View')); ui.radio(pA, [{ id: 'vA_real', label: t('วงจรจริง', 'real circuit'), on: true }, { id: 'vA_eq', label: t('วงจรสมมูล (a²R_L)', 'equivalent (a²R_L)') }], id => { SA.eq = id === 'vA_eq'; buildA(); });
+  pA.appendChild(mA); mA.className = 'metrics';
+  function buildA() { const o = opA(); BA.set(specA());
+    mA.innerHTML = ui.kv([['a = N₁/N₂', fd(o.a, 4)], ['V₂ = V₁/a', `${fd(o.V2, 2)} V`], ['I₂ = V₂/R_L', `${fd(o.I2, 4)} A`], ['I₁ = I₂/a', `${fd(o.I1, 4)} A`], ['P₁ = P₂', `${fd(o.P, 2)} W`], ['Z_in = a²R_L', SA.load ? `${fd(o.Zin, 2)} Ω` : '∞'], ['Φ_max', `${sci(o.Pm, 4)} Wb`]]);
+    $('wA').innerHTML = `<div class="answer">${SA.load ? t(`\\(V_2 = ${fd(V1, 0)}/${fd(o.a, 3)} = ${fd(o.V2, 2)}\\) V, \\(I_2 = ${fd(o.I2, 3)}\\) A และ \\(I_1 = I_2/a = ${fd(o.I1, 3)}\\) A ${o.a > 1 ? 'หม้อแปลงลดแรงดัน: ด้านปฐมภูมิแรงดันสูง กระแสน้อย' : o.a < 1 ? 'หม้อแปลงเพิ่มแรงดัน: ด้านทุติยภูมิแรงดันสูง กระแสน้อย' : 'a = 1: แรงดันและกระแสเท่าเดิม (หม้อแปลงแยกวงจร)'} แหล่งจ่ายมองเห็นโหลดเป็น \\(a^2R_L = ${fd(o.Zin, 2)}\\ \\Omega\\)`, `\\(V_2 = ${fd(V1, 0)}/${fd(o.a, 3)} = ${fd(o.V2, 2)}\\) V, \\(I_2 = ${fd(o.I2, 3)}\\) A and \\(I_1 = I_2/a = ${fd(o.I1, 3)}\\) A. ${o.a > 1 ? 'A step-down transformer: the primary has the high voltage and the small current.' : o.a < 1 ? 'A step-up transformer: the secondary has the high voltage and the small current.' : 'a = 1: voltage and current unchanged (an isolating transformer).'} The source sees the load as \\(a^2R_L = ${fd(o.Zin, 2)}\\ \\Omega\\).`)
+      : t('ไม่มีโหลด: \\(I_2 = 0\\) และเพราะ \\(N_1I_1 = N_2I_2\\) จึงได้ \\(I_1 = 0\\) ด้วย หม้อแปลงอุดมคติไม่ต้องใช้กระแสสร้างฟลักซ์ ฟลักซ์ \\(\\Phi_{max} = V_1/(4.44fN_1)\\) ยังอยู่เพราะแรงดันยังต่ออยู่', 'No load: \\(I_2 = 0\\), and since \\(N_1I_1 = N_2I_2\\), \\(I_1 = 0\\) too. An ideal transformer needs no current to set up its flux; \\(\\Phi_{max} = V_1/(4.44fN_1)\\) is still there, because the voltage is still applied.')}</div>`;
+    MC.renderMath($('wA')); }
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => BA.resize());
+
+  /* =================================================================== B: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const a1 = 220 / 24, I21 = 24 / 2, P3 = 230 / (4.44 * 50 * 500), I24 = Cx.div(cx(110), cx(6, 8)), S4 = Cx.mul(cx(220), Cx.conj(Cx.scale(I24, 0.5)));
+  CH6.quiz('quiz', [
+    { q: t('1) หม้อแปลง 220/24 V จ่ายโหลด 2 Ω ทางด้าน 24 V จงหาอัตราส่วนรอบ กระแสด้านโหลด และกระแสด้าน 220 V', '1) A 220/24 V transformer feeds 2 Ω on its 24 V side. Find the turns ratio, the load current and the 220 V side current.'),
+      fields: [{ key: 'x', lab: 'a =', ans: a1 }, { key: 'y', lab: 'I₂ =', ans: I21, unit: 'A' }, { key: 'z', lab: 'I₁ =', ans: I21 / a1, unit: 'A' }],
+      work: work(R`\begin{aligned} a &= \frac{220}{24} = ${fd(a1, 4)} \\ I_2 &= \frac{24}{2} = 12\ \text{A} \\ I_1 &= \frac{I_2}{a} = ${fd(I21 / a1, 4)}\ \text{A} \end{aligned}`) },
+    { q: t('2) เครื่องขยายเสียงมีความต้านทานภายใน 400 Ω ต้องการต่อลำโพง 4 Ω ให้ได้กำลังสูงสุด อัตราส่วนรอบ \\(N_1/N_2\\) ต้องเป็นเท่าใด', '2) An amplifier has 400 Ω inside and drives a 4 Ω speaker. What turns ratio \\(N_1/N_2\\) gives maximum power?'),
+      fields: [{ key: 'x', lab: 'a =', ans: 10 }],
+      work: work(R`a^2(4) = 400 \;\Rightarrow\; a = \sqrt{100} = 10`, `<p>${t('ขดลวดด้านเครื่องขยายต้องมีจำนวนรอบเป็นสิบเท่าของด้านลำโพง (10 : 1) แบบเดียวกับข้อ 1 ที่ใช้ 1 : 3', 'The amplifier side needs ten times the turns of the speaker side (10 : 1), the same idea as the 1 : 3 of problem 1.')}</p>`) },
+    { q: t('3) ขดลวดปฐมภูมิ 500 รอบต่อไฟ 230 V 50 Hz ต้องการด้านทุติยภูมิ 12 V จงหาจำนวนรอบด้านทุติยภูมิและฟลักซ์สูงสุดในแกน', '3) A 500-turn primary on 230 V, 50 Hz must give 12 V. Find the secondary turns and the peak core flux.'),
+      fields: [{ key: 'x', lab: 'N₂ =', ans: 500 * 12 / 230, tol: 0.05 }, { key: 'y', lab: t('Φ_max (mWb) =', 'Φ_max (mWb) ='), ans: P3 * 1e3 }],
+      work: work(R`\begin{aligned} N_2 &= N_1\frac{V_2}{V_1} = 500\cdot\frac{12}{230} = ${fd(500 * 12 / 230, 3)} \approx 26\ \text{รอบ} \\ \Phi_{max} &= \frac{230}{(4.44)(50)(500)} = ${CH10.sciTex(P3, 4)}\ \text{Wb} \end{aligned}`.replace('รอบ', t('รอบ', 'turns'))) },
+    { q: t('4) หม้อแปลงของข้อ 2 แต่โหลดเป็น \\(6 + j8\\ \\Omega\\) จงหา \\(|I_{in}|\\), \\(S_{in}\\) และ \\(P_{in}\\)', '4) The transformer of problem 2 with a load of \\(6 + j8\\ \\Omega\\). Find \\(|I_{in}|\\), \\(S_{in}\\) and \\(P_{in}\\).'),
+      fields: [{ key: 'x', lab: '|I<sub>in</sub>| =', ans: Cx.abs(I24) / 2, unit: 'A' }, { key: 'y', lab: 'S<sub>in</sub> =', ans: Cx.abs(S4), unit: 'VA' }, { key: 'z', lab: 'P<sub>in</sub> =', ans: S4.re, unit: 'W' }],
+      work: work(R`\begin{aligned} \mathbf{I}_2 &= \frac{110}{6 + j8} = ${CH6.pol(I24, 4, 2)}\ \text{A} \\ \mathbf{I}_{in} &= \frac{\mathbf{I}_2}{2} = ${CH6.pol(Cx.scale(I24, 0.5), 4, 2)}\ \text{A} \\ \mathbf{S}_{in} &= (220)(${CH6.pol(Cx.conj(Cx.scale(I24, 0.5)), 4, 2)}) = ${CH6.rect(S4, 1)}\ \text{VA} \end{aligned}`) },
+    { q: t('5) โอนโหลด \\(3 + j4\\ \\Omega\\) ของข้อ 2 ไปด้านปฐมภูมิ (a = 2) จงหาความต้านทานและรีแอกแตนซ์ที่ด้านปฐมภูมิมองเห็น', '5) Transfer the \\(3 + j4\\ \\Omega\\) load of problem 2 to the primary (a = 2). Find the resistance and reactance the primary sees.'),
+      fields: [{ key: 'x', lab: 'R =', ans: 12, unit: 'Ω' }, { key: 'y', lab: 'X =', ans: 16, unit: 'Ω' }],
+      work: work(R`Z_{in} = a^2Z_L = 4(3 + j4) = 12 + j16\ \Omega`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

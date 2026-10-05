@@ -15,7 +15,7 @@
      VAC / IAC  sinusoidal sources: amp (peak), phase (deg); same polarity rules as V / I
      C   capacitor value F, optional v0     L   inductor value H, optional i0
      Z   fixed complex impedance {re, im} (AC only)            motor  DC motor: Ra (value) in series with back-emf `emf` (+ at a)
-     XF  ideal transformer: primary a–b, secondary c–d, n = N1/N2 (dots at a and c)
+     XF  ideal transformer: primary a–b, secondary c–d, n = N1/N2 (dots at a and c; put c below d for a dot at the lower end)
      dependent sources (diamond symbols), gain in `gain`:
        G  VCCS: pushes gain·(V_c − V_d) A through itself from a to b      E  VCVS: V_a − V_b = gain·(V_c − V_d)
        F  CCCS: pushes gain·I(ctrl) A from a to b                          H  CCVS: V_a − V_b = gain·I(ctrl)
@@ -374,7 +374,7 @@ CK.vColor = (f) => { f = Math.max(0, Math.min(1, f)); const lo = [70, 140, 255],
 class View {
   /* canvas: <canvas>; ckt: Circuit; o: { aspect, flow:'conv'|'elec', speed (px/s per ampere), minV (slowest visible dot speed, px/s), showI, showV, potential, labels, onClick(part|node), box:{x,y,w,h},
      acTime (clock for AC dots), acPeak (AC readouts as peak phasors, as chapter 6 writes them, instead of rms),
-     acPower (tooltips add P and Q of the part, chapter 8; 'P': P only) } */
+     acPower (tooltips add P and Q of the part, chapter 8; 'P': P only), tip(part, circuit) → tooltip lines instead of V, I, P (chapter 10) } */
   constructor(canvas, ckt, o = {}) {
     this.canvas = canvas; this.ckt = ckt; this.o = Object.assign({ flow: 'conv', showI: true, showV: false, potential: false, labels: true, dots: true, aspect: 0.62, slow: 1 }, o);
     this.flows = {}; this.hover = null; this.sel = null; this.t = 0; this.tip = null;
@@ -446,7 +446,7 @@ class View {
       this.text(txt, x + dx, y + dy, { color: L.color || PAL.purple, size: Math.max(11.5, u * 0.32), weight: '700' }); }
     // flowing dots
     if (this.o.dots) {
-      const col = this.o.flow === 'elec' ? PAL.elec : PAL.conv;
+      const col = this.o.dotColor || (this.o.flow === 'elec' ? PAL.elec : PAL.conv);   // dotColor: flux dots of a magnetic circuit (chapter 10)
       const iref = Math.abs(this.o.dotRef || 0);
       for (const id in this.flows) {
         const p = c.byId[id.split(':')[0]]; if (!p || p.noDots) continue; if (p.type === 'VM') continue; if (p.type === 'S' && !p.closed) continue;
@@ -545,14 +545,15 @@ class View {
   }
   drawXF(p, vcol, hi) {
     const ctx = this.ctx, u = this.u, lw = Math.max(2, u * 0.055); const A = this.P(p.a), B = this.P(p.b), Cc = this.P(p.c), D = this.P(p.d);
-    const col = hi ? PAL.sel : PAL.body; const turns = (x, y0, y1, dir, nT) => { const h = (y1 - y0) / nT; ctx.beginPath(); ctx.moveTo(x, y0);
+    const col = hi ? PAL.sel : PAL.body; const turns = (x, ya, yb, dir, nT) => { const y0 = Math.min(ya, yb), h = Math.abs(yb - ya) / nT; if (h < 0.5) return; ctx.beginPath(); ctx.moveTo(x, y0);
       for (let k = 0; k < nT; k++) ctx.arc(x, y0 + h * (k + 0.5), h / 2, -Math.PI / 2, Math.PI / 2, dir < 0); ctx.stroke(); };
     ctx.save(); ctx.strokeStyle = col; ctx.lineWidth = lw;
     const n1 = Math.round(NUM.clamp(4 * Math.sqrt(p.n), 2, 8)), n2 = Math.round(NUM.clamp(4 / Math.sqrt(p.n), 2, 8));
     turns(A[0], A[1], B[1], 1, n1); turns(Cc[0], Cc[1], D[1], -1, n2);
     const xm = (A[0] + Cc[0]) / 2; ctx.lineWidth = lw * 0.9; ctx.strokeStyle = PAL.muted;
     [-0.09, 0.09].forEach(d => { ctx.beginPath(); ctx.moveTo(xm + d * u, Math.min(A[1], Cc[1]) - 0.1 * u); ctx.lineTo(xm + d * u, Math.max(B[1], D[1]) + 0.1 * u); ctx.stroke(); });
-    ctx.fillStyle = PAL.ink; [[A[0] + 0.32 * u, A[1] + 0.12 * u], [Cc[0] - 0.32 * u, Cc[1] + 0.12 * u]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(x, y, Math.max(2.5, u * 0.06), 0, 2 * Math.PI); ctx.fill(); });
+    const s1 = Math.sign(B[1] - A[1]) || 1, s2 = Math.sign(D[1] - Cc[1]) || 1;   // the dot sits inside each winding, next to its dotted terminal (a, c)
+    ctx.fillStyle = PAL.ink; [[A[0] + 0.32 * u, A[1] + 0.12 * u * s1], [Cc[0] - 0.32 * u, Cc[1] + 0.12 * u * s2]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(x, y, Math.max(2.5, u * 0.06), 0, 2 * Math.PI); ctx.fill(); });
     ctx.restore();
     this.text(p.name || `${p.n} : 1`, xm, Math.min(A[1], Cc[1]) - 0.35 * u, { color: PAL.ink, size: Math.max(11.5, u * 0.31), weight: '600' });
   }
@@ -571,6 +572,7 @@ class View {
     if (this.o.onClick) this.o.onClick(n && this.o.nodeFirst ? { node: n } : p ? { part: p } : n ? { node: n } : null); }
   drawTip(p) {
     if (p.type === 'W' && !this.o.wireTips) return; const c = this.ckt, ac = c.mode === 'ac';
+    if (this.o.tip) { const L = this.o.tip(p, c); if (L && L.length) this.tipBox(L); return; }   // o.tip(part, circuit) → lines (first line = title)
     const v = c.Vab(p.id), i = c.I(p.id); const lines = [];
     const name = p.name ?? p.id.replace(/_\d+$/, '');
     lines.push(name + (p.type === 'S' ? (p.closed ? MCt('  (ปิดวงจร: คลิกเพื่อเปิด)', '  (closed: click to open)') : MCt('  (เปิดวงจร: คลิกเพื่อปิด)', '  (open: click to close)')) : ''));
@@ -584,6 +586,9 @@ class View {
     else if (ac) { lines.push('V = ' + Cx.fmtPolar(Cx.scale(v, 1 / Math.SQRT2), 3, 'V rms')); lines.push('I = ' + Cx.fmtPolar(Cx.scale(i, 1 / Math.SQRT2), 3, 'A rms'));
       if (this.o.acPower) { zl(); if (p.type !== 'W') pw(); } else if (p.type !== 'W') lines.push('P = ' + CK.eng(c.P(p.id), 'W')); }
     else { lines.push('V = ' + CK.eng(v.re, 'V')); lines.push('I = ' + CK.eng(i.re, 'A')); if (p.type !== 'W' && p.type !== 'S') { const P = c.P(p.id); lines.push((P >= 0 ? MCt('ดูดกลืน P = ', 'absorbs P = ') : MCt('จ่าย P = ', 'delivers P = ')) + CK.eng(Math.abs(P), 'W')); } }
+    this.tipBox(lines);
+  }
+  tipBox(lines) {
     const ctx = this.ctx; ctx.save(); ctx.font = `13.5px ${FONT_TH}`; const w = Math.max(...lines.map(s => ctx.measureText(s).width)) + 18, h = lines.length * 19 + 10;
     let x = this.mx + 14, y = this.my + 14; if (x + w > this.box.x + this.box.w) x = this.mx - w - 10; if (y + h > this.box.y + this.box.h) y = this.my - h - 10;
     ctx.fillStyle = 'rgba(10,14,28,.94)'; ctx.strokeStyle = PAL.sel; ctx.lineWidth = 1; ctx.beginPath(); ctx.rect(x, y, w, h); ctx.fill(); ctx.stroke();
