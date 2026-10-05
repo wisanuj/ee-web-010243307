@@ -1,8 +1,7 @@
 /* ch8ui.js — chapter 8 in the problem-by-problem format (rebuilt Oct 2026): average power, complex power, the power factor and
    its correction. Built on ch8.js (Board, triangle, bars, pSigs), ch6.js (plane, waves, clock), lesson.js (LS.stepper, LS.step,
    LS.withCol) and ch8_circuits.js (CH8C). Peak phasors on page 8.1 (and the slide p. 7 circuit), effective values elsewhere.
-   1) CH8.Prob     one circuit on a CH8.Board (circuit + side panel + wave panels); the open steps decide the glow, the overlays,
-                   the side panel (phasors, power bars or power triangles), the waves and when the dots run
+   (CH8.Prob, the problem class on a CH8.Board, and CH8.wire live in ch8.js so that chapter 9 can use them)
    2) CH8.DEF      the problems: ex4 (page 8.1, slide p. 7), ex4q (8.2, slide p. 7 continued as in class), ex8 hw (8.3, slides
                    pp. 13, 16), ex9 house (8.4, slide p. 15 and the 2018 slide p. 19)
    3) CH8.problem  wires one problem section: canvas cv<n>, try-first box ask<n>, stepper st<n>, controls ctl<n> */
@@ -28,37 +27,8 @@ const pfTxt = (S, d = 4) => { const l = lagW(S); return `${fd(CH8C.pf(S), d)}${l
 /* a muted message in the middle of an empty panel, broken into lines */
 const wrap = (ctx, s, maxW, size) => { const out = []; let cur = '';
   String(s).split(' ').forEach(w => { const tst = cur ? `${cur} ${w}` : w; if (cur && CH8.textW(ctx, tst, size) > maxW) { out.push(cur); cur = w; } else cur = tst; }); if (cur) out.push(cur); return out; };
-const empty = (ctx, b, msg) => { CH6.bg(ctx, b); const L = wrap(ctx, tt(msg), b.w - 36, 13);
-  L.forEach((l, i) => CH6.text(ctx, l, b.x + b.w / 2, b.y + b.h / 2 + (i - (L.length - 1) / 2) * 19, { color: COL.muted, size: 13 })); };
+const empty = (ctx, b, msg) => CH8.empty(ctx, b, msg);
 const loop = (v, x, y, r, label, o = {}) => v.meshLoop(x, y, r, { label, color: COL.purple, spin: null, ...o });
-
-/* =====================================================================================================================
-   1) one circuit on a CH8.Board. o = { spec (object, or (k, self) → spec; return the same object for the same variant), steps(self),
-      solvedAt (k from which the dots run, default 0), glow(k, self) → part ids, after(view, k, self), side(ctx, box, board, k, self),
-      waves: [{ title(board, k, self), sigs(board, k, self), opts(board, k, self) }], badge(k, self) → [text, kind], vo(self) (extra View
-      options for set), shortSpec(spec, self), tick(dt, self), init(self) (state in self.st), controls(el, self), onSet(k, self),
-      layout: pad, cktFrac, topAsp, cktAspM, rowAsp, rowMin, cktAspN, sideAspN, waveAsp, waveMin, midMin } */
-CH8.Prob = class {
-  constructor(cv, o) { this.cv = cv; this.o = o; this.k = 0; this.colW = o.colW || 0; this.st = {}; if (o.init) o.init(this); const self = this;
-    this.B = new CH8.Board(cv, { T: 4, mid: true, midMin: o.midMin ?? 420, cktAspM: o.cktAspM, rowAsp: o.rowAsp, rowMin: o.rowMin, pad: o.pad ?? 1.35,
-      cktFrac: o.cktFrac ?? 0.52, topAsp: o.topAsp ?? 0.42, wideAt: o.wideAt, cktAspN: o.cktAspN, sideAspN: o.sideAspN, waveAsp: o.waveAsp, waveMin: o.waveMin, dotSpeed: o.dotSpeed,
-      view: Object.assign({ glowColor: GLOW }, o.view || {}), shortSpec: o.shortSpec ? sp => o.shortSpec(sp, self) : undefined,
-      side: o.side ? (ctx, b, bd) => o.side(ctx, b, bd, self.k, self) : undefined,
-      waves: (o.waves || []).map(w => ({ title: bd => (w.title ? w.title(bd, self.k, self) : ''), sigs: bd => w.sigs(bd, self.k, self), opts: w.opts ? bd => w.opts(bd, self.k, self) : undefined })),
-      after: v => { if (o.after) o.after(v, self.k, self); },
-      badge: () => o.badge ? o.badge(self.k, self) : self.solved ? [['แก้แล้ว: กระแสไหล', 'solved: the current flows'], 'ok'] : [['ยังไม่ได้แก้วงจร', 'not solved yet'], 'wait'] });
-    this.B.resize(); this.build(true); window.addEventListener('resize', () => this.B.resize());
-    LS.anim(cv, dt => { const v = this.B.view; if (!v) return; v.o.dots = this.solved; v.o.tips = this.solved; const g = o.glow ? o.glow(this.k, this) : null;
-      v.o.glow = g && g.length ? new Set(g) : null; if (o.tick) o.tick(dt, this); this.B.frame(dt); }); }
-  get solved() { return this.k >= (this.o.solvedAt ?? 0); }
-  get ckt() { return this.B.ckt; }
-  build(force) { const sp = typeof this.o.spec === 'function' ? this.o.spec(this.k, this) : this.o.spec;
-    if (force || sp !== this.spec) { this.spec = sp; this.B.set(sp, this.o.vo ? this.o.vo(this) : {}); } }
-  set(k) { this.k = k; if (this.o.onSet) this.o.onSet(k, this); this.build(); }
-  refresh() { this.list = null; this.build(true); if (this.stepper) this.stepper.refresh(true); }
-  get steps() { return this.list || (this.list = LS.withCol(this.colW, () => this.o.steps(this))); }
-  controls(el) { if (this.o.controls) this.o.controls(el, this); }
-};
 
 /* =====================================================================================================================
    2) the problems */
@@ -325,15 +295,5 @@ CH8.DEF = DEF;
 
 /* =====================================================================================================================
    3) wiring of one problem section */
-CH8.problem = (n, key, o = {}) => {
-  const $ = id => document.getElementById(id), d = DEF[key];
-  const sim = new CH8.Prob($('cv' + n), { ...d, colW: $('st' + n).clientWidth });
-  if ($('ctl' + n)) sim.controls($('ctl' + n));
-  const ask = o.ask || d.ask; if (ask && $('ask' + n)) LS.ask($('ask' + n), ask(sim));
-  const answer = o.answer || (d.answer ? () => d.answer(sim) : undefined);
-  sim.stepper = LS.stepper($('st' + n), { steps: () => sim.steps, answer, hint: o.hint || d.hint, onStep: k => sim.set(k) });
-  LS.onFonts(() => { sim.colW = $('st' + n).clientWidth; sim.list = null; sim.stepper.refresh(true); });
-  LS.watchWidth($('st' + n), w => { sim.colW = w; sim.list = null; sim.stepper.refresh(true); });
-  return sim;
-};
+CH8.problem = (n, key, o = {}) => CH8.wire(n, DEF[key], o);
 })(window);

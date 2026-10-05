@@ -5,16 +5,16 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=102">
-<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
-<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
-<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
-<script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
-<script src="assets/ch6.js?v=102"></script><script src="assets/ch6_circuits.js?v=102"></script>
-<script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script>
-<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
-<script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
-<script src="assets/lesson.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script><script src="assets/ch1.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+<link rel="stylesheet" href="assets/ee.css?v=110">
+<script src="assets/stops.js?v=110"></script><script src="assets/shell.js?v=110"></script>
+<script src="assets/circuit.js?v=110"></script><script src="assets/alg.js?v=110"></script>
+<script src="assets/ana.js?v=110"></script><script src="assets/ch4_circuits.js?v=110"></script><script src="assets/ch4ui.js?v=110"></script>
+<script src="assets/ch5.js?v=110"></script><script src="assets/ch5_circuits.js?v=110"></script>
+<script src="assets/ch6.js?v=110"></script><script src="assets/ch6_circuits.js?v=110"></script>
+<script src="assets/ch7_circuits.js?v=110"></script><script src="assets/ch7.js?v=110"></script>
+<script src="assets/ch8_circuits.js?v=110"></script><script src="assets/ch8.js?v=110"></script><script src="assets/ch8ui.js?v=110"></script>
+<script src="assets/ch9_circuits.js?v=110"></script><script src="assets/ch9.js?v=110"></script>
+<script src="assets/lesson.js?v=110"></script><script src="assets/ch6ui.js?v=110"></script><script src="assets/ch7ui.js?v=110"></script><script src="assets/ch1.js?v=110"></script><script src="assets/draw.js?v=110"></script><script src="assets/ch2.js?v=110"></script><script src="assets/ch9ui.js?v=110"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -633,6 +633,25 @@ T('9 Hayt Practice 12.5 / 12.7 / 12.8: 97.53 A, 83.02 kW, PF 0.983 · 1.1576 A, 
   const w = 400, Zp7 = Cx.add(Cx.c(0, w * 0.2), Cx.div(Cx.mul(Cx.c(200), Cx.c(0, -500)), Cx.c(200, -500))), Ip7 = 200 / Cx.abs(Zp7);
   const Vab = CH6.polar(440, 30), S1 = CH6.polar(40000, Math.acos(0.8) * 180 / Math.PI), S2 = Cx.c(24000, -24000 * Math.tan(Math.acos(0.9))), IAB = Cx.add(Cx.conj(Cx.div(Cx.scale(S1, 1 / 3), Vab)), Cx.conj(Cx.div(Cx.scale(S2, 1 / 3), Vab))), IaA = Cx.mul(IAB, CH6.polar(Math.sqrt(3), -30));
   return `${h9f(I5, 2)} ${h9f(3 * I5 * I5 * Z5.re / 1000, 2)} ${h9f(Z5.re / Cx.abs(Z5), 3)} · ${h9f(Ip7)} ${h9f(Math.sqrt(3) * Ip7)} ${h9f(3 * Ip7 * Ip7 * Zp7.re, 2)} · ${h9p(IaA)}`; })(), '97.53 83.02 0.983 · 1.1576 2.0051 693.16 · 75.2541\\angle{-12.46^\\circ}');
+
+/* chapter 9 rebuilt (Oct 2026): the problems of ch9ui.js on CH8.Prob */
+{ const p = new CH8.Prob(cv8n(), CH9.DEF.p45), a = CH9.DEF.p45.ask(p), ok = v => a.fields.every((f, i) => f.ok(v[i], v));
+  T('9 new: slides pp. 4–5 (9.1 problem 1): 4 steps; V_ab = 173.2∠30° accepted (also as ∠−330°); the check names the reversed order (∠−150°) and the negative sequence (∠−30°)', `${p.steps.length} ${ok([173.205, 30])} ${ok([173.2, -330])} ${ok([173.2, -150])} ${!!a.check([173.2, -150])} ${!!a.check([173.2, -30])}`, '4 true true false true true'); }
+{ const p2 = new CH8.Prob(cv8n(), CH9.DEF.vab1), a2 = CH9.DEF.vab1.ask(p2), p3 = new CH8.Prob(cv8n(), CH9.DEF.vab2), a3 = CH9.DEF.vab2.ask(p3), ok = (a, v) => a.fields.every((f, i) => f.ok(v[i], v));
+  T('9 new: class problems (9.1 problems 2–3): 5 steps each; V_bc = 207.85∠90° accepted, the positive-sequence ∠−90° named; V_ca = 17.32∠180° accepted, the reversed V_ac (∠0°) named', `${p2.steps.length} ${p3.steps.length} ${ok(a2, [207.846, 90])} ${!!a2.check([207.846, -90])} ${ok(a3, [17.3205, 180])} ${!!a3.check([17.3205, 0])}`, '5 5 true true true true'); }
+{ const d = CH9.DEF.ex1, p = new CH8.Prob(cv8n(), d), s1 = (p.set(1), p.solved), s2 = (p.set(2), p.solved), c = p.ckt, St = ['ZA', 'ZB', 'ZC'].reduce((s, id) => Cx.add(s, c.S(id)), Cx.c(0));
+  T('9 new: Ex 1 (9.2 problem 1): 5 steps; the dots start at step 2; step 2 glows the loads, step 3 the neutral wire, which carries no current; the solver\'s S = 1200∠60° VA', `${p.steps.length} ${s1} ${s2} ${d.glow(2).join(',')} ${d.glow(3).join(',')} ${Cx.abs(c.I('wn')) < 1e-9} ${CH6.pol(St, 4, 2)}`, '5 false true ZA,ZB,ZC wn true 1200\\angle{60^\\circ}'); }
+{ const d = CH9.DEF.ex2, q = CH9.DEF.q17, zv = (D, k) => D.spec(k).parts.find(x => x.id === 'ZA').valText, p = new CH8.Prob(cv8n(), d), a = d.ask(p), b = q.ask(new CH8.Prob(cv8n(), q)), ok = (A, v) => A.fields.every((f, i) => f.ok(v[i], v));
+  T('9 new: Ex 2 and the 2017 quiz (9.2 problems 2–3): 4 steps; Z_p reads "? Ω" until step 3; 2.8868 A, 60 Ω, −36.87° (leading) and +36.87° (lagging) accepted; the checks name 4.08 A (√2 twice), 1.667 A (V_L as V_p) and a wrong sign', `${p.steps.length} ${zv(d, 2)} ${zv(d, 3)} ${ok(a, [2.8868, 60, -36.87])} ${ok(b, [2.8868, 60, 36.87])} ${!!a.check([4.0825, 0, 0])} ${!!a.check([1.6667, 0, 0])} ${!!b.check([2.8868, 60, -36.87])}`, '4 ? Ω 60∠−36.87° Ω true true true true true'); }
+{ const d = CH9.DEF.ex3, p = new CH8.Prob(cv8n(), d), s1 = (p.set(1), p.solved), s2 = (p.set(2), p.solved), a = d.ask(p), ok = v => a.fields.every((f, i) => f.ok(v[i], v));
+  T('9 new: Ex 3 (9.3 problem 1): 4 steps; the dots start at step 2, step 3 glows the lines; Z_p reads "? Ω" until step 4; 2.8868 A and 180 Ω accepted; the checks name 1.667 A (the phase current), 2.36 A and 127.12 Ω (2017)', `${p.steps.length} ${s1} ${s2} ${d.glow(3).join(',')} ${d.spec(3).parts.find(x => x.id === 'ZAB').valText} ${ok([2.8868, 180])} ${!!a.check([1.6667, 180])} ${!!a.check([2.36, 180])} ${!!a.check([2.8868, 127.12])}`, '4 false true wa,wb,wc ? Ω true true true true'); }
+{ const d = CH9.DEF.hw, p = new CH8.Prob(cv8n(), d), s2 = (p.set(2), p.solved), s3 = (p.set(3), p.solved), Vb = Cx.scale(p.ckt.Vab('Vb'), 1 / Math.SQRT2), a = d.ask(p), ok = v => a.fields.every((f, i) => f.ok(v[i], v));
+  T('9 new: homework p. 20 (9.4 problem 1): 5 steps; the dots start at step 3; the source is negative sequence (V_bn = 220∠120°); 4.7847 A, 45.98 Ω, 18.19° accepted; the checks name 14.35 A (P not divided by 3) and 220/√3', `${p.steps.length} ${s2} ${s3} ${CH6.pol(Vb, 4, 0)} ${ok([4.7847, 45.98, 18.19])} ${!!a.check([14.354, 0, 0])} ${!!a.check([8.2873, 0, 0])}`, '5 false true 220\\angle{120^\\circ} true true true'); }
+{ const st = sp => { const c = new Circuit(sp); c.solve(); return CH9.ov.yyState(c).In; }, base = { Vp: 200, Z: CH9C.ex1.Z, ZC: CH6.polar(50, 60) };
+  T('9 new: CH9.ov.yyState reports the neutral current for a neutral wire or a closed switch, and none for an open switch or no neutral (Z_C = 50∠60°: I_Nn = 2∠60° A rms)', ['wire', true, false, 'none'].map(nb => { const In = st(CH9C.yy({ ...base, neutral: nb })); return In ? CH6.pol(Cx.scale(In, 1 / Math.SQRT2), 4, 0) : '-'; }).join(' '), '2\\angle{60^\\circ} 2\\angle{60^\\circ} - -'); }
+{ const keys = Object.keys(CH9.DEF), bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; };
+  const bad = keys.filter(k => { const p = new CH8.Prob(cv8n(), CH9.DEF[k]); return p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body))); });
+  T('9 new: all eight chapter 9 problems build their steps, and every step formula and note has balanced braces', `${keys.length} ${bad.join(',') || 'none'}`, '8 none'); }
 
 /* --- formatting regressions --- */
 T('fmtDec(40, 0)', C.fmtDec(40, 0), '40'); T('fmtDec(2.10, 2)', C.fmtDec(2.1, 2), '2.1'); T('eng(0.0024 A)', CK.eng(0.0024, 'A'), '2.4 mA'); T('eng(3 Ω)', CK.eng(3, 'Ω'), '3 Ω');

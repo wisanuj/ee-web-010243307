@@ -24,7 +24,7 @@ CH9.partTag = (v, id, text, o = {}) => { const p = v.ckt.part(id); if (!p) retur
 
 /* generator in box b.  o: {alpha (rotor angle, rad, counter-clockwise), e: [ea, eb, ec] in −1..1, title, values: [text a, b, c]} */
 CH9.generator = (ctx, b, o = {}) => {
-  CH6.bg(ctx, b); const top = o.title ? 30 : 10, cx0 = b.x + b.w / 2, cy0 = b.y + top + 8 + (b.h - top - 18) / 2, R = Math.max(40, Math.min(b.w / 2 - 50, (b.h - top - 18) / 2 - 40));
+  CH6.bg(ctx, b); const top = o.title ? 30 : 10, cx0 = b.x + b.w / 2, cy0 = b.y + top + 8 + (b.h - top - 18) / 2, R = Math.max(40, Math.min(b.w / 2 - (o.values ? 78 : 50), (b.h - top - 18) / 2 - 40));   // room for the coil values beside the ring
   if (o.title) T(ctx, o.title, b.x + 10, b.y + 15, { align: 'left', color: COL.muted, size: 13 });
   /* stator ring */
   ctx.save(); ctx.fillStyle = '#1b2140'; ctx.beginPath(); ctx.arc(cx0, cy0, R, 0, 2 * Math.PI); ctx.arc(cx0, cy0, R * 0.74, 0, 2 * Math.PI, true); ctx.fill();

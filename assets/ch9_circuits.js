@@ -42,7 +42,7 @@ CH9C.src = (o = {}) => { const V = CH9C.phases(o.Vp ?? 100, o.th ?? 0, o.seq ?? 
     { id: 'Mbn', type: 'VM', a: 'mb2', b: 'mn', name: 'V_{bn}', side: 1, labelOff: 0.45 } ];
   return { ground: 'n', mode: 'ac', w: 1, nodes, parts, V }; };
 
-/* Y source + Y load. o: {Vp, th, seq, Z (all phases) or ZA, ZB, ZC, neutral: true (wire) | false (open switch) | 'none' (no neutral drawn),
+/* Y source + Y load. o: {Vp, th, seq, Z (all phases) or ZA, ZB, ZC, neutral: true (closed switch) | false (open switch) | 'wire' (a plain wire) | 'none' (no neutral drawn),
    zt (z → label text), zText: false (no values), zLabels: false (no labels)} */
 CH9C.yy = (o = {}) => { const V = CH9C.phases(o.Vp ?? 200, o.th ?? 0, o.seq ?? 1), Z = o.Z ?? pol(100, 60), ZA = o.ZA ?? Z, ZB = o.ZB ?? Z, ZC = o.ZC ?? Z;
   const nodes = { ...SRC, A: [6.5, 1.1], B: [9.5, 1.1], N: [8.0, 2.6], C: [8.0, 4.7] }, zt = o.zt || (z => `${CH6.rect(z, 2).replace('-', '−')} Ω`);
@@ -52,7 +52,8 @@ CH9C.yy = (o = {}) => { const V = CH9C.phases(o.Vp ?? 200, o.th ?? 0, o.seq ?? 1
     { id: 'ZB', type: 'Z', a: 'B', b: 'N', value: ZB, name: 'Z_B', valText: o.zText === false ? '' : zt(ZB), label: o.zLabels !== false, side: 1, bodyLen: 0.95 },
     { id: 'ZC', type: 'Z', a: 'C', b: 'N', value: ZC, name: 'Z_C', valText: o.zText === false ? '' : zt(ZC), label: o.zLabels !== false, side: 1, bodyLen: 0.95 } ];
   if (o.zLabels !== false && o.zText !== false) { nodes._padR = [11.0, 2.6]; nodes._padL = [-1.3, 2.6]; }   // room for Z_B's label and the source value tags
-  if (o.neutral !== 'none') { nodes.s1 = [4.6, 2.6]; nodes.s2 = [5.6, 2.6];
+  if (o.neutral === 'wire') parts.push(W_('N', 'n', { id: 'wn' }));   // a plain neutral wire, as the slides draw it
+  else if (o.neutral !== 'none') { nodes.s1 = [4.6, 2.6]; nodes.s2 = [5.6, 2.6];
     parts.push(W_('N', 's2', { id: 'wn' }), { id: 'Sn', type: 'S', a: 's2', b: 's1', closed: o.neutral !== false, label: false }, W_('s1', 'n', { id: 'wn2' })); }
   return { ground: 'n', mode: 'ac', w: 1, nodes, parts, V }; };
 
