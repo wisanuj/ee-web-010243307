@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="11.2 — Principle of Operation and the Back EMF">11.2 — หลักการทำงานของมอเตอร์และแรงเคลื่อนไฟฟ้าต้านกลับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=113">
+<script src="assets/stops.js?v=113"></script><script src="assets/shell.js?v=113"></script>
+<script src="assets/circuit.js?v=113"></script><script src="assets/alg.js?v=113"></script><script src="assets/lesson.js?v=113"></script><script src="assets/ch6.js?v=113"></script>
+<script src="assets/ch8.js?v=113"></script><script src="assets/ch10.js?v=113"></script><script src="assets/ch11.js?v=113"></script><script src="assets/ch11_circuits.js?v=113"></script><script src="assets/ch11ui.js?v=113"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">หลักการทำงานของมอเตอร์และแรงเคลื่อนไฟฟ้าต้านกลับ <span class="en">Why the armature turns, and what limits its current</span></h1>
+<h1 data-l="en">Principle of operation and the back emf <span class="en">Why the armature turns, and what limits its current</span></h1>
+
+<p class="sub" data-l="th">สไลด์หน้า 15 อธิบายว่าตัวนำที่มีกระแสไหลและวางอยู่ในสนามแม่เหล็กจะถูกแรงกระทำ (แรงลอเรนซ์ ทิศตามกฎมือซ้ายของเฟลมมิง) ขดลวดของอาร์เมเจอร์จึงหมุน สไลด์หน้า 16 บอกต่อว่าเมื่ออาร์เมเจอร์หมุน ขดลวดเดียวกันก็ตัดฟลักซ์ มอเตอร์จึงทำงานเป็นเครื่องกำเนิดไปพร้อมกัน แรงเคลื่อนไฟฟ้า (electromotive force, emf) ที่เกิดขึ้นมีทิศต้านกระแสที่จ่ายเข้าไป จึงเรียกว่าแรงเคลื่อนไฟฟ้าต้านกลับ (back emf, \(E_b\)) หน้านี้มีภาพจำลองขดลวดหมุนระหว่างขั้วแม่เหล็กพร้อมกราฟแรงบิด เทียบคอมมิวเตเตอร์กับวงแหวนลื่น (ส่วน A) การสตาร์ตมอเตอร์ขณะที่แรงเคลื่อนไฟฟ้าต้านกลับยังเป็นศูนย์ตาม Example 4.10 ของ P. C. Sen (ส่วน B) และโจทย์ขดลวดแบบแลปเทียบแบบเวฟจาก Example 4.1 ของ P. C. Sen (ข้อ 1)</p>
+<p class="sub" data-l="en">Slide p. 15 explains that a conductor carrying a current in a magnetic field feels a force (the Lorentz force, its direction given by Fleming's left-hand rule), so the armature coils turn. Slide p. 16 adds that once the armature turns, the same coils cut the flux, so the motor works as a generator at the same time; the emf it generates opposes the current fed in, so it is called the back emf, \(E_b\). This page has coils turning between the poles with their torque graph, comparing a commutator with slip rings (section A), the start of a motor while its back emf is still zero, after P. C. Sen's Example 4.10 (section B), and lap against wave windings from P. C. Sen's Example 4.1 (problem 1).</p>
+<div class="equation-box">$$ \begin{aligned} F &= BIl \\ E_b &= K\phi\omega_m \\ K &= \frac{PZ}{2\pi A} \\ T &= K\phi I_a \\ V_t &= E_b + I_aR_a \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แรงบนตัวนำ</b>: ตัวนำยาว \(l\) ที่มีกระแส \(I\) ในสนาม \(B\) ถูกแรง \(F = BIl\) ซึ่งตั้งฉากกับทั้งสนามและกระแส (สไลด์หน้า 15) ด้านทั้งสองของขดลวดมีกระแสสวนทางกันจึงได้แรงสวนทางกัน เกิดเป็นแรงบิดรอบเพลา</li>
+  <li><b>คอมมิวเตเตอร์</b> กลับทิศกระแสในขดลวดทุกครึ่งรอบ ด้านของขดลวดที่อยู่ใต้ขั้ว N จึงมีกระแสทิศเดิมเสมอและแรงบิดไม่กลับทิศ ถ้าใช้วงแหวนลื่น (slip rings) แรงบิดจะกลับทิศทุกครึ่งรอบและเฉลี่ยเป็นศูนย์ ขดลวดหลายขดช่วยให้แรงบิดเรียบ (ส่วน A)</li>
+  <li><b>แรงเคลื่อนไฟฟ้าต้านกลับ</b> \(E_b = K\phi\omega_m\) แปรตามความเร็ว ตอนเริ่มสตาร์ต \(\omega_m = 0\) จึงมีแต่ \(R_a\) ที่จำกัดกระแส \(I_a = V_t/R_a\) ซึ่งสูงกว่าพิกัดหลายเท่า ต้องต่อตัวต้านทานสตาร์ตแล้วค่อย ๆ ลดออกเมื่อ \(E_b\) เพิ่มขึ้น (ส่วน B)</li>
+  <li><b>ค่าคงที่ของเครื่อง</b> \(K = PZ/(2\pi A)\): พันแบบแลป (lap) จำนวนทางขนาน A เท่ากับจำนวนขั้ว P พันแบบเวฟ (wave) A = 2 เสมอ ขดลวดชุดเดียวกันให้กำลังเท่ากัน แบบแลปได้กระแสสูงแรงดันต่ำ แบบเวฟได้แรงดันสูงกระแสต่ำ (ข้อ 1)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>The force on a conductor</b>: a conductor of length \(l\) carrying \(I\) in a field \(B\) feels \(F = BIl\), at right angles to both the field and the current (slide p. 15). The two sides of a coil carry opposite currents, so they feel opposite forces: a torque about the shaft.</li>
+  <li><b>The commutator</b> reverses the current in each coil every half turn, so the coil side under the N pole always carries the same current direction and the torque never reverses. With slip rings the torque would reverse every half turn and average zero. Many coils make the torque smooth (section A).</li>
+  <li><b>The back emf</b> \(E_b = K\phi\omega_m\) follows the speed. At the start \(\omega_m = 0\), so only \(R_a\) limits the current, \(I_a = V_t/R_a\), many times the rating. A starting resistance is put in and cut out step by step as \(E_b\) builds up (section B).</li>
+  <li><b>The machine constant</b> \(K = PZ/(2\pi A)\): a lap winding has as many parallel paths A as poles P, a wave winding always A = 2. The same coils give the same power: lap gives high current at low voltage, wave high voltage at low current (problem 1).</li></ul></section>
+
+<div class="slides"><figure class="slide q wide"><img src="slides/ch11/p16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 16, BACK e.m.f.: due to the rotation of the armature coil (a conductor) in the magnetic field, the motor works as a DC generator and an induced emf acts in the circuit; it opposes the current and is called the back emf (Eb). Boxed: Eb = Kφωm; K = PZ/2πA, the machine constant; ωm = 2πNm/60. P: number of poles; Z: total number of armature conductors; A: number of parallel paths in the armature, A = Z in case of lap windings, A = 2 in case of wave windings; φ: flux per pole in weber; Nm: armature speed in rpm">
+    <figcaption data-l="th">สไลด์หน้า 16 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 16 · tap to enlarge</figcaption></figure></div>
+<div class="warnbox" data-l="th"><b>สไลด์หน้า 16 พิมพ์ว่า "A = Z in case of Lap windings"</b> ซึ่งผิด ถ้า A = Z จะได้ \(K = P/(2\pi)\) ไม่ขึ้นกับจำนวนตัวนำเลย ที่ถูกคือพันแบบแลป จำนวนทางขนานเท่ากับจำนวนขั้ว \(A = P\) (P. C. Sen หัวข้อ 4.2 เขียน a = p) ส่วนแบบเวฟ \(A = 2\) ถูกต้องแล้ว ข้อ 1 ใช้ \(A = P = 4\)</div>
+<div class="warnbox" data-l="en"><b>Slide p. 16 prints "A = Z in case of Lap windings"</b>, which is wrong: with A = Z, \(K = P/(2\pi)\) would not depend on the number of conductors at all. A lap winding has as many parallel paths as poles, \(A = P\) (P. C. Sen, section 4.2, writes a = p); for a wave winding \(A = 2\) is right. Problem 1 uses \(A = P = 4\).</div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ขดลวดหมุนและคอมมิวเตเตอร์</a><a href="#tB"><b>B</b>การสตาร์ตมอเตอร์</a><a href="#ex1"><b>1</b>P. C. Sen Example 4.1</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Turning coils and the commutator</a><a href="#tB"><b>B</b>Starting a motor</a><a href="#ex1"><b>1</b>P. C. Sen Example 4.1</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ขดลวดหมุนระหว่างขั้วแม่เหล็ก: ทำไมต้องมีคอมมิวเตเตอร์</h2><h2 data-l="en">Coils turning between the poles: why a commutator is needed</h2>
+    <div class="src" data-l="th">สไลด์หน้า 15 · P. C. Sen หัวข้อ 4.1–4.2</div><div class="src" data-l="en">Slide p. 15 · P. C. Sen, sections 4.1–4.2</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch11/p15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 15, Principle of operation of a DC motor: in a DC motor the field poles are supplied by DC excitation current, which produces a DC magnetic field, and the armature winding (conductor) is supplied by DC current through the brushes and commutator. According to the Lorentz force equation, a current-carrying conductor placed in a magnetic field experiences a force that tends to move it. Two figures: the left-hand rule, a hand between an N and an S magnet with the forefinger along the magnetic field, the middle finger along the current and the thumb along the force on a conductor; and a single coil between S and N poles fed by a DC source through a two-segment commutator, with an arrow showing the direction in which the loop turns">
+    <figcaption data-l="th">สไลด์หน้า 15 (สไลด์สะกด "Lorents" ที่ถูกคือ Lorentz) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 (the slide spells "Lorents"; it is Lorentz) · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ขดลวดหนึ่งขดมีด้าน A และด้าน B อยู่ตรงข้ามกันบนอาร์เมเจอร์ ขั้ว N อยู่ทางซ้าย ขั้ว S อยู่ทางขวา (สนาม B ชี้จากซ้ายไปขวา) แปรงถ่าน + อยู่ด้านบน − อยู่ด้านล่าง ด้านที่มีกระแสพุ่งเข้าจอ (⊗) ถูกแรงกดลง ด้านที่พุ่งออก (⊙) ถูกแรงดันขึ้น (ลูกศรเขียว) ภาพจำลองหมุนขดลวดด้วยความเร็วคงที่เพื่อให้เห็นแรงบิดที่ทุกมุม กราฟข้างภาพคือแรงบิดต่อขดลวดเทียบกับค่าสูงสุดเมื่อด้านของขดลวดอยู่ตรงกลางหน้าขั้ว ลองเปลี่ยนคอมมิวเตเตอร์เป็นวงแหวนลื่น แล้วลองเพิ่มจำนวนขดลวด</p>
+  <p class="lead" data-l="en">A coil has sides A and B opposite each other on the armature; the N pole is on the left and the S pole on the right (B points from left to right), with the + brush at the top and the − brush at the bottom. A side carrying current into the screen (⊗) is pushed down, a side carrying it out (⊙) is pushed up (green arrows). The simulation turns the coils at a constant speed to show the torque at every angle; the graph beside it is the torque per coil, relative to its peak when the coil sides face the middle of the poles. Switch the commutator to slip rings, then try more coils.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">การสตาร์ตมอเตอร์: แรงเคลื่อนไฟฟ้าต้านกลับยังเป็นศูนย์</h2><h2 data-l="en">Starting a motor: the back emf is still zero</h2>
+    <div class="src" data-l="th">สไลด์หน้า 16 · P. C. Sen Example 4.10 (มอเตอร์ 10 kW, 100 V, 1000 rpm, \(R_a = 0.1\ \Omega\)) · โหลดและความเฉื่อยในภาพจำลองเลือกขึ้นเอง</div><div class="src" data-l="en">Slide p. 16 · P. C. Sen Example 4.10 (a 10 kW, 100 V, 1000 rpm motor, \(R_a = 0.1\ \Omega\)) · the load and inertia of the simulation are chosen for it</div></div></div>
+  <p class="lead" data-l="th">มอเตอร์ 10 kW 100 V มีกระแสพิกัด 100 A และ \(R_a = 0.1\ \Omega\) ขณะที่ยังไม่หมุน \(E_b = 0\) ถ้าต่อตรงกับสาย กระแสจะเป็น \(100/0.1 = 1000\) A หรือ 10 เท่าของพิกัด P. C. Sen จึงใส่กล่องตัวต้านทานสตาร์ต (starter box) \(R_{ae}\) ไว้ในวงจรอาร์เมเจอร์ ตำแหน่งที่ 1 คือ 0.4 Ω จำกัดกระแสเริ่มต้นที่ 200 A (2 เท่าของพิกัด) เมื่อมอเตอร์เร่งความเร็ว \(E_b\) เพิ่ม กระแสลดลง พอกระแสลดถึง 100 A ก็เลื่อนคันโยกไปตำแหน่งถัดไป (0.15, 0.025 แล้ว 0 Ω) กระแสกระโดดกลับขึ้น 200 A ทุกครั้ง กดปิดสวิตช์ (หรือคลิกที่สวิตช์ S ในวงจร) เพื่อสตาร์ต โหลดในภาพจำลองใช้แรงบิดคงที่ครึ่งหนึ่งของพิกัด</p>
+  <p class="lead" data-l="en">A 10 kW, 100 V motor has a rated current of 100 A and \(R_a = 0.1\ \Omega\). Standing still, \(E_b = 0\); connected straight to the line it would take \(100/0.1 = 1000\) A, ten times its rating. P. C. Sen therefore puts a starter box \(R_{ae}\) in the armature circuit: position 1 is 0.4 Ω, which limits the starting current to 200 A (twice the rating). As the motor speeds up, \(E_b\) grows and the current falls; when it is back down to 100 A the handle moves to the next position (0.15, 0.025, then 0 Ω), and the current jumps back to 200 A each time. Close the switch (or click switch S in the circuit) to start. The load of the simulation is a constant torque of half the rating.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">P. C. Sen Example 4.1: อาร์เมเจอร์เดียวกัน พันแบบแลปและแบบเวฟ</h2><h2 data-l="en">P. C. Sen Example 4.1: one armature, lap-wound and wave-wound</h2>
+    <div class="src" data-l="th">P. C. Sen, Principles of Electric Machines and Power Electronics พิมพ์ครั้งที่ 3, Example 4.1 · เพิ่มจากตำราเพื่อฝึกสูตรของสไลด์หน้า 16 · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">P. C. Sen, Principles of Electric Machines and Power Electronics, 3rd ed., Example 4.1 · added from the book to practise the formulas of slide p. 16 · no class solution</div></div></div>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>เครื่องกระแสตรง 4 ขั้ว อาร์เมเจอร์รัศมี 12.5 cm ยาว 25 cm ขั้วแม่เหล็กครอบคลุม 75 % ของเส้นรอบวงอาร์เมเจอร์ ขดลวดอาร์เมเจอร์มี 33 ขด ขดละ 7 รอบ วางใน 33 ร่อง ความหนาแน่นฟลักซ์เฉลี่ยใต้ขั้วแต่ละขั้ว 0.75 T</p>
+    <p>1. ถ้าพันแบบแลป (a) จงหาค่าคงที่ของเครื่อง K (b) จงหาแรงเคลื่อนไฟฟ้าเมื่ออาร์เมเจอร์หมุน 1000 rpm (c) จงหากระแสในขดลวดและแรงบิดแม่เหล็กไฟฟ้าเมื่อกระแสอาร์เมเจอร์ 400 A (d) จงหากำลังที่อาร์เมเจอร์พัฒนาได้ 2. ถ้าพันแบบเวฟ จงทำข้อ (a)–(d) ซ้ำ โดยขดลวดรับกระแสได้เท่ากับแบบแลป</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>A four-pole DC machine has an armature of radius 12.5 cm and an effective length of 25 cm. The poles cover 75 % of the armature periphery. The armature winding consists of 33 coils of seven turns each, in 33 slots. The average flux density under each pole is 0.75 T.</p>
+    <p>1. If the armature is lap-wound, (a) find the machine constant K; (b) find the induced voltage at 1000 rpm; (c) find the coil current and the electromagnetic torque when the armature current is 400 A; (d) find the power developed by the armature. 2. If the armature is wave-wound, repeat (a) to (d), with the same current rating of the coils.</p></div>
+  <p class="lead" data-l="th">วงจรแทนอาร์เมเจอร์ด้วยทางขนานที่อยู่ระหว่างแปรงถ่าน: แต่ละทางคือแรงเคลื่อนไฟฟ้า e ของขดลวดที่ต่ออนุกรมกันในทางนั้น กับความต้านทานเล็ก ๆ ของขดลวด ทุกทางต่อขนานกันที่แปรงถ่านแล้วจ่ายกระแส 400 A ให้โหลด (แสดงเป็นเครื่องกำเนิด) แบบแลปมี 4 ทาง ขั้นที่ 5 เปลี่ยนเป็นแบบเวฟซึ่งเหลือ 2 ทาง แต่ละทางมีรอบอนุกรมมากขึ้นเท่าตัว แผงข้างภาพเทียบแรงเคลื่อนไฟฟ้าและกระแสของสองแบบ <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The circuit shows the armature as the parallel paths between the brushes: each path is the emf e of the coils in series along it, with the small resistance of those coils. All the paths meet at the brushes and feed 400 A to a load (shown as a generator). The lap winding has 4 paths; step 5 changes to the wave winding, which has only 2, each with twice as many turns in series. The side panel compares the emf and the current of the two windings. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 2 ตำแหน่ง</div><div class="src" data-l="en">Give at least 2 decimal places</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — คอมมิวเตเตอร์</h3>
+    <ol><li>ส่วน A ขดลวดหนึ่งขดกับคอมมิวเตเตอร์: แรงบิดขึ้นลงระหว่าง 0 ถึง 1 แต่ไม่ติดลบเลย ค่าเฉลี่ยคือ \(2/\pi \approx 0.64\) ของค่าสูงสุด</li>
+    <li>เปลี่ยนเป็นวงแหวนลื่น: แรงบิดติดลบครึ่งรอบ ค่าเฉลี่ยเป็นศูนย์ ขดลวดจะแกว่งไปมาแทนที่จะหมุนต่อเนื่อง</li>
+    <li>กลับไปใช้คอมมิวเตเตอร์แล้วเพิ่มเป็น 4 ขด: แรงบิดกระเพื่อมเหลือเพียงเล็กน้อย เครื่องจริงมีขดลวดหลายสิบขดและซี่คอมมิวเตเตอร์จำนวนเท่ากัน (สไลด์หน้า 13)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — การสตาร์ต</h3>
+    <ol><li>ส่วน B เลือกตำแหน่ง 4 (0 Ω) แล้วปิดสวิตช์: กระแสพุ่งถึง 1000 A ก่อนจะลดลงเมื่อ \(E_b\) เพิ่ม</li>
+    <li>กดเริ่มใหม่ เลือกตำแหน่ง 1 (0.4 Ω) และเปิดการเลื่อนคันโยกอัตโนมัติ: กระแสอยู่ระหว่าง 100 ถึง 200 A ตลอดการสตาร์ต เหมือนรูป E4.10b ของ P. C. Sen</li>
+    <li>ดูกราฟ \(E_b\): เข้าใกล้ \(V_t = 100\) V แต่ไม่ถึง เพราะต้องเหลือแรงดันตกคร่อม \(R_a\) ให้กระแสไหลพอสร้างแรงบิดให้โหลด ถ้าโหลดเพิ่ม \(E_b\) และความเร็วจะลดลง</li></ol>
+    <div class="book">เอกสารประกอบการสอนบทที่ 11 หน้า 15–16 · P. C. Sen บทที่ 4 (หัวข้อ 4.1–4.2 และ 4.4, Examples 4.1 และ 4.10)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the commutator</h3>
+    <ol><li>In section A, one coil with a commutator: the torque rises and falls between 0 and 1 but never goes negative; its average is \(2/\pi \approx 0.64\) of the peak.</li>
+    <li>Switch to slip rings: the torque is negative for half of each turn and averages zero. The coil would rock back and forth instead of turning.</li>
+    <li>Go back to the commutator and use 4 coils: only a small ripple is left. Real machines have dozens of coils and as many commutator segments (slide p. 13).</li></ol></div>
+  <div class="card"><h3>Try this 2 — starting</h3>
+    <ol><li>In section B pick position 4 (0 Ω) and close the switch: the current shoots up to 1000 A before it falls as \(E_b\) builds up.</li>
+    <li>Press reset, pick position 1 (0.4 Ω) and turn on the automatic handle: the current stays between 100 and 200 A throughout the start, as in P. C. Sen's Fig. E4.10b.</li>
+    <li>Watch the \(E_b\) graph: it approaches \(V_t = 100\) V but never reaches it, because a drop across \(R_a\) must remain to push enough current for the load torque. With more load, \(E_b\) and the speed fall.</li></ol>
+    <div class="book">Chapter 11 handout pp. 15–16 · P. C. Sen, chapter 4 (sections 4.1–4.2 and 4.4, Examples 4.1 and 4.10)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, T = CH6.text, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const CYc = '#5ad1ff', GREEN = '#7ee787', PINK = '#ff7eb6', AMBER = '#ffd166', PURPLE = '#c792ea';
+  CH11.problem(1, 'lapwave');
+
+  /* =================================================================== A: coils turning between the poles */
+  const SA = { comm: true, n: 1, run: true, th: 0.35 };
+  const PA = CH10.pane($('cvA'), W => W < 560 ? W * 1.25 : W * 0.48);
+  LS.anim($('cvA'), dt => { const { ctx, W, H } = PA; if (SA.run) SA.th += dt * 0.8; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    const wide = W >= 560, w1 = wide ? Math.round(W * 0.46) : W, h1 = wide ? H : Math.round(H * 0.52);
+    const b1 = { x: 0, y: 0, w: w1, h: h1 }, b2 = wide ? { x: w1 + 6, y: 0, w: W - w1 - 6, h: H } : { x: 0, y: h1 + 6, w: W, h: H - h1 - 6 };
+    CH11.coilView(ctx, b1, { phi: SA.th, n: SA.n, comm: SA.comm });
+    T(ctx, SA.comm ? t('คอมมิวเตเตอร์', 'commutator') : t('วงแหวนลื่น', 'slip rings'), b1.x + 10, b1.y + 15, { align: 'left', color: COL.muted, size: 13 });
+    const deg = ((SA.th * 180 / Math.PI) % 360 + 360) % 360, avg = SA.comm ? 2 / Math.PI : 0, now = CH11.coilT(SA.th, SA.n, SA.comm);
+    CH11.plot(ctx, b2, { x: [0, 360], y: [-1.2, 1.2], xt: 90, yt: 1, xl: 'θ (°)', yl: 'T / T_max', title: t(`แรงบิดต่อขดลวด (${SA.n} ขด)`, `torque per coil (${SA.n} ${SA.n > 1 ? 'coils' : 'coil'})`),
+      bands: [{ y0: -1.2, y1: 0, color: 'rgba(255,107,107,.07)' }],
+      curves: [{ f: x => CH11.coilT(x * Math.PI / 180, SA.n, SA.comm), color: SA.comm ? GREEN : PINK }],
+      hlines: [{ y: avg, color: AMBER, label: t(`ค่าเฉลี่ย ${fd(avg, 2)}`, `average ${fd(avg, 2)}`) }], pts: [{ x: deg, y: now, color: '#e8ecf7' }] }); });
+  const pA = $('pA');
+  ui.h2(pA, t('ขดลวดต่อกับแปรงถ่านผ่าน', 'Coils connected to the brushes through')); ui.radio(pA, [{ id: 'aC', label: t('คอมมิวเตเตอร์', 'a commutator'), on: true }, { id: 'aS', label: t('วงแหวนลื่น', 'slip rings') }], id => { SA.comm = id === 'aC'; showA(); });
+  ui.h2(pA, t('จำนวนขดลวด', 'Number of coils')); ui.radio(pA, [1, 2, 4].map(n => ({ id: 'aN' + n, label: String(n), on: n === 1 })), id => { SA.n = +id.slice(2); showA(); });
+  ui.h2(pA, t('ภาพจำลอง', 'Simulation')); ui.buttons(pA, [{ label: t('หยุด', 'Pause'), on: true, onclick: el => { SA.run = !SA.run; el.textContent = SA.run ? t('หยุด', 'Pause') : t('เล่นต่อ', 'Resume'); el.classList.toggle('on', SA.run); } }]);
+  function showA() { const n = SA.n, ta = CH11.coilT(Math.PI / 2 / n, n, true), tb = CH11.coilT(0, n, true), lo = Math.min(ta, tb), hi = Math.max(ta, tb);
+    $('wA').innerHTML = `<div class="answer">${SA.comm ? t(`คอมมิวเตเตอร์กลับทิศกระแสของขดลวดทุกครั้งที่ขดลวดผ่านแนวตั้ง (ตรงแปรงถ่าน) ด้านที่อยู่ทางขั้ว N จึงเป็น ⊗ เสมอ แรงบิดไม่ติดลบ ค่าเฉลี่ย \\(2/\\pi = 0.64\\) ${n === 1 ? 'แต่ขึ้นลงตั้งแต่ 0 ถึง 1 เพราะขดลวดที่อยู่แนวตั้งไม่มีแรงบิด' : `และขดลวด ${n} ขดที่วางเหลื่อมกันทำให้แรงบิดอยู่ระหว่าง ${fd(lo, 2)} ถึง ${fd(hi, 2)} เท่านั้น`}`, `The commutator reverses a coil's current each time the coil passes the vertical (at the brushes), so the side towards the N pole is always ⊗ and the torque never goes negative. Its average is \\(2/\\pi = 0.64\\), ${n === 1 ? 'but it swings from 0 to 1, because a vertical coil has no torque.' : `and ${n} coils set at different angles keep it between ${fd(lo, 2)} and ${fd(hi, 2)}.`}`)
+      : t('วงแหวนลื่นต่อปลายขดลวดกับแปรงถ่านตลอดเวลา ด้าน A มีกระแส ⊗ เสมอไม่ว่าจะอยู่ทางขั้วใด เมื่อหมุนไปอยู่ทางขั้ว S แรงจึงกลับทิศ แรงบิดติดลบครึ่งรอบและเฉลี่ยเป็นศูนย์ วงแหวนลื่นจึงใช้กับเครื่องกระแสสลับ (บทที่ 12) ไม่ใช่มอเตอร์กระแสตรง', 'Slip rings keep each coil end on the same brush, so side A always carries ⊗ whichever pole it faces. Once it turns towards the S pole its force reverses: the torque is negative for half of each turn and averages zero. Slip rings belong to AC machines (chapter 12), not to DC motors.')}</div>`;
+    MC.renderMath($('wA')); }
+  showA();
+
+  /* =================================================================== B: starting a motor (P. C. Sen Example 4.10) */
+  const ST = CH11C.start, J = 2.2, TL = 0.5 * ST.Tr, IREF = 250, HDT = 0.02;
+  const SB = { on: false, pos: 0, auto: true, w: 0, t: 0, Ia: 0, peak: 0, hist: [], acc: 0, msg: 0 };
+  const RaeOf = () => ST.box[SB.pos], EaOf = () => ST.KF * SB.w;
+  const iPlot = (ctx, b, bd) => { const x1 = Math.max(6, SB.t), x0 = x1 - 6, big = SB.peak > 230, sh = bd.short;
+    CH11.plot(ctx, b, { x: [x0, x1], y: [0, big ? 1100 : 250], xt: 1, yt: big ? 200 : 50, xl: 't (s)', yl: 'I_a (A)', title: sh ? '' : t('กระแสอาร์เมเจอร์', 'armature current'),
+      lines: [{ pts: SB.hist.map(h => [h[0], h[1]]), color: AMBER }],
+      hlines: [{ y: ST.Ir, color: GREEN, label: sh ? '100 A' : t('พิกัด 100 A', 'rated 100 A') }, { y: 2 * ST.Ir, color: PINK, label: sh ? '200 A' : t('2 เท่าของพิกัด', 'twice rated') }] }); };
+  const ePlot = (ctx, b, bd) => { const x1 = Math.max(6, SB.t), x0 = x1 - 6, sh = bd.short;
+    CH11.plot(ctx, b, { x: [x0, x1], y: [0, 120], xt: 1, yt: 20, xl: 't (s)', yl: 'E_b (V)', title: sh ? '' : t('แรงเคลื่อนไฟฟ้าต้านกลับ', 'back emf'),
+      lines: [{ pts: SB.hist.map(h => [h[0], h[2]]), color: PURPLE }], hlines: [{ y: ST.Vt, color: CYc, label: 'V_t = 100 V' }] }); };
+  const BB = new CH8.Board('cvB', { T: 4, mid: true, midMin: 420, cktAspM: 0.46, rowAsp: 0.6, pad: 1.35, wideAt: 1e9, side: iPlot, waves: [{ draw: ePlot }],
+    view: { acPeak: false, glowColor: 'rgba(255,126,182,.4)', onToggle: p => { SB.on = p.closed; buildB(); } },
+    badge: () => !SB.on && SB.w < 1e-6 ? [['สวิตช์เปิด: กดปิดสวิตช์เพื่อสตาร์ต', 'switch open: close it to start'], 'wait'] : !SB.on ? [['สวิตช์เปิด: มอเตอร์กำลังหยุด', 'switch open: the motor is slowing down'], 'wait']
+      : [[`Ia = ${fd(SB.Ia, 0)} A = ${fd(SB.Ia / ST.Ir, 2)} × พิกัด`, `Ia = ${fd(SB.Ia, 0)} A = ${fd(SB.Ia / ST.Ir, 2)} × rated`], SB.Ia <= 2 * ST.Ir + 0.5 ? 'ok' : 'wait'] });
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('สวิตช์', 'Switch')); const bOn = ui.buttons(pB, [{ id: 'bOn', label: t('ปิดสวิตช์ (สตาร์ต)', 'Close the switch (start)'), onclick: () => { SB.on = !SB.on; buildB(); } }, { id: 'bRs', label: t('↺ เริ่มใหม่', '↺ Reset'), onclick: () => resetB() }]);
+  ui.h2(pB, t('ตำแหน่งคันโยกของกล่องตัวต้านทานสตาร์ต', 'Starter-box handle position')); const rB = ui.radio(pB, ST.box.map((r, k) => ({ id: 'bp' + k, label: `${k + 1}: ${fd(r, 3)} Ω`, on: k === 0 })), id => { SB.pos = +id.slice(2); setRae(); });
+  ui.buttons(pB, [{ label: t('เลื่อนคันโยกเองเมื่อกระแสลดถึง 100 A', 'Move the handle when the current is back to 100 A'), on: true, onclick: el => { SB.auto = !SB.auto; el.classList.toggle('on', SB.auto); } }]);
+  pB.appendChild(mB); mB.className = 'metrics';
+  function setRae() { const c = BB.ckt, p = c && c.part('Rae'); if (!p) return; const r = RaeOf(); p.value = Math.max(r, 1e-6); p.valText = `${fd(r, 3)} Ω`; rB.set('bp' + SB.pos); solveB(); }
+  function solveB() { const c = BB.ckt; if (!c) return; const m = c.part('M'), Ea = EaOf(); m.emf = Ea; m.valText = `${fd(Ea, 1)} V`; c.solve(); SB.Ia = SB.on ? Math.max(0, c.I('M').re) : 0; }
+  function buildB() { BB.set(CH11C.starter({ Vt: ST.Vt, Ra: ST.Ra, Rae: RaeOf(), Ea: EaOf(), on: SB.on }), { speed: 85 / IREF, dotRef: IREF }); solveB();
+    bOn.bOn.textContent = SB.on ? t('เปิดสวิตช์ (หยุดจ่ายไฟ)', 'Open the switch (cut the supply)') : t('ปิดสวิตช์ (สตาร์ต)', 'Close the switch (start)'); bOn.bOn.classList.toggle('on', SB.on); showB(); }
+  function resetB() { Object.assign(SB, { on: false, pos: 0, w: 0, t: 0, Ia: 0, peak: 0, hist: [], acc: 0 }); rB.set('bp0'); buildB(); }
+  function stepB(dt) { if (!SB.on && SB.w < 1e-9) return; const n = Math.max(1, Math.ceil(dt / 0.004)), h = dt / n;
+    for (let i = 0; i < n; i++) { const R = ST.Ra + RaeOf(), Ia = SB.on ? Math.max(0, (ST.Vt - ST.KF * SB.w) / R) : 0, Tm = ST.KF * Ia, Tl = SB.w > 1e-6 || Tm > TL ? TL : Tm;
+      SB.w = Math.max(0, SB.w + h * (Tm - Tl) / J); SB.t += h; SB.acc += h;
+      if (SB.on && SB.auto && SB.pos < ST.box.length - 1 && Ia <= ST.Ir && SB.t > 0.05) { SB.pos++; setRae(); }
+      if (SB.acc >= HDT) { SB.acc = 0; const I2 = SB.on ? Math.max(0, (ST.Vt - ST.KF * SB.w) / (ST.Ra + RaeOf())) : 0; SB.hist.push([SB.t, I2, ST.KF * SB.w]); SB.peak = Math.max(SB.peak, I2); if (SB.hist.length > 2000) SB.hist.shift(); } }
+    solveB(); SB.msg += dt; if (SB.msg > 0.4) { SB.msg = 0; showB(); } }
+  function showB() { const Ea = EaOf(), n = CH11C.rpm(SB.w);
+    mB.innerHTML = ui.kv([['n', `${fd(n, 1)} rpm`], ['E_b = Kφω_m', `${fd(Ea, 2)} V`], ['R_ae', `${fd(RaeOf(), 3)} Ω`], ['I_a = (V_t − E_b)/(R_a + R_ae)', `${fd(SB.Ia, 1)} A`], [t('กระแสสูงสุดที่ผ่านมา', 'peak current so far'), `${fd(SB.peak, 0)} A`]]);
+    $('wB').innerHTML = `<div class="answer">${!SB.on && SB.w < 1e-6 ? t(`มอเตอร์หยุดนิ่ง \\(E_b = 0\\) ถ้าปิดสวิตช์ตอนนี้ กระแสเริ่มต้นจะเป็น \\(\\dfrac{100}{0.1 + ${fd(RaeOf(), 3)}} = ${fd(ST.Vt / (ST.Ra + RaeOf()), 0)}\\) A`, `The motor is at rest, \\(E_b = 0\\). Closing the switch now would start it at \\(\\dfrac{100}{0.1 + ${fd(RaeOf(), 3)}} = ${fd(ST.Vt / (ST.Ra + RaeOf()), 0)}\\) A.`)
+      : SB.on ? t(`ที่ ${fd(n, 0)} rpm \\(E_b = ${fd(Ea, 1)}\\) V เหลือแรงดัน \\(100 - ${fd(Ea, 1)} = ${fd(100 - Ea, 1)}\\) V ตกคร่อม \\(R_a + R_{ae} = ${fd(ST.Ra + RaeOf(), 3)}\\ \\Omega\\) กระแสจึงเป็น ${fd(SB.Ia, 1)} A ${SB.pos === ST.box.length - 1 && SB.Ia < ST.Ir ? 'ตัวต้านทานสตาร์ตถูกตัดออกหมดแล้ว มอเตอร์เข้าใกล้สภาวะคงตัวที่ 50 A (ครึ่งหนึ่งของพิกัด ตามโหลด)' : ''}`, `At ${fd(n, 0)} rpm \\(E_b = ${fd(Ea, 1)}\\) V, leaving \\(100 - ${fd(Ea, 1)} = ${fd(100 - Ea, 1)}\\) V across \\(R_a + R_{ae} = ${fd(ST.Ra + RaeOf(), 3)}\\ \\Omega\\), so the current is ${fd(SB.Ia, 1)} A. ${SB.pos === ST.box.length - 1 && SB.Ia < ST.Ir ? 'The starter is fully cut out; the motor settles towards 50 A (half the rating, set by the load).' : ''}`)
+      : t('สวิตช์เปิด ไม่มีกระแส แรงบิดของโหลดทำให้มอเตอร์ช้าลง', 'The switch is open: no current, and the load torque slows the motor down.')}</div>`;
+    MC.renderMath($('wB')); }
+  BB.resize(); buildB(); window.addEventListener('resize', () => BB.resize());
+  LS.anim($('cvB'), dt => { stepB(dt); const p = BB.ckt && BB.ckt.part('M'); if (p) p.angle = (p.angle || 0) + dt * Math.PI * CH11C.rpm(SB.w) / 1500; BB.frame(dt); });
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const K1 = 4 * 500 / (2 * Math.PI * 4), w1 = CH11C.rad(1200), E1 = K1 * 0.02 * w1, KF3 = 210 / CH11C.rad(1000);
+  CH6.quiz('quiz', [
+    { q: t('1) อาร์เมเจอร์ 4 ขั้ว พันแบบแลป มีตัวนำ 500 เส้น ฟลักซ์ต่อขั้ว 0.02 Wb หมุน 1200 rpm จงหาค่าคงที่ของเครื่องและแรงเคลื่อนไฟฟ้า', '1) A four-pole lap-wound armature has 500 conductors, 0.02 Wb per pole, and turns at 1200 rpm. Find the machine constant and the emf.'),
+      fields: [{ key: 'x', lab: 'K =', ans: K1 }, { key: 'y', lab: 'E =', ans: E1, unit: 'V' }],
+      work: work(R`\begin{aligned} K &= \frac{PZ}{2\pi A} = \frac{(4)(500)}{2\pi(4)} = ${fd(K1, 2)} \\ E &= K\phi\omega_m = (${fd(K1, 2)})(0.02)\left(\frac{2\pi(1200)}{60}\right) = ${fd(E1, 2)}\ \text{V} \end{aligned}`) },
+    { q: t('2) อาร์เมเจอร์ของข้อ 1 แต่พันแบบเวฟ จงหาแรงเคลื่อนไฟฟ้า', '2) The armature of question 1, wave-wound. Find the emf.'),
+      fields: [{ key: 'x', lab: 'E =', ans: 2 * E1, unit: 'V' }],
+      work: work(R`K = \frac{(4)(500)}{2\pi(2)} = ${fd(2 * K1, 2)},\quad E = ${fd(2 * E1, 2)}\ \text{V}`, `<p>${t('A ลดจาก 4 เหลือ 2 แรงเคลื่อนไฟฟ้าจึงเป็นสองเท่า', 'A drops from 4 to 2, so the emf doubles.')}</p>`) },
+    { q: t('3) มอเตอร์ 220 V มี \\(R_a = 0.5\\ \\Omega\\) รับกระแสอาร์เมเจอร์ 20 A ที่ 1000 rpm จงหาแรงเคลื่อนไฟฟ้าต้านกลับและแรงบิดแม่เหล็กไฟฟ้า', '3) A 220 V motor with \\(R_a = 0.5\\ \\Omega\\) takes an armature current of 20 A at 1000 rpm. Find the back emf and the electromagnetic torque.'),
+      fields: [{ key: 'x', lab: 'E_b =', ans: 210, unit: 'V' }, { key: 'y', lab: 'T =', ans: KF3 * 20, unit: 'N·m' }],
+      work: work(R`\begin{aligned} E_b &= 220 - 20(0.5) = 210\ \text{V} \\ K\phi &= \frac{E_b}{\omega_m} = \frac{210}{${fd(CH11C.rad(1000), 2)}} = ${fd(KF3, 4)}\ \text{V}{\cdot}\text{s/rad} \\ T &= K\phi I_a = (${fd(KF3, 4)})(20) = ${fd(KF3 * 20, 2)}\ \text{N}{\cdot}\text{m} \end{aligned}`) },
+    { q: t('4) มอเตอร์ของข้อ 3 จงหากระแสสตาร์ตถ้าต่อตรงกับสาย และความต้านทานสตาร์ตที่จำกัดกระแสสตาร์ตไว้ที่ 2 เท่าของ 20 A', '4) For the motor of question 3, find the starting current with no starter, and the starting resistance that limits it to twice 20 A.'),
+      fields: [{ key: 'x', lab: 'I_start =', ans: 440, unit: 'A' }, { key: 'y', lab: 'R_ae =', ans: 5, unit: 'Ω' }],
+      work: work(R`\begin{aligned} I_{start} &= \frac{V_t}{R_a} = \frac{220}{0.5} = 440\ \text{A} \\ 40 &= \frac{220}{0.5 + R_{ae}} \Rightarrow R_{ae} = 5\ \Omega \end{aligned}`) },
+    { q: t('5) มอเตอร์ของส่วน B (P. C. Sen Example 4.10) ตำแหน่งที่ 1 (0.4 Ω) เมื่อกระแสลดลงถึง 100 A จงหาแรงเคลื่อนไฟฟ้าต้านกลับ และความต้านทานของตำแหน่งที่ 2 ที่ทำให้กระแสกลับขึ้นไปเป็น 200 A พอดี', '5) The motor of section B (P. C. Sen Example 4.10) at position 1 (0.4 Ω): when the current is back down to 100 A, find the back emf, and the resistance of position 2 that brings the current back up to exactly 200 A.'),
+      fields: [{ key: 'x', lab: 'E_b =', ans: 50, unit: 'V' }, { key: 'y', lab: 'R_ae2 =', ans: 0.15, unit: 'Ω', tol: 0.002 }],
+      work: work(R`\begin{aligned} E_b &= 100 - 100(0.1 + 0.4) = 50\ \text{V} \\ 200 &= \frac{100 - 50}{0.1 + R_{ae2}} \Rightarrow R_{ae2} = 0.15\ \Omega \end{aligned}`, `<p>${t('ตรงกับตำแหน่งที่ 2 ของส่วน B ทำต่อแบบเดียวกันจะได้ 0.025 Ω และ 0 Ω', 'This is position 2 of section B; going on the same way gives 0.025 Ω and then 0 Ω.')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

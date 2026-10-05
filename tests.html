@@ -5,17 +5,18 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=112">
-<script src="assets/stops.js?v=112"></script><script src="assets/shell.js?v=112"></script>
-<script src="assets/circuit.js?v=112"></script><script src="assets/alg.js?v=112"></script>
-<script src="assets/ana.js?v=112"></script><script src="assets/ch4_circuits.js?v=112"></script><script src="assets/ch4ui.js?v=112"></script>
-<script src="assets/ch5.js?v=112"></script><script src="assets/ch5_circuits.js?v=112"></script>
-<script src="assets/ch6.js?v=112"></script><script src="assets/ch6_circuits.js?v=112"></script>
-<script src="assets/ch7_circuits.js?v=112"></script><script src="assets/ch7.js?v=112"></script>
-<script src="assets/ch8_circuits.js?v=112"></script><script src="assets/ch8.js?v=112"></script><script src="assets/ch8ui.js?v=112"></script>
-<script src="assets/ch9_circuits.js?v=112"></script><script src="assets/ch9.js?v=112"></script>
-<script src="assets/lesson.js?v=112"></script><script src="assets/ch6ui.js?v=112"></script><script src="assets/ch7ui.js?v=112"></script><script src="assets/ch1.js?v=112"></script><script src="assets/draw.js?v=112"></script><script src="assets/ch2.js?v=112"></script><script src="assets/ch9ui.js?v=112"></script>
-<script src="assets/ch10.js?v=112"></script><script src="assets/ch10_circuits.js?v=112"></script><script src="assets/ch10ui.js?v=112"></script>
+<link rel="stylesheet" href="assets/ee.css?v=113">
+<script src="assets/stops.js?v=113"></script><script src="assets/shell.js?v=113"></script>
+<script src="assets/circuit.js?v=113"></script><script src="assets/alg.js?v=113"></script>
+<script src="assets/ana.js?v=113"></script><script src="assets/ch4_circuits.js?v=113"></script><script src="assets/ch4ui.js?v=113"></script>
+<script src="assets/ch5.js?v=113"></script><script src="assets/ch5_circuits.js?v=113"></script>
+<script src="assets/ch6.js?v=113"></script><script src="assets/ch6_circuits.js?v=113"></script>
+<script src="assets/ch7_circuits.js?v=113"></script><script src="assets/ch7.js?v=113"></script>
+<script src="assets/ch8_circuits.js?v=113"></script><script src="assets/ch8.js?v=113"></script><script src="assets/ch8ui.js?v=113"></script>
+<script src="assets/ch9_circuits.js?v=113"></script><script src="assets/ch9.js?v=113"></script>
+<script src="assets/lesson.js?v=113"></script><script src="assets/ch6ui.js?v=113"></script><script src="assets/ch7ui.js?v=113"></script><script src="assets/ch1.js?v=113"></script><script src="assets/draw.js?v=113"></script><script src="assets/ch2.js?v=113"></script><script src="assets/ch9ui.js?v=113"></script>
+<script src="assets/ch10.js?v=113"></script><script src="assets/ch10_circuits.js?v=113"></script><script src="assets/ch10ui.js?v=113"></script>
+<script src="assets/ch11.js?v=113"></script><script src="assets/ch11_circuits.js?v=113"></script><script src="assets/ch11ui.js?v=113"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -699,6 +700,51 @@ T('10 CH10.sci / sciTex: 6.4627×10⁻⁴, 9.9472×10⁶, 0.4308, 1909.9; TeX 6.
   T('10 new: try-first boxes: speaker 9 W, 25 W accepted and a = 3 named; 220/110 V names the load current 22 A; Hayt V2 = 250∠180° (or −250∠0°) accepted, 250∠0° rejected and named', `${ok(D.speaker, [9, 25])} ${chk(D.speaker, [9, 100 / 82])} ${chk(D.s220, [2420, 1452, 1936, 22, 2])} ${ok(D.hayt, [25, 250, 180, 6.25])} ${ok(D.hayt, [25, -250, 0, 6.25])} ${ok(D.hayt, [25, 250, 0, 6.25])} ${chk(D.hayt, [25, 250, 0, 6.25])}`, 'true true true true true false true'); }
 { const d = CH10.DEF.ex102, p = new CH8.Prob(cv8n(), d), g = k => (d.glow(k) || []).join(',');
   T('10 new: Example 10.2 glows the mmf source, then ℛc, then ℛg, one per step; the relay closes its gaps at step 5 (one reluctance left)', `${g(1)} ${g(2)} ${g(3)} ${(p.set(4), g(4)) || '-'} ${CH10.DEF.relay.spec(5).parts.filter(x => x.type === 'R').length}`, 'F Rc Rg - 1'); }
+
+/* --- chapter 11: DC machines (ch11.js, ch11_circuits.js, ch11ui.js) against P. C. Sen and hand calculations; the handout gives no solutions --- */
+const h11 = CH11C, s11 = sp => { const c = new Circuit(sp); c.solve(); return c; }, f11 = (x, d = 4) => CH6.fd(x, d);
+{ const R = h11.rev; T('11.1 P. C. Sen Problem 4.25: Ra = 0.25 Ω, I²R = 400 W, Pd = 9200 W, T = 73.21 N·m (manual 73.19), no load: 240 V at 1252.2 rpm', `${f11(R.Ra)} ${f11(R.Pcu)} ${f11(R.Pd)} ${f11(R.T, 2)} ${f11(R.nNL, 1)}`, '0.25 400 9200 73.21 1252.2'); }
+T('11.1 engine: the armature on 240 V with Ea = 230 V takes 40 A into the machine (motor); with Ea = 250 V it gives 40 A back (generator); with Ea = 240 V nothing flows', [230, 250, 240].map(e => f11(s11(h11.arm({ Vt: 240, Ra: 0.25, Eb: e })).I('M').re, 4)).join(' '), '40 -40 0');
+{ const L = h11.lapwave; T('11.2 P. C. Sen Example 4.1: Z = 462, Ap = 0.03682 m², Φ = 0.02761 Wb; lap K = 73.53, Ea = 212.6 V, Icoil = 100 A, T = 812.1 N·m, P = 85.04 kW; wave K = 147.06, Ea = 425.2 V, Ia = 200 A, T = 812.1 N·m',
+    `${L.Z} ${f11(L.Ap, 5)} ${f11(L.Phi, 5)} ${f11(L.lap.Ka, 2)} ${f11(L.lap.Ea, 1)} ${f11(L.lap.Ia / L.lap.a)} ${f11(L.lap.T, 1)} ${f11(L.lap.P / 1000, 2)} ${f11(L.wave.Ka, 2)} ${f11(L.wave.Ea, 1)} ${L.wave.Ia} ${f11(L.wave.T, 1)}`, '462 0.03682 0.02761 73.53 212.6 100 812.1 85.04 147.06 425.2 200 812.1');
+  T('11.2 engine: the lap armature (4 parallel paths) feeds 400 A, 100 A in each path; the wave armature (2 paths) 200 A, 100 A in each', [4, 2].map(a => { const w = a === 4 ? L.lap : L.wave, c = s11(h11.paths(a, w.Ea, w.Ia)); return `${f11(Math.abs(c.I('RL').re), 3)},${f11(Math.abs(c.I('E0').re), 3)},${f11(Math.abs(c.I('E' + (a - 1)).re), 3)}`; }).join(' '), '400,100,100 200,100,100'); }
+{ const S = h11.start; T('11.2 P. C. Sen Example 4.10: rated 100 A, start 1000 A without a starter; starter box 0.4, 0.15, 0.025, 0 Ω; Kφ = 0.8594 V·s/rad', `${S.Ir} ${S.Istart} ${S.box.map(r => f11(r, 4)).join(' ')} ${f11(S.KF)}`, '100 1000 0.4 0.15 0.025 0 0.8594');
+  T('11.2 engine: the starter circuit with the switch closed, Rae = 0.4 Ω and Ea = 0 takes 200 A; at Ea = 50 V and Rae = 0.15 Ω again 200 A; with the switch open nothing flows', `${f11(s11(h11.starter({ on: true, Rae: 0.4, Ea: 0 })).I('M').re, 3)} ${f11(s11(h11.starter({ on: true, Rae: S.box[1], Ea: 50 })).I('M').re, 3)} ${f11(s11(h11.starter({ on: false, Rae: 0.4, Ea: 0 })).I('M').re, 3)}`, '200 200 0'); }
+T('11.2 coil torque (CH11.coilT): one coil with a commutator averages 2/π = 0.6366, with slip rings 0; two coils stay within 0.5–0.7071, four within 0.6036–0.6533', (() => { const avg = (n, cm) => { let s = 0; for (let k = 0; k < 3600; k++) s += CH11.coilT(2 * Math.PI * k / 3600, n, cm); return s / 3600; },
+  rng = n => { let lo = 9, hi = -9; for (let k = 0; k < 3600; k++) { const v = CH11.coilT(2 * Math.PI * k / 3600, n, true); lo = Math.min(lo, v); hi = Math.max(hi, v); } return `${f11(lo)}–${f11(hi)}`; };
+  return `${f11(avg(1, true))} ${f11(Math.abs(avg(1, false)))} ${rng(2)} ${rng(4)}`; })(), '0.6366 0 0.5–0.7071 0.6036–0.6533');
+{ const F = h11.fan; T('11.3 P. C. Sen Example 4.9: Ea = 195 V, P = 4875 W (6.53 hp; the book rounds to 4880 W, 6.54 hp), T = 155.2 N·m, Ksr = 0.2483; at 200 rpm T = 68.97 N·m, Ia = 16.67 A, Ea = 86.67 V, Rae = 7 Ω, P = 1444.4 W',
+    `${f11(F.Ea)} ${f11(F.P)} ${f11(F.hp, 2)} ${f11(F.T, 1)} ${f11(F.Ksr)} ${f11(F.T2, 2)} ${f11(F.Ia2, 2)} ${f11(F.Ea2, 2)} ${f11(F.Rae, 3)} ${f11(F.P2, 1)}`, '195 4875 6.53 155.2 0.2483 68.97 16.67 86.67 7 1444.4');
+  T('11.3 engine: the series circuit with Rae = 7 Ω and Ea = 86.67 V carries 16.667 A; with Rae = 0 and Ea = 195 V, 25 A', `${f11(s11(h11.motor('series', { Vt: 220, Ra: F.Ra, Rse: F.Rsr, Eb: F.Ea2, Rae: F.Rae })).I('M').re, 3)} ${f11(s11(h11.motor('series', { Vt: 220, Ra: F.Ra, Rse: F.Rsr, Eb: F.Ea, Rae: 0 })).I('M').re, 3)}`, '16.667 25'); }
+{ const G = CH11.GEN, M = CH11.model, ty = ['sep', 'shunt', 'series', 'short', 'long'];
+  T('11.3 the five connections (CH11.model) all run at 1422.1 rpm with 40 N·m; at 5 N·m the shunt motor runs at 1490 rpm, the series motor at 4249 rpm; at 80 N·m the shunt motor takes Ia = 57.12 A, the series motor 41.64 A', `${ty.map(k => f11(M(k, 40).n, 1)).join(',')} ${f11(M('shunt', 5).n, 0)} ${f11(M('series', 5).n, 0)} ${f11(M('shunt', 80).Ia, 2)} ${f11(M('series', 80).Ia, 2)}`, '1422.1,1422.1,1422.1,1422.1,1422.1 1490 4249 57.12 41.64');
+  T('11.3 engine vs CH11.model: all five circuits at 10, 40 and 70 N·m carry the model\'s armature and line currents (largest difference, A)', ty.reduce((mx, k) => [10, 40, 70].reduce((m2, Tq) => { const m = M(k, Tq), c = s11(h11.motor(k, { Vt: G.Vt, Ra: G.Ra, Rse: G.Rse, Vf: G.Vf, Rfw: k === 'sep' ? 40 : 80, Rfx: k === 'sep' ? 10 : 30, Eb: m.Eb }));
+    return Math.max(m2, Math.abs(c.I('M').re - m.Ia), Math.abs(Math.abs(c.I('Vt').re) - m.IL)); }, mx), 0), 0, 1e-6); }
+{ const A = h11.ex1, B = h11.ex2, Cc = h11.ex3;
+  T('11.4 Ex1 long shunt: Ish = 2, Ia = 90 A, Eb = 211.1 V, copper 1458 + 243 + 460 = 2161 W, Pd = 18999 W, Pout = 17911 W, η = 84.65 % (88.14 % if the 25 hp rating were taken as the output)', `${f11(A.Ish)} ${f11(A.Ia)} ${f11(A.Eb, 2)} ${f11(A.Pa, 1)} ${f11(A.Pse, 1)} ${f11(A.Psh, 1)} ${f11(A.Pcu, 1)} ${f11(A.Pd, 1)} ${f11(A.Pout, 1)} ${f11(100 * A.eff, 2)} ${f11(100 * A.Prated / A.Pin, 2)}`, '2 90 211.1 1458 243 460 2161 18999 17911 84.65 88.14');
+  T('11.4 Ex2 shunt: Ia = 34 A, Eb = 293.2 V, Pd = 9968.8 W, Pout = 9658.8 W, η = 89.43 %, Td = 63.46 N·m, Ts = 61.49 N·m', `${f11(B.Ia)} ${f11(B.Eb, 2)} ${f11(B.Pd, 1)} ${f11(B.Pout, 1)} ${f11(100 * B.eff, 2)} ${f11(B.Td, 2)} ${f11(B.Ts, 2)}`, '34 293.2 9968.8 9658.8 89.43 63.46 61.49');
+  T('11.4 Ex3 short shunt: Vsh = 238.65 V, Ish = 2.9831 A, Ia = 12.0169 A, Eb = 237.33 V, Pcu = 748.06 W, η = 70.61 %, Td = 18.16 N·m, Ts = 16.18 N·m', `${f11(Cc.Vsh, 2)} ${f11(Cc.Ish)} ${f11(Cc.Ia)} ${f11(Cc.Eb, 2)} ${f11(Cc.Pcu, 2)} ${f11(100 * Cc.eff, 2)} ${f11(Cc.Td, 2)} ${f11(Cc.Ts, 2)}`, '238.65 2.9831 12.0169 237.33 748.06 70.61 18.16 16.18');
+  T('11.4 engine: the three handout circuits with their back emfs take 92, 36 and 15 A from the line, with armature currents 90, 34 and 12.0169 A', [['long', A], ['shunt', B], ['short', Cc]].map(([k, E]) => { const c = s11(h11.motor(k, { Vt: E.Vt, Ra: E.Ra, Rse: E.Rse, Rsh: E.Rsh, Eb: E.Eb })); return `${f11(Math.abs(c.I('Vt').re))},${f11(c.I('M').re)}`; }).join(' '), '92,90 36,34 15,12.0169');
+  T('11.4 CH11.flow arithmetic: Ex1 Pd = 18999 W, Pout = 17911 W, η = 84.65 %; Ex3 Pd = 2851.94 W, Pout = 2541.94 W', (() => { const ctx = cv8n().getContext('2d'), b = { x: 0, y: 0, w: 600, h: 300 };
+    const r1 = CH11.flow(ctx, b, { Pin: A.Pin, cu: [{ label: 'a', v: A.Pa }, { label: 'se', v: A.Pse }, { label: 'sh', v: A.Psh }], rot: [{ label: 'rot', v: A.Prot }] }), r3 = CH11.flow(ctx, b, { Pin: Cc.Pin, cu: [{ label: 'a', v: Cc.Pcu }], rot: [{ label: 'c', v: Cc.Pcore }, { label: 'f', v: Cc.Pfr }] });
+    return `${f11(r1.Pd, 1)} ${f11(r1.Pout, 1)} ${f11(100 * r1.eff, 2)} ${f11(r3.Pd, 2)} ${f11(r3.Pout, 2)}`; })(), '18999 17911 84.65 2851.94 2541.94'); }
+/* chapter 11 (Oct 2026): the problems of ch11ui.js on CH8.Prob */
+{ const want = { rev: [5, 1], lapwave: [6, 3], fan: [5, 1], ex1: [4, 1], ex2: [5, 1], ex3: [6, 2] }, got = [], bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; }, bad = [];
+  Object.keys(want).forEach(k => { const d = CH11.DEF[k], p = new CH8.Prob(cv8n(), d), n = p.steps.length, at = (p.set(want[k][1] - 1), p.solved) === false && (p.set(want[k][1]), p.solved) === true;
+    if (p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body)))) bad.push(k); got.push(`${k}:${n}${at ? '' : '!'}`); });
+  T('11 new: all six chapter 11 problems build their steps (count), the dots start at the step that finds the current, and every formula has balanced braces', `${got.join(' ')} ${bad.join(',') || 'none'}`, 'rev:5 lapwave:6 fan:5 ex1:4 ex2:5 ex3:6 none'); }
+{ const D = CH11.DEF, ok = (d, v) => { const a = d.ask(); return a.fields.every((f, i) => f.ok(v[i], v)); }, chk = (d, v) => !!d.ask().check(v);
+  T('11 new: try-first boxes accept the answers (rev, lapwave, fan, ex1, ex2, ex3) and name the traps: V_tI_a for the torque, A = Z, current ∝ n², 25 hp as the output, I_L for I_a, long shunt and the missing series drop',
+    [ok(D.rev, [0.25, 9200, 73.21, 1252.2]), chk(D.rev, [0.25, 9200, 76.39, 1252]), ok(D.lapwave, [73.53, 212.6, 812.1, 425.2]), chk(D.lapwave, [0.6366, 0, 0, 0]), ok(D.fan, [195, 155.17, 16.67, 7]), chk(D.fan, [195, 155, 11.11, 0]),
+      ok(D.ex1, [211.1, 84.65]), chk(D.ex1, [211.1, 88.14]), ok(D.ex2, [293.2, 89.43, 63.46, 61.49]), chk(D.ex2, [292.8, 0, 0, 0]), ok(D.ex3, [237.33, 70.61, 18.16, 16.18]), chk(D.ex3, [237.6, 0, 0, 0]), chk(D.ex3, [238.68, 0, 0, 0]), ok(D.ex3, [237.6, 70.61, 18.16, 16.18])].join(' '),
+    'true true true true true true true true true true true true true false'); }
+{ const D = CH11.DEF, eb = (d, k) => d.spec(k).parts.find(p => p.id === 'M').valText, ra = k => D.fan.spec(k).parts.find(p => p.id === 'Rae').valText;
+  T('11 new: the circuits show "? V" for the back emf until the step that finds it (ex1 at 2, ex2 at 2, ex3 at 3), the fan\'s Rae is 0 Ω, then "? Ω" (step 3), then 7 Ω (step 5), and the lap circuit becomes 2 paths at step 5',
+    `${eb(D.ex1, 1)}|${eb(D.ex1, 2)} ${eb(D.ex2, 1)}|${eb(D.ex2, 2)} ${eb(D.ex3, 2)}|${eb(D.ex3, 3)} ${ra(1)}|${ra(3)}|${ra(5)} ${D.lapwave.spec(4).parts.filter(p => p.type === 'V').length}|${D.lapwave.spec(5).parts.filter(p => p.type === 'V').length}`, '? V|211.1 V ? V|293.2 V ? V|237.33 V 0 Ω|? Ω|7 Ω 4|2'); }
+T('11 drawings: CH11.machine, coilView, flow, ts and plot draw without errors at 320, 600 and 1100 px, and the machine keeps its commutator view inside the box', (() => { let ok = true; [320, 600, 1100].forEach(w => { const c = cv8n(w), ctx = c.getContext('2d'), h = Math.round(w * (w < 560 ? 1.3 : 0.6)), b = { x: 0, y: 0, w, h };
+  try { const m = CH11.machine(ctx, b, { sel: 'comm', ang: 0.3, st: { dt: 0.016 }, forces: true }); if (m.ey + m.rc * 1.9 + 18 + 6 > h + 0.5 || m.ex + m.rc > w) ok = false; CH11.coilView(ctx, b, { phi: 0.4, n: 2 }); CH11.flow(ctx, b, { Pin: 1000, cu: [{ label: 'a', v: 50 }], rot: [{ label: 'r', v: 30 }], title: 'x' });
+    CH11.ts(ctx, b, { Tmax: 80, nmax: 3000, curves: [{ f: T => CH11.model('series', T).n, color: '#fff', label: 's' }], load: { f: T => 30 * T, label: 'l' }, ops: [{ T: 40, n: 1422, label: 'p' }] }); CH11.plot(ctx, b, { x: [0, 10], y: [-1, 1], curves: [{ f: x => Math.sin(x), color: '#fff' }], lines: [{ pts: [[0, 0], [5, 1]], color: '#fff' }], hlines: [{ y: 0.5, label: 'h' }], pts: [{ x: 2, y: 0, label: 'p' }] }); }
+  catch (e) { ok = false; } }); return ok; })(), 'true');
 
 /* --- formatting regressions --- */
 T('fmtDec(40, 0)', C.fmtDec(40, 0), '40'); T('fmtDec(2.10, 2)', C.fmtDec(2.1, 2), '2.1'); T('eng(0.0024 A)', CK.eng(0.0024, 'A'), '2.4 mA'); T('eng(3 Ω)', CK.eng(3, 'Ω'), '3 Ω');

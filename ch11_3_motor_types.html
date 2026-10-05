@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="11.3 — Types of DC Motors">11.3 — ชนิดของมอเตอร์กระแสตรง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=113">
+<script src="assets/stops.js?v=113"></script><script src="assets/shell.js?v=113"></script>
+<script src="assets/circuit.js?v=113"></script><script src="assets/alg.js?v=113"></script><script src="assets/lesson.js?v=113"></script><script src="assets/ch6.js?v=113"></script>
+<script src="assets/ch8.js?v=113"></script><script src="assets/ch10.js?v=113"></script><script src="assets/ch11.js?v=113"></script><script src="assets/ch11_circuits.js?v=113"></script><script src="assets/ch11ui.js?v=113"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ชนิดของมอเตอร์กระแสตรง <span class="en">Where the field current comes from decides how the motor behaves</span></h1>
+<h1 data-l="en">Types of DC motors <span class="en">Where the field current comes from decides how the motor behaves</span></h1>
+
+<p class="sub" data-l="th">มอเตอร์กระแสตรงแบ่งชนิดตามที่มาของกระแสในขดลวดสนาม (สไลด์หน้า 17–21): แบบกระตุ้นแยก (separately excited) รับไฟจากแหล่งจ่ายอีกชุดหนึ่ง แบบกระตุ้นตัวเอง (self-excited) รับไฟจากขั้วของมอเตอร์เอง ได้แก่ แบบชันต์ (ขดลวดสนามต่อขนานกับอาร์เมเจอร์) แบบอนุกรม (ขดลวดสนามต่ออนุกรมกับอาร์เมเจอร์) และแบบคอมปาวด์ (compound) ที่มีทั้งสองขดลวด ต่อได้สองแบบคือช็อตชันต์ (short shunt) และลองชันต์ (long shunt) การต่อแต่ละแบบให้ฟลักซ์ที่เปลี่ยนตามโหลดต่างกัน มอเตอร์จึงมีลักษณะแรงบิด–ความเร็วต่างกัน ภาพจำลองในส่วน A แก้วงจรของทั้งห้าแบบที่แรงบิดของโหลดที่เลือก แล้ววาดจุดทำงานบนกราฟแรงบิด–ความเร็ว โจทย์ของหน้านี้คือมอเตอร์อนุกรมขับพัดลมจาก Example 4.9 ของ P. C. Sen (ข้อ 1)</p>
+<p class="sub" data-l="en">DC motors are classified by where their field current comes from (slides pp. 17–21): a separately excited motor takes it from another supply; a self-excited motor takes it from its own terminals, as a shunt motor (field in parallel with the armature), a series motor (field in series with the armature), or a compound motor with both windings, connected as a short shunt or a long shunt. Each connection makes the flux change with the load in its own way, so each type has its own torque–speed characteristic. The simulation of section A solves the circuit of all five types at the load torque you choose and plots the operating point on the torque–speed plane. The problem of this page is a series motor driving a fan, from P. C. Sen's Example 4.9 (problem 1).</p>
+<div class="equation-box">$$ \begin{aligned} \text{shunt:}\quad I_L &= I_a + I_{sh},\quad E_b = V_t - I_aR_a \\ \text{series:}\quad I_L &= I_a,\quad E_b = V_t - I_a(R_a + R_{ser}) \\ T &= K\phi I_a,\quad \omega_m = \frac{E_b}{K\phi} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ขดลวดสนามสองแบบ</b>: ขดลวดชันต์ (ลวดเล็ก รอบมาก ความต้านทานสูง) ต่อคร่อมแรงดัน กระแสสนามจึงคงที่ ขดลวดอนุกรม (ลวดใหญ่ รอบน้อย ความต้านทานต่ำ) รับกระแสอาร์เมเจอร์ทั้งหมด ฟลักซ์จึงเพิ่มตามโหลด (สไลด์หน้า 11)</li>
+  <li><b>แบบกระตุ้นแยกและแบบชันต์</b>: ฟลักซ์คงที่ ความเร็วลดลงเพียงเล็กน้อยเมื่อโหลดเพิ่ม (มอเตอร์ความเร็วเกือบคงที่) กระแสสนามของแบบกระตุ้นแยกปรับได้อิสระจากแรงดันอาร์เมเจอร์ (สไลด์หน้า 17–18)</li>
+  <li><b>แบบอนุกรม</b>: ฟลักซ์แปรตามกระแส \(K\phi = K_{sr}I_a\) แรงบิดจึงแปรตาม \(I_a^2\) ให้แรงบิดเริ่มต้นสูงมาก แต่ความเร็วลดลงมากเมื่อโหลดเพิ่ม และพุ่งสูงอันตรายเมื่อไม่มีโหลด ห้ามเดินตัวเปล่า (สไลด์หน้า 19)</li>
+  <li><b>แบบคอมปาวด์</b>: ลักษณะอยู่ระหว่างชันต์กับอนุกรม แบบช็อตชันต์ ขดลวดชันต์คร่อมอาร์เมเจอร์โดยตรงและขดลวดอนุกรมรับกระแสสาย \(I_L\) แบบลองชันต์ ขดลวดชันต์คร่อมขั้วสายและขดลวดอนุกรมรับกระแส \(I_a\) (สไลด์หน้า 20–21)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Two kinds of field winding</b>: the shunt winding (fine wire, many turns, high resistance) sits across a voltage, so its current is steady; the series winding (heavy wire, few turns, low resistance) carries the whole armature current, so the flux grows with the load (slide p. 11).</li>
+  <li><b>Separately excited and shunt motors</b>: constant flux, so the speed drops only a little as the load grows (nearly constant speed). A separately excited field can be set independently of the armature voltage (slides pp. 17–18).</li>
+  <li><b>The series motor</b>: the flux follows the current, \(K\phi = K_{sr}I_a\), so the torque follows \(I_a^2\). It gives a very high starting torque, but its speed falls steeply with load and races dangerously at no load: never run it unloaded (slide p. 19).</li>
+  <li><b>The compound motor</b> lies between the shunt and the series motor. In a short shunt the shunt field is directly across the armature and the series field carries the line current \(I_L\); in a long shunt the shunt field is across the line and the series field carries \(I_a\) (slides pp. 20–21).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ห้าชนิดบนกราฟเดียว</a><a href="#ex1"><b>1</b>P. C. Sen Example 4.9</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Five types on one graph</a><a href="#ex1"><b>1</b>P. C. Sen Example 4.9</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ห้าชนิดของมอเตอร์บนกราฟแรงบิด–ความเร็วเดียวกัน</h2><h2 data-l="en">The five types on one torque–speed plane</h2>
+    <div class="src" data-l="th">สไลด์หน้า 17–21 · P. C. Sen หัวข้อ 4.4 · ตัวเลขของเครื่องเลือกขึ้นเองให้ทั้งห้าแบบผ่านจุด 40 N·m เดียวกัน</div><div class="src" data-l="en">Slides pp. 17–21 · P. C. Sen, section 4.4 · the machine's numbers are chosen so that all five pass through the same 40 N·m point</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch11/p17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 17, Types of DC Motors, 1 Separately Excited DC Motor: the shunt field windings are supplied from a separate constant DC power source (like a battery) for producing the magnetic flux, represented by the resistor Rf. Circuit: a battery Vf drives the field current If through the field winding Rfw and the rheostat Rfx; a separate armature circuit has the source Vt, Ra and Eb with Ia = IL. Rfw: resistance of the field winding; Rfx: resistance of the control rheostat in the field circuit; Rf = Rfw + Rfx: total field resistance; Ra: resistance of the armature circuit">
+      <figcaption data-l="th">สไลด์หน้า 17: แบบกระตุ้นแยก · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 17: separately excited · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch11/p18.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 18, Types of DC Motors, 2 Self-Excited DC Motor: the field winding gets its power from the armature terminals of the motor. Shunt DC motor: the shunt field winding is connected across (in parallel with) the armature terminals. Circuit: the line current IL enters at the + terminal of Vt and divides into the field current If through Rfw and Rfx on the left and the armature current Ia through Ra and Eb">
+      <figcaption data-l="th">สไลด์หน้า 18: แบบชันต์</figcaption><figcaption data-l="en">Slide p. 18: shunt</figcaption></figure>
+    <figure class="slide"><img src="slides/ch11/p19.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 19, Types of DC Motors, Series DC motor: the series field winding is connected in series with the armature windings. Circuit: the line current IL flows through the series field Rser (Iser) and then through Ra and Eb (Ia), all one current, from the supply Vt">
+      <figcaption data-l="th">สไลด์หน้า 19: แบบอนุกรม</figcaption><figcaption data-l="en">Slide p. 19: series</figcaption></figure>
+    <figure class="slide"><img src="slides/ch11/p20.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 20, Types of DC Motors, Compound DC motor: both shunt and series field windings are connected with the armature windings, in short shunt or long shunt. 1 Short shunt compound DC motor: the shunt field winding is connected directly across the armature terminals. Circuit: IL from Vt flows through the series field Rser (Iser), then divides into If through Rfw and Rfx and Ia through Ra and Ea">
+      <figcaption data-l="th">สไลด์หน้า 20: คอมปาวด์ช็อตชันต์ (สไลด์เขียนแรงเคลื่อนไฟฟ้าเป็น Ea)</figcaption><figcaption data-l="en">Slide p. 20: short-shunt compound (the slide writes the emf as Ea)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch11/p21.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 21, Types of DC Motors, 2 Long shunt compound DC motor: the shunt field winding is connected across the load (the supply terminals). Circuit: IL from Vt divides into If through Rfw and Rfx on the left and the armature branch, where Iser = Ia flows through the series field Rser, then Ra and Eb">
+      <figcaption data-l="th">สไลด์หน้า 21: คอมปาวด์ลองชันต์</figcaption><figcaption data-l="en">Slide p. 21: long-shunt compound</figcaption></figure></div>
+  <p class="lead" data-l="th">เครื่องสมมติขนาด 220 V มี \(R_a = 0.4\ \Omega\) ขดลวดอนุกรม \(0.2\ \Omega\) และขดลวดชันต์รวม \(110\ \Omega\) (\(R_{fw} + R_{fx}\)) ตัวเลขของขดลวดสนามแต่ละแบบเลือกให้ทั้งห้าแบบหมุนที่ 1422 rpm เมื่อแรงบิดของโหลดเท่ากับ 40 N·m เลือกชนิดของมอเตอร์แล้วเลื่อนแรงบิดของโหลด: วงจรแก้ใหม่ทุกครั้งและจุดวิ่งตามกระแส กราฟข้างภาพแสดงเส้นแรงบิด–ความเร็วของทั้งห้าแบบ (แบบที่เลือกเป็นเส้นเข้ม) พร้อมจุดทำงาน สังเกตว่ามอเตอร์อนุกรมเร็วขึ้นมากเมื่อแรงบิดน้อย ส่วนเส้นของแบบกระตุ้นแยกกับแบบชันต์ทับกันพอดี เพราะกระแสสนามเท่ากัน (2 A)</p>
+  <p class="lead" data-l="en">A made-up 220 V machine with \(R_a = 0.4\ \Omega\), a \(0.2\ \Omega\) series field and a \(110\ \Omega\) shunt field (\(R_{fw} + R_{fx}\)); the field numbers of each type are chosen so that all five run at 1422 rpm with a 40 N·m load. Pick a type and move the load torque: the circuit is solved again each time and the dots follow the currents. The graph beside it shows the torque–speed curves of all five types (the chosen one in bold) with the operating point. Notice how fast the series motor runs at light load, while the separately excited and shunt curves lie exactly on top of each other, because their field currents are equal (2 A).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">P. C. Sen Example 4.9: มอเตอร์อนุกรมขับพัดลม และการลดความเร็วด้วยความต้านทาน</h2><h2 data-l="en">P. C. Sen Example 4.9: a series motor driving a fan, slowed down by a resistance</h2>
+    <div class="src" data-l="th">P. C. Sen, Principles of Electric Machines and Power Electronics พิมพ์ครั้งที่ 3, Example 4.9 · เพิ่มจากตำราเพราะเอกสารประกอบการสอนไม่มีโจทย์ของมอเตอร์อนุกรม · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">P. C. Sen, Principles of Electric Machines and Power Electronics, 3rd ed., Example 4.9 · added from the book because the handout has no series-motor problem · no class solution</div></div></div>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>มอเตอร์อนุกรม 220 V 7 hp ต่อทางกลกับพัดลม เมื่อต่อกับแหล่งจ่าย 220 V โดยไม่มีความต้านทานภายนอกในวงจรอาร์เมเจอร์ (\(R_{ae} = 0\)) มอเตอร์รับกระแส 25 A และหมุน 300 rpm แรงบิดที่พัดลมต้องการแปรตามกำลังสองของความเร็ว \(R_a = 0.6\ \Omega\) และ \(R_{sr} = 0.4\ \Omega\) ไม่คิดปฏิกิริยาอาร์เมเจอร์และการสูญเสียจากการหมุน</p>
+    <p>(a) จงหากำลังที่ส่งให้พัดลมและแรงบิดที่มอเตอร์พัฒนาได้ (b) ต้องการลดความเร็วเหลือ 200 rpm โดยต่อความต้านทาน \(R_{ae}\) ในวงจรอาร์เมเจอร์ จงหาค่าความต้านทานนี้และกำลังที่ส่งให้พัดลม</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>A 220 V, 7 hp series motor is mechanically coupled to a fan. Connected to a 220 V supply with no external resistance in the armature circuit (\(R_{ae} = 0\)), it draws 25 A and runs at 300 rpm. The torque required by the fan is proportional to the square of the speed. \(R_a = 0.6\ \Omega\) and \(R_{sr} = 0.4\ \Omega\). Neglect armature reaction and rotational loss.</p>
+    <p>(a) Find the power delivered to the fan and the torque developed by the machine. (b) The speed is to be reduced to 200 rpm by inserting a resistance \(R_{ae}\) in the armature circuit. Find this resistance and the power delivered to the fan.</p></div>
+  <p class="lead" data-l="th">วงจรวาดตามสไลด์หน้า 19: ขดลวดสนามอนุกรม \(R_{sr}\) อยู่บนสายด้านบน และมีที่สำหรับ \(R_{ae}\) (ตอนแรก 0 Ω) แผงข้างภาพคือกราฟแรงบิด–ความเร็วของมอเตอร์ (สีฟ้า) กับเส้นโค้งของพัดลม \(T \propto n^2\) (เส้นประ) จุดทำงานคือจุดที่สองเส้นตัดกัน ขั้นที่ 3 วาดเส้นของมอเตอร์เมื่อมี \(R_{ae}\) ซึ่งเลื่อนลงมาตัดเส้นพัดลมที่ 200 rpm <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The circuit follows slide p. 19: the series field \(R_{sr}\) on the top wire, with a place for \(R_{ae}\) (0 Ω at first). The side panel is the motor's torque–speed curve (cyan) with the fan's curve \(T \propto n^2\) (dashed); the operating point is where they cross. Step 3 adds the motor's curve with \(R_{ae}\), which drops down to meet the fan at 200 rpm. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 2 ตำแหน่ง · ถือว่าแม่เหล็กเป็นเชิงเส้น (ฟลักซ์ของขดลวดอนุกรมแปรตามกระแส)</div><div class="src" data-l="en">Give at least 2 decimal places · assume magnetic linearity (the series-field flux follows its current)</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ห้าชนิด</h3>
+    <ol><li>ส่วน A ตั้งแรงบิด 40 N·m: ทั้งห้าแบบหมุนที่ 1422 rpm แล้วลดแรงบิดเหลือ 5 N·m: มอเตอร์ชันต์เร็วขึ้นเพียงราว 5 % แต่มอเตอร์อนุกรมพุ่งเกิน 4000 rpm (หลุดกราฟ)</li>
+    <li>เพิ่มแรงบิดเป็น 80 N·m: มอเตอร์อนุกรมใช้กระแสอาร์เมเจอร์น้อยที่สุด (ราว 42 A) เพราะฟลักซ์เพิ่มตามกระแส ส่วนมอเตอร์ชันต์ต้องใช้ 57 A แรงบิดสตาร์ตที่สูงจึงเป็นจุดเด่นของมอเตอร์อนุกรม (รถไฟฟ้า ปั้นจั่น)</li>
+    <li>เทียบช็อตชันต์กับลองชันต์: เส้นเกือบทับกัน ต่างกันเพียงว่าขดลวดอนุกรมรับ \(I_L\) หรือ \(I_a\) ซึ่งต่างกันเพียงกระแสสนามราว 2 A</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — พัดลม</h3>
+    <ol><li>ข้อ 1 ขั้นที่ 2: จุดทำงานคือจุดตัดของเส้นมอเตอร์กับเส้นพัดลมที่ 300 rpm และ 155.2 N·m</li>
+    <li>ขั้นที่ 5: \(R_{ae} = 7\ \Omega\) กำลังจากสายลดจาก 5500 W เหลือ 3667 W แต่พัดลมได้เพียง 1444 W อีก 2222 W กลายเป็นความร้อนใน \(R_{ae}\) และขดลวด</li>
+    <li>คำถาม: ถ้าลดความเร็วโดยลดแรงดันที่จ่ายแทน (กระแสยังเป็น 16.67 A เท่าเดิม) จะต้องใช้แรงดันเท่าใด และเสียกำลังเป็นความร้อนเท่าใด</li></ol>
+    <div class="book">เอกสารประกอบการสอนบทที่ 11 หน้า 11, 17–21 · P. C. Sen บทที่ 4 (หัวข้อ 4.4, Example 4.9)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the five types</h3>
+    <ol><li>In section A set the torque to 40 N·m: all five run at 1422 rpm. Lower it to 5 N·m: the shunt motor speeds up by only about 5 %, but the series motor shoots past 4000 rpm (off the graph).</li>
+    <li>Raise the torque to 80 N·m: the series motor needs the least armature current (about 42 A), because its flux grows with the current, while the shunt motor needs 57 A. A high starting torque is what series motors are known for (traction, cranes).</li>
+    <li>Compare the short and the long shunt: the curves almost coincide, since the only difference is whether the series field carries \(I_L\) or \(I_a\), about 2 A of field current apart.</li></ol></div>
+  <div class="card"><h3>Try this 2 — the fan</h3>
+    <ol><li>Problem 1, step 2: the operating point is where the motor curve meets the fan curve, at 300 rpm and 155.2 N·m.</li>
+    <li>Step 5: with \(R_{ae} = 7\ \Omega\) the line power drops from 5500 W to 3667 W, but the fan gets only 1444 W; the other 2222 W becomes heat in \(R_{ae}\) and the windings.</li>
+    <li>Question: if the speed were reduced by lowering the supply voltage instead (the current is still 16.67 A), what voltage would be needed, and how much power would be lost as heat?</li></ol>
+    <div class="book">Chapter 11 handout pp. 11, 17–21 · P. C. Sen, chapter 4 (section 4.4, Example 4.9)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  CH11.problem(1, 'fan');
+
+  /* =================================================================== A: the five types on one torque–speed plane */
+  const G = CH11.GEN, TYPES = ['sep', 'shunt', 'series', 'short', 'long'], IREF = 60;
+  const COLS = { sep: '#5ad1ff', shunt: '#7ee787', series: '#ff7eb6', short: '#ffd166', long: '#ffa552' };
+  const NAME = { sep: ['กระตุ้นแยก', 'separately excited'], shunt: ['ชันต์', 'shunt'], series: ['อนุกรม', 'series'], short: ['คอมปาวด์ช็อตชันต์', 'short-shunt compound'], long: ['คอมปาวด์ลองชันต์', 'long-shunt compound'] };
+  const nm = ty => t(...NAME[ty]);
+  const INFO = {
+    sep: t('ขดลวดสนามรับไฟจากแหล่งจ่ายแยก \\(V_f = 100\\) V ผ่าน \\(R_{fw} + R_{fx} = 50\\ \\Omega\\) กระแสสนาม 2 A คงที่ไม่ว่าโหลดเท่าใด ความเร็วจึงลดลงเพียงเท่าที่ \\(I_aR_a\\) ทำให้ \\(E_b\\) ลด ปรับ \\(R_{fx}\\) เพื่อเปลี่ยนความเร็วได้โดยไม่ยุ่งกับวงจรอาร์เมเจอร์', 'The field takes its current from a separate supply, \\(V_f = 100\\) V through \\(R_{fw} + R_{fx} = 50\\ \\Omega\\): a steady 2 A whatever the load. The speed falls only as much as \\(I_aR_a\\) lowers \\(E_b\\). Adjusting \\(R_{fx}\\) changes the speed without touching the armature circuit.'),
+    shunt: t('ขดลวดสนามคร่อมแรงดันสาย 220 V ผ่าน \\(R_{fw} + R_{fx} = 110\\ \\Omega\\) กระแสสนาม 2 A คงที่ (ตราบที่แรงดันสายคงที่) ลักษณะจึงเหมือนแบบกระตุ้นแยก ความเร็วเกือบคงที่ตั้งแต่ไม่มีโหลดถึงเต็มพิกัด กระแสสายคือ \\(I_L = I_a + I_{sh}\\)', 'The field sits across the 220 V line through \\(R_{fw} + R_{fx} = 110\\ \\Omega\\): a steady 2 A (as long as the line voltage is steady), so it behaves like the separately excited motor, with nearly constant speed from no load to full load. The line current is \\(I_L = I_a + I_{sh}\\).'),
+    series: t('ขดลวดสนามอนุกรมรับกระแสอาร์เมเจอร์ทั้งหมด ฟลักซ์จึงแปรตามกระแส \\(K\\phi = K_{sr}I_a\\) และ \\(T = K_{sr}I_a^2\\) โหลดน้อยกระแสน้อย ฟลักซ์น้อย มอเตอร์ต้องหมุนเร็วมากจึงจะสร้าง \\(E_b\\) ได้เกือบเท่าแรงดันสาย ที่ไม่มีโหลดความเร็วพุ่งจนเครื่องเสียหาย จึงต้องต่อโหลดไว้เสมอ', 'The series field carries the whole armature current, so the flux follows the current, \\(K\\phi = K_{sr}I_a\\), and \\(T = K_{sr}I_a^2\\). Little load means little current and little flux, so the motor must spin very fast to generate a back emf close to the line voltage; at no load it would race until it destroyed itself, so it must always be loaded.'),
+    short: t('ขดลวดชันต์คร่อมอาร์เมเจอร์โดยตรง ขดลวดอนุกรมรับกระแสสาย \\(I_L\\) ฟลักซ์ 70 % มาจากขดลวดชันต์ (คงที่) อีก 30 % มาจากขดลวดอนุกรม (เพิ่มตามโหลด) ความเร็วจึงลดลงมากกว่าแบบชันต์แต่น้อยกว่าแบบอนุกรม และยังมีความเร็วไม่มีโหลดที่จำกัด', 'The shunt field is directly across the armature and the series field carries the line current \\(I_L\\). 70 % of the flux comes from the shunt field (steady) and 30 % from the series field (growing with load), so the speed falls more than a shunt motor\'s but less than a series motor\'s, and the no-load speed stays finite.'),
+    long: t('ขดลวดชันต์คร่อมขั้วสาย ขดลวดอนุกรมอยู่ในกิ่งอาร์เมเจอร์รับกระแส \\(I_a\\) ลักษณะเกือบเหมือนแบบช็อตชันต์ ต่างกันเพียงกระแสที่ผ่านขดลวดอนุกรม (\\(I_a\\) แทน \\(I_L\\)) และแรงดันคร่อมขดลวดชันต์ (\\(V_t\\) เต็ม)', 'The shunt field is across the line terminals and the series field sits in the armature branch, carrying \\(I_a\\). It behaves almost like the short shunt; only the current in the series field (\\(I_a\\) instead of \\(I_L\\)) and the voltage on the shunt field (the full \\(V_t\\)) differ.') };
+  const SA = { type: 'shunt', T: 40 }, opA = () => CH11.model(SA.type, SA.T);
+  const specA = (ty, m) => CH11C.motor(ty, { Vt: G.Vt, Ra: G.Ra, Rse: G.Rse, Vf: G.Vf, Rfw: ty === 'sep' ? 40 : 80, Rfx: ty === 'sep' ? 10 : 30, Eb: m.Eb });
+  const tsA = (ctx, b, bd) => { const m = opA(), sh = bd.short;
+    CH11.ts(ctx, b, { Tmax: 80, nmax: 3000, short: sh, title: sh ? '' : t('แรงบิด–ความเร็วของทั้งห้าแบบ', 'torque–speed of the five types'),
+      curves: TYPES.filter(ty => ty !== SA.type).concat([SA.type]).map(ty => ({ f: T => CH11.model(ty, T).n, color: COLS[ty], label: ty === SA.type ? nm(ty) : '', faint: ty !== SA.type, w: ty === SA.type ? 3.2 : 2 })),
+      ops: [{ T: SA.T, n: m.n, color: COLS[SA.type], label: `${fd(m.n, 0)} rpm` }] }); };
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, midMin: 420, cktAspM: 0.5, rowAsp: 0.66, pad: 1.35, wideAt: 1e9, view: { acPeak: false }, side: tsA,
+    badge: () => { const m = opA(); return [[`${NAME[SA.type][0]}: ${fd(m.n, 0)} rpm ที่ ${fd(SA.T, 0)} N·m`, `${NAME[SA.type][1]}: ${fd(m.n, 0)} rpm at ${fd(SA.T, 0)} N·m`], 'ok']; } });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('ชนิดของมอเตอร์ (สีตามเส้นในกราฟ)', 'Type of motor (coloured as its curve)')); const rA = ui.radio(pA, TYPES.map(ty => ({ id: 'ty_' + ty, label: nm(ty), on: ty === SA.type })), id => { SA.type = id.slice(3); buildA(); });
+  TYPES.forEach(ty => { rA.btns['ty_' + ty].style.borderBottom = `3px solid ${COLS[ty]}`; });
+  ui.h2(pA, t('แรงบิดของโหลด', 'Load torque')); const sT = ui.slider(pA, { id: 'sAT', label: 'T', min: 2, max: 80, step: 1, value: SA.T, fmt: v => `${fd(v, 0)} N·m`, oninput: v => { SA.T = v; buildA(); } });
+  ui.buttons(pA, [{ label: t('เบา 5 N·m', 'light 5 N·m'), onclick: () => { SA.T = 5; sT.set(5); buildA(); } }, { label: '40 N·m', onclick: () => { SA.T = 40; sT.set(40); buildA(); } }, { label: t('หนัก 80 N·m', 'heavy 80 N·m'), onclick: () => { SA.T = 80; sT.set(80); buildA(); } }]);
+  pA.appendChild(mA); mA.className = 'metrics';
+  function buildA() { const m = opA(), c = BA.set(specA(SA.type, m), { speed: 85 / IREF, dotRef: IREF }), IL = c.I('Vt').re, If = SA.type === 'series' ? 0 : SA.type === 'sep' ? G.Vf / G.RfSep : m.If;
+    mA.innerHTML = ui.kv([['I_L', `${fd(Math.abs(IL), 2)} A`], ['I_a', `${fd(m.Ia, 2)} A`], [SA.type === 'series' ? 'I_f' : 'I_f (I_sh)', SA.type === 'series' ? t('= I_a (ขดลวดอนุกรม)', '= I_a (series field)') : `${fd(If, 3)} A`], ['E_b', `${fd(m.Eb, 2)} V`], ['Kφ = T/I_a', `${fd(m.x, 4)} V·s/rad`], ['n = E_b/(Kφ)', `${fd(m.n, 1)} rpm`]]);
+    $('wA').innerHTML = `<div class="answer"><b>${nm(SA.type)}</b>: ${INFO[SA.type]}</div>`; MC.renderMath($('wA')); }
+  BA.resize(); buildA(); window.addEventListener('resize', () => BA.resize());
+  LS.anim($('cvA'), dt => { const p = BA.ckt && BA.ckt.part('M'); if (p) p.angle = (p.angle || 0) + dt * Math.PI * Math.min(2.5, opA().n / 1500); BA.frame(dt); });
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const KF5 = 210 / CH11C.rad(1400), V4 = 240 - 20 * 0.1, I4 = V4 / 100, A4 = 20 - I4, E4 = V4 - A4 * 0.2;
+  CH6.quiz('quiz', [
+    { q: t('1) มอเตอร์ชันต์ 220 V มี \\(R_{sh} = 110\\ \\Omega\\) และ \\(R_a = 0.4\\ \\Omega\\) รับกระแสสาย 30 A จงหากระแสอาร์เมเจอร์และแรงเคลื่อนไฟฟ้าต้านกลับ', '1) A 220 V shunt motor with \\(R_{sh} = 110\\ \\Omega\\) and \\(R_a = 0.4\\ \\Omega\\) takes a line current of 30 A. Find the armature current and the back emf.'),
+      fields: [{ key: 'x', lab: 'I_a =', ans: 28, unit: 'A' }, { key: 'y', lab: 'E_b =', ans: 208.8, unit: 'V' }],
+      work: work(R`\begin{aligned} I_{sh} &= \frac{220}{110} = 2\ \text{A},\quad I_a = 30 - 2 = 28\ \text{A} \\ E_b &= 220 - 28(0.4) = 208.8\ \text{V} \end{aligned}`) },
+    { q: t('2) มอเตอร์อนุกรม 220 V มี \\(R_a + R_{ser} = 0.6\\ \\Omega\\) รับกระแส 30 A จงหาแรงเคลื่อนไฟฟ้าต้านกลับ และกระแสเมื่อแรงบิดของโหลดลดลงครึ่งหนึ่ง', '2) A 220 V series motor with \\(R_a + R_{ser} = 0.6\\ \\Omega\\) takes 30 A. Find the back emf, and the current when the load torque is halved.'),
+      fields: [{ key: 'x', lab: 'E_b =', ans: 202, unit: 'V' }, { key: 'y', lab: 'I_a =', ans: 30 / Math.SQRT2, unit: 'A' }],
+      work: work(R`\begin{aligned} E_b &= 220 - 30(0.6) = 202\ \text{V} \\ T \propto I_a^2 &\Rightarrow I_a = 30\sqrt{\tfrac{1}{2}} = ${fd(30 / Math.SQRT2, 2)}\ \text{A} \end{aligned}`, `<p>${t('แรงบิดลดครึ่งหนึ่ง กระแสลดเพียง 29 % ไม่ใช่ครึ่งหนึ่ง', 'Half the torque takes only 29 % less current, not half.')}</p>`) },
+    { q: t('3) มอเตอร์คอมปาวด์ลองชันต์ 230 V มี \\(R_{sh} = 115\\ \\Omega\\), \\(R_a = 0.2\\ \\Omega\\), \\(R_{se} = 0.05\\ \\Omega\\) กระแสอาร์เมเจอร์ 50 A จงหากระแสสายและแรงเคลื่อนไฟฟ้าต้านกลับ', '3) A 230 V long-shunt compound motor has \\(R_{sh} = 115\\ \\Omega\\), \\(R_a = 0.2\\ \\Omega\\), \\(R_{se} = 0.05\\ \\Omega\\) and an armature current of 50 A. Find the line current and the back emf.'),
+      fields: [{ key: 'x', lab: 'I_L =', ans: 52, unit: 'A' }, { key: 'y', lab: 'E_b =', ans: 217.5, unit: 'V' }],
+      work: work(R`\begin{aligned} I_L &= I_a + \frac{V_t}{R_{sh}} = 50 + 2 = 52\ \text{A} \\ E_b &= 230 - 50(0.2 + 0.05) = 217.5\ \text{V} \end{aligned}`) },
+    { q: t('4) มอเตอร์คอมปาวด์ช็อตชันต์ 240 V มี \\(R_{se} = 0.1\\ \\Omega\\), \\(R_{sh} = 100\\ \\Omega\\), \\(R_a = 0.2\\ \\Omega\\) รับกระแสสาย 20 A จงหากระแสอาร์เมเจอร์และแรงเคลื่อนไฟฟ้าต้านกลับ', '4) A 240 V short-shunt compound motor has \\(R_{se} = 0.1\\ \\Omega\\), \\(R_{sh} = 100\\ \\Omega\\), \\(R_a = 0.2\\ \\Omega\\) and takes 20 A from the line. Find the armature current and the back emf.'),
+      fields: [{ key: 'x', lab: 'I_a =', ans: A4, unit: 'A' }, { key: 'y', lab: 'E_b =', ans: E4, unit: 'V' }],
+      work: work(R`\begin{aligned} V_{sh} &= 240 - 20(0.1) = ${fd(V4, 0)}\ \text{V},\quad I_{sh} = \frac{${fd(V4, 0)}}{100} = ${fd(I4, 2)}\ \text{A} \\ I_a &= 20 - ${fd(I4, 2)} = ${fd(A4, 2)}\ \text{A} \\ E_b &= ${fd(V4, 0)} - (${fd(A4, 2)})(0.2) = ${fd(E4, 3)}\ \text{V} \end{aligned}`) },
+    { q: t('5) มอเตอร์กระตุ้นแยก \\(V_t = 220\\) V, \\(R_a = 0.4\\ \\Omega\\) รับกระแสอาร์เมเจอร์ 25 A ที่ 1400 rpm จงหาแรงเคลื่อนไฟฟ้าต้านกลับและแรงบิด', '5) A separately excited motor, \\(V_t = 220\\) V, \\(R_a = 0.4\\ \\Omega\\), takes 25 A at 1400 rpm. Find the back emf and the torque.'),
+      fields: [{ key: 'x', lab: 'E_b =', ans: 210, unit: 'V' }, { key: 'y', lab: 'T =', ans: KF5 * 25, unit: 'N·m' }],
+      work: work(R`\begin{aligned} E_b &= 220 - 25(0.4) = 210\ \text{V} \\ T &= \frac{E_bI_a}{\omega_m} = \frac{(210)(25)}{${fd(CH11C.rad(1400), 2)}} = ${fd(KF5 * 25, 2)}\ \text{N}{\cdot}\text{m} \end{aligned}`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

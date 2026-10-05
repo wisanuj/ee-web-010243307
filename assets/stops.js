@@ -14,8 +14,8 @@ window.STAGES = {
        blurb: 'เฟเซอร์ อิมพีแดนซ์ กำลังไฟฟ้าและตัวประกอบกำลัง และระบบสามเฟส ตอนนี้พร้อมครบทั้งบทที่ 6–9',
        blurb_en: 'Phasors, impedance, power and power factor, and three-phase systems. Chapters 6–9 are all ready.' },
   4: { title: 'บทที่ 10–12 วงจรแม่เหล็กและเครื่องจักรกลไฟฟ้า', title_en: 'Chapters 10–12 — Magnetic circuits and machines', short: 'บทที่ 10–12 เครื่องจักร', short_en: 'Ch. 10–12 machines',
-       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ ตอนนี้บทที่ 10 (วงจรแม่เหล็กและหม้อแปลง) พร้อมแล้ว บทที่ 11–12 กำลังสร้าง',
-       blurb_en: 'Magnetic circuits, transformers, DC and AC machines. Chapter 10 (magnetic circuits and transformers) is ready; chapters 11–12 are in preparation.' }
+       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ ตอนนี้บทที่ 10 (วงจรแม่เหล็กและหม้อแปลง) และบทที่ 11 (เครื่องจักรกลไฟฟ้ากระแสตรง) พร้อมแล้ว บทที่ 12 กำลังสร้าง',
+       blurb_en: 'Magnetic circuits, transformers, DC and AC machines. Chapters 10 (magnetic circuits and transformers) and 11 (DC machines) are ready; chapter 12 is in preparation.' }
 };
 
 window.STOPS = [
@@ -397,8 +397,42 @@ window.STOPS = [
     book: 'สไลด์หม้อแปลงหน้า 10–15 · Hayt §13.4 · P. C. Sen บทที่ 2', book_en: 'Transformer slides pp. 10–15 · Hayt §13.4 · P. C. Sen, chapter 2',
     tags: ['จุดขั้ว', 'V₁₃ = V₁₂ ± V₃₄', 'η = P_out/P_in'], tags_en: ['dot convention', 'V₁₃ = V₁₂ ± V₃₄', 'η = P_out/P_in'] },
 
-  { soon: true, step: '11', stage: 4, ch: 11, title: 'เครื่องจักรกลไฟฟ้ากระแสตรง', en: 'DC machines',
-    blurb: 'แรงเคลื่อนไฟฟ้าต้าน คอมมิวเตเตอร์ และแรงบิด–ความเร็ว', blurb_en: 'Back-emf, commutator and torque–speed' },
+  { file: 'ch11_1_dc_machine.html', step: '11.1', stage: 4, ch: 11, type: 'sim',
+    title: 'เครื่องจักรกลไฟฟ้ากระแสตรง: การแปลงพลังงานและโครงสร้าง', en: 'DC machines: energy conversion and construction',
+    blurb: 'เครื่องเดียวกันเป็นได้ทั้งมอเตอร์และเครื่องกำเนิด: เลื่อนความเร็วแล้วกระแสกลับทิศเมื่อ E_a เกิน V_t ลูกศรพลังงานกลับข้าง ตาม vi = Tω ของสไลด์หน้า 3 (ส่วน A) ภาพตัดขวางของเครื่องสองขั้วที่เลือกดูได้ทีละส่วน (โครง ขั้วแม่เหล็ก ขดลวดสนาม อาร์เมเจอร์ คอมมิวเตเตอร์ แปรงถ่าน) พร้อมฟลักซ์และแรงบนตัวนำ (ส่วน B) และ Problem 4.25 ของ P. C. Sen ทีละขั้น: 230 V บนสาย 240 V คือมอเตอร์ R_a = 0.25 Ω, 73.2 N·m และ 1252 rpm เมื่อปลดโหลด',
+    blurb_en: 'One machine is both a motor and a generator: move the speed and the current reverses once E_a passes V_t, turning the energy arrow round, as in vi = Tω of slide p. 3 (section A). A cross-section of a two-pole machine whose parts (yoke, poles, field winding, armature, commutator, brushes) can be picked one at a time, with the flux and the forces on the conductors (section B). P. C. Sen\'s Problem 4.25 step by step: 230 V on a 240 V line is a motor, R_a = 0.25 Ω, 73.2 N·m, and 1252 rpm at no load.',
+    outcome: 'บอกได้ว่าเครื่องกระแสตรงทำงานเป็นมอเตอร์หรือเครื่องกำเนิด อธิบายหน้าที่ของแต่ละส่วน และคำนวณ R_a, กำลัง และแรงบิดจากวงจรอาร์เมเจอร์',
+    outcome_en: 'tell whether a DC machine works as a motor or a generator, explain what each part does, and find R_a, the power and the torque from the armature circuit',
+    book: 'เอกสารบทที่ 11 หน้า 2–14 · P. C. Sen บทที่ 4 (Problem 4.25)', book_en: 'Chapter 11 handout pp. 2–14 · P. C. Sen, chapter 4 (Problem 4.25)',
+    tags: ['vi = Tω', 'V_t = E_a + I_aR_a', 'ω = 2πN/60'], tags_en: ['vi = Tω', 'V_t = E_a + I_aR_a', 'ω = 2πN/60'] },
+
+  { file: 'ch11_2_back_emf.html', step: '11.2', stage: 4, ch: 11, type: 'sim',
+    title: 'หลักการทำงานของมอเตอร์และแรงเคลื่อนไฟฟ้าต้านกลับ', en: 'Principle of operation and the back emf',
+    blurb: 'ขดลวดหมุนระหว่างขั้วแม่เหล็กพร้อมกราฟแรงบิดตามมุม: คอมมิวเตเตอร์ทำให้แรงบิดไม่ติดลบ (เฉลี่ย 2/π) วงแหวนลื่นทำให้เฉลี่ยเป็นศูนย์ และขดลวดหลายขดทำให้เรียบ (ส่วน A) การสตาร์ตมอเตอร์ 100 V ตาม Example 4.10 ของ P. C. Sen ซึ่งต่อตรงได้กระแส 1000 A แต่กล่องตัวต้านทานสตาร์ต 0.4, 0.15, 0.025 Ω คุมกระแสไว้ระหว่าง 100–200 A ขณะ E_b เพิ่มขึ้น (ส่วน B) และ Example 4.1 ขดลวดแบบแลปเทียบแบบเวฟ (212.6 V กับ 425.2 V แรงบิด 812 N·m เท่ากัน) พร้อมหมายเหตุ A = Z ที่พิมพ์ผิดในสไลด์หน้า 16',
+    blurb_en: 'Coils turning between the poles with the torque against the angle: a commutator keeps the torque positive (average 2/π), slip rings make it average zero, and more coils smooth it (section A). Starting a 100 V motor after P. C. Sen\'s Example 4.10: straight on the line it takes 1000 A, but a starter box of 0.4, 0.15, 0.025 Ω keeps the current between 100 and 200 A as E_b builds up (section B). Example 4.1, lap against wave windings (212.6 V and 425.2 V, the same 812 N·m), with a note on the misprint A = Z of slide p. 16.',
+    outcome: 'อธิบายหน้าที่ของคอมมิวเตเตอร์และแรงเคลื่อนไฟฟ้าต้านกลับ คำนวณ E_b = Kφω และ K = PZ/(2πA) สำหรับขดลวดแบบแลปและแบบเวฟ และหาความต้านทานสตาร์ต',
+    outcome_en: 'explain the commutator and the back emf, compute E_b = Kφω and K = PZ/(2πA) for lap and wave windings, and find a starting resistance',
+    book: 'เอกสารบทที่ 11 หน้า 15–16 · P. C. Sen บทที่ 4 (Examples 4.1, 4.10)', book_en: 'Chapter 11 handout pp. 15–16 · P. C. Sen, chapter 4 (Examples 4.1, 4.10)',
+    tags: ['E_b = Kφω_m', 'K = PZ/(2πA)', 'I_start = V_t/R_a'], tags_en: ['E_b = Kφω_m', 'K = PZ/(2πA)', 'I_start = V_t/R_a'] },
+
+  { file: 'ch11_3_motor_types.html', step: '11.3', stage: 4, ch: 11, type: 'sim',
+    title: 'ชนิดของมอเตอร์กระแสตรง', en: 'Types of DC motors',
+    blurb: 'มอเตอร์ห้าแบบของสไลด์หน้า 17–21 (กระตุ้นแยก ชันต์ อนุกรม คอมปาวด์ช็อตชันต์ และลองชันต์) บนกราฟแรงบิด–ความเร็วเดียวกัน: เลือกแบบ เลื่อนแรงบิดของโหลด แล้ววงจรแก้ใหม่พร้อมจุดทำงาน มอเตอร์ชันต์ความเร็วเกือบคงที่ มอเตอร์อนุกรมพุ่งเกิน 4000 rpm เมื่อโหลดเบา (ส่วน A) และ Example 4.9 ของ P. C. Sen ทีละขั้น: มอเตอร์อนุกรมขับพัดลม 300 rpm, 155.2 N·m แล้วลดเหลือ 200 rpm ด้วย R_ae = 7 Ω ซึ่งเสียกำลังเป็นความร้อน 2222 W',
+    blurb_en: 'The five motors of slides pp. 17–21 (separately excited, shunt, series, short-shunt and long-shunt compound) on one torque–speed plane: pick a type, move the load torque, and the circuit is solved again with its operating point. The shunt motor keeps a nearly constant speed, the series motor shoots past 4000 rpm at light load (section A). P. C. Sen\'s Example 4.9 step by step: a series motor driving a fan at 300 rpm and 155.2 N·m, slowed to 200 rpm by R_ae = 7 Ω, which wastes 2222 W as heat.',
+    outcome: 'วาดวงจรของมอเตอร์แต่ละแบบ หากระแสในแต่ละกิ่งและแรงเคลื่อนไฟฟ้าต้านกลับ และอธิบายลักษณะแรงบิด–ความเร็วของแต่ละแบบ',
+    outcome_en: 'draw the circuit of each type of motor, find its branch currents and back emf, and explain its torque–speed characteristic',
+    book: 'เอกสารบทที่ 11 หน้า 17–21 · P. C. Sen บทที่ 4 (Example 4.9)', book_en: 'Chapter 11 handout pp. 17–21 · P. C. Sen, chapter 4 (Example 4.9)',
+    tags: ['ชันต์', 'อนุกรม T ∝ I_a²', 'คอมปาวด์'], tags_en: ['shunt', 'series T ∝ I_a²', 'compound'] },
+
+  { file: 'ch11_4_power_flow.html', step: '11.4', stage: 4, ch: 11, type: 'sim',
+    title: 'การไหลของกำลัง การสูญเสีย และประสิทธิภาพ', en: 'Power flow, losses and efficiency',
+    blurb: 'แผนภาพการไหลของกำลังของสไลด์หน้า 22 ที่ความกว้างแถบตามกำลังจริง: เลื่อนโหลดของมอเตอร์ Ex2 แล้วดูประสิทธิภาพสูงสุด 91.3 % เมื่อการสูญเสียในอาร์เมเจอร์เท่ากับการสูญเสียคงที่ (ส่วน A) แล้ว Ex1–Ex3 ของสไลด์หน้า 26–28 ทีละขั้นบนวงจรของแต่ละแบบ: ลองชันต์ 84.65 % (25 hp คือพิกัด ไม่ใช่กำลังออก) ชันต์ 89.43 % และช็อตชันต์ 70.61 % พร้อมแรงบิดที่พัฒนาและแรงบิดที่เพลา',
+    blurb_en: 'The power-flow diagram of slide p. 22 with bands as wide as the real powers: move the load of the Ex2 motor and find the 91.3 % peak, where the armature loss equals the fixed losses (section A). Then Ex1–Ex3 of slides pp. 26–28 step by step on each type\'s circuit: long shunt 84.65 % (25 hp is the rating, not the output), shunt 89.43 % and short shunt 70.61 %, with the developed and shaft torques.',
+    outcome: 'แจกแจงการสูญเสียในเครื่องกระแสตรง คำนวณกำลังเข้า กำลังที่พัฒนา กำลังออก ประสิทธิภาพ และแรงบิดที่พัฒนากับแรงบิดที่เพลา',
+    outcome_en: 'list the losses of a DC machine and compute the input, developed and output power, the efficiency, and the developed and shaft torques',
+    book: 'เอกสารบทที่ 11 หน้า 22–28 · P. C. Sen บทที่ 4', book_en: 'Chapter 11 handout pp. 22–28 · P. C. Sen, chapter 4',
+    tags: ['P_d = E_bI_a', 'P_out = P_d − P_rot', 'η = P_out/P_in'], tags_en: ['P_d = E_bI_a', 'P_out = P_d − P_rot', 'η = P_out/P_in'] },
+
   { soon: true, step: '12', stage: 4, ch: 12, title: 'เครื่องจักรกลไฟฟ้ากระแสสลับ', en: 'AC machines',
     blurb: 'สนามแม่เหล็กหมุน สลิป และมอเตอร์เหนี่ยวนำ', blurb_en: 'Rotating field, slip and the induction motor' }
 ];

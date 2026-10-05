@@ -14,7 +14,8 @@
      I   DC current source, pushes value A through itself from a to b (arrow a → b)
      VAC / IAC  sinusoidal sources: amp (peak), phase (deg); same polarity rules as V / I
      C   capacitor value F, optional v0     L   inductor value H, optional i0
-     Z   fixed complex impedance {re, im} (AC only)            motor  DC motor: Ra (value) in series with back-emf `emf` (+ at a)
+     Z   fixed complex impedance {re, im} (AC only)            motor  DC motor: Ra (value) in series with back-emf `emf` (+ at a); `signs`, `angle`
+     any part may set draw: 'box' | 'L' (a resistor drawn as a winding) | 'rheo' (rheostat)
      XF  ideal transformer: primary a–b, secondary c–d, n = N1/N2 (dots at a and c; put c below d for a dot at the lower end)
      dependent sources (diamond symbols), gain in `gain`:
        G  VCCS: pushes gain·(V_c − V_d) A through itself from a to b      E  VCVS: V_a − V_b = gain·(V_c − V_d)
@@ -631,8 +632,14 @@ View.prototype.symbols = {
   E(ctx, p, h, u) { this.diamond(ctx, h, u, 'pm'); }, H(ctx, p, h, u) { this.diamond(ctx, h, u, 'pm'); },
   VM(ctx, p, h, u) { ctx.beginPath(); ctx.moveTo(-h, 0); ctx.lineTo(-u * 0.3, 0); ctx.moveTo(u * 0.3, 0); ctx.lineTo(h, 0); ctx.stroke(); ctx.save(); ctx.rotate(-ctx.getTransform ? 0 : 0); ctx.restore();
     ctx.save(); ctx.fillStyle = '#161a2f'; ctx.strokeStyle = PAL.good; ctx.beginPath(); ctx.arc(0, 0, u * 0.3, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); ctx.restore(); },
+  /* DC machine armature: back emf (+ at a, signs drawn when p.signs) with a rotor bar turned by p.angle (pages animate it) */
   motor(ctx, p, h, u) { const r = Math.min(h, u * 0.42); ctx.beginPath(); ctx.moveTo(-h, 0); ctx.lineTo(-r, 0); ctx.moveTo(r, 0); ctx.lineTo(h, 0); ctx.stroke(); ctx.save(); ctx.fillStyle = '#161a2f'; ctx.beginPath(); ctx.arc(0, 0, r, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
-    const ang = p.angle || 0; ctx.strokeStyle = PAL.purple; ctx.beginPath(); ctx.moveTo(Math.cos(ang) * r * 0.7, Math.sin(ang) * r * 0.7); ctx.lineTo(-Math.cos(ang) * r * 0.7, -Math.sin(ang) * r * 0.7); ctx.stroke(); ctx.restore(); }
+    const ang = p.angle || 0, k = p.signs ? 0.3 : 0.7; ctx.strokeStyle = PAL.purple; ctx.beginPath(); ctx.moveTo(Math.cos(ang) * r * k, Math.sin(ang) * r * k); ctx.lineTo(-Math.cos(ang) * r * k, -Math.sin(ang) * r * k); ctx.stroke(); ctx.restore();
+    if (p.signs) this.signs(ctx, -r * 0.64, r * 0.64, u, true); },
+  /* rheostat: a resistor with a diagonal arrow through it (field-circuit control resistance) */
+  rheo(ctx, p, h, u) { View.prototype.symbols.R.call(this, ctx, p, h, u); const a = u * 0.3, hl = Math.max(6, u * 0.16), x1 = -h * 0.7, y1 = a, x2 = h * 0.7, y2 = -a, an = Math.atan2(y2 - y1, x2 - x1);
+    ctx.save(); ctx.lineWidth = Math.max(1.5, ctx.lineWidth * 0.75); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - hl * Math.cos(an - 0.45), y2 - hl * Math.sin(an - 0.45)); ctx.lineTo(x2 - hl * Math.cos(an + 0.45), y2 - hl * Math.sin(an + 0.45)); ctx.closePath(); ctx.fill(); ctx.restore(); }
 };
 /* mesh-current ring: clockwise arc arrow centred at grid point (gx, gy) with radius rg (grid units).
    o: { label, value (text under the label), color, spin (phase in rad for moving beads, or null), dash, alpha } */
