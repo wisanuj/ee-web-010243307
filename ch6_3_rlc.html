@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="6.3 — Phasor Voltage and Current in R, L and C">6.3 — เฟเซอร์ของแรงดันและกระแสใน R, L และ C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">เฟเซอร์ของแรงดันและกระแสใน R, L และ C <span class="en">Phasor voltage and current in R, L and C — a derivative becomes multiplication by jω</span></h1>
+<h1 data-l="en">Phasor voltage and current in R, L and C <span class="en">A derivative becomes multiplication by jω</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch6/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13: comparison of time-domain and frequency-domain expressions. R: v = Ri and V = RI; L: v = L di/dt and V = jωL I; C: v = (1/C)∫i dt and V = I/(jωC), each with the element drawn with the passive sign convention">
+    <figcaption data-l="th">สไลด์บทที่ 6 หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 6 slides, p. 13 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">ในโดเมนเวลา ตัวเหนี่ยวนำมีกฎ \(v = L\,di/dt\) และตัวเก็บประจุมีกฎ \(i = C\,dv/dt\) ซึ่งเป็นอนุพันธ์ทั้งคู่ แต่<b>อนุพันธ์ของคลื่นไซน์คือคลื่นไซน์ความถี่เดิมที่ใหญ่ขึ้น \(\omega\) เท่าและเลื่อนไป 90°</b> ในภาษาเฟเซอร์คือ<b>การคูณด้วย \(j\omega\)</b> อุปกรณ์ทั้งสามจึงทำตามกฎหน้าตาเดียวกับกฎของโอห์ม \(\mathbf{V} = Z\,\mathbf{I}\) (สไลด์หน้า 13 ผู้สอนเขียนกำกับว่า Ohm's law) หน้านี้มีภาพจำลองให้ลองอุปกรณ์ทีละตัว (ส่วน A) <b>โจทย์ในห้องสามข้อ</b> ตามสไลด์หน้า 10–12 โจทย์จากตำราหนึ่งข้อ กราฟรีแอกแตนซ์ตามความถี่ (ส่วน B) และตารางสรุป (ส่วน C)</p>
+    <p class="sub" data-l="en">In the time domain an inductor obeys \(v = L\,di/dt\) and a capacitor \(i = C\,dv/dt\): both are derivatives. But <b>the derivative of a sinusoid is a sinusoid of the same frequency, \(\omega\) times larger and shifted by 90°</b>, which in phasor language is <b>multiplication by \(j\omega\)</b>. So all three elements obey a rule shaped like Ohm's law, \(\mathbf{V} = Z\,\mathbf{I}\) (on slide p. 13 the teacher wrote "Ohm's law" beside it). This page has a simulation to try the elements one at a time (section A), <b>the three class problems</b> of slides pp. 10–12, one textbook problem, the reactance against frequency (section B) and the summary table (section C).</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{aligned} \text{R:}\quad \mathbf{V} &= R\,\mathbf{I} \\ \text{L:}\quad \mathbf{V} &= j\omega L\,\mathbf{I} \\ \text{C:}\quad \mathbf{V} &= \frac{1}{j\omega C}\,\mathbf{I} = \frac{-j}{\omega C}\,\mathbf{I} \end{aligned} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ตัวต้านทาน: \(\mathbf{V} = R\mathbf{I}\)</b> แรงดันกับกระแส<b>เฟสเดียวกัน</b> ถึงยอดพร้อมกัน</li>
+  <li><b>ตัวเหนี่ยวนำ: \(\mathbf{V} = j\omega L\,\mathbf{I}\)</b> แรงดัน<b>นำหน้า</b>กระแส 90° และ \(|\mathbf{V}| = \omega L\,|\mathbf{I}|\)</li>
+  <li><b>ตัวเก็บประจุ: \(\mathbf{V} = -j\mathbf{I}/(\omega C)\)</b> กระแส<b>นำหน้า</b>แรงดัน 90° และ \(|\mathbf{V}| = |\mathbf{I}|/(\omega C)\)</li>
+  <li><b>คูณด้วย \(j\) คือหมุน +90° คูณด้วย \(-j\) คือหมุน −90°</b> (\(j = 1\angle 90^\circ\), \(-j = 1\angle{-90^\circ}\), \(1/j = -j\) เพราะ \(j^2 = -1\))</li>
+  <li>จำง่าย ๆ ด้วย <b>"ELI the ICE man"</b>: ใน L แรงดัน (E) มาก่อนกระแส (I) ใน C กระแส (I) มาก่อนแรงดัน (E)</li>
+  <li><b>\(\omega L\) เพิ่มตามความถี่ ส่วน \(1/(\omega C)\) ลดตามความถี่</b> ที่ไฟฟ้ากระแสตรง (\(\omega = 0\)) L จึงเป็นลัดวงจรและ C เป็นวงจรเปิด ตรงกับบทที่ 2</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Resistor: \(\mathbf{V} = R\mathbf{I}\)</b>: voltage and current are <b>in phase</b> and peak together.</li>
+  <li><b>Inductor: \(\mathbf{V} = j\omega L\,\mathbf{I}\)</b>: the voltage <b>leads</b> the current by 90°, and \(|\mathbf{V}| = \omega L\,|\mathbf{I}|\).</li>
+  <li><b>Capacitor: \(\mathbf{V} = -j\mathbf{I}/(\omega C)\)</b>: the current <b>leads</b> the voltage by 90°, and \(|\mathbf{V}| = |\mathbf{I}|/(\omega C)\).</li>
+  <li><b>Multiplying by \(j\) turns by +90°; multiplying by \(-j\) turns by −90°</b> (\(j = 1\angle 90^\circ\), \(-j = 1\angle{-90^\circ}\), and \(1/j = -j\) because \(j^2 = -1\)).</li>
+  <li>Remember it with <b>"ELI the ICE man"</b>: in L the voltage (E) comes before the current (I); in C the current (I) comes before the voltage (E).</li>
+  <li><b>\(\omega L\) grows with frequency, while \(1/(\omega C)\) falls</b>, so at DC (\(\omega = 0\)) L is a short and C is an open circuit, as in chapter 2.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ลอง R, L, C</a><a href="#ex1"><b>1</b>ตัวต้านทาน</a><a href="#ex2"><b>2</b>ตัวเหนี่ยวนำ</a><a href="#ex3"><b>3</b>ตัวเก็บประจุ</a><a href="#ex4"><b>4</b>Hayt 10.4</a><a href="#tB"><b>B</b>รีแอกแตนซ์</a><a href="#tC"><b>C</b>ตารางสรุป</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Try R, L, C</a><a href="#ex1"><b>1</b>Resistor</a><a href="#ex2"><b>2</b>Inductor</a><a href="#ex3"><b>3</b>Capacitor</a><a href="#ex4"><b>4</b>Hayt 10.4</a><a href="#tB"><b>B</b>Reactance</a><a href="#tC"><b>C</b>Summary table</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ลอง R, L, C ทีละตัว</h2><h2 data-l="en">Try R, L and C one at a time</h2>
+    <div class="src" data-l="th">แหล่งจ่ายหนึ่งตัวกับอุปกรณ์หนึ่งตัว · ปุ่มตัวอย่างใช้ค่าของโจทย์ในห้อง</div><div class="src" data-l="en">One source and one element · the example buttons use the values of the class problems</div></div></div>
+  <p class="lead" data-l="th">เครื่องหมาย + − และลูกศร \(i\) บนอุปกรณ์คือทิศอ้างอิงแบบพาสซีฟ (กระแสไหลเข้าขั้ว +) เหมือนในสไลด์ <b>ดูสามอย่างพร้อมกัน</b>: จุดในสายไฟ (กระแสจริงขณะนั้น) ลูกศรเฟเซอร์ \(\mathbf{V}\) สีฟ้ากับ \(\mathbf{I}\) สีเหลือง และรูปคลื่นที่มีสามเหลี่ยมบอกยอดแรกของแต่ละเส้น เลือก L แล้วสังเกตว่า<b>จุดในสายวิ่งเร็วที่สุดตอนที่แรงดันเป็นศูนย์</b></p>
+  <p class="lead" data-l="en">The + − marks and the arrow \(i\) on the element are the passive sign convention (current enters the + terminal), as on the slides. <b>Watch three things at once</b>: the dots in the wire (the actual current at that instant), the phasor arrows \(\mathbf{V}\) (blue) and \(\mathbf{I}\) (yellow), and the waveforms, where triangles mark each curve's first peak. Choose L and notice that <b>the dots run fastest when the voltage is zero</b>.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">ตัวต้านทาน: \(\mathbf{V}_R = 5\angle 30^\circ\) V คร่อม R = 2 Ω หา \(\mathbf{I}_R\)</h2><h2 data-l="en">Resistor: \(\mathbf{V}_R = 5\angle 30^\circ\) V across R = 2 Ω; find \(\mathbf{I}_R\)</h2>
+    <div class="src" data-l="th">ตัวอย่างที่ผู้สอนเขียนบนสไลด์หน้า 10 ในห้อง</div><div class="src" data-l="en">The example the teacher wrote on slide p. 10 in class</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10: phasor voltage and current, resistor. From R = v/i: if v = Vm sin(ωt + θ) then i = [Vm sin(ωt + θ)]/R; converted to phasors V = Vm∠θ and I = (Vm∠θ)/R">
+    <figcaption data-l="th">สไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 · tap to enlarge</figcaption></figure>
+  <details class="derive"><summary><span data-l="th">ที่มาของ \(\mathbf{V} = R\,\mathbf{I}\) (สไลด์หน้า 10)</span><span data-l="en">Where \(\mathbf{V} = R\,\mathbf{I}\) comes from (slide p. 10)</span></summary>
+    <p class="sub2" data-l="th">ตัวต้านทานไม่มีอนุพันธ์ กระแสจึงเป็นแรงดันหารด้วย R ทุกขณะ คลื่นทั้งสองมีมุมเดียวกัน</p><p class="sub2" data-l="en">There is no derivative in a resistor: the current is the voltage divided by R at every instant, so both waves have the same angle.</p>
+    <div id="drv1"></div></details>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 10 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 10 as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K12.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 10: resistor, θ = φ; R = V/I = Vm∠θ / Im∠φ; a 2 Ω resistor with V_R = 5∠30° volts, I_R = V_R/R = 5∠30°/2 = 2.5∠30°; a phasor sketch with V_R and I_R on the same line, labelled in phase">
+      <figcaption data-l="th">\(\mathbf{I}_R = 5\angle 30^\circ/2 = 2.5\angle 30^\circ\) A ลูกศรสองตัวอยู่บนเส้นเดียวกัน: เฟสเดียวกัน (in phase)</figcaption><figcaption data-l="en">\(\mathbf{I}_R = 5\angle 30^\circ/2 = 2.5\angle 30^\circ\) A; the two arrows lie on one line: in phase</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">ตัวเหนี่ยวนำ: \(Z_L = j2\ \Omega\) มีกระแส \(\mathbf{I}_L = 3\angle 30^\circ\) A หา \(\mathbf{V}_L\)</h2><h2 data-l="en">Inductor: \(Z_L = j2\ \Omega\) carries \(\mathbf{I}_L = 3\angle 30^\circ\) A; find \(\mathbf{V}_L\)</h2>
+    <div class="src" data-l="th">ตัวอย่างในห้อง (สไลด์หน้า 11 และกระดาษจด) · ภาพจำลองใช้ L = 1 H ที่ ω = 2 rad/s ซึ่งให้ \(Z_L = j2\ \Omega\)</div><div class="src" data-l="en">The class example (slide p. 11 and the notes page) · the simulation uses L = 1 H at ω = 2 rad/s, which gives \(Z_L = j2\ \Omega\)</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11: inductor with i_L entering the + terminal of v_L, v_L = L di_L/dt. If i = Im sin(ωt + θ) then v = L di/dt = ωL Im cos(ωt + θ) = ωL Im sin(ωt + θ + 90°); V = ωL Im∠(θ + 90°), I = Im∠θ; boxed: V/I = ωL∠90° = jωL">
+    <figcaption data-l="th">สไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 11 · tap to enlarge</figcaption></figure>
+  <details class="derive"><summary><span data-l="th">ที่มาของ \(\mathbf{V} = j\omega L\,\mathbf{I}\) (สไลด์หน้า 11)</span><span data-l="en">Where \(\mathbf{V} = j\omega L\,\mathbf{I}\) comes from (slide p. 11)</span></summary>
+    <p class="sub2" data-l="th">อนุพันธ์ของ sin คือ cos ซึ่งคือ sin ที่เลื่อนไป 90° แรงดันจึงใหญ่ขึ้น \(\omega L\) เท่าและนำหน้ากระแส 90°</p><p class="sub2" data-l="en">The derivative of sin is cos, which is a sine shifted by 90°: the voltage is \(\omega L\) times larger and 90° ahead of the current.</p>
+    <div id="drv2"></div></details>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 11 และกระดาษจดที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 11 and the notes page as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K13.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 11: L in henries circled, and X_L = jωL Ω written in a box at the top">
+      <figcaption data-l="th">ในห้องเขียน \(X_L = j\omega L\ \Omega\) (ที่จริงคืออิมพีแดนซ์ \(Z_L\) ดูหมายเหตุในส่วน C)</figcaption><figcaption data-l="en">In class: \(X_L = j\omega L\ \Omega\) (really the impedance \(Z_L\); see the note in section C)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K14.webp" width="1100" height="296" loading="lazy" decoding="async" alt="Handwritten notes: an inductor with X_L = 2j Ω and I_L = 3∠30° A; 2j = 2∠90°, −3j = 3∠−90°; from Ohm's law V_L = I_L X_L = (3∠30°)(2j) = 6∠120° V; a phasor sketch with V_L = 6∠120° V and I_L = 3∠30° A, 90° apart; V_L lead I_L = 90°">
+      <figcaption data-l="th">\(2j = 2\angle 90^\circ\) และ \(\mathbf{V}_L = (3\angle 30^\circ)(2j) = 6\angle 120^\circ\) V: \(\mathbf{V}_L\) นำหน้า \(\mathbf{I}_L\) อยู่ 90°</figcaption><figcaption data-l="en">\(2j = 2\angle 90^\circ\) and \(\mathbf{V}_L = (3\angle 30^\circ)(2j) = 6\angle 120^\circ\) V: \(\mathbf{V}_L\) leads \(\mathbf{I}_L\) by 90°</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">ตัวเก็บประจุ: \(Z_C = -j2\ \Omega\) มีกระแส \(\mathbf{I}_C = 3\angle 30^\circ\) A หา \(\mathbf{V}_C\)</h2><h2 data-l="en">Capacitor: \(Z_C = -j2\ \Omega\) carries \(\mathbf{I}_C = 3\angle 30^\circ\) A; find \(\mathbf{V}_C\)</h2>
+    <div class="src" data-l="th">ตัวอย่างในห้อง (สไลด์หน้า 12 และกระดาษจด) · ภาพจำลองใช้ C = 0.25 F ที่ ω = 2 rad/s ซึ่งให้ \(Z_C = -j2\ \Omega\)</div><div class="src" data-l="en">The class example (slide p. 12 and the notes page) · the simulation uses C = 0.25 F at ω = 2 rad/s, which gives \(Z_C = -j2\ \Omega\)</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12: capacitor with i_C entering the + terminal of v_C, i_C = C dv_C/dt. If v = Vm sin(ωt + θ) then i = C dv/dt = ωC Vm cos(ωt + θ) = ωC Vm sin(ωt + θ + 90°); V = Vm∠θ, I = ωC Vm∠(θ + 90°); boxed: V/I = (1/ωC)∠−90° = 1/(jωC) = −j/ωC">
+    <figcaption data-l="th">สไลด์หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 12 · tap to enlarge</figcaption></figure>
+  <details class="derive"><summary><span data-l="th">ที่มาของ \(\mathbf{V} = \mathbf{I}/(j\omega C)\) (สไลด์หน้า 12)</span><span data-l="en">Where \(\mathbf{V} = \mathbf{I}/(j\omega C)\) comes from (slide p. 12)</span></summary>
+    <p class="sub2" data-l="th">คราวนี้กระแสคืออนุพันธ์ของแรงดัน กระแสจึงนำหน้าแรงดัน 90° และ \(1/j = j/j^2 = -j\) เพราะ \(j^2 = -1\)</p><p class="sub2" data-l="en">This time the current is the derivative of the voltage, so the current leads the voltage by 90°, and \(1/j = j/j^2 = -j\) because \(j^2 = -1\).</p>
+    <div id="drv3"></div></details>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 12 และกระดาษจดที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 12 and the notes page as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K15.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 12: C in farads, j = √−1 and j² = 1 written at the top; X_C = −j/ωC = 1/(jωC) Ω in a box; X_C = (1/ωC)×(j/j) = −(−1)/(jωC) worked at the left">
+      <figcaption data-l="th">ในห้องเขียน \(j^2 = 1\) ที่ถูกคือ \(j^2 = -1\) (การคูณ \(j/j\) ทางซ้ายของสไลด์ใช้ค่า −1 นี้อยู่แล้ว) จึงได้ \(X_C = -j/(\omega C) = 1/(j\omega C)\)</figcaption><figcaption data-l="en">In class \(j^2 = 1\) was written; the correct value is \(j^2 = -1\) (the \(j/j\) working on the left of the slide already uses −1), which gives \(X_C = -j/(\omega C) = 1/(j\omega C)\)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K16.webp" width="1100" height="289" loading="lazy" decoding="async" alt="Handwritten notes: a capacitor with X_C = −j2 Ω = 2∠−90° and I_C = 3∠30°; V_C = I_C X_C = (3∠30°)(2∠−90°) = 6∠−60° V; a phasor sketch with I_C = 3∠30° and V_C = 6∠−60°, 90° apart; I_C lead V_C = 90°">
+      <figcaption data-l="th">\(\mathbf{V}_C = (3\angle 30^\circ)(2\angle{-90^\circ}) = 6\angle{-60^\circ}\) V: \(\mathbf{I}_C\) นำหน้า \(\mathbf{V}_C\) อยู่ 90°</figcaption><figcaption data-l="en">\(\mathbf{V}_C = (3\angle 30^\circ)(2\angle{-90^\circ}) = 6\angle{-60^\circ}\) V: \(\mathbf{I}_C\) leads \(\mathbf{V}_C\) by 90°</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แรงดัน \(8\angle{-50^\circ}\) V ที่ \(\omega = 100\) rad/s คร่อมตัวเหนี่ยวนำ 4 H หา \(\mathbf{I}\) และ \(i(t)\)</h2><h2 data-l="en">A voltage \(8\angle{-50^\circ}\) V at \(\omega = 100\) rad/s across a 4 H inductor; find \(\mathbf{I}\) and \(i(t)\)</h2>
+    <div class="src" data-l="th">Hayt ตัวอย่าง 10.4 · ตำราอ่านเฟเซอร์ด้วย cos ส่วนวิชานี้อ่านด้วย sin ตัวเลขของเฟเซอร์เหมือนกัน</div><div class="src" data-l="en">Hayt Example 10.4 · the book reads phasors with cos, this course with sin; the phasor numbers are the same</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ขนาดของอิมพีแดนซ์เปลี่ยนตามความถี่</h2><h2 data-l="en">The size of the impedance changes with frequency</h2>
+    <div class="src" data-l="th">กราฟใช้ R, L, C และ ω ของส่วน A</div><div class="src" data-l="en">The graph uses R, L, C and ω of section A</div></div></div>
+  <p class="lead" data-l="th">ขนาดของ \(Z\) ของตัวต้านทานไม่ขึ้นกับความถี่ แต่ \(\omega L\) เป็นเส้นตรงที่ชันขึ้น และ \(1/(\omega C)\) เป็นเส้นโค้งที่ลดลง <b>ตัวเหนี่ยวนำต้านการเปลี่ยนแปลงเร็ว ๆ ส่วนตัวเก็บประจุยอมให้การเปลี่ยนแปลงเร็ว ๆ ผ่าน</b> เส้นแนวตั้งคือ \(\omega\) ปัจจุบัน ลองเลื่อน \(\omega\) ในส่วน A แล้วดูขนาดของ \(\mathbf{V}\) เปลี่ยนตาม</p>
+  <p class="lead" data-l="en">A resistor's \(|Z|\) does not depend on frequency, but \(\omega L\) is a rising straight line and \(1/(\omega C)\) a falling curve. <b>An inductor opposes fast changes; a capacitor lets fast changes through.</b> The vertical line is the present \(\omega\). Slide \(\omega\) in section A and watch the size of \(\mathbf{V}\) follow.</p>
+  <div class="card sim"><canvas id="cvB"></canvas></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ตารางสรุป: โดเมนเวลาเทียบกับโดเมนความถี่</h2><h2 data-l="en">Summary table: time domain against frequency domain</h2>
+    <div class="src" data-l="th">สไลด์หน้า 13 (รูปบนสุดของหน้านี้) · Hayt ตาราง 10.1</div><div class="src" data-l="en">Slide p. 13 (the picture at the top of this page) · Hayt Table 10.1</div></div></div>
+  <div class="card" style="overflow-x:auto;position:relative">
+  <table class="tbl" data-l="th" style="min-width:580px"><tr><th>อุปกรณ์</th><th>โดเมนเวลา</th><th>โดเมนความถี่ (เฟเซอร์)</th><th>อิมพีแดนซ์ \(Z = \mathbf{V}/\mathbf{I}\)</th><th>มุมของ V เทียบกับ I</th></tr>
+    <tr><td>R</td><td>\(v = Ri\)</td><td>\(\mathbf{V} = R\mathbf{I}\)</td><td>\(R\)</td><td><b>0°</b> (เฟสเดียวกัน)</td></tr>
+    <tr><td>L</td><td>\(v = L\dfrac{di}{dt}\)</td><td>\(\mathbf{V} = j\omega L\,\mathbf{I}\)</td><td>\(j\omega L = \omega L\angle 90^\circ\)</td><td><b>+90°</b> (V นำหน้า)</td></tr>
+    <tr><td>C</td><td>\(v = \dfrac{1}{C}\displaystyle\int i\,dt\)</td><td>\(\mathbf{V} = \dfrac{1}{j\omega C}\mathbf{I}\)</td><td>\(\dfrac{-j}{\omega C} = \dfrac{1}{\omega C}\angle{-90^\circ}\)</td><td><b>−90°</b> (I นำหน้า)</td></tr></table>
+  <table class="tbl" data-l="en" style="min-width:580px"><tr><th>Element</th><th>Time domain</th><th>Frequency domain (phasor)</th><th>Impedance \(Z = \mathbf{V}/\mathbf{I}\)</th><th>Angle of V relative to I</th></tr>
+    <tr><td>R</td><td>\(v = Ri\)</td><td>\(\mathbf{V} = R\mathbf{I}\)</td><td>\(R\)</td><td><b>0°</b> (in phase)</td></tr>
+    <tr><td>L</td><td>\(v = L\dfrac{di}{dt}\)</td><td>\(\mathbf{V} = j\omega L\,\mathbf{I}\)</td><td>\(j\omega L = \omega L\angle 90^\circ\)</td><td><b>+90°</b> (V leads)</td></tr>
+    <tr><td>C</td><td>\(v = \dfrac{1}{C}\displaystyle\int i\,dt\)</td><td>\(\mathbf{V} = \dfrac{1}{j\omega C}\mathbf{I}\)</td><td>\(\dfrac{-j}{\omega C} = \dfrac{1}{\omega C}\angle{-90^\circ}\)</td><td><b>−90°</b> (I leads)</td></tr></table>
+  </div>
+  <p class="lead" data-l="th">อ่านแถวละตัว: <b>อนุพันธ์ \(d/dt\) กลายเป็น \(j\omega\)</b> และ<b>ปริพันธ์ \(\int dt\) กลายเป็น \(1/(j\omega)\)</b> คอลัมน์โดเมนความถี่จึงเป็นกฎของโอห์มทั้งหมด มุมของ \(Z\) คือมุมที่ \(\mathbf{V}\) นำหน้า \(\mathbf{I}\) เสมอ เพราะ \(\angle\mathbf{V} = \angle Z + \angle\mathbf{I}\)</p>
+  <p class="lead" data-l="en">Read it row by row: <b>the derivative \(d/dt\) becomes \(j\omega\)</b> and <b>the integral \(\int dt\) becomes \(1/(j\omega)\)</b>, so the frequency-domain column is all Ohm's law. The angle of \(Z\) is always the angle by which \(\mathbf{V}\) leads \(\mathbf{I}\), because \(\angle\mathbf{V} = \angle Z + \angle\mathbf{I}\).</p>
+  <div class="callout" data-l="th"><b>หมายเหตุเรื่องสัญลักษณ์:</b> ในห้องเขียน \(X_L = j\omega L\) และ \(X_C = -j/(\omega C)\) ซึ่งที่จริงคือ<b>อิมพีแดนซ์</b> \(Z_L\) และ \(Z_C\) ตำรา Hayt และบทที่ 7 ใช้ \(X_L = \omega L\) และ \(X_C = 1/(\omega C)\) เป็น<b>รีแอกแตนซ์</b> (จำนวนจริง หน่วยโอห์ม) แล้วเขียน \(Z_L = jX_L\), \(Z_C = -jX_C\) ตัวเลขที่ได้เหมือนกัน ขอให้รู้ว่า \(j\) อยู่ที่ไหน</div>
+  <div class="callout" data-l="en"><b>A note on symbols:</b> in class \(X_L = j\omega L\) and \(X_C = -j/(\omega C)\) were written; these are really the <b>impedances</b> \(Z_L\) and \(Z_C\). Hayt and chapter 7 use \(X_L = \omega L\) and \(X_C = 1/(\omega C)\) as the <b>reactances</b> (real numbers, in ohms) and write \(Z_L = jX_L\), \(Z_C = -jX_C\). The numbers are the same; just know where the \(j\) is.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 13 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 13 as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K17.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 13: the frequency-domain column circled and labelled Ohm's law; X_L = jωL drawn from the L of v = L di/dt, and X_C = −j/ωC = 1/(jωC) from the 1/C of the integral">
+      <figcaption data-l="th">คอลัมน์โดเมนความถี่คือกฎของโอห์ม (Ohm's law) และ \(L\) กับ \(1/C\) ในโดเมนเวลากลายเป็น \(j\omega L\) กับ \(1/(j\omega C)\)</figcaption><figcaption data-l="en">The frequency-domain column is Ohm's law, and the \(L\) and \(1/C\) of the time domain become \(j\omega L\) and \(1/(j\omega C)\)</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ใครถึงยอดก่อน</h3>
+    <ol><li>ส่วน A เลือก L แล้วกดหยุด: สามเหลี่ยมบนยอดของ \(v\) (สีฟ้า) อยู่ก่อนของ \(i\) (สีเหลือง) 90° พอดี และลูกศร \(\mathbf{V}\) อยู่หน้า \(\mathbf{I}\) 90° (ทวนเข็มนาฬิกา)</li>
+    <li>เปลี่ยนค่า L: ขนาดของ \(\mathbf{V}\) เปลี่ยน แต่มุม 90° ไม่เปลี่ยนเลย</li>
+    <li>เลือก C: คราวนี้ \(i\) ถึงยอดก่อน ("ICE")</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ความถี่</h3>
+    <ol><li>เลือก L ขับด้วยแหล่งจ่ายกระแส เพิ่ม \(\omega\) เป็นสองเท่า: \(|\mathbf{V}|\) เพิ่มสองเท่า เพราะ \(|Z_L| = \omega L\)</li>
+    <li>เลือก C แล้วเพิ่ม \(\omega\): \(|\mathbf{V}|\) ลดลง ลด \(\omega\) จนเหลือน้อย ๆ แรงดันใหญ่มาก เพราะใกล้วงจรเปิดของไฟฟ้ากระแสตรง</li>
+    <li>ดูกราฟในส่วน B: ที่ความถี่ใดที่ \(\omega L = 1/(\omega C)\) (บทที่ 7 จะเรียกจุดนี้ว่าเรโซแนนซ์)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ตัวต้านทาน</h3>
+    <ol><li>เลือก R: ลูกศรสองตัวทับมุมเดียวกัน กราฟสองเส้นถึงยอดพร้อมกัน และจุดในสายวิ่งเร็วสุดตอนแรงดันสูงสุด</li>
+    <li>เปลี่ยน \(\omega\): ไม่มีอะไรเปลี่ยนเลย เพราะ \(Z_R = R\) ไม่มี \(\omega\)</li>
+    <li>คำถาม: ถ้ากระแสในตัวเหนี่ยวนำ 0.5 H คือ \(4\sin(100t + 10^\circ)\) A แรงดันคร่อมคือเท่าไร</li></ol>
+    <div class="book">สไลด์บทที่ 6 หน้า 10–13 · ฉบับในห้อง ก.ย. 2566 · Hayt §10.4 (ตาราง 10.1, ตัวอย่าง 10.4)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — who peaks first</h3>
+    <ol><li>In section A choose L and pause: the triangle on the peak of \(v\) (blue) is exactly 90° before that of \(i\) (yellow), and the arrow \(\mathbf{V}\) is 90° ahead of \(\mathbf{I}\) (anticlockwise).</li>
+    <li>Change L: the size of \(\mathbf{V}\) changes, but the 90° does not move at all.</li>
+    <li>Choose C: now \(i\) peaks first ("ICE").</li></ol></div>
+  <div class="card"><h3>Try this 2 — frequency</h3>
+    <ol><li>Choose L driven by a current source and double \(\omega\): \(|\mathbf{V}|\) doubles, because \(|Z_L| = \omega L\).</li>
+    <li>Choose C and raise \(\omega\): \(|\mathbf{V}|\) falls. Lower \(\omega\) to a small value and the voltage becomes very large, close to the open circuit of DC.</li>
+    <li>Look at the graph in section B: at what frequency is \(\omega L = 1/(\omega C)\)? (Chapter 7 calls this resonance.)</li></ol></div>
+  <div class="card"><h3>Try this 3 — the resistor</h3>
+    <ol><li>Choose R: both arrows lie at the same angle, both curves peak together, and the dots run fastest when the voltage is largest.</li>
+    <li>Change \(\omega\): nothing changes, because \(Z_R = R\) has no \(\omega\) in it.</li>
+    <li>Question: if the current in a 0.5 H inductor is \(4\sin(100t + 10^\circ)\) A, what is the voltage across it?</li></ol>
+    <div class="book">Chapter 6 slides, pp. 10–13 · in class, September 2023 · Hayt §10.4 (Table 10.1, Example 10.4)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+const sg = (x, d = 3) => fd(x, d).replace('-', '−');
+
+/* =================================================================== A: one source, one element */
+const S = { el: 'L', drive: 'I', w: 2, R: 2, L: 1, C: 0.25, M: 3, A: 30 };
+const zOf = () => S.el === 'R' ? cx(S.R, 0) : S.el === 'L' ? cx(0, S.w * S.L) : cx(0, -1 / (S.w * S.C));
+const T1 = new CH6.Trio('cvA', { T: 4, mid: true, cktFrac: 0.5,
+  vecs: tr => { const c = tr.ckt, V = c.Vab('X'), I = c.I('X'); return [{ z: V, color: COL.V, label: 'V' }, { z: I, color: COL.I, label: 'I', g: 'i' }]; },
+  planeOpts: () => ({ arcs: [{ a: 1, b: 0, color: COL.sig, r: 0.34 }] }),
+  sigs: tr => { const c = tr.ckt, V = c.Vab('X'), I = c.I('X'); return [{ mag: Cx.abs(V), ang: CH6.deg(V), color: COL.V, label: 'v', unit: 'V', peak: true }, { mag: Cx.abs(I), ang: CH6.deg(I), color: COL.I, label: 'i', unit: 'A', g: 'i', peak: true }]; },
+  after: v => { const p = v.ckt.part('X'); v.polarity(p, 'e', { side: 'L', text: 'v', color: COL.V }); v.refArrow(p, 'e', 'i', { side: 'R', color: COL.I, at: 0.16, off: 0.42 }); },
+  waveTitle: ['v(t) และ i(t) (แต่ละเส้นใช้สเกลของตัวเอง)', 'v(t) and i(t) (each on its own scale)'] });
+function build1() {
+  const elPart = S.el === 'R' ? { id: 'X', type: 'R', value: S.R, name: 'R', valText: `${fd(S.R, 2)} Ω` }
+    : S.el === 'L' ? { id: 'X', type: 'L', value: S.L, name: 'L', valText: `${fd(S.L, 2)} H` } : { id: 'X', type: 'C', value: S.C, name: 'C', valText: `${fd(S.C, 3)} F` };
+  const src = S.drive === 'V' ? { id: 'src', type: 'VAC', a: 's', b: 'g', amp: S.M, phase: S.A, name: 'v_s', valText: `${fd(S.M, 2)}∠${sg(S.A, 0)}° V`, side: -1 }
+    : { id: 'src', type: 'IAC', a: 'g', b: 's', amp: S.M, phase: S.A, name: 'i_s', valText: `${fd(S.M, 2)}∠${sg(S.A, 0)}° A`, side: -1 };
+  T1.set({ ground: 'g', mode: 'ac', w: S.w, nodes: { s: [0, 0], e: [3.2, 0], g: [0, 3], h: [3.2, 3] }, parts: [src, { type: 'W', a: 's', b: 'e' }, { ...elPart, a: 'e', b: 'h', side: 1, labelOff: 0.95 }, { type: 'W', a: 'h', b: 'g' }] });
+  metrics1(); drawX();
+}
+const panel1 = $('pA');
+ui.h2(panel1, t('อุปกรณ์', 'Element'));
+const radEl = ui.radio(panel1, [{ id: 'el_R', label: t('ตัวต้านทาน R', 'resistor R'), on: S.el === 'R' }, { id: 'el_L', label: t('ตัวเหนี่ยวนำ L', 'inductor L'), on: S.el === 'L' }, { id: 'el_C', label: t('ตัวเก็บประจุ C', 'capacitor C'), on: S.el === 'C' }], id => { S.el = id.slice(3); showVal(); build1(); });
+ui.h2(panel1, t('แหล่งจ่าย', 'Source'));
+const radDr = ui.radio(panel1, [{ id: 'dr_V', label: t('แหล่งจ่ายแรงดัน', 'voltage source'), on: S.drive === 'V' }, { id: 'dr_I', label: t('แหล่งจ่ายกระแส', 'current source'), on: S.drive === 'I' }], id => { S.drive = id.slice(3); build1(); });
+const sl = {};
+sl.M = ui.slider(panel1, { id: 'sM', label: t('ขนาดเฟเซอร์ (ค่ายอด)', 'phasor size (peak)'), min: 0.5, max: 10, step: 0.5, value: S.M, fmt: v => `${fd(v, 1)} ${S.drive === 'V' ? 'V' : 'A'}`, oninput: v => { S.M = v; build1(); } });
+sl.A = ui.slider(panel1, { id: 'sA', label: t('มุมเฟส', 'phase'), min: -180, max: 180, step: 5, value: S.A, fmt: v => `${sg(v, 0)}°`, oninput: v => { S.A = v; build1(); } });
+ui.h2(panel1, t('ค่าอุปกรณ์และความถี่', 'Element value and frequency'));
+sl.w = ui.slider(panel1, { id: 'sW', label: t('ความถี่เชิงมุม ω', 'angular frequency ω'), min: 0.5, max: 10, step: 0.5, value: S.w, fmt: v => `${fd(v, 1)} rad/s`, oninput: v => { S.w = v; build1(); } });
+sl.R = ui.slider(panel1, { id: 'sR', label: 'R', min: 0.5, max: 10, step: 0.5, value: S.R, fmt: v => `${fd(v, 1)} Ω`, oninput: v => { S.R = v; build1(); } });
+sl.L = ui.slider(panel1, { id: 'sL', label: 'L', min: 0.1, max: 5, step: 0.05, value: S.L, fmt: v => `${fd(v, 2)} H`, oninput: v => { S.L = v; build1(); } });
+sl.C = ui.slider(panel1, { id: 'sC', label: 'C', min: 0.05, max: 2, step: 0.05, value: S.C, fmt: v => `${fd(v, 2)} F`, oninput: v => { S.C = v; build1(); } });
+const showVal = () => { ['R', 'L', 'C'].forEach(k => { sl[k].block.style.display = k === S.el ? '' : 'none'; }); };
+ui.h2(panel1, t('ตัวอย่างในห้องเรียน', 'Class examples'));
+const set1 = o => { Object.assign(S, o); Object.keys(sl).forEach(k => sl[k].set(S[k])); radEl.set('el_' + S.el); radDr.set('dr_' + S.drive); showVal(); build1(); };
+ui.buttons(panel1, [{ label: t('ข้อ 1: R = 2 Ω', 'Problem 1: R = 2 Ω'), onclick: () => set1({ el: 'R', drive: 'V', M: 5, A: 30, R: 2, w: 2 }) },
+  { label: t('ข้อ 2: Z_L = j2 Ω', 'Problem 2: Z_L = j2 Ω'), onclick: () => set1({ el: 'L', drive: 'I', M: 3, A: 30, L: 1, w: 2 }) },
+  { label: t('ข้อ 3: Z_C = −j2 Ω', 'Problem 3: Z_C = −j2 Ω'), onclick: () => set1({ el: 'C', drive: 'I', M: 3, A: 30, C: 0.25, w: 2 }) }]);
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, T1.clk, T1);
+const met1 = ui.metrics(panel1);
+ui.html(panel1, t('ชี้เมาส์ที่อุปกรณ์เพื่ออ่าน V, I และ Z = V/I', 'Hover over the element to read V, I and Z = V/I'), 'hint');
+function metrics1() { const c = T1.ckt, V = c.Vab('X'), I = c.I('X'), Z = zOf(), d = CH6.wrap(CH6.deg(V) - CH6.deg(I));
+  met1.innerHTML = ui.kv([['Z', `${CH6.rect(Z, 3).replace('-', '−')} Ω`], ['', `${fd(Cx.abs(Z), 3)} Ω ∠ ${sg(CH6.deg(Z), 1)}°`], ['V', CH6.polTxt(V, 'V')], ['I', CH6.polTxt(I, 'A')], [t('มุม V − มุม I', 'angle V − angle I'), `${sg(d, 1)}°`]]); }
+
+/* =================================================================== the derivations of slides pp. 10–12 */
+const DRV = {
+  drv1: '\\begin{aligned} v &= V_m\\sin(\\omega t + \\theta) \\\\ i &= \\frac{v}{R} = \\frac{V_m}{R}\\sin(\\omega t + \\theta) \\\\ \\mathbf{V} &= V_m\\angle\\theta \\\\ \\mathbf{I} &= \\frac{V_m\\angle\\theta}{R} = \\frac{\\mathbf{V}}{R} \\\\ \\frac{\\mathbf{V}}{\\mathbf{I}} &= \\boxed{R} \\end{aligned}',
+  drv2: '\\begin{aligned} i &= I_m\\sin(\\omega t + \\theta) \\\\ v &= L\\frac{di}{dt} = \\omega L I_m\\cos(\\omega t + \\theta) = \\omega L I_m\\sin(\\omega t + \\theta + 90^\\circ) \\\\ \\mathbf{V} &= \\omega L I_m\\angle(\\theta + 90^\\circ) \\\\ \\mathbf{I} &= I_m\\angle\\theta \\\\ \\frac{\\mathbf{V}}{\\mathbf{I}} &= \\omega L\\angle 90^\\circ = \\boxed{j\\omega L} \\end{aligned}',
+  drv3: '\\begin{aligned} v &= V_m\\sin(\\omega t + \\theta) \\\\ i &= C\\frac{dv}{dt} = \\omega C V_m\\cos(\\omega t + \\theta) = \\omega C V_m\\sin(\\omega t + \\theta + 90^\\circ) \\\\ \\mathbf{V} &= V_m\\angle\\theta \\\\ \\mathbf{I} &= \\omega C V_m\\angle(\\theta + 90^\\circ) \\\\ \\frac{\\mathbf{V}}{\\mathbf{I}} &= \\frac{1}{\\omega C}\\angle{-90^\\circ} = \\frac{1}{j\\omega C} = \\frac{j}{j^2\\,\\omega C} = \\boxed{\\frac{-j}{\\omega C}} \\end{aligned}' };
+const drvAll = () => Object.entries(DRV).forEach(([id, tex]) => { const el = $(id); el.innerHTML = tx(LS.fitIn(el.closest('details'), tex, el), true); });
+
+/* =================================================================== 1–3: the class problems of slides pp. 10–12; 4: Hayt Example 10.4 */
+CH6.problem(1, 'elem', { el: 'R', value: 2, w: 2, given: 'V', M: 5, ang: 30, sub: 'R' }, {
+  ask: CH6.askPh('I<sub>R</sub>', 2.5, 30, 'A', { traps: [[10, 30, t('\\(\\mathbf{I} = \\mathbf{V}/R\\) ต้องหารด้วย R ไม่ใช่คูณ', '\\(\\mathbf{I} = \\mathbf{V}/R\\): divide by R, do not multiply')]] }),
+  answer: t('\\(\\mathbf{I}_R = 2.5\\angle 30^\\circ\\) A ตรงกับในห้อง แรงดันกับกระแสเฟสเดียวกัน (in phase)', '\\(\\mathbf{I}_R = 2.5\\angle 30^\\circ\\) A, as in class; the voltage and the current are in phase') });
+CH6.problem(2, 'elem', { el: 'L', value: 1, w: 2, given: 'I', M: 3, ang: 30, sub: 'L', Ztex: 'j2' }, {
+  ask: CH6.askPh('V<sub>L</sub>', 6, 120, 'V', { traps: [[6, 30, t('ลืมมุมของ \\(Z_L\\): \\(j2 = 2\\angle 90^\\circ\\) ต้องบวก 90° เข้าที่มุม', 'The angle of \\(Z_L\\) is missing: \\(j2 = 2\\angle 90^\\circ\\), so add 90° to the angle')],
+    [6, -60, t('\\(Z_L = +j2\\) มีมุม +90° (ตัวเหนี่ยวนำ) ไม่ใช่ −90°', '\\(Z_L = +j2\\) has the angle +90° (an inductor), not −90°')], [1.5, -60, t('\\(\\mathbf{V} = Z\\mathbf{I}\\) ต้องคูณ ไม่ใช่หาร', '\\(\\mathbf{V} = Z\\mathbf{I}\\): multiply, do not divide')]] }),
+  answer: t('\\(\\mathbf{V}_L = 6\\angle 120^\\circ\\) V ตรงกับในห้อง และ \\(\\mathbf{V}_L\\) นำหน้า \\(\\mathbf{I}_L\\) อยู่ 90°', '\\(\\mathbf{V}_L = 6\\angle 120^\\circ\\) V, as in class, and \\(\\mathbf{V}_L\\) leads \\(\\mathbf{I}_L\\) by 90°') });
+CH6.problem(3, 'elem', { el: 'C', value: 0.25, w: 2, given: 'I', M: 3, ang: 30, sub: 'C', Ztex: '-j2' }, {
+  ask: CH6.askPh('V<sub>C</sub>', 6, -60, 'V', { traps: [[6, 120, t('\\(Z_C = -j2\\) มีมุม −90° (ตัวเก็บประจุ) ไม่ใช่ +90°', '\\(Z_C = -j2\\) has the angle −90° (a capacitor), not +90°')],
+    [6, 30, t('ลืมมุมของ \\(Z_C\\): \\(-j2 = 2\\angle{-90^\\circ}\\)', 'The angle of \\(Z_C\\) is missing: \\(-j2 = 2\\angle{-90^\\circ}\\)')], [1.5, 120, t('\\(\\mathbf{V} = Z\\mathbf{I}\\) ต้องคูณ ไม่ใช่หาร', '\\(\\mathbf{V} = Z\\mathbf{I}\\): multiply, do not divide')]] }),
+  answer: t('\\(\\mathbf{V}_C = 6\\angle{-60^\\circ}\\) V ตรงกับในห้อง และ \\(\\mathbf{I}_C\\) นำหน้า \\(\\mathbf{V}_C\\) อยู่ 90°', '\\(\\mathbf{V}_C = 6\\angle{-60^\\circ}\\) V, as in class, and \\(\\mathbf{I}_C\\) leads \\(\\mathbf{V}_C\\) by 90°') });
+CH6.problem(4, 'elem', { el: 'L', value: 4, w: 100, given: 'V', M: 8, ang: -50, sub: 'L', unitI: 'mA' }, {
+  ask: CH6.askPh('I<sub>L</sub>', 0.02, -140, 'A', { traps: [[0.02, 40, t('หารด้วย \\(j\\omega L\\): มุมต้องลบ 90° ไม่ใช่บวก', 'Dividing by \\(j\\omega L\\) subtracts 90° from the angle; it does not add it')],
+    [3200, 40, t('\\(\\mathbf{I} = \\mathbf{V}/Z\\) ต้องหาร ไม่ใช่คูณ', '\\(\\mathbf{I} = \\mathbf{V}/Z\\): divide, do not multiply')], [0.08, -140, t('\\(\\omega L = (100)(4) = 400\\ \\Omega\\)', '\\(\\omega L = (100)(4) = 400\\ \\Omega\\)')],
+    [20, -140, t('หน่วยเป็นแอมแปร์: 20 mA = 0.02 A', 'The unit is amperes: 20 mA = 0.02 A')]] }),
+  answer: t('\\(\\mathbf{I}_L = 0.02\\angle{-140^\\circ}\\) A ดังนั้น \\(i(t) = 20\\sin(100t - 140^\\circ)\\) mA (Hayt เขียน \\(20\\cos(100t - 140^\\circ)\\) mA เพราะตำราอ่านเฟเซอร์ด้วย cos ตัวเลขของเฟเซอร์เหมือนกันทุกตัว)', '\\(\\mathbf{I}_L = 0.02\\angle{-140^\\circ}\\) A, so \\(i(t) = 20\\sin(100t - 140^\\circ)\\) mA (Hayt writes \\(20\\cos(100t - 140^\\circ)\\) mA, because the book reads phasors with cos; the phasor numbers are identical)') });
+
+/* =================================================================== B: the size of Z against ω */
+const cvB = $('cvB');
+function drawX() { const W = Math.max(300, Math.floor(cvB.parentElement.clientWidth - 12)), H = Math.round(Math.max(250, Math.min(360, W * 0.36))); const ctx = CK.setup(cvB, W, H);
+  ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H); const wMax = 10, XL = w => w * S.L, XC = w => 1 / (w * S.C), narrow = W < 520;
+  const yMax = Math.max(10, S.R * 1.3, XL(S.w) * 1.3, Math.min(XC(S.w) * 1.3, 40));
+  const P = new DRAW.Plot(ctx, { x: 0, y: 0, w: W, h: H }, { xlim: [0, wMax], ylim: [0, yMax], title: t('ขนาดของอิมพีแดนซ์ (Ω) ตามความถี่เชิงมุม', 'size of the impedance (Ω) against angular frequency'), xlabel: 'ω (rad/s)', ml: 46, mr: 16 });
+  P.frame(); const xs = Array.from({ length: 241 }, (_, k) => 0.02 + k / 240 * (wMax - 0.02));
+  P.line(xs, xs.map(() => S.R), { color: COL.purple, width: 2.4 }); P.line(xs, xs.map(XL), { color: COL.V, width: 2.4 }); P.line(xs, xs.map(XC), { color: COL.ref, width: 2.4 });
+  P.vline(S.w, { color: '#ffd166', label: `ω = ${fd(S.w, 1)}` });
+  [[S.R, COL.purple], [XL(S.w), COL.V], [XC(S.w), COL.ref]].forEach(([y, c]) => P.marker(S.w, y, { type: 'dot', color: c, r: 5 }));
+  [[`|Z_R| = R = ${fd(S.R, 2)} Ω`, COL.purple], [`|Z_L| = ωL = ${fd(XL(S.w), 3)} Ω`, COL.V], [`|Z_C| = 1/(ωC) = ${fd(XC(S.w), 3)} Ω`, COL.ref]].forEach(([s, c], k) => CH6.tag(ctx, s, P.px + P.pw - 8, P.py + 16 + k * 25, c, { align: 'right', size: narrow ? 11.5 : 12.5 }));
+  const cross = 1 / Math.sqrt(S.L * S.C); if (cross < wMax) { P.marker(cross, XL(cross), { type: 'o', color: COL.sig, r: 6 }); const lab = narrow ? `ωL = 1/(ωC): ω = ${fd(cross, 2)}` : t(`ωL = 1/(ωC) ที่ ω = ${fd(cross, 2)} rad/s`, `ωL = 1/(ωC) at ω = ${fd(cross, 2)} rad/s`);
+    const x = P.toX(cross), right = x < P.px + P.pw * 0.55; CH6.tag(ctx, lab, right ? x + 10 : x - 10, Math.min(P.py + P.ph - 14, P.toY(XL(cross)) + 22), COL.sig, { align: right ? 'left' : 'right', size: 12 }); }
+}
+
+T1.resize(); showVal(); build1(); LS.anim($('cvA'), dt => T1.frame(dt));
+drvAll(); LS.onFonts(drvAll);
+window.addEventListener('resize', () => { T1.resize(); drawX(); drvAll(); });
+});
+</script>
+</body>
+</html>

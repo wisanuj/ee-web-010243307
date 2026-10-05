@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="7.3 — Thévenin and Norton in AC Circuits">7.3 — วงจรสมมูลเทวินินและนอร์ตันในวงจรกระแสสลับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">วงจรสมมูลเทวินินและนอร์ตันในวงจรกระแสสลับ <span class="en">Thévenin and Norton equivalents in AC circuits — the same steps, with a complex Z_th</span></h1>
+<h1 data-l="en">Thévenin and Norton equivalents in AC circuits <span class="en">The same steps, with a complex Z_th</span></h1>
+
+<p class="sub" data-l="th">วงจรสมมูลเทวินินของบทที่ 5 ใช้กับวงจรกระแสสลับได้ทุกขั้นตอน เพียงแทนความต้านทานด้วยอิมพีแดนซ์และแทนแรงดันกระแสด้วยเฟเซอร์ ผลที่ได้คือ<b>แหล่งจ่ายเฟเซอร์ \(\mathbf{V}_{th}\) อนุกรมกับอิมพีแดนซ์ \(Z_{th}\)</b> ซึ่งอาจมีส่วนจินตภาพ (แบบตัวเหนี่ยวนำหรือตัวเก็บประจุ) Ex 5 ในสไลด์หน้า 8 มีแหล่งจ่ายแรงดันสองตัว ผลที่น่าสนใจคือ \(Z_{th} = j150\ \Omega\) เป็นตัวเหนี่ยวนำล้วน และตัวต้านทาน 200 Ω หายไปจาก \(Z_{th}\) ทั้งตัว หน้านี้มี Ex 5 (ทั้งเทวินินและนอร์ตัน) ภาพจำลองโหลดแบบใดก็ได้ (ส่วน A) และโจทย์เพิ่มเติมจากสไลด์ปี 2561 ที่ต้องหาวงจรสมมูลซึ่ง "มองจาก" อิมพีแดนซ์ที่อยู่ระหว่างสองโนด</p>
+<p class="sub" data-l="en">The Thévenin equivalent of chapter 5 works for AC circuits step for step: just replace resistances by impedances and voltages and currents by phasors. The result is <b>a phasor source \(\mathbf{V}_{th}\) in series with an impedance \(Z_{th}\)</b>, which may have an imaginary part (inductive or capacitive). Ex 5 on slide p. 8 has two voltage sources; the interesting results are that \(Z_{th} = j150\ \Omega\) is a pure inductance and that the 200 Ω resistor drops out of \(Z_{th}\) altogether. This page has Ex 5 (both Thévenin and Norton), a simulation with any load (section A), and an extra problem from the 2018 slides that asks for the equivalent "seen by" an impedance sitting between two nodes.</p>
+<div class="equation-box">$$ \begin{aligned} \mathbf{V}_{th} &= \mathbf{V}_{oc} \qquad Z_{th} = Z_{AB}\big|_{\mathbf{V}_s = 0,\ \mathbf{I}_s = 0} \\ \mathbf{I}_N &= \mathbf{I}_{sc} = \frac{\mathbf{V}_{th}}{Z_{th}} \qquad Z_N = Z_{th} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ขั้นตอนเหมือนบทที่ 5</b>: ถอดโหลด → หาแรงดันวงจรเปิด \(\mathbf{V}_{oc}\) → ฆ่าแหล่งจ่าย → หา \(Z_{th}\) ที่มองเข้าขั้ว AB → ต่อวงจรสมมูลกับโหลด</li>
+  <li><b>\(\mathbf{V}_{th} = 158.11\angle 108.43^\circ\) V</b> ได้จากสมการโนดสมการเดียว เพราะแหล่งจ่ายแรงดันสองตัวกำหนดแรงดันโนดอื่นไว้แล้ว</li>
+  <li><b>\(Z_{th} = (-j300) \parallel (j100) = j150\ \Omega\)</b> เป็นจำนวนจินตภาพล้วน และ<b>ตัวต้านทาน 200 Ω ไม่อยู่ใน \(Z_{th}\)</b> เพราะเมื่อลัดวงจรแหล่งจ่าย ปลายทั้งสองข้างของมันต่อกับ B</li>
+  <li><b>นอร์ตัน</b>: \(\mathbf{I}_N = \mathbf{V}_{th}/Z_{th} = 1.054\angle 18.43^\circ\) A เท่ากับกระแสลัดวงจรที่ AB และ \(Z_N = Z_{th}\)</li>
+  <li>วงจรสมมูลให้กระแสในโหลดเท่ากับวงจรจริง<b>ทุกค่าของ \(Z_L\)</b> แต่<b>ใช้ได้เฉพาะที่ความถี่นี้</b> เพราะ \(Z_{th}\) ขึ้นกับ ω</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>The steps of chapter 5</b>: remove the load → find the open-circuit voltage \(\mathbf{V}_{oc}\) → kill the sources → find \(Z_{th}\) looking into AB → connect the equivalent to the load.</li>
+  <li><b>\(\mathbf{V}_{th} = 158.11\angle 108.43^\circ\) V</b> comes from a single node equation, because the two voltage sources already fix the other node voltages.</li>
+  <li><b>\(Z_{th} = (-j300) \parallel (j100) = j150\ \Omega\)</b> is purely imaginary, and <b>the 200 Ω resistor is not in \(Z_{th}\)</b>: with the sources shorted, both of its ends tie to B.</li>
+  <li><b>Norton</b>: \(\mathbf{I}_N = \mathbf{V}_{th}/Z_{th} = 1.054\angle 18.43^\circ\) A, equal to the short-circuit current at AB, and \(Z_N = Z_{th}\).</li>
+  <li>The equivalent draws the same load current as the real circuit <b>for every \(Z_L\)</b>, but <b>only at this frequency</b>, because \(Z_{th}\) depends on ω.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 5 เทวินินและนอร์ตัน</a><a href="#tA"><b>A</b>โหลดแบบใดก็ได้</a><a href="#ex2"><b>2</b>ฝึกเพิ่ม: มองจาก −j10 Ω</a><a href="#tB"><b>B</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 5 Thévenin and Norton</a><a href="#tA"><b>A</b>Any load</a><a href="#ex2"><b>2</b>Extra: seen by −j10 Ω</a><a href="#tB"><b>B</b>More practice</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 5: หาวงจรสมมูลเทวินินและนอร์ตันที่ขั้ว A–B</h2><h2 data-l="en">Ex 5: find the Thévenin and Norton equivalents at A–B</h2>
+    <div class="src" data-l="th">สไลด์หน้า 8 · Hayt §10.7 · เฉลยในห้องหน้า 13–14 · เลือกโหลดใต้ภาพได้</div><div class="src" data-l="en">Slide p. 8 · Hayt §10.7 · class solution pp. 13–14 · choose the load under the picture</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p08q.webp" width="1160" height="618" loading="lazy" decoding="async" alt="Slide 8 Ex 5: determine the Thévenin equivalent and Norton equivalent. A 100∠0° V source on the left, 200 Ω and j100 Ω in series along the middle to the right terminal, a 100∠90° V source from the middle node down, and −j300 Ω across the top from the left node to the right terminal">
+    <figcaption data-l="th">สไลด์หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 8 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ภาพจำลองเปลี่ยนตามขั้นในห้อง: ถอดโหลด วัดแรงดันวงจรเปิดด้วยโวลต์มิเตอร์ ลัดวงจรแหล่งจ่ายแรงดันทั้งสอง (วงกลมประ) แล้วต่อแหล่งจ่ายทดสอบ 1∠0° V ที่ AB เพื่อวัด \(Z_{th}\) สองขั้นสุดท้ายวางวงจรจริงคู่กับวงจรสมมูล: <b>จุดในโหลดของทั้งสองภาพวิ่งเหมือนกัน</b></p>
+  <p class="lead" data-l="en">The simulation follows the class steps: remove the load, read the open-circuit voltage with a voltmeter, short both voltage sources (the dashed circles), and drive AB with a 1∠0° V test source to measure \(Z_{th}\). The last two steps put the real circuit next to the equivalent: <b>the dots in the load move identically in both pictures</b>.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas><div class="ctl" id="ctl1"></div></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <div class="warnbox" data-l="th">ฉบับในห้อง 2569 (หน้า 13) เขียนบรรทัดกลางเป็น \([-3V_3 - 300\angle 90^\circ]\) เครื่องหมายที่ถูกคือ \(+300\angle 90^\circ\) (เพราะ \(-3(V_3 - V_2) = -3V_3 + 3V_2\)) แต่คำตอบสุดท้าย 158.11∠108.434° V ถูกต้อง และฉบับปี 2561 เขียนเครื่องหมายถูก · ในห้องขีดฆ่าส่วนนอร์ตันไว้ หน้านี้ทำต่อให้ในขั้นที่ 5</div>
+  <div class="warnbox" data-l="en">The 2026 in-class notes (p. 13) write the middle line as \([-3V_3 - 300\angle 90^\circ]\); the correct sign is \(+300\angle 90^\circ\) (since \(-3(V_3 - V_2) = -3V_3 + 3V_2\)). The final answer 158.11∠108.434° V is right, and the 2018 version has the correct sign. · The Norton part was struck out in class; step 5 of this page completes it.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 8 และเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 8 and the solution written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K12.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 8: 'and Norton equivalent' crossed out; terminals A and B marked with a load ZL; a sketch of the target: a source Vth in series with Zth feeding ZL between A and B">
+      <figcaption data-l="th">เป้าหมาย: แหล่งจ่าย \(V_{th}\) อนุกรม \(Z_{th}\) ต่อโหลด \(Z_L\) ที่ A–B (ส่วนนอร์ตันถูกขีดฆ่า)</figcaption><figcaption data-l="en">The target: a source \(V_{th}\) in series with \(Z_{th}\) driving \(Z_L\) at A–B (the Norton part struck out)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/K13.webp" width="1100" height="1510" loading="lazy" decoding="async" alt="Handwritten solution of Ex 5: find Vth = VAB by nodal analysis with V4 = Vref = 0, V1 = 100∠0 V, V2 = 100∠90 V; KCL at node V3: (V3 − V1)/(−300j) + (V3 − V2)/(100j) = 0; V3 = 158.11∠108.434 V; Vth = VAB = 158.11∠108.434 V; Zth with all independent sources killed: the 200 Ω shorted out, (100j)(−300j)/(100j + (−300j)) = 150j Ω">
+      <figcaption data-l="th">\(V_{th} = 158.11\angle 108.434^\circ\) V จากสมการโนดเดียว และ \(Z_{th} = j150\ \Omega\) เมื่อฆ่าแหล่งจ่าย</figcaption><figcaption data-l="en">\(V_{th} = 158.11\angle 108.434^\circ\) V from one node equation, and \(Z_{th} = j150\ \Omega\) with the sources killed</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/K14.webp" width="720" height="340" loading="lazy" decoding="async" alt="Handwritten Thévenin equivalent: Vth = 158.11∠108.43 V in series with Zth = 150∠90 Ω, feeding ZL between A and B">
+      <figcaption data-l="th">วงจรสมมูลที่ได้ในห้อง</figcaption><figcaption data-l="en">The equivalent obtained in class</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">โหลดเชิงซ้อนแบบใดก็ได้: กระแสในโหลดเท่ากันเสมอ</h2><h2 data-l="en">Any complex load: always the same load current</h2>
+    <div class="src" data-l="th">วงจรของ Ex 5 · ชี้เมาส์ที่แหล่งจ่ายเพื่อเทียบกระแสภายใน</div><div class="src" data-l="en">The circuit of Ex 5 · hover over the sources to compare the internal currents</div></div></div>
+  <p class="lead" data-l="th">เลื่อน \(R_L\) และ \(X_L\) ของโหลด \(Z_L = R_L + jX_L\) วงจรจริง วงจรสมมูลเทวินิน และวงจรสมมูลนอร์ตันต่อโหลดตัวเดียวกัน <b>กระแสในโหลดเท่ากันทุกค่า</b> แต่กระแสภายในวงจรไม่เท่ากัน ลองกด "10 − j150 Ω": ส่วนจินตภาพของโหลดหักล้างกับ \(Z_{th} = j150\ \Omega\) พอดี อิมพีแดนซ์รวมเหลือ 10 Ω กระแสจึงสูงมาก</p>
+  <p class="lead" data-l="en">Slide \(R_L\) and \(X_L\) of the load \(Z_L = R_L + jX_L\). The real circuit, the Thévenin equivalent and the Norton equivalent drive the same load: <b>the load current is equal for every value</b>, while the currents inside the circuits are not. Press "10 − j150 Ω": the load's imaginary part cancels \(Z_{th} = j150\ \Omega\) exactly, the total impedance is only 10 Ω, and the current gets very large.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">หาวงจรสมมูลเทวินินที่อิมพีแดนซ์ −j10 Ω มองเห็น แล้วใช้หา \(\mathbf{V}_1\)</h2><h2 data-l="en">Find the Thévenin equivalent seen by the −j10 Ω impedance, and use it to find \(\mathbf{V}_1\)</h2>
+    <div class="src" data-l="th">สไลด์ปี 2561 หน้า 10 · Hayt Example 10.11 · ไม่มีเฉลยในสไลด์</div><div class="src" data-l="en">2018 slides, p. 10 · Hayt Example 10.11 · no solution on the slides</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/L09q.webp" width="1071" height="421" loading="lazy" decoding="async" alt="2018 slide: determine the Thévenin equivalent seen by the −j10 ohm impedance of the figure, and use this to compute V1. A 1∠0° A source into V1, 4 − j2 Ω from V1 to the reference carrying I1, −j10 Ω between V1 and V2, 2 + j4 Ω from V2 to the reference, and a 0.5∠−90° A source from V2 to the reference">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2018 slides, p. 10 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">"มองจาก −j10 Ω" แปลว่าให้ −j10 Ω เป็นโหลด ขั้ว A คือโนด \(V_1\) และขั้ว B คือโนด \(V_2\) ซึ่งไม่มีขั้วใดเป็นโนดอ้างอิง ฆ่าแหล่งจ่ายกระแสด้วยการเปิดวงจร (วงกลมประ) ไม่ใช่ลัดวงจร</p>
+  <p class="lead" data-l="en">"Seen by the −j10 Ω" means the −j10 Ω is the load: terminal A is node \(V_1\) and terminal B is node \(V_2\), and neither is the reference node. Current sources are killed by opening them (the dashed circles), not by shorting.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง มุมเป็นองศา</div><div class="src" data-l="en">Give at least 3 decimal places, angles in degrees</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ทำไม 200 Ω หายไป</h3>
+    <ol><li>ขั้นที่ 3 ของ Ex 5: ลัดวงจร 100∠0° V และ 100∠90° V แล้วปลายทั้งสองของ 200 Ω ต่อกับเส้นล่าง (B) ทั้งคู่ จึงไม่มีกระแสไหลผ่าน</li>
+    <li>เหลือ −j300 Ω และ j100 Ω ต่อขนานระหว่าง A กับ B: \(\tfrac{(-j300)(j100)}{-j200} = j150\ \Omega\)</li>
+    <li>ชี้เมาส์ที่แหล่งจ่ายทดสอบ: \(\mathbf{I} = 1/(j150) = 6.67\angle{-90^\circ}\) mA ตรงกับ \(Z_{th}\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — วงจรสมมูลจริงหรือไม่</h3>
+    <ol><li>ส่วน A เลื่อน \(X_L\) จาก −300 ถึง 300 Ω: กระแสในโหลดของทั้งสามวงจรเท่ากันทุกหลัก</li>
+    <li>ชี้เมาส์ที่แหล่งจ่ายในวงจรจริงกับในวงจรเทวินิน: กระแสของแหล่งจ่ายไม่เท่ากัน วงจรสมมูล "เหมือน" เฉพาะที่ขั้ว AB</li>
+    <li>ข้อ 2: \(\mathbf{V}_1 = 1 - j2\) V เท่ากับข้อ 6 ของหน้า 7.1 แม้จะคิดคนละวิธี</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ความถี่ต้องเท่าเดิม</h3>
+    <ol><li>ที่ความถี่อื่น \(Z_C = -j300\) และ \(Z_L = j100\) จะเปลี่ยน \(Z_{th}\) และ \(\mathbf{V}_{th}\) จึงต้องคำนวณใหม่</li>
+    <li>เทียบกับบทที่ 5: \(R_{th}\) ใช้ได้ทุกค่าของแหล่งจ่ายกระแสตรง แต่ \(Z_{th}\) ใช้ได้ที่ ω เดียว</li>
+    <li>คำถาม: \(Z_L\) แบบไหนทำให้กระแสในโหลดสูงที่สุดเมื่อ \(R_L\) คงที่ (ดูปุ่ม 10 − j150 Ω ในส่วน A)</li></ol>
+    <div class="book">สไลด์บทที่ 7 หน้า 8 · ฉบับในห้อง 2569 หน้า 12–14 · สไลด์ปี 2561 หน้า 10 · Hayt §10.7, Example 10.11</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — why the 200 Ω disappears</h3>
+    <ol><li>Step 3 of Ex 5: with 100∠0° V and 100∠90° V shorted, both ends of the 200 Ω land on the bottom line (B), so no current flows through it.</li>
+    <li>What remains is −j300 Ω and j100 Ω in parallel between A and B: \(\tfrac{(-j300)(j100)}{-j200} = j150\ \Omega\).</li>
+    <li>Hover over the test source: \(\mathbf{I} = 1/(j150) = 6.67\angle{-90^\circ}\) mA, consistent with \(Z_{th}\).</li></ol></div>
+  <div class="card"><h3>Try this 2 — really equivalent?</h3>
+    <ol><li>In section A slide \(X_L\) from −300 to 300 Ω: the load current of all three circuits agrees to every digit.</li>
+    <li>Hover over a source in the real circuit and in the Thévenin circuit: the source currents differ. The equivalent is "the same" only at terminals AB.</li>
+    <li>Problem 2: \(\mathbf{V}_1 = 1 - j2\) V, the same as problem 6 of page 7.1, although the methods differ.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the frequency must stay the same</h3>
+    <ol><li>At another frequency \(Z_C = -j300\) and \(Z_L = j100\) change, so \(Z_{th}\) and \(\mathbf{V}_{th}\) must be recomputed.</li>
+    <li>Compare with chapter 5: \(R_{th}\) holds for any DC source values, but \(Z_{th}\) holds at one ω only.</li>
+    <li>Question: with \(R_L\) fixed, which \(Z_L\) gives the largest load current? (See the 10 − j150 Ω button in section A.)</li></ol>
+    <div class="book">Chapter 7 slides, p. 8 · in class 2026, pp. 12–14 · 2018 slides, p. 10 · Hayt §10.7, Example 10.11</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+  const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), T5 = CH7C.ex5, IL = zl => Cx.div(T5.Vth, Cx.add(T5.Zth, zl));
+  CH7.problem(1, 'ex5'); CH7.problem(2, 'x3');
+
+  /* =================================================================== A: any load on the real circuit and both equivalents */
+  const S = { R: 100, X: 0 };
+  const G = new CH7.Grid('cvA', { aspect: 0.62, cols2At: 520, clock: CH6.clock({ T: 4 }),
+    cell: (ctx, b, g) => { const zl = cx(S.R, S.X), I = IL(zl), V = Cx.mul(I, zl);
+      CH6.plane(ctx, b, [{ z: T5.Vth, color: COL.V, label: 'V_th', w: 2, dash: [5, 4], proj: false }, { z: V, color: COL.ref, label: 'V_AB' }, { z: I, color: COL.I, label: 'I_L', g: 'i' }], { rot: g.clk.ph, proj: false, title: t('เฟเซอร์ที่ขั้ว AB', 'phasors at AB') }); } });
+  const noVal = sp => ({ ...sp, parts: sp.parts.map(p => (p.id === 'Vth' || p.id === 'IN') ? { ...p, valText: '' } : p) });
+  const panel = $('pA');
+  ui.h2(panel, 'Z_L = R_L + jX_L');
+  const sR = ui.slider(panel, { id: 'sRA', label: 'R<sub>L</sub>', min: 5, max: 400, step: 5, value: S.R, fmt: v => `${v} Ω`, oninput: v => { S.R = v; build(); } });
+  const sX = ui.slider(panel, { id: 'sXA', label: 'X<sub>L</sub>', min: -300, max: 300, step: 5, value: S.X, fmt: v => `${v < 0 ? '−' : ''}${Math.abs(v)} Ω`, oninput: v => { S.X = v; build(); } });
+  const setZ = (r, x) => { S.R = r; S.X = x; sR.set(r); sX.set(x); build(); };
+  ui.buttons(panel, [{ label: '100 Ω', onclick: () => setZ(100, 0) }, { label: '10 − j150 Ω', onclick: () => setZ(10, -150) }, { label: '200 + j300 Ω', onclick: () => setZ(200, 300) }]);
+  ui.h2(panel, t('การเล่น', 'Playback')); CH6.playBtns(panel, G.clk);
+  const met = ui.metrics(panel);
+  function build() { const zl = cx(S.R, S.X), lab = `I_L = ${CH6.polTxt(IL(zl), 'A', 4, 2)}`;
+    G.set([{ spec: T5.spec({ load: zl }), title: ['วงจรจริง + Z_L', 'real circuit + Z_L'], sub: lab, after: v => CH7.terminals(v, 'A', 'B') },
+      { spec: noVal(T5.thev(zl)), title: ['เทวินิน + Z_L', 'Thévenin + Z_L'], sub: lab, after: v => CH7.terminals(v, 'A', 'B') },
+      { spec: noVal(T5.nort(zl)), title: ['นอร์ตัน + Z_L', 'Norton + Z_L'], sub: lab, after: v => CH7.terminals(v, 'A', 'B') }]);
+    const c = G.items.map(it => it.ckt.I('ZL')), src = G.items[0].ckt.I('V1'), srcT = G.items[1].ckt.I('Vth');
+    met.innerHTML = ui.kv([[t('I<sub>L</sub> วงจรจริง', 'I<sub>L</sub> real'), CH6.polTxt(c[0], 'A', 4, 2)], [t('I<sub>L</sub> เทวินิน', 'I<sub>L</sub> Thévenin'), CH6.polTxt(c[1], 'A', 4, 2)], [t('I<sub>L</sub> นอร์ตัน', 'I<sub>L</sub> Norton'), CH6.polTxt(c[2], 'A', 4, 2)],
+      [t('Z ที่ V<sub>th</sub> เห็น', 'Z seen by V<sub>th</sub>'), `${CH6.rect(Cx.add(T5.Zth, zl), 1).replace('-', '−')} Ω`], [t('กระแสแหล่งจ่าย 100∠0° (จริง)', 'source 100∠0° current (real)'), CH6.polTxt(Cx.neg(src), 'A', 3, 1)], [t('กระแสแหล่งจ่าย V<sub>th</sub> (สมมูล)', 'source V<sub>th</sub> current (equivalent)'), CH6.polTxt(Cx.neg(srcT), 'A', 3, 1)]]); }
+  build(); LS.anim($('cvA'), dt => G.frame(dt)); window.addEventListener('resize', () => G.resize());
+
+  /* =================================================================== B: more practice */
+  const zl = cx(150, 0), I = IL(zl), work = tex => tx(LS.fitIn($('quiz'), tex), true);
+  CH6.quiz('quiz', [
+    { q: t('1) \\(\\mathbf{V}_{th}\\) ของ Ex 5', '1) \\(\\mathbf{V}_{th}\\) of Ex 5'), cz: T5.Vth, fields: [{ key: 'm', lab: '\\(\\mathbf{V}_{th}\\) =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }] },
+    { q: t('2) \\(Z_{th}\\) ของ Ex 5 (\\(R + jX\\))', '2) \\(Z_{th}\\) of Ex 5 (\\(R + jX\\))'), fields: [{ key: 'r', lab: 'R =', ans: 0, tol: 0.011, unit: 'Ω' }, { key: 'x', lab: 'X =', ans: 150, unit: 'Ω' }] },
+    { q: t('3) กระแสนอร์ตัน \\(\\mathbf{I}_N\\)', '3) The Norton current \\(\\mathbf{I}_N\\)'), cz: T5.IN, fields: [{ key: 'm', lab: '\\(\\mathbf{I}_N\\) =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }] },
+    { q: t('4) ต่อโหลด \\(Z_L = 150\\ \\Omega\\) ที่ AB: กระแสในโหลด', '4) A load \\(Z_L = 150\\ \\Omega\\) at AB: the load current'), cz: I, fields: [{ key: 'm', lab: '\\(\\mathbf{I}_L\\) =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }],
+      work: work(R`\mathbf{I}_L = \frac{${P(T5.Vth, 2, 2)}}{150 + j150} = \frac{${P(T5.Vth, 2, 2)}}{212.13\angle 45^\circ} = ${P(I)}\ \text{A}`) }], { wide: true });
+});
+</script>
+</body>
+</html>

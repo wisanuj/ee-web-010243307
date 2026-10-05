@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="1.2 — Determinants and Cramer's Rule">1.2 — ดีเทอร์มิแนนต์และกฎของคราเมอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch1.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ดีเทอร์มิแนนต์และกฎของคราเมอร์ <span class="en">Determinants and Cramer's rule — swap one column, take a determinant, divide</span></h1>
+<h1 data-l="en">Determinants and Cramer's rule <span class="en">Swap one column, take a determinant, divide</span></h1>
+
+<div class="slides">
+  <figure class="slide"><img src="slides/ch1/p07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 7: Cramer's rule is an explicit formula for the solution of a system of linear equations, AX = B, A has a nonzero determinant">
+    <figcaption data-l="th">สไลด์บทที่ 1 หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 1 slides, p. 7 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch1/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8: matrices A, X, B; x_i = Delta_i / Delta, where A_i is A with column i replaced by B">
+    <figcaption data-l="th">สไลด์บทที่ 1 หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 1 slides, p. 8 · tap to enlarge</figcaption></figure>
+</div>
+<p class="sub" data-l="th">สไลด์สองหน้านี้คือ <b>กฎของคราเมอร์</b> (Cramer's rule; สไลด์สะกดว่า Cremer): เขียนระบบสมการเป็น \(AX = B\) แล้วคำตอบแต่ละตัวคือ \(x_i = \Delta_i / \Delta\) โดย \(\Delta = \det A\) และ \(\Delta_i\) คือดีเทอร์มิแนนต์ (determinant) ของเมทริกซ์ \(A_i\) ซึ่งได้จาก <b>การนำ \(B\) ไปแทนคอลัมน์ที่ \(i\) ของ \(A\)</b> วิธีกำจัดตัวแปรในหน้า 1.1 ต้องเลือกเองทุกขั้นว่าจะคูณอะไร แต่กฎของคราเมอร์เป็นสูตรสำเร็จ ไม่ต้องเลือกอะไรเลย หน้านี้มี <b>6 โจทย์ เรียงทีละข้อ</b> แต่ละข้อเปิดเฉลยได้ทีละขั้นด้วยปุ่ม ▶</p>
+<p class="sub" data-l="en">These two slides are <b>Cramer's rule</b> (the slides spell it "Cremer"): write the system as \(AX = B\); then each answer is \(x_i = \Delta_i / \Delta\), where \(\Delta = \det A\) and \(\Delta_i\) is the determinant of the matrix \(A_i\), made by <b>putting \(B\) in place of column \(i\) of \(A\)</b>. Elimination on page 1.1 needs a choice at every step; Cramer's rule is a ready-made formula with no choices at all. This page has <b>6 problems, one after another</b>, each with a solution you open one step at a time with the ▶ button.</p>
+<div class="equation-box">
+  <div class="label"><span data-l="th">ดีเทอร์มิแนนต์ 2×2 และ 3×3 (วิธีของซาร์รัส: เส้นทแยงลงเป็นบวก เส้นทแยงขึ้นเป็นลบ)</span><span data-l="en">2×2 and 3×3 determinants (Sarrus' rule: down diagonals plus, up diagonals minus)</span></div>
+  $$ x_i = \frac{\Delta_i}{\Delta},\qquad \begin{vmatrix} a & b \\ c & d \end{vmatrix} = ad - bc,\qquad
+     \begin{vmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{vmatrix} = \underbrace{a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32}}_{\text{↘}} - \underbrace{\left(a_{31}a_{22}a_{13} + a_{32}a_{23}a_{11} + a_{33}a_{21}a_{12}\right)}_{\text{↗}} $$
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>\(x_i = \Delta_i/\Delta\)</b> โดย \(A_i\) คือ \(A\) ที่ <b>แทนคอลัมน์ที่ \(i\) ด้วย \(B\)</b></li><li><b>ดีเทอร์มิแนนต์ 2×2 = \(ad - bc\)</b> · 3×3 ใช้ <b>วิธีซาร์รัส</b>: ผลคูณเส้นทแยงลง 3 เส้น ลบผลคูณเส้นทแยงขึ้น 3 เส้น</li><li><b>ถ้า \(\Delta = 0\) ใช้กฎของคราเมอร์ไม่ได้</b> เพราะระบบไม่มีคำตอบเดียว</li><li><b>วิธีซาร์รัสใช้ได้กับ 3×3 เท่านั้น</b> ระบบ 4×4 ต้องกระจายโคแฟกเตอร์หรือใช้วิธีกำจัดตัวแปร</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>\(x_i = \Delta_i/\Delta\)</b>, where \(A_i\) is \(A\) with <b>column \(i\) replaced by \(B\)</b>.</li><li><b>A 2×2 determinant is \(ad - bc\)</b> · for 3×3 use <b>Sarrus' rule</b>: three down-diagonal products minus three up-diagonal products.</li><li><b>If \(\Delta = 0\), Cramer's rule cannot be used</b>: the system has no unique answer.</li><li><b>Sarrus' rule works for 3×3 only</b>; a 4×4 needs cofactor expansion or elimination.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>อุ่นเครื่อง 2×2</a><a href="#ex2"><b>2</b>Ex 1 ในสไลด์</a><a href="#ex3"><b>3</b>การบ้านข้อ 1</a><a href="#ex4"><b>4</b>วงจรสามช่อง</a><a href="#ex5"><b>5</b>เมื่อ Δ = 0</a><a href="#ex6"><b>6</b>ใส่โจทย์เอง</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Warm-up 2×2</a><a href="#ex2"><b>2</b>Slide Ex 1</a><a href="#ex3"><b>3</b>Homework 1</a><a href="#ex4"><b>4</b>Three-window circuit</a><a href="#ex5"><b>5</b>When Δ = 0</a><a href="#ex6"><b>6</b>Your own system</a></nav>
+
+<!-- ============ 1: warm-up 2×2 ============ -->
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div>
+    <h2 data-l="th">อุ่นเครื่อง 2×2: วงจรของหน้า 1.1 ด้วยกฎของคราเมอร์</h2><h2 data-l="en">Warm-up 2×2: the page 1.1 circuit by Cramer's rule</h2>
+    <div class="src" data-l="th">วงจรเดียวกับหน้า 1.1 ข้อ 1 (V₁ = 12 V, V₂ = 10 V, R₁ = 3 Ω, R₂ = 4 Ω, R₃ = 2 Ω)</div><div class="src" data-l="en">The same circuit as page 1.1, problem 1 (V₁ = 12 V, V₂ = 10 V, R₁ = 3 Ω, R₂ = 4 Ω, R₃ = 2 Ω)</div></div></div>
+  <p class="lead" data-l="th">ดีเทอร์มิแนนต์ 2×2 คือ <b>ผลคูณเส้นทแยงลง ลบ ผลคูณเส้นทแยงขึ้น</b> วงจรเดิมต้องได้คำตอบเดิม \(I_1 = 2\) A และ \(I_2 = -1\) A</p>
+  <p class="lead" data-l="en">A 2×2 determinant is <b>the down-diagonal product minus the up-diagonal product</b>. The same circuit must give the same answer, \(I_1 = 2\) A and \(I_2 = -1\) A.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv1"></canvas><div class="readout metrics" id="ro1"></div></div>
+    <div class="card solve"><div class="given"><div class="gl" data-l="th">โจทย์: หา I₁ และ I₂ จากสมการของวงจร</div><div class="gl" data-l="en">Problem: find I₁ and I₂ from the circuit's equations</div><div id="g1"></div></div><div id="st1"></div></div>
+  </div>
+</section>
+
+<!-- ============ 2: slide Ex 1 ============ -->
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div>
+    <h2 data-l="th">Ex 1 ในสไลด์: ระบบ 3×3</h2><h2 data-l="en">Slide Ex 1: a 3×3 system</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 1 หน้า 9–12 · ขั้นตอนเรียงตาม Step 1–4 ของสไลด์</div><div class="src" data-l="en">Chapter 1 slides, pp. 9–12 · the steps follow Steps 1–4 of the slides</div></div></div>
+  <figure class="slide q"><img src="slides/ch1/p09q.webp" width="876" height="350" loading="lazy" decoding="async" alt="Slide 9: Practice Ex 1. Determine x1, x2 and x3 using Cramer's rule: 7x1 − 3x2 − 4x3 = −11; −7x1 + 4x2 + 9x3 = 28; −x2 + x3 = 22">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 9 · tap to enlarge</figcaption></figure>
+  <div class="card solve">
+    <div class="given"><div class="gl" data-l="th">โจทย์: หา x₁, x₂, x₃ ด้วยกฎของคราเมอร์</div><div class="gl" data-l="en">Problem: find x₁, x₂, x₃ by Cramer's rule</div><div id="g2"></div></div>
+    <p class="lead" data-l="th" style="font-size:15px">ในขั้นของดีเทอร์มิแนนต์ <b>เส้นทแยงจะสว่างทีละเส้น</b> พร้อมผลคูณ ลำดับเดียวกับบรรทัด +(7)(4)(1)+(−3)(9)(0)+… ในสไลด์หน้า 10 กด ⟲ เพื่อดูซ้ำ</p>
+    <p class="lead" data-l="en" style="font-size:15px">In each determinant step <b>the diagonals light up one at a time</b> with their products, in the same order as the line +(7)(4)(1)+(−3)(9)(0)+… on slide p. 10. Press ⟲ to see it again.</p>
+    <div id="st2"></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์เฉลยต้นฉบับของผู้สอน (หน้า 9–12)</span><span data-l="en">See the teacher's original worked slides (pp. 9–12)</span></summary>
+    <div class="slides">
+      <figure class="slide"><img src="slides/ch1/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: Step 1, define A and B"><figcaption>p. 9</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10: Step 2, A1, A2, A3; Step 3, det A = 42"><figcaption>p. 10</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11: det A1 printed as −18 (should be −189), det A2 = −651, det A3 = 273"><figcaption data-l="th">p. 11 (พิมพ์ Det A₁ = −18 ผิด ที่ถูกคือ −189)</figcaption><figcaption data-l="en">p. 11 (prints Det A₁ = −18; it should be −189)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12: Step 4, x1 = −4.5, x2 = −15.5, x3 = 6.5"><figcaption>p. 12</figcaption></figure>
+    </div></details>
+</section>
+
+<!-- ============ 3: homework 1 ============ -->
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div>
+    <h2 data-l="th">การบ้านข้อ 1</h2><h2 data-l="en">Homework problem 1</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 1 หน้า 21 · สไลด์ให้คำตอบมาแล้ว ลองทำเองก่อนแล้วค่อยเปิดเฉลย</div><div class="src" data-l="en">Chapter 1 slides, p. 21 · the slide gives the answer; try it yourself before opening the steps</div></div></div>
+  <figure class="slide q"><img src="slides/ch1/p21q.webp" width="904" height="403" loading="lazy" decoding="async" alt="Slide 21: Homework 1. Use Cramer's rule: −x + 2y − 3z = 10; 3x + y − 4z = 5; 2x − 5y + z = 2. Answer: x = −2.8125, y = −2.3125, z = −3.9375">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 21 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 21 · tap to enlarge</figcaption></figure>
+  <div class="card solve">
+    <div class="given"><div class="gl" data-l="th">โจทย์: หา x, y, z ด้วยกฎของคราเมอร์</div><div class="gl" data-l="en">Problem: find x, y, z by Cramer's rule</div><div id="g3"></div></div>
+    <div id="st3"></div>
+  </div>
+</section>
+
+<!-- ============ 4: three-window circuit ============ -->
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div>
+    <h2 data-l="th">วงจรสามช่อง: กระแสสามตัวด้วยกฎของคราเมอร์</h2><h2 data-l="en">A three-window circuit: three currents by Cramer's rule</h2>
+    <div class="src" data-l="th">ตัวอย่างประกอบของหน้านี้ · เลื่อนค่าอุปกรณ์แล้วเฉลยจะคำนวณใหม่ตาม</div><div class="src" data-l="en">An example for this page · move a slider and the solution is recomputed</div></div></div>
+  <p class="lead" data-l="th">สามช่องให้สามสมการ สามตัวแปร \(I_1, I_2, I_3\) <b>กระแสจะยังไม่ไหลจนกว่าจะหาครบทั้งสามตัว</b> ลองเพิ่ม \(V_2\) แล้วสังเกตว่า <b>มีแต่คอลัมน์ \(B\) ที่เปลี่ยน</b> \(\Delta\) เท่าเดิม</p>
+  <p class="lead" data-l="en">Three windows give three equations in three unknowns \(I_1, I_2, I_3\). <b>The current stays still until all three are found.</b> Raise \(V_2\) and note that <b>only column \(B\) changes</b>: \(\Delta\) stays the same.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv4"></canvas><div class="ctl" id="ctl4"></div><div class="readout metrics" id="ro4"></div></div>
+    <div class="card solve"><div class="given"><div class="gl" data-l="th">โจทย์: หา I₁, I₂, I₃</div><div class="gl" data-l="en">Problem: find I₁, I₂, I₃</div><div id="g4"></div></div><div id="st4"></div></div>
+  </div>
+</section>
+
+<!-- ============ 5: when Δ = 0 ============ -->
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div>
+    <h2 data-l="th">เมื่อ Δ = 0: ระบบ 2×2 คือเส้นตรงสองเส้น</h2><h2 data-l="en">When Δ = 0: a 2×2 system is two straight lines</h2>
+    <div class="src" data-l="th">ตัวอย่างประกอบ · สไลด์หน้า 7 บอกว่า A ต้องมีดีเทอร์มิแนนต์ไม่เป็นศูนย์ ข้อนี้แสดงว่าทำไม</div><div class="src" data-l="en">An example · slide p. 7 says A must have a nonzero determinant; this problem shows why</div></div></div>
+  <p class="lead" data-l="th">แต่ละสมการของระบบ 2×2 คือเส้นตรงหนึ่งเส้นบนระนาบ \(x\)–\(y\) <b>คำตอบคือจุดตัดของสองเส้น</b> เลื่อน \(k\) ไปที่ 4: สองเส้นขนานกัน (\(\Delta = 0\)) ไม่มีจุดตัด ถ้าเลื่อน \(c\) ไปที่ 8 ด้วย สองเส้นจะทับกันพอดี มีจุดร่วมไม่จำกัด</p>
+  <p class="lead" data-l="en">Each equation of a 2×2 system is a straight line on the \(x\)–\(y\) plane, and <b>the answer is where the two lines cross</b>. Move \(k\) to 4: the lines become parallel (\(\Delta = 0\)) and never cross. Move \(c\) to 8 as well and the lines lie on top of each other, with infinitely many common points.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv5"></canvas><div class="ctl" id="ctl5"></div></div>
+    <div class="card solve"><div class="given"><div class="gl" data-l="th">โจทย์: แก้ระบบนี้ด้วยกฎของคราเมอร์</div><div class="gl" data-l="en">Problem: solve this system by Cramer's rule</div><div id="g5"></div></div><div id="st5"></div>
+      <details class="alt"><summary><span data-l="th">ตัวอย่าง 3×3 ที่ Δ = 0</span><span data-l="en">A 3×3 example with Δ = 0</span></summary>
+        <p class="lead" data-l="th" style="font-size:15px;margin-top:6px">แถวที่สามคือผลบวกของแถวที่หนึ่งกับแถวที่สอง จึงไม่ได้ให้ข้อมูลใหม่ ดีเทอร์มิแนนต์ต้องเป็นศูนย์</p>
+        <p class="lead" data-l="en" style="font-size:15px;margin-top:6px">The third row is the sum of the first two, so it adds no information, and the determinant must be zero.</p>
+        <div id="g5b"></div><div id="st5b"></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6: your own system ============ -->
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div>
+    <h2 data-l="th">ใส่ระบบ 3×3 ของคุณเอง</h2><h2 data-l="en">Your own 3×3 system</h2>
+    <div class="src" data-l="th">พิมพ์ตัวเลขในช่องแล้วกด Enter เฉลยจะเริ่มใหม่ตามระบบที่ใส่ · ใช้ตรวจการบ้านหรือแบบฝึกหัดอื่นได้</div><div class="src" data-l="en">Type numbers in the boxes and press Enter; the solution restarts for your system · use it to check other exercises</div></div></div>
+  <div class="card solve">
+    <div class="given"><div class="gl" data-l="th">ระบบของคุณ: A · x = B</div><div class="gl" data-l="en">Your system: A · x = B</div><div class="matrow" id="g6"></div></div>
+    <div id="st6"></div>
+  </div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ทำซ้ำตัวอย่างในสไลด์</h3>
+    <ol><li>ข้อ 2 ต้องได้ \(\Delta = 42\), \(\Delta_1 = -189\), \(\Delta_2 = -651\), \(\Delta_3 = 273\) และ \(x_1 = -4.5\), \(x_2 = -15.5\), \(x_3 = 6.5\)</li>
+    <li>สังเกตลำดับของผลคูณหกตัว ตรงกับบรรทัด +(7)(4)(1)+(−3)(9)(0)+… ในสไลด์หน้า 10 ทุกตัว</li>
+    <li>ข้อ 3 (การบ้าน) <b>คิดด้วยมือก่อน</b> แล้วค่อยเปิดทีละขั้นเพื่อตรวจ</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เมื่อ Δ = 0</h3>
+    <ol><li>ข้อ 5: เมื่อ \(\Delta = 0\) <b>กฎของคราเมอร์หยุดทันที</b> เพราะหารด้วยศูนย์ไม่ได้ บนกราฟคือเส้นตรงที่ขนานกันหรือทับกัน</li>
+    <li>ข้อ 6: ทำให้แถวหนึ่งเป็นสองเท่าของอีกแถว แล้วดูว่า \(\Delta\) เป็นศูนย์ทุกครั้ง</li>
+    <li>วงจรที่มีแต่ตัวต้านทานค่าบวก \(\Delta\) ไม่มีวันเป็นศูนย์ (ลองเลื่อนค่าในข้อ 4) <b>วงจรจริงจึงมีคำตอบเดียวเสมอ</b></li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ข้อควรระวัง</h3>
+    <ol><li>วิธีของซาร์รัส (คัดลอกสองคอลัมน์แรกไปต่อท้าย) <b>ใช้ได้กับ 3×3 เท่านั้น</b> เมทริกซ์ 4×4 ต้องกระจายโคแฟกเตอร์ (cofactor expansion) หรือใช้วิธีกำจัดตัวแปรแทน</li>
+    <li>ข้อ 4: เพิ่ม \(V_2\) แล้วดูว่ามีแต่ \(\Delta_1, \Delta_2, \Delta_3\) ที่ต้องคำนวณใหม่</li>
+    <li>คำถาม: ถ้าเปลี่ยน \(R_4\) ดีเทอร์มิแนนต์ตัวไหนบ้างที่เปลี่ยน และทำไมการเปลี่ยน \(R_4\) จึงกระทบ \(I_3\) ทั้งที่ \(R_4\) ไม่ได้อยู่ในช่องที่สาม</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 1 หน้า 7–12 และการบ้านข้อ 1 หน้า 21 (ภาพสไลด์อยู่ในหน้านี้แล้ว)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — reproduce the slide example</h3>
+    <ol><li>Problem 2 must give \(\Delta = 42\), \(\Delta_1 = -189\), \(\Delta_2 = -651\), \(\Delta_3 = 273\) and \(x_1 = -4.5\), \(x_2 = -15.5\), \(x_3 = 6.5\).</li>
+    <li>Note the order of the six products: it matches the line +(7)(4)(1)+(−3)(9)(0)+… on slide p. 10 term for term.</li>
+    <li>Problem 3 (homework): <b>work it by hand first</b>, then open the steps to check.</li></ol></div>
+  <div class="card"><h3>Try this 2 — when Δ = 0</h3>
+    <ol><li>Problem 5: when \(\Delta = 0\), <b>Cramer's rule stops at once</b>, because you cannot divide by zero. On the graph the lines are parallel or on top of each other.</li>
+    <li>Problem 6: make one row twice another and see that \(\Delta\) is zero every time.</li>
+    <li>For a circuit of positive resistances, \(\Delta\) is never zero (move the sliders in problem 4), <b>so a real circuit always has exactly one answer</b>.</li></ol></div>
+  <div class="card"><h3>Try this 3 — watch out</h3>
+    <ol><li>Sarrus' rule (copy the first two columns to the right) <b>works for 3×3 only</b>. A 4×4 needs cofactor expansion or elimination instead.</li>
+    <li>Problem 4: raise \(V_2\) and see that only \(\Delta_1, \Delta_2, \Delta_3\) must be recomputed.</li>
+    <li>Question: if you change \(R_4\), which determinants change, and why does changing \(R_4\) affect \(I_3\) even though \(R_4\) is not in the third window?</li></ol>
+    <div class="book">Source: chapter 1 slides, pp. 7–12 and homework problem 1, p. 21 (the slide pictures are on this page)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), ui = MC.ui, UA = '\\,\\text{A}';
+const dec = x => ALG.fmtDec(x, 4);
+
+/* ---------- 1: warm-up 2×2 ---------- */
+const m1 = new CH1.Mesh(document.getElementById('cv1'), { n: 2 }), ro1 = document.getElementById('ro1');
+{ const { A, B } = CH1.sys2(m1.S); const V = ['I_1', 'I_2'];
+  document.getElementById('g1').innerHTML = tx(ALG.texSystem([ALG.eq(A[0], B[0], '(1)'), ALG.eq(A[1], B[1], '(2)')], V), true);
+  LS.stepper(document.getElementById('st1'), { steps: CH1.cramer2Steps(A, B, V, { unit: UA }).steps,
+    answer: `${tx('I_1 = 2\\,\\text{A},\\qquad I_2 = -1\\,\\text{A}')} &nbsp; ${MC.t('<b>ตรงกับหน้า 1.1 ทุกตัว</b> และกระแสเริ่มไหลในวงจรแล้ว', '<b>exactly as on page 1.1</b>, and the current is now flowing')}`,
+    onStep: (k, n) => { m1.setSolved(k === n); ro1.innerHTML = m1.readout(); } }); }
+
+/* ---------- 2: slide Ex 1 ---------- */
+const sysTex = (A, B, V) => tx(ALG.texSystem(A.map((r, i) => ALG.eq(r, B[i], `(${i + 1})`)), V), true);
+{ const A = [[7, -3, -4], [-7, 4, 9], [0, -1, 1]], B = [-11, 28, 22], V = ['x_1', 'x_2', 'x_3'];
+  document.getElementById('g2').innerHTML = sysTex(A, B, V);
+  const note = `<div class="warnbox">${MC.t('<b>หมายเหตุ:</b> สไลด์หน้า 11 พิมพ์ Det A<sub>1</sub> = −18 (ตกเลข 9) ค่าที่ถูกคือ <b>−189</b> ซึ่งสไลด์หน้า 12 ใช้ถูกแล้ว จึงได้ x<sub>1</sub> = −189/42 = −4.5', '<b>Note:</b> slide p. 11 prints Det A<sub>1</sub> = −18 (a dropped 9). The correct value is <b>−189</b>, which slide p. 12 uses, giving x<sub>1</sub> = −189/42 = −4.5.')}</div>`;
+  LS.stepper(document.getElementById('st2'), { steps: CH1.cramer3Steps(A, B, V, { tags: true, notes: { D1: note } }).steps,
+    answer: `${tx('x_1 = -4.5,\\qquad x_2 = -15.5,\\qquad x_3 = 6.5')} &nbsp; ${MC.t('ตรงกับสไลด์หน้า 12', 'as on slide p. 12')}` }); }
+
+/* ---------- 3: homework 1 ---------- */
+{ const A = [[-1, 2, -3], [3, 1, -4], [2, -5, 1]], B = [10, 5, 2], V = ['x', 'y', 'z'];
+  document.getElementById('g3').innerHTML = sysTex(A, B, V);
+  LS.stepper(document.getElementById('st3'), { steps: CH1.cramer3Steps(A, B, V).steps,
+    answer: `${tx('x = -\\tfrac{45}{16} = -2.8125,\\quad y = -\\tfrac{37}{16} = -2.3125,\\quad z = -\\tfrac{63}{16} = -3.9375')} &nbsp; ${MC.t('ตรงกับคำตอบในสไลด์หน้า 21', 'matches the answer on slide p. 21')}` }); }
+
+/* ---------- 4: three-window circuit ---------- */
+const m4 = new CH1.Mesh(document.getElementById('cv4'), { n: 3 }), S4 = m4.S, ro4 = document.getElementById('ro4'), V3 = ['I_1', 'I_2', 'I_3'];
+const g4 = () => { const { A, B } = CH1.sys3(S4);
+  document.getElementById('g4').innerHTML = tx(`\\begin{aligned} (R_1+R_4)I_1 - R_4 I_2 &= V_1 \\\\ -R_4 I_1 + (R_2+R_4+R_5) I_2 - R_5 I_3 &= 0 \\\\ -R_5 I_2 + (R_3+R_5) I_3 &= -V_2 \\end{aligned}`, true) +
+    `<div style="font-size:15px;color:var(--muted)">${MC.t('กฎแรงดันของเคียร์ชอฟฟ์ (KVL) รอบแต่ละช่องตามเข็มนาฬิกา แทนค่าอุปกรณ์แล้วได้:', 'Kirchhoff\'s voltage law (KVL) round each window, clockwise; with the part values:')}</div>` + sysTex(A, B, V3); };
+const st4 = LS.stepper(document.getElementById('st4'), { steps: () => { const { A, B } = CH1.sys3(S4); return CH1.cramer3Steps(A, B, V3, { unit: UA, flow: true }).steps; },
+  answer: () => { const { A, B } = CH1.sys3(S4), r = CH1.cramer3Steps(A, B, V3); return r.ok ? tx(`I_1 = ${dec(r.x[0])}${UA},\\quad I_2 = ${dec(r.x[1])}${UA},\\quad I_3 = ${dec(r.x[2])}${UA}`) : ''; },
+  onStep: (k, n) => { m4.setSolved(k === n); ro4.innerHTML = m4.readout(); } });
+[['V1', 'V₁', 0, 30, 'V'], ['V2', 'V₂', 0, 30, 'V'], ['R1', 'R₁', 1, 10, 'Ω'], ['R2', 'R₂', 1, 10, 'Ω'], ['R3', 'R₃', 1, 10, 'Ω'], ['R4', 'R₄', 1, 10, 'Ω'], ['R5', 'R₅', 1, 10, 'Ω']].forEach(([k, lab, mn, mx, un]) =>
+  ui.slider(document.getElementById('ctl4'), { id: 's4' + k, label: lab, min: mn, max: mx, step: 1, value: S4[k], fmt: v => `${v} ${un}`, oninput: v => { m4.set({ [k]: v }); g4(); st4.refresh(); } }));
+g4();
+
+/* ---------- 5: two lines, Δ = 0 ---------- */
+const L5 = { k: 3, c: 5 };
+const sol5 = () => { const D = L5.k - 4, D1 = 4 * L5.k - 2 * L5.c, D2 = L5.c - 8; return { D, D1, D2, x: D1 / D, y: D2 / D }; };
+let open5 = false;
+const pl5 = new CH1.Plane(document.getElementById('cv5'), { R: 6, j: false, xLab: 'x', yLab: 'y', aspect: 0.78,
+  scene: p => { const s = sol5(), par = Math.abs(s.D) < 1e-12, same = par && L5.c === 8;
+    p.line(1, 2, 4, CH1.PC.z1, { width: 3.2 }); p.line(2, L5.k, L5.c, CH1.PC.z2, { width: same ? 3.2 : 3, dash: same ? [10, 8] : null });
+    p.text('x + 2y = 4', 10, 16, { color: CH1.PC.z1, size: 14, weight: '700' }); p.text(`2x + ${ALG.fmtDec(L5.k, 1)}y = ${L5.c}`, 10, 36, { color: CH1.PC.z2, size: 14, weight: '700' });
+    if (!par && open5) { const z = ALG.cx(s.x, s.y); p.dot(z, CH1.PC.res, `(${LS.u(s.x, 3)}, ${LS.u(s.y, 3)})`); }
+    p.note(par ? (same ? MC.t('Δ = 0: สองเส้นทับกัน → คำตอบไม่จำกัด', 'Δ = 0: the lines coincide → infinitely many answers') : MC.t('Δ = 0: สองเส้นขนานกัน → ไม่มีคำตอบ', 'Δ = 0: parallel lines → no answer'))
+      : (open5 ? MC.t('จุดตัด = คำตอบ', 'crossing point = the answer') : MC.t('Δ ≠ 0: สองเส้นตัดกันหนึ่งจุด', 'Δ ≠ 0: the lines cross at one point')), par ? CH1.PC.bad : CH1.PC.good); } });
+const g5 = () => { document.getElementById('g5').innerHTML = tx(`\\begin{aligned} x + 2y &= 4 \\\\ 2x + ${ALG.fmtDec(L5.k, 1)}\\,y &= ${L5.c} \\end{aligned}`, true); };
+const st5 = LS.stepper(document.getElementById('st5'), {
+  steps: () => { const s = sol5(), kk = ALG.fmtDec(L5.k, 1), D = ALG.fmtDec(s.D, 1);
+    const out = [{ why: MC.t('<b>ดีเทอร์มิแนนต์หลัก</b> \\(\\Delta\\)', '<b>Main determinant</b> \\(\\Delta\\)'), tex: `\\Delta = \\begin{vmatrix} 1 & 2 \\\\ 2 & ${kk} \\end{vmatrix} = (1)(${kk}) - (2)(2) = ${D}` }];
+    if (Math.abs(s.D) < 1e-12) {
+      out.push({ body: `<div class="badbox">${MC.t('<b>Δ = 0</b> หารด้วยศูนย์ไม่ได้ <b>กฎของคราเมอร์ใช้ไม่ได้</b>', '<b>Δ = 0</b>: you cannot divide by zero, so <b>Cramer\'s rule cannot be used</b>')}</div>` });
+      out.push({ why: L5.c === 8 ? MC.t('<b>ดูว่าสองสมการสัมพันธ์กันอย่างไร</b>: สมการที่ 2 คือ 2 เท่าของสมการที่ 1 พอดี (ทั้งซ้ายและขวา) จึงเป็นเส้นเดียวกัน <b>มีคำตอบไม่จำกัด</b>', '<b>See how the two equations are related</b>: equation 2 is exactly twice equation 1 (both sides), so they are the same line, with <b>infinitely many answers</b>')
+          : MC.t('<b>ดูว่าสองสมการสัมพันธ์กันอย่างไร</b>: ทางซ้ายของสมการที่ 2 เป็น 2 เท่าของสมการที่ 1 แต่ทางขวาไม่ใช่ 2 เท่า สองเส้นจึงขนานกันและ <b>ไม่มีคำตอบเลย</b>', '<b>See how the two equations are related</b>: the left side of equation 2 is twice that of equation 1, but the right side is not, so the lines are parallel and there is <b>no answer at all</b>'),
+        tex: `\\begin{aligned} 2\\times(1){:}&\\quad 2x + 4y = 8 \\\\ (2){:}&\\quad 2x + 4y = ${L5.c} \\end{aligned}` });
+      return out; }
+    out.push({ why: MC.t('<b>\\(\\Delta_1\\)</b>: แทนคอลัมน์ที่ 1 ด้วยค่าทางขวา', '<b>\\(\\Delta_1\\)</b>: replace column 1 by the right-hand sides'), tex: `\\Delta_1 = \\begin{vmatrix} 4 & 2 \\\\ ${L5.c} & ${kk} \\end{vmatrix} = (4)(${kk}) - (2)(${L5.c}) = ${ALG.fmtDec(s.D1, 1)}` });
+    out.push({ why: MC.t('<b>\\(\\Delta_2\\)</b>: แทนคอลัมน์ที่ 2', '<b>\\(\\Delta_2\\)</b>: replace column 2'), tex: `\\Delta_2 = \\begin{vmatrix} 1 & 4 \\\\ 2 & ${L5.c} \\end{vmatrix} = (1)(${L5.c}) - (4)(2) = ${ALG.fmtDec(s.D2, 1)}` });
+    out.push({ why: MC.t('<b>หาร</b> แล้วจุด \\((x, y)\\) คือจุดตัดบนกราฟ', '<b>Divide</b>; the point \\((x, y)\\) is the crossing on the graph'), tex: `x = \\frac{${ALG.fmtDec(s.D1, 1)}}{${D}} = \\boxed{${LS.d(s.x, 4)}},\\qquad y = \\frac{${ALG.fmtDec(s.D2, 1)}}{${D}} = \\boxed{${LS.d(s.y, 4)}}` });
+    return out; },
+  onStep: (k, n) => { open5 = k === n; pl5.redraw(); } });
+[['k', 'k', 1, 7, 0.5], ['c', 'c', 2, 12, 1]].forEach(([key, lab, mn, mx, stp]) =>
+  ui.slider(document.getElementById('ctl5'), { id: 's5' + key, label: lab, min: mn, max: mx, step: stp, value: L5[key], fmt: v => ALG.fmtDec(v, 1), oninput: v => { L5[key] = v; g5(); st5.refresh(false); pl5.redraw(); } }));
+g5();
+{ const A = [[1, 2, 3], [2, 4, 1], [3, 6, 4]], B = [6, 7, 13], V = ['x', 'y', 'z'];
+  document.getElementById('g5b').innerHTML = sysTex(A, B, V);
+  LS.stepper(document.getElementById('st5b'), { steps: CH1.cramer3Steps(A, B, V).steps, scroll: false }); }
+
+/* ---------- 6: your own system ---------- */
+const C6 = { A: [[2, 1, -1], [-3, -1, 2], [-2, 1, 2]], B: [8, -11, -3] }, V6 = ['x', 'y', 'z'];
+const box6 = document.getElementById('g6');
+const inp = (k, r, c, v) => `<span><input class="mi" data-k="${k}" data-r="${r}" data-c="${c}" value="${v}" inputmode="decimal" aria-label="${k} ${r + 1},${c + 1}"></span>`;
+box6.innerHTML = `<div><div class="matlabel">A</div><div class="mat" style="grid-template-columns:repeat(3,auto)">${C6.A.map((row, r) => row.map((v, c) => inp('A', r, c, v)).join('')).join('')}</div></div><span class="op">·</span>` +
+  `<div><div class="matlabel">x</div><div class="mat" style="grid-template-columns:auto">${V6.map(v => `<span>${tx(v)}</span>`).join('')}</div></div><span class="op">=</span>` +
+  `<div><div class="matlabel">B</div><div class="mat" style="grid-template-columns:auto">${C6.B.map((v, r) => inp('B', r, 0, v)).join('')}</div></div>`;
+const st6 = LS.stepper(document.getElementById('st6'), { steps: () => CH1.cramer3Steps(C6.A, C6.B, V6).steps,
+  answer: () => { const r = CH1.cramer3Steps(C6.A, C6.B, V6); return r.ok ? tx(`x = ${dec(r.x[0])},\\quad y = ${dec(r.x[1])},\\quad z = ${dec(r.x[2])}`) : ''; } });
+box6.querySelectorAll('input').forEach(el => el.addEventListener('change', () => { const v = parseFloat(el.value.replace(/−/g, '-'));
+  const { k, r, c } = el.dataset; if (!isFinite(v)) { el.value = k === 'A' ? C6.A[r][c] : C6.B[r]; return; }
+  if (k === 'A') C6.A[r][c] = v; else C6.B[r] = v; st6.refresh(false); }));
+});
+</script>
+</body>
+</html>

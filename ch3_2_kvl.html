@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="3.2 — Kirchhoff's Voltage Law">3.2 — กฎแรงดันของเคียร์ชอฟฟ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch3.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">กฎแรงดันของเคียร์ชอฟฟ์ <span class="en">Kirchhoff's voltage law — walk round a loop and you come back to the same potential</span></h1>
+<h1 data-l="en">Kirchhoff's voltage law <span class="en">Walk round a loop and you come back to the same potential</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch3/p08.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 8: KVL, the algebraic sum of the voltages around any closed path is zero; move clockwise and write +v when the + terminal is entered, −v when the − terminal is met first">
+    <figcaption data-l="th">สไลด์บทที่ 3 หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 3 slides, p. 8 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">กระแสเกี่ยวกับประจุที่ไหลผ่านอุปกรณ์ ส่วนแรงดันคือผลต่างของพลังงานศักย์ระหว่างสองขั้ว <b>กฎแรงดันของเคียร์ชอฟฟ์ (Kirchhoff's Voltage Law, KVL)</b> บอกว่าผลรวมเชิงพีชคณิตของแรงดันรอบทางเดินปิดใด ๆ เป็นศูนย์ เพราะเดินวนกลับมาที่จุดเดิม ศักย์ก็ต้องเท่าเดิม สไลด์หน้า 8 แนะวิธีที่ผิดน้อยที่สุด: <b>เดินในใจตามเข็มนาฬิกา เข้าทางขั้ว + ให้เขียน \(+v\) เข้าทางขั้ว − ให้เขียน \(-v\)</b> ในภาพจำลอง ลูกศรสีเขียวคือคนเดิน ทางที่เดินแล้วเป็นเส้นสีเขียว และกราฟด้านล่างคือศักย์ระหว่างเดิน ซึ่งต้องกลับมาที่ศูนย์ หน้านี้มี <b>8 โจทย์ เรียงทีละข้อ</b> (Ex 3–4 ของสไลด์ แบบฝึกเพิ่มจากสไลด์ในห้องชุดก่อน 3 ข้อ และตัวอย่างเพิ่มเติมข้อ 1 อีก 3 ข้อ)</p>
+    <p class="sub" data-l="en">Current is about the charge flowing through an element; voltage is the difference in potential energy between its two terminals. <b>Kirchhoff's Voltage Law (KVL)</b> says the algebraic sum of the voltages around any closed path is zero: walk back to where you started and the potential must be the same again. Slide p. 8 gives the method with the fewest mistakes: <b>walk mentally clockwise, write \(+v\) when you enter a + terminal and \(-v\) when you enter a − terminal</b>. In the simulations the green arrow is the walker, the path already walked turns green, and the graph below shows the potential along the walk, which must come back to zero. This page has <b>8 problems, one after another</b> (Ex 3–4 of the slides, 3 extra problems from the earlier in-class slides, and 3 parts of extra example 1).</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum_{\text{loop}} v = 0 \\ \text{enter } + \Rightarrow +v, \qquad \text{enter } - \Rightarrow -v \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>KVL: \(\sum v = 0\)</b> รอบทางเดินปิดใด ๆ เพราะเดินกลับมาที่จุดเดิม ศักย์ต้องเท่าเดิม</li>
+  <li><b>เดินตามเข็มนาฬิกา</b>: เข้าทางขั้ว + เขียน \(+v\) · เข้าทางขั้ว − เขียน \(-v\) ไม่ต้องสนใจว่าเป็นแหล่งจ่ายหรือตัวต้านทาน</li>
+  <li><b>เลือกลูปที่มีตัวไม่รู้ค่าตัวเดียว</b> เช่น Ex 4 ใช้เมชซ้ายหา \(v_{R_2}\) ก่อน แล้วจึงใช้เมชขวาหา \(v_x\)</li>
+  <li><b>ค่าที่ติดลบในโจทย์ ให้แทนทั้งเครื่องหมาย</b>: เข้าทางขั้ว + ของแรงดัน −8 V เขียน \(+(-8)\) · เข้าทางขั้ว − ของแหล่งจ่าย −3 V เขียน \(-(-3)\)</li>
+  <li><b>อุปกรณ์หลายตัวที่ไม่รู้ค่า มองรวมเป็นอุปกรณ์เดียว</b>ได้ ถ้ารู้แรงดันรวมของมัน (Ex 4: ส่วนขวาทั้งหมดมีแรงดัน \(v_x\))</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>KVL: \(\sum v = 0\)</b> around any closed path, because walking back to the start brings you back to the same potential.</li>
+  <li><b>Walk clockwise</b>: entering a + terminal, write \(+v\) · entering a − terminal, write \(-v\), whether the element is a source or a resistor.</li>
+  <li><b>Choose a loop with a single unknown</b>: in Ex 4 the left mesh gives \(v_{R_2}\) first, then the right mesh gives \(v_x\).</li>
+  <li><b>Keep the sign of a negative value</b>: entering the + terminal of a −8 V voltage, write \(+(-8)\) · entering the − terminal of a −3 V source, write \(-(-3)\).</li>
+  <li><b>Several unknown elements can be treated as one</b> if you know their total voltage (Ex 4: the whole right part has the voltage \(v_x\)).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 3</a><a href="#ex2"><b>2</b>Ex 4</a><a href="#ex3"><b>3</b>แหล่งจ่ายค่าติดลบ</a><a href="#ex4"><b>4</b>ฝึกเครื่องหมาย</a><a href="#ex5"><b>5</b>KVL + KCL + โอห์ม</a><a href="#ex6"><b>6</b>สามเมช</a><a href="#ex7"><b>7</b>กล่อง 3 ใบ</a><a href="#ex8"><b>8</b>กล่อง 5 ใบ</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 3</a><a href="#ex2"><b>2</b>Ex 4</a><a href="#ex3"><b>3</b>Negative sources</a><a href="#ex4"><b>4</b>Sign drill</a><a href="#ex5"><b>5</b>KVL + KCL + Ohm</a><a href="#ex6"><b>6</b>Three meshes</a><a href="#ex7"><b>7</b>Three boxes</a><a href="#ex8"><b>8</b>Five boxes</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 3: จงหา \(v_x\) และ \(i_x\)</h2><h2 data-l="en">Ex 3: find \(v_x\) and \(i_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 9 · Hayt Example 3.2</div><div class="src" data-l="en">Chapter 3 slides, p. 9 · Hayt Example 3.2</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p09q.webp" width="1456" height="618" loading="lazy" decoding="async" alt="Ex 3: find vx and ix. A 5 V source on the left (+ at the top), a 7 V source along the top (+ on the right) and a 100 ohm resistor on the right with vx (+ at the top); ix clockwise">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 9 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 9)</span><span data-l="en">See the teacher's in-class working (slide p. 9)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L10.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 9: KVL clockwise, −5 V − 7 V + vx = 0, vx = 12 V; Ohm's law ix = vx/100 = 12/100 = 0.12 A"><figcaption data-l="th">สไลด์หน้า 9 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 9, in class, July 2026</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 4: วงจรมี 8 อุปกรณ์ จงหา \(v_{R_2}\) และ \(v_x\)</h2><h2 data-l="en">Ex 4: eight elements; find \(v_{R_2}\) and \(v_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 10–11 · Hayt Example 3.3</div><div class="src" data-l="en">Chapter 3 slides, pp. 10–11 · Hayt Example 3.3</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p10q.webp" width="1458" height="643" loading="lazy" decoding="async" alt="Ex 4: eight elements. 36 V source along the top (+ on the right), R5 with +12 V−, R4 with +14 V−, R3 with −vR3+, a source vs1 and R1 with vR1 on the right, R2 with vR2 (+ at the top), R6 with 4 V (+ at the bottom); vx between the top right node and the bottom">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 10 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 10–11)</span><span data-l="en">See the teacher's in-class working (slides pp. 10–11)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L11.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 10: the right part R3, vs1, R1 boxed as one element between A and B"><figcaption data-l="th">สไลด์หน้า 10 ฉบับในห้อง: ส่วนขวาเป็นอุปกรณ์เดียว</figcaption><figcaption data-l="en">Slide p. 10, in class: the right part as one element</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/L12.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 11, mesh Ix: +4 V − 36 V + vR2 = 0, vR2 = 32 V"><figcaption data-l="th">เมช Iₓ: \(v_{R_2} = 32\) V</figcaption><figcaption data-l="en">Mesh Iₓ: \(v_{R_2} = 32\) V</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/L13.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 11, mesh Iy: −vR2 + 12 V + 14 V + vx = 0, vx = 6 V"><figcaption data-l="th">เมช I_y: \(v_x = 6\) V</figcaption><figcaption data-l="en">Mesh I_y: \(v_x = 6\) V</figcaption></figure></div></details>
+</section>
+
+<!-- ======================= extra in-class problems ======================= -->
+<div class="group-head"><h2 data-l="th">แบบฝึกเพิ่มจากสไลด์ฉบับในห้อง ธ.ค. 2568</h2><h2 data-l="en">Extra practice from the in-class slides of December 2025</h2></div>
+<p class="lead" data-l="th">สามข้อนี้อยู่ในสไลด์ชุดก่อน แต่ฉบับแจก ก.ค. 2569 ตัดออก เก็บไว้ฝึกเรื่องเครื่องหมาย และการใช้ KVL กับ KCL และกฎของโอห์มร่วมกัน</p>
+<p class="lead" data-l="en">These three problems are in the earlier slides but were dropped from the July 2026 handout. They are kept here to practise signs, and to use KVL together with KCL and Ohm's law.</p>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">Ex 3 แบบค่าติดลบ: แหล่งจ่าย −3 V และ −1 V จงหา \(v_x\) และ \(i_x\)</h2><h2 data-l="en">Ex 3 with negative values: −3 V and −1 V sources; find \(v_x\) and \(i_x\)</h2>
+    <div class="src" data-l="th">สไลด์ฉบับในห้อง ธ.ค. 2568 หน้า 10 · Hayt Practice 3.2 (Hayt ใช้ 10 Ω)</div><div class="src" data-l="en">In-class slides of December 2025, p. 10 · Hayt Practice 3.2 (Hayt uses 10 Ω)</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/K11q.webp" width="798" height="618" loading="lazy" decoding="async" alt="Find vx and ix: −3 V source on the left (+ at the top), −1 V source along the top (+ on the right), 100 ohm with vx on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์ฉบับในห้อง ธ.ค. 2568 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, in-class slides of December 2025 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">ฝึกเครื่องหมาย: ถ้า \(v_{R_1} = 1\) V จงหา \(v_{R_2}\) และ \(v_{R_3}\)</h2><h2 data-l="en">Sign drill: if \(v_{R_1} = 1\) V, find \(v_{R_2}\) and \(v_{R_3}\)</h2>
+    <div class="src" data-l="th">สไลด์ฉบับในห้อง ธ.ค. 2568 หน้า 13 · Hayt Practice 3.3 · ตัวเลขชุดนี้เป็นแบบฝึกเครื่องหมาย ภาพจึงไม่มีจุดกระแส</div><div class="src" data-l="en">In-class slides of December 2025, p. 13 · Hayt Practice 3.3 · these numbers are a sign drill, so the picture has no moving dots</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/K15q.webp" width="1375" height="599" loading="lazy" decoding="async" alt="Determine vR2 and vR3 if vR1 = 1 V. 12 V source along the top (+ on the right), R5 with +7 V−, R4 with −9 V+, R3 with −vR3+, a 3 V source (+ at the bottom), R1 with vR1, R2 with vR2, R6 with −8 V (+ at the bottom)">
+    <figcaption data-l="th">โจทย์จากสไลด์ฉบับในห้อง ธ.ค. 2568 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, in-class slides of December 2025 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูคำตอบที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class answers</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide: vR2 = 20 V and vR3 = −24 V written above the problem"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568: 20 V และ −24 V</figcaption><figcaption data-l="en">In class, December 2025: 20 V and −24 V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">ใช้กฎของโอห์ม KVL และ KCL หา \(V_x\) และ \(I_x\)</h2><h2 data-l="en">Use Ohm's law, KVL and KCL to find \(V_x\) and \(I_x\)</h2>
+    <div class="src" data-l="th">ตัวอย่างเพิ่มเติมข้อ 5 = สไลด์ฉบับในห้อง ธ.ค. 2568 หน้า 15–17 · Hayt Example 3.4</div><div class="src" data-l="en">Extra example 5 = in-class slides of December 2025, pp. 15–17 · Hayt Example 3.4</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex5q.webp" width="1400" height="496" loading="lazy" decoding="async" alt="Use Ohm's law, KVL or KCL to find Ix and Vx: 60 V source, 5 A through 8 ohm, 10 ohm down, 4 ohm across, 2 ohm with Vx, and a current source Ix on the right">
+    <figcaption data-l="th">โจทย์จากเอกสารตัวอย่างเพิ่มเติม ข้อ 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, extra example 5 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยในห้องและเฉลยลายมือ</span><span data-l="en">See the in-class working and the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K18.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: nodes A, B, C, D labelled; vx = 8 V"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/sol5.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 5: v1 = 40 V, mesh x gives v2 = 20 V, I2 = 2 A, KCL at A gives I3 = 3 A, v3 = 12 V, mesh y gives v4 = 8 V = Vx, I4 = 4 A, KCL at B gives Ix = 1 A"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 5</figcaption><figcaption data-l="en">Handwritten solution, extra example 5</figcaption></figure></div></details>
+</section>
+
+<!-- ======================= extra example 1 ======================= -->
+<div class="group-head"><h2 data-l="th">ตัวอย่างเพิ่มเติม (Extra Example) ข้อ 1.1, 1.3 และ 1.4</h2><h2 data-l="en">Extra example 1, items 1.1, 1.3 and 1.4</h2></div>
+<p class="lead" data-l="th">ข้อ 1.2 (KCL) อยู่ในหน้า 3.1 ส่วนข้อ 1.3 และ 1.4 ทบทวนกฎของโอห์มและกำลังจากบทที่ 2 กับกล่องที่ไม่บอกว่าข้างในคืออะไร: \(R = v/i\) และกำลัง \(P = v\,i\) เมื่อกระแสไหลเข้าทางขั้ว + ค่าบวกแปลว่ารับกำลัง ค่าลบแปลว่าจ่าย</p>
+<p class="lead" data-l="en">Item 1.2 (KCL) is on page 3.1. Items 1.3 and 1.4 revisit Ohm's law and power from chapter 2 with boxes whose insides are not given: \(R = v/i\), and the power \(P = v\,i\) with the current entering the + terminal; positive means absorbed, negative means delivered.</p>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">ข้อ 1.1: เขียน KVL ทั้งสามเมช แล้วหา \(V_1\), \(V_4\), \(V_5\)</h2><h2 data-l="en">Item 1.1: write KVL for all three meshes, then find \(V_1\), \(V_4\), \(V_5\)</h2>
+    <div class="src" data-l="th">ตัวอย่างเพิ่มเติมข้อ 1.1 (Fig. 1) · เมื่อ \(V_{S1} = V_{S2} = V_2 = V_3 = 5\) V · เป็นแบบฝึกเครื่องหมาย ภาพจึงไม่มีจุดกระแส</div><div class="src" data-l="en">Extra example 1.1 (Fig. 1) · with \(V_{S1} = V_{S2} = V_2 = V_3 = 5\) V · a sign drill, so the picture has no moving dots</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch3/ex1q1.webp" width="579" height="641" loading="lazy" decoding="async" alt="Fig. 1: VS1 on the left, R1 with V1 along the top, R2 with V2 and R3 with V3 down the middle, VS2 top right, R4 with V4 across the middle, R5 with V5 bottom right">
+    <figcaption data-l="th">Fig. 1 ของตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Fig. 1 of the extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv6"></canvas></div><div class="card solve"><div id="ask6"></div><div id="st6"></div></div></div>
+</section>
+
+<section class="prob" id="ex7">
+  <div class="prob-head"><span class="prob-no">7</span><div><h2 data-l="th">ข้อ 1.3: หาความต้านทานของกล่อง A, B และ C</h2><h2 data-l="en">Item 1.3: find the resistance of boxes A, B and C</h2>
+    <div class="src" data-l="th">ตัวอย่างเพิ่มเติมข้อ 1.3 (Fig. 3) · กระแส 25 A ไหลวนผ่านกล่องทั้งสาม</div><div class="src" data-l="en">Extra example 1.3 (Fig. 3) · a 25 A current goes round all three boxes</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex1q3.webp" width="784" height="599" loading="lazy" decoding="async" alt="Fig. 3: box A on the left with −12 V (+ at the top), box B on top with +15 V−, box C on the right with 27 V (+ at the bottom); 25 A flows from A to B">
+    <figcaption data-l="th">Fig. 3 ของตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Fig. 3 of the extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv7"></canvas></div><div class="card solve"><div id="ask7"></div><div id="st7"></div></div></div>
+</section>
+
+<section class="prob" id="ex8">
+  <div class="prob-head"><span class="prob-no">8</span><div><h2 data-l="th">ข้อ 1.4: ความต้านทานและกำลังของกล่อง A ถึง E กล่องไหนรับ กล่องไหนจ่าย</h2><h2 data-l="en">Item 1.4: resistance and power of boxes A to E; which absorb, which deliver?</h2>
+    <div class="src" data-l="th">ตัวอย่างเพิ่มเติมข้อ 1.4 (Fig. 4)</div><div class="src" data-l="en">Extra example 1.4 (Fig. 4)</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex1q4.webp" width="840" height="769" loading="lazy" decoding="async" alt="Fig. 4: box A with 100 V and 4 A leaving its top terminal toward box B (+10 V−); box C with 100 V and 1 A up from its top, box D below it with −10 V; box E with 90 V and 5 A into its top">
+    <figcaption data-l="th">Fig. 4 ของตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Fig. 4 of the extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv8"></canvas></div><div class="card solve"><div id="ask8"></div><div id="st8"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน (ตัวอย่างเพิ่มเติมข้อ 1 ทั้งหน้า)</span><span data-l="en">See the teacher's handwritten solution (the whole of extra example 1)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol1.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 1: the three mesh equations and V1 = −5 V, V4 = 0 V, V5 = 5 V; RA = 0.48, RB = 0.6, RC = −1.08 ohm; boxes A to E with resistance and power"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 1</figcaption><figcaption data-l="en">Handwritten solution, extra example 1</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กราฟศักย์ต้องปิดกลับศูนย์</h3>
+    <ol><li>ข้อ 1: เปิดเฉลยทีละขั้น ศักย์ลดลง 5 V แล้วลดอีก 7 V จากนั้นตัวต้านทานต้อง<b>ยกกลับขึ้นมา 12 V</b> จึงได้ \(v_x = 12\) V</li>
+    <li>ช่วงของตัวที่ยังไม่รู้ค่าเป็นเส้นประสีชมพู เพราะความสูงของมันถูกบังคับให้ศักย์กลับมาที่ศูนย์พอดี</li>
+    <li>ข้อ 3: แหล่งจ่ายค่าติดลบทำให้กราฟ<b>ขึ้น</b>แทนที่จะลง จึงได้ \(v_x = -4\) V และกระแสวิ่งทวนเข็มนาฬิกา</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เลือกลูปให้ดี</h3>
+    <ol><li>ข้อ 2: เมชซ้ายมีตัวไม่รู้ค่าตัวเดียว (\(v_{R_2}\)) จึงทำก่อน เมชขวามี \(v_{R_2}\) กับ \(v_x\) จึงต้องรอ</li>
+    <li>Hayt แสดงทางลัดอีกทาง: เดินรอบนอกทั้งวง \(+4 - 36 + 12 + 14 + v_x = 0\) ได้ \(v_x = 6\) V ทันที</li>
+    <li>ข้อ 5 ต้องสลับใช้สามกฎ: โอห์มหาแรงดันจากกระแสที่รู้ · KVL หาแรงดันตัวสุดท้ายของลูป · KCL หากระแสที่แยกที่โนด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — กล่องที่ \(R\) ติดลบ</h3>
+    <ol><li>ข้อ 7: กล่อง C ได้ \(R = -1.08\ \Omega\) ค่าติดลบแปลว่ามัน<b>จ่าย</b>กำลัง ข้างในจึงต้องมีแหล่งจ่าย</li>
+    <li>ข้อ 8: กล่อง A และ C จ่ายรวม 500 W ส่วน B, D, E รับรวม 500 W พอดี (กำลังสมดุล)</li>
+    <li>คำถาม: ในข้อ 8 ตรวจ KCL ที่จุดดำ และ KVL รอบ A–B–E ได้หรือไม่</li></ol>
+    <div class="book">สไลด์บทที่ 3 หน้า 8–11 · สไลด์ฉบับในห้อง ธ.ค. 2568 หน้า 10, 13–17 · ตัวอย่างเพิ่มเติมข้อ 1 และ 5 · Hayt §3.3, Examples 3.2–3.4, Practice 3.2–3.3</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the potential must come back to zero</h3>
+    <ol><li>Problem 1: open the steps one at a time. The potential drops 5 V, then another 7 V, so the resistor must <b>lift it back up by 12 V</b>: \(v_x = 12\) V.</li>
+    <li>The stretch of the unknown is dashed pink, because its height is forced by the walk having to return to zero.</li>
+    <li>Problem 3: the negative sources make the graph go <b>up</b> instead of down, so \(v_x = -4\) V and the current runs anticlockwise.</li></ol></div>
+  <div class="card"><h3>Try this 2 — choosing the loop</h3>
+    <ol><li>Problem 2: the left mesh has a single unknown (\(v_{R_2}\)), so it comes first; the right mesh has both \(v_{R_2}\) and \(v_x\), so it must wait.</li>
+    <li>Hayt shows a shortcut: walk the whole outer loop, \(+4 - 36 + 12 + 14 + v_x = 0\), and \(v_x = 6\) V at once.</li>
+    <li>Problem 5 switches between the three laws: Ohm for a voltage from a known current · KVL for the last voltage of a loop · KCL for the current that splits at a node.</li></ol></div>
+  <div class="card"><h3>Try this 3 — a box with a negative \(R\)</h3>
+    <ol><li>Problem 7: box C gives \(R = -1.08\ \Omega\). A negative value means it <b>delivers</b> power, so there must be a source inside.</li>
+    <li>Problem 8: boxes A and C deliver 500 W in all, while B, D and E absorb exactly 500 W (the power balances).</li>
+    <li>Question: in problem 8, can you check KCL at the black dot, and KVL round A–B–E?</li></ol>
+    <div class="book">Chapter 3 slides, pp. 8–11 · in-class slides of December 2025, pp. 10, 13–17 · extra examples 1 and 5 · Hayt §3.3, Examples 3.2–3.4, Practice 3.2–3.3</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const W_ = (a, b, id) => (id ? { id, type: 'W', a, b } : { type: 'W', a, b });
+const near = (x, y, tol = 0.011) => Math.abs(x - y) < tol;
+function kvl(n, spec, o) {
+  const sim = new CH3.KVL($('cv' + n), spec);
+  if (o.ask) LS.ask($('ask' + n), o.ask);
+  LS.stepper($('st' + n), { steps: o.steps, answer: o.answer, onStep: k => sim.set(o.state(k)) });
+  return sim;
+}
+const AL = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* 1: Ex 3 */
+kvl(1, { ground: 'C', speed: 160, dots: false,
+  nodes: { A: [0, 0], B: [4, 0], C: [0, 3], Cr: [4, 3] },
+  parts: [{ id: 'V5', type: 'V', a: 'A', b: 'C', value: 5, label: false }, { id: 'V7', type: 'V', a: 'B', b: 'A', value: 7, label: false },
+    { id: 'R', type: 'R', a: 'B', b: 'Cr', value: 100, label: false }, W_('C', 'Cr')],
+  labels: { V5: { plus: 'A', sym: '5', txt: '5 V', side: 'L', src: true }, V7: { plus: 'B', sym: '7', txt: '7 V', side: 'U', src: true }, R: { plus: 'B', sym: 'v_x', txt: 'vₓ', side: 'L', extra: '100 Ω' } },
+  loops: [{ th: 'ลูปเดียว', en: 'The loop', nodes: ['C', 'A', 'B', 'Cr', 'C'], unknown: 'R' }] }, {
+  ask: { fields: [{ label: 'vₓ (V) =', ok: x => near(x, 12), w: 4 }, { label: 'iₓ (A) =', ok: x => near(x, 0.12, 0.002), w: 4 }], check: v => near(v[0], -12) ? t('ขนาดถูกแต่เครื่องหมายผิด ดูว่าเข้าขั้วไหนของแหล่งจ่าย', 'Right size, wrong sign: check which terminal of each source you enter') : near(v[0], 2) || near(v[0], -2) ? t('แหล่งจ่ายทั้งสองเข้าทางขั้ว − ทั้งคู่', 'Both sources are entered at their − terminal') : '' },
+  steps: [
+    { why: t('<b>เริ่มที่ขั้วล่างของแหล่งจ่าย 5 V</b> แล้วเดินตามเข็มนาฬิกา (ขึ้นไปทางซ้าย) ตามที่สไลด์บอก', '<b>Start at the bottom terminal of the 5 V source</b> and walk clockwise (up the left side), as the slide says'), tex: `\\sum v = 0` },
+    { why: t('<b>ผ่านแหล่งจ่าย 5 V</b>: เข้าทางขั้ว − จึงเขียน \\(-5\\) (ศักย์ลดลง 5 V ในกราฟ)', '<b>Through the 5 V source</b>: entered at its − terminal, so write \\(-5\\) (the graph drops 5 V)'), tex: `-5` },
+    { why: t('<b>ผ่านแหล่งจ่าย 7 V</b>: ขั้ว + อยู่ทางขวา เราเข้าทางซ้ายซึ่งเป็นขั้ว − จึงเขียน \\(-7\\)', '<b>Through the 7 V source</b>: its + is on the right and we come in from the left, the − terminal, so write \\(-7\\)'), tex: `-5 - 7` },
+    { why: t('<b>ลงผ่านตัวต้านทาน 100 Ω</b>: เข้าทางขั้ว + ของ \\(v_x\\) จึงเขียน \\(+v_x\\) แล้วกลับถึงจุดเริ่ม', '<b>Down through the 100 Ω resistor</b>: entered at the + of \\(v_x\\), so write \\(+v_x\\), and we are back at the start'), tex: `-5 - 7 + v_x = 0` },
+    { why: t('<b>แก้สมการ</b>: ตัวต้านทานต้องยกศักย์กลับขึ้นมา 12 V', '<b>Solve</b>: the resistor must lift the potential back up by 12 V'), tex: `v_x = \\boxed{12\\ \\text{V}}` },
+    { why: t('<b>กฎของโอห์ม</b> … กระแสเริ่มไหลตามเข็มนาฬิกา', '<b>Ohm\'s law</b> … the current starts to flow clockwise'), tex: `i_x = \\frac{v_x}{100\\ \\Omega} = \\frac{12}{100} = \\boxed{0.12\\ \\text{A}}` }],
+  answer: t('\\(v_x = 12\\) V และ \\(i_x = 0.12\\) A (120 mA) ตรงกับเฉลยในห้องและ Hayt Example 3.2', '\\(v_x = 12\\) V and \\(i_x = 0.12\\) A (120 mA), as in class and in Hayt Example 3.2'),
+  state: k => ({ upto: Math.max(0, Math.min(3, k - 1)), solved: k >= 5 ? [0] : [], dots: k >= 6 }) });
+
+/* 2: Ex 4 */
+kvl(2, { ground: 'bl', speed: 9, dots: false, aspect: 0.86,
+  nodes: { tl: [0, 0], tm: [3.2, 0], n54: [6.4, 0], tr: [9.6, 0], bl: [0, 3.4], bm: [3.2, 3.4], br: [9.6, 3.4] },
+  parts: [{ id: 'V36', type: 'V', a: 'tm', b: 'tl', value: 36, label: false }, { id: 'R6', type: 'R', a: 'bl', b: 'tl', value: 1, label: false },
+    { id: 'R2', type: 'R', a: 'tm', b: 'bm', value: 16, label: false }, { id: 'R5', type: 'R', a: 'tm', b: 'n54', value: 6, label: false },
+    { id: 'R4', type: 'R', a: 'n54', b: 'tr', value: 7, label: false }, { id: 'BB', type: 'R', a: 'tr', b: 'br', value: 3, draw: 'box', label: false }, W_('bl', 'bm'), W_('bm', 'br')],
+  labels: { V36: { plus: 'tm', sym: '36', txt: '36 V', side: 'U', src: true }, R6: { plus: 'bl', sym: '4', txt: '4 V', side: 'L', name: 'R₆' },
+    R2: { plus: 'tm', sym: 'v_{R_2}', txt: 'v_R₂', side: 'R', name: 'R₂' }, R5: { plus: 'tm', sym: '12', txt: '12 V', side: 'U', name: 'R₅' },
+    R4: { plus: 'n54', sym: '14', txt: '14 V', side: 'U', name: 'R₄' }, BB: { plus: 'tr', sym: 'v_x', txt: 'vₓ', side: 'L' } },
+  loops: [{ th: 'เมช 1 (ซ้าย)', en: 'Mesh 1 (left)', nodes: ['bl', 'tl', 'tm', 'bm', 'bl'], unknown: 'R2' }, { th: 'เมช 2 (ขวา)', en: 'Mesh 2 (right)', nodes: ['bm', 'tm', 'n54', 'tr', 'br', 'bm'], unknown: 'BB' }] }, {
+  ask: { fields: [{ label: 'v_R₂ (V) =', ok: x => near(x, 32), w: 4 }, { label: 'vₓ (V) =', ok: x => near(x, 6), w: 4 }], check: v => near(v[0], 40) ? t('4 V เข้าทางขั้ว + (ขั้ว + อยู่ล่าง) จึงเป็น \\(+4\\)', 'The 4 V is entered at its + (the + is at the bottom), so it is \\(+4\\)') : '' },
+  steps: [
+    { why: t('<b>มองส่วนขวาเป็นอุปกรณ์เดียว</b> แบบในห้อง: \\(R_3\\), \\(v_{s1}\\) และ \\(R_1\\) ไม่รู้ค่าสักตัว แต่รวมกันมีแรงดัน \\(v_x\\) (ขั้ว + อยู่บน) จึงวาดเป็นกล่องเดียวเหมือนสไลด์หน้า 11', '<b>Treat the right part as one element</b>, as in class: \\(R_3\\), \\(v_{s1}\\) and \\(R_1\\) are all unknown, but together they have the voltage \\(v_x\\) (+ at the top), so draw them as one box, like slide p. 11'), tex: `\\text{${t('วงจรเหลือ 6 อุปกรณ์ สองเมช', '6 elements left, two meshes')}}` },
+    { why: t('<b>เมช 1 (ซ้าย)</b> มีตัวไม่รู้ค่าตัวเดียวคือ \\(v_{R_2}\\): เริ่มที่มุมล่างซ้าย เดินขึ้นผ่าน \\(R_6\\) เข้าทางขั้ว + (ขั้ว + อยู่ล่าง) เขียน \\(+4\\)', '<b>Mesh 1 (left)</b> has a single unknown, \\(v_{R_2}\\): start at the bottom left corner and walk up through \\(R_6\\), entering its + (the + is at the bottom): write \\(+4\\)'), tex: `+4` },
+    { why: t('<b>ผ่านแหล่งจ่าย 36 V</b> เข้าทางขั้ว − เขียน \\(-36\\) แล้ว<b>ลง \\(R_2\\)</b> เข้าทางขั้ว + เขียน \\(+v_{R_2}\\)', '<b>Through the 36 V source</b>, entering its −: write \\(-36\\); then <b>down \\(R_2\\)</b>, entering its +: write \\(+v_{R_2}\\)'), tex: `+4 - 36 + v_{R_2} = 0` },
+    { why: t('<b>แก้สมการ</b>', '<b>Solve</b>'), tex: `v_{R_2} = 36 - 4 = \\boxed{32\\ \\text{V}}` },
+    { why: t('<b>เมช 2 (ขวา)</b>: ขึ้น \\(R_2\\) เข้าทางขั้ว − เขียน \\(-v_{R_2}\\) · ผ่าน 12 V และ 14 V เข้าทางขั้ว + ทั้งคู่ · ลงกล่องส่วนขวาเข้าทางขั้ว + เขียน \\(+v_x\\)', '<b>Mesh 2 (right)</b>: up \\(R_2\\), entering its −: \\(-v_{R_2}\\) · through the 12 V and the 14 V, both entered at +, · down the right box, entering its +: \\(+v_x\\)'), tex: `-v_{R_2} + 12 + 14 + v_x = 0` },
+    { why: t('<b>แทน \\(v_{R_2} = 32\\) V แล้วแก้</b>', '<b>Put in \\(v_{R_2} = 32\\) V and solve</b>'), tex: `v_x = 32 - 12 - 14 = \\boxed{6\\ \\text{V}}` }],
+  answer: t('\\(v_{R_2} = 32\\) V และ \\(v_x = 6\\) V ตรงกับเฉลยในห้องและ Hayt Example 3.3 · Hayt ยังแสดงทางลัด: เดินรอบนอก \\(+4 - 36 + 12 + 14 + v_x = 0\\) ก็ได้ 6 V', '\\(v_{R_2} = 32\\) V and \\(v_x = 6\\) V, as in class and in Hayt Example 3.3 · Hayt also shows a shortcut: the outer loop \\(+4 - 36 + 12 + 14 + v_x = 0\\) gives 6 V too'),
+  state: k => k <= 4 ? { loop: 0, upto: k <= 1 ? 0 : k === 2 ? 1 : 3, solved: k >= 4 ? [0] : [], dots: false } : { loop: 1, upto: 4, solved: k >= 6 ? [0, 1] : [0], dots: k >= 6 } });
+
+/* 3: Ex 3 with negative sources */
+kvl(3, { ground: 'C', speed: 600, dots: false,
+  nodes: { A: [0, 0], B: [4, 0], C: [0, 3], Cr: [4, 3] },
+  parts: [{ id: 'V3', type: 'V', a: 'A', b: 'C', value: -3, label: false }, { id: 'V1', type: 'V', a: 'B', b: 'A', value: -1, label: false },
+    { id: 'R', type: 'R', a: 'B', b: 'Cr', value: 100, label: false }, W_('C', 'Cr')],
+  labels: { V3: { plus: 'A', sym: '(-3)', txt: '−3 V', side: 'L', src: true }, V1: { plus: 'B', sym: '(-1)', txt: '−1 V', side: 'U', src: true }, R: { plus: 'B', sym: 'v_x', txt: 'vₓ', side: 'L', extra: '100 Ω' } },
+  loops: [{ th: 'ลูปเดียว', en: 'The loop', nodes: ['C', 'A', 'B', 'Cr', 'C'], unknown: 'R' }] }, {
+  ask: { fields: [{ label: 'vₓ (V) =', ok: x => near(x, -4), w: 4 }, { label: 'iₓ (mA) =', ok: x => near(x, -40, 0.2), w: 4 }], check: v => near(v[0], 4) ? t('ขนาดถูก แต่ \\(-(-3) = +3\\) และ \\(-(-1) = +1\\)', 'Right size, but \\(-(-3) = +3\\) and \\(-(-1) = +1\\)') : '' },
+  steps: [
+    { why: t('<b>เริ่มที่ขั้วล่างของแหล่งจ่ายทางซ้าย</b> เดินตามเข็มนาฬิกาเหมือน Ex 3', '<b>Start at the bottom of the left source</b> and walk clockwise, as in Ex 3'), tex: `\\sum v = 0` },
+    { why: t('<b>แหล่งจ่าย −3 V</b>: เข้าทางขั้ว − จึงเขียน \\(-(-3)\\) (แทนทั้งเครื่องหมาย ศักย์<b>เพิ่ม</b>ขึ้น 3 V)', '<b>The −3 V source</b>: entered at its −, so write \\(-(-3)\\) (keep the sign; the potential <b>rises</b> 3 V)'), tex: `-(-3)` },
+    { why: t('<b>แหล่งจ่าย −1 V</b>: เข้าทางขั้ว − เช่นกัน เขียน \\(-(-1)\\)', '<b>The −1 V source</b>: entered at its − as well, write \\(-(-1)\\)'), tex: `-(-3) - (-1)` },
+    { why: t('<b>ตัวต้านทาน</b>: เข้าทางขั้ว + เขียน \\(+v_x\\)', '<b>The resistor</b>: entered at +, write \\(+v_x\\)'), tex: `-(-3) - (-1) + v_x = 0` },
+    { why: t('<b>แก้สมการ</b>: ค่าติดลบแปลว่าขั้วล่างของตัวต้านทานสูงกว่าขั้วบน', '<b>Solve</b>: negative means the bottom of the resistor is the higher end'), tex: AL(['3 + 1 + v_x &= 0', 'v_x &= \\boxed{-4\\ \\text{V}}']) },
+    { why: t('<b>กฎของโอห์ม</b> … กระแสจริงไหลทวนเข็มนาฬิกา (จุดที่วิ่ง)', '<b>Ohm\'s law</b> … the real current runs anticlockwise (the moving dots)'), tex: AL(['i_x &= \\frac{v_x}{100} = \\frac{-4}{100}', '&= \\boxed{-0.04\\ \\text{A} = -40\\ \\text{mA}}']) }],
+  answer: t('\\(v_x = -4\\) V และ \\(i_x = -40\\) mA · Hayt Practice 3.2 ใช้ตัวต้านทาน 10 Ω จึงตอบ \\(-4\\) V และ \\(-400\\) mA', '\\(v_x = -4\\) V and \\(i_x = -40\\) mA · Hayt Practice 3.2 uses a 10 Ω resistor and answers \\(-4\\) V and \\(-400\\) mA'),
+  state: k => ({ upto: Math.max(0, Math.min(3, k - 1)), solved: k >= 5 ? [0] : [], dots: k >= 6 }) });
+
+/* 4: sign drill, Hayt Practice 3.3 (numbers that real parts cannot give: vals) */
+kvl(4, { ground: 'bl', aspect: 0.86,
+  nodes: { tl: [0, 0], tm: [3.2, 0], m1: [5.4, 0], m2: [7.6, 0], tr: [9.8, 0], rm: [9.8, 1.8], bl: [0, 3.6], bm: [3.2, 3.6], br: [9.8, 3.6] },
+  parts: [{ id: 'V12', type: 'V', a: 'tm', b: 'tl', value: 12, label: false }, { id: 'R6', type: 'R', a: 'tl', b: 'bl', value: 1, label: false },
+    { id: 'R2', type: 'R', a: 'tm', b: 'bm', value: 1, label: false }, { id: 'R5', type: 'R', a: 'tm', b: 'm1', value: 1, label: false },
+    { id: 'R4', type: 'R', a: 'm1', b: 'm2', value: 1, label: false }, { id: 'R3', type: 'R', a: 'm2', b: 'tr', value: 1, label: false },
+    { id: 'V3', type: 'V', a: 'rm', b: 'tr', value: 3, label: false }, { id: 'R1', type: 'R', a: 'rm', b: 'br', value: 1, label: false }, W_('bl', 'bm'), W_('bm', 'br')],
+  vals: { V12: 12, R6: -8, R2: 20, R5: 7, R4: 9, R3: -24, V3: 3, R1: 1 },
+  labels: { V12: { plus: 'tm', sym: '12', txt: '12 V', side: 'U', src: true }, R6: { plus: 'bl', sym: '(-8)', txt: '−8 V', side: 'L', name: 'R₆' },
+    R2: { plus: 'tm', sym: 'v_{R_2}', txt: 'v_R₂', side: 'R', name: 'R₂' }, R5: { plus: 'tm', sym: '7', txt: '7 V', side: 'U', name: 'R₅' },
+    R4: { plus: 'm2', sym: '9', txt: '9 V', side: 'U', name: 'R₄' }, R3: { plus: 'tr', sym: 'v_{R_3}', txt: 'v_R₃', side: 'U', name: 'R₃' },
+    V3: { plus: 'rm', sym: '3', txt: '3 V', side: 'R', src: true }, R1: { plus: 'rm', sym: '1', txt: 'v_R₁ = 1 V', side: 'L', name: 'R₁' } },
+  loops: [{ th: 'เมช 1 (ซ้าย)', en: 'Mesh 1 (left)', nodes: ['bl', 'tl', 'tm', 'bm', 'bl'], unknown: 'R2' }, { th: 'เมช 2 (ขวา)', en: 'Mesh 2 (right)', nodes: ['bm', 'tm', 'm1', 'm2', 'tr', 'rm', 'br', 'bm'], unknown: 'R3' }] }, {
+  ask: { fields: [{ label: 'v_R₂ (V) =', ok: x => near(x, 20), w: 4 }, { label: 'v_R₃ (V) =', ok: x => near(x, -24), w: 4 }], check: v => near(v[0], 4) ? t('นี่คือคำตอบในเฉลยของ Hayt แต่ตามรูป −8 V เข้าทางขั้ว + จึงเป็น \\(+(-8)\\)', 'That is Hayt\'s key, but in the figure the −8 V is entered at its +, so it is \\(+(-8)\\)') : '' },
+  steps: [
+    { why: t('<b>เมช 1 (ซ้าย)</b>: เริ่มที่มุมล่างซ้าย เดินขึ้นผ่าน \\(R_6\\) ขั้ว + อยู่ล่างจึงเข้าทางขั้ว + เขียน \\(+(-8)\\) · แหล่งจ่าย 12 V เข้าทางขั้ว − เขียน \\(-12\\) · ลง \\(R_2\\) เข้าขั้ว + เขียน \\(+v_{R_2}\\)', '<b>Mesh 1 (left)</b>: start at the bottom left and walk up \\(R_6\\); its + is at the bottom, so we enter +: \\(+(-8)\\) · the 12 V source is entered at −: \\(-12\\) · down \\(R_2\\), entering +: \\(+v_{R_2}\\)'),
+      tex: `+(-8) - 12 + v_{R_2} = 0` },
+    { why: t('<b>แก้สมการ</b>', '<b>Solve</b>'), tex: `v_{R_2} = 8 + 12 = \\boxed{20\\ \\text{V}}` },
+    { why: t('<b>เมช 2 (ขวา)</b>: ขึ้น \\(R_2\\) เข้าขั้ว − · \\(R_5\\) เข้าขั้ว + · \\(R_4\\) เข้าขั้ว − · \\(R_3\\) เข้าขั้ว − · แหล่งจ่าย 3 V เข้าขั้ว − (ขั้ว + อยู่ล่าง) · \\(R_1\\) เข้าขั้ว +', '<b>Mesh 2 (right)</b>: up \\(R_2\\), in at − · \\(R_5\\), in at + · \\(R_4\\), in at − · \\(R_3\\), in at − · the 3 V source, in at − (its + is at the bottom) · \\(R_1\\), in at +'),
+      tex: `-v_{R_2} + 7 - 9 - v_{R_3} - 3 + v_{R_1} = 0` },
+    { why: t('<b>แทน \\(v_{R_2} = 20\\) V และ \\(v_{R_1} = 1\\) V แล้วแก้</b>', '<b>Put in \\(v_{R_2} = 20\\) V and \\(v_{R_1} = 1\\) V, and solve</b>'), tex: AL(['-20 + 7 - 9 - v_{R_3} - 3 + 1 &= 0', 'v_{R_3} &= \\boxed{-24\\ \\text{V}}']) }],
+  answer: t('\\(v_{R_2} = 20\\) V และ \\(v_{R_3} = -24\\) V ตรงกับที่ผู้สอนเขียนในห้อง <div class="warnbox" style="margin-top:8px"><b>เฉลยของ Hayt Practice 3.3 ตอบ (a) 4 V (b) −8 V ซึ่งไม่ตรงกับรูปของ Hayt เอง</b>: รูปเขียน −8 V โดยขั้ว + อยู่ล่าง เดินขึ้นจึงเข้าทางขั้ว + ได้ \\(-8 - 12 + v_{R_2} = 0\\) คือ 20 V คำตอบ 4 V จะได้ก็ต่อเมื่ออ่าน −8 V กลับเครื่องหมาย · สไลด์ฉบับเดียวกันหน้า 14 พิมพ์เงื่อนไขเป็น \\(v_{R_2} = 1\\) V ที่ถูกคือ \\(v_{R_1} = 1\\) V ตามหน้า 13</div>',
+    '\\(v_{R_2} = 20\\) V and \\(v_{R_3} = -24\\) V, as the teacher wrote in class <div class="warnbox" style="margin-top:8px"><b>Hayt\'s key for Practice 3.3 answers (a) 4 V, (b) −8 V, which does not match Hayt\'s own figure</b>: the figure marks −8 V with the + at the bottom, so walking up enters the +: \\(-8 - 12 + v_{R_2} = 0\\), i.e. 20 V. The answer 4 V only comes out if the −8 V is read with the opposite sign · page 14 of the same slides prints the condition as \\(v_{R_2} = 1\\) V; it should be \\(v_{R_1} = 1\\) V, as on page 13.</div>'),
+  state: k => k <= 2 ? { loop: 0, upto: k >= 1 ? 3 : 0, solved: k >= 2 ? [0] : [] } : { loop: 1, upto: 6, solved: k >= 4 ? [0, 1] : [0] } });
+
+/* 5: KVL + KCL + Ohm (Hayt Example 3.4, extra example 5) */
+kvl(5, { ground: 'bl', speed: 14, dots: false, aspect: 0.86,
+  nodes: { D: [0, 0], A: [3, 0], C: [6.4, 0], Cx: [9.2, 0], bl: [0, 3], bA: [3, 3], bC: [6.4, 3], bx: [9.2, 3] },
+  parts: [{ id: 'V60', type: 'V', a: 'D', b: 'bl', value: 60, label: false }, { id: 'R8', type: 'R', a: 'D', b: 'A', value: 8, label: false },
+    { id: 'R10', type: 'R', a: 'A', b: 'bA', value: 10, label: false }, { id: 'R4', type: 'R', a: 'A', b: 'C', value: 4, label: false },
+    { id: 'R2', type: 'R', a: 'C', b: 'bC', value: 2, label: false }, { id: 'Ix', type: 'I', a: 'bx', b: 'Cx', value: 1, label: false },
+    W_('C', 'Cx'), W_('bl', 'bA'), W_('bA', 'bC'), W_('bC', 'bx')],
+  labels: { V60: { plus: 'D', sym: '60', txt: '60 V', side: 'L', src: true }, R8: { plus: 'D', sym: 'v_8', txt: 'v₈', side: 'U', name: '8 Ω' },
+    R10: { plus: 'A', sym: 'v_{10}', txt: 'v₁₀', side: 'R', name: '10 Ω' }, R4: { plus: 'A', sym: 'v_4', txt: 'v₄', side: 'U', name: '4 Ω' }, R2: { plus: 'C', sym: 'v_x', txt: 'vₓ', side: 'R', name: '2 Ω' } },
+  refs: [{ id: 'R8', from: 'D', text: '5 A', side: 'D' }, { id: 'Ix', from: 'bx', text: 'Iₓ', side: 'R' }],
+  loops: [{ th: 'เมช x (ซ้าย)', en: 'Mesh x (left)', nodes: ['bl', 'D', 'A', 'bA', 'bl'], unknown: 'R10' }, { th: 'เมช y (กลาง)', en: 'Mesh y (middle)', nodes: ['bA', 'A', 'C', 'bC', 'bA'], unknown: 'R2' }] }, {
+  ask: { fields: [{ label: 'Vₓ (V) =', ok: x => near(x, 8), w: 4 }, { label: 'Iₓ (A) =', ok: x => near(x, 1), w: 4 }] },
+  steps: [
+    { why: t('<b>กฎของโอห์มกับ 8 Ω</b>: รู้กระแส 5 A ที่ไหลผ่าน', '<b>Ohm\'s law on the 8 Ω</b>: its 5 A current is given'), tex: `v_8 = (5)(8) = 40\\ \\text{V}` },
+    { why: t('<b>KVL เมช x</b>: \\(-60 + v_8 + v_{10} = 0\\) (เข้าขั้ว − ของ 60 V แล้วเข้าขั้ว + ของ 8 Ω และ 10 Ω)', '<b>KVL, mesh x</b>: \\(-60 + v_8 + v_{10} = 0\\) (in at the − of the 60 V, then at the + of the 8 Ω and the 10 Ω)'), tex: AL(['-60 + 40 + v_{10} &= 0', 'v_{10} &= 20\\ \\text{V}']) },
+    { why: t('<b>กฎของโอห์มกับ 10 Ω</b>', '<b>Ohm\'s law on the 10 Ω</b>'), tex: `i_{10} = \\frac{20}{10} = 2\\ \\text{A}` },
+    { why: t('<b>KCL ที่โนด A</b>: กระแส 5 A แยกลง 10 Ω และไปทางขวาผ่าน 4 Ω', '<b>KCL at node A</b>: the 5 A splits down the 10 Ω and right through the 4 Ω'), tex: AL(['5 &= i_{10} + i_4', 'i_4 &= 5 - 2 = 3\\ \\text{A}']) },
+    { why: t('<b>กฎของโอห์มกับ 4 Ω</b>', '<b>Ohm\'s law on the 4 Ω</b>'), tex: `v_4 = (3)(4) = 12\\ \\text{V}` },
+    { why: t('<b>KVL เมช y</b>: ขึ้น 10 Ω เข้าขั้ว − · ผ่าน 4 Ω เข้าขั้ว + · ลง 2 Ω เข้าขั้ว +', '<b>KVL, mesh y</b>: up the 10 Ω, in at − · through the 4 Ω, in at + · down the 2 Ω, in at +'), tex: AL(['-v_{10} + v_4 + v_x &= 0', 'v_x &= 20 - 12 = \\boxed{8\\ \\text{V}}']) },
+    { why: t('<b>โอห์มกับ 2 Ω แล้ว KCL ที่โนดขวาบน</b> … กระแสเริ่มไหล', '<b>Ohm on the 2 Ω, then KCL at the top right node</b> … the current starts to flow'), tex: AL(['i_2 &= \\frac{8}{2} = 4\\ \\text{A}', 'i_4 + I_x &= i_2 \\ \\Rightarrow\\ I_x = 4 - 3 = \\boxed{1\\ \\text{A}}']) }],
+  answer: t('\\(V_x = 8\\) V และ \\(I_x = 1\\) A ตรงกับเฉลยลายมือและ Hayt Example 3.4 (8 V)', '\\(V_x = 8\\) V and \\(I_x = 1\\) A, as in the handwritten solution and Hayt Example 3.4 (8 V)'),
+  state: k => { const hide = k < 1 ? ['R8', 'R4'] : k < 5 ? ['R4'] : []; return k <= 4 ? { loop: 0, upto: k >= 2 ? 3 : 0, solved: k >= 2 ? [0] : [], hide, dots: false } : { loop: 1, upto: k >= 6 ? 3 : 0, solved: k >= 6 ? [0, 1] : [0], hide, dots: k >= 7 }; } });
+
+/* 6: extra example 1.1, three meshes (sign drill) */
+kvl(6, { ground: 'BL', aspect: 0.96, aspectN: 1.25,
+  nodes: { TL: [0, 0], T: [3.4, 0], TR: [6.8, 0], M: [3.4, 2.4], N: [6.8, 2.4], BL: [0, 4.8], BM: [3.4, 4.8], BR: [6.8, 4.8] },
+  parts: [{ id: 'VS1', type: 'V', a: 'TL', b: 'BL', value: 5, label: false }, { id: 'R1', type: 'R', a: 'TL', b: 'T', value: 1, label: false },
+    { id: 'R2', type: 'R', a: 'T', b: 'M', value: 1, label: false }, { id: 'VS2', type: 'V', a: 'TR', b: 'N', value: 5, label: false },
+    { id: 'R4', type: 'R', a: 'M', b: 'N', value: 1, label: false }, { id: 'R3', type: 'R', a: 'M', b: 'BM', value: 1, label: false },
+    { id: 'R5', type: 'R', a: 'N', b: 'BR', value: 1, label: false }, W_('T', 'TR'), W_('BL', 'BM'), W_('BM', 'BR')],
+  vals: { VS1: 5, R1: -5, R2: 5, VS2: 5, R4: 0, R3: 5, R5: 5 },
+  labels: { VS1: { plus: 'TL', sym: 'V_{S1}', txt: 'V_S1', side: 'R', src: true }, R1: { plus: 'TL', sym: 'V_1', txt: 'V₁', side: 'U', name: 'R₁' },
+    R2: { plus: 'T', sym: 'V_2', txt: 'V₂', side: 'L', name: 'R₂', nameSide: 'L' }, VS2: { plus: 'TR', sym: 'V_{S2}', txt: 'V_S2', side: 'L', src: true },
+    R4: { plus: 'M', sym: 'V_4', txt: 'V₄', side: 'U', name: 'R₄' }, R3: { plus: 'M', sym: 'V_3', txt: 'V₃', side: 'L', name: 'R₃', nameSide: 'L' }, R5: { plus: 'N', sym: 'V_5', txt: 'V₅', side: 'L', name: 'R₅' } },
+  loops: [{ th: 'เมช 1 (ซ้าย)', en: 'Mesh 1 (left)', nodes: ['BL', 'TL', 'T', 'M', 'BM', 'BL'], unknown: 'R1' },
+    { th: 'เมช 2 (ขวาบน)', en: 'Mesh 2 (top right)', nodes: ['M', 'T', 'TR', 'N', 'M'], unknown: 'R4' },
+    { th: 'เมช 3 (ขวาล่าง)', en: 'Mesh 3 (bottom right)', nodes: ['M', 'N', 'BR', 'BM', 'M'], unknown: 'R5' }] }, {
+  ask: { fields: [{ label: 'V₁ (V) =', ok: x => near(x, -5), w: 3.6 }, { label: 'V₄ (V) =', ok: x => near(x, 0), w: 3.6 }, { label: 'V₅ (V) =', ok: x => near(x, 5), w: 3.6 }] },
+  steps: [
+    { why: t('<b>เมช 1 (ซ้าย)</b> ตามเข็มนาฬิกาจากมุมล่างซ้าย: \\(V_{S1}\\) เข้าขั้ว − · \\(R_1\\), \\(R_2\\), \\(R_3\\) เข้าขั้ว + ทุกตัว', '<b>Mesh 1 (left)</b>, clockwise from the bottom left corner: \\(V_{S1}\\) in at − · \\(R_1\\), \\(R_2\\), \\(R_3\\) all in at +'), tex: `-V_{S1} + V_1 + V_2 + V_3 = 0` },
+    { why: t('<b>แทนค่า</b>', '<b>Put in the values</b>'), tex: AL(['V_1 &= V_{S1} - V_2 - V_3', '&= 5 - 5 - 5 = \\boxed{-5\\ \\text{V}}']) },
+    { why: t('<b>เมช 2 (ขวาบน)</b> เริ่มที่จุดกลาง: ขึ้น \\(R_2\\) เข้าขั้ว − · ลง \\(V_{S2}\\) เข้าขั้ว + · กลับผ่าน \\(R_4\\) จากขวาไปซ้าย เข้าขั้ว −', '<b>Mesh 2 (top right)</b>, from the middle point: up \\(R_2\\), in at − · down \\(V_{S2}\\), in at + · back through \\(R_4\\) from right to left, in at −'), tex: AL(['-V_2 + V_{S2} - V_4 &= 0', 'V_4 &= V_{S2} - V_2 = \\boxed{0\\ \\text{V}}']) },
+    { why: t('<b>เมช 3 (ขวาล่าง)</b>: ผ่าน \\(R_4\\) เข้าขั้ว + · ลง \\(R_5\\) เข้าขั้ว + · ขึ้น \\(R_3\\) เข้าขั้ว −', '<b>Mesh 3 (bottom right)</b>: through \\(R_4\\), in at + · down \\(R_5\\), in at + · up \\(R_3\\), in at −'), tex: AL(['V_4 + V_5 - V_3 &= 0', 'V_5 &= V_3 - V_4 = \\boxed{5\\ \\text{V}}']) }],
+  answer: t('\\(V_1 = -5\\) V, \\(V_4 = 0\\) V, \\(V_5 = 5\\) V ตรงกับเฉลยลายมือ', '\\(V_1 = -5\\) V, \\(V_4 = 0\\) V, \\(V_5 = 5\\) V, as in the handwritten solution'),
+  state: k => k <= 2 ? { loop: 0, upto: k >= 1 ? 4 : 0, solved: k >= 2 ? [0] : [] } : k === 3 ? { loop: 1, upto: 3, solved: [0, 1] } : { loop: 2, upto: 3, solved: [0, 1, 2] } });
+
+/* 7–8: boxes with given v and i */
+function boxes(n, spec, o) {
+  const sim = new CH3.Boxes($('cv' + n), spec);
+  if (o.ask) LS.ask($('ask' + n), o.ask);
+  LS.stepper($('st' + n), { steps: o.steps, answer: o.answer, onStep: k => sim.set(o.state(k)) });
+  return sim;
+}
+const boxStep = (name, e, extra) => { const P = e.v * e.iIn, R = e.v / e.iIn, s = x => LS.d(x, 3);
+  return { why: t(`<b>กล่อง ${name}</b>: ${extra.th}`, `<b>Box ${name}</b>: ${extra.en}`),
+    tex: AL([`R_${name} &= \\frac{v}{i} = \\frac{${s(e.v)}}{${s(e.iIn)}} = \\boxed{${s(R)}\\ \\Omega}`, `P_${name} &= v\\,i = (${s(e.v)})(${s(e.iIn)})`, `&= ${s(P)}\\ \\text{W}`]),
+    body: `<p class="lead" style="margin:2px 0 0"><b style="color:${P >= 0 ? 'var(--bad)' : 'var(--good)'}">${P >= 0 ? t(`กล่อง ${name} รับกำลัง ${s(P)} W`, `Box ${name} absorbs ${s(P)} W`) : t(`กล่อง ${name} จ่ายกำลัง ${s(-P)} W`, `Box ${name} delivers ${s(-P)} W`)}</b></p>` }; };
+const B3 = { ground: 'aB', aspect: 0.6, aspectN: 0.82,
+  nodes: { aT: [0, 0], aB: [0, 3.2], bL: [2.6, 0], bR: [5.0, 0], cT: [7.6, 0], cB: [7.6, 3.2] },
+  parts: [{ id: 'A', type: 'R', draw: 'box', a: 'aT', b: 'aB', value: 1 }, W_('aT', 'bL', 'w1'), { id: 'B', type: 'R', draw: 'box', a: 'bL', b: 'bR', value: 1 }, W_('bR', 'cT', 'w2'),
+    { id: 'C', type: 'R', draw: 'box', a: 'cT', b: 'cB', value: 1 }, W_('aB', 'cB', 'w3')],
+  els: [{ id: 'A', name: 'A', plus: 'aT', v: -12, iIn: -25, lab: 'R' }, { id: 'B', name: 'B', plus: 'bL', v: 15, iIn: 25, lab: 'U', ref: { from: 'bL', text: '25 A', side: 'D' } },
+    { id: 'C', name: 'C', plus: 'cB', v: 27, iIn: -25, lab: 'L' }] };
+boxes(7, B3, {
+  ask: { fields: [{ label: 'R_A (Ω) =', ok: x => near(x, 0.48, 0.005), w: 3.6 }, { label: 'R_B (Ω) =', ok: x => near(x, 0.6, 0.005), w: 3.6 }, { label: 'R_C (Ω) =', ok: x => near(x, -1.08, 0.005), w: 3.6 }],
+    check: v => near(v[0], -0.48, 0.005) ? t('กล่อง A: กระแส 25 A ไหล<b>ออก</b>ทางขั้ว + จึงเป็นกระแสเข้าขั้ว + เท่ากับ −25 A', 'Box A: the 25 A <b>leaves</b> through its +, so the current into the + terminal is −25 A') : '' },
+  steps: [boxStep('A', B3.els[0], { th: 'ขั้ว + อยู่บน \\(v = -12\\) V กระแส 25 A ไหลออกทางขั้วบน กระแสที่เข้าขั้ว + จึงเป็น \\(-25\\) A', en: 'the + is at the top, \\(v = -12\\) V; the 25 A leaves through the top, so the current into the + terminal is \\(-25\\) A' }),
+    boxStep('B', B3.els[1], { th: 'ขั้ว + อยู่ซ้าย \\(v = 15\\) V กระแส 25 A เข้าทางขั้ว +', en: 'the + is on the left, \\(v = 15\\) V; the 25 A enters at the +' }),
+    boxStep('C', B3.els[2], { th: 'ขั้ว + อยู่ล่าง \\(v = 27\\) V กระแส 25 A เข้าทางขั้วบน (ขั้ว −) และออกทางขั้ว + กระแสที่เข้าขั้ว + จึงเป็น \\(-25\\) A · \\(R\\) ติดลบ กล่องนี้จ่ายกำลัง', en: 'the + is at the bottom, \\(v = 27\\) V; the 25 A enters at the top (−) and leaves at the +, so the current into the + is \\(-25\\) A · a negative \\(R\\): this box delivers power' }),
+    { why: t('<b>ตรวจ</b>: กำลังสมดุล และ KVL รอบวง (เดินตามเข็มนาฬิกาจากมุมล่างซ้าย)', '<b>Check</b>: the power balances, and KVL round the loop (clockwise from the bottom left)'), tex: AL(['300 + 375 &= 675\\ \\text{W} \\quad\\checkmark', '-(-12) + 15 - 27 &= 0 \\quad\\checkmark']) }],
+  answer: t('\\(R_A = 0.48\\ \\Omega\\), \\(R_B = 0.6\\ \\Omega\\), \\(R_C = -1.08\\ \\Omega\\) ตรงกับเฉลยลายมือ · โจทย์ถาม "ความต้านทานรวม" ด้วย แต่เฉลยขีดฆ่าทิ้ง เพราะกล่อง C เป็นแหล่งจ่าย (รวมเป็นความต้านทานเดียวไม่ได้)', '\\(R_A = 0.48\\ \\Omega\\), \\(R_B = 0.6\\ \\Omega\\), \\(R_C = -1.08\\ \\Omega\\), as in the handwritten solution · the problem also asks for the "total resistance", but the solution crosses it out: box C is a source, so the boxes cannot be lumped into one resistance'),
+  state: k => ({ focus: k >= 1 && k <= 3 ? k - 1 : -1, shown: [0, 1, 2].slice(0, Math.min(k, 3)) }) });
+const B4 = { ground: 'aB', aspect: 0.66, aspectN: 0.9,
+  nodes: { aT: [0, 0], aB: [0, 4.6], bL: [1.8, 0], bR: [4.0, 0], J: [5.4, 0], m: [5.4, 2.3], dB: [5.4, 4.6], eT: [8.0, 0], eB: [8.0, 4.6] },
+  parts: [{ id: 'A', type: 'R', draw: 'box', a: 'aT', b: 'aB', value: 1 }, W_('aT', 'bL', 'w1'), { id: 'B', type: 'R', draw: 'box', a: 'bL', b: 'bR', value: 1 }, W_('bR', 'J', 'w2'),
+    { id: 'C', type: 'R', draw: 'box', a: 'J', b: 'm', value: 1 }, { id: 'D', type: 'R', draw: 'box', a: 'm', b: 'dB', value: 1 }, W_('J', 'eT', 'w3'),
+    { id: 'E', type: 'R', draw: 'box', a: 'eT', b: 'eB', value: 1 }, W_('aB', 'dB', 'w4'), W_('dB', 'eB', 'w5')],
+  els: [{ id: 'A', name: 'A', plus: 'aT', v: 100, iIn: -4, lab: 'R' }, { id: 'B', name: 'B', plus: 'bL', v: 10, iIn: 4, lab: 'U', ref: { from: 'bL', text: '4 A', side: 'D' } },
+    { id: 'C', name: 'C', plus: 'J', v: 100, iIn: -1, lab: 'L', ref: { from: 'm', text: '1 A', side: 'R' } }, { id: 'D', name: 'D', plus: 'm', v: -10, iIn: -1, lab: 'L' },
+    { id: 'E', name: 'E', plus: 'eT', v: 90, iIn: 5, lab: 'L', ref: { from: 'eT', text: '5 A', side: 'R' } }] };
+boxes(8, B4, {
+  ask: { fields: [{ label: t('กำลังที่ A จ่าย (W) =', 'power A delivers (W) ='), ok: x => near(x, 400), w: 4 }, { label: 'R_E (Ω) =', ok: x => near(x, 18), w: 4 }] },
+  steps: [boxStep('A', B4.els[0], { th: 'ขั้ว + อยู่บน กระแส 4 A ไหลออกทางขั้ว + (ไปยัง B) กระแสเข้าขั้ว + จึงเป็น \\(-4\\) A', en: 'the + is at the top; the 4 A leaves through the + (toward B), so the current into the + is \\(-4\\) A' }),
+    boxStep('B', B4.els[1], { th: 'ขั้ว + อยู่ซ้าย กระแส 4 A เข้าทางขั้ว +', en: 'the + is on the left; the 4 A enters at the +' }),
+    boxStep('C', B4.els[2], { th: 'ขั้ว + อยู่บน ลูกศร 1 A ชี้ขึ้นออกจากขั้ว + กระแสเข้าขั้ว + จึงเป็น \\(-1\\) A', en: 'the + is at the top; the 1 A arrow points up out of the +, so the current into the + is \\(-1\\) A' }),
+    boxStep('D', B4.els[3], { th: 'อนุกรมกับ C กระแส 1 A จึงไหลขึ้นผ่าน D ด้วย (เข้าขั้วล่าง ออกขั้ว + ด้านบน) และ \\(v = -10\\) V', en: 'in series with C, so the same 1 A flows up through D (in at the bottom, out at the + on top), and \\(v = -10\\) V' }),
+    boxStep('E', B4.els[4], { th: 'ขั้ว + อยู่บน กระแส 5 A ชี้ลงเข้าทางขั้ว +', en: 'the + is at the top; the 5 A points down into the +' }),
+    { why: t('<b>ตรวจ</b>: กำลังสมดุล · KCL ที่จุดดำ · KVL สองวง', '<b>Check</b>: the power balance · KCL at the black dot · KVL for two loops'), tex: AL(['P_{\\text{del}} &= 400 + 100 = 500\\ \\text{W}', 'P_{\\text{abs}} &= 40 + 10 + 450 = 500\\ \\text{W} \\quad\\checkmark', '4 + 1 &= 5\\ \\text{A} \\quad\\checkmark', '100 &= 10 + 90 \\quad\\checkmark', '100 + (-10) &= 90 \\quad\\checkmark']) }],
+  answer: t('A จ่าย 400 W (R = −25 Ω) · B รับ 40 W (2.5 Ω) · C จ่าย 100 W (−100 Ω) · D รับ 10 W (10 Ω) · E รับ 450 W (18 Ω) ตรงกับเฉลยลายมือ', 'A delivers 400 W (R = −25 Ω) · B absorbs 40 W (2.5 Ω) · C delivers 100 W (−100 Ω) · D absorbs 10 W (10 Ω) · E absorbs 450 W (18 Ω), as in the handwritten solution'),
+  state: k => ({ focus: k >= 1 && k <= 5 ? k - 1 : -1, shown: [0, 1, 2, 3, 4].slice(0, Math.min(k, 5)) }) });
+});
+</script>
+</body>
+</html>

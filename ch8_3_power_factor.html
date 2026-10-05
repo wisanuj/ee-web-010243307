@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="8.3 — The Power Triangle and Power Factor">8.3 — สามเหลี่ยมกำลังและตัวประกอบกำลัง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">สามเหลี่ยมกำลังและตัวประกอบกำลัง <span class="en">The power triangle and power factor — PF = P/|S| = cos(θ − φ)</span></h1>
+<h1 data-l="en">The power triangle and power factor <span class="en">PF = P/|S| = cos(θ − φ)</span></h1>
+
+<p class="sub" data-l="th">กำลังเชิงซ้อน \(\mathbf{S} = P + jQ\) วาดเป็นลูกศรบนระนาบได้ ส่วนจริง \(P\) อยู่แนวนอน ส่วนจินตภาพ \(Q\) อยู่แนวตั้ง ลูกศรจึงเป็นด้านตรงข้ามมุมฉากของ<b>สามเหลี่ยมกำลัง</b> (สไลด์หน้า 11) รู้สองค่าก็หาค่าที่สามได้ อัตราส่วน \(P/|\mathbf{S}|\) คือ<b>ตัวประกอบกำลัง</b> (power factor, PF, สไลด์หน้า 12) ซึ่งบอกว่ากำลังที่การไฟฟ้าส่งมาถูกใช้ทำงานจริงกี่ส่วน โหลดตัวต้านทานได้ 1 พอดี โหลดที่มีตัวเหนี่ยวนำหรือตัวเก็บประจุได้น้อยกว่า 1 และเพราะ \(\cos\) ของมุมบวกและลบเท่ากัน จึงต้องบอกเสมอว่า<b>ตามหลัง</b>หรือ<b>นำหน้า</b> หน้านี้มีภาพจำลองสามเหลี่ยมของโหลดหนึ่งตัว (ส่วน A) โจทย์สไลด์หน้า 13 (ข้อ 1) การบ้านหน้า 16 (ข้อ 2) และตารางสรุปหน้า 14 (ส่วน B)</p>
+<p class="sub" data-l="en">The complex power \(\mathbf{S} = P + jQ\) is an arrow on a plane: the real part \(P\) is horizontal and the imaginary part \(Q\) vertical, so the arrow is the hypotenuse of the <b>power triangle</b> (slide p. 11); any two values give the third. The ratio \(P/|\mathbf{S}|\) is the <b>power factor</b> (PF, slide p. 12), which says what fraction of the power the utility sends is turned into work. A resistive load gives exactly 1, a load with inductors or capacitors less than 1, and since \(\cos\) of a positive and a negative angle are equal, it must always say <b>lagging</b> or <b>leading</b>. This page has a simulation of the triangle of one load (section A), the problem of slide p. 13 (problem 1), the homework of p. 16 (problem 2) and the summary table of p. 14 (section B).</p>
+<div class="equation-box">$$ \begin{aligned} \text{PF} &= \frac{P}{|\mathbf{S}|} = \frac{P}{V_{\text{eff}}I_{\text{eff}}} = \cos(\theta-\phi) \\ |\mathbf{S}|^2 &= P^2 + Q^2 \qquad \theta - \phi = \angle Z_{\text{load}} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>สามเหลี่ยมกำลัง</b>: \(P\) แนวนอน \(Q\) แนวตั้ง \(|\mathbf{S}|\) เป็นด้านตรงข้ามมุมฉาก และมุม \(\theta-\phi\) · รู้สองค่าก็หาค่าที่สามได้ (สไลด์หน้า 11)</li>
+  <li><b>ตัวประกอบกำลัง \(\text{PF} = P/|\mathbf{S}| = \cos(\theta-\phi)\)</b> อยู่ระหว่าง 0 ถึง 1 มุม \(\theta-\phi\) เรียกว่ามุมตัวประกอบกำลัง (PF angle) และ<b>เท่ากับมุมของอิมพีแดนซ์โหลด</b></li>
+  <li><b>ควอดรันต์ที่ 1 (\(Q > 0\)): โหลดเหนี่ยวนำ ตัวประกอบกำลังตามหลัง (lagging)</b> เพราะกระแสตามหลังแรงดัน · <b>ควอดรันต์ที่ 4 (\(Q < 0\)): โหลดตัวเก็บประจุ ตัวประกอบกำลังนำหน้า (leading)</b></li>
+  <li>PF 0.5 อาจเป็นมุม +60° หรือ −60° ก็ได้ จึง<b>ต้องเขียน "ตามหลัง" หรือ "นำหน้า" กำกับเสมอ</b></li>
+  <li>กำลังเชิงซ้อนของโหลดหลายตัว ไม่ว่าต่อแบบใด <b>บวกกันได้ สามเหลี่ยมจึงต่อกันหัวต่อหาง</b> แต่ PF ของโหลดรวม<b>ไม่ใช่</b>ผลบวกของ PF แต่ละตัว ต้องหาจาก \(P\) และ \(|\mathbf{S}|\) รวม</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Power triangle</b>: \(P\) horizontal, \(Q\) vertical, \(|\mathbf{S}|\) the hypotenuse, and the angle \(\theta-\phi\) · any two give the third (slide p. 11).</li>
+  <li><b>Power factor \(\text{PF} = P/|\mathbf{S}| = \cos(\theta-\phi)\)</b> lies between 0 and 1. The angle \(\theta-\phi\) is called the PF angle and <b>equals the angle of the load impedance</b>.</li>
+  <li><b>First quadrant (\(Q > 0\)): an inductive load, lagging PF</b>, because the current lags the voltage · <b>fourth quadrant (\(Q < 0\)): a capacitive load, leading PF</b>.</li>
+  <li>A PF of 0.5 may mean +60° or −60°, so <b>always write "lagging" or "leading"</b>.</li>
+  <li>The complex powers of several loads, however they are connected, <b>add, so their triangles join head to tail</b>; but the PF of the combination is <b>not</b> the sum of the PFs: find it from the total \(P\) and \(|\mathbf{S}|\).</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<div class="slides"><figure class="slide"><img src="slides/ch8/p11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11, The Power Triangle: a graphical representation of complex power with P along Re, Q along Im, S the hypotenuse and the angle θ − φ; only two of the three quantities are required; if the triangle lies in the first quadrant (θ − φ &gt; 0) the power factor is lagging (inductive load); in the fourth quadrant (θ − φ &lt; 0) it is leading (corresponding to a capacitive, cut off)">
+    <figcaption data-l="th">สไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 11 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch8/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12, Power Factor (PF): the ratio of the real or average power to the apparent power, PF = average power / apparent power = P/(Veff Ieff); an inductive load has a lagging PF, a capacitive load a leading PF">
+    <figcaption data-l="th">สไลด์หน้า 12</figcaption><figcaption data-l="en">Slide p. 12</figcaption></figure></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>สามเหลี่ยมของโหลดหนึ่งตัว</a><a href="#ex1"><b>1</b>สไลด์หน้า 13</a><a href="#ex2"><b>2</b>การบ้านหน้า 16</a><a href="#tB"><b>B</b>ตารางสรุป</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>The triangle of one load</a><a href="#ex1"><b>1</b>Slide p. 13</a><a href="#ex2"><b>2</b>Homework p. 16</a><a href="#tB"><b>B</b>Summary table</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">สามเหลี่ยมกำลังของโหลดหนึ่งตัว</h2><h2 data-l="en">The power triangle of one load</h2>
+    <div class="src" data-l="th">สไลด์หน้า 11–12 · Hayt §11.4–11.5</div><div class="src" data-l="en">Slides pp. 11–12 · Hayt §11.4–11.5</div></div></div>
+  <p class="lead" data-l="th">แหล่งจ่าย 60 V (ค่ายังผล) ต่อกับโหลด \(Z = R + jX\) ปรับ \(X\) เป็นบวก (ตัวเหนี่ยวนำ): สามเหลี่ยมชี้ขึ้นในควอดรันต์ที่ 1 และในกราฟ<b>ยอดของกระแสมาทีหลังยอดของแรงดัน</b> (ตามหลัง) ปรับ \(X\) เป็นลบ (ตัวเก็บประจุ): สามเหลี่ยมชี้ลงในควอดรันต์ที่ 4 และยอดของกระแสมาก่อน (นำหน้า) สังเกตว่ามุมของสามเหลี่ยมเท่ากับมุมของ \(Z\) ทุกครั้ง เพราะ \(\mathbf{S} = \mathbf{V}\mathbf{I}^* = |\mathbf{I}|^2 Z\)</p>
+  <p class="lead" data-l="en">A 60 V (effective) source drives a load \(Z = R + jX\). Make \(X\) positive (an inductor): the triangle points up into the first quadrant and on the graph <b>the current peaks after the voltage</b> (lagging). Make \(X\) negative (a capacitor): the triangle points down into the fourth quadrant and the current peaks first (leading). The triangle's angle always equals the angle of \(Z\), because \(\mathbf{S} = \mathbf{V}\mathbf{I}^* = |\mathbf{I}|^2 Z\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">หากำลังเฉลี่ยที่โหลดแต่ละตัวรับ กำลังปรากฏที่แหล่งจ่ายส่ง และตัวประกอบกำลังของโหลดรวม</h2><h2 data-l="en">Find the average power delivered to each load, the apparent power supplied by the source, and the power factor of the combined loads</h2>
+    <div class="src" data-l="th">สไลด์หน้า 13 · Hayt Example 11.8 · เฉลยในห้องปี 2561</div><div class="src" data-l="en">Slide p. 13 · Hayt Example 11.8 · 2018 class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch8/p13q.webp" width="1119" height="689" loading="lazy" decoding="async" alt="Slide 13 practice: calculate values for the average power delivered to each of the two loads shown in the figure, the apparent power supplied by the source, and the power factor of the combined loads. A 60∠0° V rms source drives 2 − j1 Ω and 1 + j5 Ω in series, current I">
+    <figcaption data-l="th">สไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 13 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แรงดันในโจทย์นี้เป็นค่ายังผล จึงใช้ \(\mathbf{S} = \mathbf{V}\mathbf{I}^*\) โดยไม่มี ½ ภาพจำลองเปลี่ยนตามขั้น: ระนาบแสดง \(\mathbf{V}_1 + \mathbf{V}_2 = \mathbf{V}_s\) แล้วกลายเป็นสามเหลี่ยมกำลังที่<b>ต่อหัวต่อหาง</b>: \(\mathbf{S}_1\) ชี้ลง (โหลดตัวเก็บประจุ) แล้ว \(\mathbf{S}_2\) ชี้ขึ้นมาก (โหลดเหนี่ยวนำ) ผลรวมจึงตามหลัง กราฟแสดงว่ายอดของกระแสมาหลังยอดของแรงดัน</p>
+  <p class="lead" data-l="en">The voltage in this problem is effective, so \(\mathbf{S} = \mathbf{V}\mathbf{I}^*\) with no ½. The simulation follows the steps: the plane shows \(\mathbf{V}_1 + \mathbf{V}_2 = \mathbf{V}_s\), then turns into power triangles joined <b>head to tail</b>: \(\mathbf{S}_1\) points down (a capacitive load), then \(\mathbf{S}_2\) points far up (an inductive load), so the total lags. The graph shows the current peaking after the voltage.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2561)</span><span data-l="en">See the solution written in class (2018)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L09.webp" width="1100" height="1380" loading="lazy" decoding="async" alt="Handwritten solution of slide 13: S1 = P1 + jQ1, S2 = P2 + jQ2, Ss = ?, p.f. of the loads = ?; use mesh analysis: −60∠0 + IA(2 − j1) + IA(1 + j5) = 0, IA = 60∠0/(3 + 4j) = 12∠−53.13 Arms; I1 = I2 = IA; V1 = I1Z1 = 26.83∠−79.69 Vrms; V2 = I2Z2 = 61.19∠25.56 Vrms; S1 = V1I1* = 321.96∠−26.56 = 287.91 − 143.95j; S2 = V2I2* = 734.25∠78.69 = 144.00 + 720.02j; Ss = VsIA* = (60∠0)(12∠53.17) = 720∠53.13 VA = 432 + 575.99j; Sload = S1 + S2 = 432 + 575.99j = 720∠53.13; p.f. = cos(53.13) = 0.6 lagging, QL &gt; QC">
+      <figcaption data-l="th">วิธีเมช \(\mathbf{I}_A = 12\angle{-53.13^\circ}\) A แล้วหา \(\mathbf{S}_1\), \(\mathbf{S}_2\), \(\mathbf{S}_s = 720\angle 53.13^\circ\) VA และ PF = 0.6 ตามหลัง (ตัวเลขทศนิยมต่างจากค่าแม่นเล็กน้อยเพราะปัดเศษ)</figcaption><figcaption data-l="en">Mesh method \(\mathbf{I}_A = 12\angle{-53.13^\circ}\) A, then \(\mathbf{S}_1\), \(\mathbf{S}_2\), \(\mathbf{S}_s = 720\angle 53.13^\circ\) VA and PF = 0.6 lagging (the decimals differ slightly from the exact values because of rounding)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">การบ้าน: หาตัวประกอบกำลังของโหลดรวมเมื่อ \(Z_L = 10\ \Omega\)</h2><h2 data-l="en">Homework: find the power factor of the combined loads if \(Z_L = 10\ \Omega\)</h2>
+    <div class="src" data-l="th">สไลด์หน้า 16 · Hayt Practice 11.8 · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Slide p. 16 · Hayt Practice 11.8 · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch8/p16q.webp" width="1075" height="554" loading="lazy" decoding="async" alt="Slide 16 homework: for the circuit of the figure, determine the power factor of the combined loads if ZL = 10 Ω. A 60∠0° V rms source drives 2 − j1 Ω and ZL in series, current Is">
+    <figcaption data-l="th">สไลด์หน้า 16 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 16 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">วงจรเดียวกับข้อ 1 แต่ \(Z_L\) เป็นตัวต้านทาน 10 Ω <b>ลองตอบก่อน</b> แล้วเปิดเฉลยทีละขั้น สามเหลี่ยมของ \(Z_L\) นอนบนแกน \(P\) เพราะไม่มี \(Q\) ผลรวมจึงเอียงลงตาม \(\mathbf{S}_1\) เล็กน้อย</p>
+  <p class="lead" data-l="en">The same circuit as problem 1, but \(Z_L\) is a 10 Ω resistor. <b>Try it first</b>, then open the solution step by step. The triangle of \(Z_L\) lies on the \(P\) axis because it has no \(Q\), so the total tilts slightly down with \(\mathbf{S}_1\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">สรุปปริมาณที่เกี่ยวกับกำลังเชิงซ้อน</h2><h2 data-l="en">Summary of the quantities related to complex power</h2>
+    <div class="src" data-l="th">สไลด์หน้า 14 · Hayt ตาราง 11.1</div><div class="src" data-l="en">Slide p. 14 · Hayt Table 11.1</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch8/p14.webp" width="1400" height="527" loading="lazy" decoding="async" alt="Slide 14, Summary of Quantities Related to Complex Power: average power P = Veff Ieff cos(θ − φ) in watt (W); reactive power Q = Veff Ieff sin(θ − φ) in volt-ampere-reactive (VAR); complex power S = P + jQ = Veff Ieff∠θ − φ = Veff Ieff* in volt-ampere (VA); apparent power |S| = Veff Ieff in volt-ampere (VA)">
+    <figcaption data-l="th">สไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 14 · tap to enlarge</figcaption></figure>
+  <div class="card eqcard" style="overflow-x:auto;position:relative" data-l="th">
+    <table class="tbl" style="min-width:600px"><tr><th>ปริมาณ</th><th>สัญลักษณ์</th><th>สูตร</th><th>หน่วย</th></tr>
+      <tr><td>กำลังเฉลี่ย</td><td>\(P\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\cos(\theta-\phi)\)</td><td>วัตต์ (W)</td></tr>
+      <tr><td>กำลังรีแอกทีฟ</td><td>\(Q\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\sin(\theta-\phi)\)</td><td>โวลต์-แอมแปร์รีแอกทีฟ (VAR)</td></tr>
+      <tr><td>กำลังเชิงซ้อน</td><td>\(\mathbf{S}\)</td><td>\(P + jQ = V_{\text{eff}}I_{\text{eff}}\angle(\theta-\phi) = \mathbf{V}_{\text{eff}}\mathbf{I}^*_{\text{eff}}\)</td><td>โวลต์-แอมแปร์ (VA)</td></tr>
+      <tr><td>กำลังปรากฏ</td><td>\(|\mathbf{S}|\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\)</td><td>โวลต์-แอมแปร์ (VA)</td></tr>
+      <tr><td>ตัวประกอบกำลัง</td><td>PF</td><td>\(P/|\mathbf{S}| = \cos(\theta-\phi)\)</td><td>ไม่มีหน่วย + ตามหลัง/นำหน้า</td></tr></table>
+    <table class="tbl" style="min-width:600px;margin-top:12px"><tr><th>โหลด</th><th>\(Q\)</th><th>\(\theta-\phi\)</th><th>กระแสเทียบแรงดัน</th><th>ตัวประกอบกำลัง</th></tr>
+      <tr><td>เหนี่ยวนำ (R–L)</td><td>\(> 0\)</td><td>\(0^\circ\) ถึง \(90^\circ\)</td><td>ตามหลัง</td><td><b>ตามหลัง</b> (ควอดรันต์ที่ 1)</td></tr>
+      <tr><td>ตัวต้านทาน</td><td>\(0\)</td><td>\(0^\circ\)</td><td>เฟสเดียวกัน</td><td>1</td></tr>
+      <tr><td>ตัวเก็บประจุ (R–C)</td><td>\(< 0\)</td><td>\(-90^\circ\) ถึง \(0^\circ\)</td><td>นำหน้า</td><td><b>นำหน้า</b> (ควอดรันต์ที่ 4)</td></tr></table>
+    <div class="answer">สไลด์หน้า 14 ไม่มีแถวตัวประกอบกำลัง ตารางแรกเพิ่มไว้ให้ครบ · สไลด์หน้า 11 ประโยคสุดท้ายถูกตัดหายเป็น "...leading (corresponding to a capacitive" ที่ครบคือ "corresponding to a capacitive load)" ตาม Hayt</div>
+  </div>
+  <div class="card eqcard" style="overflow-x:auto;position:relative" data-l="en">
+    <table class="tbl" style="min-width:600px"><tr><th>Quantity</th><th>Symbol</th><th>Formula</th><th>Units</th></tr>
+      <tr><td>Average power</td><td>\(P\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\cos(\theta-\phi)\)</td><td>watt (W)</td></tr>
+      <tr><td>Reactive power</td><td>\(Q\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\sin(\theta-\phi)\)</td><td>volt-ampere reactive (VAR)</td></tr>
+      <tr><td>Complex power</td><td>\(\mathbf{S}\)</td><td>\(P + jQ = V_{\text{eff}}I_{\text{eff}}\angle(\theta-\phi) = \mathbf{V}_{\text{eff}}\mathbf{I}^*_{\text{eff}}\)</td><td>volt-ampere (VA)</td></tr>
+      <tr><td>Apparent power</td><td>\(|\mathbf{S}|\)</td><td>\(V_{\text{eff}}I_{\text{eff}}\)</td><td>volt-ampere (VA)</td></tr>
+      <tr><td>Power factor</td><td>PF</td><td>\(P/|\mathbf{S}| = \cos(\theta-\phi)\)</td><td>no unit + lagging/leading</td></tr></table>
+    <table class="tbl" style="min-width:600px;margin-top:12px"><tr><th>Load</th><th>\(Q\)</th><th>\(\theta-\phi\)</th><th>Current relative to voltage</th><th>Power factor</th></tr>
+      <tr><td>Inductive (R–L)</td><td>\(> 0\)</td><td>\(0^\circ\) to \(90^\circ\)</td><td>lags</td><td><b>lagging</b> (first quadrant)</td></tr>
+      <tr><td>Resistive</td><td>\(0\)</td><td>\(0^\circ\)</td><td>in phase</td><td>1</td></tr>
+      <tr><td>Capacitive (R–C)</td><td>\(< 0\)</td><td>\(-90^\circ\) to \(0^\circ\)</td><td>leads</td><td><b>leading</b> (fourth quadrant)</td></tr></table>
+    <div class="answer">Slide p. 14 has no power factor row; the first table adds it for completeness · the last sentence of slide p. 11 is cut off as "...leading (corresponding to a capacitive"; Hayt's full text ends "corresponding to a capacitive load)".</div>
+  </div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · แรงดันและกระแสเป็นค่ายังผล · มุม \(\theta-\phi\) เป็นบวกเมื่อตามหลัง ลบเมื่อนำหน้า</div><div class="src" data-l="en">Give at least 3 decimal places · voltages and currents are effective values · the angle \(\theta-\phi\) is positive when lagging, negative when leading</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — มุมของสามเหลี่ยม = มุมของ Z</h3>
+    <ol><li>ส่วน A กด "3 + j4 Ω": PF = 0.6 ตามหลัง มุม 53.13° เท่ากับมุมของ \(Z\)</li>
+    <li>กด "3 − j4 Ω": PF = 0.6 เท่าเดิม แต่<b>นำหน้า</b> สามเหลี่ยมพลิกลงล่าง</li>
+    <li>เลื่อน \(X\) ผ่านศูนย์: PF เพิ่มเป็น 1 แล้วลดลงอีก ตัวเลข PF อย่างเดียวบอกไม่ได้ว่าอยู่ฝั่งไหน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — โหลดผสม</h3>
+    <ol><li>ข้อ 1: \(P_1 + P_2 = 288 + 144 = 432\) W แต่ \(|\mathbf{S}_1| + |\mathbf{S}_2| = 322 + 734 \ne 720\) VA <b>กำลังปรากฏบวกกันตรง ๆ ไม่ได้</b></li>
+    <li>ถ้าต้องการให้ PF รวมเป็น 1 โหลดตัวที่สองต้องมี \(X = +1\ \Omega\) เพื่อหักล้าง \(-j1\) (ลองในส่วน A ด้วย \(R = 3\), \(X = 0\))</li>
+    <li>คำถาม: ถ้า \(Z_L = 1 - j5\ \Omega\) PF รวมเป็นเท่าใด ตามหลังหรือนำหน้า</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ตรวจด้วยหลายวิธี</h3>
+    <ol><li>PF ของข้อ 1 หาได้สามทาง: \(432/720\), \(\cos 53.13^\circ\) และ \(R/|Z| = 3/5\) ได้ 0.6 เท่ากัน</li>
+    <li>ข้อ 2: \(Z = 12 - j1\ \Omega\) จึงได้ \(\text{PF} = 12/\sqrt{145}\) โดยไม่ต้องหากระแสเลย</li></ol>
+    <div class="book">สไลด์บทที่ 8 หน้า 11–14 และ 16 · สไลด์ปี 2561 · Hayt §11.4–11.5 (Example 11.8, Practice 11.8, 11.10, ตาราง 11.1)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — triangle angle = angle of Z</h3>
+    <ol><li>In section A press "3 + j4 Ω": PF = 0.6 lagging, angle 53.13°, the angle of \(Z\).</li>
+    <li>Press "3 − j4 Ω": the same PF = 0.6 but <b>leading</b>; the triangle flips down.</li>
+    <li>Slide \(X\) through zero: PF rises to 1 and falls again; the PF number alone cannot tell which side you are on.</li></ol></div>
+  <div class="card"><h3>Try this 2 — mixed loads</h3>
+    <ol><li>Problem 1: \(P_1 + P_2 = 288 + 144 = 432\) W, but \(|\mathbf{S}_1| + |\mathbf{S}_2| = 322 + 734 \ne 720\) VA: <b>apparent powers do not simply add</b>.</li>
+    <li>For a total PF of 1 the second load needs \(X = +1\ \Omega\) to cancel the \(-j1\) (try it in section A with \(R = 3\), \(X = 0\)).</li>
+    <li>Question: with \(Z_L = 1 - j5\ \Omega\), what is the total PF, and is it lagging or leading?</li></ol></div>
+  <div class="card"><h3>Try this 3 — check it several ways</h3>
+    <ol><li>The PF of problem 1 comes three ways: \(432/720\), \(\cos 53.13^\circ\) and \(R/|Z| = 3/5\), all 0.6.</li>
+    <li>Problem 2: \(Z = 12 - j1\ \Omega\), so \(\text{PF} = 12/\sqrt{145}\) without finding the current at all.</li></ol>
+    <div class="book">Chapter 8 slides, pp. 11–14 and 16 · 2018 slides · Hayt §11.4–11.5 (Example 11.8, Practice 11.8, 11.10, Table 11.1)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+  const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+  const PINK = '#ff7eb6', RT2 = Math.SQRT2, rms = z => Cx.scale(z, 1 / RT2);
+  const pfTxt = (S, d = 4) => { const pf = CH8C.pf(S); return Math.abs(S.im) < 1e-9 * Math.max(1, Cx.abs(S)) ? fd(pf, d) : `${fd(pf, d)} ${S.im > 0 ? t('ตามหลัง', 'lagging') : t('นำหน้า', 'leading')}`; };
+  CH8.problem(1, 'ex8'); CH8.problem(2, 'hw');
+
+  /* =================================================================== A: one load */
+  const S1 = { R: 3, X: 4 };
+  const one = bd => { const c = bd.ckt, V = c.Vab('Vs'), I = c.I('wt'), S = Cx.scale(Cx.mul(V, Cx.conj(I)), 0.5); return { c, V, I, S }; };
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, pad: 1.3, cktFrac: 0.48, topAsp: 0.44, cktAspM: 0.46, view: { acPeak: false },
+    side: (ctx, b, bd) => { const { S } = one(bd), m = Math.max(Math.abs(S.im), 0.35 * S.re, 1e-9), d = CH6.deg(S), sh = bd.short;
+      CH8.triangle(ctx, b, { title: sh ? `PF = ${pfTxt(S, 3)}` : t(`สามเหลี่ยมกำลัง · PF = ${pfTxt(S, 3)}`, `power triangle · PF = ${pfTxt(S, 3)}`), max: { Q: m, Qn: m }, quad: !sh,
+        segs: [{ S, color: PINK, label: sh ? '|S|' : `|S| = ${CH8.fmt(Cx.abs(S), 'VA')}`, arc: true, arcText: sh ? `${sg(d, 2)}°` : `θ − φ = ${sg(d, 2)}°`, lpos: S.im >= 0 ? -1 : 1, pl: sh ? '' : undefined, ql: sh ? '' : undefined }] }); },
+    waves: [{ title: bd => { const { S } = one(bd), n = bd.short; return Math.abs(S.im) < 1e-9 ? (n ? 'PF = 1' : t('v และ i เฟสเดียวกัน (PF = 1)', 'v and i in phase (PF = 1)')) : S.im > 0 ? (n ? t('ตามหลัง', 'lagging') : t('ยอดของ i มาหลัง v: ตามหลัง', 'i peaks after v: lagging')) : (n ? t('นำหน้า', 'leading') : t('ยอดของ i มาก่อน v: นำหน้า', 'i peaks before v: leading')); },
+      sigs: bd => { const { V, I } = one(bd); return [{ mag: Cx.abs(V), ang: CH6.deg(V), color: COL.V, label: 'v', unit: 'V', g: 'v', peak: true, w: 2.6 }, { mag: Cx.abs(I), ang: CH6.deg(I), color: COL.I, label: 'i', unit: 'A', g: 'i', peak: true, w: 2.6 }]; } }] });
+  const pA = $('pA');
+  function buildA() { let { R: Rv, X } = S1; if (Math.hypot(Rv, X) < 0.05) Rv = 0.05;
+    BA.set(CH8C.one({ amp: 60 * RT2, R: Rv, X, srcName: 'v_s', srcVal: '60 V rms' }));
+    const { V, I, S } = one(BA), Z = Cx.div(V, I);
+    mA.innerHTML = ui.kv([['Z', `${CH6.rect(Z, 3).replace('-', '−')} Ω = ${CH6.polTxt(Z, 'Ω', 3, 2)}`], ['I', CH6.polTxt(rms(I), 'A rms', 4, 2)], ['P', `${sg(S.re, 2)} W`], ['Q', `${sg(S.im, 2)} VAR`], ['|S|', `${fd(Cx.abs(S), 2)} VA`], ['θ − φ', `${sg(CH6.deg(S), 2)}°`], ['PF = P/|S|', pfTxt(S)]]); }
+  ui.h2(pA, t('โหลด Z = R + jX', 'Load Z = R + jX'));
+  const sA = {}, setA = o => { Object.assign(S1, o); Object.keys(sA).forEach(k => sA[k].set(S1[k])); buildA(); };
+  ui.buttons(pA, [{ label: '3 + j4 Ω', onclick: () => setA({ R: 3, X: 4 }) }, { label: '3 − j4 Ω', onclick: () => setA({ R: 3, X: -4 }) }, { label: t('R ล้วน', 'R only'), onclick: () => setA({ R: 5, X: 0 }) }, { label: t('L ล้วน', 'L only'), onclick: () => setA({ R: 0, X: 5 }) }]);
+  sA.R = ui.slider(pA, { id: 'sAR', label: 'R', min: 0, max: 10, step: 0.1, value: S1.R, fmt: v => `${fd(v, 1)} Ω`, oninput: v => { S1.R = v; buildA(); } });
+  sA.X = ui.slider(pA, { id: 'sAX', label: t('X (บวก = L, ลบ = C)', 'X (+ = L, − = C)'), min: -10, max: 10, step: 0.1, value: S1.X, fmt: v => `${v < 0 ? '−' : ''}j${fd(Math.abs(v), 1)} Ω`, oninput: v => { S1.X = v; buildA(); } });
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, BA.clk);
+  const mA = ui.metrics(pA);
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => { BA.resize(); buildA(); });
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html, E8 = CH8C.ex8;
+  const I10 = Cx.div(cx(440), cx(11.5, 2)), SL = Cx.scale(cx(10, 2), Cx.abs(I10) ** 2), Pline = 1.5 * Cx.abs(I10) ** 2, Ss = Cx.mul(cx(440), Cx.conj(I10)), hw = E8.hw;
+  const S5 = Cx.add(cx(4000, 3000), cx(1200, -1600));
+  CH6.quiz('quiz', [
+    { q: t('1) แหล่งจ่าย 100 V ต่อกับโหลด \\(Z = 3 + j4\\ \\Omega\\) จงหา \\(P\\), \\(Q\\), ตัวประกอบกำลัง และมุม \\(\\theta-\\phi\\)', '1) A 100 V source feeds a load \\(Z = 3 + j4\\ \\Omega\\). Find \\(P\\), \\(Q\\), the power factor and the angle \\(\\theta-\\phi\\).'),
+      fields: [{ key: 'x', lab: 'P =', ans: 1200, unit: 'W' }, { key: 'y', lab: 'Q =', ans: 1600, unit: 'VAR' }, { key: 'z', lab: 'PF =', ans: 0.6 }, { key: 'w', lab: 'θ − φ =', ans: 53.1301, ang: true, unit: '°' }],
+      work: work(R`\begin{aligned} I &= \frac{100}{5} = 20\ \text{A} \\ P &= I^2R = 1200\ \text{W} \\ Q &= I^2X = 1600\ \text{VAR} \\ \text{PF} &= \frac{1200}{2000} = 0.6\ \text{${t('ตามหลัง', 'lagging')}}\ (+53.13^\circ) \end{aligned}`) },
+    { q: t('2) Hayt Practice 11.10: แหล่งจ่าย 440 V ส่งกำลังให้โหลด \\(Z_L = 10 + j2\\ \\Omega\\) ผ่านสายส่งที่มีความต้านทานรวม 1.5 Ω จงหากำลังเฉลี่ยและกำลังปรากฏของโหลด และกำลังเฉลี่ยที่สูญเสียในสาย (หน่วยกิโล, k)', '2) Hayt Practice 11.10: a 440 V source supplies a load \\(Z_L = 10 + j2\\ \\Omega\\) through a line with a total resistance of 1.5 Ω. Find the average and apparent power of the load and the average power lost in the line (in kilo units, k).'),
+      fields: [{ key: 'x', lab: 'P<sub>L</sub> =', ans: SL.re / 1000, unit: 'kW' }, { key: 'y', lab: '|S<sub>L</sub>| =', ans: Cx.abs(SL) / 1000, unit: 'kVA' }, { key: 'z', lab: t('P<sub>สาย</sub> =', 'P<sub>line</sub> ='), ans: Pline / 1000, unit: 'kW' }],
+      work: work(R`\begin{aligned} \mathbf{I} &= \frac{440}{11.5 + j2} = ${P(I10)}\ \text{A} \\ \mathbf{S}_L &= |\mathbf{I}|^2(10 + j2) = ${RC(SL, 1)}\ \text{VA} \\ |\mathbf{S}_L| &= ${fd(Cx.abs(SL), 1)}\ \text{VA} \\ P_{\text{${t('สาย', 'line')}}} &= |\mathbf{I}|^2(1.5) = ${fd(Pline, 1)}\ \text{W} \end{aligned}`) },
+    { q: t('3) ต่อจากข้อ 2: จงหากำลังปรากฏที่แหล่งจ่ายส่ง และตัวประกอบกำลังที่แหล่งจ่ายทำงาน', '3) Continuing question 2: find the apparent power the source supplies and the power factor at which it operates.'),
+      fields: [{ key: 'x', lab: '|S<sub>s</sub>| =', ans: Cx.abs(Ss) / 1000, unit: 'kVA' }, { key: 'y', lab: 'PF =', ans: CH8C.pf(Ss) }],
+      work: work(R`\begin{aligned} \mathbf{S}_s &= \mathbf{V}\mathbf{I}^* = ${RC(Ss, 1)}\ \text{VA} \\ |\mathbf{S}_s| &= ${fd(Cx.abs(Ss) / 1000, 3)}\ \text{kVA} \\ \text{PF} &= \frac{${fd(Ss.re, 1)}}{${fd(Cx.abs(Ss), 1)}} = ${fd(CH8C.pf(Ss), 4)}\ \text{${t('ตามหลัง', 'lagging')}} \end{aligned}`,
+        `<div class="answer">${t('Hayt: 14.21 kW, 14.49 kVA; 2.131 kW; 16.34 kW, 16.59 kVA; 0.985 ตามหลัง', 'Hayt: 14.21 kW, 14.49 kVA; 2.131 kW; 16.34 kW, 16.59 kVA; 0.985 lagging.')}</div>`) },
+    { q: t('4) ข้อ 2 ของหน้านี้ด้วยวิธีลัด: \\(Z_L = 10\\ \\Omega\\) จงหาตัวประกอบกำลังของโหลดรวมจากมุมของ \\(Z\\) อย่างเดียว และมุม \\(\\theta-\\phi\\) (ลบเมื่อนำหน้า)', '4) Problem 2 of this page by the shortcut: with \\(Z_L = 10\\ \\Omega\\), find the power factor of the combined loads from the angle of \\(Z\\) alone, and the angle \\(\\theta-\\phi\\) (negative when leading).'),
+      fields: [{ key: 'x', lab: 'PF =', ans: hw.PF }, { key: 'y', lab: 'θ − φ =', ans: CH6.deg(hw.S), ang: true, unit: '°' }],
+      work: work(R`\begin{aligned} Z &= 12 - j1\ \Omega = ${P(cx(12, -1))}\ \Omega \\ \text{PF} &= \cos(${fd(CH6.deg(hw.S), 3)}^\circ) = \frac{12}{\sqrt{145}} = ${fd(hw.PF, 4)}\ \text{${t('นำหน้า', 'leading')}} \end{aligned}`) },
+    { q: t('5) โหลดตัวหนึ่งรับ 2 kW ที่ตัวประกอบกำลัง 0.5 ตามหลัง จงหากำลังปรากฏและกำลังรีแอกทีฟ', '5) A load takes 2 kW at a power factor of 0.5 lagging. Find its apparent and reactive power.'),
+      fields: [{ key: 'x', lab: '|S| =', ans: 4, unit: 'kVA' }, { key: 'y', lab: 'Q =', ans: 2 * Math.sqrt(3), unit: 'kVAR' }],
+      work: work(R`\begin{aligned} |\mathbf{S}| &= \frac{P}{\text{PF}} = \frac{2}{0.5} = 4\ \text{kVA} \\ Q &= +\sqrt{4^2 - 2^2} = 3.464\ \text{kVAR} \end{aligned}`, `<div class="answer">${t('ตามหลัง จึงเลือก \\(Q > 0\\)', 'Lagging, so \\(Q > 0\\).')}</div>`) },
+    { q: t('6) โหลดสองตัวต่อขนาน: ตัวแรก 4 kW ที่ PF 0.8 ตามหลัง ตัวที่สอง 2 kVA ที่ PF 0.6 นำหน้า จงหากำลังปรากฏรวมและ PF รวม', '6) Two loads in parallel: the first takes 4 kW at PF 0.8 lagging, the second 2 kVA at PF 0.6 leading. Find the total apparent power and the total PF.'),
+      fields: [{ key: 'x', lab: '|S| =', ans: Cx.abs(S5), unit: 'VA' }, { key: 'y', lab: 'PF =', ans: CH8C.pf(S5) }],
+      work: work(R`\begin{aligned} \mathbf{S}_1 &= 4000 + j4000\tan 36.87^\circ = 4000 + j3000 \\ \mathbf{S}_2 &= 2000(0.6) - j2000(0.8) = 1200 - j1600 \\ \mathbf{S} &= 5200 + j1400\ \text{VA} \\ |\mathbf{S}| &= ${fd(Cx.abs(S5), 2)}\ \text{VA} \\ \text{PF} &= \frac{5200}{${fd(Cx.abs(S5), 2)}} = ${fd(CH8C.pf(S5), 4)}\ \text{${t('ตามหลัง', 'lagging')}} \end{aligned}`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

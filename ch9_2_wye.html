@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="9.2 — The Y–Y Connection">9.2 — การต่อแบบวาย–วาย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8.js?v=102"></script><script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การต่อแบบวาย–วาย (Y–Y) <span class="en">The Y–Y connection — three single-phase circuits sharing one return lead</span></h1>
+<h1 data-l="en">The Y–Y connection <span class="en">Three single-phase circuits sharing one return lead</span></h1>
+
+<div class="equation-box">
+  <div class="label"><span data-l="th">โหลดต่อแบบวายที่สมดุล (balanced Y-connected load) มีอิมพีแดนซ์ \(Z_p\) เท่ากันทุกเฟส ต่อระหว่างสายกับจุดนิวทรัล N · ทุกค่าเป็นค่ายังผล · สไลด์บทที่ 9 หน้า 11–14 · Hayt §12.3</span><span data-l="en">A balanced Y-connected load has the same impedance \(Z_p\) in every phase, each between a line and the neutral point N · all values are rms · chapter 9 slides, pp. 11–14 · Hayt §12.3</span></div>
+  $$ \mathbf{I}_{aA} = \frac{\mathbf{V}_{an}}{Z_p} \qquad \mathbf{I}_{bB} = \mathbf{I}_{aA}\angle{-120^\circ} \qquad \mathbf{I}_{cC} = \mathbf{I}_{aA}\angle{-240^\circ} \qquad \mathbf{I}_{Nn} = \mathbf{I}_{aA} + \mathbf{I}_{bB} + \mathbf{I}_{cC} = 0 \qquad P = 3V_pI_L\cos\theta $$
+</div>
+
+<p class="sub" data-l="th">เมื่อต่อโหลดวายที่สมดุลเข้ากับแหล่งจ่ายวาย แต่ละเฟสคือวงจรเฟสเดียวที่มีแหล่งจ่าย \(\mathbf{V}_{an}\) กับอิมพีแดนซ์ \(Z_p\) สามวงใช้สายกลับร่วมกันหนึ่งเส้น (สายนิวทรัล) สไลด์หน้า 12 สรุปว่า<b>กระแสสายสามเส้นมีขนาดเท่ากันและห่างกัน 120° จึงรวมกันได้ศูนย์ สายนิวทรัลไม่มีกระแสเลย</b> ถอดออกได้โดยไม่มีอะไรเปลี่ยน (ระบบสามสาย) เราจึง<b>คิดเพียงเฟสเดียว</b>แล้วเลื่อนมุมไป ±120° ได้อีกสองเฟส Hayt เรียกว่าการวิเคราะห์ทีละเฟส (per-phase analysis) ในโหลดวาย กระแสเฟสกับกระแสสายคือกระแสเดียวกัน ส่วนแรงดันสายโตกว่าแรงดันเฟส \(\sqrt3\) เท่า</p>
+<p class="sub" data-l="en">When a balanced Y load is connected to a Y source, each phase is a single-phase circuit, a source \(\mathbf{V}_{an}\) and an impedance \(Z_p\); the three circuits share one return lead (the neutral). Slide p. 12 concludes that <b>the three line currents have equal size, 120° apart, so they add to zero and the neutral carries no current at all</b>; it can be removed without changing anything (a three-wire system). We therefore <b>work out one phase only</b> and shift the angle by ±120° for the other two: Hayt calls this per-phase analysis. In a Y load the phase current and the line current are the same current, while the line voltage is \(\sqrt3\) times the phase voltage.</p>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>วิเคราะห์ทีละเฟส</b>: \(\mathbf{I}_{aA} = \mathbf{V}_{an}/Z_p\) แล้ว \(\mathbf{I}_{bB}\), \(\mathbf{I}_{cC}\) ได้จากการเลื่อนมุม −120° และ −240° (ลำดับบวก) ไม่ต้องแก้สมการทั้งวงจร</li>
+  <li>โหลดวาย: <b>กระแสเฟส = กระแสสาย</b> (\(\mathbf{I}_{AN} = \mathbf{I}_{aA}\)) และแรงดันเฟสของโหลด = \(V_p\), แรงดันสาย = \(\sqrt3V_p\)</li>
+  <li>โหลดสมดุล: <b>\(\mathbf{I}_{Nn} = 0\)</b> จะต่อหรือถอดสายนิวทรัลก็ได้ผลเท่าเดิม แต่โหลดไม่สมดุลจะมีกระแสในนิวทรัล และถ้าถอดนิวทรัล แรงดันของจุด N จะเลื่อนไป</li>
+  <li>กำลังรวม \(P = 3V_pI_L\cos\theta\) โดย \(\theta\) คือมุมของ \(Z_p\) และ<b>กำลังรวมขณะใด ๆ ของระบบสามเฟสสมดุลคงที่</b> (Hayt) มอเตอร์สามเฟสจึงได้แรงบิดเรียบ</li>
+  <li>รู้ \(P\), PF และ \(V_L\) ก็หากระแสได้: \(V_p = V_L/\sqrt3\), \(P_p = P/3\), \(I_L = P_p/(V_p\cos\theta)\), \(|Z_p| = V_p/I_L\) (Ex 2)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Per-phase analysis</b>: \(\mathbf{I}_{aA} = \mathbf{V}_{an}/Z_p\), and \(\mathbf{I}_{bB}\), \(\mathbf{I}_{cC}\) follow by shifting the angle by −120° and −240° (positive sequence); no need to solve the whole circuit.</li>
+  <li>Y load: <b>phase current = line current</b> (\(\mathbf{I}_{AN} = \mathbf{I}_{aA}\)); the load's phase voltage is \(V_p\) and the line voltage \(\sqrt3V_p\).</li>
+  <li>Balanced load: <b>\(\mathbf{I}_{Nn} = 0\)</b>, so connecting or removing the neutral changes nothing. An unbalanced load drives current in the neutral, and without the neutral the voltage of point N shifts.</li>
+  <li>Total power \(P = 3V_pI_L\cos\theta\) with \(\theta\) the angle of \(Z_p\), and <b>the total instantaneous power of a balanced three-phase system is constant</b> (Hayt), so a three-phase motor gets a smooth torque.</li>
+  <li>From \(P\), PF and \(V_L\): \(V_p = V_L/\sqrt3\), \(P_p = P/3\), \(I_L = P_p/(V_p\cos\theta)\), \(|Z_p| = V_p/I_L\) (Ex 2).</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<h2 data-l="th">ส่วนที่ 1 · Ex 1 (สไลด์หน้า 13): วงจรวาย–วายสมดุล</h2><h2 data-l="en">Part 1 · Ex 1 (slide p. 13): a balanced Y–Y circuit</h2>
+<p class="sub" data-l="th">โจทย์ (Hayt Example 12.2): <b>จงหากระแสเฟสและกระแสสาย แรงดันเฟสและแรงดันสายทั้งวงจร แล้วคำนวณกำลังรวมที่โหลดใช้</b> แหล่งจ่าย \(200\angle 0^\circ\) V rms ลำดับบวก โหลด \(100\angle 60^\circ\ \Omega\) ทุกเฟส จุดในสายทั้งสามวิ่งสลับกันตามจังหวะที่ห่างกัน 120° ลองกดต่อสายนิวทรัล: <b>จุดในสายนิวทรัลไม่ขยับ</b> เพราะ \(\mathbf{I}_{Nn} = 0\) จากนั้นเลือกโหลดไม่สมดุล แล้วสลับต่อและถอดสายนิวทรัลเพื่อดูว่ามันสำคัญเมื่อใด กราฟล่างสุดคือกำลังขณะใด ๆ ของแต่ละเฟส (เส้นสี) กับผลรวม (เส้นขาว)</p>
+<p class="sub" data-l="en">The problem (Hayt Example 12.2): <b>find both the phase and line currents, and the phase and line voltages throughout the circuit; then calculate the total power dissipated in the load</b>. The source is \(200\angle 0^\circ\) V rms in positive sequence and every phase of the load is \(100\angle 60^\circ\ \Omega\). The dots in the three lines take turns, 120° apart. Connect the neutral: <b>the dots in the neutral do not move</b>, because \(\mathbf{I}_{Nn} = 0\). Then choose an unbalanced load and connect or remove the neutral to see when it matters. The bottom graph shows the instantaneous power of each phase (coloured) and the total (white).</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv1"></canvas></div>
+  <aside class="card panel" id="panel1"></aside>
+</div>
+<section class="card eqcard"><div id="work1"></div></section>
+
+<h2 data-l="th">ส่วนที่ 2 · ทำไมกำลังรวมจึงคงที่</h2><h2 data-l="en">Part 2 · Why the total power is constant</h2>
+<section class="card eqcard"><ol class="steps" id="steps2"></ol></section>
+
+<h2 data-l="th">ส่วนที่ 3 · Ex 2 (สไลด์หน้า 14): หากระแสและอิมพีแดนซ์จากกำลัง</h2><h2 data-l="en">Part 3 · Ex 2 (slide p. 14): current and impedance from the power</h2>
+<p class="sub" data-l="th">โจทย์ (Hayt Example 12.3): <b>ระบบสามเฟสสมดุลแรงดันสาย 300 V จ่ายกำลังให้โหลดวายสมดุล 1200 W ที่ตัวประกอบกำลัง 0.8 นำหน้า จงหากระแสสายและอิมพีแดนซ์ต่อเฟส</b> ปุ่มที่สองคือแบบทดสอบปี 2560 ซึ่งเป็นโจทย์เดียวกันแต่ 0.8 ตามหลัง (Hayt Example 12.6) ภาพด้านขวาคือสามเหลี่ยมกำลังของหนึ่งเฟส วงจรใช้อิมพีแดนซ์ที่คำนวณได้ จุดในสายจึงวิ่งด้วยกระแส 2.89 A พอดี</p>
+<p class="sub" data-l="en">The problem (Hayt Example 12.3): <b>a balanced three-phase system with a line voltage of 300 V is supplying a balanced Y-connected load with 1200 W at a leading PF of 0.8. Find the line current and the per-phase load impedance.</b> The second button is the 2017 quiz, the same problem at 0.8 lagging (Hayt Example 12.6). The picture on the right is the power triangle of one phase; the circuit uses the impedance found, so its dots run with exactly 2.89 A.</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv3"></canvas></div>
+  <aside class="card panel" id="panel3"></aside>
+</div>
+<section class="card eqcard"><ol class="steps" id="steps3"></ol></section>
+
+<h2 data-l="th">ส่วนที่ 4 · ฝึกเพิ่ม</h2><h2 data-l="en">Part 4 · More practice</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ทุกค่าเป็นค่ายังผล · มุมเป็นองศา</p><p class="lead" data-l="en">Give at least 3 decimal places · all values are rms · angles in degrees.</p>
+  <div id="quiz"></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — สายนิวทรัล</h3>
+    <ol><li>ส่วนที่ 1 โหลดสมดุล: ต่อหรือถอดสายนิวทรัล ทุกค่าเท่าเดิม และจุดในสายนิวทรัลไม่ขยับ</li>
+    <li>เลือก "Z_C = 50∠60° Ω" แล้วต่อสายนิวทรัล: มีกระแส \(\mathbf{I}_{Nn}\) ไหลกลับทางนิวทรัล แต่แรงดันทุกเฟสยังเป็น 200 V</li>
+    <li>ถอดสายนิวทรัล: กระแสต้องหาทางกลับผ่านเฟสอื่น จุด N เลื่อนไป (\(\mathbf{V}_{Nn} \ne 0\)) <b>แรงดันที่โหลดแต่ละเฟสจึงไม่เท่ากัน</b> อุปกรณ์บางตัวได้แรงดันเกิน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — กำลังคงที่</h3>
+    <ol><li>ดูกราฟกำลัง: แต่ละเฟสแกว่งระหว่าง −200 W ถึง 600 W แต่เส้นขาว (ผลรวม) นิ่งที่ 600 W</li>
+    <li>เลือกโหลดไม่สมดุล: เส้นขาวเริ่มแกว่ง กำลังรวมคงที่เฉพาะระบบสมดุล</li>
+    <li>คำถาม: ระบบเฟสเดียวจ่าย 600 W เฉลี่ย กำลังขณะใด ๆ ต่ำสุดเป็นเท่าใดถ้าตัวประกอบกำลังเป็น 0.5</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ค่ายังผลหรือค่ายอด</h3>
+    <ol><li>ส่วนที่ 3: \(I_L = 2.89\) A คิดโดยถือว่า 300 V เป็นค่ายังผล ตามเชิงอรรถของ Hayt และนิยาม \(V_p\) ในสไลด์หน้า 7</li>
+    <li>เฉลยแบบทดสอบปี 2560 ได้ 4.08 A เพราะหาร 300 V ด้วย \(\sqrt2\) อีกครั้ง (ถือเป็นค่ายอด)</li>
+    <li>ในระบบไฟฟ้ากำลัง "380 V" หรือ "300 V" หมายถึงค่ายังผลเสมอ ถ้าต้องการค่ายอดควรเขียนกำกับให้ชัด</li></ol>
+    <div class="book">สไลด์บทที่ 9 หน้า 11–14 · Hayt §12.3 (Examples 12.2–12.4, 12.6, Practice 12.4–12.5)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the neutral</h3>
+    <ol><li>In Part 1 with the balanced load, connect or remove the neutral: every value stays the same and the neutral dots do not move.</li>
+    <li>Choose "Z_C = 50∠60° Ω" and connect the neutral: a current \(\mathbf{I}_{Nn}\) returns through it, but every phase still has 200 V.</li>
+    <li>Remove the neutral: the current must return through the other phases, point N shifts (\(\mathbf{V}_{Nn} \ne 0\)) and <b>the load phases no longer get equal voltages</b>; some devices get too much.</li></ol></div>
+  <div class="card"><h3>Try this 2 — constant power</h3>
+    <ol><li>Look at the power graph: each phase swings between −200 W and 600 W, yet the white total stays at 600 W.</li>
+    <li>Choose an unbalanced load: the white line starts to swing; the total is constant only for a balanced system.</li>
+    <li>Question: a single-phase system delivers 600 W on average; what is the lowest instantaneous power at a power factor of 0.5?</li></ol></div>
+  <div class="card"><h3>Try this 3 — rms or peak?</h3>
+    <ol><li>In Part 3, \(I_L = 2.89\) A takes 300 V as an rms value, as Hayt's footnote and the definition of \(V_p\) on slide p. 7 say.</li>
+    <li>The 2017 quiz solution got 4.08 A by dividing 300 V by \(\sqrt2\) once more (taking it as a peak value).</li>
+    <li>In power systems "380 V" or "300 V" always means rms; a peak value should be labelled clearly.</li></ol>
+    <div class="book">Chapter 9 slides, pp. 11–14 · Hayt §12.3 (Examples 12.2–12.4, 12.6, Practice 12.4–12.5)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const R = String.raw; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, C9 = CH9.COL;
+const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+const li = (why, body, done) => `<li class="${done ? 'done' : ''}"><div><div class="why">${why}</div>${body}</div></li>`;
+const al = rows => tx(R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`, true);
+const RT2 = Math.SQRT2, RT3 = Math.sqrt(3), D2R = Math.PI / 180, K = ['a', 'b', 'c'], KU = ['A', 'B', 'C'];
+const rms = z => Cx.scale(z, 1 / RT2), pt = (z, u, d = 3, ad = 1) => CH6.polTxt(rms(z), u, d, ad);
+
+/* shared circuit overlays: terminal letters, source values, line-current tags */
+const LET_SRC = { a: [-0.35, 0.05], b: [0.35, 0.05], c: [-0.35, 0.15], n: [-0.42, 0] }, LET_LOAD = { A: [-0.38, 0], B: [0.38, 0], C: [-0.38, 0.1], N: [0.4, -0.05] };
+const tags = (v, bd, I, In) => { const u = v.u, ctx = v.ctx, n = bd.narrow, tag = (txt, x, y, col) => { const [px, py] = v.P([x, y]); CH6.tag(ctx, txt, px, py, col, { size: Math.max(11.5, Math.min(13, u * 0.3)) }); };
+  const val = z => n ? '' : ` = ${pt(z, 'A', 2, 0)}`;
+  tag(`I_{aA}${val(I[0])}`, 3.5, -0.62, C9.a); tag(`I_{bB}${val(I[1])}`, n ? 7.6 : 8.0, 0.05, C9.b); tag(`I_{cC}${val(I[2])}`, 5.0, 5.12, C9.c);
+  if (In !== undefined) tag(`I_{Nn}${n ? '' : ` = ${Cx.abs(In) < 1e-9 ? '0' : pt(In, 'A', 2, 0)}`}`, 3.4, 3.05, '#e8ecf7'); };
+
+/* =================================================================== Part 1: Ex 1 */
+const S1 = { neutral: false, load: 'bal' };
+const ZC1 = { bal: null, half: CH6.polar(50, 60), res: cx(100, 0) };
+const st1 = bd => { const c = bd.ckt, I = ['wa', 'wb', 'wc'].map(id => c.I(id)), sw = c.part('Sn'), In = sw && sw.closed ? c.I('wn') : cx(0), V = ['Va', 'Vb', 'Vc'].map(id => c.Vab(id));
+  return { c, I, In, V, VN: c.V('N'), S: ['ZA', 'ZB', 'ZC'].map(id => c.S(id)), VL: ['ZA', 'ZB', 'ZC'].map(id => c.Vab(id)) }; };
+const B1 = new CH8.Board('cv1', { T: 4, shortSpec: CH9.short, pad: 1.15, cktFrac: 0.58, topAsp: 0.46, view: { acPeak: false, onToggle: p => { if (p.id === 'Sn') { S1.neutral = p.closed; rn1.set(S1.neutral ? 'n1_on' : 'n1_off'); build1(); } } },
+  side: (ctx, b, bd) => { const { I, In, V } = st1(bd), vecs = [...CH9.set(V.map(rms), ['V_{an}', 'V_{bn}', 'V_{cn}'], { w: 2.6 }), ...CH9.set(I.map(rms), ['I_{aA}', 'I_{bB}', 'I_{cC}'], { g: 'i', dash: [6, 4], w: 2.6 })];
+    if (Cx.abs(In) > 1e-6) vecs.push({ z: rms(In), color: '#e8ecf7', label: 'I_{Nn}', g: 'i', w: 3 });
+    CH6.plane(ctx, b, vecs, { title: MC.t('เฟเซอร์ (ค่ายังผล): แรงดันเส้นทึบ กระแสเส้นประ', 'phasors (rms): voltages solid, currents dashed'), max: { i: Math.max(...I.map(z => Cx.abs(rms(z)))) },
+      arcs: [{ a: 0, b: 3, color: '#7ee787', r: 0.24 }] }); },
+  waves: [
+    { title: bd => bd.narrow ? '' : MC.t('กระแสสายและกระแสในสายนิวทรัล (ค่ายอด)', 'line currents and the neutral current (peak)'),
+      sigs: bd => { const { I, In } = st1(bd), s = I.map((z, k) => ({ mag: Cx.abs(z), ang: CH6.deg(z), color: C9[K[k]], label: `i_{${K[k]}${KU[k]}}`, unit: 'A', g: 'i', w: 2.4 }));
+        s.push({ mag: Cx.abs(In), ang: CH6.deg(In), color: '#e8ecf7', label: 'i_{Nn}', unit: 'A', g: 'i', w: 3, dash: [6, 4] }); return s; },
+      opts: bd => ({ max: { i: Math.max(...st1(bd).I.map(Cx.abs)) * 1.05 } }) },
+    { title: bd => bd.narrow ? '' : MC.t('กำลังขณะใด ๆ ของแต่ละเฟส (สี) และผลรวม (ขาว)', 'instantaneous power of each phase (coloured) and the total (white)'),
+      sigs: bd => { const c = bd.ckt, f = ['ZA', 'ZB', 'ZC'].map(id => CH8.pOf(c, id)), tot = d => f[0](d) + f[1](d) + f[2](d); let mag = 0;
+        for (let k = 0; k < 72; k++) { const d = k * 5; mag = Math.max(mag, Math.abs(tot(d)), ...f.map(g => Math.abs(g(d)))); }
+        return [...f.map((g, k) => ({ f: g, color: C9[K[k]], label: `p_${KU[k]}`, unit: 'W', g: 'p', mag, w: 2 })), { f: tot, color: '#e8ecf7', label: 'p', unit: 'W', g: 'p', mag, w: 3.6 }]; } } ],
+  after: (v, bd) => { const { I, In } = st1(bd); CH9.letters(v, LET_SRC); CH9.letters(v, LET_LOAD, { color: '#e8ecf7' }); tags(v, bd, I, In);
+    if (!bd.narrow) { const V = ['Va', 'Vb', 'Vc'].map(id => v.ckt.Vab(id)); CH9.partTag(v, 'Va', `${pt(V[0], 'V', 0, 0)}`, { dx: -0.5, dy: 0.5, align: 'right', color: C9.a }); CH9.partTag(v, 'Vb', `${pt(V[1], 'V', 0, 0)}`, { dx: 0.5, dy: 0.55, align: 'left', color: C9.b }); CH9.partTag(v, 'Vc', `${pt(V[2], 'V', 0, 0)}`, { dx: 0.45, dy: 0, align: 'left', color: C9.c }); } } });
+function build1() { const E = CH9C.ex1, ZC = ZC1[S1.load] || E.Z; B1.set(CH9C.yy({ Vp: 200, Z: E.Z, ZC, neutral: S1.neutral, zt: CH9C.zp }));
+  const { I, In, VN, S, VL } = st1(B1), St = S.reduce((s, z) => Cx.add(s, z), cx(0)), bal = S1.load === 'bal';
+  m1.innerHTML = ui.kv([['I_aA', pt(I[0], 'A', 4, 2)], ['I_bB', pt(I[1], 'A', 4, 2)], ['I_cC', pt(I[2], 'A', 4, 2)], ['I_Nn', Cx.abs(In) < 1e-9 ? '0' : pt(In, 'A', 4, 2)],
+    ['V_Nn', Cx.abs(VN) < 1e-9 ? '0' : pt(VN, 'V', 3, 1)], ['|V_AN|, |V_BN|, |V_CN|', VL.map(z => fd(Cx.abs(z) / RT2, 1)).join(', ') + ' V'], ['P', `${fd(St.re, 2)} W`], ['Q', `${fd(St.im, 2)} VAR`]]);
+  work1(bal, { I, In, VN, S, St }); }
+function work1(bal, r) { const E = CH9C.ex1, box = document.getElementById('work1');
+  if (!bal) { box.innerHTML = `<h3>${MC.t('โหลดไม่สมดุล', 'Unbalanced load')}</h3><div class="warnbox">${MC.t(`การวิเคราะห์ทีละเฟสใช้ได้กับโหลดไม่สมดุลก็ต่อเมื่อ<b>มีสายนิวทรัลที่อิมพีแดนซ์เป็นศูนย์</b> (Hayt ท้าย §12.3) ตอนนี้${S1.neutral ? 'ต่อสายนิวทรัลอยู่ แรงดันทุกเฟสจึงยังเป็น 200 V และกระแสในนิวทรัลคือผลรวม \\(\\mathbf{I}_{aA} + \\mathbf{I}_{bB} + \\mathbf{I}_{cC} = ' + P(rms(r.In), 4, 2) + '\\) A' : 'ไม่ได้ต่อสายนิวทรัล จุด N เลื่อนไป \\(\\mathbf{V}_{Nn} = ' + P(rms(r.VN), 3, 1) + '\\) V แรงดันของโหลดแต่ละเฟสจึงไม่เท่ากัน ต้องใช้วิธีโนดหรือเมชของบทที่ 7 (ค่าในแผงด้านขวาคำนวณจากตัวแก้วงจร)'}`,
+      `Per-phase analysis works for an unbalanced load only <b>with a neutral of zero impedance</b> (Hayt, end of §12.3). ${S1.neutral ? 'The neutral is connected, so every phase still has 200 V and the neutral carries the sum \\(\\mathbf{I}_{aA} + \\mathbf{I}_{bB} + \\mathbf{I}_{cC} = ' + P(rms(r.In), 4, 2) + '\\) A.' : 'The neutral is removed: point N shifts to \\(\\mathbf{V}_{Nn} = ' + P(rms(r.VN), 3, 1) + '\\) V, so the load phases get unequal voltages and nodal or mesh analysis of chapter 7 is needed (the panel on the right comes from the circuit solver).'}`)}</div>`;
+    MC.renderMath(box); return; }
+  const V = E.V, L = E.VL, I = E.I, S = E.S;
+  box.innerHTML = `<h3>${MC.t('วิธีทำตามเฉลยในห้อง', 'The class solution')}</h3><ol class="steps">` +
+    li(MC.t('ขั้นที่ 1: แรงดันเฟสและแรงดันสายจากฝั่งแหล่งจ่าย (ลำดับบวก)', 'Step 1: phase and line voltages from the source side (positive sequence)'),
+      al([R`\mathbf{V}_{an} &= ${P(V[0], 4, 0)}, \quad \mathbf{V}_{bn} = ${P(V[1], 4, 0)}, \quad \mathbf{V}_{cn} = ${P(V[2], 4, 0)}\ \text{V rms}`,
+        R`\mathbf{V}_{ab} &= \mathbf{V}_{an} - \mathbf{V}_{bn} = 200\sqrt3\angle 30^\circ = ${P(L[0], 4, 0)}, \quad \mathbf{V}_{bc} = ${P(L[1], 4, 0)}, \quad \mathbf{V}_{ca} = ${P(L[2], 4, 0)}\ \text{V}`])) +
+    li(MC.t('ขั้นที่ 2: กระแสเฟส (แรงดันเฟสของโหลด = แรงดันเฟสของแหล่งจ่าย)', 'Step 2: phase currents (the load phase voltage equals the source phase voltage)'),
+      al([R`\mathbf{I}_{AN} &= \frac{\mathbf{V}_{an}}{Z_A} = \frac{200\angle 0^\circ}{100\angle 60^\circ} = \boxed{${P(I[0], 4, 0)}\ \text{A}}`, R`\mathbf{I}_{BN} &= \frac{200\angle{-120^\circ}}{100\angle 60^\circ} = \boxed{${P(I[1], 4, 0)}\ \text{A}}, \quad \mathbf{I}_{CN} = \frac{200\angle 120^\circ}{100\angle 60^\circ} = \boxed{${P(I[2], 4, 0)}\ \text{A}}`])) +
+    li(MC.t('ขั้นที่ 3: กระแสสาย = กระแสเฟส (โหลดวาย) และกระแสนิวทรัลเป็นศูนย์', 'Step 3: line currents = phase currents (Y load), and the neutral current is zero'),
+      al([R`\mathbf{I}_{aA} &= \mathbf{I}_{AN}, \quad \mathbf{I}_{bB} = \mathbf{I}_{BN}, \quad \mathbf{I}_{cC} = \mathbf{I}_{CN}`, R`\mathbf{I}_{Nn} &= ${P(I[0], 1, 0)} + ${P(I[1], 1, 0)} + ${P(I[2], 1, 0)} = 0`])) +
+    li(MC.t('ขั้นที่ 4: กำลังเชิงซ้อนของแต่ละเฟสและผลรวม (\\(\\mathbf{S} = \\mathbf{V}\\mathbf{I}^*\\) ค่ายังผล)', 'Step 4: complex power of each phase and the total (\\(\\mathbf{S} = \\mathbf{V}\\mathbf{I}^*\\), rms)'),
+      al([R`\mathbf{S}_A &= \mathbf{V}_{AN}\mathbf{I}_{AN}^* = (200\angle 0^\circ)(2\angle 60^\circ) = 400\angle 60^\circ = ${RC(S[0], 2)}\ \text{VA} = \mathbf{S}_B = \mathbf{S}_C`,
+        R`\mathbf{S} &= \mathbf{S}_A + \mathbf{S}_B + \mathbf{S}_C = ${P(E.St, 4, 0)}\ \text{VA} \;\Rightarrow\; P = \boxed{${fd(E.St.re, 2)}\ \text{W}}, \quad Q = \boxed{${fd(E.St.im, 2)}\ \text{VAR}}`]) +
+      `<div class="answer">${MC.t('ตรงกับเฉลยในห้อง (ΣP = 600 W, ΣQ = 1039.23 VAR) และ Hayt Example 12.2 (600 W) · Hayt เขียน \\(\\mathbf{V}_{ca} = 346\\angle{-210^\\circ}\\) และ \\(\\mathbf{I}_{cC} = 2\\angle{-300^\\circ}\\) ซึ่งคือมุมเดียวกับ \\(150^\\circ\\) และ \\(60^\\circ\\)', 'This matches the class solution (ΣP = 600 W, ΣQ = 1039.23 VAR) and Hayt Example 12.2 (600 W) · Hayt writes \\(\\mathbf{V}_{ca} = 346\\angle{-210^\\circ}\\) and \\(\\mathbf{I}_{cC} = 2\\angle{-300^\\circ}\\), the same angles as \\(150^\\circ\\) and \\(60^\\circ\\).')}</div>`) + '</ol>';
+  MC.renderMath(box); }
+const panel1 = document.getElementById('panel1');
+ui.h2(panel1, t('สายนิวทรัล', 'Neutral wire'));
+const rn1 = ui.radio(panel1, [{ id: 'n1_off', label: t('ไม่ต่อ (สามสาย ตามโจทย์)', 'removed (three wires, as given)'), on: true }, { id: 'n1_on', label: t('ต่อ (สี่สาย)', 'connected (four wires)') }], id => { S1.neutral = id === 'n1_on'; build1(); });
+ui.h2(panel1, t('โหลดเฟส C', 'Load of phase C'));
+ui.radio(panel1, [{ id: 'z1_bal', label: t('สมดุล 100∠60° Ω (Ex 1)', 'balanced 100∠60° Ω (Ex 1)'), on: true }, { id: 'z1_half', label: 'Z_C = 50∠60° Ω' }, { id: 'z1_res', label: 'Z_C = 100∠0° Ω' }], id => { S1.load = id.slice(3); build1(); });
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, B1.clk);
+const m1 = ui.metrics(panel1);
+
+/* =================================================================== Part 2: constant total power (derivation) */
+function steps2() { let h = '';
+  h += li(MC.t('ค่าขณะใด ๆ ของเฟส A ใน Ex 1 (ค่ายอด = ค่ายังผล × √2, อ้างอิงไซน์)', 'Instantaneous values of phase A in Ex 1 (peak = rms × √2, sine reference)'),
+    al([R`v_{AN} &= 200\sqrt2\sin\omega t\ \text{V}, \qquad i_{AN} = 2\sqrt2\sin(\omega t - 60^\circ)\ \text{A}`]));
+  h += li(MC.t('กำลังของแต่ละเฟส (เอกลักษณ์ผลคูณเป็นผลต่างของหน้า 8.1)', 'Power of each phase (the product identity of page 8.1)'),
+    al([R`p_A &= 800\sin\omega t\,\sin(\omega t - 60^\circ) = 200 - 400\cos(2\omega t - 60^\circ)\ \text{W}`, R`p_B &= 200 - 400\cos(2\omega t - 300^\circ) = 200 - 400\cos(2\omega t + 60^\circ)\ \text{W}`, R`p_C &= 200 - 400\cos(2\omega t + 180^\circ)\ \text{W}`]));
+  h += li(MC.t('รวมสามเฟส: โคไซน์สามตัวที่ห่างกัน 120° รวมกันได้ศูนย์', 'Add the three phases: three cosines 120° apart add to zero'),
+    al([R`p &= p_A + p_B + p_C = 600 - 400\left[\cos(2\omega t - 60^\circ) + \cos(2\omega t + 60^\circ) + \cos(2\omega t + 180^\circ)\right]`, R`&= 600 - 400\left[\cos 2\omega t - \cos 2\omega t\right] = \boxed{600\ \text{W}\ \ ${MC.t('คงที่ทุกขณะ', 'at every instant')}}`]) +
+    `<div class="answer">${MC.t('Hayt §12.1: <b>กำลังรวมขณะใด ๆ ของโหลดสามเฟสสมดุลไม่เคยเป็นศูนย์ และที่จริงคงที่</b> แรงบิดของมอเตอร์สามเฟสจึงเรียบ สั่นน้อยกว่ามอเตอร์เฟสเดียวที่กำลังเต้นตามความถี่สองเท่า (หน้า 8.1) ส่วนในการส่งกำลัง ระบบสามเฟสสามสายส่งกำลังได้เท่าวงจรเฟสเดียวสามวงที่ต้องใช้ถึงหกสาย', 'Hayt §12.1: <b>the total instantaneous power of a balanced three-phase load never reaches zero; in fact it is constant</b>. A three-phase motor therefore gets a smooth torque with less vibration than a single-phase motor, whose power pulses at twice the frequency (page 8.1). In transmission, three wires carry the power of three single-phase circuits that would need six.')}</div>`);
+  const el = document.getElementById('steps2'); el.innerHTML = h; MC.renderMath(el); }
+
+/* =================================================================== Part 3: Ex 2 and the 2017 quiz */
+const S3 = { key: 'ex2' };
+const cur3 = () => S3.key === 'ex2' ? CH9C.ex2 : CH9C.q2017;
+const B3 = new CH8.Board('cv3', { T: 4, shortSpec: CH9.short, pad: 1.15, cktFrac: 0.6, topAsp: 0.44, view: { acPeak: false },
+  side: (ctx, b, bd) => { const r = cur3(), Sp = r.Sp;
+    CH8.triangle(ctx, b, { title: MC.t('สามเหลี่ยมกำลังของหนึ่งเฟส', 'power triangle of one phase'), max: { Q: Math.abs(Sp.im), Qn: Math.abs(Sp.im) }, quad: !bd.narrow,
+      segs: [{ S: Sp, color: C9.S, label: bd.narrow ? 'S_p' : `S_p = ${CH8.cfmt(Sp)}`, arc: true, lpos: Sp.im >= 0 ? -1 : 1 }] }); },
+  after: (v, bd) => { const c = v.ckt, I = ['wa', 'wb', 'wc'].map(id => c.I(id)); CH9.letters(v, LET_SRC); CH9.letters(v, LET_LOAD, { color: '#e8ecf7' }); tags(v, bd, I); } });
+function build3() { const r = cur3(); B3.set(CH9C.yy({ Vp: r.Vsrc, Z: r.Z, neutral: 'none', zt: CH9C.zp }));
+  const c = B3.ckt; m3.innerHTML = ui.kv([['V_L', '300 V'], ['V_p', `${fd(r.Vp, 3)} V`], ['P_p = P/3', `${fd(r.Pp, 1)} W`], ['I_L = I_p', `${fd(r.IL, 4)} A`], ['Z_p', CH9C.zp(r.Z)],
+    [t('จากวงจร: |I_aA|', 'from the circuit: |I_aA|'), `${fd(Cx.abs(c.I('wa')) / RT2, 4)} A`], [t('จากวงจร: P รวม', 'from the circuit: total P'), `${fd(['ZA', 'ZB', 'ZC'].reduce((s, id) => s + c.S(id).re, 0), 2)} W`]]);
+  steps3(); }
+function steps3() { const r = cur3(), lead = S3.key === 'ex2', th = r.th; let h = '';
+  h += li(MC.t('แรงดันเฟส (โหลดวาย) และกำลังต่อเฟส', 'Phase voltage (Y load) and power per phase'), al([R`V_p &= \frac{V_L}{\sqrt3} = \frac{300}{\sqrt3} = ${fd(r.Vp, 3)}\ \text{V}, \qquad P_p = \frac{1200}{3} = 400\ \text{W}`]));
+  h += li(MC.t('กระแสสายจาก \\(P_p = V_pI_L\\cos\\theta\\)', 'Line current from \\(P_p = V_pI_L\\cos\\theta\\)'), al([R`400 &= (${fd(r.Vp, 3)})\,I_L\,(0.8) \;\Rightarrow\; I_L = \boxed{${fd(r.IL, 4)}\ \text{A}}`]));
+  h += li(MC.t('อิมพีแดนซ์ต่อเฟส: ขนาดจาก \\(V_p/I_L\\) มุมจากตัวประกอบกำลัง', 'Per-phase impedance: size from \\(V_p/I_L\\), angle from the power factor'),
+    al([R`|Z_p| &= \frac{V_p}{I_L} = \frac{${fd(r.Vp, 3)}}{${fd(r.IL, 4)}} = ${fd(r.Zm, 3)}\ \Omega, \qquad \theta = ${lead ? '-' : '+'}\cos^{-1}0.8 = ${sg(th, 2)}^\circ\ (${lead ? MC.t('นำหน้า', 'leading') : MC.t('ตามหลัง', 'lagging')})`,
+      R`Z_p &= \boxed{${fd(r.Zm, 2)}\angle{${fd(th, 2)}^\circ}\ \Omega = ${RC(r.Z, 2)}\ \Omega}`]) +
+    `<div class="answer">${lead ? MC.t('ตรงกับ Hayt Example 12.3: \\(I_L = 2.89\\) A และ \\(Z_p = 60\\angle{-36.9^\\circ}\\ \\Omega\\)', 'This matches Hayt Example 12.3: \\(I_L = 2.89\\) A and \\(Z_p = 60\\angle{-36.9^\\circ}\\ \\Omega\\).') : MC.t('ตรงกับ Hayt Example 12.6: \\(I_L = 2.89\\) A และ \\(Z_p = 60\\angle 36.9^\\circ\\ \\Omega\\)', 'This matches Hayt Example 12.6: \\(I_L = 2.89\\) A and \\(Z_p = 60\\angle 36.9^\\circ\\ \\Omega\\).')}</div>` +
+    (lead ? '' : `<div class="warnbox">${MC.t(`<b>เฉลยแบบทดสอบปี 2560 ได้ 4.0824 A</b> เพราะหาร \\(300/\\sqrt3 = 173.205\\) ด้วย \\(\\sqrt2\\) อีกครั้งเป็น 122.474 V (ถือว่า 300 V เป็นค่ายอด) แต่สไลด์หน้า 7 นิยาม \\(V_p\\) เป็นค่ายังผล และ Hayt เขียนไว้ในเชิงอรรถของบทที่ 12 ว่าใช้ค่ายังผลตลอดบท คำตอบที่สอดคล้องกับสไลด์คือ <b>2.887 A</b> (ถ้าตั้งใจให้ 300 V เป็นค่ายอด ควรเขียนกำกับในโจทย์)`,
+      `<b>The 2017 quiz solution got 4.0824 A</b> by dividing \\(300/\\sqrt3 = 173.205\\) by \\(\\sqrt2\\) once more to 122.474 V (taking 300 V as a peak value). Slide p. 7 defines \\(V_p\\) as an rms value, and Hayt's chapter 12 footnote says rms values are used throughout, so the answer consistent with the slides is <b>2.887 A</b> (if 300 V were meant as a peak value, the problem should say so).`)}</div>`));
+  const el = document.getElementById('steps3'); el.innerHTML = h; MC.renderMath(el); }
+const panel3 = document.getElementById('panel3');
+ui.h2(panel3, t('โจทย์', 'Problem'));
+ui.radio(panel3, [{ id: 'k3_ex2', label: t('Ex 2: 0.8 นำหน้า', 'Ex 2: 0.8 leading'), on: true }, { id: 'k3_q17', label: t('แบบทดสอบปี 2560: 0.8 ตามหลัง', '2017 quiz: 0.8 lagging') }], id => { S3.key = id === 'k3_ex2' ? 'ex2' : 'q17'; build3(); });
+ui.h2(panel3, t('การเล่น', 'Playback')); CH6.playBtns(panel3, B3.clk);
+const m3 = ui.metrics(panel3);
+
+/* =================================================================== quiz */
+function quiz() { const E = CH9C.ex1, q17 = CH9C.q2017;
+  const Y4 = Cx.add(Cx.add(cx(0, 0.01), cx(0.01)), Cx.inv(cx(50, 50))), Z4 = Cx.inv(Y4), Van4 = CH6.polar(400 / RT3, -30), I4 = Cx.div(Van4, Z4);
+  const Z5 = Cx.div(Cx.mul(cx(7, -2), cx(4, 2)), cx(11, 0)), Vp5 = 500 / RT3, I5 = Vp5 / Cx.abs(Z5);
+  const Vp6 = 300 / RT3, I6 = Cx.add(CH6.polar(200 / Vp6, 0), CH6.polar(400 / (Vp6 * 0.8), Math.acos(0.8) / D2R));
+  CH6.quiz('quiz', [
+    { q: MC.t('1) Ex 1: กำลังเฉลี่ยรวมและกำลังรีแอกทีฟรวมของโหลด', '1) Ex 1: the total average and reactive power of the load'), fields: [{ key: 'x', lab: 'P =', ans: E.St.re, unit: 'W' }, { key: 'y', lab: 'Q =', ans: E.St.im, unit: 'VAR' }],
+      work: tx(R`\mathbf{S} = 3(200)(2)\angle 60^\circ = 1200\angle 60^\circ = 600 + j1039.23\ \text{VA}`, true) },
+    { q: MC.t('2) Ex 2: กระแสสาย และขนาดกับมุมของ \\(Z_p\\)', '2) Ex 2: the line current, and the size and angle of \\(Z_p\\)'), fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: CH9C.ex2.IL, unit: 'A' }, { key: 'y', lab: '|Z<sub>p</sub>| =', ans: 60, unit: 'Ω' }, { key: 'z', lab: '∠', ans: CH9C.ex2.th, ang: true, unit: '°' }],
+      work: tx(R`I_L = \frac{400}{173.205(0.8)} = 2.887\ \text{A}, \quad Z_p = \frac{173.205}{2.887}\angle{-36.87^\circ} = 60\angle{-36.87^\circ}\ \Omega`, true) },
+    { q: MC.t('3) Hayt Practice 12.4: โหลดวายสามสาย แต่ละเฟสมี \\(-j100\\ \\Omega\\), 100 Ω และ \\(50 + j50\\ \\Omega\\) ขนานกัน ลำดับบวก \\(\\mathbf{V}_{ab} = 400\\angle 0^\\circ\\) V จงหา \\(\\mathbf{I}_{aA}\\) และกำลังรวม', '3) Hayt Practice 12.4: a three-wire Y load, each phase \\(-j100\\ \\Omega\\), 100 Ω and \\(50 + j50\\ \\Omega\\) in parallel, positive sequence with \\(\\mathbf{V}_{ab} = 400\\angle 0^\\circ\\) V. Find \\(\\mathbf{I}_{aA}\\) and the total power.'),
+      fields: [{ key: 'x', lab: '|I<sub>aA</sub>| =', ans: Cx.abs(I4), unit: 'A' }, { key: 'y', lab: '∠', ans: CH6.deg(I4), ang: true, unit: '°' }, { key: 'z', lab: 'P =', ans: 3 * Cx.abs(I4) ** 2 * Z4.re, unit: 'W' }],
+      work: tx(R`\begin{aligned} Y_p &= j0.01 + 0.01 + \tfrac{1}{50 + j50} = 0.02\ \text{S} \;\Rightarrow\; Z_p = 50\ \Omega \\ \mathbf{V}_{an} &= \tfrac{400}{\sqrt3}\angle{-30^\circ} = 230.94\angle{-30^\circ}\ \text{V}, \quad \mathbf{I}_{aA} = \tfrac{\mathbf{V}_{an}}{50} = ${P(I4, 4, 2)}\ \text{A}, \quad P = 3(230.94)(4.619) = 3200\ \text{W} \end{aligned}`, true) },
+    { q: MC.t('4) Hayt Practice 12.5: แรงดันสาย 500 V มีโหลดวายสองชุด \\(7 - j2\\ \\Omega\\) กับ \\(4 + j2\\ \\Omega\\) ต่อเฟส จงหากระแสสาย กำลังรวม (kW) และตัวประกอบกำลัง', '4) Hayt Practice 12.5: a 500 V line voltage with two Y loads, \\(7 - j2\\ \\Omega\\) and \\(4 + j2\\ \\Omega\\) per phase. Find the line current, the total power (kW) and the power factor.'),
+      fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: I5, unit: 'A' }, { key: 'y', lab: 'P =', ans: 3 * I5 * I5 * Z5.re / 1000, unit: 'kW' }, { key: 'z', lab: 'PF =', ans: Z5.re / Cx.abs(Z5) }],
+      work: tx(R`Z_p = \frac{(7 - j2)(4 + j2)}{11} = ${RC(Z5, 4)}\ \Omega, \quad I_L = \frac{288.68}{${fd(Cx.abs(Z5), 4)}} = ${fd(I5, 2)}\ \text{A}, \quad P = 3I_L^2R = ${fd(3 * I5 * I5 * Z5.re / 1000, 2)}\ \text{kW}, \quad \text{PF} = ${fd(Z5.re / Cx.abs(Z5), 3)}\ \text{${MC.t('ตามหลัง', 'lagging')}}`, true) },
+    { q: MC.t('5) Hayt Example 12.4: เพิ่มโหลดแสงสว่างสมดุล 600 W (PF = 1) ขนานกับระบบของ Ex 2 จงหากระแสสายใหม่ (ขนาดและมุม เทียบ \\(\\mathbf{V}_{an}\\) ที่ 0°)', '5) Hayt Example 12.4: a balanced 600 W lighting load (PF = 1) is added in parallel to the system of Ex 2. Find the new line current (size and angle, with \\(\\mathbf{V}_{an}\\) at 0°).'),
+      fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: Cx.abs(I6), unit: 'A' }, { key: 'y', lab: '∠', ans: CH6.deg(I6), ang: true, unit: '°' }],
+      work: tx(R`\mathbf{I}_1 = \frac{200}{173.205}\angle 0^\circ = 1.155\angle 0^\circ, \quad \mathbf{I}_2 = 2.887\angle 36.87^\circ, \quad \mathbf{I}_L = \mathbf{I}_1 + \mathbf{I}_2 = ${P(I6, 4, 2)}\ \text{A}`, true) },
+    { q: MC.t('6) แบบทดสอบปี 2560 (Hayt Example 12.6): แรงดันสาย 300 V จ่าย 1200 W ให้โหลดวายที่ PF 0.8 ตามหลัง จงหากระแสสาย (ค่ายังผล)', '6) 2017 quiz (Hayt Example 12.6): a 300 V line voltage supplies 1200 W to a Y load at PF 0.8 lagging. Find the line current (rms).'),
+      fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: q17.IL, unit: 'A' }], work: tx(R`I_L = \frac{1200}{\sqrt3(300)(0.8)} = 2.887\ \text{A}\quad (${MC.t('เฉลยปี 2560: 4.0824 A จากการถือ 300 V เป็นค่ายอด', '2017 solution: 4.0824 A from taking 300 V as a peak value')})`, true) } ], { wide: true });
+}
+
+document.addEventListener('mc:ready', () => {
+  B1.resize(); build1(); steps2(); B3.resize(); build3(); quiz();
+  window.addEventListener('resize', () => { B1.resize(); B3.resize(); });
+  CK.loop(dt => { B1.frame(dt); B3.frame(dt); });
+});
+})();
+</script>
+</body>
+</html>

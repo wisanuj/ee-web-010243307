@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="6.4 — Impedance and Admittance">6.4 — อิมพีแดนซ์และแอดมิตแตนซ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch6_circuits.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">อิมพีแดนซ์และแอดมิตแตนซ์ <span class="en">Impedance and admittance — Ohm's law, series and parallel, all over again with complex numbers</span></h1>
+<h1 data-l="en">Impedance and admittance <span class="en">Ohm's law, series and parallel, all over again with complex numbers</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch6/p14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14: impedance and admittance. Impedance is the ratio between the voltage phasor and the current phasor: Z = V/I = Vm∠θ / Im∠φ = Veff∠θ / Ieff∠φ; a table: element R, L, C with Z = R, jωL, −j/ωC">
+    <figcaption data-l="th">สไลด์บทที่ 6 หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 6 slides, p. 14 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">หน้า 6.3 แสดงว่าอุปกรณ์ทุกตัวทำตาม \(\mathbf{V} = Z\mathbf{I}\) <b>อิมพีแดนซ์</b> (impedance) คืออัตราส่วนของเฟเซอร์แรงดันต่อเฟเซอร์กระแส (สไลด์หน้า 14) ใช้ค่ายอดหรือค่ายังผลก็ได้อัตราส่วนเดียวกัน กฎของเคียร์ชอฟฟ์ใช้กับเฟเซอร์ได้ <b>อิมพีแดนซ์จึงรวมกันแบบเดียวกับความต้านทานทุกประการ</b> อนุกรมบวกกัน ขนานใช้ผลคูณหารผลบวก และวิธีเมชจากบทที่ 4 ใช้ได้ทั้งหมด ต่างกันเพียงต้องคำนวณด้วยจำนวนเชิงซ้อน หน้านี้มีภาพจำลองอิมพีแดนซ์กับแอดมิตแตนซ์ (ส่วน A) <b>แบบฝึกหัดในห้องสองข้อ การบ้านหนึ่งข้อ</b> และแบบฝึกเพิ่ม (ส่วน B)</p>
+    <p class="sub" data-l="en">Page 6.3 showed that every element obeys \(\mathbf{V} = Z\mathbf{I}\). The <b>impedance</b> is the ratio of the voltage phasor to the current phasor (slide p. 14); peak or effective values give the same ratio. Kirchhoff's laws hold for phasors, <b>so impedances combine exactly like resistances</b>: series adds, parallel is product over sum, and mesh analysis from chapter 4 still works; only the arithmetic is complex. This page has a simulation of impedance and admittance (section A), <b>two class practices and the homework</b>, and extra practice (section B).</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{aligned} Z &= \frac{\mathbf{V}}{\mathbf{I}} = R + jX \qquad Y = \frac{1}{Z} = G + jB \\ Z_{eq} &= Z_1 + Z_2 \qquad Z_1 \parallel Z_2 = \frac{Z_1 Z_2}{Z_1 + Z_2} \end{aligned} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>อิมพีแดนซ์ \(Z = \mathbf{V}/\mathbf{I} = R + jX\)</b> หน่วยโอห์ม ส่วนจริง \(R\) คือความต้านทาน ส่วนจินตภาพ \(X\) คือ<b>รีแอกแตนซ์</b> (\(X > 0\) แบบตัวเหนี่ยวนำ, \(X < 0\) แบบตัวเก็บประจุ)</li>
+  <li>อิมพีแดนซ์ของอุปกรณ์: <b>\(Z_R = R\), \(Z_L = j\omega L\), \(Z_C = -j/(\omega C)\)</b> แปลงทุกตัวที่ความถี่ของแหล่งจ่ายก่อนเริ่ม</li>
+  <li><b>อนุกรม: \(Z_1 + Z_2\) · ขนาน: \(Z_1Z_2/(Z_1 + Z_2)\)</b> กฎเดียวกับตัวต้านทาน บวกในรูปคาร์ทีเซียน คูณหารในรูปเชิงขั้วสะดวกกว่า</li>
+  <li><b>แอดมิตแตนซ์ \(Y = 1/Z = G + jB\)</b> หน่วยซีเมนส์ (S) \(G\) คือคอนดักแตนซ์ \(B\) คือซัสเซปแตนซ์ <b>กับดัก: \(G = R/(R^2 + X^2)\) ไม่เท่ากับ \(1/R\)</b> เว้นแต่ \(X = 0\)</li>
+  <li><b>ขั้นตอนหาคำตอบเป็นฟังก์ชันเวลา</b>: แหล่งจ่าย → เฟเซอร์, อุปกรณ์ → อิมพีแดนซ์, แก้วงจรด้วยวิธีบทที่ 3–5, เฟเซอร์คำตอบ → ฟังก์ชันไซน์</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Impedance \(Z = \mathbf{V}/\mathbf{I} = R + jX\)</b>, in ohms. The real part \(R\) is the resistance and the imaginary part \(X\) the <b>reactance</b> (\(X > 0\) inductive, \(X < 0\) capacitive).</li>
+  <li>Element impedances: <b>\(Z_R = R\), \(Z_L = j\omega L\), \(Z_C = -j/(\omega C)\)</b>; convert every element at the source frequency before anything else.</li>
+  <li><b>Series: \(Z_1 + Z_2\) · parallel: \(Z_1Z_2/(Z_1 + Z_2)\)</b>, the same rules as for resistors; add in Cartesian form, multiply and divide in polar form.</li>
+  <li><b>Admittance \(Y = 1/Z = G + jB\)</b>, in siemens (S): \(G\) is the conductance and \(B\) the susceptance. <b>Trap: \(G = R/(R^2 + X^2)\) is not \(1/R\)</b> unless \(X = 0\).</li>
+  <li><b>Getting a time-domain answer</b>: source → phasor, elements → impedances, solve with the methods of chapters 3–5, answer phasor → sinusoid.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>Z และ Y</a><a href="#ex1"><b>1</b>\(Z_{AB}\) ที่ 5 rad/s</a><a href="#ex2"><b>2</b>\(i(t)\) ด้วยวิธีเมช</a><a href="#ex3"><b>3</b>การบ้าน \(\mathbf{I}_s\)</a><a href="#tB"><b>B</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Z and Y</a><a href="#ex1"><b>1</b>\(Z_{AB}\) at 5 rad/s</a><a href="#ex2"><b>2</b>\(i(t)\) by meshes</a><a href="#ex3"><b>3</b>Homework \(\mathbf{I}_s\)</a><a href="#tB"><b>B</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">อิมพีแดนซ์และแอดมิตแตนซ์บนระนาบเชิงซ้อน</h2><h2 data-l="en">Impedance and admittance on the complex plane</h2>
+    <div class="src" data-l="th">นิยามแอดมิตแตนซ์ในสไลด์หน้า 15</div><div class="src" data-l="en">The admittance is defined on slide p. 15</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 15: admittance Y. The reciprocal of the impedance is often just as valuable; the admittance of a circuit element or passive network is the ratio of current to voltage: Y = G + jB = 1/Z = 1/(R + jX)">
+    <figcaption data-l="th">สไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">อิมพีแดนซ์ \(Z = R + jX\) ต่อกับแหล่งจ่าย \(10\angle 0^\circ\) V (ที่ \(\omega = 1\) rad/s ส่วน \(X > 0\) จึงวาดเป็นตัวเหนี่ยวนำ และ \(X < 0\) เป็นตัวเก็บประจุ) ระนาบซ้ายคือ<b>สามเหลี่ยมอิมพีแดนซ์</b>: ด้านนอน \(R\) ด้านตั้ง \(X\) และด้านเอียง \(|Z|\) ที่มุม \(\theta_Z\) ระนาบขวาคือ \(Y = 1/Z\) ซึ่ง<b>ยาวเป็นส่วนกลับและมุมกลับเครื่องหมาย</b> กดตัวอย่าง "3 + j4" แล้วเทียบ \(G = 0.12\) S กับ \(1/R = 0.333\) S</p>
+  <p class="lead" data-l="en">An impedance \(Z = R + jX\) across a \(10\angle 0^\circ\) V source (at \(\omega = 1\) rad/s, so \(X > 0\) is drawn as an inductor and \(X < 0\) as a capacitor). The left plane is the <b>impedance triangle</b>: horizontal side \(R\), vertical side \(X\), hypotenuse \(|Z|\) at angle \(\theta_Z\). The right plane is \(Y = 1/Z\), <b>with the reciprocal length and the opposite angle</b>. Press the "3 + j4" example and compare \(G = 0.12\) S with \(1/R = 0.333\) S.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div>
+    <h3 data-l="th">จาก Z ไป Y: คูณด้วยคอนจูเกต</h3><h3 data-l="en">From Z to Y: multiply by the conjugate</h3>
+    <div id="wA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">อิมพีแดนซ์สมมูล \(Z_{AB}\) ของวงจรที่ความถี่ 5 rad/s เป็นเท่าไร</h2><h2 data-l="en">What is the equivalent impedance \(Z_{AB}\) of the network at 5 rad/s?</h2>
+    <div class="src" data-l="th">แบบฝึกหัดในห้อง สไลด์หน้า 17 · Hayt ตัวอย่าง 10.6</div><div class="src" data-l="en">Class practice, slide p. 17 · Hayt Example 10.6</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p17q.webp" width="1440" height="552" loading="lazy" decoding="async" alt="Slide 17 practice: determine the equivalent impedance of the network shown, given an operating frequency of 5 rad/s. A 10 Ω resistor across the input, then a 200 mF capacitor and a 2 H inductor in series along the top, then a 6 Ω resistor in parallel with a 500 mF capacitor at the right">
+    <figcaption data-l="th">สไลด์หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 17 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">ภาพจำลองต่อแหล่งจ่ายทดสอบ \(1\angle 0^\circ\) V (สีเทา ไม่ใช่ส่วนของโจทย์) เข้าที่ขั้ว A–B แต่ละขั้นของเฉลยยุบวงจรให้เล็กลง <b>กระแสทดสอบไม่เปลี่ยนเลยทุกขั้น</b> แสดงว่าวงจรที่เล็กลงสมมูลกับวงจรเดิมจริง กลุ่มที่จะรวมในขั้นถัดไปมีแสงสีชมพู</p>
+  <p class="lead" data-l="en">The simulation connects a \(1\angle 0^\circ\) V test source (grey, not part of the problem) to terminals A–B. Each step of the solution shrinks the circuit, and <b>the test current does not change at any step</b>, which shows that each smaller circuit really is equivalent. The group to be combined next glows pink.</p>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 17 และกระดาษจดที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 17 and the notes page as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K20.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 17: ω = 5 rad/s; X_C1 = −j/(ωC1) = −j/((5)(200×10⁻³)) = −j Ω; X_C2 = −j/((5)(500×10⁻³)) = −0.4j Ω; X_L1 = jωL1 = j(5)(2) = 10j Ω; terminals A and B marked with Z_AB; Z_AB = [[X_C2 ∥ 6] + X_C1 + X_L1] ∥ 10">
+      <figcaption data-l="th">อิมพีแดนซ์ของอุปกรณ์ที่ 5 rad/s และลำดับการรวม \(Z_{AB} = [(X_{C2} \parallel 6) + X_{C1} + X_{L1}] \parallel 10\)</figcaption><figcaption data-l="en">The element impedances at 5 rad/s and the order of combination \(Z_{AB} = [(X_{C2} \parallel 6) + X_{C1} + X_{L1}] \parallel 10\)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K21.webp" width="1100" height="344" loading="lazy" decoding="async" alt="Handwritten working: Z_AB = [[(−0.4j)(6)/((−0.4j) + 6)] + (−j) + (10j)] ∥ 10 = (0.0265 + 8.6017j) ∥ 10 = (0.0265 + 8.6017j)(10)/((0.0265 + 8.6017j) + 10) = 4.2549 + 4.9288j Ω = 6.5112∠49.197° Ω">
+      <figcaption data-l="th">\(Z_{AB} = 4.2549 + j4.9288\ \Omega = 6.5112\angle 49.197^\circ\ \Omega\) (ขนาด 6.5112 ต่างจากเฉลยที่นี่ 6.5113 เพราะการปัดเศษ)</figcaption><figcaption data-l="en">\(Z_{AB} = 4.2549 + j4.9288\ \Omega = 6.5112\angle 49.197^\circ\ \Omega\) (the size 6.5112 differs from 6.5113 here only by rounding)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">หากระแส \(i(t)\) ในวงจร เมื่อ \(v_s(t) = 40\sin 3000t\) V</h2><h2 data-l="en">Find the current \(i(t)\) in the circuit, with \(v_s(t) = 40\sin 3000t\) V</h2>
+    <div class="src" data-l="th">แบบฝึกหัดในห้อง สไลด์หน้า 18 · Hayt ตัวอย่าง 10.7 · ในห้องใช้วิธีเมช</div><div class="src" data-l="en">Class practice, slide p. 18 · Hayt Example 10.7 · solved by mesh analysis in class</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p18q.webp" width="1291" height="462" loading="lazy" decoding="async" alt="Slide 18 practice: find the current i(t) in the circuit shown. vs(t) = 40 sin 3000t V, then 1.5 kΩ in series with the source carrying i(t), a 1/3 H inductor down the middle, and 1 kΩ in series with a 1/6 µF capacitor on the right">
+    <figcaption data-l="th">สไลด์หน้า 18 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 18 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 18 และกระดาษจดที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 18 and the notes page as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K22.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 18: ω = 3000 rad/s, i(t) = I1; Vs = 40∠0 from vs(t) = 40 sin(3000t + θ); mesh currents I1 and I2 drawn clockwise; X_L = jωL = j(3000)(1/3) = 1000j Ω; X_C = −j/(ωC) = −j/((3000)(1/6 × 10⁻⁶)) = −2000j Ω">
+      <figcaption data-l="th">\(\mathbf{V}_s = 40\angle 0^\circ\), \(X_L = j1000\ \Omega\), \(X_C = -j2000\ \Omega\) และกระแสเมช \(\mathbf{I}_1\), \(\mathbf{I}_2\) ตามเข็มนาฬิกา (\(i(t) = \mathbf{I}_1\))</figcaption><figcaption data-l="en">\(\mathbf{V}_s = 40\angle 0^\circ\), \(X_L = j1000\ \Omega\), \(X_C = -j2000\ \Omega\) and the clockwise mesh currents \(\mathbf{I}_1\), \(\mathbf{I}_2\) (\(i(t) = \mathbf{I}_1\))</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K23.webp" width="1100" height="619" loading="lazy" decoding="async" alt="Handwritten working: mesh I1: −40∠0 + 1500 I1 + 1000j(I1 − I2) = 0, so (1500 + 1000j) I1 − 1000j I2 = 40∠0 (1); mesh I2: 1000 I2 + (−2000j) I2 + (1000j)(I2 − I1) = 0, so (−1000j) I1 + (1000 − 1000j) I2 = 0 (2); Δ = 3500000 − 500000j, ΔI1 = 40000 − 40000j, ΔI2 = 40000j; I1 = 0.016∠−36.869°, i(t) = 0.016 sin(3000t − 36.869°)">
+      <figcaption data-l="th">สมการเมชสองสมการ กฎของคราเมอร์ และ \(i(t) = 0.016\sin(3000t - 36.869^\circ)\) A</figcaption><figcaption data-l="en">The two mesh equations, Cramer's rule, and \(i(t) = 0.016\sin(3000t - 36.869^\circ)\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">การบ้าน: หา \(\mathbf{I}_s\) และ \(i_s(t)\) เมื่อแหล่งจ่ายทั้งสองทำงานที่ \(\omega = 2\) rad/s และ \(\mathbf{I}_C = 2\angle 28^\circ\) A</h2><h2 data-l="en">Homework: find \(\mathbf{I}_s\) and \(i_s(t)\) when both sources run at \(\omega = 2\) rad/s and \(\mathbf{I}_C = 2\angle 28^\circ\) A</h2>
+    <div class="src" data-l="th">การบ้านสไลด์หน้า 20 · Hayt ตัวอย่าง 10.5</div><div class="src" data-l="en">Homework, slide p. 20 · Hayt Example 10.5</div></div></div>
+  <figure class="slide q"><img src="slides/ch6/p20q.webp" width="1486" height="652" loading="lazy" decoding="async" alt="Slide 20 homework: for the RLC circuit shown, determine Is and is(t) if both sources operate at ω = 2 rad/s, with I_C = 2∠28° A. Vs drives a 1 Ω resistor (current I_R1) into a node with a 2 H inductor (I_L) to ground; a current source Is feeds a node with a 2 Ω resistor (I_R2) and a 1 F capacitor (I_C) to ground">
+    <figcaption data-l="th">สไลด์หน้า 20 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 20 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">โจทย์ไม่ได้บอก \(V_s\) <b>ลองเลื่อน \(V_s\) ใต้ภาพ: จุดทางซ้ายเปลี่ยน แต่ \(\mathbf{I}_s\), \(\mathbf{I}_{R2}\), \(\mathbf{I}_C\) ไม่เปลี่ยนเลย</b> เพราะแหล่งจ่ายกระแสกำหนดกระแสในกิ่งของตัวเองไว้แล้ว จึงใช้เพียง \(\mathbf{I}_C\) ก็หา \(\mathbf{I}_s\) ได้ ลูกศรต่อหัวต่อหางในขั้นสุดท้ายคือกฎกระแสของเคียร์ชอฟฟ์ \(\mathbf{I}_s = \mathbf{I}_{R2} + \mathbf{I}_C\)</p>
+  <p class="lead" data-l="en">The problem does not give \(V_s\). <b>Slide \(V_s\) under the picture: the dots on the left change, but \(\mathbf{I}_s\), \(\mathbf{I}_{R2}\) and \(\mathbf{I}_C\) do not change at all</b>, because the current source fixes the current in its own branch. So \(\mathbf{I}_C\) alone is enough to find \(\mathbf{I}_s\). The head-to-tail arrows of the last step are KCL, \(\mathbf{I}_s = \mathbf{I}_{R2} + \mathbf{I}_C\).</p>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas><div class="ctl" id="ctl3"></div></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <div class="warnbox" data-l="th"><b>ระวังตำรา:</b> Hayt ฉบับที่ 8 ตัวอย่าง 10.5 เขียน \(\mathbf{I}_s = 1\angle{-62^\circ} + \tfrac12\angle{-62^\circ} = 1.5\angle{-62^\circ}\) A ซึ่ง<b>ผิด</b>: พจน์แรก \(1\angle{-62^\circ}\) คือแรงดัน \(\mathbf{V}_C\) (หน่วยโวลต์) ไม่ใช่กระแส \(\mathbf{I}_C\) และกระแสทั้งสองไม่ได้เฟสเดียวกัน \(\mathbf{I}_C\) นำหน้า \(\mathbf{I}_{R2}\) อยู่ 90° คำตอบที่ถูกคือ \(2.062\angle 13.96^\circ\) A ตามที่คิดในห้อง</div>
+  <div class="warnbox" data-l="en"><b>Watch the textbook:</b> Hayt 8th edition, Example 10.5, writes \(\mathbf{I}_s = 1\angle{-62^\circ} + \tfrac12\angle{-62^\circ} = 1.5\angle{-62^\circ}\) A, which is <b>wrong</b>: the first term \(1\angle{-62^\circ}\) is the voltage \(\mathbf{V}_C\) (in volts), not the current \(\mathbf{I}_C\), and the two currents are not in phase: \(\mathbf{I}_C\) leads \(\mathbf{I}_{R2}\) by 90°. The correct answer is \(2.062\angle 13.96^\circ\) A, as worked in class.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 20 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 20 as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K24.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 20: HW; Is and is(t) circled with polar form; Ans Is = 2.062∠13.964, is(t) = 2.062 sin(2t + 13.964); X_L and X_C marked on the 2 H and 1 F; I_C = 2∠28° A with + V_C − across the capacitor; the 2 Ω resistor shaded">
+      <figcaption data-l="th">คำตอบในห้อง \(\mathbf{I}_s = 2.062\angle 13.964^\circ\) A และ \(i_s(t) = 2.062\sin(2t + 13.964^\circ)\) A</figcaption><figcaption data-l="en">The class answer \(\mathbf{I}_s = 2.062\angle 13.964^\circ\) A and \(i_s(t) = 2.062\sin(2t + 13.964^\circ)\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง ส่วนจินตภาพใส่เครื่องหมายด้วย (เช่น −0.16)</div><div class="src" data-l="en">Give at least 3 decimal places; include the sign of imaginary parts (e.g. −0.16)</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — สามเหลี่ยมอิมพีแดนซ์</h3>
+    <ol><li>ส่วน A ตั้ง X = 0: Z เป็นจำนวนจริง \(Y = 1/R\) และกระแสกับแรงดันเฟสเดียวกัน</li>
+    <li>ตั้ง R = 0: Z ชี้ขึ้นตรง (ตัวเหนี่ยวนำล้วน) แล้ว Y ชี้ลงตรง ส่วนกลับของ \(j\) คือ \(-j\)</li>
+    <li>ลาก X จากบวกเป็นลบ: Z ข้ามจากครึ่งบนลงครึ่งล่าง และ Y ข้ามสวนทางเสมอ</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — สมมูลจริงหรือไม่</h3>
+    <ol><li>ข้อ 1 กดขั้นถัดไปทีละขั้น: กระแสทดสอบ \(0.1536\angle{-49.197^\circ}\) A ไม่เปลี่ยนเลยแม้วงจรจะเล็กลง</li>
+    <li>ชี้เมาส์ที่ \(Z_b\) ในขั้นที่ 3: ส่วนจริงเล็กมาก (0.0265 Ω) เพราะ 6 Ω ขนานกับ −j0.4 Ω ทำให้เกือบเป็นตัวเก็บประจุล้วน</li>
+    <li>ข้อ 2 ชี้เมาส์ที่ตัวเหนี่ยวนำ: กระแสในตัวเหนี่ยวนำคือ \(\mathbf{I}_1 - \mathbf{I}_2\) ตรวจได้จากค่าที่อ่าน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แหล่งจ่ายกระแส</h3>
+    <ol><li>ข้อ 3 เลื่อน \(V_s\) จาก 0 ถึง 10 V: กระแสทางขวาไม่เปลี่ยน กระแสทางซ้าย (\(\mathbf{I}_{R1}\), \(\mathbf{I}_L\)) เปลี่ยน</li>
+    <li>ดูลูกศรในขั้นสุดท้าย: \(\mathbf{I}_{R2}\) กับ \(\mathbf{I}_C\) ตั้งฉากกัน (90°) ผลรวมจึงยาว \(\sqrt{0.5^2 + 2^2} = 2.062\) A ตามทฤษฎีบทพีทาโกรัส</li>
+    <li>คำถาม: ถ้า \(\omega\) เป็น 1 rad/s (Hayt Practice 10.8) \(\mathbf{I}_s\) จะเป็นเท่าไร</li></ol>
+    <div class="book">สไลด์บทที่ 6 หน้า 14–20 · ฉบับในห้อง ก.ย. 2566 · Hayt §10.5 ตัวอย่าง 10.5–10.7</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the impedance triangle</h3>
+    <ol><li>In section A set X = 0: Z is real, \(Y = 1/R\), and current and voltage are in phase.</li>
+    <li>Set R = 0: Z points straight up (a pure inductor) and Y straight down; the reciprocal of \(j\) is \(-j\).</li>
+    <li>Drag X from positive to negative: Z crosses from the upper half to the lower half, and Y always crosses the other way.</li></ol></div>
+  <div class="card"><h3>Try this 2 — really equivalent?</h3>
+    <ol><li>In problem 1 press Next step one at a time: the test current \(0.1536\angle{-49.197^\circ}\) A never changes, although the circuit shrinks.</li>
+    <li>Hover over \(Z_b\) at step 3: its real part is tiny (0.0265 Ω), because 6 Ω in parallel with −j0.4 Ω is almost a pure capacitor.</li>
+    <li>In problem 2 hover over the inductor: its current is \(\mathbf{I}_1 - \mathbf{I}_2\); check it with the readings.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the current source</h3>
+    <ol><li>In problem 3 slide \(V_s\) from 0 to 10 V: the currents on the right do not change, those on the left (\(\mathbf{I}_{R1}\), \(\mathbf{I}_L\)) do.</li>
+    <li>Look at the arrows of the last step: \(\mathbf{I}_{R2}\) and \(\mathbf{I}_C\) are perpendicular (90°), so the sum is \(\sqrt{0.5^2 + 2^2} = 2.062\) A long, by Pythagoras.</li>
+    <li>Question: what is \(\mathbf{I}_s\) if \(\omega\) is 1 rad/s instead (Hayt Practice 10.8)?</li></ol>
+    <div class="book">Chapter 6 slides, pp. 14–20 · in class, September 2023 · Hayt §10.5, Examples 10.5–10.7</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+const sg = (x, d = 3) => fd(x, d).replace('-', '−'); const pol = (z, d = 4, ad = 3) => CH6.pol(z, d, ad); const rct = (z, d = 4) => CH6.rect(z, d);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.01, 0.004 * Math.abs(y)));
+
+/* =================================================================== A: Z and Y planes */
+const S1 = { R: 3, X: 4 };
+const clk1 = CH6.clock({ T: 4 }); const cv1 = $('cvA'); let L1 = null, ck1 = null, vw1 = null;
+function build1() { const X = S1.X, xp = Math.abs(X) < 1e-9 ? { type: 'W' } : X > 0 ? { type: 'L', value: X, name: 'L', valText: `j${fd(X, 2)} Ω` } : { type: 'C', value: -1 / X, name: 'C', valText: `−j${fd(-X, 2)} Ω` };
+  const rp = S1.R > 1e-9 ? { type: 'R', value: S1.R, name: 'R', valText: `${fd(S1.R, 2)} Ω` } : { type: 'W' };
+  ck1 = new CK.Circuit({ ground: 'g', mode: 'ac', w: 1, nodes: { s: [0, 0], m: [3, 0], g: [0, 3], h: [3, 3] },
+    parts: [{ id: 'Vs', type: 'VAC', a: 's', b: 'g', amp: 10, phase: 0, name: 'V', valText: '10∠0° V', side: -1 }, { id: 'Rp', ...rp, a: 's', b: 'm' }, { id: 'Xp', ...xp, a: 'm', b: 'h', side: 1 }, { type: 'W', a: 'h', b: 'g' }] });
+  ck1.solve(); const im = CH6.imax(ck1); vw1 = new CK.View(cv1, ck1, { speed: 95 / Math.max(im, 1e-9), ground: false, showI: false, pad: 1.45, tips: true, acPeak: true, acTime: () => clk1.at(1) });
+  if (L1) { vw1.ctx = L1.ctx; vw1.fit(L1.ckt); } work1(); }
+/* three columns from 760 px; the circuit over the two planes from 460 px; everything stacked on phones */
+function resize1() { const W = Math.max(300, Math.floor(cv1.parentElement.clientWidth - 12)), B = {};
+  if (W >= 760) { const wc = Math.round(W * 0.36), wp = Math.round((W - wc) / 2), H = Math.round(Math.max(300, wp * 1.05)); B.ckt = { x: 0, y: 34, w: wc - 4, h: H - 70 }; B.z = { x: wc + 2, y: 0, w: wp - 4, h: H }; B.y = { x: wc + wp + 2, y: 0, w: W - wc - wp - 2, h: H }; B.H = H; }
+  else if (W >= 460) { const ch = Math.round(Math.max(240, W * 0.45)), ph = Math.round(Math.max(250, W * 0.52)), pw = Math.floor((W - 6) / 2); B.ckt = { x: 0, y: 34, w: W, h: ch - 64 }; B.z = { x: 0, y: ch + 6, w: pw, h: ph }; B.y = { x: pw + 6, y: ch + 6, w: W - pw - 6, h: ph }; B.H = ch + 6 + ph; }
+  else { const ch = Math.round(W * 0.72), ph = Math.round(W * 0.8); B.ckt = { x: 0, y: 34, w: W, h: ch - 64 }; B.z = { x: 0, y: ch + 6, w: W, h: ph }; B.y = { x: 0, y: ch + 12 + ph, w: W, h: ph }; B.H = ch + 12 + 2 * ph; }
+  L1 = { ...B, W, ctx: CK.setup(cv1, W, B.H) }; if (vw1) { vw1.ctx = L1.ctx; vw1.fit(L1.ckt); } }
+function frame1(dt) {
+  if (!L1) return; clk1.tick(dt); const ctx = L1.ctx; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L1.W, L1.H);
+  if (clk1.run) vw1.advance(dt); vw1.draw();
+  const Z = cx(S1.R, S1.X), Y = Cx.inv(Z.re === 0 && Z.im === 0 ? cx(1e-9, 0) : Z);
+  const I = Cx.scale(Y, 10); CH6.tag(ctx, `I = V/Z = ${CH6.polTxt(I, 'A', 3, 1)}`, L1.ckt.x + L1.ckt.w / 2, L1.ckt.y + L1.ckt.h + 16, COL.I, { size: 13 });
+  const zt = (v, d = 2) => sg(v, d);
+  CH6.plane(ctx, L1.z, [{ z: cx(S1.R, 0), color: COL.purple, label: `R = ${zt(S1.R)}`, dash: [5, 4], w: 2.2, lmid: S1.X < 0 ? 1 : -1 }, { z: cx(0, S1.X), from: cx(S1.R, 0), color: COL.ref, label: `X = ${zt(S1.X)}`, dash: [5, 4], w: 2.2, lmid: S1.X >= 0 ? -1 : 1 },
+    { z: Z, color: COL.sig, label: `|Z| = ${fd(Cx.abs(Z), 3)}` }], { title: t('Z = R + jX (โอห์ม)', 'Z = R + jX (ohms)'), circle: false, arcs: Math.abs(S1.X) > 1e-9 && S1.R > 1e-9 ? [{ a: 0, b: 2, color: '#ffd166', text: `θ_Z = ${sg(CH6.deg(Z), 1)}°`, r: 0.3 }] : [] });
+  CH6.plane(ctx, L1.y, [{ z: cx(Y.re, 0), color: COL.purple, label: `G = ${zt(Y.re, 3)}`, dash: [5, 4], w: 2.2, lmid: Y.im < 0 ? 1 : -1 }, { z: cx(0, Y.im), from: cx(Y.re, 0), color: COL.ref, label: `B = ${zt(Y.im, 3)}`, dash: [5, 4], w: 2.2, lmid: Y.im >= 0 ? -1 : 1 },
+    { z: Y, color: COL.V, label: `|Y| = ${fd(Cx.abs(Y), 3)}` }], { title: t('Y = 1/Z = G + jB (ซีเมนส์)', 'Y = 1/Z = G + jB (siemens)'), circle: false, arcs: Math.abs(Y.im) > 1e-9 && Y.re > 1e-9 ? [{ a: 0, b: 2, color: '#ffd166', text: `${sg(CH6.deg(Y), 1)}°`, r: 0.3 }] : [] });
+  CK.badge(ctx, clk1.run ? t('▶ เล่นช้า', '▶ slow motion') : t('❚❚ หยุดชั่วคราว', '❚❚ paused'), clk1.run ? 'ok' : 'wait');
+}
+const panel1 = $('pA');
+ui.h2(panel1, 'Z = R + jX');
+const sR = ui.slider(panel1, { id: 'sR', label: t('ความต้านทาน R', 'resistance R'), min: 0, max: 10, step: 0.5, value: S1.R, fmt: v => `${fd(v, 1)} Ω`, oninput: v => { S1.R = v; build1(); } });
+const sX = ui.slider(panel1, { id: 'sX', label: t('รีแอกแตนซ์ X', 'reactance X'), min: -10, max: 10, step: 0.5, value: S1.X, fmt: v => `${sg(v, 1)} Ω`, oninput: v => { S1.X = v; build1(); } });
+ui.buttons(panel1, [{ label: '3 + j4', onclick: () => { S1.R = 3; S1.X = 4; sR.set(3); sX.set(4); build1(); } }, { label: '3 − j4', onclick: () => { S1.R = 3; S1.X = -4; sR.set(3); sX.set(-4); build1(); } },
+  { label: t('R ล้วน', 'pure R'), onclick: () => { S1.X = 0; sX.set(0); build1(); } }, { label: t('L ล้วน', 'pure L'), onclick: () => { S1.R = 0; S1.X = 5; sR.set(0); sX.set(5); build1(); } }]);
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, clk1);
+const m1 = ui.metrics(panel1);
+function work1() { const R = S1.R, X = S1.X, Z = cx(R, X), d = R * R + X * X, el = $('wA');
+  if (d < 1e-12) { el.innerHTML = `<div class="badbox">${t('Z = 0 (ลัดวงจร) ไม่มีส่วนกลับ', 'Z = 0 (a short circuit) has no reciprocal')}</div>`; m1.innerHTML = ''; return; }
+  const Y = Cx.inv(Z), sgn = X < 0 ? '+' : '-', zs = `${fd(R)} ${X < 0 ? '-' : '+'} j${fd(Math.abs(X))}`, zc = `${fd(R)} ${sgn} j${fd(Math.abs(X))}`;
+  el.innerHTML = tx(LS.fitIn(el, `\\begin{aligned} Y &= \\frac{1}{Z} = \\frac{1}{${zs}} \\cdot \\frac{${zc}}{${zc}} = \\frac{${zc}}{${fd(R)}^2 + ${fd(Math.abs(X))}^2} \\\\ &= \\frac{${fd(R)}}{${fd(d)}} ${sgn} j\\frac{${fd(Math.abs(X))}}{${fd(d)}} = \\boxed{${rct(Y)}\\ \\text{S}} = ${pol(Y)}\\ \\text{S} \\\\ G &= \\frac{R}{R^2 + X^2} = ${fd(Y.re, 4)}\\ \\text{S} \\\\ B &= \\frac{-X}{R^2 + X^2} = ${fd(Y.im, 4)}\\ \\text{S} \\end{aligned}`), true) +
+    (Math.abs(X) > 1e-9 && R > 1e-9 ? `<div class="warnbox">${t(`<b>กับดัก:</b> \\(G = ${fd(Y.re, 4)}\\) S ไม่เท่ากับ \\(1/R = ${fd(1 / R, 4)}\\) S และ \\(B\\) ไม่เท่ากับ \\(-1/X = ${fd(-1 / X, 4)}\\) S เพราะ \\(R\\) กับ \\(X\\) อยู่อนุกรมกัน ส่วนกลับต้องคิดทั้งจำนวนเชิงซ้อนพร้อมกัน`, `<b>Trap:</b> \\(G = ${fd(Y.re, 4)}\\) S is not \\(1/R = ${fd(1 / R, 4)}\\) S, and \\(B\\) is not \\(-1/X = ${fd(-1 / X, 4)}\\) S, because \\(R\\) and \\(X\\) are in series; the reciprocal must be taken of the whole complex number at once.`)}</div>` : '');
+  MC.renderMath(el);
+  m1.innerHTML = ui.kv([['Z', `${rct(Z, 3).replace('-', '−')} Ω`], ['', `${fd(Cx.abs(Z), 3)} Ω ∠ ${sg(CH6.deg(Z), 2)}°`], ['Y', `${rct(Y, 4).replace('-', '−')} S`], ['', `${fd(Cx.abs(Y), 4)} S ∠ ${sg(CH6.deg(Y), 2)}°`],
+    [t('ชนิด', 'type'), X > 1e-9 ? t('แบบตัวเหนี่ยวนำ (X > 0)', 'inductive (X > 0)') : X < -1e-9 ? t('แบบตัวเก็บประจุ (X < 0)', 'capacitive (X < 0)') : t('ความต้านทานล้วน', 'purely resistive')]]); }
+resize1(); build1(); LS.anim(cv1, frame1);
+
+/* =================================================================== 1: practice 1 (slide p. 17), Z_AB by reduction */
+const P1 = CH6C.p1, P2 = CH6C.p2, H = CH6C.hw;
+CH6.problem(1, 'z', {}, {
+  ask: () => ({ fields: [{ label: 'Z<sub>AB</sub> (Ω) =', ok: x => near(x, P1.Zab.re), w: 4.5 }, { label: '+ j', ok: x => near(x, P1.Zab.im), w: 4.5 }],
+    check: v => near(v[0], P1.Zb.re, 0.002) && near(v[1], P1.Zb.im) ? t('นั่นคือ \\(Z_b\\) ยังไม่ได้ขนานกับ 10 Ω', 'That is \\(Z_b\\): the 10 Ω in parallel is still missing')
+      : near(v[0], Cx.abs(P1.Zab)) && near(v[1], CH6.deg(P1.Zab), 0.1) ? t('นั่นคือรูปเชิงขั้ว ช่องนี้ถามรูป \\(a + jb\\)', 'That is the polar form; these boxes ask for \\(a + jb\\)') : '' }),
+  answer: t(`\\(Z_{AB} = ${rct(P1.Zab)}\\ \\Omega = ${pol(P1.Zab)}\\ \\Omega\\) ตรงกับในห้อง (\\(4.2549 + j4.9288\\ \\Omega\\))`, `\\(Z_{AB} = ${rct(P1.Zab)}\\ \\Omega = ${pol(P1.Zab)}\\ \\Omega\\), as in class (\\(4.2549 + j4.9288\\ \\Omega\\))`) });
+
+/* =================================================================== 2: practice 2 (slide p. 18), i(t) by mesh analysis */
+CH6.problem(2, 'mesh', {}, {
+  ask: CH6.askPh('I<sub>1</sub>', 16, CH6.deg(P2.I1), 'mA', { traps: [[0.016, CH6.deg(P2.I1), t('หน่วยเป็นมิลลิแอมแปร์: 0.016 A = 16 mA', 'The unit is milliamperes: 0.016 A = 16 mA')],
+    [16, -CH6.deg(P2.I1), t('มุมควรเป็นลบ: วงจรที่แหล่งจ่ายเห็นเป็นแบบตัวเหนี่ยวนำ กระแสจึงตามหลังแรงดัน', 'The angle should be negative: the circuit the source sees is inductive, so the current lags the voltage')],
+    [26.667, null, t('นั่นคือ 40/1500: ลืมกิ่งของตัวเหนี่ยวนำ ต้องแก้สองเมชพร้อมกัน', 'That is 40/1500: the inductor branch is missing; solve both meshes together')]] }),
+  answer: t('\\(\\mathbf{I}_1 = 0.016\\angle{-36.87^\\circ}\\) A ดังนั้น \\(i(t) = 16\\sin(3000t - 36.87^\\circ)\\) mA ตรงกับในห้อง', '\\(\\mathbf{I}_1 = 0.016\\angle{-36.87^\\circ}\\) A, so \\(i(t) = 16\\sin(3000t - 36.87^\\circ)\\) mA, as in class') });
+
+/* =================================================================== 3: homework (slide p. 20) */
+CH6.problem(3, 'hw', {}, {
+  ask: CH6.askPh('I<sub>s</sub>', Cx.abs(H.Is), CH6.deg(H.Is), 'A', { traps: [[2.5, null, t('บวกขนาดตรง ๆ ไม่ได้ (0.5 + 2) เพราะ \\(\\mathbf{I}_{R2}\\) กับ \\(\\mathbf{I}_C\\) ทำมุมกัน 90° ต้องบวกในรูปคาร์ทีเซียน', 'Sizes cannot simply add (0.5 + 2): \\(\\mathbf{I}_{R2}\\) and \\(\\mathbf{I}_C\\) are 90° apart, so add in Cartesian form')],
+    [1.5, -62, t('นี่คือคำตอบที่ผิดของตำรา: \\(1\\angle{-62^\\circ}\\) คือแรงดัน \\(\\mathbf{V}_C\\) ไม่ใช่กระแส', 'This is the textbook\'s wrong answer: \\(1\\angle{-62^\\circ}\\) is the voltage \\(\\mathbf{V}_C\\), not a current')]] }),
+  answer: t('\\(\\mathbf{I}_s = 2.062\\angle 13.96^\\circ\\) A และ \\(i_s(t) = 2.062\\sin(2t + 13.96^\\circ)\\) A ตรงกับคำตอบในห้อง (\\(2.062\\angle 13.964^\\circ\\))', '\\(\\mathbf{I}_s = 2.062\\angle 13.96^\\circ\\) A and \\(i_s(t) = 2.062\\sin(2t + 13.96^\\circ)\\) A, as the class answer (\\(2.062\\angle 13.964^\\circ\\))') });
+
+/* =================================================================== B: more practice */
+const Y34 = Cx.inv(cx(3, 4)), Zp = Cx.div(Cx.mul(cx(10, 0), cx(0, -10)), cx(10, -10));
+const Zp2 = (() => { const ZL = cx(0, 1000), ZB = cx(2000, -2000); return Cx.add(cx(1500, 0), Cx.div(Cx.mul(ZL, ZB), Cx.add(ZL, ZB))); })(), I2 = Cx.div(cx(40, 0), Zp2);
+const work = tex => tx(LS.fitIn($('quiz'), tex), true);
+CH6.quiz('quiz', [
+  { q: t('1) แอดมิตแตนซ์ของ \\(Z = 3 + j4\\ \\Omega\\)', '1) The admittance of \\(Z = 3 + j4\\ \\Omega\\)'), fields: [{ key: 'g', lab: 'G =', ans: Y34.re, unit: 'S' }, { key: 'b', lab: 'B =', ans: Y34.im, unit: 'S' }],
+    work: work(`Y = \\frac{3 - j4}{3^2 + 4^2} = \\frac{3 - j4}{25} = 0.12 - j0.16\\ \\text{S}`) },
+  { q: t('2) R = 2 Ω อนุกรมกับ L = 0.5 H ที่ \\(\\omega = 4\\) rad/s: \\(Z = R + jX\\)', '2) R = 2 Ω in series with L = 0.5 H at \\(\\omega = 4\\) rad/s: \\(Z = R + jX\\)'), fields: [{ key: 'r', lab: 'R =', ans: 2, unit: 'Ω' }, { key: 'x', lab: 'X =', ans: 2, unit: 'Ω' }],
+    work: work(`Z = 2 + j(4)(0.5) = 2 + j2\\ \\Omega = 2.8284\\angle 45^\\circ\\ \\Omega`) },
+  { q: t('3) 10 Ω ขนานกับ \\(-j10\\ \\Omega\\)', '3) 10 Ω in parallel with \\(-j10\\ \\Omega\\)'), fields: [{ key: 'r', lab: 'R =', ans: Zp.re, unit: 'Ω' }, { key: 'x', lab: 'X =', ans: Zp.im, unit: 'Ω' }],
+    work: work(`Z = \\frac{(10)(-j10)}{10 - j10} = \\frac{-j100}{10 - j10}\\cdot\\frac{10 + j10}{10 + j10} = \\frac{1000 - j1000}{200} = 5 - j5\\ \\Omega`) },
+  { q: t('4) ข้อ 2 แต่เปลี่ยน 1 kΩ เป็น 2 kΩ: เฟเซอร์ \\(\\mathbf{I}\\) (A)', '4) Problem 2 with the 1 kΩ changed to 2 kΩ: the phasor \\(\\mathbf{I}\\) (A)'), cz: I2, fields: [{ key: 'm', lab: '\\(\\mathbf{I}\\) =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }],
+    work: work(`\\begin{aligned} Z_{eq} &= 1500 + j1000 \\parallel (2000 - j2000) = 1500 + (400 + j1200) = 1900 + j1200\\ \\Omega \\\\ \\mathbf{I} &= \\frac{40\\angle 0^\\circ}{${pol(Zp2, 1, 2)}} = ${pol(I2, 4, 2)}\\ \\text{A} \\end{aligned}`) }], { wide: true });
+
+window.addEventListener('resize', () => { resize1(); work1(); });
+LS.onFonts(() => work1());
+});
+</script>
+</body>
+</html>

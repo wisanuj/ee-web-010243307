@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="5.2 — Thévenin's Theorem">5.2 — ทฤษฎีบทของเทวินิน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ทฤษฎีบทของเทวินิน <span class="en">Thévenin's theorem — any linear network seen from two terminals is one source in series with one resistor</span></h1>
+<h1 data-l="en">Thévenin's theorem <span class="en">Any linear network seen from two terminals is one source in series with one resistor</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch5/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8: Thévenin's theorem. A complex network with load RL is replaced by VTH in series with RTH feeding the same RL; a large, complicated and uninteresting part of a circuit is replaced by a very simple equivalent, which enables rapid calculations and helps to choose the best value of the load resistance">
+    <figcaption data-l="th">สไลด์บทที่ 5 หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 5 slides, p. 8 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 8: ส่วนที่ "ใหญ่ ซับซ้อน และไม่น่าสนใจ" ของวงจร (เครือข่าย A) ถูกแทนด้วย<b>แหล่งจ่ายแรงดัน \(V_{th}\) อนุกรมกับ \(R_{th}\)</b> โดยโหลด (เครือข่าย B) ได้กระแส แรงดัน และกำลังเท่าเดิมทุกประการ จึงคำนวณได้เร็ว และช่วยเลือกค่าโหลดที่ดีที่สุด (หน้า 5.4) ภาพจำลองของแต่ละโจทย์เปลี่ยนตามขั้นในห้อง: ถอดโหลด → วัด \(V_{oc}\) (ส่วนที่ใช้คิดเรืองแสง) → ฆ่าแหล่งจ่ายแล้วมองเข้าที่ AB (ตัวที่หลุดถูกขีดฆ่าสีแดง) → วงจรสมมูล → ต่อโหลดกลับทั้งวงจรจริงและวงจรสมมูลให้เห็นว่าได้กระแสเท่ากัน หน้านี้มี <b>4 โจทย์ เรียงทีละข้อ</b> (Ex 3 และแบบฝึกหัด Ex.1, Ex.3, Ex.5) พร้อมภาพจำลองความสมมูลและการแปลงเดลตา–สตาร์</p>
+    <p class="sub" data-l="en">Slide p. 8: the "large, complicated and uninteresting" part of a circuit (network A) is replaced by <b>a voltage source \(V_{th}\) in series with \(R_{th}\)</b>, and the load (network B) keeps exactly the same current, voltage and power. The calculation becomes quick, and it helps to choose the best load (page 5.4). Each problem's simulation follows the class steps: remove the load → read \(V_{oc}\) (the parts used glow) → kill the sources and look into AB (parts that drop out are crossed in red) → the equivalent → the load back on both the real circuit and the equivalent, to show the same current. This page has <b>4 problems, one after another</b> (Ex 3 and exercises Ex.1, Ex.3, Ex.5), with simulations of the equivalence and of delta–wye conversion.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} V_{th} = V_{oc} = V_{AB}\big|_{R_L\ \text{removed}} \\ R_{th} = R_{AB}\big|_{\text{sources killed}} \\ I_L = \frac{V_{th}}{R_{th} + R_L} \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>เครือข่ายเชิงเส้นใด ๆ เมื่อมองจากสองขั้ว A–B</b> แทนได้ด้วย <b>\(V_{th}\) อนุกรม \(R_{th}\)</b> โหลดที่ต่อเข้าไปจะ "ไม่รู้ตัว" ว่าถูกแทน</li>
+  <li><b>\(V_{th} = V_{oc}\)</b>: ถอดโหลดออก แล้วหาแรงดันคร่อมขั้ว A–B ที่เปิดอยู่ ใช้วิธีไหนก็ได้ (โนด เมช ตัวแบ่งแรงดัน)</li>
+  <li><b>\(R_{th}\)</b>: ฆ่าแหล่งจ่ายอิสระทุกตัว (แรงดัน → ลัด, กระแส → เปิด) แล้วมองเข้าที่ขั้ว A–B ด้วยอนุกรม–ขนาน หรือ<b>การแปลงเดลตา–สตาร์</b>เมื่อเป็นบริดจ์</li>
+  <li>ตัวต้านทานที่<b>อนุกรมกับวงจรเปิด</b> หรือ<b>ขนานกับลวดลัด</b> หลุดออกจาก \(R_{th}\) ได้ทันที (ขีดฆ่าแบบในห้อง)</li>
+  <li>ได้วงจรสมมูลแล้ว <b>เปลี่ยนโหลดกี่ค่าก็ใช้ \(I_L = V_{th}/(R_{th} + R_L)\) ได้เลย</b> ไม่ต้องแก้ทั้งวงจรใหม่ \(V_{th}\) ที่ติดลบแปลว่าขั้ว A ต่ำกว่า B</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Any linear network seen from two terminals A–B</b> can be replaced by <b>\(V_{th}\) in series with \(R_{th}\)</b>; a load connected to it cannot tell the difference.</li>
+  <li><b>\(V_{th} = V_{oc}\)</b>: remove the load and find the voltage across the open terminals A–B, by any method (nodal, mesh, voltage divider).</li>
+  <li><b>\(R_{th}\)</b>: kill every independent source (voltage → short, current → open) and look into A–B using series–parallel, or <b>delta–wye conversion</b> for a bridge.</li>
+  <li>A resistor <b>in series with an open circuit</b> or <b>in parallel with a short</b> drops out of \(R_{th}\) at once (cross it out, as in class).</li>
+  <li>With the equivalent, <b>any load value just needs \(I_L = V_{th}/(R_{th} + R_L)\)</b>, with no need to solve the whole circuit again. A negative \(V_{th}\) means terminal A is below B.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 3</a><a href="#tA"><b>A</b>โหลดค่าใดก็สมมูล</a><a href="#ex2"><b>2</b>แบบฝึกหัด Ex.1</a><a href="#ex3"><b>3</b>แบบฝึกหัด Ex.3</a><a href="#ex4"><b>4</b>แบบฝึกหัด Ex.5</a><a href="#tB"><b>B</b>เดลตา–สตาร์</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 3</a><a href="#tA"><b>A</b>Equivalent for every load</a><a href="#ex2"><b>2</b>Exercise Ex.1</a><a href="#ex3"><b>3</b>Exercise Ex.3</a><a href="#ex4"><b>4</b>Exercise Ex.5</a><a href="#tB"><b>B</b>Delta–wye</a></nav>
+
+<div class="group-head"><h2 data-l="th">ขั้นตอนของเทวินิน (สไลด์หน้า 9–10)</h2><h2 data-l="en">The Thévenin steps (slides pp. 9–10)</h2></div>
+<p class="lead" data-l="th">ขั้นตอนหกข้อ: (1) ถอดโหลดออกแล้วทำเครื่องหมายขั้ว (2) หาแรงดันวงจรเปิดที่ขั้ว ด้วยวิธีใดก็ได้ ได้ \(V_{th}\) (3) ฆ่าแหล่งจ่ายอิสระ (4) หาความต้านทานที่มองเข้าจากขั้ว ได้ \(R_{th}\) (5) เขียนวงจรสมมูล \(V_{th}\) อนุกรม \(R_{th}\) (6) ต่อโหลดกลับแล้วใช้ \(I = V_{th}/(R_{th} + R_{load})\) ส่วนในห้องผู้สอนรวมเป็นห้าขั้น โดยขั้นที่ 3 คือฆ่าแหล่งจ่ายแล้วหา \(R_{th}\) ในขั้นเดียว แบบเดียวกับภาพจำลองในหน้านี้</p>
+<p class="lead" data-l="en">Six steps: (1) remove the load and mark the terminals, (2) find the open-circuit voltage at the terminals by any method, giving \(V_{th}\), (3) kill the independent sources, (4) find the resistance looking in from the terminals, giving \(R_{th}\), (5) draw the equivalent, \(V_{th}\) in series with \(R_{th}\), (6) reconnect the load and use \(I = V_{th}/(R_{th} + R_{load})\). In class the teacher used five steps, killing the sources and finding \(R_{th}\) in one step 3, as the simulations on this page do.</p>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch5/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: steps to use Thévenin's analysis. 1 remove the load, leave the terminals open and keep all sources; 2 find the Thévenin voltage, the open-circuit voltage across the terminals by any method; 3 prepare to find RTH: turn off all independent sources (voltage → short, current → open), keep dependent sources active">
+    <figcaption data-l="th">สไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 9 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch5/p10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10: 4 find the Thévenin resistance looking into the circuit from the load terminals; 5 draw the Thévenin equivalent, VTH in series with RTH, connected to the original load; 6 analyse the equivalent with the load: I = VTH/(RTH + Rload), Vload = I × Rload">
+    <figcaption data-l="th">สไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูห้าขั้นที่ผู้สอนเขียนในห้อง (พ.ศ. 2564)</span><span data-l="en">See the five steps as written in class (2021)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch5/K08a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 10, a statement of Thévenin's theorem: network X (the uninteresting part) and network Y (the load RL) joined at A and B; step 1 mark the load and terminals A and B, remove RL; step 2 find the voltage at terminal AB by node, mesh, voltage divider or current divider, VAB = Voc = Vth; step 3 kill the sources and find the resistance looking into AB (Rth); step 4 draw the Thévenin equivalent; step 5 reconnect RL at AB">
+    <figcaption data-l="th">หน้า 10 ฉบับในห้อง: เครือข่าย X (ส่วนที่ไม่น่าสนใจ) กับเครือข่าย Y (โหลด) และห้าขั้นของเทวินิน</figcaption><figcaption data-l="en">p. 10 in class: network X (the uninteresting part), network Y (the load), and the five Thévenin steps</figcaption></figure></div></details>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 3: ใช้ทฤษฎีบทของเทวินินหากระแสผ่านตัวต้านทาน 2 Ω</h2><h2 data-l="en">Ex 3: use Thévenin's theorem to find the current through the 2 Ω resistor</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 11 (ให้ 2 Ω เป็นเครือข่าย B คือโหลด) · Hayt Practice 5.6</div><div class="src" data-l="en">Chapter 5 slides, p. 11 (the 2 Ω is network B, the load) · Hayt Practice 5.6</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p11q.webp" width="1415" height="599" loading="lazy" decoding="async" alt="Ex 3: use Thévenin's theorem to find the current through the 2 ohm resistor (hint: designate the 2 ohm as network B). A 9 V source, 4 ohm and 5 ohm across the top, 4 ohm down the middle, 6 ohm along the bottom left, and the 2 ohm on the right with i2Ω pointing down">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 11 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สองหน้า)</span><span data-l="en">See the teacher's in-class working (two pages)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K08b.webp" width="1100" height="646" loading="lazy" decoding="async" alt="In-class slide 11: step 1 remove the 2 ohm load RL; step 2 the 5 ohm carries no current (crossed out), mesh KVL −9 + 4Ix + 4Ix + 6Ix = 0 gives Ix = 0.64 A and VAB = 4Ix = 2.56 V; step 3 kill the source (voltage source → short circuit) and look into AB: Rth = [(4 + 6) ∥ 4] + 5 = 7.86 ohm">
+      <figcaption data-l="th">หน้า 11: ขั้นที่ 1–3 ได้ \(V_{AB}\) = 2.56 V (ปัด \(I_x\) เป็น 0.64 A ก่อนคูณ) และ \(R_{th}\) = 7.86 Ω</figcaption><figcaption data-l="en">p. 11: steps 1–3 give \(V_{AB}\) = 2.56 V (with \(I_x\) rounded to 0.64 A first) and \(R_{th}\) = 7.86 Ω</figcaption></figure>
+      <figure class="slide"><img src="slides/ch5/K09.webp" width="1000" height="1293" loading="lazy" decoding="async" alt="Handwritten steps 4 and 5: the Thévenin equivalent Vth = 2.56 V with Rth = 7.86 ohm, beside the original circuit; reconnect RL = 2 ohm at A and B: IL = Vth/(Rth + RL) = 2.56/(7.86 + 2) = 0.26 A">
+      <figcaption data-l="th">ขั้นที่ 4–5: วงจรสมมูลแล้วต่อ 2 Ω กลับ ได้ \(I_L\) = 0.26 A</figcaption><figcaption data-l="en">Steps 4–5: the equivalent, then the 2 Ω back on: \(I_L\) = 0.26 A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">โหลดค่าใดก็ได้กระแสเท่ากัน: ความสมมูลที่ขั้ว</h2><h2 data-l="en">The same current for every load: equivalent at the terminals</h2>
+    <div class="src" data-l="th">วงจรของข้อ 1 (Ex 3) กับวงจรสมมูลเทวินินของมัน</div><div class="src" data-l="en">The circuit of problem 1 (Ex 3) and its Thévenin equivalent</div></div></div>
+  <p class="lead" data-l="th">ซ้ายคือวงจรจริงของข้อ 1 ขวาคือวงจรสมมูลเทวินินที่ได้ ทั้งสองต่อกับ \(R_L\) ตัวเดียวกัน <b>เลื่อน \(R_L\) จากลัดวงจรไปจนเปิดวงจร</b> แล้วดูว่าจุดใน \(R_L\) ทั้งสองวิ่งเร็วเท่ากันเสมอ กราฟคือเส้นลักษณะ V–I ที่ขั้ว AB ซึ่งเป็นเส้นตรงเส้นเดียวกันของทั้งสองวงจร: ตัดแกนแรงดันที่ \(V_{oc}\) ตัดแกนกระแสที่ \(I_{sc}\) และความชันคือ \(-R_{th}\)</p>
+  <p class="lead" data-l="en">Left is the real circuit of problem 1, right its Thévenin equivalent, both with the same \(R_L\). <b>Slide \(R_L\) from short circuit to open circuit</b> and watch the dots in both \(R_L\) always run at the same speed. The graph is the V–I line at terminals AB, one and the same straight line for both circuits: it crosses the voltage axis at \(V_{oc}\), the current axis at \(I_{sc}\), and its slope is \(-R_{th}\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด 5.2 Thévenin's and Norton's Theorems)</h2><h2 data-l="en">More practice (exercise sheet 5.2, Thévenin's and Norton's Theorems)</h2></div>
+<p class="lead" data-l="th">ข้อ Ex.1, Ex.3, Ex.5 ถามวงจรสมมูลเทวินิน ส่วน Ex.2, Ex.4, Ex.6 ใช้วงจรเดียวกันแต่ถามวงจรสมมูลนอร์ตัน (หน้า 5.3) และ Ex.7 ถามกำลังสูงสุด (หน้า 5.4)</p>
+<p class="lead" data-l="en">Ex.1, Ex.3 and Ex.5 ask for the Thévenin equivalent; Ex.2, Ex.4 and Ex.6 use the same circuits for the Norton equivalent (page 5.3), and Ex.7 asks for the maximum power (page 5.4).</p>
+<details class="orig"><summary><span data-l="th">ดูสรุปขั้นตอนของเทวินินที่ผู้สอนเขียนในไฟล์เฉลย</span><span data-l="en">See the summary of the Thévenin steps in the solutions file</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch5/sum52T.webp" width="1000" height="1413" loading="lazy" decoding="async" alt="Handwritten summary of Thévenin's theorem: step 1 remove RL and mark terminals A and B; step 2 find VAB = Voc = Vth; step 3 kill the sources and find RAB = Rth; step 4 draw the Thévenin equivalent; step 5 reconnect RL at A and B and find what is asked">
+    <figcaption data-l="th">สรุปห้าขั้นของเทวินินในไฟล์เฉลยแบบฝึกหัด 5.2</figcaption><figcaption data-l="en">The five Thévenin steps in the solutions file of exercise sheet 5.2</figcaption></figure></div></details>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">แบบฝึกหัด Ex.1: หาวงจรสมมูลเทวินินที่ต่อกับ \(R_L\)</h2><h2 data-l="en">Exercise Ex.1: find the Thévenin equivalent connected to \(R_L\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.1 · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.1 · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q1.webp" width="1300" height="469" loading="lazy" decoding="async" alt="Exercise Ex.1: find the Thévenin equivalent connected to RL. A 4 A source pointing down on the left, 1 kilohm across the top, 1 kilohm down, a 2 V source over 2 kilohm down the middle, a 3 V source across the top right to terminal A, and RL between A and B">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.1 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.1 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol52_1.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.1: step 1 remove RL; step 2 meshes IA = −4 A and 1k(IB − IA) + 2 + 2kIB = 0 give IB = −1.334 A, so VAB = −3 + 2 + (2k)(IB) = −2669 V; step 3 kill the sources: Rth = 1k ∥ 2k = 666.67 ohm; step 4 the Thévenin equivalent">
+      <figcaption data-l="th">\(V_{th}\) = −2669 V และ \(R_{th}\) = 1 k ∥ 2 k = 666.67 Ω</figcaption><figcaption data-l="en">\(V_{th}\) = −2669 V and \(R_{th}\) = 1 k ∥ 2 k = 666.67 Ω</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">แบบฝึกหัด Ex.3: หาวงจรสมมูลเทวินินที่ต่อกับ \(R_L\)</h2><h2 data-l="en">Exercise Ex.3: find the Thévenin equivalent connected to \(R_L\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.3 · ไม่มีเฉลยในโฟลเดอร์ หน้านี้คำนวณให้</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.3 · no solution in the folder; this page works it out</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q3.webp" width="1300" height="494" loading="lazy" decoding="async" alt="Exercise Ex.3: find the Thévenin equivalent connected to RL. A 6 ohm on the left, an 8 V source across the top, a 4 V source over 4 ohm down the middle, terminal A at the top right and RL between A and B">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.3 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัด Ex.5: ใช้ทฤษฎีบทเทวินิน หา \(V_{oc}\), \(R_{th}\) และ \(V_L\) พร้อมเขียนวงจรสมมูลเทวินิน</h2><h2 data-l="en">Exercise Ex.5: use Thévenin's theorem to find \(V_{oc}\), \(R_{th}\) and \(V_L\), and draw the Thévenin equivalent</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.5 · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.5 · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q5.webp" width="1300" height="630" loading="lazy" decoding="async" alt="Exercise Ex.5 (in Thai): find Voc, Rth and VL by Thévenin's theorem and draw the equivalent. An 8 A source across the top into 15 ohm, 20 ohm, a 40 V source on the left, 30 ohm down the middle, 10 ohm along the bottom, and RL = 10 ohm between a and b with VL across it">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.5 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol52_5.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.5: mesh I1 = 8 A, mesh I2 from −40 + 20(I2 − I1) + 30I2 + 10I2 = 0 gives I2 = 3.33 A and VAB = 30I2 = 100 V; Rth = (20 + 10) ∥ 30 = 15 ohm with the 15 ohm crossed out; the equivalent 100 V with 15 ohm and RL = 10 ohm; the voltage divider gives VL = 40 V">
+      <figcaption data-l="th">\(V_{oc}\) = 100 V, \(R_{th}\) = 15 Ω และตัวแบ่งแรงดันได้ \(V_L\) = 40 V</figcaption><figcaption data-l="en">\(V_{oc}\) = 100 V, \(R_{th}\) = 15 Ω, and the voltage divider gives \(V_L\) = 40 V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">เมื่ออนุกรม–ขนานไปต่อไม่ได้: การแปลงเดลตา–สตาร์</h2><h2 data-l="en">When series–parallel gets stuck: delta–wye conversion</h2>
+    <div class="src" data-l="th">สไลด์ฉบับในห้องหน้า 21–23 (ไม่มีในฉบับแจก 2568) · Hayt §5.5, Example 5.12</div><div class="src" data-l="en">In-class slides pp. 21–23 (not in the 2025 handout) · Hayt §5.5, Example 5.12</div></div></div>
+  <p class="lead" data-l="th">บางครั้งตอนหา \(R_{th}\) จะเจอวงจรแบบบริดจ์ที่ไม่มีตัวต้านทานคู่ไหนอนุกรมหรือขนานกันเลย ทางออกคือ<b>แปลงสามเหลี่ยม (Δ) เป็นสตาร์ (Y)</b> ซึ่งสมมูลกันเมื่อมองจากสามจุดต่อ ภาพจำลองคือ Hayt Example 5.12: ซ้ายคือบริดจ์เดิม ขวาคือหลังแปลง Δ ด้านบน (1, 4, 3 Ω) เป็น Y สังเกตว่า<b>กระแสใน 2 Ω, 5 Ω และแหล่งจ่ายเท่าเดิม</b> ลองเปลี่ยนค่าสามตัวบนด้วยแถบเลื่อน</p>
+  <p class="lead" data-l="en">Finding \(R_{th}\) sometimes runs into a bridge in which no two resistors are in series or in parallel. The way out is to <b>convert a triangle (Δ) into a star (Y)</b>, which is equivalent as seen from its three corners. The simulation is Hayt Example 5.12: left is the bridge, right is after turning the upper Δ (1, 4, 3 Ω) into a Y. Note that <b>the currents in the 2 Ω, the 5 Ω and the source stay the same</b>. Change the three upper resistors with the sliders.</p>
+  <div class="slides">
+    <figure class="slide"><img src="slides/ch5/K17b.webp" width="1100" height="646" loading="lazy" decoding="async" alt="In-class slide 21: delta and star transformations for resistive networks; a pi network turned into a delta and a T network turned into a star"><figcaption data-l="th">ฉบับในห้องหน้า 21 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">In-class p. 21 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch5/K18a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 22: to convert from a star network to a delta network, RA = (R1R2 + R2R3 + R3R1)/R2, RB = (R1R2 + R2R3 + R3R1)/R3, RC = (R1R2 + R2R3 + R3R1)/R1"><figcaption data-l="th">ฉบับในห้องหน้า 22: สตาร์ → เดลตา · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">In-class p. 22: star → delta · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch5/K18b.webp" width="1100" height="646" loading="lazy" decoding="async" alt="In-class slide 23: to convert from a delta network to a star network, R1 = RARB/(RA + RB + RC), R2 = RBRC/(RA + RB + RC), R3 = RCRA/(RA + RB + RC)"><figcaption data-l="th">ฉบับในห้องหน้า 23: เดลตา → สตาร์ · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">In-class p. 23: delta → star · tap to enlarge</figcaption></figure>
+  </div>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div>
+    <h3 data-l="th">ค่าของสตาร์ที่ได้ (แทนค่าแล้ว)</h3><h3 data-l="en">The wye values (with numbers)</h3><div id="dyLive"></div>
+    <p class="sub2" data-l="th"><b>จำง่าย</b>: ตัวต้านทานของ Y ที่จุดใด = ผลคูณของตัวต้านทาน Δ สองตัวที่แตะจุดนั้น ÷ ผลรวมของ Δ ทั้งสามตัว</p>
+    <p class="sub2" data-l="en"><b>Easy to remember</b>: the Y resistor at a corner = the product of the two Δ resistors touching that corner ÷ the sum of all three Δ resistors.</p>
+    <h3 data-l="th">Hayt Example 5.12 ทีละขั้น</h3><h3 data-l="en">Hayt Example 5.12 step by step</h3><div id="stB"></div></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — โหลดเปลี่ยน วงจรสมมูลไม่เปลี่ยน</h3>
+    <ol><li>ส่วน A กด "ตามโจทย์" (\(R_L\) = 2 Ω): กระแสทั้งสองวงจร = 0.2609 A ตรงกับ Hayt (260.8 mA)</li>
+    <li>เลื่อน \(R_L\) ไปค่าอื่น: ถ้าคิดด้วยวงจรจริงต้องแก้ใหม่ทุกครั้ง แต่ด้วยวงจรสมมูลแค่ \(I_L = V_{th}/(R_{th} + R_L)\)</li>
+    <li>กด "เปิดวงจร": จุดทำงานไปอยู่ที่ \(V_{oc}\) บนแกนแรงดัน กด "ลัดวงจร": ไปอยู่ที่ \(I_{sc}\) บนแกนกระแส</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ตัวต้านทานที่หลุดจาก \(R_{th}\)</h3>
+    <ol><li>ข้อ 2 (แบบฝึกหัด Ex.1) ขั้นที่ 3: 1 kΩ ด้านบนอนุกรมกับแหล่งจ่าย 4 A ที่เปิดวงจรแล้ว <b>จึงถูกขีดฆ่า</b> เหลือ 1 k ∥ 2 k</li>
+    <li>ข้อ 4 (แบบฝึกหัด Ex.5) ขั้นที่ 3: 15 Ω อนุกรมกับ 8 A ที่เปิดวงจร จึงหลุดเช่นกัน ได้ \(R_{th}\) = (20 + 10) ∥ 30 = 15 Ω</li>
+    <li>ข้อ 1 (Ex 3) ขั้นที่ 2: 5 Ω ไม่มีกระแส (ปลายเปิด) <b>แรงดันตกคร่อมจึงเป็นศูนย์</b> \(V_{AB}\) เท่ากับแรงดันคร่อม 4 Ω ตัวกลาง</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — \(V_{th}\) ติดลบ และเดลตา–สตาร์</h3>
+    <ol><li>ข้อ 2 ได้ \(V_{th}\) = −2669 V และข้อ 3 ได้ −0.8 V: ขั้ว A ต่ำกว่า B ในวงจรสมมูล ขั้ว + ของ \(V_{th}\) จึงหันลง (หรือเขียน 2669 V กลับขั้ว)</li>
+    <li>ส่วน B กด "ค่าของ Hayt": \(R_{in}\) = 159/71 ≈ 2.239 Ω ทั้งสองภาพ แล้วลองตั้งสามตัวบนให้เท่ากันหมด (เช่น 3, 3, 3 Ω) จะได้ Y เป็น 1, 1, 1 Ω (หาร 3)</li>
+    <li>คำถาม: ถ้าบริดจ์สมดุล (อัตราส่วนของตัวต้านทานด้านข้างเท่ากัน) กระแสในตัวกลางจะเป็นเท่าไร ลองหาค่าที่ทำให้จุดในตัวกลางหยุด</li></ol>
+    <div class="book">สไลด์บทที่ 5 หน้า 8–11 · ฉบับในห้องหน้า 10–11, 21–23 · แบบฝึกหัด 5.2 Ex.1, Ex.3, Ex.5 และเฉลย · Hayt §5.3, §5.5, Practice 5.6, Example 5.12</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the load changes, the equivalent does not</h3>
+    <ol><li>In section A press "as given" (\(R_L\) = 2 Ω): both circuits give 0.2609 A, as Hayt does (260.8 mA).</li>
+    <li>Slide \(R_L\) to other values: with the real circuit you would solve again each time, with the equivalent only \(I_L = V_{th}/(R_{th} + R_L)\).</li>
+    <li>Press "open": the operating point sits at \(V_{oc}\) on the voltage axis; press "short": it sits at \(I_{sc}\) on the current axis.</li></ol></div>
+  <div class="card"><h3>Try this 2 — resistors that drop out of \(R_{th}\)</h3>
+    <ol><li>Problem 2 (exercise Ex.1), step 3: the top 1 kΩ is in series with the opened 4 A source, <b>so it is crossed out</b>, leaving 1 k ∥ 2 k.</li>
+    <li>Problem 4 (exercise Ex.5), step 3: the 15 Ω is in series with the opened 8 A and drops out too, giving \(R_{th}\) = (20 + 10) ∥ 30 = 15 Ω.</li>
+    <li>Problem 1 (Ex 3), step 2: the 5 Ω carries no current (open end), <b>so it drops no voltage</b> and \(V_{AB}\) equals the voltage across the middle 4 Ω.</li></ol></div>
+  <div class="card"><h3>Try this 3 — a negative \(V_{th}\), and delta–wye</h3>
+    <ol><li>Problem 2 gives \(V_{th}\) = −2669 V and problem 3 gives −0.8 V: terminal A is below B, so in the equivalent the + of \(V_{th}\) points down (or write 2669 V with the polarity turned round).</li>
+    <li>In section B press "Hayt values": \(R_{in}\) = 159/71 ≈ 2.239 Ω in both drawings. Then make the three upper resistors equal (e.g. 3, 3, 3 Ω) and the Y becomes 1, 1, 1 Ω (divide by 3).</li>
+    <li>Question: if the bridge is balanced (equal ratios of the side resistors), what current flows in the middle resistor? Find values that make its dots stop.</li></ol>
+    <div class="book">Chapter 5 slides, pp. 8–11 · in-class slides pp. 10–11, 21–23 · exercise sheet 5.2 Ex.1, Ex.3, Ex.5 and solutions · Hayt §5.3, §5.5, Practice 5.6, Example 5.12</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.002, 0.004 * Math.abs(y)));
+const sameSize = (x, y) => near(Math.abs(x), Math.abs(y)) && !near(x, y);
+
+/* 1: Ex 3 = Hayt Practice 5.6 */
+CH5.problem(1, 'thev', 'ex3', {
+  ask: () => ({ fields: [{ label: 'i₂Ω (A) =', ok: x => near(x, 6 / 23, 0.0015), w: 5 }], check: v => near(v[0], 18 / 7 / 2) ? t('นั่นคือ \\(V_{th}/R_L\\) ยังขาด \\(R_{th}\\) ในตัวส่วน', 'That is \\(V_{th}/R_L\\): \\(R_{th}\\) is missing from the denominator') : '' }),
+  answer: t('\\(i_{2\\Omega} = 6/23 \\approx 0.2609\\) A ตรงกับเฉลยในห้อง (0.26 A) และ Hayt Practice 5.6 (260.8 mA) <div class="warnbox" style="margin-top:8px">บันทึกในห้องปัด \\(I_x\\) เป็น 0.64 A ก่อนคูณ จึงได้ \\(V_{AB}\\) = 2.56 V ค่าแม่นตรงคือ \\(18/7 \\approx 2.571\\) V (Hayt: 2.571 V, 7.857 Ω) คำตอบสุดท้าย 0.26 A ไม่เปลี่ยน</div>',
+    '\\(i_{2\\Omega} = 6/23 \\approx 0.2609\\) A, as in class (0.26 A) and Hayt Practice 5.6 (260.8 mA) <div class="warnbox" style="margin-top:8px">The in-class note rounds \\(I_x\\) to 0.64 A before multiplying, giving \\(V_{AB}\\) = 2.56 V; the exact value is \\(18/7 \\approx 2.571\\) V (Hayt: 2.571 V, 7.857 Ω). The final 0.26 A is unchanged.</div>') });
+
+/* A: the equivalence demo on the network of problem 1 */
+const E = CH5.equivDemo({ cv: 'cvA', panel: 'pA', keys: ['ex3'] }); E.build(); window.addEventListener('resize', () => E.resize()); LS.anim($('cvA'), dt => E.frame(dt));
+
+/* 2–4: exercise sheet 5.2 Ex.1, Ex.3, Ex.5 */
+CH5.problem(2, 'thev', 's1', {
+  ask: () => ({ fields: [{ label: 'V<sub>th</sub> (V) =', ok: x => near(x, -2669, 0.6), w: 5 }, { label: 'R<sub>th</sub> (Ω) =', ok: x => near(x, 2000 / 3, 0.4), w: 5 }],
+    check: v => sameSize(v[0], -2669) ? t('ขนาดของ \\(V_{th}\\) ถูก แต่เครื่องหมาย: ขั้ว A ต่ำกว่า B', 'The size of \\(V_{th}\\) is right, but the sign: terminal A is below B') : near(v[1], 2000 / 3 + 1000, 1) ? t('1 kΩ ด้านบนอนุกรมกับแหล่งจ่าย 4 A ที่เปิดวงจร จึงไม่อยู่ใน \\(R_{th}\\)', 'The top 1 kΩ is in series with the opened 4 A source, so it is not part of \\(R_{th}\\)') : '' }),
+  answer: t('\\(V_{th} = -2669\\) V และ \\(R_{th} = 2000/3 \\approx 666.67\\) Ω ตรงกับเฉลย', '\\(V_{th} = -2669\\) V and \\(R_{th} = 2000/3 \\approx 666.67\\) Ω, as in the solution') });
+CH5.problem(3, 'thev', 's3', {
+  ask: () => ({ fields: [{ label: 'V<sub>th</sub> (V) =', ok: x => near(x, -0.8), w: 5 }, { label: 'R<sub>th</sub> (Ω) =', ok: x => near(x, 2.4), w: 5 }],
+    check: v => near(v[0], 0.8) ? t('ขนาดถูก แต่เครื่องหมาย: \\(I\\) = −1.2 A ทำให้ \\(V_{AB} = 4 + 4I\\) ติดลบ', 'Right size, wrong sign: \\(I\\) = −1.2 A makes \\(V_{AB} = 4 + 4I\\) negative') : near(v[1], 10) ? t('6 Ω กับ 4 Ω ขนานกันเมื่อมองจาก AB (ไม่ได้อนุกรม)', 'Seen from AB the 6 Ω and the 4 Ω are in parallel (not in series)') : '' }),
+  answer: t('\\(V_{th} = -0.8\\) V และ \\(R_{th} = 2.4\\) Ω (ข้อนี้ไม่มีเฉลยในโฟลเดอร์ หน้า 5.3 ข้อ 5 ตรวจด้วยวงจรสมมูลนอร์ตันของวงจรเดียวกัน: \\(I_N R_N = (-1/3)(2.4) = -0.8\\) V)', '\\(V_{th} = -0.8\\) V and \\(R_{th} = 2.4\\) Ω (no solution in the folder; problem 5 on page 5.3 checks it with the Norton equivalent of the same circuit: \\(I_N R_N = (-1/3)(2.4) = -0.8\\) V)') });
+CH5.problem(4, 'thev', 's5', {
+  ask: () => ({ fields: [{ label: 'V<sub>oc</sub> (V) =', ok: x => near(x, 100), w: 4 }, { label: 'R<sub>th</sub> (Ω) =', ok: x => near(x, 15), w: 4 }, { label: 'V<sub>L</sub> (V) =', ok: x => near(x, 40), w: 4 }],
+    check: v => near(v[1], 22.5) || near(v[1], 37.5) ? t('15 Ω อนุกรมกับแหล่งจ่าย 8 A ที่เปิดวงจร จึงไม่อยู่ใน \\(R_{th}\\)', 'The 15 Ω is in series with the opened 8 A source, so it is not part of \\(R_{th}\\)') : '' }),
+  answer: t('\\(V_{oc} = 100\\) V, \\(R_{th} = 15\\) Ω และ \\(V_L = 40\\) V ตรงกับเฉลย', '\\(V_{oc} = 100\\) V, \\(R_{th} = 15\\) Ω and \\(V_L = 40\\) V, as in the solution') });
+
+/* B: delta–wye, Hayt Example 5.12 */
+const Y = CH5.dyDemo({ cv: 'cvB', panel: 'pB', live: 'dyLive' }); Y.resize(); window.addEventListener('resize', () => Y.resize()); LS.anim($('cvB'), dt => Y.frame(dt));
+const stB = LS.stepper($('stB'), { steps: () => [
+  { why: t('<b>หาจุดติด</b>: 1, 4, 3, 2, 5 Ω ไม่มีคู่ใดอนุกรมหรือขนานกัน (บริดจ์) แต่ 1, 4, 3 Ω ต่อกันเป็นสามเหลี่ยม', '<b>Spot the snag</b>: of 1, 4, 3, 2, 5 Ω no pair is in series or in parallel (a bridge), but 1, 4, 3 Ω form a triangle') },
+  { why: t('<b>แปลง Δ ด้านบนเป็น Y</b> (ตัวหารคือ 1 + 4 + 3 = 8)', '<b>Turn the upper Δ into a Y</b> (the divisor is 1 + 4 + 3 = 8)'), tex: CH5.fitIn($('stB'), '\\begin{aligned} R_T &= \\frac{(1)(4)}{8} = \\frac{1}{2}\\ \\Omega \\\\ R_L &= \\frac{(1)(3)}{8} = \\frac{3}{8}\\ \\Omega \\\\ R_R &= \\frac{(4)(3)}{8} = \\frac{3}{2}\\ \\Omega \\end{aligned}') },
+  { why: t('<b>ตอนนี้อนุกรมได้แล้ว</b>', '<b>Now series combinations appear</b>'), tex: '\\begin{aligned} \\frac{3}{8} + 2 &= \\frac{19}{8}\\ \\Omega \\\\ \\frac{3}{2} + 5 &= \\frac{13}{2}\\ \\Omega \\end{aligned}' },
+  { why: t('<b>ขนาน แล้วอนุกรมกับ \\(R_T\\)</b>', '<b>Parallel, then in series with \\(R_T\\)</b>'), tex: CH5.fitIn($('stB'), 'R_{in} = \\left(\\frac{19}{8} \\parallel \\frac{13}{2}\\right) + \\frac{1}{2} = \\frac{247}{142} + \\frac{1}{2} = \\boxed{\\tfrac{159}{71} \\approx 2.239\\ \\Omega}') }],
+  answer: t('\\(R_{in} = 159/71 \\approx 2.239\\) Ω เท่ากับที่ภาพจำลองวัดได้จากบริดจ์เดิม (กด "ค่าของ Hayt")', '\\(R_{in} = 159/71 \\approx 2.239\\) Ω, the value the simulation measures on the original bridge (press "Hayt values")') });
+CH5.onFonts(() => stB.refresh(true));
+});
+</script>
+</body>
+</html>

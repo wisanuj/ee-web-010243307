@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="5.4 — Maximum Power Transfer">5.4 — การส่งกำลังสูงสุด</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การส่งกำลังสูงสุด <span class="en">Maximum power transfer — the load gets the most power when R_L equals R_th</span></h1>
+<h1 data-l="en">Maximum power transfer <span class="en">The load gets the most power when R_L equals R_th</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch5/p18.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 18: maximum power transfer. For a practical voltage source vs with Rs feeding RL, pL = iL²RL = vs²RL/(Rs + RL)²; differentiating with respect to RL and setting the derivative to zero gives (Rs + RL)² = 2RL(Rs + RL), so Rs = RL">
+    <figcaption data-l="th">สไลด์บทที่ 5 หน้า 18 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 5 slides, p. 18 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 18: แหล่งจ่ายจริง (หรือวงจรใดก็ได้ผ่านวงจรสมมูลเทวินิน) ส่งกำลังให้โหลด \(p_L = v_s^2 R_L/(R_s + R_L)^2\) หาอนุพันธ์เทียบกับ \(R_L\) แล้วให้เป็นศูนย์ ได้ <b>\(R_L = R_s = R_{th}\)</b> และกำลังสูงสุด \(V_{th}^2/(4R_{th})\) ในห้องผู้สอนย้ำว่า<b>ต้องหาวงจรสมมูลเทวินินก่อน</b> ภาพจำลองของแต่ละโจทย์วางวงจรจริงพร้อมโหลดที่เลื่อนได้คู่กับกราฟกำลัง: ก่อนหาวงจรสมมูล กราฟมีแต่จุดที่วัดได้จากวงจรจริง เมื่อได้ \(V_{th}\), \(R_{th}\) แล้ว เส้นโค้งที่ทำนายจะขึ้นมา และจุดที่วัดได้อยู่บนเส้นพอดี หน้านี้มี <b>4 โจทย์ เรียงทีละข้อ</b> (Ex 6, Ex 7, แบบฝึกหัด Ex.7 และการบ้านข้อ 2) ก่อนหน้านั้นมีภาพจำลองหลอดไฟ</p>
+    <p class="sub" data-l="en">Slide p. 18: a practical source (or any circuit, through its Thévenin equivalent) delivers \(p_L = v_s^2 R_L/(R_s + R_L)^2\) to the load. Setting the derivative with respect to \(R_L\) to zero gives <b>\(R_L = R_s = R_{th}\)</b> and the maximum power \(V_{th}^2/(4R_{th})\). In class the teacher stressed that <b>the Thévenin equivalent comes first</b>. Each problem's simulation puts the real circuit with a load you can slide beside the power plot: before the equivalent is found the plot holds only powers measured in the real circuit; once \(V_{th}\) and \(R_{th}\) are known the predicted curve appears and the measured points sit on it. This page has <b>4 problems, one after another</b> (Ex 6, Ex 7, exercise Ex.7 and homework 2), after a lamp simulation.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} P_L = \frac{V_{th}^2\,R_L}{(R_{th} + R_L)^2} \\ \frac{dP_L}{dR_L} = 0 \;\Rightarrow\; R_L = R_{th} \\ P_{max} = \frac{V_{th}^2}{4R_{th}} \qquad \eta\big|_{R_L = R_{th}} = 50\,\% \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>หาวงจรสมมูลเทวินินที่ขั้วของโหลดก่อนเสมอ</b> (หน้า 5.2) แล้ววงจรใหญ่แค่ไหนก็เหลือแค่ \(V_{th}\), \(R_{th}\) และ \(R_L\)</li>
+  <li><b>กำลังที่โหลดสูงสุดเมื่อ \(R_L = R_{th}\)</b> (ได้จาก \(dP_L/dR_L = 0\)) เรียกว่า<b>การจับคู่ความต้านทาน</b></li>
+  <li><b>\(P_{max} = V_{th}^2/(4R_{th})\)</b> เครื่องหมายของ \(V_{th}\) ไม่มีผลเพราะยกกำลังสอง</li>
+  <li>โหลดน้อยไปกระแสมากแต่แรงดันต่ำ โหลดมากไปแรงดันสูงแต่กระแสน้อย <b>ทั้งสองทางได้กำลังน้อยกว่า \(P_{max}\)</b></li>
+  <li><b>กำลังสูงสุดไม่ใช่ประสิทธิภาพสูงสุด</b>: ที่ \(R_L = R_{th}\) กำลังครึ่งหนึ่งร้อนอยู่ใน \(R_{th}\) (η = 50 %) ระบบไฟฟ้ากำลังจึงไม่ทำงานที่จุดนี้ แต่วงจรสื่อสารและเครื่องขยายเสียงต้องการจุดนี้</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Always find the Thévenin equivalent at the load terminals first</b> (page 5.2); however big the circuit, only \(V_{th}\), \(R_{th}\) and \(R_L\) are left.</li>
+  <li><b>The load power is greatest when \(R_L = R_{th}\)</b> (from \(dP_L/dR_L = 0\)), called <b>resistance matching</b>.</li>
+  <li><b>\(P_{max} = V_{th}^2/(4R_{th})\)</b>; the sign of \(V_{th}\) does not matter because it is squared.</li>
+  <li>Too small a load draws a large current at a low voltage, too large a load a high voltage at a small current; <b>both give less than \(P_{max}\)</b>.</li>
+  <li><b>Maximum power is not maximum efficiency</b>: at \(R_L = R_{th}\) half the power heats \(R_{th}\) (η = 50 %), so power systems never run there, while communication circuits and amplifiers want exactly this point.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>หลอดไฟสว่างที่สุดเมื่อไร</a><a href="#ex1"><b>1</b>Ex 6</a><a href="#ex2"><b>2</b>Ex 7</a><a href="#ex3"><b>3</b>แบบฝึกหัด Ex.7</a><a href="#ex4"><b>4</b>การบ้านข้อ 2</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>When is the lamp brightest?</a><a href="#ex1"><b>1</b>Ex 6</a><a href="#ex2"><b>2</b>Ex 7</a><a href="#ex3"><b>3</b>Exercise Ex.7</a><a href="#ex4"><b>4</b>Homework 2</a></nav>
+
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 18 ที่ผู้สอนเขียนในห้อง (พ.ศ. 2564)</span><span data-l="en">See slide p. 18 as written in class (2021)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch5/K15a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 18, maximum power transfer: 'Thévenin equivalent circuit' written over the source, a note that the Thévenin equivalent must be found first, the derivative set to zero, and the result Rth = RL boxed">
+    <figcaption data-l="th">หน้า 18: ต้องหาวงจรสมมูลเทวินินก่อน แล้วได้ \(R_{th} = R_L\)</figcaption><figcaption data-l="en">p. 18: find the Thévenin equivalent first; then \(R_{th} = R_L\)</figcaption></figure></div></details>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">หลอดไฟสว่างที่สุดเมื่อไร</h2><h2 data-l="en">When is the lamp brightest?</h2>
+    <div class="src" data-l="th">วงจรสมมูลเทวินินกับโหลดเป็นหลอดไฟ · เลื่อน \(R_L\), \(V_{th}\) และ \(R_{th}\)</div><div class="src" data-l="en">A Thévenin equivalent with a lamp as the load · slide \(R_L\), \(V_{th}\) and \(R_{th}\)</div></div></div>
+  <p class="lead" data-l="th">หลอดไฟสว่างตามกำลังที่ได้รับ <b>เลื่อน \(R_L\)</b> แล้วดูทั้งหลอดไฟและวงกลมบนกราฟ: กำลัง (เส้นสีเหลือง) ขึ้นถึงยอดที่ \(R_L = R_{th}\) พอดีแล้วลดลง ส่วนประสิทธิภาพ (เส้นประสีฟ้า แกนขวา) เพิ่มขึ้นเรื่อย ๆ และเป็น 50 % ที่ยอดของกำลัง เปลี่ยน \(V_{th}\) และ \(R_{th}\) ด้วย ยอดจะตาม \(R_{th}\) เสมอ</p>
+  <p class="lead" data-l="en">The lamp glows with the power it receives. <b>Slide \(R_L\)</b> and watch the lamp and the circle on the graph: the power (yellow) climbs to its peak exactly at \(R_L = R_{th}\) and falls again, while the efficiency (dashed blue, right axis) keeps rising and is 50 % at the power peak. Change \(V_{th}\) and \(R_{th}\) too; the peak always follows \(R_{th}\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div>
+    <details class="derive"><summary><span data-l="th">ที่มาของ \(R_L = R_{th}\) (สไลด์หน้า 18)</span><span data-l="en">Where \(R_L = R_{th}\) comes from (slide p. 18)</span></summary><div id="drv"></div></details></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 6: (a) ถ้า \(R_{out}\) = 3 kΩ จงหากำลังที่ส่งให้ (b) กำลังสูงสุดที่ส่งให้ \(R_{out}\) ใด ๆ ได้คือเท่าใด</h2><h2 data-l="en">Ex 6: (a) if \(R_{out}\) = 3 kΩ, find the power delivered to it; (b) what is the maximum power that can be delivered to any \(R_{out}\)?</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 19 · Hayt Practice 5.10</div><div class="src" data-l="en">Chapter 5 slides, p. 19 · Hayt Practice 5.10</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p19q.webp" width="1445" height="650" loading="lazy" decoding="async" alt="Ex 6: consider the circuit. (a) If Rout = 3 k, find the power delivered to it; (b) what is the maximum power that can be delivered to any Rout? A 20 V and a 40 V source along the top, a 30 V source over 2 kilohm down the middle, 5 kilohm on the left and Rout on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 19 (ฉบับแจกพิมพ์ 5 kΩ) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 19 (the handout prints 5 kΩ) · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv1"></canvas><div class="ctl" id="ctl1"></div></div><div class="card solve">
+    <div class="warnbox" data-l="th">ฉบับแจก (พ.ศ. 2568) พิมพ์ตัวต้านทานซ้ายเป็น 5 kΩ แต่ฉบับในห้องและ Hayt Practice 5.10 ใช้ 2 kΩ (ตอบ 230 mW และ 306 mW) เลือกได้ทั้งสองแบบด้วยปุ่มใต้ภาพจำลอง ขั้นที่ 4 (ข้อ c ของ Hayt) มีเฉพาะแบบ 2 kΩ</div>
+    <div class="warnbox" data-l="en">The 2025 handout prints the left resistor as 5 kΩ, while the in-class version and Hayt Practice 5.10 use 2 kΩ (answers 230 mW and 306 mW). Both are available with the buttons under the simulation; step 4 (Hayt's part c) exists for 2 kΩ only.</div>
+    <div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (2 kΩ, สองหน้า)</span><span data-l="en">See the teacher's in-class working (2 kΩ, two pages)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K15b.webp" width="1100" height="646" loading="lazy" decoding="async" alt="In-class slide 19 with 2 kilohm on the left: mesh Ix gives 4kIx − 2kIy = −50, mesh Iy gives −2kIx + 5kIy = −10; Ix = −0.016875 A, Iy = −0.00875 A; P3k = Iy²(3k) = 0.229 W">
+      <figcaption data-l="th">ข้อ (a): วิธีเมชได้ \(I_y\) = −8.75 mA และ \(P_{3k}\) = 0.229 W</figcaption><figcaption data-l="en">Part (a): meshes give \(I_y\) = −8.75 mA and \(P_{3k}\) = 0.229 W</figcaption></figure>
+      <figure class="slide"><img src="slides/ch5/K16.webp" width="1000" height="1293" loading="lazy" decoding="async" alt="Handwritten part (b): remove RL; mesh 2kIx + 20 + 30 + 2kIx = 0 gives Ix = −0.0125 A, Vx = 2kIx = −25 V and VAB = −40 + 30 + Vx = −35 V; kill the sources: Rth = 2k ∥ 2k = 1 kilohm; Thévenin equivalent −35 V with 1 kilohm; Rout = Rth = 1 kilohm, I = −35/(1k + 1k) = −0.0175 A, P = I²R = 0.30625 W">
+      <figcaption data-l="th">ข้อ (b): \(V_{th}\) = −35 V, \(R_{th}\) = 1 kΩ, \(R_{out} = R_{th}\) ได้ \(P\) = 0.30625 W</figcaption><figcaption data-l="en">Part (b): \(V_{th}\) = −35 V, \(R_{th}\) = 1 kΩ, and \(R_{out} = R_{th}\) gives \(P\) = 0.30625 W</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 7: หากำลังสูงสุดที่วงจรนี้ส่งให้โหลดได้</h2><h2 data-l="en">Ex 7: find the maximum power this circuit can deliver to a load</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 20 (วงจรเดียวกับ Ex 5 ในหน้า 5.3)</div><div class="src" data-l="en">Chapter 5 slides, p. 20 (the circuit of Ex 5 on page 5.3)</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p20q.webp" width="1320" height="513" loading="lazy" decoding="async" alt="Ex 7: determine the maximum power transfer of the circuit; the circuit of Ex 5 with the 3 V source, 2 kilohm, the 7 mA source, 5 kilohm and 1 kilohm to the open terminals">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 20 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 20 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv2"></canvas><div class="ctl" id="ctl2"></div></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the in-class slide</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K17a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 20: the Thévenin equivalent drawn with Rth = 2.43 k and Vth = −7.86 V, RL = 2.43 k, and 'P = ?' left unfinished">
+      <figcaption data-l="th">หน้า 20: \(R_{th}\) = 2.43 kΩ, \(V_{th}\) = −7.86 V, \(R_L\) = 2.43 kΩ แล้วเขียน "P = ?" ไว้</figcaption><figcaption data-l="en">p. 20: \(R_{th}\) = 2.43 kΩ, \(V_{th}\) = −7.86 V, \(R_L\) = 2.43 kΩ, and "P = ?" left open</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">แบบฝึกหัด Ex.7: หาค่า \(R_L\) ที่ทำให้เกิดกำลังสูงสุด พร้อมคำนวณกำลังที่ \(R_L\)</h2><h2 data-l="en">Exercise Ex.7: find the \(R_L\) that receives maximum power and compute that power</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.7 (วงจรเดียวกับ Ex.5 ในหน้า 5.2) · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.7 (the circuit of Ex.5 on page 5.2) · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q7.webp" width="1300" height="609" loading="lazy" decoding="async" alt="Exercise Ex.7 (in Thai): find the RL that gives maximum power transfer and the power in RL; the circuit of exercise Ex.5 with the 8 A source, 15 ohm, 20 ohm, the 40 V source, 30 ohm, 10 ohm and RL">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.7 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv3"></canvas><div class="ctl" id="ctl3"></div></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol52_7.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.7: dPL/dRL = 0 gives RL = Rth; the Thévenin equivalent from Ex.5, Vth = 100 V with Rth = 15 ohm, and RL = 15 ohm; PL = VL²/RL = IL²RL = VLIL; IL = Vth/(Rth + RL) = 100/(15 + 15) = 10/3 A; PL = (10/3)²(15) = 166.6667 W">
+      <figcaption data-l="th">\(R_L = R_{th}\) = 15 Ω, \(I_L\) = 10/3 A และ \(P_L\) = 166.6667 W</figcaption><figcaption data-l="en">\(R_L = R_{th}\) = 15 Ω, \(I_L\) = 10/3 A and \(P_L\) = 166.6667 W</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">การบ้านข้อ 2: หาวงจรสมมูลเทวินินและนอร์ตัน และกำลังสูงสุดที่ส่งให้ \(R_L\) ได้</h2><h2 data-l="en">Homework 2: find the Thévenin and Norton equivalents and the maximum power that can be delivered to \(R_L\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 22 (Problems ข้อ 2) · สไลด์ไม่มีเฉลย หน้านี้คำนวณให้</div><div class="src" data-l="en">Chapter 5 slides, p. 22 (Problems, no. 2) · no solution in the slides; this page works it out</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p22q.webp" width="1357" height="644" loading="lazy" decoding="async" alt="Homework 2: create the Thévenin and Norton equivalent circuits and determine the maximum power transfer. A 300 mA source pointing up, 7 kilohm down, 5 kilohm across the top, 1 kilohm over a 2.5 V source down the middle, 6 kilohm down, and RL on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 22 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 22 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ยอดของเส้นโค้ง</h3>
+    <ol><li>ส่วน A ตั้ง \(V_{th}\) = 12 V, \(R_{th}\) = 6 Ω: \(P_{max}\) = 144/24 = 6 W ที่ \(R_L\) = 6 Ω</li>
+    <li>กด "\(R_L = R_{th}/4\)" และ "\(R_L = 4R_{th}\)": ทั้งสองได้กำลังเท่ากันคือ 64 % ของ \(P_{max}\) แต่ประสิทธิภาพต่างกันมาก (20 % กับ 80 %)</li>
+    <li>เพิ่ม \(V_{th}\) เป็นสองเท่า: \(P_{max}\) เพิ่มสี่เท่า แต่ตำแหน่งยอดไม่ย้าย</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — โจทย์ Ex 6 สองแบบ</h3>
+    <ol><li>ข้อ 1 แบบ 2 kΩ (Hayt): ข้อ (a) ได้ 229.7 mW ที่ 3 kΩ ข้อ (b) ได้ 306.25 mW ที่ \(R_{out}\) = 1 kΩ ตรงกับเฉลยในห้อง</li>
+    <li>เปลี่ยนเป็นแบบ 5 kΩ ตามฉบับแจก: \(R_{th}\) = 1.429 kΩ, \(V_{th}\) = −24.29 V จึงได้ 90.22 mW และ 103.2 mW</li>
+    <li>ก่อนเปิดขั้นที่ 2 ลองเลื่อน \(R_{out}\) ไปมา จุดที่วัดได้จะเรียงตัวเป็นเส้นโค้งเดียวกับที่ขั้นที่ 2 วาดให้</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — โหลดที่โจทย์ให้มาไม่ใช่ค่าที่ดีที่สุด</h3>
+    <ol><li>ข้อ 3 (แบบฝึกหัด Ex.7): \(R_L\) = 15 Ω ได้ 166.67 W ส่วน \(R_L\) = 10 Ω ของ Ex.5 ได้แค่ 160 W</li>
+    <li>ข้อ 4 (การบ้านข้อ 2): \(R_L\) = 800 Ω ได้ 6.301 W ลองหาค่า \(R_L\) ที่ได้ครึ่งหนึ่งของ \(P_{max}\)</li>
+    <li>คำถาม: ทำไมโรงไฟฟ้าไม่ตั้งโหลดให้เท่ากับความต้านทานภายในของเครื่องกำเนิด</li></ol>
+    <div class="book">สไลด์บทที่ 5 หน้า 18–20, 22 · ฉบับในห้องหน้า 18–20 · แบบฝึกหัด 5.2 Ex.7 และเฉลย · Hayt §5.4, Practice 5.10</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the top of the curve</h3>
+    <ol><li>In section A set \(V_{th}\) = 12 V, \(R_{th}\) = 6 Ω: \(P_{max}\) = 144/24 = 6 W at \(R_L\) = 6 Ω.</li>
+    <li>Press "\(R_L = R_{th}/4\)" and "\(R_L = 4R_{th}\)": both give the same power, 64 % of \(P_{max}\), but very different efficiencies (20 % and 80 %).</li>
+    <li>Double \(V_{th}\): \(P_{max}\) quadruples, but the peak does not move.</li></ol></div>
+  <div class="card"><h3>Try this 2 — two versions of Ex 6</h3>
+    <ol><li>Problem 1 with 2 kΩ (Hayt): (a) gives 229.7 mW at 3 kΩ and (b) 306.25 mW at \(R_{out}\) = 1 kΩ, as in the class solution.</li>
+    <li>Switch to the 5 kΩ of the handout: \(R_{th}\) = 1.429 kΩ and \(V_{th}\) = −24.29 V give 90.22 mW and 103.2 mW.</li>
+    <li>Before opening step 2, slide \(R_{out}\) back and forth: the measured points line up on the very curve that step 2 draws.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the given load is not the best one</h3>
+    <ol><li>Problem 3 (exercise Ex.7): \(R_L\) = 15 Ω gets 166.67 W, while the \(R_L\) = 10 Ω of Ex.5 gets only 160 W.</li>
+    <li>Problem 4 (homework 2): \(R_L\) = 800 Ω gets 6.301 W; find the \(R_L\) values that get half of \(P_{max}\).</li>
+    <li>Question: why does a power station not set its load equal to the internal resistance of its generator?</li></ol>
+    <div class="book">Chapter 5 slides, pp. 18–20, 22 · in-class slides pp. 18–20 · exercise sheet 5.2 Ex.7 and solution · Hayt §5.4, Practice 5.10</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.002, 0.004 * Math.abs(y)));
+
+/* A: the lamp */
+const M = CH5.mpDemo({ cv: 'cvA', panel: 'pA' }); M.resize(); window.addEventListener('resize', () => M.resize()); LS.anim($('cvA'), dt => M.frame(dt));
+const drv = () => { $('drv').innerHTML = MC.tex(CH5.fitIn($('pA'), '\\begin{aligned} p_L &= i_L^2 R_L = \\frac{v_s^2 R_L}{(R_s + R_L)^2} \\\\ \\frac{dp_L}{dR_L} &= v_s^2\\,\\frac{(R_s + R_L) - 2R_L}{(R_s + R_L)^3} \\\\ &= v_s^2\\,\\frac{R_s - R_L}{(R_s + R_L)^3} = 0 \\\\ R_L &= \\boxed{R_s = R_{th}} \\\\ P_{max} &= \\frac{V_{th}^2 R_{th}}{(2R_{th})^2} = \\frac{V_{th}^2}{4R_{th}} \\end{aligned}'), true) + `<div class="sub2">${t('สไลด์เขียนเงื่อนไขเป็น \\((R_s + R_L)^2 = 2R_L(R_s + R_L)\\) ซึ่งคือบรรทัดที่สองหลังตัด \\((R_s + R_L)\\) หนึ่งตัวออกจากเศษและส่วน', 'The slide writes the condition as \\((R_s + R_L)^2 = 2R_L(R_s + R_L)\\), the second line before one factor \\((R_s + R_L)\\) is cancelled from top and bottom')}</div>`; MC.renderMath($('drv')); };
+drv(); CH5.onFonts(drv);
+
+/* 1: Ex 6 = Hayt Practice 5.10 (2 kΩ, or the handout's 5 kΩ) */
+const p1 = CH5.problem(1, 'mp', 'ex6', {
+  ask: sim => ({ fields: [{ label: t('(a) P (mW) =', '(a) P (mW) ='), ok: x => near(x, sim.vi ? 86700 / 961 : 229.6875, 0.4), w: 5 }, { label: t('(b) P<sub>max</sub> (mW) =', '(b) P<sub>max</sub> (mW) ='), ok: x => near(x, sim.vi ? 103.2 : 306.25, 0.4), w: 5 }],
+    check: v => near(v[0], 229.7, 0.5) || near(v[1], 306.25, 0.5) ? t('นี่คือคำตอบของแบบ 2 kΩ แต่ตอนนี้เลือกแบบ 5 kΩ ไว้', 'Those are the 2 kΩ answers, but the 5 kΩ version is selected') : near(v[0], 90.2, 0.5) || near(v[1], 103.2, 0.5) ? t('นี่คือคำตอบของแบบ 5 kΩ แต่ตอนนี้เลือกแบบ 2 kΩ ไว้', 'Those are the 5 kΩ answers, but the 2 kΩ version is selected') : '' }),
+  answer: () => p1 && p1.vi ? t('แบบ 5 kΩ (ฉบับแจก): (a) \\(P_{3k} \\approx 90.22\\) mW (b) \\(P_{max} = (170/7)^2/(4 \\cdot 10000/7) \\approx 103.2\\) mW ที่ \\(R_{out} = R_{th} \\approx 1.429\\) kΩ', '5 kΩ version (handout): (a) \\(P_{3k} \\approx 90.22\\) mW, (b) \\(P_{max} = (170/7)^2/(4 \\cdot 10000/7) \\approx 103.2\\) mW at \\(R_{out} = R_{th} \\approx 1.429\\) kΩ')
+    : t('แบบ 2 kΩ (Hayt, ในห้อง): (a) \\(P_{3k} = 147/640 \\approx 229.7\\) mW (b) \\(P_{max} = 49/160 = 306.25\\) mW ที่ \\(R_{out} = R_{th} = 1\\) kΩ ตรงกับในห้อง (0.229 W, 0.30625 W) และ Hayt (230 mW, 306 mW)', '2 kΩ version (Hayt, in class): (a) \\(P_{3k} = 147/640 \\approx 229.7\\) mW, (b) \\(P_{max} = 49/160 = 306.25\\) mW at \\(R_{out} = R_{th} = 1\\) kΩ, as in class (0.229 W, 0.30625 W) and Hayt (230 mW, 306 mW)') });
+
+/* 2: Ex 7 (the circuit of Ex 5) */
+CH5.problem(2, 'mp', 'ex5', {
+  ask: () => ({ fields: [{ label: 'P<sub>max</sub> (mW) =', ok: x => near(x, 121 / 19.04, 0.01), w: 5 }], check: v => near(v[0], 4 * 121 / 19.04, 0.03) ? t('ใช้ \\(V_{th}^2/R_{th}\\) อยู่ ต้องหารด้วย \\(4R_{th}\\)', 'That is \\(V_{th}^2/R_{th}\\): divide by \\(4R_{th}\\)') : '' }),
+  answer: t('\\(P_{max} = 121/19040\\) W \\(\\approx 6.355\\) mW ที่ \\(R_L = R_{th} = 17/7 \\approx 2.429\\) kΩ (ในห้องหยุดที่ "P = ?" หน้านี้คำนวณต่อให้)', '\\(P_{max} = 121/19040\\) W \\(\\approx 6.355\\) mW at \\(R_L = R_{th} = 17/7 \\approx 2.429\\) kΩ (the class stopped at "P = ?"; this page finishes it)') });
+
+/* 3: exercise sheet 5.2 Ex.7 */
+CH5.problem(3, 'mp', 's5', {
+  ask: () => ({ fields: [{ label: 'R<sub>L</sub> (Ω) =', ok: x => near(x, 15), w: 4 }, { label: 'P<sub>L</sub> (W) =', ok: x => near(x, 500 / 3, 0.1), w: 5 }], check: v => near(v[1], 160, 0.1) ? t('160 W คือกำลังเมื่อ \\(R_L\\) = 10 Ω ของ Ex.5 ยังไม่ใช่ค่าสูงสุด', '160 W is the power with the 10 Ω of Ex.5, not the maximum') : '' }),
+  answer: t('\\(R_L = R_{th} = 15\\) Ω และ \\(P_L = 500/3 \\approx 166.67\\) W ตรงกับเฉลย (166.6667 W)', '\\(R_L = R_{th} = 15\\) Ω and \\(P_L = 500/3 \\approx 166.67\\) W, as in the solution (166.6667 W)') });
+
+/* 4: homework 2, Thévenin + Norton + maximum power */
+CH5.problem(4, 'both', 'hw2', { mp: true,
+  ask: () => ({ fields: [{ label: 'V<sub>th</sub> (V) =', ok: x => near(x, 142), w: 4 }, { label: 'R<sub>th</sub> (Ω) =', ok: x => near(x, 800), w: 4 }, { label: 'I<sub>N</sub> (A) =', ok: x => near(x, 0.1775, 0.0005), w: 4 }, { label: 'P<sub>max</sub> (W) =', ok: x => near(x, 6.30125, 0.005), w: 4 }],
+    check: v => near(v[1], 12000 / 13) ? t('\\(R_{th}\\): 7 kΩ อนุกรมกับ 5 kΩ เมื่อแหล่งจ่าย 300 mA เปิดวงจร แล้วขนานกับ 1 kΩ และ 6 kΩ', '\\(R_{th}\\): with the 300 mA opened, the 7 kΩ is in series with the 5 kΩ, then in parallel with the 1 kΩ and the 6 kΩ') : '' }),
+  answer: t('\\(V_{th} = 142\\) V, \\(R_{th} = R_N = 800\\) Ω, \\(I_N = 0.1775\\) A (ตรวจ: \\(I_N R_N = 142\\) V) และ \\(P_{max} = 142^2/(4 \\cdot 800) = 6.30125\\) W ที่ \\(R_L = 800\\) Ω (สไลด์ไม่มีเฉลย)', '\\(V_{th} = 142\\) V, \\(R_{th} = R_N = 800\\) Ω, \\(I_N = 0.1775\\) A (check: \\(I_N R_N = 142\\) V) and \\(P_{max} = 142^2/(4 \\cdot 800) = 6.30125\\) W at \\(R_L = 800\\) Ω (no solution in the slides)') });
+});
+</script>
+</body>
+</html>

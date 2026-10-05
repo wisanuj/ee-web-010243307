@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="6.1 — Sinusoids: Amplitude, Frequency and Phase">6.1 — สัญญาณไซน์: แอมพลิจูด ความถี่ และมุมเฟส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">สัญญาณไซน์: แอมพลิจูด ความถี่ และมุมเฟส <span class="en">Sinusoids — amplitude, frequency, phase, leading and lagging</span></h1>
+<h1 data-l="en">Sinusoids: amplitude, frequency and phase <span class="en">Leading, lagging and the three rules for comparing two sine waves</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch6/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3: characteristics of the sinusoidal function. v(t) = Vm sin ωt drawn against ωt in radians; f = 1/T, ωT = 2π, ω = 2πf">
+    <figcaption data-l="th">สไลด์บทที่ 6 หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 6 slides, p. 3 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">ในบทที่ 2–5 แหล่งจ่ายทุกตัวให้ค่าคงที่ (ไฟฟ้ากระแสตรง) ตั้งแต่บทนี้แหล่งจ่ายเปลี่ยนค่าตามเวลาเป็น<b>คลื่นไซน์</b> แบบเดียวกับไฟที่เต้ารับในบ้านและสายส่งไฟฟ้า สไลด์หน้า 3: คลื่นไซน์บอกด้วยสามค่า คือ<b>แอมพลิจูด \(V_m\)</b> (ค่ายอด) <b>ความถี่เชิงมุม \(\omega\)</b> และ<b>มุมเฟส \(\theta\)</b> ก่อนวิเคราะห์วงจรจึงต้องอ่านคลื่นไซน์ให้คล่อง ว่าสูงแค่ไหน หมุนเร็วแค่ไหน และเริ่มที่มุมเท่าไร หน้านี้มีภาพจำลองลูกศรหมุน (ส่วน A) ตามด้วย <b>ตัวอย่างหนึ่งข้อและแบบฝึกหัดสามข้อย่อย</b> เรื่องการนำหน้าและตามหลัง ภาพจำลองของแต่ละข้อแสดงคลื่นที่โจทย์ให้ แล้ว<b>ลูกศรเฟเซอร์จะปรากฏเมื่อแปลงเป็นรูปไซน์ทีละขั้น</b></p>
+    <p class="sub" data-l="en">In chapters 2–5 every source was constant (DC). From this chapter on, sources vary in time as a <b>sine wave</b>, like the voltage at a wall socket or on a power line. Slide p. 3: a sinusoid is fixed by three numbers, the <b>amplitude \(V_m\)</b> (peak value), the <b>angular frequency \(\omega\)</b> and the <b>phase angle \(\theta\)</b>, so before analysing circuits we must read a sinusoid fluently: how high it peaks, how fast it turns and at what angle it starts. This page has a spinning-arrow simulation (section A), then <b>one example and one practice with three items</b> on leading and lagging. Each problem's simulation shows the given waves, and <b>the phasor arrows appear as each signal is rewritten into the sine form, one step at a time</b>.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} v(t) = V_m\sin(\omega t + \theta) \\ f = \frac{1}{T} \qquad \omega T = 2\pi \qquad \omega = 2\pi f \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li>คลื่นไซน์บอกด้วยสามค่า: <b>แอมพลิจูด \(V_m\)</b> (ค่ายอด), <b>ความถี่เชิงมุม \(\omega\)</b> (เรเดียนต่อวินาที, rad/s) และ<b>มุมเฟส \(\theta\)</b> (องศา)</li>
+  <li><b>\(\omega = 2\pi f\) และ \(f = 1/T\)</b>: ไฟบ้าน 50 Hz มีคาบ \(T = 20\) ms และ \(\omega = 100\pi \approx 314.16\) rad/s</li>
+  <li><b>คลื่นไซน์คือความสูงของปลายลูกศรยาว \(V_m\) ที่หมุนทวนเข็มนาฬิกาด้วยความเร็วเชิงมุม \(\omega\)</b> ลูกศรอยู่ที่มุม \(\theta\) เมื่อ \(t = 0\) และหมุนครบหนึ่งรอบ (360°) ในหนึ่งคาบ</li>
+  <li><b>\(\theta > 0\) คือนำหน้า (leading)</b>: ถึงยอดก่อน กราฟเลื่อนไปทางซ้าย · <b>\(\theta < 0\) คือตามหลัง (lagging)</b> · มุมเท่ากันคือเฟสเดียวกัน (in phase)</li>
+  <li><b>จะเทียบเฟสได้ ต้อง (1) เป็น sin ทั้งคู่หรือ cos ทั้งคู่ (2) แอมพลิจูดเป็นบวก (3) ความถี่เท่ากัน</b> ใช้ \(\cos x = \sin(x + 90^\circ)\) และ \(-\sin x = \sin(x \pm 180^\circ)\) แปลงให้ครบก่อน</li>
+  <li>เขียนมุมเฟสเป็น<b>องศาพร้อมเครื่องหมาย °</b> เสมอ เช่น \(100\sin(2\pi 1000t - 30^\circ)\) แทน \(100\sin(2\pi 1000t - \pi/6)\) จะได้ไม่สับสนกับ \(\omega t\) ที่เป็นเรเดียน</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li>A sinusoid is fixed by three numbers: the <b>amplitude \(V_m\)</b> (peak value), the <b>angular frequency \(\omega\)</b> (radians per second, rad/s) and the <b>phase angle \(\theta\)</b> (degrees).</li>
+  <li><b>\(\omega = 2\pi f\) and \(f = 1/T\)</b>: 50 Hz mains has a period \(T = 20\) ms and \(\omega = 100\pi \approx 314.16\) rad/s.</li>
+  <li><b>A sinusoid is the height of the tip of an arrow of length \(V_m\) turning anticlockwise at angular speed \(\omega\)</b>. The arrow sits at angle \(\theta\) at \(t = 0\) and makes one full turn (360°) per period.</li>
+  <li><b>\(\theta > 0\) means leading</b>: it peaks earlier, so the graph shifts left · <b>\(\theta < 0\) means lagging</b> · equal angles mean in phase.</li>
+  <li><b>Two phases can be compared only if (1) both are sines or both cosines, (2) both amplitudes are positive, (3) both frequencies are equal.</b> Use \(\cos x = \sin(x + 90^\circ)\) and \(-\sin x = \sin(x \pm 180^\circ)\) to get there first.</li>
+  <li>Always write the phase <b>in degrees with the ° sign</b>, e.g. \(100\sin(2\pi 1000t - 30^\circ)\) rather than \(100\sin(2\pi 1000t - \pi/6)\), so it is not confused with \(\omega t\), which is in radians.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ลูกศรหมุน</a><a href="#ex1"><b>1</b>ตัวอย่างหน้า 6</a><a href="#ex2"><b>2</b>แบบฝึกหัดหน้า 7</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Spinning arrow</a><a href="#ex1"><b>1</b>Example, p. 6</a><a href="#ex2"><b>2</b>Practice, p. 7</a></nav>
+
+<div class="group-head"><h2 data-l="th">บทนำ การนำหน้าและตามหลัง (สไลด์หน้า 2, 4–5)</h2><h2 data-l="en">Introduction, leading and lagging (slides pp. 2, 4–5)</h2></div>
+<p class="lead" data-l="th">ผลตอบสนองของวงจรมีสองส่วน คือ<b>ผลตอบสนองธรรมชาติ</b> ซึ่งเกิดชั่วครู่หลังวงจรเปลี่ยน และ<b>ผลตอบสนองบังคับ</b> ซึ่งอยู่นานตราบที่แหล่งจ่ายยังทำงาน บทนี้สนใจเฉพาะส่วนหลัง เรียกว่า<b>สถานะคงตัวแบบไซน์</b> (หน้า 2) หน้า 4 ให้รูปทั่วไป \(V_m\sin(\omega t + \theta)\): ถ้า \(\theta > 0\) คลื่นนำหน้า \(V_m\sin\omega t\) ถ้ามุมเท่ากันคือเฟสเดียวกัน และให้เขียนมุมเป็นองศา หน้า 5 เตือนว่าสัญญาณสองตัวจะเทียบเฟสกันได้ต้องเขียนเป็น sin (หรือ cos) ทั้งคู่ แอมพลิจูดเป็นบวก และความถี่เท่ากัน</p>
+<p class="lead" data-l="en">A circuit's response has two parts: the <b>natural response</b>, a short-lived transient after the circuit changes, and the <b>forced response</b>, which lasts as long as the source keeps running. This chapter is only about the second, the <b>sinusoidal steady state</b> (p. 2). Page 4 gives the general form \(V_m\sin(\omega t + \theta)\): with \(\theta > 0\) the wave leads \(V_m\sin\omega t\), equal angles mean in phase, and angles are written in degrees. Page 5 warns that two signals can only have their phases compared if both are written as sines (or both as cosines), both amplitudes are positive and both frequencies are equal.</p>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch6/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: introduction. The complete response of a linear circuit is the natural response (a short-lived transient) plus the forced response (the long-term steady state); the sinusoid is the common forcing function at household sockets and on power lines">
+    <figcaption data-l="th">สไลด์หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 2 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch6/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4: lagging and leading. v(t) = Vm sin(ωt + θ) leads Vm sin ωt by θ; in phase when the angles are equal; write the angle in degrees, 100 sin(2π1000t − π/6) becomes 100 sin(2π1000t − 30°)">
+    <figcaption data-l="th">สไลด์หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 4 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch6/p05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5: don't confuse; two sinusoidal waves whose phases are to be compared must be written as sine waves or both as cosine waves, with positive amplitudes, and have the same frequency">
+    <figcaption data-l="th">สไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 5 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง (ก.ย. 2566)</span><span data-l="en">See the slides as written in class (September 2023)</span></summary>
+  <div class="slides">
+    <figure class="slide"><img src="slides/ch6/K02.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class contents slide: sin and cos next to the introduction, the phasor as a vector V∠θ and I∠φ, the phasor of voltage and current in polar form, Z in ohms and Y in siemens">
+      <figcaption data-l="th">หน้าสารบัญ: เฟเซอร์คือเวกเตอร์ \(V\angle\theta\), \(I\angle\phi\) ในรูปเชิงขั้ว และหน่วยของ \(Z\) (Ω) กับ \(Y\) (S)</figcaption><figcaption data-l="en">Contents: the phasor is a vector \(V\angle\theta\), \(I\angle\phi\) in polar form, with the units of \(Z\) (Ω) and \(Y\) (S)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K04.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 3: v(t) = Vm sin(ωt + θ) with amplitude, initial angle of the voltage, frequency and period labelled; ω = 2πf = 2π/T; V = Vm∠θ">
+      <figcaption data-l="th">หน้า 3: ชื่อของแต่ละส่วนใน \(V_m\sin(\omega t + \theta)\) และเฟเซอร์ \(V_m\angle\theta\)</figcaption><figcaption data-l="en">p. 3: the name of each part of \(V_m\sin(\omega t + \theta)\), and the phasor \(V_m\angle\theta\)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch6/K05.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 4: v1 lags v2, v2 leads v1 by θ; the leading and lagging parts and the degree sign circled on the example">
+      <figcaption data-l="th">หน้า 4: \(v_1\) ตามหลัง \(v_2\) หรือ \(v_2\) นำหน้า \(v_1\) อยู่ \(\theta\)</figcaption><figcaption data-l="en">p. 4: \(v_1\) lags \(v_2\), or \(v_2\) leads \(v_1\), by \(\theta\)</figcaption></figure></div></details>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ลูกศรหมุนวาดคลื่นไซน์</h2><h2 data-l="en">A spinning arrow draws the sine wave</h2>
+    <div class="src" data-l="th">ตั้งค่า \(V_m\), \(f\) และ \(\theta\) เอง หรือกดตัวอย่าง (ไฟบ้าน 220 V 50 Hz, ตัวอย่างสไลด์หน้า 4)</div><div class="src" data-l="en">Set \(V_m\), \(f\) and \(\theta\) yourself, or press an example (mains 220 V 50 Hz, the example of slide p. 4)</div></div></div>
+  <p class="lead" data-l="th">ภาพบนคือวงจรที่มีแหล่งจ่าย \(v(t)\) ต่อกับตัวต้านทาน <b>จุดในสายไฟวิ่งไปกลับตามค่า \(v(t)\) ขณะนั้น</b> ภาพล่างซ้ายคือ<b>ลูกศรยาว \(V_m\) ที่หมุนทวนเข็มนาฬิกา</b> เส้นประจากปลายลูกศรลากไปทางขวาที่ความสูงเท่ากับปลายลูกศร ซึ่งคือค่าของกราฟที่เส้นเคอร์เซอร์พอดี กราฟใช้แกน \(\omega t\) เป็นองศาและมีเวลาเป็นมิลลิวินาทีอยู่ใต้แกน <b>เส้นสีเขียว</b>คือ \(V_m\sin\omega t\) (มุมเฟสศูนย์) ไว้เทียบ</p>
+  <p class="lead" data-l="en">Top is a circuit with a source \(v(t)\) across a resistor: <b>the dots swing back and forth with the value of \(v(t)\) at that instant</b>. Bottom left is <b>an arrow of length \(V_m\) turning anticlockwise</b>; the dashed line from its tip runs right at the height of the tip, which is exactly the value of the graph at the cursor. The graph has \(\omega t\) in degrees with the time in milliseconds underneath. <b>Green</b> is \(V_m\sin\omega t\) (zero phase), for comparison.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div>
+    <details class="derive"><summary><span data-l="th">ทำไมความสูงของลูกศรที่หมุนจึงเป็นคลื่นไซน์</span><span data-l="en">Why the height of a spinning arrow is a sine wave</span></summary>
+      <div data-l="th"><p>ลูกศรยาว \(V_m\) ที่มุม \(\alpha\) มีปลายอยู่ที่ \((V_m\cos\alpha,\ V_m\sin\alpha)\) ถ้าลูกศรหมุนด้วยความเร็วเชิงมุม \(\omega\) และเริ่มที่มุม \(\theta\) จะได้ \(\alpha = \omega t + \theta\) ความสูงของปลายลูกศรจึงเป็น \(V_m\sin(\omega t + \theta)\) และหมุนครบหนึ่งรอบเมื่อ \(\omega T = 2\pi\) หน้า 1.4 อ่านเงาบนแกนจริง (cos) ตามแบบ Hayt ส่วนวิชานี้ตั้งแต่บทที่ 6 อ่าน<b>ความสูงบนแกนจินตภาพ</b> (sin) ตามสไลด์ เป็นลูกศรตัวเดียวกัน เพราะ \(\sin x = \cos(x - 90^\circ)\)</p></div>
+      <div data-l="en"><p>An arrow of length \(V_m\) at angle \(\alpha\) has its tip at \((V_m\cos\alpha,\ V_m\sin\alpha)\). If it turns at angular speed \(\omega\) starting from angle \(\theta\), then \(\alpha = \omega t + \theta\), so the height of the tip is \(V_m\sin(\omega t + \theta)\), and one turn takes \(\omega T = 2\pi\). Page 1.4 read the shadow on the real axis (cosine), as Hayt does; from chapter 6 this course reads <b>the height on the imaginary axis</b> (sine), as the slides do. It is the same arrow, since \(\sin x = \cos(x - 90^\circ)\).</p></div></details></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">ตัวอย่างสไลด์หน้า 6: \(v_1\) กับ \(v_2\) ตัวไหนนำหน้า และนำหน้ากี่องศา</h2><h2 data-l="en">Example of slide p. 6: which of \(v_1\), \(v_2\) leads, and by how much?</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 6 หน้า 6 (ตารางแปลง sin ↔ cos ทางซ้าย) · Hayt §10.1</div><div class="src" data-l="en">Chapter 6 slides, p. 6 (the sine ↔ cosine table on the left) · Hayt §10.1</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch6/p06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6: converting sines to cosines. Note that −sin ωt = sin(ωt ± 180°), −cos ωt = cos(ωt ± 180°), ∓sin ωt = cos(ωt ± 90°), ±cos ωt = sin(ωt ± 90°); v1 = Vm1 cos(5t + 10°) = Vm1 sin(5t + 90° + 10°) = Vm1 sin(5t + 100°) and v2 = Vm2 sin(5t − 30°)">
+    <figcaption data-l="th">สไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 6 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the slide as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K07.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 6: Vm1 sin(5t + 100°) boxed, and v2 rewritten as a cosine: v2 = Vm2 cos(5t − 90° − 30°) = Vm2 cos(5t − 120°)">
+      <figcaption data-l="th">ในห้องแปลง \(v_2\) เป็น cos: \(v_2 = V_{m_2}\cos(5t - 120^\circ)\) แล้วเทียบกับ \(v_1 = V_{m_1}\cos(5t + 10^\circ)\) ได้ 130° เท่ากัน</figcaption><figcaption data-l="en">In class \(v_2\) was rewritten as a cosine, \(v_2 = V_{m_2}\cos(5t - 120^\circ)\), and compared with \(v_1 = V_{m_1}\cos(5t + 10^\circ)\): the same 130°</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="ex2"><h2 data-l="th">แบบฝึกหัด 1: หามุมที่ \(i_1\) ตามหลัง \(v_1\) (สไลด์หน้า 7)</h2><h2 data-l="en">Practice 1: find the angle by which \(i_1\) lags \(v_1\) (slide p. 7)</h2></div>
+<p class="lead" data-l="th">Hayt Practice 10.1 · \(v_1 = 120\cos(120\pi t - 40^\circ)\) V ใช้ร่วมกันทั้งสามข้อ ตอบเป็นองศา ค่าลบแปลว่า \(i_1\) นำหน้า \(v_1\) มุมที่ต่างกัน 360° ถือว่าเป็นคำตอบเดียวกัน (เช่น −60 กับ 300)</p>
+<p class="lead" data-l="en">Hayt Practice 10.1 · \(v_1 = 120\cos(120\pi t - 40^\circ)\) V is shared by all three items. Answer in degrees; a negative value means \(i_1\) leads \(v_1\). Angles 360° apart count as the same answer (e.g. −60 and 300).</p>
+<figure class="slide q"><img src="slides/ch6/p07q.webp" width="1418" height="368" loading="lazy" decoding="async" alt="Practice 1: find the angle by which i1 lags v1 if v1 = 120 cos(120πt − 40°) V and i1 equals (a) 2.5 cos(120πt + 20°) A, (b) 1.4 sin(120πt − 70°) A, (c) −0.8 cos(120πt − 110°) A">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 7 · tap to enlarge</figcaption></figure>
+<details class="orig"><summary><span data-l="th">ดูข้อ (a) ที่ผู้สอนทำในห้อง</span><span data-l="en">See item (a) as worked in class</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch6/K08.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 7: ω = 120π; v1 = 120 sin(120πt + 90° − 40°) = 120 sin(120πt + 50°), 120∠50°; (a) 2.5 sin(120πt + 20° + 90°) = 2.5 sin(120πt + 110°), 2.5∠110°; I leads V, V lags I, by about 110° − 50° = 60°, the phase shift; a phasor diagram">
+    <figcaption data-l="th">ข้อ (a): \(\mathbf{V}_1 = 120\angle 50^\circ\), \(\mathbf{I}_1 = 2.5\angle 110^\circ\) ดังนั้น \(i_1\) นำหน้า \(v_1\) 60° (ตอบ −60° ตามโจทย์ที่ถามมุมที่ตามหลัง)</figcaption><figcaption data-l="en">Item (a): \(\mathbf{V}_1 = 120\angle 50^\circ\), \(\mathbf{I}_1 = 2.5\angle 110^\circ\), so \(i_1\) leads \(v_1\) by 60° (the answer is −60°, since the question asks for the lag)</figcaption></figure></div></details>
+
+<section class="prob sub-item" id="ex2a">
+  <div class="prob-head"><span class="prob-no">2a</span><div><h2 data-l="th">(a) \(i_1 = 2.5\cos(120\pi t + 20^\circ)\) A</h2><h2 data-l="en">(a) \(i_1 = 2.5\cos(120\pi t + 20^\circ)\) A</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2a"></canvas></div><div class="card solve"><div id="ask2a"></div><div id="st2a"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex2b">
+  <div class="prob-head"><span class="prob-no">2b</span><div><h2 data-l="th">(b) \(i_1 = 1.4\sin(120\pi t - 70^\circ)\) A</h2><h2 data-l="en">(b) \(i_1 = 1.4\sin(120\pi t - 70^\circ)\) A</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2b"></canvas></div><div class="card solve"><div id="ask2b"></div><div id="st2b"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex2c">
+  <div class="prob-head"><span class="prob-no">2c</span><div><h2 data-l="th">(c) \(i_1 = -0.8\cos(120\pi t - 110^\circ)\) A</h2><h2 data-l="en">(c) \(i_1 = -0.8\cos(120\pi t - 110^\circ)\) A</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2c"></canvas></div><div class="card solve"><div id="ask2c"></div><div id="st2c"></div></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — นำหน้าคือเลื่อนซ้าย</h3>
+    <ol><li>ส่วน A ตั้ง \(\theta = +90^\circ\): กราฟสีชมพูถึงยอดตั้งแต่ \(\omega t = 0\) คือ \(V_m\cos\omega t\) ซึ่ง<b>นำหน้า</b> \(V_m\sin\omega t\) อยู่ 90°</li>
+    <li>ตั้ง \(\theta = -90^\circ\): กราฟเลื่อนไปทางขวา คือ<b>ตามหลัง</b> 90° และเท่ากับ \(-V_m\cos\omega t\)</li>
+    <li>กดหยุดภาพ: ลูกศรสีชมพูอยู่หน้าลูกศรสีเขียว (ในทิศทวนเข็มนาฬิกา) เท่ากับ θ เสมอ ไม่ว่าจะหยุดตอนไหน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — องศาและเวลา</h3>
+    <ol><li>ส่วน A กดตัวอย่าง "สไลด์หน้า 4": \(100\sin(2\pi 1000t - \pi/6)\) เขียนใหม่เป็น \(100\sin(2\pi 1000t - 30^\circ)\)</li>
+    <li>ที่ 1000 Hz คาบคือ 1 ms มุม −30° จึงเป็นการหน่วงเวลา \(\tfrac{30}{360} \times 1\ \text{ms} = 83.3\ \mu\text{s}\) (ดูค่า \(\Delta t\) ในแผงควบคุม)</li>
+    <li>เปลี่ยนความถี่: แกนองศาไม่เปลี่ยน แต่แกนเวลาเปลี่ยน เพราะ 360° คือหนึ่งคาบเสมอ</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แปลงแล้วกราฟไม่ขยับ</h3>
+    <ol><li>ข้อ 2c: ขั้นเปลี่ยน cos เป็น sin และขั้นทำแอมพลิจูดให้เป็นบวก ไม่ทำให้กราฟของ \(i_1\) ขยับเลย เปลี่ยนแค่วิธีเขียน</li>
+    <li>ส่วน A ตั้ง \(\theta = 180^\circ\) แล้ว \(-180^\circ\): ได้กราฟเดียวกัน เพราะ +180° กับ −180° ไปที่เดียวกัน ข้อ 2c ใช้เรื่องนี้</li>
+    <li>คำถาม: \(5\sin(\omega t + 200^\circ)\) นำหน้าหรือตามหลัง \(5\sin\omega t\) และกี่องศา (ลดมุมให้อยู่ในช่วง ±180° ก่อน)</li></ol>
+    <div class="book">สไลด์บทที่ 6 หน้า 2–7 · ฉบับในห้อง ก.ย. 2566 · Hayt §10.1, Practice 10.1</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — leading means shifted left</h3>
+    <ol><li>In section A set \(\theta = +90^\circ\): the pink graph peaks right at \(\omega t = 0\). It is \(V_m\cos\omega t\), which <b>leads</b> \(V_m\sin\omega t\) by 90°.</li>
+    <li>Set \(\theta = -90^\circ\): the graph shifts right, i.e. it <b>lags</b> by 90°, and equals \(-V_m\cos\omega t\).</li>
+    <li>Pause: the pink arrow is ahead of the green one (anticlockwise) by exactly θ, whenever you stop it.</li></ol></div>
+  <div class="card"><h3>Try this 2 — degrees and time</h3>
+    <ol><li>In section A press the "slide p. 4" example: \(100\sin(2\pi 1000t - \pi/6)\) is rewritten as \(100\sin(2\pi 1000t - 30^\circ)\).</li>
+    <li>At 1000 Hz the period is 1 ms, so −30° is a delay of \(\tfrac{30}{360} \times 1\ \text{ms} = 83.3\ \mu\text{s}\) (see \(\Delta t\) in the panel).</li>
+    <li>Change the frequency: the degree axis stays the same while the time axis changes, because 360° is always one period.</li></ol></div>
+  <div class="card"><h3>Try this 3 — rewriting does not move the graph</h3>
+    <ol><li>Problem 2c: the steps that turn cos into sin and make the amplitude positive do not move the graph of \(i_1\) at all; only the way it is written changes.</li>
+    <li>In section A set \(\theta = 180^\circ\), then \(-180^\circ\): the same graph, because +180° and −180° land in the same place. Problem 2c uses this.</li>
+    <li>Question: does \(5\sin(\omega t + 200^\circ)\) lead or lag \(5\sin\omega t\), and by how much? (Bring the angle into ±180° first.)</li></ol>
+    <div class="book">Chapter 6 slides, pp. 2–7 · in class, September 2023 · Hayt §10.1, Practice 10.1</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, $ = id => document.getElementById(id);
+const sgnDeg = a => (a < 0 ? '−' : a > 0 ? '+' : '') + fd(Math.abs(a), 1);
+const angOk = ans => x => Math.abs(CH6.wrap(x - ans)) <= 0.6;
+
+/* A: the spinning arrow (sliders and examples in the right card) */
+const S = { Vm: 311, f: 50, th: 30, ref: true };
+const clk1 = CH6.clock({ T: 3 });
+const cv1 = $('cvA'); let L1 = null, ck1 = null, vw1 = null;
+function build1() { const w = 2 * Math.PI * S.f;
+  ck1 = new CK.Circuit({ ground: 'g', mode: 'ac', w, nodes: { a: [0, 0], b: [3, 0], g: [0, 2.6], h: [3, 2.6] },
+    parts: [ { id: 'Vs', type: 'VAC', a: 'a', b: 'g', amp: S.Vm, phase: S.th, name: 'v(t)', valText: '', side: -1 }, { type: 'W', a: 'a', b: 'b' },
+      { id: 'R', type: 'R', a: 'b', b: 'h', value: 100, name: 'R', valText: '100 Ω', side: 1 }, { type: 'W', a: 'h', b: 'g' } ] });
+  ck1.solve(); vw1 = new CK.View(cv1, ck1, { speed: 95 / (S.Vm / 100), ground: false, showI: false, pad: 1.05, tips: true, acPeak: true, acTime: () => clk1.at(w) });
+  if (L1) { vw1.ctx = L1.ctx; vw1.fit(L1.ckt); } }
+function resize1() { const W = Math.max(320, Math.floor(cv1.parentElement.clientWidth - 12)); const B = {};
+  if (W >= 540) { const Lw = Math.round(W * 0.36), ch = Math.round(Math.max(210, Lw * 0.8)), cs = Math.round(Lw * 1.02);
+    B.ckt = { x: 0, y: 34, w: Lw, h: ch - 34 }; B.form = { x: Lw + 6, y: 0, w: W - Lw - 6, h: ch }; B.circ = { x: 0, y: ch + 6, w: Lw, h: cs }; B.wave = { x: Lw + 6, y: ch + 6, w: W - Lw - 6, h: cs }; B.H = ch + 6 + cs; }
+  else { const ch = Math.round(W * 0.58), fh = 140, y2 = ch + fh + 10, cs = Math.round(W * 0.38), hh = Math.round(W * 0.66);
+    B.ckt = { x: 0, y: 34, w: W, h: ch - 34 }; B.form = { x: 0, y: ch + 4, w: W, h: fh }; B.circ = { x: 0, y: y2, w: cs, h: hh }; B.wave = { x: cs + 4, y: y2, w: W - cs - 4, h: hh }; B.H = y2 + hh; }
+  L1 = { ...B, W, ctx: CK.setup(cv1, W, B.H) }; if (vw1) { vw1.ctx = L1.ctx; vw1.fit(L1.ckt); } }
+/* coloured formula: pieces [[text, colour], ...] on one line */
+function pieces(ctx, list, x, y, size) { list.forEach(([s, c, wt]) => { CH6.text(ctx, s, x, y, { align: 'left', color: c, size, weight: wt || '600' }); ctx.save(); ctx.font = `${wt || '600'} ${size}px "IBM Plex Mono", monospace`; x += ctx.measureText(s).width; ctx.restore(); }); }
+function drawForm(ctx, b) { CH6.bg(ctx, b); const w = 2 * Math.PI * S.f, narrow = b.w < 520, sz = narrow ? 15 : 20, sm = narrow ? 12.5 : 15;
+  const wTxt = S.f === 50 ? '100π' : fd(w, 2), thTxt = S.th === 0 ? '' : ` ${S.th < 0 ? '−' : '+'} ${Math.abs(S.th)}°`;
+  const T = 1 / S.f, Tt = T >= 0.1 ? fd(T, 3) + ' s' : T >= 1e-3 ? fd(T * 1000, 3) + ' ms' : fd(T * 1e6, 1) + ' µs', dt = S.th / 360 * T * 1000;
+  const lead = S.th > 0 && S.th < 180 ? MC.t(`นำหน้า V_m sin ωt อยู่ ${S.th}°`, `leads V_m sin ωt by ${S.th}°`) : S.th < 0 && S.th > -180 ? MC.t(`ตามหลัง V_m sin ωt อยู่ ${-S.th}°`, `lags V_m sin ωt by ${-S.th}°`) : S.th === 0 ? MC.t('เฟสเดียวกับ V_m sin ωt', 'in phase with V_m sin ωt') : MC.t('ตรงข้ามเฟส: เท่ากับ −V_m sin ωt', 'opposite phase: equals −V_m sin ωt');
+  const thTxt2 = `θ = ${sgnDeg(S.th)}° = ${fd(S.th * Math.PI / 180, 4).replace('-', '−')} rad`;
+  const shift = MC.t(`เลื่อนเวลา Δt = θ/ω = ${fd(Math.abs(dt), 4)} ms ${S.th > 0 ? '(ไปทางซ้าย = มาก่อน)' : S.th < 0 ? '(ไปทางขวา = มาทีหลัง)' : ''}`, `time shift Δt = θ/ω = ${fd(Math.abs(dt), 4)} ms ${S.th > 0 ? '(to the left = earlier)' : S.th < 0 ? '(to the right = later)' : ''}`);
+  const lines = [[MC.t(`แอมพลิจูด (ค่ายอด) V_m = ${S.Vm} V`, `amplitude (peak) V_m = ${S.Vm} V`), COL.sig]];
+  if (narrow) lines.push([`f = ${S.f} Hz · T = 1/f = ${Tt}`, COL.V], [`ω = 2πf = ${fd(w, 2)} rad/s`, COL.V], [thTxt2, '#ffd166'], [lead, '#ffd166']);
+  else lines.push([`f = ${S.f} Hz · T = 1/f = ${Tt} · ω = 2πf = ${fd(w, 2)} rad/s`, COL.V], [`${thTxt2} · ${lead}`, '#ffd166'], [shift, COL.muted]);
+  const y0 = b.y + (narrow ? 22 : 30), gap = Math.min(narrow ? 21 : 34, (b.h - (y0 - b.y) - 12) / lines.length);
+  pieces(ctx, [['v(t) = ', COL.ink], [String(S.Vm), COL.sig, '700'], [' sin(', COL.ink], [wTxt, COL.V, '700'], ['t', COL.ink], [thTxt, '#ffd166', '700'], [') V', COL.ink]], b.x + 12, y0, sz);
+  lines.forEach(([txt, col], k) => CH6.text(ctx, txt, b.x + 12, y0 + gap * (k + 1.15), { align: 'left', color: col, size: sm, weight: col === COL.muted ? '' : '600' }));
+}
+function frame1(dt) {
+  if (!L1) return; clk1.tick(dt); const ctx = L1.ctx; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L1.W, L1.H);
+  if (clk1.run) vw1.advance(dt); vw1.draw();
+  const vNow = S.Vm * Math.sin(clk1.ph + S.th * Math.PI / 180); const [sx, sy] = vw1.P('a'); const u = vw1.u;
+  CH6.text(ctx, `v = ${vNow < 0 ? '−' : '+'}${fd(Math.abs(vNow), 0)} V`, sx + u * 0.1, sy - u * 0.42, { align: 'left', color: COL.sig, size: Math.max(13, u * 0.3), weight: '700' });
+  drawForm(ctx, L1.form);
+  const wb = L1.wave, cb = L1.circ, mt = 32, mb = 42, ph = wb.h - mt - mb, cy = wb.y + mt + ph / 2, R = Math.max(30, Math.min(cb.w / 2 - 18, ph * 0.38)), w = 2 * Math.PI * S.f;
+  const vecs = []; if (S.ref) vecs.push({ z: CH6.polar(S.Vm, 0), color: COL.ref, w: 2.6 }); vecs.push({ z: CH6.polar(S.Vm, S.th), color: COL.sig, label: 'V_m' });
+  const pl = CH6.plane(ctx, cb, vecs, { cx: cb.x + cb.w / 2, cy, R, rot: clk1.ph, proj: false, max: { a: S.Vm }, title: MC.t('ลูกศรหมุน', 'spinning arrow'), arcs: S.ref && S.th !== 0 ? [{ a: 0, b: 1, color: '#ffd166', text: 'θ', r: 0.42 }] : [] });
+  const sigs = []; if (S.ref) sigs.push({ mag: S.Vm, ang: 0, color: COL.ref, w: 2 }); sigs.push({ mag: S.Vm, ang: S.th, color: COL.sig, label: 'v', unit: 'V', peak: true });
+  const wv = CH6.waves(ctx, wb, sigs, { now: clk1.ph, title: MC.t('v(t) ตาม ωt', 'v(t) against ωt'), w, Y: v => cy - v / S.Vm * R });
+  // the tips' heights carried across to the cursor
+  const cur = ((clk1.ph * 180 / Math.PI) % 720 + 720) % 720, xc = wv.X(cur);
+  vecs.forEach(v => { const q = pl.P(v.z); ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = v.color; ctx.globalAlpha = 0.8; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(xc, q[1]); ctx.stroke(); ctx.restore(); });
+  // the period and the shift θ on the axis
+  const yb = wv.y0 + wv.ph - 9; ctx.save(); ctx.strokeStyle = COL.V; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(wv.X(0) + 2, yb); ctx.lineTo(wv.X(360) - 2, yb); ctx.moveTo(wv.X(0) + 2, yb - 5); ctx.lineTo(wv.X(0) + 2, yb + 5); ctx.moveTo(wv.X(360) - 2, yb - 5); ctx.lineTo(wv.X(360) - 2, yb + 5); ctx.stroke(); ctx.restore();
+  CH6.tag(ctx, MC.t('1 คาบ T ↔ 360°', 'one period T ↔ 360°'), wv.X(180), yb, COL.V, { size: 12 });
+  if (S.ref && S.th !== 0) { const x1 = wv.X(360), x2 = wv.X(360 - S.th), y = wv.ym; CH6.arrow(ctx, x1, y + 14, x2, y + 14, '#ffd166', 2.4); CH6.tag(ctx, 'θ', (x1 + x2) / 2, y + 30, '#ffd166', { size: 13 }); }
+  CK.badge(ctx, clk1.run ? MC.t(`▶ เล่นช้า ${fd(clk1.T * S.f, 0)} เท่า (1 รอบใช้ ${clk1.T} วินาที)`, `▶ ${fd(clk1.T * S.f, 0)}× slow motion (one cycle per ${clk1.T} s)`) : MC.t('❚❚ หยุดชั่วคราว', '❚❚ paused'), clk1.run ? 'ok' : 'wait');
+}
+const panel1 = $('pA');
+ui.h2(panel1, t('ค่าของคลื่น', 'The wave'));
+const sl = {};
+sl.Vm = ui.slider(panel1, { id: 'sVm', label: t('แอมพลิจูด V<sub>m</sub>', 'amplitude V<sub>m</sub>'), min: 10, max: 400, step: 1, value: S.Vm, fmt: v => `${v} V`, oninput: v => { S.Vm = v; build1(); metrics1(); } });
+sl.f = ui.slider(panel1, { id: 'sF', label: t('ความถี่ f', 'frequency f'), min: 10, max: 1000, step: 10, value: S.f, fmt: v => `${v} Hz`, oninput: v => { S.f = v; build1(); metrics1(); } });
+sl.th = ui.slider(panel1, { id: 'sTh', label: t('มุมเฟส θ', 'phase θ'), min: -180, max: 180, step: 5, value: S.th, fmt: v => `${sgnDeg(v)}°`, oninput: v => { S.th = v; build1(); metrics1(); } });
+ui.h2(panel1, t('ตัวอย่าง', 'Examples'));
+const setS = (o) => { Object.assign(S, o); sl.Vm.set(S.Vm); sl.f.set(S.f); sl.th.set(S.th); build1(); metrics1(); };
+ui.buttons(panel1, [{ label: t('ไฟบ้าน 220 V 50 Hz', 'mains 220 V 50 Hz'), onclick: () => setS({ Vm: 311, f: 50, th: 0 }) },
+  { label: t('สไลด์หน้า 4: 100 sin(2π1000t − 30°)', 'slide p. 4: 100 sin(2π1000t − 30°)'), onclick: () => setS({ Vm: 100, f: 1000, th: -30 }) },
+  { label: t('θ = +90° (cos)', 'θ = +90° (cos)'), onclick: () => setS({ th: 90 }) }, { label: t('θ = −90°', 'θ = −90°'), onclick: () => setS({ th: -90 }) }, { label: t('θ = 180°', 'θ = 180°'), onclick: () => setS({ th: 180 }) }]);
+ui.h2(panel1, t('การแสดงผล', 'Display'));
+ui.buttons(panel1, [{ label: t('เส้นเทียบ V<sub>m</sub> sin ωt', 'reference V<sub>m</sub> sin ωt').replace(/<\/?sub>/g, ''), on: true, onclick: el => { S.ref = !S.ref; el.classList.toggle('on', S.ref); } }]);
+CH6.playBtns(panel1, clk1);
+const met1 = ui.metrics(panel1);
+function metrics1() { const w = 2 * Math.PI * S.f, T = 1 / S.f;
+  met1.innerHTML = ui.kv([[t('ค่ายอด V<sub>m</sub>', 'peak V<sub>m</sub>'), `${S.Vm} V`], [t('คาบ T = 1/f', 'period T = 1/f'), T >= 1e-3 ? `${fd(T * 1000, 3)} ms` : `${fd(T * 1e6, 1)} µs`], ['ω = 2πf', `${fd(w, 2)} rad/s`],
+    [t('มุมเฟส θ', 'phase θ'), `${sgnDeg(S.th)}° = ${fd(S.th * Math.PI / 180, 4).replace('-', '−')} rad`], [t('เลื่อนเวลา Δt = θ/ω', 'time shift Δt = θ/ω'), `${fd(S.th / 360 * T * 1000, 4).replace('-', '−')} ms`]]); }
+ui.html(panel1, t('ชี้เมาส์ที่แหล่งจ่ายหรือตัวต้านทานเพื่ออ่านเฟเซอร์ (ค่ายอด) ส่วนเลข v บนวงจรคือค่าขณะนั้น', 'Hover over the source or the resistor to read the phasor (peak value); the v on the circuit is the value at this instant.'), 'hint');
+resize1(); build1(); metrics1(); window.addEventListener('resize', resize1); LS.anim(cv1, frame1);
+
+/* 1: the example of slide p. 6 (symbolic amplitudes) */
+CH6.problem(1, 'lag', { a: { A: 1, Atex: 'V_{m_1}', fn: 'cos', w: 5, ph: 10, name: 'v_1', unit: 'V' }, b: { A: 0.8, Atex: 'V_{m_2}', fn: 'sin', w: 5, ph: -30, name: 'v_2', unit: 'V' } }, {
+  ask: () => ({ fields: [{ label: t('v₁ นำหน้า v₂ (°) =', 'v₁ leads v₂ by (°) ='), ok: angOk(130), w: 5 }], check: v => Math.abs(CH6.wrap(v[0] - 40)) < 1 ? t('ยังไม่ได้เปลี่ยน cos เป็น sin: \\(v_1 = V_{m_1}\\sin(5t + 100^\\circ)\\)', 'cos has not been turned into sin yet: \\(v_1 = V_{m_1}\\sin(5t + 100^\\circ)\\)') : '' }),
+  answer: t('\\(v_1\\) นำหน้า \\(v_2\\) อยู่ 130° ตรงกับวิธีในห้องที่แปลงทั้งคู่เป็น cos (\\(10^\\circ - (-120^\\circ) = 130^\\circ\\)) ผลต่างของมุมไม่ขึ้นกับว่าแปลงเป็นแบบไหน ขอให้แปลงทั้งสองตัวเป็นแบบเดียวกัน', '\\(v_1\\) leads \\(v_2\\) by 130°, as in class, where both were turned into cosines (\\(10^\\circ - (-120^\\circ) = 130^\\circ\\)). The difference does not depend on which form is used, as long as both use the same one.') });
+
+/* 2: practice 1 = Hayt Practice 10.1 */
+const W120 = 120 * Math.PI, v1 = { A: 120, fn: 'cos', w: W120, wTex: '120\\pi', ph: -40, name: 'v_1', unit: 'V' }, i1 = o => ({ ...o, w: W120, wTex: '120\\pi', name: 'i_1', unit: 'A' });
+const lagAsk = (ans, wrong) => () => ({ fields: [{ label: t('มุม (°) =', 'angle (°) ='), ok: angOk(ans), w: 5 }], check: v => wrong && Math.abs(CH6.wrap(v[0] - wrong[0])) < 1 ? wrong[1] : '' });
+CH6.problem('2a', 'lag', { a: v1, b: i1({ A: 2.5, fn: 'cos', ph: 20 }) }, { ask: lagAsk(-60, [60, t('เครื่องหมาย: โจทย์ถามมุมที่ \\(i_1\\) ตามหลัง แต่ \\(i_1\\) นำหน้า จึงติดลบ', 'The sign: the question asks for the lag of \\(i_1\\), but \\(i_1\\) leads, so it is negative')]),
+  answer: t('\\(-60^\\circ\\): \\(i_1\\) นำหน้า \\(v_1\\) อยู่ 60° ตรงกับในห้องและ Hayt', '\\(-60^\\circ\\): \\(i_1\\) leads \\(v_1\\) by 60°, as in class and in Hayt') });
+CH6.problem('2b', 'lag', { a: v1, b: i1({ A: 1.4, fn: 'sin', ph: -70 }) }, { ask: lagAsk(120, [30, t('\\(v_1\\) ยังเป็น cos อยู่ ต้องเปลี่ยนเป็น \\(120\\sin(120\\pi t + 50^\\circ)\\) ก่อน', '\\(v_1\\) is still a cosine: turn it into \\(120\\sin(120\\pi t + 50^\\circ)\\) first')]),
+  answer: t('\\(120^\\circ\\): \\(i_1\\) ตามหลัง \\(v_1\\) อยู่ 120° ตรงกับ Hayt', '\\(120^\\circ\\): \\(i_1\\) lags \\(v_1\\) by 120°, as in Hayt') });
+CH6.problem('2c', 'lag', { a: v1, b: i1({ A: -0.8, fn: 'cos', ph: -110 }) }, { ask: lagAsk(-110, [70, t('ลืมกฎข้อ 2: แอมพลิจูดติดลบต้องเลื่อน 180° ก่อน', 'Rule 2 is missing: a negative amplitude means a 180° shift first')]),
+  answer: t('\\(-110^\\circ\\): \\(i_1\\) นำหน้า \\(v_1\\) อยู่ 110° ตรงกับ Hayt (มุม 250° ก็ถือว่าถูก เพราะต่างกัน 360°)', '\\(-110^\\circ\\): \\(i_1\\) leads \\(v_1\\) by 110°, as in Hayt (250° also counts, being 360° away)') });
+});
+</script>
+</body>
+</html>

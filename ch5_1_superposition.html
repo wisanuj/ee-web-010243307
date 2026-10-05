@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="5.1 — Superposition">5.1 — หลักการซ้อนทับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">หลักการซ้อนทับ <span class="en">Superposition — work out each source acting alone, then add the results</span></h1>
+<h1 data-l="en">Superposition <span class="en">Work out each source acting alone, then add the results</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch5/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: the superposition principle greatly simplifies circuits with multiple independent sources and applies only to linear circuits; analyse each source separately while temporarily removing all other sources, then add the individual results">
+    <figcaption data-l="th">สไลด์บทที่ 5 หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 5 slides, p. 2 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 2: <b>หลักการซ้อนทับ</b> (superposition) ใช้ได้กับ<b>วงจรเชิงเส้นเท่านั้น</b> ในวงจรที่มีแหล่งจ่ายอิสระหลายตัว ผลตอบสนองใด ๆ (กระแสหรือแรงดัน) เท่ากับผลรวมของผลตอบสนองเมื่อแหล่งจ่ายแต่ละตัวทำงานตัวเดียว ขณะที่แหล่งจ่ายตัวอื่นถูก "ฆ่า" ในภาพจำลองของแต่ละโจทย์ ภาพ ①, ②, ③ คือวงจรที่เหลือแหล่งจ่ายตัวเดียว (<b>วงกลมประสีเหลือง</b> = แหล่งจ่ายที่ถูกฆ่า) และภาพสุดท้ายคือวงจรจริง กด <b>▶ ขั้นถัดไป</b> ทีละครั้ง ภาพที่กำลังคิดมีกรอบสีเหลือง จุดในภาพนั้นเริ่มวิ่งเมื่อคิดเสร็จ และจุดในวงจรจริงวิ่งเมื่อรวมผลแล้ว หน้านี้มี <b>5 โจทย์ เรียงทีละข้อ</b> (Ex 1, Ex 2, การบ้านข้อ 1 และแบบฝึกหัด Ex.1, Ex.2) ก่อนหน้านั้นมีภาพจำลองความเป็นเชิงเส้นด้วยวงจรในสไลด์หน้า 3</p>
+    <p class="sub" data-l="en">Slide p. 2: <b>superposition</b> works for <b>linear circuits only</b>. In a circuit with several independent sources, any response (a current or a voltage) equals the sum of the responses with each source acting alone while the others are "killed". In each problem's simulation, panels ①, ②, ③ are the circuit with one source left (<b>dashed yellow circle</b> = a killed source) and the last panel is the real circuit. Press <b>▶ Next step</b> one step at a time: the panel being worked has a yellow frame, its dots start once it is done, and the dots of the real circuit run once the results are added. This page has <b>5 problems, one after another</b> (Ex 1, Ex 2, homework 1, and exercises Ex.1 and Ex.2), after a linearity simulation on the circuit of slide p. 3.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} i_x = i_x' + i_x'' + i_x''' + \cdots \\ \text{kill: } v_s \to 0 \ (\text{short}), \quad i_s \to 0 \ (\text{open}) \\ P \neq P' + P'' \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ใช้ได้กับวงจรเชิงเส้นเท่านั้น</b> (ตัวต้านทาน แหล่งจ่าย และแหล่งจ่ายไม่อิสระแบบเชิงเส้น)</li>
+  <li><b>เลือกแหล่งจ่ายอิสระทีละตัว แล้ว "ฆ่า" ตัวอื่นทั้งหมด</b>: แหล่งจ่ายแรงดัน → <b>ลัดวงจร</b> (0 V แต่กระแสผ่านได้) แหล่งจ่ายกระแส → <b>เปิดวงจร</b> (0 A แต่มีแรงดันคร่อมได้)</li>
+  <li><b>แหล่งจ่ายไม่อิสระห้ามฆ่า</b> ปล่อยไว้ในวงจรทุกครั้ง</li>
+  <li><b>วงจรย่อยแต่ละวงมักง่ายพอจะใช้ตัวแบ่งแรงดันหรือตัวแบ่งกระแส</b> แล้ว<b>รวมผลโดยระวังทิศและขั้ว</b> ผลย่อยที่สวนทิศอ้างอิงเป็นค่าลบ</li>
+  <li><b>ห้ามบวกกำลัง</b>: กำลังแปรตามกำลังสองของกระแส ต้องรวมกระแสหรือแรงดันก่อน แล้วค่อยคำนวณกำลัง</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>It works for linear circuits only</b> (resistors, sources and linear dependent sources).</li>
+  <li><b>Take one independent source at a time and "kill" all the others</b>: a voltage source → <b>short circuit</b> (0 V, but current can flow), a current source → <b>open circuit</b> (0 A, but a voltage can appear across it).</li>
+  <li><b>Never kill a dependent source</b>; leave it in the circuit every time.</li>
+  <li><b>Each small circuit is usually simple enough for a voltage or current divider</b>, then <b>add the results minding direction and polarity</b>; a part that runs against the reference is negative.</li>
+  <li><b>Never add powers</b>: power goes with the square of the current, so add the currents or voltages first, then compute the power.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ความเป็นเชิงเส้น</a><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#ex3"><b>3</b>การบ้านข้อ 1</a><a href="#ex4"><b>4</b>แบบฝึกหัด Ex.1</a><a href="#ex5"><b>5</b>แบบฝึกหัด Ex.2</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Linearity</a><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#ex3"><b>3</b>Homework 1</a><a href="#ex4"><b>4</b>Exercise Ex.1</a><a href="#ex5"><b>5</b>Exercise Ex.2</a></nav>
+
+<div class="group-head"><h2 data-l="th">ฆ่าแหล่งจ่าย และขั้นตอนของการซ้อนทับ (สไลด์หน้า 3–5)</h2><h2 data-l="en">Killing a source, and the superposition steps (slides pp. 3–5)</h2></div>
+<p class="lead" data-l="th">สไลด์หน้า 3 บอกความหมายของการฆ่าแหล่งจ่าย: แหล่งจ่ายแรงดัน 0 V คือ<b>ลวดลัด</b> (ไม่มีแรงดันตกคร่อม แต่กระแสไหลผ่านได้) แหล่งจ่ายกระแส 0 A คือ<b>วงจรเปิด</b> (ไม่มีกระแส แต่มีแรงดันคร่อมได้) หน้า 4–5 คือขั้นตอนหกข้อ: เลือกแหล่งจ่ายทีละตัวแล้วฆ่าตัวอื่น ตั้งชื่อผลย่อยด้วยเครื่องหมาย \(v'\), \(i''\) วิเคราะห์วงจรย่อย ทำซ้ำจนครบทุกแหล่งจ่าย รวมผลโดยระวังขั้วและทิศ และ<b>ห้ามบวกกำลัง</b></p>
+<p class="lead" data-l="en">Slide p. 3 shows what killing a source means: a 0 V voltage source is a <b>short</b> (no voltage across it, but current can flow) and a 0 A current source is an <b>open circuit</b> (no current, but a voltage can appear across it). Pages 4–5 give the six steps: take one source at a time and kill the others, name the parts with primes such as \(v'\), \(i''\), analyse the small circuit, repeat for every source, add the results minding polarity and direction, and <b>never add powers</b>.</p>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch5/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3: a 0 V source has no voltage drop across its terminals but current can flow; a 0 A source lets no current flow but a voltage can appear across its terminals; and the linearity circuit with current sources ia and ib, 2 ohm, 5 ohm and 1 ohm">
+    <figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch5/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4: steps to use superposition analysis. 1 select one source and turn off all others (voltage sources replaced by short circuits, current sources by open circuits, dependent sources unchanged), 2 relabel variables, 3 analyse the circuit, 4 repeat for each remaining independent source">
+    <figcaption data-l="th">สไลด์หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 4 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch5/p05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5: 5 sum the results, paying attention to voltage polarities and current directions; 6 calculate power only after summing, never add power quantities directly">
+    <figcaption data-l="th">สไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 5 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์ที่ผู้สอนเขียนในห้อง (พ.ศ. 2564) และสรุปวิธีในไฟล์เฉลยแบบฝึกหัด</span><span data-l="en">See the slides as written in class (2021) and the summary in the exercise solutions file</span></summary>
+  <div class="slides">
+    <figure class="slide"><img src="slides/ch5/K02b.webp" width="1100" height="706" loading="lazy" decoding="async" alt="In-class slide 3: written between the slides, 'Kill source: voltage source → short circuit (V = 0), current source → open circuit (I = 0)'; on the linearity circuit, v1 = v1′ + v1″, each part with one current source opened">
+      <figcaption data-l="th">หน้า 3: วิธีฆ่าแหล่งจ่ายที่เขียนไว้ระหว่างสองสไลด์ และ \(v_1 = v_1' + v_1''\) โดยเปิดแหล่งจ่ายกระแสทีละตัว</figcaption><figcaption data-l="en">p. 3: how to kill a source, written between the two slides, and \(v_1 = v_1' + v_1''\) with one current source opened at a time</figcaption></figure>
+    <figure class="slide"><img src="slides/ch5/K03a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 4, summary of the basic superposition procedure, with 'Kill source' next to step 1 and 'Node, Mesh, Voltage divider, Current divider' as the ways to do step 3">
+      <figcaption data-l="th">หน้า 4 (สรุปขั้นตอน): ขั้นที่ 3 วิเคราะห์วงจรย่อยด้วยวิธีโนด วิธีเมช ตัวแบ่งแรงดัน หรือตัวแบ่งกระแส</figcaption><figcaption data-l="en">p. 4 (the procedure): step 3 solves each small circuit by nodal or mesh analysis, or a voltage or current divider</figcaption></figure>
+    <figure class="slide"><img src="slides/ch5/sum51.webp" width="1000" height="1413" loading="lazy" decoding="async" alt="Handwritten summary of the superposition method on the circuit of homework 1: step 1 consider what the problem asks, step 2 write vx = vx′ + vx″ + vx‴, one term per independent source, step 3 take one source at a time and kill the others (voltage → short circuit, current → open circuit), step 4 add the parts">
+      <figcaption data-l="th">สรุปวิธีซ้อนทับสี่ขั้นในไฟล์เฉลยแบบฝึกหัด 5.1 (ใช้วงจรของการบ้านข้อ 1)</figcaption><figcaption data-l="en">The four-step summary of superposition in the solutions file of exercise sheet 5.1 (on the circuit of homework 1)</figcaption></figure></div></details>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ความเป็นเชิงเส้น: ผลจากแหล่งจ่ายสองตัวบวกกันได้</h2><h2 data-l="en">Linearity: the effects of two sources simply add</h2>
+    <div class="src" data-l="th">วงจรในสไลด์หน้า 3 (Hayt รูป 5.1) · เลื่อนค่าแหล่งจ่ายแล้วดู \(v_1\)</div><div class="src" data-l="en">The circuit of slide p. 3 (Hayt Fig. 5.1) · move the sources and watch \(v_1\)</div></div></div>
+  <p class="lead" data-l="th">ภาพ ① มีแค่ \(i_a\) (ฆ่า \(i_b\) → เปิดวงจร) ภาพ ② มีแค่ \(i_b\) ภาพสุดท้ายคือวงจรจริง <b>\(v_1\) ของวงจรจริงเท่ากับผลรวมของสองภาพเสมอ</b> และจุดในตัวต้านทานทุกตัวของวงจรจริงก็วิ่งด้วยกระแสที่เป็นผลรวมเช่นกัน ลองกด \(i_a \times 2\) แล้ว \(v_1'\) จะเพิ่มเป็นสองเท่าพอดี</p>
+  <p class="lead" data-l="en">Panel ① keeps only \(i_a\) (\(i_b\) killed → open), panel ② only \(i_b\), and the last panel is the real circuit. <b>\(v_1\) of the real circuit always equals the sum of the two panels</b>, and the dots in every resistor of the real circuit run at the summed current too. Press \(i_a \times 2\) and \(v_1'\) doubles exactly.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas><div class="ctl" id="ctlA"></div></div><div class="card solve"><div id="fA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 1: ใช้หลักการซ้อนทับหากระแส \(i_x\)</h2><h2 data-l="en">Ex 1: use superposition to find the current \(i_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 6 · Hayt Example 5.1</div><div class="src" data-l="en">Chapter 5 slides, p. 6 · Hayt Example 5.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p06q.webp" width="1367" height="487" loading="lazy" decoding="async" alt="Ex 1: for the circuit, use superposition to compute the current ix. A 3 V source on the left, 6 ohm across the top, 9 ohm down the middle carrying ix, and a 2 A source pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 6 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K05.webp" width="1000" height="1293" loading="lazy" decoding="async" alt="Handwritten Ex 1: two independent sources, ix = ix′ + ix″; with the 3 V alone (2 A open), mesh KVL −3 + 6ia + 9ia = 0 gives ix′ = 0.2 A; with the 2 A alone (3 V shorted), the current divider gives ix″ = (6/(6 + 9))(2) = 0.8 A; ix = 0.2 + 0.8 = 1 A">
+      <figcaption data-l="th">\(i_x' = 0.2\) A จาก KVL รอบเมช \(i_x'' = 0.8\) A จากตัวแบ่งกระแส รวม \(i_x = 1\) A</figcaption><figcaption data-l="en">\(i_x' = 0.2\) A from mesh KVL, \(i_x'' = 0.8\) A from the current divider, \(i_x = 1\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 2: ใช้หลักการซ้อนทับหากระแส \(i_x\)</h2><h2 data-l="en">Ex 2: use superposition to find the current \(i_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 7 · Hayt Practice 5.1</div><div class="src" data-l="en">Chapter 5 slides, p. 7 · Hayt Practice 5.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p07q.webp" width="1370" height="648" loading="lazy" decoding="async" alt="Ex 2: a 2 A source pointing up on the left, 7 ohm over 3 ohm in the left branch, 15 ohm across the top carrying ix to the right, 5 ohm down the middle and a 3.5 V source on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 7 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K06.webp" width="1000" height="1415" loading="lazy" decoding="async" alt="Handwritten Ex 2: with the 2 A alone the 5 ohm is shorted and the current divider gives ix′ = (10/(10 + 15))(2) = 0.8 A; with the 3.5 V alone, mesh analysis 30i1 − 5i2 = 0 and −5i1 + 5i2 = −3.5 gives ix″ = i1 = −0.14 A; ix = 0.8 + (−0.14) = 0.66 A">
+      <figcaption data-l="th">\(i_x' = 0.8\) A จากตัวแบ่งกระแส \(i_x'' = -0.14\) A จากวิธีเมช รวม 0.66 A</figcaption><figcaption data-l="en">\(i_x' = 0.8\) A from the current divider, \(i_x'' = -0.14\) A by meshes, 0.66 A in all</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">การบ้านข้อ 1: ใช้หลักการซ้อนทับหาแรงดัน \(v_x\)</h2><h2 data-l="en">Homework 1: use superposition to find the voltage \(v_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 21 (Problems ข้อ 1)</div><div class="src" data-l="en">Chapter 5 slides, p. 21 (Problems, no. 1)</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p21q.webp" width="1521" height="514" loading="lazy" decoding="async" alt="Homework 1: using superposition, determine vx. A 4 V source on the left, 3 ohm, a 2 A source pointing up, 1 ohm carrying vx (+ on the left), 5 ohm down, 2 ohm and a 4 V source on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 21 (ปิดคำตอบที่พิมพ์ไว้) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 21 (the printed answer is covered) · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K20.webp" width="1000" height="1415" loading="lazy" decoding="async" alt="Handwritten homework 1: with the left 4 V alone, 2 ∥ 5 = 1.4285 ohm and the voltage divider gives vx′ = 0.7368 V; with the 2 A alone, vx″ = (1)(1.10526) = 1.105 V; with the right 4 V alone, vy from the divider and vx‴ = −0.526 V">
+      <figcaption data-l="th">\(v_x' = 0.7368\) V, \(v_x'' = 1.105\) V, \(v_x''' = -0.526\) V (ในห้องไม่ได้เขียนผลรวม)</figcaption><figcaption data-l="en">\(v_x' = 0.7368\) V, \(v_x'' = 1.105\) V, \(v_x''' = -0.526\) V (the class did not write the sum)</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด 5.1 Superposition and Source Transformation)</h2><h2 data-l="en">More practice (exercise sheet 5.1, Superposition and Source Transformation)</h2></div>
+<p class="lead" data-l="th">ข้อ Ex.3 ของชุดเดียวกันเป็นเรื่องการแปลงแหล่งจ่าย จึงอยู่ในหน้า 5.3</p>
+<p class="lead" data-l="en">Ex.3 of the same sheet is about source transformation, so it is on page 5.3.</p>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัด Ex.1: ใช้หลักการซ้อนทับหา \(I_x\)</h2><h2 data-l="en">Exercise Ex.1: find \(I_x\) by superposition</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.1 ข้อ Ex.1 · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.1, Ex.1 · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x51q1.webp" width="1300" height="556" loading="lazy" decoding="async" alt="Exercise Ex.1: after studying the circuit, determine Ix using superposition. A 6 V source on the left, 6 kilohm down, an 8 A source pointing left along the top, 4 kilohm down carrying Ix upward, 4 kilohm across the top right to a 12 V source, and 6 kilohm along the bottom">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.1 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.1 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol51_1.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.1: with the 6 V alone Ix′ = 0; with the 8 A alone the current divider gives Ix″ = (4k/(4k + 4k))(8) = 4 A; with the 12 V alone KVL 4kIA + 4kIA + 12 = 0 gives Ix‴ = −1.5 mA; Ix = 0 + 4 + (−1.5 mA) = 3.9985 A">
+      <figcaption data-l="th">\(I_x' = 0\), \(I_x'' = 4\) A, \(I_x''' = -1.5\) mA รวม 3.9985 A</figcaption><figcaption data-l="en">\(I_x' = 0\), \(I_x'' = 4\) A, \(I_x''' = -1.5\) mA, 3.9985 A in all</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">แบบฝึกหัด Ex.2: จงหากระแส \(I_x\) โดยใช้หลักการซ้อนทับ</h2><h2 data-l="en">Exercise Ex.2: find the current \(I_x\) by superposition</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.1 ข้อ Ex.2 · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.1, Ex.2 · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x51q2.webp" width="1300" height="531" loading="lazy" decoding="async" alt="Exercise Ex.2 (in Thai): find Ix by superposition. 30 ohm, 10 ohm carrying Ix to the right and 20 ohm across the top, a 4 V source and a 5 ohm down the middle, an 8 V source on the right and a 2 A source along the bottom left">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.2 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol51_2.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.2: with the 2 A alone Ix′ = 0; with the 4 V alone 5 ∥ 20 = 4 ohm and IA = 4/14 = 0.2857 A; with the 8 V alone a source transformation to 0.4 A in parallel with 20 ohm, then the current divider gives Ix‴ = −0.1143 A; Ix = 0.1714 A">
+      <figcaption data-l="th">0 + 0.2857 − 0.1143 = 0.1714 A (ส่วนที่สามใช้การแปลงแหล่งจ่าย หน้า 5.3)</figcaption><figcaption data-l="en">0 + 0.2857 − 0.1143 = 0.1714 A (the third part uses a source transformation, page 5.3)</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ฆ่าแหล่งจ่ายให้ถูกแบบ</h3>
+    <ol><li>ข้อ 2 (Ex 2) ภาพ ①: แหล่งจ่าย 3.5 V ถูกลัดวงจร <b>5 Ω จึงถูกลัดไปด้วย</b> (เมื่อจุดวิ่งแล้ว ชี้เมาส์ที่ 5 Ω จะเห็นกระแสเป็นศูนย์)</li>
+    <li>ภาพ ②: แหล่งจ่าย 2 A ถูกเปิดวงจร กิ่ง 7 + 3 Ω จึงต่อกับวงจรที่เหลือทางด้านบนเท่านั้น</li>
+    <li>ถ้าฆ่าผิดแบบ (ลัดวงจรแหล่งจ่ายกระแส) คำตอบจะผิดทันที เพราะวงจรย่อยเปลี่ยนไป</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ผลย่อยที่เป็นศูนย์และติดลบ</h3>
+    <ol><li>ข้อ 4 (แบบฝึกหัด Ex.1) ภาพ ①: 6 V ไม่ทำให้เกิดกระแสใน 4 kΩ ตั้งเลย เพราะ<b>ไม่มีทางวนกลับ</b> (สองฝั่งต่อกันด้วย 6 kΩ ล่างเส้นเดียว)</li>
+    <li>ภาพ ③: กระแสจาก 12 V ไหลลงผ่าน 4 kΩ ตั้ง สวนลูกศร \(I_x\) จึงได้ \(I_{x3}\) = −1.5 mA และจุดในภาพนั้นวิ่งลง</li>
+    <li>ข้อ 3 (การบ้านข้อ 1) ภาพ ③: \(v_x'''\) เป็นลบเพราะกระแสไหลผ่าน 1 Ω จากขวาไปซ้าย สวนขั้ว + ของ \(v_x\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — กำลังบวกกันไม่ได้</h3>
+    <ol><li>ข้อ 1 (Ex 1) กดจนจบ: กำลังที่ 9 Ω จริงคือ (1)²(9) = 9 W แต่ถ้าบวกกำลังจากแต่ละภาพได้แค่ 6.12 W</li>
+    <li>ในส่วน A กด \(i_b = 0\) แล้วกด \(i_a \times 2\): \(v_1\) เพิ่มสองเท่า แต่กำลังใน 2 Ω เพิ่มสี่เท่า</li>
+    <li>คำถาม: ถ้าวงจรมีแหล่งจ่ายไม่อิสระ จะใช้หลักการซ้อนทับได้หรือไม่ และต้องทำอย่างไรกับแหล่งจ่ายไม่อิสระนั้น</li></ol>
+    <div class="book">สไลด์บทที่ 5 หน้า 2–7, 21 · แบบฝึกหัด 5.1 Ex.1, Ex.2 และเฉลย · Hayt §5.1, Example 5.1, Practice 5.1</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — kill each source the right way</h3>
+    <ol><li>Problem 2 (Ex 2), panel ①: the 3.5 V source is shorted, <b>so the 5 Ω is shorted too</b> (once the dots run, hover over the 5 Ω: its current is zero).</li>
+    <li>Panel ②: the 2 A source is opened, so the 7 + 3 Ω branch connects to the rest only along the top.</li>
+    <li>Kill a source the wrong way (shorting a current source) and the answer is wrong at once, because the small circuit changes.</li></ol></div>
+  <div class="card"><h3>Try this 2 — zero and negative parts</h3>
+    <ol><li>Problem 4 (exercise Ex.1), panel ①: the 6 V causes no current at all in the vertical 4 kΩ, because <b>there is no way back</b> (only the bottom 6 kΩ joins the two sides).</li>
+    <li>Panel ③: the 12 V current flows down through the vertical 4 kΩ, against the \(I_x\) arrow, so \(I_{x3}\) = −1.5 mA and the dots there run down.</li>
+    <li>Problem 3 (homework 1), panel ③: \(v_x'''\) is negative because the current crosses the 1 Ω from right to left, against the + of \(v_x\).</li></ol></div>
+  <div class="card"><h3>Try this 3 — powers do not add</h3>
+    <ol><li>Problem 1 (Ex 1), step to the end: the real power in the 9 Ω is (1)²(9) = 9 W, but adding the powers of the panels gives only 6.12 W.</li>
+    <li>In section A press \(i_b = 0\), then \(i_a \times 2\): \(v_1\) doubles, but the power in the 2 Ω quadruples.</li>
+    <li>Question: can superposition be used when the circuit has a dependent source, and what must be done with that dependent source?</li></ol>
+    <div class="book">Chapter 5 slides, pp. 2–7, 21 · exercise sheet 5.1 Ex.1, Ex.2 and solutions · Hayt §5.1, Example 5.1, Practice 5.1</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id), ui = MC.ui;
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.002, 0.004 * Math.abs(y)));
+const fd = (x, n = 3) => ALG.fmtDec(x, n).replace('-', '−');
+
+/* A: linearity on the circuit of slide p. 3 (Hayt Fig. 5.1): v1 = 1.5 ia + 0.25 ib */
+const L = CH5S.lin, SL = { ia: 4, ib: 2 }, PA = new CH5.Panels($('cvA'));
+PA.set([CH5.kill(L.spec, ['Ia']), CH5.kill(L.spec, ['Ib']), CH5.clone(L.spec)].map((sp, i) => ({ spec: sp, ckt: new CK.Circuit(sp), speed: L.speed, ask: L.ask, on: true,
+  title: [t('① i_a ทำงานตัวเดียว', '① i_a acting alone'), t('② i_b ทำงานตัวเดียว', '② i_b acting alone'), t('วงจรจริง: i_a และ i_b พร้อมกัน', 'The real circuit: i_a and i_b together')][i],
+  sub: [t('i_b → เปิดวงจร', 'i_b → open'), t('i_a → เปิดวงจร', 'i_a → open'), 'v_1 = v_1′ + v_1″'][i] })));
+function lin() {
+  PA.items.forEach(it => { const c = it.ckt; ['Ia', 'Ib'].forEach(id => { const p = c.part(id); if (p.type === 'I') { p.value = id === 'Ia' ? SL.ia : SL.ib; p.valText = `${fd(p.value, 2)} A`; } }); c.solve(); });
+  const a = 1.5 * SL.ia, b = 0.25 * SL.ib, v = [a, b, a + b]; PA.items.forEach((it, i) => { it.askLabel = ['v_1′', 'v_1″', 'v_1'][i]; it.askText = `${it.askLabel} = ${fd(v[i], 3)} V`; });
+  $('fA').innerHTML = `<h3>${t('ผลรวมของสองภาพ', 'The sum of the two panels')}</h3>` + MC.tex(CH5.fitIn($('fA'), `\\begin{aligned} v_1' &= i_a\\left[2 \\parallel (5 + 1)\\right] = 1.5\\,i_a = ${fd(a, 3)}\\ \\text{V} \\\\ v_1'' &= (2)\\left(\\frac{1}{1 + 5 + 2}\\right) i_b = 0.25\\,i_b = ${fd(b, 3)}\\ \\text{V} \\\\ v_1 &= v_1' + v_1'' = \\boxed{${fd(a + b, 3)}\\ \\text{V}} \\end{aligned}`.replace(/−/g, '-')), true) +
+    `<div class="sub2">${t('ตรวจกับวงจรจริง (ภาพสุดท้าย): ', 'Check with the real circuit (last panel): ')}v₁ = ${fd(PA.items[2].ckt.V('a').re, 4)} V · ${t('ทุกค่าเป็นเส้นตรงตาม i_a และ i_b: คูณแหล่งจ่ายด้วย k ผลของมันก็คูณด้วย k', 'everything is a straight-line function of i_a and i_b: scale a source by k and its effect scales by k')}</div>`;
+}
+const sa = ui.slider($('ctlA'), { id: 'sIa', label: 'i<sub>a</sub>', min: -6, max: 6, step: 0.5, value: SL.ia, fmt: v => `${fd(v, 1)} A`, oninput: v => { SL.ia = v; lin(); } });
+const sb = ui.slider($('ctlA'), { id: 'sIb', label: 'i<sub>b</sub>', min: -6, max: 6, step: 0.5, value: SL.ib, fmt: v => `${fd(v, 1)} A`, oninput: v => { SL.ib = v; lin(); } });
+ui.buttons($('ctlA'), [{ label: 'i_a × 2', onclick: () => { SL.ia = Math.max(-6, Math.min(6, SL.ia * 2)); sa.set(SL.ia); lin(); } }, { label: 'i_b = 0', onclick: () => { SL.ib = 0; sb.set(0); lin(); } },
+  { label: t('ค่าเริ่มต้น', 'reset'), onclick: () => { SL.ia = 4; SL.ib = 2; sa.set(4); sb.set(2); lin(); } }]);
+lin(); CH5.onFonts(lin); window.addEventListener('resize', () => PA.resize()); LS.anim($('cvA'), dt => PA.draw(dt));
+
+/* 1: Ex 1 = Hayt Example 5.1 */
+CH5.problem(1, 'sup', 'ex1', {
+  ask: () => ({ fields: [{ label: 'iₓ (A) =', ok: x => near(x, 1), w: 5 }], check: v => near(v[0], 0.2) || near(v[0], 0.8) ? t('นั่นคือผลย่อยตัวเดียว ต้องรวมผลจากแหล่งจ่ายทั้งสองตัว', 'That is one part only: add the parts from both sources') : '' }),
+  answer: t('\\(i_x = 1\\) A (\\(i_x\' = 0.2\\) A, \\(i_x\'\' = 0.8\\) A) ตรงกับเฉลยในห้องและ Hayt Example 5.1', '\\(i_x = 1\\) A (\\(i_x\' = 0.2\\) A, \\(i_x\'\' = 0.8\\) A), as in class and Hayt Example 5.1') });
+
+/* 2: Ex 2 = Hayt Practice 5.1 */
+CH5.problem(2, 'sup', 'ex2', {
+  ask: () => ({ fields: [{ label: 'iₓ (A) =', ok: x => near(x, 0.66), w: 5 }], check: v => near(v[0], 0.94) ? t('ดูเครื่องหมายของ \\(i_x\'\'\\) อีกครั้ง: กระแสจาก 3.5 V ไหลผ่าน 15 Ω สวนลูกศร', 'Check the sign of \\(i_x\'\'\\): the 3.5 V current crosses the 15 Ω against the arrow') : '' }),
+  answer: t('\\(i_x = 0.8 + (-0.14) = 0.66\\) A ตรงกับเฉลยในห้องและ Hayt Practice 5.1 (660 mA)', '\\(i_x = 0.8 + (-0.14) = 0.66\\) A, as in class and Hayt Practice 5.1 (660 mA)') });
+
+/* 3: homework 1 */
+CH5.problem(3, 'sup', 'hw1', {
+  ask: () => ({ fields: [{ label: 'vₓ (V) =', ok: x => near(x, 25 / 19), w: 5 }], check: v => near(v[0], 45 / 19) ? t('ดูเครื่องหมายของ \\(v_x\'\'\'\\) อีกครั้ง: เมื่อ 4 V ขวาทำงาน กระแสไหลผ่าน 1 Ω จากขวาไปซ้าย', 'Check the sign of \\(v_x\'\'\'\\): with the right 4 V acting, the current crosses the 1 Ω from right to left') : '' }),
+  answer: t('\\(v_x = 14/19 + 21/19 - 10/19 = 25/19 \\approx 1.316\\) V ตรงกับคำตอบที่พิมพ์ในสไลด์ (1.316 V) และผลย่อยที่ผู้สอนเขียนในห้อง (0.7368, 1.105, −0.526 V)',
+    '\\(v_x = 14/19 + 21/19 - 10/19 = 25/19 \\approx 1.316\\) V, as printed on the slide (1.316 V) and matching the parts written in class (0.7368, 1.105, −0.526 V)') });
+
+/* 4: exercise sheet 5.1 Ex.1 */
+CH5.problem(4, 'sup', 's1', {
+  ask: () => ({ fields: [{ label: 'Iₓ (A) =', ok: x => near(x, 3.9985, 0.0002), w: 5.5 }], check: v => near(v[0], 4.0015, 0.0002) ? t('ดูเครื่องหมายของผลย่อยจาก 12 V: กระแสไหลลงผ่าน 4 kΩ สวนลูกศร \\(I_x\\)', 'Check the sign of the 12 V part: its current flows down through the 4 kΩ, against the \\(I_x\\) arrow') : near(v[0], 4, 0.0002) ? t('เกือบแล้ว: ผลย่อยจาก 12 V มีขนาด 1.5 mA ซึ่งเล็กแต่ไม่เป็นศูนย์', 'Nearly: the 12 V part is 1.5 mA, small but not zero') : '' }),
+  answer: t('\\(I_x = 0 + 4 + (-0.0015) = 3.9985\\) A ตรงกับเฉลย', '\\(I_x = 0 + 4 + (-0.0015) = 3.9985\\) A, as in the solution') });
+
+/* 5: exercise sheet 5.1 Ex.2 */
+CH5.problem(5, 'sup', 's2', {
+  ask: () => ({ fields: [{ label: 'Iₓ (A) =', ok: x => near(x, 6 / 35), w: 5 }], check: v => near(v[0], 0.4) ? t('ดูเครื่องหมายของผลย่อยจาก 8 V: กระแสใน 10 Ω ไหลจากขวาไปซ้าย', 'Check the sign of the 8 V part: its current in the 10 Ω flows right to left') : '' }),
+  answer: t('\\(I_x = 0 + \\tfrac{2}{7} - \\tfrac{4}{35} = \\tfrac{6}{35} \\approx 0.1714\\) A ตรงกับเฉลย', '\\(I_x = 0 + \\tfrac{2}{7} - \\tfrac{4}{35} = \\tfrac{6}{35} \\approx 0.1714\\) A, as in the solution') });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="3.4 — Voltage and Current Division">3.4 — การแบ่งแรงดันและการแบ่งกระแส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch3.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การแบ่งแรงดันและการแบ่งกระแส <span class="en">Voltage and current division — share the voltage in series, share the current in parallel</span></h1>
+<h1 data-l="en">Voltage and current division <span class="en">Share the voltage in series, share the current in parallel</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch3/p20.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 20: voltage division, v1 = R1/(R1 + R2) times v and v2 = R2/(R1 + R2) times v for two resistors in series">
+    <figcaption data-l="th">สไลด์บทที่ 3 หน้า 20 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 3 slides, p. 20 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">ตัวต้านทานที่<b>อนุกรม</b>กันมีกระแสเดียวกัน แรงดันรวมจึงแบ่งให้แต่ละตัว<b>ตามสัดส่วนของความต้านทาน</b> (การแบ่งแรงดัน สไลด์หน้า 20) ส่วนตัวต้านทานที่<b>ขนาน</b>กันมีแรงดันเดียวกัน กระแสรวมจึงแบ่งให้แต่ละกิ่ง โดยกิ่งที่ความต้านทานน้อยได้กระแสมาก (การแบ่งกระแส สไลด์หน้า 22) จำง่าย ๆ ว่า<b>ตัวเศษของสูตรแบ่งกระแสคือกิ่งตรงข้าม</b> หน้านี้มีเครื่องมือสองชิ้น (A ตัวแบ่งแรงดัน B ตัวแบ่งกระแส) และ <b>5 โจทย์ เรียงทีละข้อ</b> (Ex 10 กับตัวอย่างเพิ่มเติมข้อ 2, 3, 4, 6) ในภาพจำลองส่วนที่กำลังคิดในแต่ละขั้นจะเรืองแสง</p>
+    <p class="sub" data-l="en">Resistors in <b>series</b> carry the same current, so the total voltage is shared among them <b>in proportion to their resistance</b> (voltage division, slide p. 20). Resistors in <b>parallel</b> share one voltage, so the total current is split among the branches, the smaller resistance taking more (current division, slide p. 22). An easy way to remember: <b>the numerator of the current divider is the other branch</b>. This page has two tools (A, a voltage divider; B, a current divider) and <b>5 problems, one after another</b> (Ex 10 and extra examples 2, 3, 4 and 6). In the simulations, the part being worked on in each step glows.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} v_1 = \frac{R_1}{R_1 + R_2}\,v, \qquad v_2 = \frac{R_2}{R_1 + R_2}\,v \\ i_1 = \frac{R_2}{R_1 + R_2}\,i, \qquad i_2 = \frac{R_1}{R_1 + R_2}\,i \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แบ่งแรงดัน</b> (อนุกรม กระแสเดียวกัน): \(v_1 = \frac{R_1}{R_1 + R_2}v\) <b>ตัวต้านทานที่ใหญ่กว่าได้แรงดันมากกว่า</b></li>
+  <li><b>แบ่งกระแส</b> (ขนาน แรงดันเดียวกัน): \(i_1 = \frac{R_2}{R_1 + R_2}i\) <b>ตัวเศษคือกิ่งตรงข้าม</b> กิ่งที่ความต้านทานน้อยได้กระแสมาก</li>
+  <li><b>ใช้สูตรได้เมื่อวงจรอยู่ในรูปตัวแบ่ง</b>: ยุบส่วนที่เหลือให้เป็นตัวเดียวก่อน เช่น Ex 10 รวม 10 Ω สองตัวกับ 3 Ω ให้เป็น 8 Ω</li>
+  <li><b>สูตรแบ่งกระแสแบบนี้ใช้กับสองกิ่ง</b> ถ้ามีหลายกิ่ง ให้รวมกิ่งอื่นเป็นตัวเดียวก่อน</li>
+  <li><b>ตรวจคำตอบเสมอ</b>: \(v_1 + v_2 = v\) และ \(i_1 + i_2 = i\)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Voltage division</b> (series, one current): \(v_1 = \frac{R_1}{R_1 + R_2}v\); <b>the larger resistor takes the larger voltage</b>.</li>
+  <li><b>Current division</b> (parallel, one voltage): \(i_1 = \frac{R_2}{R_1 + R_2}i\); <b>the numerator is the other branch</b>, so the smaller resistance takes more current.</li>
+  <li><b>Use the formulas once the circuit is in divider form</b>: first merge the rest into one resistor, as Ex 10 merges the two 10 Ω and the 3 Ω into 8 Ω.</li>
+  <li><b>This current-divider formula is for two branches</b>; with more branches, merge the others into one first.</li>
+  <li><b>Always check</b>: \(v_1 + v_2 = v\) and \(i_1 + i_2 = i\).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>ตัวแบ่งแรงดัน</a><a href="#ex1"><b>1</b>Ex 10</a><a href="#tB"><b>B</b>ตัวแบ่งกระแส</a><a href="#ex2"><b>2</b>ตัวอย่างเพิ่มเติม 2</a><a href="#ex3"><b>3</b>ตัวอย่างเพิ่มเติม 3</a><a href="#ex4"><b>4</b>ตัวอย่างเพิ่มเติม 4</a><a href="#ex5"><b>5</b>ตัวอย่างเพิ่มเติม 6</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Voltage divider</a><a href="#ex1"><b>1</b>Ex 10</a><a href="#tB"><b>B</b>Current divider</a><a href="#ex2"><b>2</b>Extra example 2</a><a href="#ex3"><b>3</b>Extra example 3</a><a href="#ex4"><b>4</b>Extra example 4</a><a href="#ex5"><b>5</b>Extra example 6</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เครื่องมือ: ตัวแบ่งแรงดัน</h2><h2 data-l="en">Tool: the voltage divider</h2>
+    <div class="src" data-l="th">เลื่อนค่าแล้วดูแท่งแรงดันแบ่งตามสัดส่วน \(R_1 : R_2\)</div><div class="src" data-l="en">Move the sliders and watch the voltage bar split in the ratio \(R_1 : R_2\)</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvA"></canvas><div class="ctl" id="ctlA"></div></div><div class="card solve"><div id="fA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 10: จงหาแรงดัน \(v_x\)</h2><h2 data-l="en">Ex 10: find the voltage \(v_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 21 · Hayt Practice 3.15</div><div class="src" data-l="en">Chapter 3 slides, p. 21 · Hayt Practice 3.15</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p21q.webp" width="1095" height="575" loading="lazy" decoding="async" alt="Ex 10: 10 V source, 2 ohm with vx and 3 ohm along the top, two 10 ohm resistors in parallel">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 21 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 21 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ฉบับ ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K31.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: 3 + 5 = 8 ohm, vx = 2/(2 + 8) times 10 = 2 V"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">เครื่องมือ: ตัวแบ่งกระแส</h2><h2 data-l="en">Tool: the current divider</h2>
+    <div class="src" data-l="th">สไลด์หน้า 22 · เลื่อนค่าแล้วดูว่ากิ่งที่ความต้านทานน้อยได้กระแสมาก</div><div class="src" data-l="en">Slide p. 22 · move the sliders and see that the branch with less resistance takes more current</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p22.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 22: current division, i1 = R2/(R1 + R2) times i and i2 = R1/(R1 + R2) times i for two resistors in parallel">
+    <figcaption data-l="th">สไลด์หน้า 22 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 22 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cvB"></canvas><div class="ctl" id="ctlB"></div></div><div class="card solve"><div id="fB"></div></div></div>
+</section>
+
+<!-- ======================= extra examples ======================= -->
+<div class="group-head"><h2 data-l="th">ตัวอย่างเพิ่มเติม (Extra Example) ข้อ 2, 3, 4 และ 6</h2><h2 data-l="en">Extra examples 2, 3, 4 and 6</h2></div>
+<p class="lead" data-l="th">ข้อ 1 อยู่ในหน้า 3.1–3.2 และข้อ 5 (KVL + KCL) อยู่ในหน้า 3.2 · เฉลยลายมือของผู้สอนอยู่ในกล่องพับใต้แต่ละข้อ</p>
+<p class="lead" data-l="en">Example 1 is on pages 3.1–3.2 and example 5 (KVL + KCL) is on page 3.2 · the teacher's handwritten solutions are in the folded boxes under each problem.</p>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">ตัวอย่างเพิ่มเติม 2: ความต้านทานรวม \(i\), \(v_1\), \(v_2\) และกำลัง</h2><h2 data-l="en">Extra example 2: the total resistance, \(i\), \(v_1\), \(v_2\) and the powers</h2>
+    <div class="src" data-l="th">(a) ความต้านทานรวม (b) \(i\), \(v_1\), \(v_2\) (c) กำลังที่แหล่งจ่ายจ่าย (d) กำลังที่ \(R_1\) รับหรือจ่าย</div><div class="src" data-l="en">(a) the total resistance, (b) \(i\), \(v_1\), \(v_2\), (c) the power delivered by the source, (d) the power of \(R_1\), absorbed or delivered</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex2q.webp" width="1400" height="395" loading="lazy" decoding="async" alt="Extra example 2: 6 V source, 2 ohm and 6 ohm (v1) along the top, R1 = 4 ohm on the right with v2 (+ at the bottom)">
+    <figcaption data-l="th">โจทย์จากเอกสารตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน</span><span data-l="en">See the teacher's handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol2.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 2: Rt = 12 ohm, I = 0.5 A, v1 = 3 V, v2 = −2 V, P source = 3 W, P R1 = 1 W absorbed"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 2</figcaption><figcaption data-l="en">Handwritten solution, extra example 2</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">ตัวอย่างเพิ่มเติม 3: ความต้านทานรวม และกระแส \(i\) กับ \(i_1\)</h2><h2 data-l="en">Extra example 3: the total resistance, and the currents \(i\) and \(i_1\)</h2>
+    <div class="src" data-l="th">ยุบจากด้านในสุดออกมาหาแหล่งจ่าย แล้วใช้การแบ่งกระแสย้อนกลับเข้าไป</div><div class="src" data-l="en">Reduce from the innermost part out to the source, then use current division on the way back in</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex3q.webp" width="1400" height="818" loading="lazy" decoding="async" alt="Extra example 3: 50 V source, 1 ohm, 90 ohm down with i, 4 ohm, 22 ohm down with i1 to two 4 ohm in parallel, 8 ohm on the right">
+    <figcaption data-l="th">โจทย์จากเอกสารตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน</span><span data-l="en">See the teacher's handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol3.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 3: Rt = 10 ohm, It = 5 A, current divider i = 0.5 A, IBC = 4.5 A, i1 = 1.125 A"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 3</figcaption><figcaption data-l="en">Handwritten solution, extra example 3</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">ตัวอย่างเพิ่มเติม 4: จงหากระแส \(i\), \(i_1\) และแรงดัน \(v\)</h2><h2 data-l="en">Extra example 4: find the currents \(i\), \(i_1\) and the voltage \(v\)</h2>
+    <div class="src" data-l="th">เฉลยมีสามโนด A, B, C</div><div class="src" data-l="en">The solution letters three nodes, A, B and C</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex4q.webp" width="1400" height="832" loading="lazy" decoding="async" alt="Extra example 4: 9 V source, 2 ohm with i, 9 ohm down with i1, 72 ohm with v">
+    <figcaption data-l="th">โจทย์จากเอกสารตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน</span><span data-l="en">See the teacher's handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol4.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 4: Rt = (9 parallel 72) + 2 = 10 ohm, i = 0.9 A, current divider i1 = 0.8 A, v = 7.2 V"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 4</figcaption><figcaption data-l="en">Handwritten solution, extra example 4</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">ตัวอย่างเพิ่มเติม 6: ใช้การแบ่งแรงดันหรือการแบ่งกระแส หา \(V_x\) และ \(I_x\)</h2><h2 data-l="en">Extra example 6: use voltage or current division to find \(V_x\) and \(I_x\)</h2>
+    <div class="src" data-l="th">แบ่งแรงดันหา \(V_x\) แล้วแบ่งกระแสหา \(I_x\)</div><div class="src" data-l="en">Voltage division gives \(V_x\), then current division gives \(I_x\)</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/ex6q.webp" width="1400" height="484" loading="lazy" decoding="async" alt="Extra example 6: 20 V source, 5 ohm, 6 ohm down with Vx, 10 ohm, 28 ohm down with Ix, 4 ohm on the right">
+    <figcaption data-l="th">โจทย์จากเอกสารตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน</span><span data-l="en">See the teacher's handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol6.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 6: 28 parallel 4 = 3.5 ohm, RBD = 13.5 ohm, R = 6 parallel 13.5 = 4.154 ohm, Vx = 9.0756 V, It = 0.6723 A, Ix = 0.08403 A"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 6</figcaption><figcaption data-l="en">Handwritten solution, extra example 6</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — แท่งแรงดันและแท่งกระแส</h3>
+    <ol><li>เครื่องมือ A: ตั้ง \(R_1 = R_2\) แท่งแรงดันแบ่งครึ่งพอดี แล้วเพิ่ม \(R_2\) เป็นสองเท่าของ \(R_1\): \(v_2\) ได้สองในสามของ \(v\)</li>
+    <li>เครื่องมือ B: ตั้ง \(R_2\) ให้ใหญ่กว่า \(R_1\) แปดเท่า (ค่าตั้งต้น 9 Ω กับ 72 Ω) กิ่ง \(R_1\) ได้กระแสแปดในเก้าส่วน</li>
+    <li>ทั้งสองเครื่องมือ ผลรวมของสองส่วนเท่ากับค่าทั้งหมดเสมอ</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ยุบก่อนแบ่ง</h3>
+    <ol><li>ข้อ 1: แบ่งแรงดันระหว่าง 2 Ω กับ 3 Ω ทันทีไม่ได้ เพราะ 3 Ω ไม่ได้อนุกรมกับ 2 Ω อย่างเดียว ต้องรวม 3 Ω กับ 5 Ω (สองตัว 10 Ω ขนานกัน) เป็น 8 Ω ก่อน</li>
+    <li>ข้อ 3: ยุบออกมาหาแหล่งจ่ายเพื่อหากระแสรวม แล้ว<b>ย้อนกลับเข้าไป</b>ด้วยการแบ่งกระแสทีละชั้น</li>
+    <li>ข้อ 5: ใช้การแบ่งแรงดันหา \(V_x\) ก่อน จากนั้นกระแสในกิ่งขวาจึงแบ่งให้ 28 Ω กับ 4 Ω</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — เครื่องหมายของแรงดัน</h3>
+    <ol><li>ข้อ 2: \(v_2\) กำหนดขั้ว + ไว้ด้านล่าง แต่กระแสไหลลง (เข้าทางด้านบน) \(v_2\) จึงติดลบ −2 V</li>
+    <li>ตัวต้านทานรับกำลังเสมอ ข้อ 2 \(R_1\) รับ 1 W ถึงแม้ \(v_2\) จะติดลบ (เพราะคิดด้วยแรงดันและกระแสที่ขั้วสัมพันธ์กัน)</li>
+    <li>คำถาม: ในข้อ 4 ถ้าเปลี่ยน 72 Ω เป็น 9 Ω \(i_1\) จะเป็นเท่าไร</li></ol>
+    <div class="book">สไลด์บทที่ 3 หน้า 20–22 · ตัวอย่างเพิ่มเติมข้อ 2, 3, 4, 6 · Hayt §3.8, Practice 3.15</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the voltage bar and the current bar</h3>
+    <ol><li>Tool A: set \(R_1 = R_2\) and the voltage bar splits exactly in half; then make \(R_2\) twice \(R_1\): \(v_2\) takes two thirds of \(v\).</li>
+    <li>Tool B: make \(R_2\) eight times \(R_1\) (the starting 9 Ω and 72 Ω): the \(R_1\) branch takes eight ninths of the current.</li>
+    <li>In both tools the two parts always add up to the whole.</li></ol></div>
+  <div class="card"><h3>Try this 2 — reduce, then divide</h3>
+    <ol><li>Problem 1: you cannot divide between the 2 Ω and the 3 Ω straight away, because the 3 Ω is not alone in series with the 2 Ω; first merge the 3 Ω with the 5 Ω (the two 10 Ω in parallel) into 8 Ω.</li>
+    <li>Problem 3: reduce out to the source to find the total current, then <b>work back in</b> with current division, one layer at a time.</li>
+    <li>Problem 5: voltage division gives \(V_x\) first; then the current in the right branch splits between the 28 Ω and the 4 Ω.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the sign of a voltage</h3>
+    <ol><li>Problem 2: \(v_2\) is marked with its + at the bottom, but the current flows down (in at the top), so \(v_2\) is negative, −2 V.</li>
+    <li>A resistor always absorbs power: in problem 2, \(R_1\) absorbs 1 W even though \(v_2\) is negative (the power uses a voltage and a current with matching polarity).</li>
+    <li>Question: in problem 4, if the 72 Ω is changed to 9 Ω, what is \(i_1\)?</li></ol>
+    <div class="book">Chapter 3 slides, pp. 20–22 · extra examples 2, 3, 4, 6 · Hayt §3.8, Practice 3.15</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id), ui = MC.ui, tx = (s, d) => MC.tex(s, d), d3 = (x, n = 3) => LS.d(x, n);
+const W_ = (a, b) => ({ type: 'W', a, b });
+const near = (x, y, tol = 0.011) => Math.abs(x - y) < tol;
+const AL = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+/* o.stage(k): stage shown after k open steps · o.reveal(k): the current moves (default: once every step is open) */
+function stages(n, spec, o) {
+  const sim = new CH3.Stages($('cv' + n), spec);
+  if (o.ask) LS.ask($('ask' + n), o.ask);
+  LS.stepper($('st' + n), { steps: o.steps, answer: o.answer, onStep: (k, N) => { sim.set(o.stage(k)); sim.reveal(o.reveal ? o.reveal(k) : k === N); } });
+  return sim;
+}
+/* the same circuit repeated with a different glow for each step */
+const glowSteps = (base, groups) => groups.map(g => ({ ...base, group: g[0] || null, born: g[1] || null }));
+
+/* A: voltage divider */
+{ const sim = new CH3.VDiv($('cvA')), S = sim.S;
+  const render = () => { const v1 = S.R1 / (S.R1 + S.R2) * S.V, v2 = S.R2 / (S.R1 + S.R2) * S.V;
+    $('fA').innerHTML = `<h3>${t('แบ่งแรงดัน (แทนค่าแล้ว)', 'Voltage division (with numbers)')}</h3>` + tx(AL([`v_1 &= \\frac{R_1}{R_1 + R_2}\\,v = \\frac{${S.R1}}{${S.R1} + ${S.R2}}(${S.V})`, `&= \\boxed{${d3(v1)}\\ \\text{V}}`,
+      `v_2 &= \\frac{R_2}{R_1 + R_2}\\,v = \\frac{${S.R2}}{${S.R1} + ${S.R2}}(${S.V})`, `&= \\boxed{${d3(v2)}\\ \\text{V}}`, `v_1 + v_2 &= ${d3(v1 + v2)} = v \\quad\\checkmark`]), true) +
+      `<p class="lead">${t('ตัวต้านทานสองตัวมีกระแสเดียวกัน แรงดันจึงแบ่งตามสัดส่วนของความต้านทาน', 'Both resistors carry the same current, so the voltage is shared in proportion to the resistance')}</p>`; };
+  ui.slider($('ctlA'), { id: 'aV', label: 'v', min: 1, max: 24, step: 1, value: S.V, fmt: v => `${v} V`, oninput: v => { sim.set({ V: v }); render(); } });
+  ui.slider($('ctlA'), { id: 'aR1', label: 'R₁', min: 1, max: 20, step: 1, value: S.R1, fmt: v => `${v} Ω`, oninput: v => { sim.set({ R1: v }); render(); } });
+  ui.slider($('ctlA'), { id: 'aR2', label: 'R₂', min: 1, max: 20, step: 1, value: S.R2, fmt: v => `${v} Ω`, oninput: v => { sim.set({ R2: v }); render(); } });
+  render(); }
+/* B: current divider */
+{ const sim = new CH3.IDiv($('cvB')), S = sim.S;
+  const render = () => { const i1 = S.R2 / (S.R1 + S.R2) * S.I, i2 = S.R1 / (S.R1 + S.R2) * S.I;
+    $('fB').innerHTML = `<h3>${t('แบ่งกระแส (ตัวเศษคือกิ่งตรงข้าม)', 'Current division (numerator = the other branch)')}</h3>` + tx(AL([`i_1 &= \\frac{R_2}{R_1 + R_2}\\,i = \\frac{${S.R2}}{${S.R1} + ${S.R2}}(${d3(S.I, 1)})`, `&= \\boxed{${d3(i1)}\\ \\text{A}}`,
+      `i_2 &= \\frac{R_1}{R_1 + R_2}\\,i = \\frac{${S.R1}}{${S.R1} + ${S.R2}}(${d3(S.I, 1)})`, `&= \\boxed{${d3(i2)}\\ \\text{A}}`, `i_1 + i_2 &= ${d3(i1 + i2)} = i \\quad\\checkmark`]), true) +
+      `<p class="lead">${t('สองกิ่งมีแรงดันเดียวกัน กิ่งที่ความต้านทานน้อยจึงได้กระแสมาก', 'Both branches share one voltage, so the branch with less resistance takes more current')}</p>`; };
+  ui.slider($('ctlB'), { id: 'bI', label: 'i', min: 0.1, max: 3, step: 0.1, value: S.I, fmt: v => `${d3(v, 1)} A`, oninput: v => { sim.set({ I: v }); render(); } });
+  ui.slider($('ctlB'), { id: 'bR1', label: 'R₁', min: 1, max: 80, step: 1, value: S.R1, fmt: v => `${v} Ω`, oninput: v => { sim.set({ R1: v }); render(); } });
+  ui.slider($('ctlB'), { id: 'bR2', label: 'R₂', min: 1, max: 80, step: 1, value: S.R2, fmt: v => `${v} Ω`, oninput: v => { sim.set({ R2: v }); render(); } });
+  render(); }
+
+/* 1: Ex 10 */
+stages(1, { speed: 26, ground: 'g', quant: { th: 'vₓ', en: 'vₓ', get: c => c.Vab('R2').re, unit: 'V' },
+  stages: [
+    { nodes: { a: [0, 0], b: [2.6, 0], c: [5.2, 0], d: [7.8, 0], g: [0, 3], gc: [5.2, 3], gd: [7.8, 3] },
+      parts: [{ id: 'V10', type: 'V', a: 'a', b: 'g', value: 10, name: '10 V', valText: '', side: -1 }, { id: 'R2', type: 'R', a: 'a', b: 'b', value: 2, name: '2 Ω', valText: '', side: -1 },
+        { id: 'R3', type: 'R', a: 'b', b: 'c', value: 3, name: '3 Ω', valText: '', side: -1 }, { id: 'Ra', type: 'R', a: 'c', b: 'gc', value: 10, name: '10 Ω', valText: '', side: -1 },
+        { id: 'Rb', type: 'R', a: 'd', b: 'gd', value: 10, name: '10 Ω', valText: '', side: 1 }, W_('c', 'd'), W_('g', 'gc'), W_('gc', 'gd')],
+      group: ['Ra', 'Rb'], pols: [{ id: 'R2', plus: 'a', text: 'vₓ', side: 'U' }] },
+    { nodes: { a: [0, 0], b: [2.6, 0], c: [5.2, 0], g: [0, 3], gc: [5.2, 3] },
+      parts: [{ id: 'V10', type: 'V', a: 'a', b: 'g', value: 10, name: '10 V', valText: '', side: -1 }, { id: 'R2', type: 'R', a: 'a', b: 'b', value: 2, name: '2 Ω', valText: '', side: -1 },
+        { id: 'R3', type: 'R', a: 'b', b: 'c', value: 3, name: '3 Ω', valText: '', side: -1 }, { id: 'R5', type: 'R', a: 'c', b: 'gc', value: 5, name: '10 ∥ 10 = 5 Ω', valText: '', side: 1 }, W_('g', 'gc')],
+      born: ['R5'], group: ['R3', 'R5'], pols: [{ id: 'R2', plus: 'a', text: 'vₓ', side: 'U' }] },
+    { nodes: { a: [0, 0], b: [3.2, 0], g: [0, 3], gb: [3.2, 3] },
+      parts: [{ id: 'V10', type: 'V', a: 'a', b: 'g', value: 10, name: '10 V', valText: '', side: -1 }, { id: 'R2', type: 'R', a: 'a', b: 'b', value: 2, name: '2 Ω', valText: '', side: -1 },
+        { id: 'R8', type: 'R', a: 'b', b: 'gb', value: 8, name: '3 + 5 = 8 Ω', valText: '', side: 1 }, W_('g', 'gb')],
+      born: ['R8'], group: ['R2'], pols: [{ id: 'R2', plus: 'a', text: 'vₓ', side: 'U' }] }] }, {
+  ask: { fields: [{ label: 'vₓ (V) =', ok: x => near(x, 2), w: 4 }], check: v => near(v[0], 4) ? t('ต้องรวม 3 Ω กับ 5 Ω เป็น 8 Ω ก่อนแบ่ง', 'Merge the 3 Ω with the 5 Ω into 8 Ω before dividing') : '' },
+  steps: [
+    { why: t('<b>รวม 10 Ω สองตัวที่ขนานกัน</b> (เหลือง)', '<b>Merge the two 10 Ω in parallel</b> (yellow)'), tex: `10 \\parallel 10 = \\frac{(10)(10)}{10 + 10} = 5\\ \\Omega` },
+    { why: t('<b>3 Ω อนุกรมกับ 5 Ω</b> (กระแสเดียวกัน)', '<b>The 3 Ω is in series with the 5 Ω</b> (one current)'), tex: `3 + 5 = 8\\ \\Omega` },
+    { why: t('<b>ตัวแบ่งแรงดัน</b>: เหลือ 2 Ω อนุกรมกับ 8 Ω คร่อมแหล่งจ่าย 10 V … กระแสเริ่มไหล', '<b>Voltage divider</b>: a 2 Ω in series with an 8 Ω across the 10 V source … the current starts to flow'), tex: `v_x = \\left(\\frac{2}{2 + 8}\\right)(10) = \\boxed{2\\ \\text{V}}` }],
+  answer: t('\\(v_x = 2\\) V ตรงกับเฉลยในห้องและ Hayt Practice 3.15', '\\(v_x = 2\\) V, as in class and Hayt Practice 3.15'),
+  stage: k => Math.min(k, 2) });
+
+/* 2: extra example 2 (one series loop; each step glows the part it uses) */
+const X2 = { nodes: { a: [0, 0], b: [2.6, 0], c: [5.4, 0], g: [0, 3.2], gc: [5.4, 3.2] },
+  parts: [{ id: 'V6', type: 'V', a: 'a', b: 'g', value: 6, name: '6 V', valText: '', side: -1 }, { id: 'R3', type: 'R', a: 'a', b: 'b', value: 2, name: '2 Ω', valText: '', side: -1 },
+    { id: 'R2', type: 'R', a: 'b', b: 'c', value: 6, name: '6 Ω', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 'c', b: 'gc', value: 4, name: 'R₁ = 4 Ω', valText: '', side: -1 }, W_('gc', 'g')],
+  pols: [{ id: 'R2', plus: 'b', text: 'v₁', side: 'U' }, { id: 'R1', plus: 'gc', text: 'v₂', side: 'R' }], refs: [{ id: 'R3', from: 'a', text: 'i', side: 'U' }] };
+stages(2, { speed: 60, ground: 'g', aspect: 0.6, stages: glowSteps(X2, [[], [['R3', 'R2', 'R1']], [['V6']], [['R2']], [['R1']], [['V6']], [['R1']]]),
+  badge: (k, c, on) => on ? `i = ${CK.eng(c.I('R3').re, 'A')} · v₁ = ${CH3.u(c.Vab('R2').re, 2)} V · v₂ = ${CH3.u(-c.Vab('R1').re, 2)} V` : t('ลองหาเองก่อน', 'Try it yourself first') }, {
+  ask: { fields: [{ label: 'i (A) =', ok: x => near(x, 0.5), w: 3.6 }, { label: 'v₂ (V) =', ok: x => near(x, -2), w: 3.6 }], check: v => near(v[1], 2) ? t('\\(v_2\\) กำหนดขั้ว + ไว้ด้านล่าง แต่กระแสไหลลง', '\\(v_2\\) has its + at the bottom, but the current flows down') : '' },
+  steps: [
+    { why: t('<b>(a) ความต้านทานรวม</b>: ตัวต้านทานสามตัวอยู่ในวงเดียว (อนุกรม)', '<b>(a) Total resistance</b>: the three resistors are in one loop (series)'), tex: AL(['R_t &= R_1 + R_2 + R_3', '&= 4 + 6 + 2 = \\boxed{12\\ \\Omega}']) },
+    { why: t('<b>(b) กระแส</b> (กฎของโอห์มกับวงจรทั้งวง) … กระแสเริ่มไหลตามเข็มนาฬิกา', '<b>(b) The current</b> (Ohm\'s law for the whole loop) … the current starts to flow clockwise'), tex: `i = \\frac{V}{R_t} = \\frac{6}{12} = \\boxed{0.5\\ \\text{A}}` },
+    { why: t('<b>\\(v_1\\)</b>: กระแสเข้าทางขั้ว + ของ \\(v_1\\)', '<b>\\(v_1\\)</b>: the current enters at the + of \\(v_1\\)'), tex: `v_1 = i R_2 = (0.5)(6) = \\boxed{3\\ \\text{V}}` },
+    { why: t('<b>\\(v_2\\)</b>: ขั้ว + ของ \\(v_2\\) อยู่ล่าง แต่กระแสไหลลง (เข้าทางด้านบน) จึงติดเครื่องหมายลบ', '<b>\\(v_2\\)</b>: the + of \\(v_2\\) is at the bottom, but the current flows down (in at the top), so it takes a minus sign'), tex: AL(['v_2 &= -i R_1 = -(0.5)(4)', '&= \\boxed{-2\\ \\text{V}}']) },
+    { why: t('<b>(c) กำลังที่แหล่งจ่ายจ่าย</b>: กระแส 0.5 A ออกทางขั้ว +', '<b>(c) Power delivered by the source</b>: the 0.5 A leaves its +'), tex: `P_{\\text{${t('จ่าย', 'del')}}} = V i = (6)(0.5) = \\boxed{3\\ \\text{W}}` },
+    { why: t('<b>(d) กำลังที่ \\(R_1\\)</b>: แรงดันคร่อม \\(R_1\\) ด้านบนเป็น + 2 V และกระแสเข้าทางด้านบน จึง<b>รับ</b>กำลัง', '<b>(d) Power of \\(R_1\\)</b>: the voltage across \\(R_1\\) is 2 V, + at the top, and the current enters at the top, so it <b>absorbs</b> power'), tex: `P_{R_1} = (2)(0.5) = \\boxed{1\\ \\text{W}}` }],
+  answer: t('\\(R_t = 12\\ \\Omega\\), \\(i = 0.5\\) A, \\(v_1 = 3\\) V, \\(v_2 = -2\\) V, แหล่งจ่ายจ่าย 3 W, \\(R_1\\) รับ 1 W ตรงกับเฉลยลายมือ', '\\(R_t = 12\\ \\Omega\\), \\(i = 0.5\\) A, \\(v_1 = 3\\) V, \\(v_2 = -2\\) V; the source delivers 3 W and \\(R_1\\) absorbs 1 W, as in the handwritten solution'),
+  stage: k => k, reveal: k => k >= 2 });
+
+/* 3: extra example 3 */
+const X3 = { nodes: { A: [0, 0], B: [2.4, 0], C: [5.4, 0], Ct: [8.4, 0], D: [5.4, 2.1], Dl: [4.6, 2.1], Dr: [6.2, 2.1], g: [0, 4.4], gB: [2.4, 4.4], gDl: [4.6, 4.4], gDr: [6.2, 4.4], g8: [8.4, 4.4] },
+  parts: [{ id: 'V50', type: 'V', a: 'A', b: 'g', value: 50, name: '50 V', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 'A', b: 'B', value: 1, name: '1 Ω', valText: '', side: 1 },
+    { id: 'R90', type: 'R', a: 'B', b: 'gB', value: 90, name: '90 Ω', valText: '', side: 1 }, { id: 'R4', type: 'R', a: 'B', b: 'C', value: 4, name: '4 Ω', valText: '', side: 1 }, W_('C', 'Ct'),
+    { id: 'R22', type: 'R', a: 'C', b: 'D', value: 22, name: '22 Ω', valText: '', side: 1, bodyLen: 0.9 }, W_('Dl', 'D'), W_('D', 'Dr'),
+    { id: 'R4a', type: 'R', a: 'Dl', b: 'gDl', value: 4, name: '4 Ω', valText: '', side: -1, bodyLen: 0.9 }, { id: 'R4b', type: 'R', a: 'Dr', b: 'gDr', value: 4, name: '4 Ω', valText: '', side: 1, bodyLen: 0.9 },
+    { id: 'R8', type: 'R', a: 'Ct', b: 'g8', value: 8, name: '8 Ω', valText: '', side: 1 }, W_('g', 'gB'), W_('gB', 'gDl'), W_('gDl', 'gDr'), W_('gDr', 'g8')],
+  refs: [{ id: 'R90', from: 'B', text: 'i', side: 'L' }, { id: 'R22', from: 'C', text: 'i₁', side: 'L' }] };
+const in4 = ['R4a', 'R4b'], in24 = ['R22', ...in4], in6 = [...in24, 'R8'], in10 = [...in6, 'R4'], in9 = [...in10, 'R90'];
+stages(3, { speed: 14, ground: 'g', aspect: 0.66, aspectN: 0.92, stages: glowSteps(X3, [[], [in4], [in24], [in6], [in10], [in9], [[...in9, 'R1']], [['R90'], in10], [in24, ['R8']]]),
+  badge: (k, c, on) => on ? `I_t = ${CK.eng(c.I('R1').re, 'A')} · i = ${CK.eng(c.I('R90').re, 'A')} · i₁ = ${CK.eng(c.I('R22').re, 'A', 4)}` : t('ยุบทีละชั้น (เหลือง)', 'reduce one layer at a time (yellow)') }, {
+  ask: { fields: [{ label: 'R_t (Ω) =', ok: x => near(x, 10), w: 3.6 }, { label: 'i (A) =', ok: x => near(x, 0.5), w: 3.6 }, { label: 'i₁ (A) =', ok: x => near(x, 1.125, 0.002), w: 3.6 }] },
+  steps: [
+    { why: t('<b>เริ่มด้านในสุด</b>: 4 Ω สองตัวขนานกัน', '<b>Start from the innermost part</b>: the two 4 Ω are in parallel'), tex: `4 \\parallel 4 = 2\\ \\Omega` },
+    { why: t('<b>อนุกรมกับ 22 Ω</b>', '<b>In series with the 22 Ω</b>'), tex: `2 + 22 = 24\\ \\Omega` },
+    { why: t('<b>ขนานกับ 8 Ω</b> (ทั้งคู่ต่อคร่อมโนด C กับลวดล่าง)', '<b>In parallel with the 8 Ω</b> (both sit across node C and the bottom wire)'), tex: `24 \\parallel 8 = \\frac{(24)(8)}{24 + 8} = 6\\ \\Omega` },
+    { why: t('<b>อนุกรมกับ 4 Ω</b>', '<b>In series with the 4 Ω</b>'), tex: `6 + 4 = 10\\ \\Omega` },
+    { why: t('<b>ขนานกับ 90 Ω</b>', '<b>In parallel with the 90 Ω</b>'), tex: `10 \\parallel 90 = \\frac{(10)(90)}{10 + 90} = 9\\ \\Omega` },
+    { why: t('<b>อนุกรมกับ 1 Ω ได้ความต้านทานรวม</b> แล้วกฎของโอห์มกับแหล่งจ่าย … กระแสเริ่มไหล', '<b>In series with the 1 Ω: the total resistance</b>, then Ohm\'s law with the source … the current starts to flow'), tex: AL(['R_t &= 9 + 1 = \\boxed{10\\ \\Omega}', 'I_t &= \\frac{50}{10} = 5\\ \\text{A}']) },
+    { why: t('<b>ย้อนกลับเข้าไป: แบ่งกระแสที่โนด B</b> ระหว่าง 90 Ω กับกิ่งขวา (10 Ω) ตัวเศษคือกิ่งตรงข้าม', '<b>Work back in: current division at node B</b> between the 90 Ω and the right branch (10 Ω); the numerator is the other branch'), tex: `i = \\left(\\frac{10}{10 + 90}\\right)(5) = \\boxed{0.5\\ \\text{A}}` },
+    { why: t('<b>แบ่งกระแสที่โนด C</b>: กระแสในกิ่งขวา \\(5 - 0.5 = 4.5\\) A แบ่งระหว่าง 24 Ω กับ 8 Ω', '<b>Current division at node C</b>: the right-branch current \\(5 - 0.5 = 4.5\\) A splits between the 24 Ω and the 8 Ω'), tex: AL(['I_{BC} &= 5 - 0.5 = 4.5\\ \\text{A}', 'i_1 &= \\left(\\frac{8}{24 + 8}\\right)(4.5) = \\boxed{1.125\\ \\text{A}}']) }],
+  answer: t('\\(R_t = 10\\ \\Omega\\), \\(i = 0.5\\) A, \\(i_1 = 1.125\\) A ตรงกับเฉลยลายมือ', '\\(R_t = 10\\ \\Omega\\), \\(i = 0.5\\) A, \\(i_1 = 1.125\\) A, as in the handwritten solution'),
+  stage: k => k, reveal: k => k >= 6 });
+
+/* 4: extra example 4 */
+const X4 = { nodes: { A: [0, 0], B: [3, 0], Bt: [6, 0], C: [0, 3], gB: [3, 3], gBt: [6, 3] },
+  parts: [{ id: 'V9', type: 'V', a: 'A', b: 'C', value: 9, name: '9 V', valText: '', side: -1 }, { id: 'R2', type: 'R', a: 'A', b: 'B', value: 2, name: '2 Ω', valText: '', side: -1 },
+    { id: 'R9', type: 'R', a: 'B', b: 'gB', value: 9, name: '9 Ω', valText: '', side: -1 }, W_('B', 'Bt'), { id: 'R72', type: 'R', a: 'Bt', b: 'gBt', value: 72, name: '72 Ω', valText: '', side: 1 }, W_('C', 'gB'), W_('gB', 'gBt')],
+  refs: [{ id: 'R2', from: 'A', text: 'i', side: 'U' }, { id: 'R9', from: 'B', text: 'i₁', side: 'R' }], pols: [{ id: 'R72', plus: 'Bt', text: 'v', side: 'L' }] };
+stages(4, { speed: 30, ground: 'C', aspect: 0.6, stages: glowSteps(X4, [[], [['R9', 'R72']], [['R2']], [['R9']], [['R9', 'R72']]]),
+  badge: (k, c, on) => on ? `i = ${CK.eng(c.I('R2').re, 'A')} · i₁ = ${CK.eng(c.I('R9').re, 'A')} · v = ${CH3.u(c.Vab('R72').re, 2)} V` : t('ลองหาเองก่อน', 'Try it yourself first') }, {
+  ask: { fields: [{ label: 'i (A) =', ok: x => near(x, 0.9), w: 3.6 }, { label: 'i₁ (A) =', ok: x => near(x, 0.8), w: 3.6 }, { label: 'v (V) =', ok: x => near(x, 7.2), w: 3.6 }],
+    check: v => near(v[1], 0.1) ? t('สลับตัวเศษ: \\(i_1\\) ใช้กิ่งตรงข้าม (72 Ω)', 'Swapped numerator: \\(i_1\\) uses the other branch (72 Ω)') : '' },
+  steps: [
+    { why: t('<b>9 Ω ขนานกับ 72 Ω</b> (คร่อมโนด B กับ C ทั้งคู่)', '<b>The 9 Ω is in parallel with the 72 Ω</b> (both across nodes B and C)'), tex: `9 \\parallel 72 = \\frac{(9)(72)}{9 + 72} = 8\\ \\Omega` },
+    { why: t('<b>ความต้านทานรวมและกระแส \\(i\\)</b> … กระแสเริ่มไหล', '<b>The total resistance and the current \\(i\\)</b> … the current starts to flow'), tex: AL(['R_t &= 8 + 2 = 10\\ \\Omega', 'i &= \\frac{9}{10} = \\boxed{0.9\\ \\text{A}}']) },
+    { why: t('<b>แบ่งกระแส</b>ระหว่าง 9 Ω กับ 72 Ω: ตัวเศษคือกิ่งตรงข้าม (72 Ω)', '<b>Current division</b> between the 9 Ω and the 72 Ω: the numerator is the other branch (72 Ω)'), tex: `i_1 = \\left(\\frac{72}{72 + 9}\\right)(0.9) = \\boxed{0.8\\ \\text{A}}` },
+    { why: t('<b>กฎของโอห์ม</b>: \\(v\\) คร่อม 72 Ω เท่ากับแรงดันคร่อม 9 Ω (ขนานกัน)', '<b>Ohm\'s law</b>: \\(v\\) across the 72 Ω equals the voltage across the 9 Ω (in parallel)'), tex: `v = i_1 (9) = (0.8)(9) = \\boxed{7.2\\ \\text{V}}` }],
+  answer: t('\\(i = 0.9\\) A, \\(i_1 = 0.8\\) A, \\(v = 7.2\\) V ตรงกับเฉลยลายมือ', '\\(i = 0.9\\) A, \\(i_1 = 0.8\\) A, \\(v = 7.2\\) V, as in the handwritten solution'),
+  stage: k => k, reveal: k => k >= 2 });
+
+/* 5: extra example 6 */
+const X6 = { nodes: { A: [0, 0], B: [2.6, 0], C: [5.4, 0], Ct: [8, 0], g: [0, 3], gB: [2.6, 3], gC: [5.4, 3], gCt: [8, 3] },
+  parts: [{ id: 'V20', type: 'V', a: 'A', b: 'g', value: 20, name: '20 V', valText: '', side: -1 }, { id: 'R5', type: 'R', a: 'A', b: 'B', value: 5, name: '5 Ω', valText: '', side: 1 },
+    { id: 'R6', type: 'R', a: 'B', b: 'gB', value: 6, name: '6 Ω', valText: '', side: -1 }, { id: 'R10', type: 'R', a: 'B', b: 'C', value: 10, name: '10 Ω', valText: '', side: 1 },
+    { id: 'R28', type: 'R', a: 'C', b: 'gC', value: 28, name: '28 Ω', valText: '', side: -1 }, W_('C', 'Ct'), { id: 'R4', type: 'R', a: 'Ct', b: 'gCt', value: 4, name: '4 Ω', valText: '', side: 1 },
+    W_('g', 'gB'), W_('gB', 'gC'), W_('gC', 'gCt')],
+  pols: [{ id: 'R6', plus: 'B', text: 'Vₓ', side: 'R' }], refs: [{ id: 'R28', from: 'C', text: 'Iₓ', side: 'R' }] };
+stages(5, { speed: 26, ground: 'g', aspect: 0.6, stages: glowSteps(X6, [[], [['R28', 'R4']], [['R10', 'R28', 'R4']], [['R6', 'R10', 'R28', 'R4']], [['R5'], ['R6', 'R10', 'R28', 'R4']], [['R10', 'R28', 'R4']], [['R28'], ['R4']]]),
+  badge: (k, c, on) => on ? `Vₓ = ${CH3.u(c.Vab('R6').re, 4)} V · Iₓ = ${CH3.u(c.I('R28').re, 5)} A` : t('ลองหาเองก่อน', 'Try it yourself first') }, {
+  ask: { fields: [{ label: 'Vₓ (V) =', ok: x => near(x, 9.0756, 0.002), w: 4.4 }, { label: 'Iₓ (A) =', ok: x => near(x, 0.08403, 0.0002), w: 4.4 }] },
+  steps: [
+    { why: t('<b>28 Ω ขนานกับ 4 Ω</b>', '<b>The 28 Ω is in parallel with the 4 Ω</b>'), tex: `28 \\parallel 4 = \\frac{(28)(4)}{28 + 4} = 3.5\\ \\Omega` },
+    { why: t('<b>อนุกรมกับ 10 Ω</b> (ความต้านทานระหว่าง B กับลวดล่าง)', '<b>In series with the 10 Ω</b> (the resistance from B to the bottom wire)'), tex: `R_{BD} = 10 + 3.5 = 13.5\\ \\Omega` },
+    { why: t('<b>ขนานกับ 6 Ω</b>', '<b>In parallel with the 6 Ω</b>'), tex: AL(['R &= 6 \\parallel 13.5 = \\frac{(6)(13.5)}{6 + 13.5}', '&= 4.154\\ \\Omega']) },
+    { why: t('<b>แบ่งแรงดัน</b>: 5 Ω อนุกรมกับ 4.154 Ω คร่อม 20 V … กระแสเริ่มไหล', '<b>Voltage division</b>: the 5 Ω in series with the 4.154 Ω across 20 V … the current starts to flow'), tex: AL(['V_x &= \\left(\\frac{4.154}{5 + 4.154}\\right)(20)', '&= \\boxed{9.0756\\ \\text{V}}']) },
+    { why: t('<b>กระแสในกิ่งขวา</b>: \\(V_x\\) คร่อม 10 Ω กับ 3.5 Ω ที่อนุกรมกัน', '<b>The current in the right branch</b>: \\(V_x\\) sits across the 10 Ω and the 3.5 Ω in series'), tex: `I_t = \\frac{V_x}{10 + 3.5} = \\frac{9.0756}{13.5} = 0.6723\\ \\text{A}` },
+    { why: t('<b>แบ่งกระแส</b>ระหว่าง 28 Ω กับ 4 Ω: ตัวเศษคือกิ่งตรงข้าม (4 Ω)', '<b>Current division</b> between the 28 Ω and the 4 Ω: the numerator is the other branch (4 Ω)'), tex: AL(['I_x &= \\left(\\frac{4}{28 + 4}\\right)(0.6723)', '&= \\boxed{0.08403\\ \\text{A}}']) }],
+  answer: t('\\(V_x = 9.0756\\) V และ \\(I_x = 0.08403\\) A ตรงกับเฉลยลายมือ', '\\(V_x = 9.0756\\) V and \\(I_x = 0.08403\\) A, as in the handwritten solution'),
+  stage: k => k, reveal: k => k >= 4 });
+});
+</script>
+</body>
+</html>

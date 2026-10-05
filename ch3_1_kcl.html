@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="3.1 — Nodes, Loops and Kirchhoff's Current Law">3.1 — โนด ลูป และกฎกระแสของเคียร์ชอฟฟ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch3.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">โนด ลูป และกฎกระแสของเคียร์ชอฟฟ์ <span class="en">Nodes, loops and Kirchhoff's current law — what flows into a node must flow out</span></h1>
+<h1 data-l="en">Nodes, loops and Kirchhoff's current law <span class="en">What flows into a node must flow out</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch3/p02.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 2: definitions of node, path, loop and branch, with two drawings (a) and (b) of the same circuit">
+    <figcaption data-l="th">สไลด์บทที่ 3 หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 3 slides, p. 2 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 2 นิยามคำสี่คำที่ใช้ทั้งบท: <b>โนด</b> (node) คือจุดที่อุปกรณ์ตั้งแต่สองตัวต่อถึงกัน <b>ทางเดิน</b> (path) คือการเดินผ่านอุปกรณ์โดยไม่ผ่านโนดซ้ำ <b>ลูป</b> (loop) คือทางเดินที่กลับมาจบที่โนดเริ่มต้น และ<b>กิ่ง</b> (branch) คืออุปกรณ์หนึ่งตัวกับโนดที่ปลายทั้งสองข้าง ภาพ (a) กับ (b) ในสไลด์คือวงจรเดียวกัน แสดงว่า<b>ลวดทั้งเส้นเป็นโนดเดียว</b> แม้จะวาดให้ดูเป็นหลายจุด จากนั้น<b>กฎกระแสของเคียร์ชอฟฟ์ (Kirchhoff's Current Law, KCL)</b> บอกว่ากระแสที่ไหลเข้าโนดต้องเท่ากับกระแสที่ไหลออก เพราะโนดเก็บประจุไม่ได้ หน้านี้มี <b>10 โจทย์ เรียงทีละข้อ</b> (นับวงจร 4 ข้อ ตัวอย่าง KCL 2 ข้อ การบ้าน 3 ข้อ และตัวอย่างเพิ่มเติม 1 ข้อ) แต่ละข้อมีภาพจำลองของตัวเอง ลองคิดเองก่อนแล้วเปิดเฉลยทีละขั้น</p>
+    <p class="sub" data-l="en">Slide p. 2 defines four words used throughout the chapter: a <b>node</b> is a point where two or more elements connect; a <b>path</b> passes through elements without meeting a node twice; a <b>loop</b> is a path that ends where it started; and a <b>branch</b> is one element with the nodes at its two ends. Drawings (a) and (b) on the slide are the same circuit: <b>a whole wire is one node</b>, even when it is drawn to look like several points. Then <b>Kirchhoff's Current Law (KCL)</b> says that the current flowing into a node equals the current flowing out, because a node cannot store charge. This page has <b>10 problems, one after another</b> (4 counting problems, 2 KCL examples, 3 homework problems and 1 extra example), each with its own simulation. Try each one yourself first, then open the solution one step at a time.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum I_{\text{in}} = \sum I_{\text{out}} \quad\Longleftrightarrow\quad \sum I_{\text{in}} = 0 \\ m = b - n + 1 \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>โนด</b> คือจุดที่อุปกรณ์ตั้งแต่สองตัวต่อถึงกัน <b>ทุกจุดที่ต่อถึงกันด้วยลวดคือโนดเดียวกัน</b> จึงใช้ตัวอักษรเดียวกัน</li>
+  <li><b>กิ่ง</b> คืออุปกรณ์หนึ่งตัวกับโนดที่ปลายทั้งสอง · <b>ลูป</b> คือทางเดินปิดที่ไม่ผ่านโนดซ้ำ · <b>เมช</b> (mesh) คือลูปที่ไม่มีลูปอื่นอยู่ข้างใน เหมือนช่องหน้าต่าง</li>
+  <li><b>จำนวนเมช \(m = b - n + 1\)</b> เมื่อ \(b\) คือจำนวนกิ่ง และ \(n\) คือจำนวนโนด</li>
+  <li><b>KCL: \(\sum I_{\text{in}} = \sum I_{\text{out}}\)</b> ที่ทุกโนด ค่าที่ติดลบแปลว่ากระแสจริงไหลสวนลูกศรที่เขียนไว้</li>
+  <li><b>อุปกรณ์ที่มีลวดลัดคร่อมไม่มีกระแสไหล</b> จึงไม่นับ และ<b>ปลายที่ลอยอยู่ไม่มีกระแส</b> เพราะไม่มีทางกลับ</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li>A <b>node</b> is a point where two or more elements connect. <b>Every point joined by wire is the same node</b>, so it gets the same letter.</li>
+  <li>A <b>branch</b> is one element with the nodes at its two ends · a <b>loop</b> is a closed path that meets no node twice · a <b>mesh</b> is a loop with no other loop inside it, like a window pane.</li>
+  <li><b>Number of meshes \(m = b - n + 1\)</b>, where \(b\) is the number of branches and \(n\) the number of nodes.</li>
+  <li><b>KCL: \(\sum I_{\text{in}} = \sum I_{\text{out}}\)</b> at every node; a negative value means the real current flows against the drawn arrow.</li>
+  <li><b>An element shorted by a wire carries no current</b>, so it is not counted, and <b>a floating end carries no current</b>, because there is no way back.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>วงจรซ้าย</a><a href="#ex2"><b>2</b>วงจรกลาง</a><a href="#ex3"><b>3</b>วงจรขวา</a><a href="#ex4"><b>4</b>ลวดลัด</a><a href="#ex5"><b>5</b>Ex 1</a><a href="#ex6"><b>6</b>Ex 2</a><a href="#ex7"><b>7</b>การบ้านข้อ 1</a><a href="#ex8"><b>8</b>การบ้านข้อ 2</a><a href="#ex9"><b>9</b>การบ้านข้อ 3</a><a href="#ex10"><b>10</b>ตัวอย่างเพิ่มเติม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Left circuit</a><a href="#ex2"><b>2</b>Middle circuit</a><a href="#ex3"><b>3</b>Right circuit</a><a href="#ex4"><b>4</b>Shorting wire</a><a href="#ex5"><b>5</b>Ex 1</a><a href="#ex6"><b>6</b>Ex 2</a><a href="#ex7"><b>7</b>Homework 1</a><a href="#ex8"><b>8</b>Homework 2</a><a href="#ex9"><b>9</b>Homework 3</a><a href="#ex10"><b>10</b>Extra example</a></nav>
+
+<!-- ======================= counting ======================= -->
+<div class="group-head"><h2 data-l="th">นับโนด กิ่ง เมช และลูป (สไลด์หน้า 3)</h2><h2 data-l="en">Counting nodes, branches, meshes and loops (slide p. 3)</h2></div>
+<p class="lead" data-l="th">วิธีนับแบบในห้อง: <b>ระบายสีลวดที่ต่อถึงกันเป็นสีเดียว</b> แล้วนับสี (โนด) → นับอุปกรณ์ (กิ่ง) → นับช่องหน้าต่าง (เมช) แล้วตรวจด้วย \(m = b - n + 1\) → ไล่ทางเดินปิดทุกเส้น (ลูป) ภาพจำลองทำตามเฉลยทีละขั้น จุดสีเหลืองที่วิ่งคือกระแสจริงของวงจร (ใส่ค่าอุปกรณ์สมมุติ เพราะโจทย์ไม่ได้ให้ค่า)</p>
+<p class="lead" data-l="en">The counting method from class: <b>paint each set of joined wires one colour</b> and count the colours (nodes) → count the elements (branches) → count the window panes (meshes) and check with \(m = b - n + 1\) → walk every closed path (loops). The simulation follows the solution step by step; the moving yellow dots are the real currents of the circuit (with made-up part values, since the problem gives none).</p>
+<figure class="slide q wide"><img src="slides/ch3/p03.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 3: three circuits to count. Left: Vs, R1, R2, R3, R4. Middle: R1, R2, R3, current source Is and R4. Right: R1, R2, R3, R7, Is, R4, Vs, R6, R5">
+  <figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">วงจรซ้าย: นับโนด กิ่ง เมช และลูป</h2><h2 data-l="en">Left circuit: count the nodes, branches, meshes and loops</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 3 · Hayt §3.1</div><div class="src" data-l="en">Chapter 3 slides, p. 3 · Hayt §3.1</div></div></div>
+  <figure class="slide q sm"><img src="slides/ch3/p03q1.webp" width="523" height="361" loading="lazy" decoding="async" alt="Left circuit of slide 3: source Vs on the left, R1 and R2 along the top, R3 and R4 down to the bottom wire">
+    <figcaption data-l="th">วงจรซ้ายของสไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Left circuit, slide p. 3 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">วงจรกลาง: นับโนด กิ่ง เมช และลูป</h2><h2 data-l="en">Middle circuit: count the nodes, branches, meshes and loops</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 3</div><div class="src" data-l="en">Chapter 3 slides, p. 3</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch3/p03q2.webp" width="422" height="457" loading="lazy" decoding="async" alt="Middle circuit of slide 3: R1 and R2 along the top, R3 down from between them, current source Is pointing left in the middle wire, R4 along the bottom">
+    <figcaption data-l="th">วงจรกลางของสไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Middle circuit, slide p. 3 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">วงจรขวา: นับโนด กิ่ง เมช และลูป</h2><h2 data-l="en">Right circuit: count the nodes, branches, meshes and loops</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 3 · วงจรนี้มีลูปมาก ภาพจำลองไล่ให้ครบทุกเส้น</div><div class="src" data-l="en">Chapter 3 slides, p. 3 · this one has many loops; the simulation walks every one</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch3/p03q3.webp" width="487" height="553" loading="lazy" decoding="async" alt="Right circuit of slide 3: R1 and R2 along the top, R3 and R7 down, Is pointing left and R4 across the middle, Vs from the centre down, R6 and R5 along the bottom">
+    <figcaption data-l="th">วงจรขวาของสไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Right circuit, slide p. 3 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูการนับที่ผู้สอนเขียนในห้อง (ทั้งสามวงจรของสไลด์หน้า 3)</span><span data-l="en">See the teacher's in-class counting (all three circuits of slide p. 3)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L04.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 3: left circuit 4 nodes, 2 meshes, 3 loops; middle circuit 3 nodes, 3 meshes, 7 loops; right circuit 6 nodes, 4 meshes, 13 loops">
+      <figcaption data-l="th">สไลด์หน้า 3 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 3, in class, July 2026</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกนับเพิ่ม: ตัวต้านทานที่มีลวดลัดคร่อม</h2><h2 data-l="en">Extra counting practice: a resistor with a wire across it</h2>
+    <div class="src" data-l="th">การบ้านข้อ 1 ในสไลด์ฉบับในห้อง ธ.ค. 2568 (ฉบับแจก ก.ค. 2569 ตัดข้อนี้ออก) · ภาพมีลายมือของผู้สอน</div><div class="src" data-l="en">Homework 1 in the in-class slides of December 2025 (dropped from the July 2026 handout) · the picture carries the teacher's writing</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/K33q.webp" width="1356" height="742" loading="lazy" decoding="async" alt="Count the nodes, elements, meshes and loops. Two current sources, a resistor A to B, a crossed-out resistor shorted by a wire between the two B points, resistors from B down to D and from B to C">
+    <figcaption data-l="th">โจทย์จากสไลด์ฉบับในห้อง ธ.ค. 2568 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, in-class slides of December 2025 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas><div class="ctl" id="ctl4"></div></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูการนับที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class counting</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K33.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class homework 1: the shorted resistor is crossed out and the circuit redrawn; 4 nodes, 3 meshes, 6 elements, 6 loops">
+      <figcaption data-l="th">การบ้านข้อ 1 ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">Homework 1, in class, December 2025</figcaption></figure></div></details>
+</section>
+
+<!-- ======================= KCL ======================= -->
+<div class="group-head"><h2 data-l="th">กฎกระแสของเคียร์ชอฟฟ์ (สไลด์หน้า 4–7)</h2><h2 data-l="en">Kirchhoff's current law (slides pp. 4–7)</h2></div>
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch3/p04.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 4: KCL, the algebraic sum of the currents entering any node is zero; a node with currents iA, iB entering and iC, iD leaving">
+    <figcaption data-l="th">สไลด์หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 4 · tap to enlarge</figcaption></figure>
+  <div><p class="lead" data-l="th">ผลรวมเชิงพีชคณิตของกระแสที่ไหลเข้าโนดใด ๆ เป็นศูนย์ ในห้องเขียนได้สามแบบที่ให้ผลเหมือนกัน: \(\sum I_{\text{in}} = \sum I_{\text{out}}\), \(\sum I_{\text{in}} = 0\) หรือ \(\sum I_{\text{out}} = 0\) เช่นที่โนดในสไลด์ \(i_A + i_B = i_C + i_D\) ในภาพจำลอง <b>ลูกศรสีม่วงคือค่าที่โจทย์ให้</b> ลูกศรสีชมพู "?" คือตัวที่ถาม และเมื่อเลือกโนดแล้ว <b>ลูกศรเขียวคือกระแสไหลเข้า ส้มคือไหลออก</b> ตัวที่ถามจะมีจุดกระแสวิ่งเมื่อหาค่าได้แล้ว</p>
+    <p class="lead" data-l="en">The algebraic sum of the currents entering any node is zero. In class it is written three equivalent ways: \(\sum I_{\text{in}} = \sum I_{\text{out}}\), \(\sum I_{\text{in}} = 0\) or \(\sum I_{\text{out}} = 0\); at the node on the slide, \(i_A + i_B = i_C + i_D\). In the simulations, <b>purple arrows are the values given in the problem</b>, the pink "?" arrow is the one asked, and once a node is chosen <b>green arrows flow in and orange arrows flow out</b>. The asked branch carries moving dots only once its value is found.</p></div>
+</div>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">Ex 1: แหล่งจ่ายแรงดันจ่ายกระแส 3 A จงหากระแส \(i\) ใน \(R_3\)</h2><h2 data-l="en">Ex 1: the voltage source supplies 3 A; find the current \(i\) in \(R_3\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 5–6 · Hayt Example 3.1</div><div class="src" data-l="en">Chapter 3 slides, pp. 5–6 · Hayt Example 3.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p05q.webp" width="1306" height="649" loading="lazy" decoding="async" alt="Ex 1: compute the current through R3 if the voltage source supplies 3 A. 10 V source, R1 with iR1 to the right, R2 with 2 A down, R3 with i down, 5 A source pointing up">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 5 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 5–6)</span><span data-l="en">See the teacher's in-class working (slides pp. 5–6)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L06.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 5: nodes lettered A, B, C; 3 nodes, 3 meshes, 6 loops; i = ?"><figcaption data-l="th">สไลด์หน้า 5 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 5, in class, July 2026</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/L07.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 6: at B, sum of currents in equals sum out: iR1 + 5 A = 2 A + i, 3 A + 5 A = 2 A + i, i = 6 A"><figcaption data-l="th">สไลด์หน้า 6 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 6, in class, July 2026</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 6, December 2025: sum of currents out equals zero: −3 A + 2 A + i + (−5 A) = 0, i = 6 A"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568 (เขียนแบบ ΣI ออก = 0)</figcaption><figcaption data-l="en">In class, December 2025 (written as ΣI out = 0)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">Ex 2: นับโนดและเมช แล้วหา \(R_A\) (ใช้ทั้งกฎของโอห์มและ KCL)</h2><h2 data-l="en">Ex 2: count the nodes and meshes, then find \(R_A\) (Ohm's law and KCL)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 7 · Hayt Practice 3.1</div><div class="src" data-l="en">Chapter 3 slides, p. 7 · Hayt Practice 3.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p07q.webp" width="1460" height="638" loading="lazy" decoding="async" alt="Ex 2: count the meshes and nodes. If ix = 3 A and the 18 V source delivers 8 A, find RA. 18 V source, RA, 6 ohm with ix down, 5 ohm with 13 A to the left, source vx">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 7 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv6"></canvas></div><div class="card solve"><div id="ask6"></div><div id="st6"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 7)</span><span data-l="en">See the teacher's in-class working (slide p. 7)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L08.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 7: VA = 18 V; at node A, 8 A + 13 A = IA + 3 A, IA = 18 A; RA = VA/IA = 18/18 = 1 ohm"><figcaption data-l="th">สไลด์หน้า 7 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 7, in class, July 2026</figcaption></figure></div></details>
+</section>
+
+<!-- ======================= homework ======================= -->
+<div class="group-head" id="ex7"><h2 data-l="th">การบ้านข้อ 1: หากระแส \(I\) ในแต่ละวงจร (สไลด์หน้า 23)</h2><h2 data-l="en">Homework 1: find the current \(I\) in each circuit (slide p. 23)</h2></div>
+<p class="lead" data-l="th">Hayt ข้อ 3.8 · สามวงจรย่อยแยกเป็นสามข้อ แต่ละข้อเขียน KCL ที่โนดเดียวก็พอ</p><p class="lead" data-l="en">Hayt Problem 3.8 · the three small circuits are split into three items; each needs KCL at a single node.</p>
+<figure class="slide q wide"><img src="slides/ch3/p23q.webp" width="1562" height="493" loading="lazy" decoding="async" alt="Homework 1: determine the current labeled I in each circuit (a), (b) and (c)">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 23 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 23 · tap to enlarge</figcaption></figure>
+
+<section class="prob sub-item" id="ex7a">
+  <div class="prob-head"><span class="prob-no">7a</span><div><h2 data-l="th">วงจร (a): 7 A เข้า 6 A ลง จงหา \(I\)</h2><h2 data-l="en">Circuit (a): 7 A in, 6 A down; find \(I\)</h2></div></div>
+  <figure class="slide q sm"><img src="slides/ch3/p23qa.webp" width="514" height="348" loading="lazy" decoding="async" alt="Circuit (a): 1.5 V source, 7 A through the top-left resistor, 6 A down the middle resistor, I through the top-right resistor"><figcaption data-l="th">วงจร (a) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Circuit (a) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv7a"></canvas></div><div class="card solve"><div id="ask7a"></div><div id="st7a"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex7b">
+  <div class="prob-head"><span class="prob-no">7b</span><div><h2 data-l="th">วงจร (b): แหล่งจ่าย 2 A กับตัวต้านทานสามตัว จงหา \(I\)</h2><h2 data-l="en">Circuit (b): a 2 A source and three resistors; find \(I\)</h2></div></div>
+  <figure class="slide q sm"><img src="slides/ch3/p23qb.webp" width="559" height="296" loading="lazy" decoding="async" alt="Circuit (b): 2 A source pointing up, 3 A down the first resistor, I down the second, 3 A down the third"><figcaption data-l="th">วงจร (b) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Circuit (b) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv7b"></canvas></div><div class="card solve"><div id="ask7b"></div><div id="st7b"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex7c">
+  <div class="prob-head"><span class="prob-no">7c</span><div><h2 data-l="th">วงจร (c): ตัวต้านทานที่ปลายลอย จงหา \(I\)</h2><h2 data-l="en">Circuit (c): a resistor with a floating end; find \(I\)</h2></div></div>
+  <figure class="slide q sm"><img src="slides/ch3/p23qc.webp" width="510" height="339" loading="lazy" decoding="async" alt="Circuit (c): 9 A source, 1 ohm down, 1 ohm across the top, 5 ohm down, and a resistor carrying I to an open end"><figcaption data-l="th">วงจร (c) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Circuit (c) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv7c"></canvas></div><div class="card solve"><div id="ask7c"></div><div id="st7c"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูคำตอบที่ผู้สอนเขียนในห้อง (การบ้านข้อ 1)</span><span data-l="en">See the teacher's in-class answers (homework 1)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L26.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class homework 1: answers I = 1 A, I = −4 A, I = 0"><figcaption data-l="th">ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">In class, July 2026</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K34.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class homework, December 2025: 7 A = 6 A + I so I = 1 A; 2 A = 3 A + I + 3 A so I = −4 A; I = 0"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex8">
+  <div class="prob-head"><span class="prob-no">8</span><div><h2 data-l="th">การบ้านข้อ 2: แหล่งจ่ายจ่ายกระแส 1 A เข้า \(R_1\) จงหา \(i_2\)</h2><h2 data-l="en">Homework 2: the source drives 1 A into \(R_1\); find \(i_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 24 · Hayt ข้อ 3.10</div><div class="src" data-l="en">Chapter 3 slides, p. 24 · Hayt Problem 3.10</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p24q.webp" width="1473" height="629" loading="lazy" decoding="async" alt="Homework 2: the voltage source has 1 A flowing out of its + terminal into R1. Find i2. −2 V source, R1, R2 with i2 down, R3 with −3 A down, 7 A source pointing down">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 24 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 24 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv8"></canvas></div><div class="card solve"><div id="ask8"></div><div id="st8"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูคำตอบที่ผู้สอนเขียนในห้อง (การบ้านข้อ 2)</span><span data-l="en">See the teacher's in-class answer (homework 2)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L27.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class homework 2: i2 = −3 A"><figcaption data-l="th">ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">In class, July 2026</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K35.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class homework, December 2025: i2 = −3 A"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex9">
+  <div class="prob-head"><span class="prob-no">9</span><div><h2 data-l="th">การบ้านข้อ 3: วงจรโนดคู่เดียว หากำลังของทุกอุปกรณ์</h2><h2 data-l="en">Homework 3: a single-node-pair circuit; find the power of every element</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 25 · Hayt ข้อ 3.34 · (a) กำลังที่ตัวต้านทานรับ (b) กำลังที่แหล่งจ่ายกระแสจ่าย (c) ผลรวมสองฝั่งเท่ากัน</div><div class="src" data-l="en">Chapter 3 slides, p. 25 · Hayt Problem 3.34 · (a) power absorbed by each resistor, (b) power supplied by each current source, (c) the two sums match</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p25q.webp" width="1300" height="720" loading="lazy" decoding="async" alt="Homework 3: although drawn so it may not look like it, the circuit is a single-node-pair circuit. 1 kilo-ohm, 3 mA source pointing down, 2.8 kilo-ohm, 5 mA source pointing down, 4.7 kilo-ohm">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 25 (ตัดตารางคำตอบออก) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 25 (answer table cut off) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv9"></canvas></div><div class="card solve"><div id="ask9"></div><div id="st9"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ที่มีตารางคำตอบ และสิ่งที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the slide with its answer table, and the teacher's in-class writing</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/p25.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 25 with the answer table: resistors 1.623 mW, 345.3 microwatts, 579.7 microwatts; sources 3 mA −3.833 mW, 5 mA +6.370 mW; sums 2.548 mW"><figcaption data-l="th">สไลด์หน้า 25 พร้อมตารางคำตอบ</figcaption><figcaption data-l="en">Slide p. 25 with its answer table</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K36.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class homework, December 2025: the circuit redrawn as two current sources and three resistors between nodes A and B"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568 (วาดใหม่เป็นโนด A กับ B)</figcaption><figcaption data-l="en">In class, December 2025 (redrawn between nodes A and B)</figcaption></figure></div></details>
+</section>
+
+<!-- ======================= extra example ======================= -->
+<div class="group-head"><h2 data-l="th">ตัวอย่างเพิ่มเติม (Extra Example) ข้อ 1.2</h2><h2 data-l="en">Extra example, item 1.2</h2></div>
+<section class="prob" id="ex10">
+  <div class="prob-head"><span class="prob-no">10</span><div><h2 data-l="th">เขียน KCL ที่โนด a และโนด b แล้วหา \(I_2\) และ \(I_3\)</h2><h2 data-l="en">Write KCL at nodes a and b, then find \(I_2\) and \(I_3\)</h2>
+    <div class="src" data-l="th">เอกสารตัวอย่างเพิ่มเติมบทที่ 3 ข้อ 1.2 (Fig. 2) · กำหนด \(I_0 = -2\) A, \(I_1 = -4\) A, \(I_S = 8\) A, \(V_S = 12\) V · ข้อ 1.1, 1.3, 1.4 อยู่ในหน้า 3.2</div><div class="src" data-l="en">Chapter 3 extra examples, item 1.2 (Fig. 2) · given \(I_0 = -2\) A, \(I_1 = -4\) A, \(I_S = 8\) A, \(V_S = 12\) V · items 1.1, 1.3 and 1.4 are on page 3.2</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch3/ex1q2.webp" width="528" height="658" loading="lazy" decoding="async" alt="Fig. 2: R4 along the top to node a, R0 down the left with I0, R1 from a down to b with I1, R2 down the right with I2, battery VS with IS up, R3 from b down with I3, R5 along the bottom">
+    <figcaption data-l="th">Fig. 2 ของตัวอย่างเพิ่มเติม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Fig. 2 of the extra examples · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv10"></canvas></div><div class="card solve"><div id="ask10"></div><div id="st10"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน (ตัวอย่างเพิ่มเติมข้อ 1 ทั้งหน้า)</span><span data-l="en">See the teacher's handwritten solution (the whole of extra example 1)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/sol1.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of extra example 1: KVL for the three meshes, node a: I0 + I1 + I2 = 0 so I2 = 6 A; node b: I0 + I1 + IS = I3 so I3 = 2 A; resistances and powers of the boxes"><figcaption data-l="th">เฉลยลายมือ ตัวอย่างเพิ่มเติมข้อ 1</figcaption><figcaption data-l="en">Handwritten solution, extra example 1</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — โนดคือลวดทั้งเส้น</h3>
+    <ol><li>ข้อ 9 วาดให้ดูมีหลายจุด แต่เปิดขั้นแรกแล้วเหลือ <b>เพียง 2 สี</b> อุปกรณ์ทั้ง 5 ตัวจึงต่อขนานกันหมด และมีแรงดันเท่ากัน</li>
+    <li>ข้อ 2: ลวดซ้ายทั้งเส้นเป็นโนด A และลวดขวาทั้งเส้นเป็นโนด C ทั้งที่วาดยาวมาก</li>
+    <li>ข้อ 4: กดปุ่มถอดลวดลัดออก จำนวนโนดเพิ่มเป็น 5 กิ่งเพิ่มเป็น 7 แต่เมชยังเป็น 3 ตามสูตร \(m = b - n + 1\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ค่าติดลบใน KCL</h3>
+    <ol><li>ข้อ 8: ลูกศรของ \(R_3\) เขียนว่า −3 A ชี้ลง แต่จุดสีเหลืองวิ่ง<b>ขึ้น</b> เพราะ −3 A ชี้ลงคือ 3 A ชี้ขึ้น</li>
+    <li>ข้อ 7b ได้ \(I = -4\) A: กระแสจริง 4 A ไหลขึ้น สวนลูกศรที่เขียนไว้</li>
+    <li>ข้อ 7c: ตัวต้านทานที่ปลายลอยไม่มีจุดวิ่งเลย <b>ถ้าไม่มีทางกลับ กระแสก็ไหลไม่ได้</b></li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — เลือกโนดให้ถูก</h3>
+    <ol><li>เลือกโนดที่<b>รู้กระแสอื่นครบ เหลือตัวที่ถามตัวเดียว</b> เช่น Ex 1 ใช้โนด B ไม่ใช่โนด C (ที่ C มีกระแสของ \(R_2\), \(R_3\) และแหล่งจ่ายทั้งสอง)</li>
+    <li>Ex 2 ต้องใช้กฎของโอห์มด้วย: KCL ให้กระแส \(I_A\) ส่วนแรงดัน \(v_A\) ได้จากการต่อขนานกับแหล่งจ่าย 18 V</li>
+    <li>คำถาม: ใน Ex 2 แรงดัน \(v_x\) ของแหล่งจ่ายทางขวาเป็นเท่าไร (ใช้กฎของโอห์มกับตัวต้านทาน 5 Ω)</li></ol>
+    <div class="book">สไลด์บทที่ 3 หน้า 2–7, 23–25 · ตัวอย่างเพิ่มเติมข้อ 1.2 · Hayt §3.1–3.2, Example 3.1, Practice 3.1, ข้อ 3.8, 3.10, 3.34</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — a node is the whole wire</h3>
+    <ol><li>Problem 9 is drawn to look like many points, but its first step leaves <b>only 2 colours</b>: all five elements are in parallel and share one voltage.</li>
+    <li>Problem 2: the whole left wire is node A and the whole right wire is node C, even though they are drawn very long.</li>
+    <li>Problem 4: press the button to remove the short. The nodes rise to 5 and the branches to 7, but there are still 3 meshes, as \(m = b - n + 1\) says.</li></ol></div>
+  <div class="card"><h3>Try this 2 — negative values in KCL</h3>
+    <ol><li>Problem 8: the arrow on \(R_3\) says −3 A pointing down, yet the yellow dots run <b>up</b>, because −3 A down is 3 A up.</li>
+    <li>Problem 7b gives \(I = -4\) A: the real 4 A flows up, against the drawn arrow.</li>
+    <li>Problem 7c: the resistor with a floating end has no dots at all. <b>With no way back, no current can flow.</b></li></ol></div>
+  <div class="card"><h3>Try this 3 — choosing the node</h3>
+    <ol><li>Pick the node where <b>every other current is known and only the asked one is left</b>: Ex 1 uses node B, not node C (C meets \(R_2\), \(R_3\) and both sources).</li>
+    <li>Ex 2 also needs Ohm's law: KCL gives the current \(I_A\), and the voltage \(v_A\) comes from being in parallel with the 18 V source.</li>
+    <li>Question: in Ex 2, what is the voltage \(v_x\) of the source on the right? (Use Ohm's law on the 5 Ω resistor.)</li></ol>
+    <div class="book">Chapter 3 slides, pp. 2–7, 23–25 · extra example 1.2 · Hayt §3.1–3.2, Example 3.1, Practice 3.1, Problems 3.8, 3.10, 3.34</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id), u = CH3.u;
+const W_ = (a, b) => ({ type: 'W', a, b });
+const near = (x, y, tol = 0.011) => Math.abs(x - y) < tol;
+
+/* ================= counting problems (1–4) ================= */
+function counting(n, spec, o = {}) {
+  const sim = new CH3.Topo($('cv' + n), spec), T = () => sim.T, pre = o.pre || [];
+  const ask = LS.ask($('ask' + n), { fields: [
+      { label: 'n =', ok: x => x === T().n, w: 3.2, aria: 'nodes' }, { label: 'b =', ok: x => x === T().b, w: 3.2, aria: 'branches' },
+      { label: 'm =', ok: x => x === T().meshes, w: 3.2, aria: 'meshes' }, { label: t('ลูป =', 'loops ='), ok: x => x === T().loops.length, w: 3.2, aria: 'loops' }],
+    check: v => v[2] !== v[1] - v[0] + 1 ? t('ตรวจเมชด้วยสูตร \\(m = b - n + 1\\)', 'Check the meshes with \\(m = b - n + 1\\)') : '' });
+  const steps = () => { const X = T(); return pre.concat([
+    { why: t('<b>หาโนด</b>: ทุกจุดที่ต่อถึงกันด้วยลวดคือโนดเดียวกัน ระบายสีเดียวกันแล้วติดตัวอักษร (ตัวอักษรเดียวกันอาจอยู่หลายจุด)', '<b>Find the nodes</b>: every point joined by wire is one node; paint it one colour and give it a letter (the same letter may sit at several points)'),
+      tex: `n = ${X.n}\\qquad (${X.nets.map(q => q.label).join(',\\ ')})` },
+    { why: t('<b>นับกิ่ง</b>: อุปกรณ์หนึ่งตัวคือหนึ่งกิ่ง (ตัวเลขสีส้ม)', '<b>Count the branches</b>: one element is one branch (the orange numbers)'), tex: `b = ${X.b}` },
+    { why: t('<b>นับเมช</b>: เมชคือช่องหน้าต่างของวงจร (วงสีม่วง) ตรวจด้วยสูตร', '<b>Count the meshes</b>: the window panes of the circuit (purple rings); check with the formula'), tex: `m = b - n + 1 = ${X.b} - ${X.n} + 1 = ${X.meshes}` },
+    { why: t('<b>ไล่ลูปทุกเส้น</b> (ลูกปัดสีเขียววิ่งทีละลูป): ลูปคือทางเดินปิดที่ไม่ผ่านโนดซ้ำ', '<b>Walk every loop</b> (the green beads run one loop at a time): a loop is a closed path that meets no node twice'),
+      body: () => `<ol class="looplist">${X.loops.map((_, k) => `<li>${sim.loopText(k)}</li>`).join('')}</ol>`, tex: `\\text{${t('ลูปทั้งหมด', 'all loops')}} = ${X.loops.length}` }]); };
+  const st = LS.stepper($('st' + n), { steps,
+    answer: () => { const X = T(); return `<b>n = ${X.n}, b = ${X.b}, m = ${X.meshes}, ${t('ลูป', 'loops')} = ${X.loops.length}</b>` + (o.note ? ' · ' + o.note() : ''); },
+    onStep: k => { const j = k - pre.length; sim.set({ colors: j >= 1, letters: j >= 1, branches: j === 2 || j === 3, meshes: j === 3 ? T().meshes : 0, cycle: j >= 4 }); if (o.onStep) o.onStep(k, sim); } });
+  return { sim, st, ask };
+}
+const P3 = {
+  a: { labels: null, meshes: [[1.6, 1.5], [4.8, 1.5]], speed: 34, ground: 'D',
+    nodes: { A: [0, 0], B: [3.2, 0], C: [6.4, 0], D: [0, 3], Dm: [3.2, 3], Dr: [6.4, 3] },
+    parts: [{ id: 'Vs', name: 'Vₛ', type: 'V', a: 'A', b: 'D', value: 12, side: -1, valText: '' }, { id: 'R1', name: 'R₁', type: 'R', a: 'A', b: 'B', value: 2, valText: '' },
+      { id: 'R2', name: 'R₂', type: 'R', a: 'B', b: 'C', value: 3, valText: '' }, { id: 'R3', name: 'R₃', type: 'R', a: 'B', b: 'Dm', value: 6, side: 1, valText: '' },
+      { id: 'R4', name: 'R₄', type: 'R', a: 'C', b: 'Dr', value: 3, side: 1, valText: '' }, W_('D', 'Dm'), W_('Dm', 'Dr')] },
+  b: { meshes: [[1.6, 1.1], [4.8, 1.1], [3.2, 3.3]], speed: 34, ground: 'Am',
+    nodes: { A: [0, 0], B: [3.2, 0], C: [6.4, 0], Am: [0, 2.2], Cm: [3.2, 2.2], Cr: [6.4, 2.2], Ab: [0, 4.4], Cb: [6.4, 4.4] },
+    parts: [{ id: 'R1', name: 'R₁', type: 'R', a: 'A', b: 'B', value: 2, valText: '' }, { id: 'R2', name: 'R₂', type: 'R', a: 'B', b: 'C', value: 4, valText: '' },
+      { id: 'R3', name: 'R₃', type: 'R', a: 'B', b: 'Cm', value: 4, side: 1, valText: '' }, { id: 'Is', name: 'Iₛ', type: 'I', a: 'Cm', b: 'Am', value: 2, side: 1, valText: '' },
+      { id: 'R4', name: 'R₄', type: 'R', a: 'Ab', b: 'Cb', value: 4, side: -1, valText: '' }, W_('A', 'Am'), W_('Am', 'Ab'), W_('C', 'Cr'), W_('Cr', 'Cb'), W_('Cm', 'Cr')] },
+  c: { meshes: [[1.6, 1.2], [4.8, 1.2], [1.6, 3.6], [4.8, 3.6]], speed: 30, ground: 'BM', aspect: 0.74, aspectN: 0.95,
+    nodes: { TL: [0, 0], TM: [3.2, 0], TR: [6.4, 0], ML: [0, 2.4], CM: [3.2, 2.4], MR: [6.4, 2.4], BL: [0, 4.8], BM: [3.2, 4.8], BR: [6.4, 4.8] },
+    parts: [{ id: 'R1', name: 'R₁', type: 'R', a: 'TL', b: 'TM', value: 2, valText: '' }, { id: 'R2', name: 'R₂', type: 'R', a: 'TM', b: 'TR', value: 3, valText: '' },
+      { id: 'R3', name: 'R₃', type: 'R', a: 'TM', b: 'CM', value: 4, side: 1, valText: '' }, { id: 'R7', name: 'R₇', type: 'R', a: 'TR', b: 'MR', value: 2, side: 1, valText: '' },
+      { id: 'Is', name: 'Iₛ', type: 'I', a: 'CM', b: 'ML', value: 2, valText: '' }, { id: 'R4', name: 'R₄', type: 'R', a: 'CM', b: 'MR', value: 3, side: -1, valText: '' },
+      { id: 'Vs', name: 'Vₛ', type: 'V', a: 'CM', b: 'BM', value: 12, side: -1, valText: '' }, { id: 'R6', name: 'R₆', type: 'R', a: 'BL', b: 'BM', value: 2, side: -1, valText: '' },
+      { id: 'R5', name: 'R₅', type: 'R', a: 'BM', b: 'BR', value: 3, side: -1, valText: '' }, W_('TL', 'ML'), W_('ML', 'BL'), W_('MR', 'BR')] } };
+counting(1, P3.a, { note: () => t('ตรงกับที่ผู้สอนนับในห้อง (4 โนด 2 เมช 3 ลูป)', 'as counted in class (4 nodes, 2 meshes, 3 loops)') });
+counting(2, P3.b, { note: () => t('<b>ในห้องเขียน 7 ลูป</b> แต่ไล่ได้ครบ 6 ลูปตามรายการ: สองลูปเล็ก (\\(R_2\\) กับ \\(R_3\\), \\(I_s\\) กับ \\(R_4\\)) และลูปที่ผ่าน \\(R_1\\) ซึ่งเลือก \\(R_2\\) หรือ \\(R_3\\) แล้วเลือก \\(I_s\\) หรือ \\(R_4\\) ได้ 2 × 2 = 4 ลูป', '<b>The class wrote 7 loops</b>, but the list above has all 6: two small loops (\\(R_2\\) with \\(R_3\\), \\(I_s\\) with \\(R_4\\)) and the loops through \\(R_1\\), which pick \\(R_2\\) or \\(R_3\\) and then \\(I_s\\) or \\(R_4\\): 2 × 2 = 4 loops') });
+counting(3, P3.c, { note: () => t('ตรงกับที่ผู้สอนนับในห้อง (6 โนด 4 เมช 13 ลูป) · โนด C อยู่ระหว่าง \\(R_2\\) กับ \\(R_7\\) เท่านั้น แต่ก็นับเป็นโนดเหมือนในห้อง', 'as counted in class (6 nodes, 4 meshes, 13 loops) · node C only joins \\(R_2\\) and \\(R_7\\), but it is counted as a node, as in class') });
+/* problem 4: the shorting wire is a closed switch, so it can be removed */
+const P4 = { meshes: [[1.5, 1.5], [4.5, 1.5], [7.5, 1.5]], speed: 40, ground: 'D', aspect: 0.6, aspectN: 0.8,
+  nodes: { A: [0, 0], B1: [3, 0], B2: [6, 0], C: [9, 0], D: [0, 3], D1: [3, 3], D2: [6, 3], D3: [9, 3], T1: [3, -1.5], T2: [6, -1.5] },
+  parts: [{ id: 'Is1', name: '', type: 'I', a: 'D', b: 'A', value: 2, label: false }, { id: 'Ra', name: '', type: 'R', a: 'A', b: 'B1', value: 2, label: false },
+    { id: 'Rx', name: 'Rₓ', type: 'R', a: 'B1', b: 'B2', value: 5, valText: '', side: -1 }, { id: 'Rb', name: '', type: 'R', a: 'B1', b: 'D1', value: 4, label: false },
+    { id: 'Rc', name: '', type: 'R', a: 'B2', b: 'D2', value: 4, label: false }, { id: 'Rd', name: '', type: 'R', a: 'B2', b: 'C', value: 2, label: false },
+    { id: 'Is2', name: '', type: 'I', a: 'D3', b: 'C', value: 1, label: false }, W_('D', 'D1'), W_('D1', 'D2'), W_('D2', 'D3'), W_('B1', 'T1'), W_('T2', 'B2'),
+    { id: 'Sx', name: '', type: 'S', a: 'T1', b: 'T2', closed: true, label: false }] };
+const c4 = counting(4, P4, { pre: [{ why: t('<b>ดูลวดลัดก่อน</b>: ลวดด้านบนต่อปลายทั้งสองของ \\(R_x\\) เข้าด้วยกัน แรงดันคร่อม \\(R_x\\) จึงเป็นศูนย์ ไม่มีกระแส ผู้สอนจึง<b>ขีดฆ่า \\(R_x\\) ทิ้ง</b> และสองจุด B เป็นโนดเดียวกัน', '<b>Look at the shorting wire first</b>: the top wire joins both ends of \\(R_x\\), so the voltage across \\(R_x\\) is zero and it carries no current. The teacher therefore <b>crosses \\(R_x\\) out</b>, and the two points B are one node.'),
+    tex: `v_{R_x} = 0 \\quad\\Rightarrow\\quad i_{R_x} = 0` }],
+  note: () => c4.sim.ckt.part('Sx').closed ? t('ตรงกับที่ผู้สอนนับในห้อง (4 โนด 6 อุปกรณ์ 3 เมช 6 ลูป)', 'as counted in class (4 nodes, 6 elements, 3 meshes, 6 loops)') : t('นี่คือจำนวนเมื่อถอดลวดลัดออก (\\(R_x\\) กลับมามีกระแส)', 'these are the counts with the short removed (\\(R_x\\) carries current again)') });
+const sw4 = () => { const p = c4.sim.ckt.part('Sx'); p.closed = !p.closed; c4.sim.ckt.solve(); c4.sim.retopo(); c4.ask.reset(); c4.st.refresh(); bt4.textContent = p.closed ? t('ถอดลวดลัดออก', 'Remove the short') : t('ใส่ลวดลัดกลับ', 'Put the short back'); };
+c4.sim.onToggle = () => { c4.ask.reset(); c4.st.refresh(); bt4.textContent = c4.sim.ckt.part('Sx').closed ? t('ถอดลวดลัดออก', 'Remove the short') : t('ใส่ลวดลัดกลับ', 'Put the short back'); };
+const bt4 = document.createElement('button'); bt4.type = 'button'; bt4.className = 'btn'; bt4.textContent = t('ถอดลวดลัดออก', 'Remove the short'); bt4.addEventListener('click', sw4); $('ctl4').appendChild(bt4);
+
+/* ================= KCL problems ================= */
+function kcl(n, spec, o) {
+  const sim = new CH3.KCL($('cv' + n), spec);
+  if (o.ask) LS.ask($('ask' + n), o.ask);
+  const st = LS.stepper($('st' + n), { steps: o.steps, answer: o.answer, onStep: k => sim.set(o.state(k)) });
+  return { sim, st };
+}
+const KCLsum = (node, ins, outs) => `\\sum I_{\\text{in, ${node}}} &= \\sum I_{\\text{out, ${node}}}`;
+
+/* 5: Ex 1 */
+kcl(5, { ground: 'g', speed: 26, labels: null,
+  nodes: { a: [0, 0], b1: [3, 0], b2: [5.6, 0], b3: [8.2, 0], g: [0, 3], g1: [3, 3], g2: [5.6, 3], g3: [8.2, 3] },
+  parts: [{ id: 'V', name: '10 V', type: 'V', a: 'a', b: 'g', value: 10, side: -1, valText: '' }, { id: 'R1', name: 'R₁', type: 'R', a: 'a', b: 'b1', value: 2, valText: '', side: -1 },
+    { id: 'R2', name: 'R₂', type: 'R', a: 'b1', b: 'g1', value: 2, valText: '', side: -1 }, { id: 'R3', name: 'R₃', type: 'R', a: 'b2', b: 'g2', value: 2 / 3, valText: '', side: -1 },
+    { id: 'I5', name: '5 A', type: 'I', a: 'g3', b: 'b3', value: 5, valText: '', side: 1 }, W_('b1', 'b2'), W_('b2', 'b3'), W_('g', 'g1'), W_('g1', 'g2'), W_('g2', 'g3')],
+  refs: [{ id: 'R1', from: 'a', text: 'i_R₁ = 3 A', side: 'U' }, { id: 'R2', from: 'b1', text: '2 A', side: 'R' }, { id: 'R3', from: 'b2', text: 'i', side: 'R', ask: true, solvedText: 'i = 6 A' }] }, {
+  ask: { fields: [{ label: 'i (A) =', ok: x => near(x, 6), w: 4 }], check: v => near(v[0], -6) ? t('ขนาดถูกแต่เครื่องหมายผิด ดูทิศของลูกศร \\(i\\)', 'Right size, wrong sign: look at the direction of the \\(i\\) arrow') : near(v[0], -2) ? t('แหล่งจ่าย 5 A ชี้ขึ้น จึงดันกระแส<b>เข้า</b>โนด B', 'The 5 A source points up, so it pushes current <b>into</b> node B') : '' },
+  steps: [
+    { why: t('<b>ตั้งชื่อโนด</b> แบบที่ทำในห้อง: ลวดบนทั้งเส้น (ขวาของ \\(R_1\\)) เป็นโนด B ลวดล่างทั้งเส้นเป็นโนด C (ในห้องนับได้ 3 โนด 3 เมช 6 ลูปด้วย)', '<b>Letter the nodes</b> as in class: the whole top wire (right of \\(R_1\\)) is node B and the whole bottom wire is node C (the class also counted 3 nodes, 3 meshes, 6 loops)'), tex: `n = 3\\quad(A,\\ B,\\ C)` },
+    { why: t('<b>เลือกโนดที่มีตัวไม่รู้ค่าตัวเดียว</b>: ที่โนด B รู้กระแสอื่นครบ เหลือแค่ \\(i\\) ลูกศรเขียวคือกระแสเข้า ส้มคือกระแสออก', '<b>Pick a node with a single unknown</b>: at node B every other current is known, only \\(i\\) is left. Green arrows flow in, orange arrows flow out'), tex: `\\sum I_{\\text{in, B}} = \\sum I_{\\text{out, B}}` },
+    { why: t('<b>เขียนกระแสเข้าและออก</b>: เข้า \\(i_{R_1}\\) กับ 5 A (แหล่งจ่ายกระแสชี้ขึ้นเข้าโนด B) · ออก 2 A กับ \\(i\\)', '<b>Write the currents in and out</b>: in, \\(i_{R_1}\\) and 5 A (the current source points up into node B) · out, 2 A and \\(i\\)'), tex: `i_{R_1} + 5 = 2 + i` },
+    { why: t('<b>แทนค่า</b> \\(i_{R_1} = 3\\) A: แหล่งจ่ายแรงดันจ่าย 3 A ซึ่งต้องไหลผ่าน \\(R_1\\) (ต่ออนุกรมกัน) เข้าโนด B', '<b>Substitute</b> \\(i_{R_1} = 3\\) A: the voltage source supplies 3 A, which must flow through \\(R_1\\) (in series) into node B'), tex: `3 + 5 = 2 + i` },
+    { why: t('<b>แก้สมการ</b> … กระแสใน \\(R_3\\) เริ่มไหล', '<b>Solve</b> … the current in \\(R_3\\) starts to flow'), tex: `i = 8 - 2 = \\boxed{6\\ \\text{A}}` }],
+  answer: t('\\(i = 6\\) A ตรงกับเฉลยในห้อง · ฉบับ ธ.ค. 2568 เขียนแบบ \\(\\sum I_{\\text{out}} = 0\\): \\(-3 + 2 + i + (-5) = 0\\) ได้ 6 A เท่ากัน', '\\(i = 6\\) A, as in class · the December 2025 version writes \\(\\sum I_{\\text{out}} = 0\\): \\(-3 + 2 + i + (-5) = 0\\), the same 6 A'),
+  state: k => ({ letters: k >= 1, sel: k >= 2 ? 'B' : null, io: k >= 2, solved: k >= 5 }) });
+
+/* 6: Ex 2 */
+kcl(6, { ground: 'g', speed: 5,
+  nodes: { a: [0, 0], a1: [2.6, 0], a2: [5.2, 0], bn: [8.4, 0], g: [0, 3], g1: [2.6, 3], g2: [5.2, 3], g3: [8.4, 3] },
+  parts: [{ id: 'V18', name: '18 V', type: 'V', a: 'a', b: 'g', value: 18, side: -1, valText: '' }, { id: 'RA', name: 'R_A', type: 'R', a: 'a1', b: 'g1', value: 1, valText: '', side: 1 },
+    { id: 'R6', name: '6 Ω', type: 'R', a: 'a2', b: 'g2', value: 6, valText: '', side: 1 }, { id: 'R5', name: '5 Ω', type: 'R', a: 'a2', b: 'bn', value: 5, valText: '', side: -1 },
+    { id: 'Vx', name: 'vₓ', type: 'V', a: 'bn', b: 'g3', value: 83, valText: '', side: 1 }, W_('a', 'a1'), W_('a1', 'a2'), W_('g', 'g1'), W_('g1', 'g2'), W_('g2', 'g3')],
+  refs: [{ id: 'V18', from: 'g', text: '8 A', side: 'R', at: 0.25 }, { id: 'R5', from: 'bn', text: '13 A', side: 'U' }, { id: 'R6', from: 'a2', text: 'iₓ = 3 A', side: 'L' },
+    { id: 'RA', from: 'a1', text: 'I_A', side: 'L', ask: true, solvedText: 'I_A = 18 A' }] }, {
+  ask: { fields: [{ label: 'R_A (Ω) =', ok: x => near(x, 1), w: 4 }], check: v => near(v[0], 1.8) || near(v[0], 18 / 21) ? t('ใช้กระแส \\(I_A\\) ที่ไหลผ่าน \\(R_A\\) จาก KCL ที่โนด A', 'Use the current \\(I_A\\) through \\(R_A\\), from KCL at node A') : '' },
+  steps: [
+    { why: t('<b>นับโนดและเมช</b> (โจทย์ถาม): ลวดบนฝั่งซ้ายทั้งเส้นคือโนด A ระหว่าง 5 Ω กับ \\(v_x\\) คือโนด B ลวดล่างคือโนด C · อุปกรณ์ 5 ตัว', '<b>Count the nodes and meshes</b> (as asked): the whole left part of the top wire is node A, the point between 5 Ω and \\(v_x\\) is node B, the bottom wire is node C · 5 elements'),
+      tex: `\\begin{aligned} n &= 3, \\quad b = 5 \\\\ m &= b - n + 1 = 3 \\end{aligned}` },
+    { why: t('<b>แรงดันคร่อม \\(R_A\\)</b>: \\(R_A\\) ต่อคร่อมโนด A กับ C เหมือนแหล่งจ่าย 18 V (ขนานกัน)', '<b>The voltage across \\(R_A\\)</b>: \\(R_A\\) sits across nodes A and C, like the 18 V source (in parallel)'), tex: `v_A = 18\\ \\text{V}` },
+    { why: t('<b>KCL ที่โนด A</b>: เข้า 8 A (จากแหล่งจ่าย) กับ 13 A (จาก 5 Ω) · ออก \\(I_A\\) กับ \\(i_x\\)', '<b>KCL at node A</b>: in, 8 A (from the source) and 13 A (from the 5 Ω) · out, \\(I_A\\) and \\(i_x\\)'),
+      tex: `\\begin{aligned} ${KCLsum('A')} \\\\ 8 + 13 &= I_A + 3 \\\\ I_A &= 18\\ \\text{A} \\end{aligned}` },
+    { why: t('<b>กฎของโอห์ม</b> กับ \\(R_A\\)', '<b>Ohm\'s law</b> on \\(R_A\\)'), tex: `R_A = \\frac{v_A}{I_A} = \\frac{18}{18} = \\boxed{1\\ \\Omega}` }],
+  answer: t('\\(n = 3\\), \\(m = 3\\), \\(R_A = 1\\ \\Omega\\) ตรงกับเฉลยในห้องและ Hayt Practice 3.1 (5 กิ่ง 3 โนด 1 Ω)', '\\(n = 3\\), \\(m = 3\\), \\(R_A = 1\\ \\Omega\\), as in class and Hayt Practice 3.1 (5 branches, 3 nodes, 1 Ω)'),
+  state: k => ({ letters: k >= 1, sel: k >= 3 ? 'A' : null, io: k >= 3, solved: k >= 3 }) });
+
+/* 7a–7c: homework 1 */
+kcl('7a', { ground: 'g', speed: 26,
+  nodes: { a: [0, 0], n: [3.4, 0], r: [6.8, 0], g: [0, 3], gm: [3.4, 3], gr: [6.8, 3] },
+  parts: [{ id: 'V', name: '1.5 V', type: 'V', a: 'a', b: 'g', value: 1.5, side: -1, valText: '' }, { id: 'RL', name: '', type: 'R', a: 'a', b: 'n', value: 0.1, label: false },
+    { id: 'Rm', name: '', type: 'R', a: 'n', b: 'gm', value: 0.8 / 6, label: false }, { id: 'RR', name: '', type: 'R', a: 'n', b: 'r', value: 0.8, label: false }, W_('r', 'gr'), W_('g', 'gm'), W_('gm', 'gr')],
+  refs: [{ id: 'RL', from: 'a', text: '7 A', side: 'U' }, { id: 'Rm', from: 'n', text: '6 A', side: 'R' }, { id: 'RR', from: 'n', text: 'I', side: 'U', ask: true, solvedText: 'I = 1 A' }] }, {
+  ask: { fields: [{ label: 'I (A) =', ok: x => near(x, 1), w: 4 }] },
+  steps: [{ why: t('<b>KCL ที่โนดบนตรงกลาง</b> (โนด B): เข้า 7 A · ออก 6 A (ลง) กับ \\(I\\) (ไปทางขวา)', '<b>KCL at the top middle node</b> (node B): in, 7 A · out, 6 A (down) and \\(I\\) (to the right)'), tex: `\\begin{aligned} \\sum I_{\\text{in, B}} &= \\sum I_{\\text{out, B}} \\\\ 7 &= 6 + I \\end{aligned}` },
+    { why: t('<b>แก้สมการ</b>', '<b>Solve</b>'), tex: `I = 7 - 6 = \\boxed{1\\ \\text{A}}` }],
+  answer: t('\\(I = 1\\) A ตรงกับคำตอบในห้อง', '\\(I = 1\\) A, the class answer'),
+  state: k => ({ letters: k >= 1, sel: k >= 1 ? 'B' : null, io: k >= 1, solved: k >= 2 }) });
+kcl('7b', { ground: 'b0', vals: { I2: 2, Ra: 3, Rb: -4, Rc: 3 },
+  nodes: { t0: [0, 0], t1: [2.4, 0], t2: [4.6, 0], t3: [6.8, 0], b0: [0, 3], b1: [2.4, 3], b2: [4.6, 3], b3: [6.8, 3] },
+  parts: [{ id: 'I2', name: '2 A', type: 'I', a: 'b0', b: 't0', value: 2, side: -1, valText: '' }, { id: 'Ra', name: '', type: 'R', a: 't1', b: 'b1', value: 1, label: false },
+    { id: 'Rb', name: '', type: 'R', a: 't2', b: 'b2', value: 1, label: false }, { id: 'Rc', name: '', type: 'R', a: 't3', b: 'b3', value: 1, label: false },
+    W_('t0', 't1'), W_('t1', 't2'), W_('t2', 't3'), W_('b0', 'b1'), W_('b1', 'b2'), W_('b2', 'b3')],
+  refs: [{ id: 'Ra', from: 't1', text: '3 A', side: 'R' }, { id: 'Rb', from: 't2', text: 'I', side: 'R', ask: true, solvedText: 'I = −4 A' }, { id: 'Rc', from: 't3', text: '3 A', side: 'R' }] }, {
+  ask: { fields: [{ label: 'I (A) =', ok: x => near(x, -4), w: 4 }], check: v => near(v[0], 4) ? t('ขนาดถูกแต่เครื่องหมายผิด', 'Right size, wrong sign') : near(v[0], -1) ? t('มีตัวต้านทาน 3 A <b>สองตัว</b>', 'There are <b>two</b> 3 A resistors') : '' },
+  steps: [{ why: t('<b>KCL ที่ลวดบน</b> (โนด A): เข้า 2 A จากแหล่งจ่าย · ออก 3 A, \\(I\\) และ 3 A ลงตัวต้านทานทั้งสาม', '<b>KCL at the top wire</b> (node A): in, 2 A from the source · out, 3 A, \\(I\\) and 3 A down the three resistors'), tex: `\\begin{aligned} \\sum I_{\\text{in, A}} &= \\sum I_{\\text{out, A}} \\\\ 2 &= 3 + I + 3 \\end{aligned}` },
+    { why: t('<b>แก้สมการ</b>: ค่าติดลบแปลว่ากระแสจริง 4 A ไหล<b>ขึ้น</b> สวนลูกศรที่เขียนไว้', '<b>Solve</b>: the negative value means the real 4 A flows <b>up</b>, against the drawn arrow'), tex: `I = 2 - 3 - 3 = \\boxed{-4\\ \\text{A}}` }],
+  answer: t('\\(I = -4\\) A ตรงกับคำตอบในห้อง · <b>ข้อสังเกต</b>: ตัวต้านทานสามตัวต่อขนานกันจึงมีแรงดันเท่ากัน กระแสในตัวต้านทานจริงต้องไหลทิศเดียวกันหมด (3 A ลงแต่ 4 A ขึ้นเป็นไปไม่ได้) ตัวเลขชุดนี้จึงเป็นแบบฝึก KCL ล้วน ภาพนี้ไม่มีจุดกระแสวิ่ง', '\\(I = -4\\) A, the class answer · <b>Note</b>: the three resistors are in parallel, so they share one voltage and real resistor currents must all flow the same way (3 A down but 4 A up is impossible). These numbers are a pure KCL drill, so this picture has no moving dots.'),
+  state: k => ({ letters: k >= 1, sel: k >= 1 ? 'A' : null, io: k >= 1, solved: k >= 2 }) });
+kcl('7c', { ground: 'g0', speed: 12,
+  nodes: { t0: [0, 0], t1: [2.6, 0], t2: [5.2, 0], t3: [7.8, 0], g0: [0, 3], g1: [2.6, 3], g2: [5.2, 3] },
+  parts: [{ id: 'I9', name: '9 A', type: 'I', a: 'g0', b: 't0', value: 9, side: -1, valText: '' }, { id: 'R1v', name: '1 Ω', type: 'R', a: 't1', b: 'g1', value: 1, valText: '', side: 1 },
+    { id: 'R1h', name: '1 Ω', type: 'R', a: 't1', b: 't2', value: 1, valText: '' }, { id: 'R5', name: '5 Ω', type: 'R', a: 't2', b: 'g2', value: 5, valText: '', side: 1 },
+    { id: 'Rd', name: '', type: 'R', a: 't2', b: 't3', value: 1, label: false }, W_('t0', 't1'), W_('g0', 'g1'), W_('g1', 'g2')],
+  refs: [{ id: 'Rd', from: 't2', text: 'I', side: 'D', ask: true, solvedText: 'I = 0' }] }, {
+  ask: { fields: [{ label: 'I (A) =', ok: x => near(x, 0), w: 4 }] },
+  steps: [{ why: t('<b>ดูปลายขวาของตัวต้านทาน</b>: ไม่ได้ต่อกับอะไร (ปลายลอย) ที่จุดนั้น (โนด C) มีอุปกรณ์ตัวเดียว', '<b>Look at the right end of the resistor</b>: it connects to nothing (a floating end); that point (node C) has a single element'), tex: `\\begin{aligned} \\sum I_{\\text{in, C}} &= \\sum I_{\\text{out, C}} \\\\ 0 &= I \\end{aligned}` },
+    { why: t('<b>สรุป</b>: กระแสไม่มีทางกลับ จึงไหลไม่ได้ แหล่งจ่าย 9 A แบ่งกระแสให้ 1 Ω ตัวตั้งกับ 1 Ω + 5 Ω เท่านั้น', '<b>Conclusion</b>: the current has no way back, so it cannot flow; the 9 A splits only between the upright 1 Ω and the 1 Ω + 5 Ω path'), tex: `I = \\boxed{0\\ \\text{A}}` }],
+  answer: t('\\(I = 0\\) ตรงกับคำตอบในห้อง', '\\(I = 0\\), the class answer'),
+  state: k => ({ letters: k >= 1, sel: k >= 1 ? 'C' : null, io: k >= 1, solved: k >= 2 }) });
+
+/* 8: homework 2 */
+kcl(8, { ground: 'g', speed: 22,
+  nodes: { a: [0, 0], n1: [3, 0], n2: [5.6, 0], n3: [8.2, 0], g: [0, 3], g1: [3, 3], g2: [5.6, 3], g3: [8.2, 3] },
+  parts: [{ id: 'V', name: '−2 V', type: 'V', a: 'a', b: 'g', value: -2, side: -1, valText: '' }, { id: 'R1', name: 'R₁', type: 'R', a: 'a', b: 'n1', value: 1, valText: '', side: 1 },
+    { id: 'R2', name: 'R₂', type: 'R', a: 'n1', b: 'g1', value: 1, valText: '', side: -1 }, { id: 'R3', name: 'R₃', type: 'R', a: 'n2', b: 'g2', value: 1, valText: '', side: -1 },
+    { id: 'I7', name: '7 A', type: 'I', a: 'n3', b: 'g3', value: 7, valText: '', side: 1 }, W_('n1', 'n2'), W_('n2', 'n3'), W_('g', 'g1'), W_('g1', 'g2'), W_('g2', 'g3')],
+  refs: [{ id: 'R1', from: 'a', text: '1 A', side: 'D' }, { id: 'R2', from: 'n1', text: 'i₂', side: 'R', ask: true, solvedText: 'i₂ = −3 A' }, { id: 'R3', from: 'n2', text: '−3 A', side: 'R' }] }, {
+  ask: { fields: [{ label: 'i₂ (A) =', ok: x => near(x, -3), w: 4 }], check: v => near(v[0], 3) ? t('ขนาดถูกแต่เครื่องหมายผิด', 'Right size, wrong sign') : near(v[0], -9) ? t('กระแส −3 A ที่ไหลออกทาง \\(R_3\\) เมื่อย้ายข้างต้องเปลี่ยนเครื่องหมาย', 'The −3 A leaving through \\(R_3\\) changes sign when moved to the other side') : '' },
+  steps: [
+    { why: t('<b>ตั้งชื่อโนดและเลือกโนดบน</b> (โนด B): กระแส 1 A ไหลออกจากขั้วบวกของแหล่งจ่ายผ่าน \\(R_1\\) เข้าโนด B', '<b>Letter the nodes and take the top node</b> (node B): the 1 A leaves the + terminal of the source through \\(R_1\\) into node B'), tex: `\\sum I_{\\text{in, B}} = \\sum I_{\\text{out, B}}` },
+    { why: t('<b>เขียนกระแส</b>: เข้า 1 A · ออก \\(i_2\\), −3 A (ตามลูกศรของ \\(R_3\\)) และ 7 A (แหล่งจ่ายกระแสชี้ลง)', '<b>Write the currents</b>: in, 1 A · out, \\(i_2\\), −3 A (along the arrow of \\(R_3\\)) and 7 A (the current source points down)'), tex: `1 = i_2 + (-3) + 7` },
+    { why: t('<b>แก้สมการ</b>: ค่าติดลบ กระแสจริงใน \\(R_2\\) ไหลขึ้น 3 A (จุดใน \\(R_2\\) กับ \\(R_3\\) วิ่งขึ้นทั้งคู่)', '<b>Solve</b>: negative, so the real current in \\(R_2\\) is 3 A upward (the dots in \\(R_2\\) and \\(R_3\\) both run up)'), tex: `i_2 = 1 + 3 - 7 = \\boxed{-3\\ \\text{A}}` }],
+  answer: t('\\(i_2 = -3\\) A ตรงกับคำตอบในห้อง', '\\(i_2 = -3\\) A, the class answer'),
+  state: k => ({ letters: k >= 1, sel: k >= 1 ? 'B' : null, io: k >= 2, solved: k >= 3 }) });
+
+/* 9: homework 3, single node pair */
+{ const sim = new CH3.Topo($('cv9'), { ground: 'BL', speed: 9000, labels: ['B', 'A'], meshes: [], aspect: 0.66, aspectN: 0.9,
+    nodes: { TL: [0, 0], TM: [3.2, 0], TR: [6.4, 0], ML: [0, 2.2], MM: [3.2, 2.2], MR: [6.4, 2.2], BL: [0, 4.4], BM: [3.2, 4.4], BR: [6.4, 4.4] },
+    parts: [{ id: 'R1k', name: '1 kΩ', type: 'R', a: 'TL', b: 'ML', value: 1000, valText: '', side: 1 }, { id: 'I3', name: '3 mA', type: 'I', a: 'TM', b: 'MM', value: 3e-3, valText: '', side: 1 },
+      { id: 'R28', name: '2.8 kΩ', type: 'R', a: 'MM', b: 'MR', value: 2800, valText: '', side: -1 }, { id: 'I5', name: '5 mA', type: 'I', a: 'ML', b: 'BL', value: 5e-3, valText: '', side: -1 },
+      { id: 'R47', name: '4.7 kΩ', type: 'R', a: 'MM', b: 'BM', value: 4700, valText: '', side: -1 }, W_('TL', 'TM'), W_('TM', 'TR'), W_('TR', 'MR'), W_('MR', 'BR'), W_('BL', 'BM'), W_('BM', 'BR'), W_('ML', 'MM')] });
+  const v = sim.ckt.V('MM').re - sim.ckt.V('TL').re;   // v = vA − vB (exact); the class works with −1.274 V
+  LS.ask($('ask9'), { fields: [{ label: 'v (V) =', ok: x => near(x, -1.274, 0.006), w: 4.4 }, { label: t('ΣP ตัวต้านทาน (mW) =', 'ΣP resistors (mW) ='), ok: x => near(x, 2.548, 0.006), w: 4.4 }],
+    check: vv => near(vv[0], 1.274, 0.006) ? t('ขนาดของ \\(v\\) ถูก แต่เครื่องหมายขึ้นกับว่า \\(v = v_A - v_B\\)', 'The size of \\(v\\) is right; the sign depends on \\(v = v_A - v_B\\)') : '' });
+  const vr = -1.274, P = R => vr * vr / R * 1000;   // mW, with the rounded voltage as in class
+  LS.stepper($('st9'), {
+    steps: [
+      { why: t('<b>หาโนด</b>: ระบายสีทุกจุดที่ต่อถึงกันด้วยลวด เหลือ<b>เพียง 2 สี</b> (A ตรงกลาง B รอบนอก) อุปกรณ์ทั้ง 5 ตัวต่อคร่อม A–B ทั้งหมด จึงมีแรงดัน \\(v = v_A - v_B\\) เท่ากันทุกตัว', '<b>Find the nodes</b>: painting every set of joined wires leaves <b>only 2 colours</b> (A in the middle, B around the outside). All five elements sit across A–B, so they all have the same voltage \\(v = v_A - v_B\\)'), tex: `n = 2` },
+      { why: t('<b>KCL ที่โนด A</b>: แหล่งจ่าย 3 mA ชี้ลงเข้า A (ดันเข้า) แหล่งจ่าย 5 mA ชี้ลงออกจาก A (ดึงออก) ตัวต้านทานแต่ละตัวมีกระแส \\(v/R\\) ไหลออกจาก A · \\(R_p = 1\\,\\text{k} \\parallel 4.7\\,\\text{k} \\parallel 2.8\\,\\text{k} = 637\\ \\Omega\\) คือตัวต้านทานสามตัวขนานกัน', '<b>KCL at node A</b>: the 3 mA source points down into A (pushes in), the 5 mA source points down out of A (pulls out), and each resistor carries \\(v/R\\) out of A · \\(R_p = 1\\,\\text{k} \\parallel 4.7\\,\\text{k} \\parallel 2.8\\,\\text{k} = 637\\ \\Omega\\) is the three resistors in parallel'),
+        tex: `\\begin{aligned} 3\\ \\text{mA} &= 5\\ \\text{mA} + \\frac{v}{1\\,\\text{k}} \\\\ &\\quad + \\frac{v}{4.7\\,\\text{k}} + \\frac{v}{2.8\\,\\text{k}} \\\\ -2\\ \\text{mA} &= v/R_p \\\\ v &= (-2\\ \\text{mA})(637\\ \\Omega) \\\\ &= \\boxed{${LS.d(v, 3)}\\ \\text{V}} \\end{aligned}` },
+      { why: t('<b>(a) กำลังที่ตัวต้านทานรับ</b> \\(P = v^2/R\\) (ใช้ \\(v = -1.274\\) V แบบในห้อง)', '<b>(a) Power absorbed by each resistor</b>, \\(P = v^2/R\\) (with \\(v = -1.274\\) V, as in class)'),
+        tex: `\\begin{aligned} P_{1\\,\\text{k}} &= \\frac{1.274^2}{1000} = ${LS.d(P(1000), 3)}\\ \\text{mW} \\\\ P_{4.7\\,\\text{k}} &= \\frac{1.274^2}{4700} = ${LS.d(P(4700) * 1000, 1)}\\ \\mu\\text{W} \\\\ P_{2.8\\,\\text{k}} &= \\frac{1.274^2}{2800} = ${LS.d(P(2800) * 1000, 1)}\\ \\mu\\text{W} \\end{aligned}` },
+      { why: t('<b>(b) กำลังที่แหล่งจ่ายกระแสจ่าย</b> = (แรงดันของขั้วที่กระแสไหลออก − ขั้วที่กระแสไหลเข้า) × กระแส: แหล่งจ่าย 5 mA ดันกระแสออกทาง B แหล่งจ่าย 3 mA ดันกระแสออกทาง A', '<b>(b) Power supplied by each current source</b> = (voltage of the terminal the current leaves − the terminal it enters) × current: the 5 mA source drives its current out at B, the 3 mA source out at A'),
+        tex: `\\begin{aligned} P_{\\text{supp},\\,5\\,\\text{mA}} &= (v_B - v_A)(5\\ \\text{mA}) \\\\ &= (1.274)(5\\ \\text{mA}) = \\boxed{6.370\\ \\text{mW}} \\\\ P_{\\text{supp},\\,3\\,\\text{mA}} &= (v_A - v_B)(3\\ \\text{mA}) \\\\ &= (-1.274)(3\\ \\text{mA}) = \\boxed{-3.822\\ \\text{mW}} \\end{aligned}` },
+      { why: t('<b>(c) ตรวจสมดุล</b>: กำลังที่ตัวต้านทานรับรวมกัน ต้องเท่ากับกำลังที่แหล่งจ่ายจ่ายรวมกัน (แหล่งจ่าย 3 mA ถูกดันกระแสสวนทาง จึง<b>รับ</b>กำลัง 3.822 mW)', '<b>(c) Check the balance</b>: the power absorbed by the resistors must equal the power supplied by the sources (the 3 mA source has current forced through it backwards, so it <b>absorbs</b> 3.822 mW)'),
+        tex: `\\begin{aligned} \\sum P_{\\text{abs}} &= 1.623 + 0.3453 + 0.5797 \\\\ &= 2.548\\ \\text{mW} \\\\ \\sum P_{\\text{supp}} &= 6.370 - 3.822 \\\\ &= 2.548\\ \\text{mW} \\quad\\checkmark \\end{aligned}` }],
+    answer: t('ตัวต้านทานรับ 1.623 mW, 345.3 µW, 579.7 µW · แหล่งจ่าย 5 mA จ่าย 6.370 mW · แหล่งจ่าย 3 mA จ่าย −3.822 mW (คือรับ 3.822 mW) · รวมเท่ากัน 2.548 mW <div class="warnbox" style="margin-top:8px"><b>ตารางคำตอบในสไลด์หน้า 25</b> เขียนกำลังของแหล่งจ่าย 3 mA เป็น −3.833 mW ค่าที่ถูกคือ \\((1.274)(3) = 3.822\\) mW และหัวคอลัมน์ "P<sub>absorbed</sub>" ของแหล่งจ่ายควรเป็นกำลังที่จ่าย (supplied) เพราะเครื่องหมายกลับกัน: แหล่งจ่าย 5 mA จ่าย 6.370 mW ส่วนแหล่งจ่าย 3 mA รับ 3.822 mW</div>',
+      'Resistors absorb 1.623 mW, 345.3 µW and 579.7 µW · the 5 mA source supplies 6.370 mW · the 3 mA source supplies −3.822 mW (it absorbs 3.822 mW) · both sums are 2.548 mW <div class="warnbox" style="margin-top:8px"><b>The answer table on slide p. 25</b> prints the 3 mA source as −3.833 mW; the correct value is \\((1.274)(3) = 3.822\\) mW, and the column headed "P<sub>absorbed</sub>" for the sources actually holds the power supplied, since its signs are flipped: the 5 mA source supplies 6.370 mW and the 3 mA source absorbs 3.822 mW.</div>'),
+    onStep: k => sim.set({ colors: k >= 1, letters: k >= 1 }) }); }
+
+/* 10: extra example 1.2 */
+kcl(10, { ground: 'nBM', speed: 16, labels: ['d', 'a', 'b', 'e', 'c'], letterNodes: ['na', 'nb'], aspect: 0.74, aspectN: 0.95,
+  nodes: { nd: [0, 0], na: [3.4, 0], nTR: [6.8, 0], nML: [0, 2.4], nb: [3.4, 2.4], nBL: [0, 4.8], nBM: [3.4, 4.8], nBR: [6.8, 4.8] },
+  parts: [{ id: 'R4', name: 'R₄', type: 'R', a: 'nd', b: 'na', value: 1, valText: '' }, { id: 'R0', name: 'R₀', type: 'R', a: 'nd', b: 'nML', value: 1.5, valText: '', side: -1 },
+    W_('nML', 'nb'), { id: 'R1', name: 'R₁', type: 'R', a: 'na', b: 'nb', value: 1.25, valText: '', side: -1 }, W_('na', 'nTR'),
+    { id: 'R2', name: 'R₂', type: 'R', a: 'nTR', b: 'nBR', value: 0.5, valText: '', side: 1 }, { id: 'Vs', name: 'V_S', type: 'V', a: 'nML', b: 'nBL', value: 12, battery: true, valText: '', side: -1 },
+    { id: 'R3', name: 'R₃', type: 'R', a: 'nb', b: 'nBM', value: 4, valText: '', side: -1 }, { id: 'R5', name: 'R₅', type: 'R', a: 'nBL', b: 'nBM', value: 0.5, valText: '', side: -1 }, W_('nBM', 'nBR')],
+  refs: [{ id: 'R0', from: 'nd', text: 'I₀ = −2 A', side: 'R' }, { id: 'R1', from: 'na', text: 'I₁ = −4 A', side: 'R' }, { id: 'R2', from: 'nTR', text: 'I₂', side: 'L', ask: true, key: 'I2', solvedText: 'I₂ = 6 A' },
+    { id: 'R3', from: 'nb', text: 'I₃', side: 'R', ask: true, key: 'I3', solvedText: 'I₃ = 2 A' }, { id: 'Vs', from: 'nBL', text: 'I_S = 8 A', side: 'R' }] }, {
+  ask: { fields: [{ label: 'I₂ (A) =', ok: x => near(x, 6), w: 4 }, { label: 'I₃ (A) =', ok: x => near(x, 2), w: 4 }] },
+  steps: [
+    { why: t('<b>KCL ที่โนด a</b> (เฉลยใช้ \\(\\sum I_{\\text{out}} = 0\\)): กระแสที่ออกจาก a มีสามทาง คือ \\(I_0\\) (ผ่าน \\(R_4\\) ไปทางซ้ายแล้วลง \\(R_0\\)), \\(I_1\\) และ \\(I_2\\)', '<b>KCL at node a</b> (the solution uses \\(\\sum I_{\\text{out}} = 0\\)): three currents leave a: \\(I_0\\) (left through \\(R_4\\), then down \\(R_0\\)), \\(I_1\\) and \\(I_2\\)'),
+      tex: `\\begin{aligned} \\sum I_{\\text{out, a}} &= 0 \\\\ I_0 + I_1 + I_2 &= 0 \\end{aligned}` },
+    { why: t('<b>แทนค่าหา \\(I_2\\)</b>', '<b>Substitute to find \\(I_2\\)</b>'), tex: `\\begin{aligned} I_2 &= -I_0 - I_1 \\\\ &= -(-2) - (-4) = \\boxed{6\\ \\text{A}} \\end{aligned}` },
+    { why: t('<b>KCL ที่โนด b</b>: เข้า \\(I_0\\) (ลงจาก \\(R_0\\) ผ่านลวดกลาง), \\(I_1\\) และ \\(I_S\\) (ขึ้นจากแบตเตอรี่) · ออก \\(I_3\\)', '<b>KCL at node b</b>: in, \\(I_0\\) (down \\(R_0\\) and along the middle wire), \\(I_1\\) and \\(I_S\\) (up from the battery) · out, \\(I_3\\)'),
+      tex: `\\begin{aligned} \\sum I_{\\text{in, b}} &= \\sum I_{\\text{out, b}} \\\\ I_0 + I_1 + I_S &= I_3 \\\\ I_3 &= -2 - 4 + 8 = \\boxed{2\\ \\text{A}} \\end{aligned}` }],
+  answer: t('\\(I_2 = 6\\) A และ \\(I_3 = 2\\) A ตรงกับเฉลยลายมือ · \\(V_S = 12\\) V ไม่ต้องใช้ เพราะ KCL ใช้แค่กระแส (ค่าความต้านทานในภาพจำลองเลือกให้กระแสตรงกับโจทย์)', '\\(I_2 = 6\\) A and \\(I_3 = 2\\) A, as in the handwritten solution · \\(V_S = 12\\) V is not needed, because KCL only uses currents (the simulation\'s resistances are chosen so the currents match the problem)'),
+  state: k => ({ sel: k >= 3 ? 'b' : k >= 1 ? 'a' : null, io: k >= 1, solved: k >= 3 ? ['I2', 'I3'] : k >= 2 ? ['I2'] : [] }) });
+});
+</script>
+</body>
+</html>

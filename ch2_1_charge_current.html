@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="2.1 — Units, Charge and Current">2.1 — หน่วย ประจุ และกระแส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">หน่วย ประจุ และกระแส <span class="en">Units, charge and current — one ampere is one coulomb crossing a section every second</span></h1>
+<h1 data-l="en">Units, charge and current <span class="en">One ampere is one coulomb crossing a section every second</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch2/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: introduction: units, components (voltage sources, current sources, batteries, resistors), and the concepts of voltage, current and power">
+    <figcaption data-l="th">สไลด์บทที่ 2 หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 2 slides, p. 2 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">บทที่ 2 เริ่มจาก <b>ระบบหน่วย</b> แล้วจึงนิยามปริมาณพื้นฐานของวงจร: ประจุ กระแส แรงดัน และกำลัง หน้านี้ครอบคลุมหน่วยกับคำนำหน้า (สไลด์หน้า 3–5) และประจุกับกระแส (สไลด์หน้า 6–8, 17–18) มี <b>เครื่องมือ 2 ชิ้น (A, B)</b> และ <b>4 โจทย์ เรียงทีละข้อ</b> แต่ละข้อมีภาพสไลด์ ภาพจำลองของตัวเอง และเฉลยที่เปิดทีละขั้น</p>
+    <p class="sub" data-l="en">Chapter 2 starts from <b>systems of units</b>, then defines the basic circuit quantities: charge, current, voltage and power. This page covers units and prefixes (slides pp. 3–5) and charge and current (slides pp. 6–8, 17–18). It has <b>2 tools (A, B)</b> and <b>4 problems, one after another</b>, each with its slide picture, its own simulation and a solution opened step by step.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ i = \frac{dq}{dt}\;(1\ \text{A} = 1\ \text{C/s}),\qquad q(t) = \int_{t_0}^{t} i\,dt' + q(t_0) $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>คำนำหน้า SI</b> แทนกำลังของ 10 ขยับหนึ่งขั้น (เช่น n → µ) = เลื่อนจุดทศนิยม 3 ตำแหน่ง</li><li><b>\(i = dq/dt\)</b>: กระแส 1 A คือประจุ 1 C ผ่านหน้าตัดในหนึ่งวินาที</li><li><b>\(q(t)\) คือพื้นที่ใต้กราฟ \(i(t)\)</b> พื้นที่ใต้แกนนับเป็นลบ</li><li><b>กระแสติดลบ = ไหลสวนทิศอ้างอิง</b>: 3 A ชี้ขวา เท่ากับ −3 A ชี้ซ้าย</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>SI prefixes</b> stand for powers of 10; one step (e.g. n → µ) moves the decimal point 3 places.</li><li><b>\(i = dq/dt\)</b>: 1 A is 1 C crossing the section every second.</li><li><b>\(q(t)\) is the area under \(i(t)\)</b>; area below the axis counts as negative.</li><li><b>A negative current flows against the reference</b>: 3 A to the right equals −3 A to the left.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>คำนำหน้า SI</a><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#tB"><b>B</b>ประจุไหลในลวด</a><a href="#ex3"><b>3</b>Ex 5</a><a href="#ex4"><b>4</b>แบบฝึกหัดข้อ 3</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>SI prefixes</a><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#tB"><b>B</b>Charge in a wire</a><a href="#ex3"><b>3</b>Ex 5</a><a href="#ex4"><b>4</b>Exercise 3</a></nav>
+
+<div class="group-head"><h2 data-l="th">หน่วย SI และคำนำหน้า (สไลด์หน้า 3–4)</h2><h2 data-l="en">SI units and prefixes (slides pp. 3–4)</h2></div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch2/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3: the International System of Units; base units (meter, kilogram, second, ampere, kelvin, mole, candela) and derived units"><figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch2/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4: table of SI prefixes from yocto (10^-24) to yotta (10^24)"><figcaption data-l="th">สไลด์หน้า 4</figcaption><figcaption data-l="en">Slide p. 4</figcaption></figure>
+</div>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เครื่องมือ: ไล่คำนำหน้า SI และแปลงหน่วย</h2><h2 data-l="en">Tool: walk the SI prefixes and convert units</h2>
+    <div class="src" data-l="th">วิศวกรนิยม <b>สัญกรณ์วิศวกรรม</b>: ตัวเลข 1–999 คูณกำลังของ 10 ที่หารด้วย 3 ลงตัว เช่น 0.048 W เขียนเป็น 48 mW (Hayt §2.1)</div><div class="src" data-l="en">Engineers prefer <b>engineering notation</b>: a number from 1 to 999 times a power of 10 divisible by 3, e.g. 0.048 W is 48 mW (Hayt §2.1)</div></div></div>
+  <div class="card solve"><div class="eqgrid">
+    <div><div class="row"><label for="pfx" data-l="th">กำลังของ 10</label><label for="pfx" data-l="en">power of 10</label><span class="val" id="pfxVal"></span></div>
+      <input type="range" id="pfx" min="-18" max="15" step="3" value="-3"><div id="pfxCard" class="status" style="margin-top:8px"></div></div>
+    <div><h3 data-l="th">ตัวแปลงหน่วย</h3><h3 data-l="en">Converter</h3>
+      <div class="matrow"><input class="mi" id="cvIn" value="248" style="width:7em" aria-label="value"><select id="cvFrom" class="mi" style="width:auto;text-align:left" aria-label="from prefix"></select><select id="cvUnit" class="mi" style="width:auto;text-align:left" aria-label="unit"></select></div>
+      <div id="cvOut" class="terms"></div></div>
+  </div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 1: ความยาวคลื่น 248 nm</h2><h2 data-l="en">Ex 1: a wavelength of 248 nm</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 5 · Hayt Practice 2.1</div><div class="src" data-l="en">Chapter 2 slides, p. 5 · Hayt Practice 2.1</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch2/p05q1.webp" width="1308" height="317" loading="lazy" decoding="async" alt="Slide 5, Ex 1: a krypton fluoride laser emits light at 248 nm. This is the same as (a) 0.0248 mm (b) 2.48 µm (c) 0.248 µm (d) 24,800 Å">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 5 · tap to enlarge</figcaption></figure>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv1"></canvas><div class="simnote" data-l="th">แต่ละขั้นของบันไดคือคำนำหน้าที่ต่างกัน 10³ (ยกเว้นอังสตรอม Å = 10⁻¹⁰ m) ลูกศรสีชมพูบอกว่าตัวเลขต้องคูณด้วยเท่าไร</div><div class="simnote" data-l="en">Each rung is a prefix 10³ away from the next (except the ångström, Å = 10⁻¹⁰ m). The pink arrow says what the number is multiplied by.</div></div>
+    <div class="card solve"><div id="ask1"></div><div id="st1"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 5)</span><span data-l="en">See the teacher's in-class working (slide p. 5)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch2/L06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 5 with handwritten working for Ex 1 and Ex 2"><figcaption data-l="th">สไลด์หน้า 5 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 5, in-class version</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 2: เกตลอจิกสลับสถานะใน 12 ps</h2><h2 data-l="en">Ex 2: a logic gate switching in 12 ps</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 5 · Hayt Practice 2.2 · ในสไลด์ตัวเลือก (a) กับ (b) พิมพ์ "1.2 ns" ซ้ำกัน (ผิดทั้งคู่)</div><div class="src" data-l="en">Chapter 2 slides, p. 5 · Hayt Practice 2.2 · on the slide options (a) and (b) are both printed "1.2 ns" (both wrong)</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch2/p05q2.webp" width="1307" height="302" loading="lazy" decoding="async" alt="Slide 5, Ex 2: a logic gate switches from on to off in 12 ps. This corresponds to (a) 1.2 ns (b) 1.2 ns (c) 1200 ns (d) 0.012 ns">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 5 · tap to enlarge</figcaption></figure>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv2"></canvas></div>
+    <div class="card solve"><div id="ask2"></div><div id="st2"></div></div>
+  </div>
+</section>
+
+<div class="group-head"><h2 data-l="th">ประจุและกระแส (สไลด์หน้า 6–8)</h2><h2 data-l="en">Charge and current (slides pp. 6–8)</h2></div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch2/p06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6: charge; current through a wire: 1 ampere is 1 coulomb crossing a cross section in 1 second"><figcaption data-l="th">สไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 6 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch2/p07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 7: current is the rate of charge flow, i = dq/dt"><figcaption data-l="th">สไลด์หน้า 7</figcaption><figcaption data-l="en">Slide p. 7</figcaption></figure>
+  <figure class="slide"><img src="slides/ch2/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8: q(t) = integral of i dt + q(t0); 3 A to the right and −3 A to the left are the same current"><figcaption data-l="th">สไลด์หน้า 8</figcaption><figcaption data-l="en">Slide p. 8</figcaption></figure>
+</div>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ประจุไหลในลวด: กระแสคือจำนวนคูลอมบ์ที่ผ่านหน้าตัดต่อวินาที</h2><h2 data-l="en">Charge in a wire: current is coulombs crossing the section per second</h2>
+    <div class="src" data-l="th">เหมือนรูปในสไลด์หน้า 6 · กดกลับทิศอ้างอิงเพื่อดู "สองวิธีเขียนกระแสเดียวกัน" ของสไลด์หน้า 8</div><div class="src" data-l="en">Like the figure on slide p. 6 · flip the reference to see the "two ways to write the same current" of slide p. 8</div></div></div>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cvB"></canvas><div id="ctlB" style="padding:0 8px"></div></div>
+    <div class="card solve"><h3 data-l="th">อ่านค่า</h3><h3 data-l="en">Readings</h3><div class="metrics" id="roB"></div>
+      <p class="lead" data-l="th" style="margin-top:10px">แผ่นสีชมพูคือ <b>หน้าตัดที่เราเลือก</b> จุดวิ่งเร็ว = กระแสมาก กราฟล่างแสดงว่าประจุที่ผ่านไปแล้ว \(q(t)\) คือ <b>พื้นที่ใต้กราฟ \(i(t)\)</b> กด "แสดงอิเล็กตรอน": ในลวดโลหะสิ่งที่วิ่งจริงคืออิเล็กตรอน (สวนทาง) แต่เราตกลงกันใช้ทิศของประจุบวก</p>
+      <p class="lead" data-l="en" style="margin-top:10px">The pink disc is <b>the cross-section we chose</b>; fast dots = large current. The lower graph shows the charge that has crossed, \(q(t)\), is <b>the area under \(i(t)\)</b>. Press "Show electrons": in a metal wire the electrons are what really move (the other way), but by agreement we use the direction of positive charge.</p></div>
+  </div>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">Ex 5: อุปกรณ์ที่สะสมประจุ \(q(t) = 10t^2 - 22t\) mC</h2><h2 data-l="en">Ex 5: a device accumulating \(q(t) = 10t^2 - 22t\) mC</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 17–18 · Hayt ข้อ 2.19</div><div class="src" data-l="en">Chapter 2 slides, pp. 17–18 · Hayt problem 2.19</div></div></div>
+  <div class="slides"><figure class="slide q"><img src="slides/ch2/p17q.webp" width="1247" height="295" loading="lazy" decoding="async" alt="Slide 17, Ex 5: q(t) = 10t^2 − 22t mC. (a) In 0 ≤ t < 5 s, when is the current into the device zero?"><figcaption data-l="th">โจทย์ (a) สไลด์หน้า 17</figcaption><figcaption data-l="en">Part (a), slide p. 17</figcaption></figure>
+    <figure class="slide q"><img src="slides/ch2/p18q.webp" width="990" height="151" loading="lazy" decoding="async" alt="Slide 18: (b) Sketch q(t) and i(t) over 0 ≤ t < 5 s"><figcaption data-l="th">โจทย์ (b) สไลด์หน้า 18 (กราฟเฉลยของสไลด์อยู่ท้ายข้อ)</figcaption><figcaption data-l="en">Part (b), slide p. 18 (the slide's answer plot is at the end)</figcaption></figure></div>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cv3"></canvas><div id="ctl3" style="padding:0 8px"></div></div>
+    <div class="card solve"><div class="given"><div class="gl" data-l="th">โจทย์</div><div class="gl" data-l="en">Problem</div><div id="g3"></div></div><div id="ask3"></div><div id="st3"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์เฉลย (หน้า 18) และเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the answer slide (p. 18) and the teacher's in-class working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch2/L19.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 17: i(t) = 20t − 22 mA, t = 1.1 s"><figcaption data-l="th">สไลด์หน้า 17 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 17, in class</figcaption></figure>
+      <figure class="slide"><img src="slides/ch2/L20.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 18: plot of q(t) and i(t), q(1.1) = −12.1 mC"><figcaption data-l="th">สไลด์หน้า 18 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 18, in class</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัดข้อ 3: กระแสฟันเลื่อย คาบ 8 s</h2><h2 data-l="en">Exercise 3: a sawtooth current with an 8 s period</h2>
+    <div class="src" data-l="th">แบบฝึกหัดบทที่ 2 ข้อ 3 · มีเฉลยลายมือของผู้สอนท้ายข้อ</div><div class="src" data-l="en">Chapter 2 exercise sheet, problem 3 · the teacher's handwritten solution is at the end</div></div></div>
+  <figure class="slide q"><img src="slides/ch2/ex3q.webp" width="827" height="532" loading="lazy" decoding="async" alt="Exercise 3: the current waveform of Fig. 2 has a period of 8 s. (a) Average current over one period? (b) With q(0) = 0, sketch q(t) for 0 < t < 20 s. The waveform rises linearly from 0 to 6 A in 6 s, then is zero until 8 s, repeating">
+    <figcaption data-l="th">โจทย์จากแบบฝึกหัดข้อ 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, exercise 3 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cv4"></canvas><div id="ctl4" style="padding:0 8px"></div></div>
+    <div class="card solve"><div id="ask4"></div><div id="st4"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน (แบบฝึกหัดข้อ 3)</span><span data-l="en">See the teacher's handwritten solution (exercise 3)</span></summary>
+    <figure class="slide" style="max-width:720px"><img src="slides/ch2/sol3.webp" width="1240" height="1605" loading="lazy" decoding="async" alt="Handwritten solution to exercise 3: average 2.25 A; q(t) piecewise"><figcaption data-l="th">เฉลยแบบฝึกหัดข้อ 3</figcaption><figcaption data-l="en">Solution to exercise 3</figcaption></figure></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กระแสกลับทิศได้</h3>
+    <ol><li>ข้อ 3 (Ex 5) ช่วง \(0 < t < 1.1\) s จุดวิ่ง <b>ไปทางซ้าย</b> (กระแสติดลบ) ช้าลงจนหยุดที่ \(t = 1.1\) s แล้วกลับมาวิ่งไปทางขวา</li>
+    <li>\(q(t)\) ต่ำสุดที่ \(t = 1.1\) s พอดี <b>เพราะกระแสคือความชันของ \(q(t)\)</b> ความชันเป็นศูนย์ตรงจุดต่ำสุด</li>
+    <li>พื้นที่สีแดงช่วงแรกคือประจุ −12.1 mC ที่ไหลออกไปก่อน ต้องรอจนพื้นที่สีเขียวเท่ากัน (\(t = 2.2\) s) \(q\) จึงกลับเป็นศูนย์</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ทิศอ้างอิงกับเครื่องหมาย</h3>
+    <ol><li>ในเครื่องมือ B กด "กลับทิศอ้างอิง": ลูกศรชี้ซ้ายและค่าอ่านติดลบ แต่จุดยังวิ่งทางเดิม <b>นี่คือ "สองวิธีเขียนกระแสเดียวกัน" ในสไลด์หน้า 8</b></li>
+    <li>กระแส 1 A คืออิเล็กตรอนประมาณ \(6.24\times10^{18}\) ตัวผ่านหน้าตัดในหนึ่งวินาที</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ค่าเฉลี่ยกับพื้นที่</h3>
+    <ol><li>ข้อ 4: พื้นที่ใต้กราฟหนึ่งคาบคือ 18 C หารด้วย 8 s <b>ได้กระแสเฉลี่ย 2.25 A</b></li>
+    <li>ระหว่าง \(t = 6\) ถึง 8 s กระแสเป็นศูนย์ จุดหยุด และ \(q(t)\) เป็นเส้นแนวนอน</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 2 หน้า 2–8, 17–18 และแบบฝึกหัดข้อ 3 (ภาพอยู่ในหน้านี้แล้ว) · Hayt §2.1–2.2</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — current can reverse</h3>
+    <ol><li>Problem 3 (Ex 5), for \(0 < t < 1.1\) s: the dots move <b>left</b> (negative current), slow down until they stop at \(t = 1.1\) s, then move right.</li>
+    <li>\(q(t)\) is lowest exactly at \(t = 1.1\) s, <b>because the current is the slope of \(q(t)\)</b> and the slope is zero at a minimum.</li>
+    <li>The red area at first is the −12.1 mC that flowed out first; only when the green area equals it (\(t = 2.2\) s) is \(q\) back to zero.</li></ol></div>
+  <div class="card"><h3>Try this 2 — reference direction and sign</h3>
+    <ol><li>In tool B press "Flip reference": the arrow points left and the reading turns negative, but the dots keep going the same way. <b>These are the "two ways to write the same current" of slide p. 8.</b></li>
+    <li>1 A is about \(6.24\times10^{18}\) electrons crossing the section every second.</li></ol></div>
+  <div class="card"><h3>Try this 3 — average and area</h3>
+    <ol><li>Problem 4: the area under one period is 18 C; divided by 8 s <b>it gives an average of 2.25 A</b>.</li>
+    <li>Between \(t = 6\) and 8 s the current is zero, the dots stop and \(q(t)\) is flat.</li></ol>
+    <div class="book">Source: chapter 2 slides, pp. 2–8, 17–18 and exercise 3 (the pictures are on this page) · Hayt §2.1–2.2</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), t = MC.t, ui = MC.ui, fd = (x, n = 3) => ALG.fmtDec(x, n);
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* ---------- A: prefixes and converter ---------- */
+const PREFIX = { '-18': ['a', 'atto', 'อัตโต'], '-15': ['f', 'femto', 'เฟมโต'], '-12': ['p', 'pico', 'พิโก'], '-9': ['n', 'nano', 'นาโน'], '-6': ['µ', 'micro', 'ไมโคร'], '-3': ['m', 'milli', 'มิลลิ'],
+  '0': ['', '(none)', '(ไม่มี)'], '3': ['k', 'kilo', 'กิโล'], '6': ['M', 'mega', 'เมกะ'], '9': ['G', 'giga', 'จิกะ'], '12': ['T', 'tera', 'เทระ'], '15': ['P', 'peta', 'เพตะ'] };
+const EXAMPLES = { '-18': ['ประจุของอิเล็กตรอนหนึ่งตัว 1.602 × 10⁻¹⁹ C ≈ 0.16 aC', 'the charge of one electron, 1.602 × 10⁻¹⁹ C ≈ 0.16 aC'], '-15': ['12 ps ของ Ex 2 เท่ากับ 12,000 fs', 'the 12 ps of Ex 2 is 12,000 fs'],
+  '-12': ['กระแส 1 pA ไหลเข้ากล่องใน Ex 6(a) · เกตลอจิกสลับสถานะใน 12 ps (Ex 2)', 'the 1 pA into the box of Ex 6(a) · a logic gate switching in 12 ps (Ex 2)'], '-9': ['เลเซอร์คริปทอนฟลูออไรด์ ความยาวคลื่น 248 nm (Ex 1)', 'a krypton fluoride laser at 248 nm (Ex 1)'],
+  '-6': ['1 mV คร่อม 4.7 kΩ ให้กระแส 0.21 µA (Ex 7a)', '1 mV across 4.7 kΩ gives 0.21 µA (Ex 7a)'], '-3': ['กระแส 42.4 mA ผ่านตัวต้านทาน 560 Ω (Ex 4) · ประจุ −12.1 mC ใน Ex 5', '42.4 mA through the 560 Ω resistor (Ex 4) · the −12.1 mC of Ex 5'],
+  '0': ['แบตเตอรี่รถยนต์ 12 V · กระแส 2 A ของแหล่งจ่ายใน Ex 6(c)', 'a 12 V car battery · the 2 A source of Ex 6(c)'], '3': ['ตัวต้านทาน 4.7 kΩ (Ex 7) · ค่าไฟคิดเป็นกิโลวัตต์ชั่วโมง (kWh)', 'the 4.7 kΩ resistor (Ex 7) · electricity is billed in kilowatt-hours (kWh)'],
+  '6': ['ตัวต้านทาน 1 MΩ · ฟ้าผ่ามีแรงดันหลายร้อย MV', 'a 1 MΩ resistor · lightning reaches hundreds of MV'], '9': ['สัญญาณนาฬิกาของซีพียู 3 GHz', 'a 3 GHz processor clock'],
+  '12': ['ฮาร์ดดิสก์ 1 TB = 10¹² ไบต์', 'a 1 TB disk = 10¹² bytes'], '15': ['10¹⁵ หรือหนึ่งพันล้านล้าน', '10¹⁵, a thousand million million'] };
+const renderPfx = () => { const e = document.getElementById('pfx').value, p = PREFIX[e]; document.getElementById('pfxVal').textContent = `10^${e}`;
+  document.getElementById('pfxCard').innerHTML = `<b style="font-size:20px;font-family:'IBM Plex Mono',monospace">${p[0] || '—'}</b> &nbsp;<b>${t(p[2], p[1])}</b> = ${tx(`10^{${e}}`)}<br>${t(EXAMPLES[e][0], EXAMPLES[e][1])}`; };
+document.getElementById('pfx').addEventListener('input', renderPfx);
+const UNITS = ['m', 's', 'A', 'V', 'W', 'Ω', 'C', 'Hz'];
+{ const f = document.getElementById('cvFrom'), un = document.getElementById('cvUnit');
+  f.innerHTML = Object.entries(PREFIX).sort((a, b) => +a[0] - +b[0]).map(([e, p]) => `<option value="${e}"${e === '-9' ? ' selected' : ''}>${p[0] || t('(ไม่มี)', '(none)')}</option>`).join('');
+  un.innerHTML = UNITS.map(v => `<option value="${v}">${v}</option>`).join(''); }
+const convert = () => { const v = parseFloat(document.getElementById('cvIn').value.replace(',', '.')), e = +document.getElementById('cvFrom').value, un = document.getElementById('cvUnit').value, out = document.getElementById('cvOut');
+  if (!isFinite(v)) { out.textContent = '—'; return; } const si = v * Math.pow(10, e);
+  out.innerHTML = Object.entries(PREFIX).sort((a, b) => +a[0] - +b[0]).filter(([k]) => Math.abs(+k - e) <= 9).map(([k, p]) => { const x = si / Math.pow(10, +k);
+    const s = Math.abs(x) >= 1e6 || (Math.abs(x) < 1e-4 && x !== 0) ? x.toExponential(3) : ALG.fmtDec(x, 6); return `<span class="t ${Math.abs(x) >= 1 && Math.abs(x) < 1000 ? 'on' : ''}">${s} ${p[0]}${un}</span>`; }).join(' &nbsp;=&nbsp; ') +
+    `<div class="hint">${t('ตัวที่ไฮไลต์คือสัญกรณ์วิศวกรรม (ตัวเลข 1–999)', 'The highlighted one is engineering notation (a number from 1 to 999)')}</div>`; };
+['cvIn', 'cvFrom', 'cvUnit'].forEach(id => document.getElementById(id).addEventListener('input', convert));
+renderPfx(); convert();
+
+/* ---------- 1: Ex 1 ---------- */
+const lad1 = new CH2.Ladder(document.getElementById('cv1'), { rungs: [{ e: 0, sym: 'm' }, { e: -3, sym: 'mm' }, { e: -6, sym: 'µm' }, { e: -9, sym: 'nm' }, { e: -10, sym: 'Å' }], value: 248e-9, from: -9,
+  opts: [{ e: -3, label: '(a)', text: '0.0248 mm' }, { e: -6, label: '(b)', text: '2.48 µm' }, { e: -6, label: '(c)', text: '0.248 µm' }, { e: -10, label: '(d)', text: '24,800 Å' }] });
+const S1 = [{ at: 0, show: [0], marks: {} }, { at: -3, show: [0, -3], marks: { 0: false } }, { at: -6, show: [0, -3, -6], marks: { 0: false, 1: false, 2: true } }, { at: -10, show: [0, -3, -6, -10], marks: { 0: false, 1: false, 2: true, 3: false } }];
+LS.choose(document.getElementById('ask1'), { options: ['0.0248 mm', '2.48 µm', '0.248 µm', '24,800 Å'], answer: 2 });
+LS.stepper(document.getElementById('st1'), {
+  steps: [{ why: t('<b>เขียน 248 nm ในหน่วยเมตรก่อน</b>: นาโน (n) = \\(10^{-9}\\)', '<b>First write 248 nm in metres</b>: nano (n) = \\(10^{-9}\\)'), tex: `248\\ \\text{nm} = 248\\times10^{-9}\\ \\text{m}` },
+    { why: t('<b>ตัวเลือก (a): แปลงเป็นมิลลิเมตร</b> หารด้วย \\(10^{-3}\\)', '<b>Option (a): convert to millimetres</b>: divide by \\(10^{-3}\\)'), tex: al(['\\frac{248\\times10^{-9}}{10^{-3}} &= 248\\times10^{-6}', '&= 0.000248\\ \\text{mm} \\;\\neq\\; 0.0248\\ \\text{mm}']) },
+    { why: t('<b>ตัวเลือก (b) และ (c): แปลงเป็นไมโครเมตร</b> หารด้วย \\(10^{-6}\\)', '<b>Options (b) and (c): convert to micrometres</b>: divide by \\(10^{-6}\\)'), tex: al(['\\frac{248\\times10^{-9}}{10^{-6}} &= 248\\times10^{-3}', '&= \\boxed{0.248\\ \\mu\\text{m}}']) },
+    { why: t('<b>ตัวเลือก (d): แปลงเป็นอังสตรอม</b> (1 Å = \\(10^{-10}\\) m)', '<b>Option (d): convert to ångströms</b> (1 Å = \\(10^{-10}\\) m)'), tex: al(['\\frac{248\\times10^{-9}}{10^{-10}} &= 2480\\ \\text{\\AA}', '&\\neq 24{,}800\\ \\text{\\AA}']) }],
+  answer: t('<b>(c) 0.248 µm</b> · (a) ผิด 100 เท่า, (b) ผิด 10 เท่า, (d) ผิด 10 เท่า', '<b>(c) 0.248 µm</b> · (a) is off by 100 times, (b) by 10 times, (d) by 10 times'),
+  onStep: k => lad1.set(k ? S1[k - 1] : { at: null, show: [], marks: {} }) });
+
+/* ---------- 2: Ex 2 ---------- */
+const lad2 = new CH2.Ladder(document.getElementById('cv2'), { rungs: [{ e: 0, sym: 's' }, { e: -3, sym: 'ms' }, { e: -6, sym: 'µs' }, { e: -9, sym: 'ns' }, { e: -12, sym: 'ps' }], value: 12e-12, from: -12,
+  opts: [{ e: -9, label: '(a)', text: '1.2 ns' }, { e: -9, label: '(b)', text: '1.2 ns' }, { e: -9, label: '(c)', text: '1200 ns' }, { e: -9, label: '(d)', text: '0.012 ns' }] });
+const S2 = [{ at: 0, show: [0], marks: {} }, { at: -9, show: [0, -9], marks: { 3: true } }, { at: -9, show: [0, -9], marks: { 0: false, 1: false, 2: false, 3: true } }];
+LS.choose(document.getElementById('ask2'), { options: ['1.2 ns', '1.2 ns', '1200 ns', '0.012 ns'], answer: 3 });
+LS.stepper(document.getElementById('st2'), {
+  steps: [{ why: t('<b>เขียน 12 ps ในหน่วยวินาที</b>: พิโก (p) = \\(10^{-12}\\)', '<b>Write 12 ps in seconds</b>: pico (p) = \\(10^{-12}\\)'), tex: `12\\ \\text{ps} = 12\\times10^{-12}\\ \\text{s}` },
+    { why: t('<b>แปลงเป็นนาโนวินาที</b> หารด้วย \\(10^{-9}\\)', '<b>Convert to nanoseconds</b>: divide by \\(10^{-9}\\)'), tex: al(['\\frac{12\\times10^{-12}}{10^{-9}} &= 12\\times10^{-3}', '&= \\boxed{0.012\\ \\text{ns}}']) },
+    { why: t('<b>ตรวจตัวเลือกอื่น</b>: ทุกตัวอยู่ในหน่วย ns จึงเทียบตัวเลขได้ตรง ๆ', '<b>Check the other options</b>: all are in ns, so compare the numbers directly'), tex: al(['1.2\\ \\text{ns} &= 100\\times(0.012\\ \\text{ns})', '1200\\ \\text{ns} &= 10^{5}\\times(0.012\\ \\text{ns})']) }],
+  answer: t('<b>(d) 0.012 ns</b> · ในสไลด์ (a) กับ (b) พิมพ์ "1.2 ns" ซ้ำกัน ไม่ว่าตัวไหนก็ผิด', '<b>(d) 0.012 ns</b> · the slide prints "1.2 ns" for both (a) and (b); either way it is wrong'),
+  onStep: k => lad2.set(k ? S2[k - 1] : { at: null, show: [], marks: {} }) });
+
+/* ---------- B: charge in a wire (DC) ---------- */
+const dcB = { I0: 3 }; const waveB = { T: 10, unit: 1, i: () => dcB.I0, q: tt => dcB.I0 * tt };
+const tubeB = new CH2.Tube(document.getElementById('cvB'), waveB);
+const ctlB = document.getElementById('ctlB');
+ui.slider(ctlB, { id: 'sI0', label: t('กระแสคงที่ I', 'constant current I'), min: -5, max: 5, step: 0.5, value: 3, fmt: v => `${v} A`, oninput: v => { dcB.I0 = v; } });
+tubeB.controls(ctlB, { flip: true, elec: true, id: 'tB' });
+const sci = x => { if (x < 1) return '0'; const e = Math.floor(Math.log10(x)), m = x / Math.pow(10, e); return `${m.toFixed(2)} × 10${String(e).split('').map(c => '⁰¹²³⁴⁵⁶⁷⁸⁹'[+c]).join('')}`; };
+setInterval(() => { document.getElementById('roB').innerHTML = ui.kv([['t', fd(tubeB.t, 2) + ' s'], ['i(t)', fd(tubeB.ref * dcB.I0, 2).replace('-', '−') + ' A'], ['q(t)', fd(tubeB.ref * dcB.I0 * tubeB.t, 2).replace('-', '−') + ' C'],
+  [t('อิเล็กตรอนต่อวินาที', 'electrons per second'), sci(Math.abs(dcB.I0) / 1.602e-19)]]); }, 200);
+
+/* ---------- 3: Ex 5 ---------- */
+let k3 = 0;
+const tube3 = new CH2.Tube(document.getElementById('cv3'), { T: 5, unit: 1e-3, i: tt => (20 * tt - 22) * 1e-3, q: tt => (10 * tt * tt - 22 * tt) * 1e-3 }, {
+  view: () => ({ i: k3 >= 1, q: true }),
+  overlay: (pI, pQ) => { if (k3 >= 2) { pI.marker(1.1, 0, { type: 'o', color: '#ff7eb6', r: 7, force: true }); pI.text(1.1, 0, 'i = 0 @ 1.1 s', { dx: 10, dy: -8, color: '#ff7eb6', size: 12.5, weight: '700' }); }
+    if (k3 >= 3) { pQ.marker(1.1, -12.1, { type: 'o', color: '#ff7eb6', r: 7, force: true }); pQ.text(1.1, -12.1, 'q(1.1) = −12.1 mC', { dx: 10, dy: 16, color: '#ff7eb6', size: 12.5, weight: '700' }); }
+    if (k3 >= 4) { pI.text(0, -22, '−22', { dx: 4, dy: -6, color: '#ffd166', size: 12 }); pI.text(5, 78, '78 mA', { dx: -50, dy: 4, color: '#ffd166', size: 12 }); pQ.text(2.2, 0, '0 @ 2.2 s', { dx: 6, dy: -8, color: '#7ee787', size: 12 }); pQ.text(5, 140, '140 mC', { dx: -60, dy: 10, color: '#7ee787', size: 12 }); } } });
+tube3.controls(document.getElementById('ctl3'), { id: 't3' });
+document.getElementById('g3').innerHTML = tx(`q(t) = 10t^2 - 22t\\ \\text{mC},\\qquad 0 \\le t < 5\\ \\text{s}`, true);
+LS.ask(document.getElementById('ask3'), { fields: [{ label: t('(a) t =', '(a) t ='), ok: x => Math.abs(x - 1.1) < 0.011 }], check: v => Math.abs(v[0] - 2.2) < 0.02 ? t('t = 2.2 s คือเวลาที่ \\(q = 0\\) ไม่ใช่ \\(i = 0\\)', 't = 2.2 s is when \\(q = 0\\), not \\(i = 0\\)') : '' });
+LS.stepper(document.getElementById('st3'), {
+  steps: [{ why: t('<b>กระแสคืออนุพันธ์ของประจุ</b> \\(i = dq/dt\\) (สไลด์หน้า 7) · กราฟ \\(i(t)\\) ปรากฏบนภาพ', '<b>Current is the derivative of charge</b>, \\(i = dq/dt\\) (slide p. 7) · the \\(i(t)\\) graph appears'),
+      tex: al(['i(t) &= \\frac{dq}{dt} = \\frac{d}{dt}\\left(10t^2 - 22t\\right)', '&= 20t - 22\\ \\text{mA}']) },
+    { why: t('<b>(a) ตั้ง \\(i(t) = 0\\)</b> แล้วแก้หา \\(t\\)', '<b>(a) Set \\(i(t) = 0\\)</b> and solve for \\(t\\)'), tex: al(['0 &= 20t - 22', 't &= \\frac{22}{20} = \\boxed{1.1\\ \\text{s}}']) },
+    { why: t('<b>ประจุ ณ เวลานั้น</b>: จุดต่ำสุดของ \\(q(t)\\) เพราะความชัน (กระแส) เป็นศูนย์', '<b>The charge at that time</b>: the lowest point of \\(q(t)\\), because its slope (the current) is zero'), tex: al(['q(1.1) &= 10(1.1)^2 - 22(1.1)', '&= 12.1 - 24.2 = -12.1\\ \\text{mC}']) },
+    { why: t('<b>(b) ร่างกราฟ</b>: หาค่าที่จุดสำคัญ \\(i(t)\\) เป็นเส้นตรง \\(q(t)\\) เป็นพาราโบลาหงาย', '<b>(b) Sketch</b>: find the key values; \\(i(t)\\) is a straight line, \\(q(t)\\) an upward parabola'),
+      tex: al(['i(0) &= -22\\ \\text{mA}', 'i(5) &= 20(5) - 22 = 78\\ \\text{mA}', 'q(0) &= q(2.2) = 0', 'q(5) &= 250 - 110 = 140\\ \\text{mC}']) }],
+  answer: t('(a) <b>t = 1.1 s</b> · ตอนนั้น q ต่ำสุด −12.1 mC · (b) i(t) เส้นตรงจาก −22 ถึง 78 mA, q(t) ลงไป −12.1 mC แล้วขึ้นถึง 140 mC ที่ 5 s (ตรงกับกราฟในสไลด์หน้า 18)', '(a) <b>t = 1.1 s</b> · then q is lowest, −12.1 mC · (b) i(t) is a line from −22 to 78 mA; q(t) dips to −12.1 mC, then rises to 140 mC at 5 s (as in the plot on slide p. 18)'),
+  onStep: k => { k3 = k; } });
+
+/* ---------- 4: exercise 3 (sawtooth) ---------- */
+let k4 = 0;
+const qSaw = tt => { const n = Math.floor(tt / 8), u = tt - 8 * n; return 18 * n + (u < 6 ? u * u / 2 : 18); };
+const tube4 = new CH2.Tube(document.getElementById('cv4'), { T: 20, unit: 1, avg: 2.25, i: tt => { const u = tt % 8; return u < 6 ? u : 0; }, q: qSaw }, {
+  view: () => ({ i: true, avg: k4 >= 2, q: k4 < 3 ? false : [0, 0, 0, 6, 8, 16, 20][Math.min(6, k4)] }),
+  overlay: (pI, pQ) => { if (k4 >= 3) pQ.text(6, 18, '18 C', { dx: 4, dy: -6, color: '#7ee787', size: 12, weight: '700' }); if (k4 >= 5) pQ.text(14, 36, '36 C', { dx: 4, dy: -6, color: '#7ee787', size: 12, weight: '700' }); if (k4 >= 6) pQ.text(20, 44, '44 C', { dx: -40, dy: -6, color: '#7ee787', size: 12, weight: '700' }); } });
+tube4.controls(document.getElementById('ctl4'), { id: 't4' });
+LS.ask(document.getElementById('ask4'), { fields: [{ label: t('(a) ค่าเฉลี่ย (A) =', '(a) average (A) ='), ok: x => Math.abs(x - 2.25) < 0.011, w: 6 }], check: v => Math.abs(v[0] - 3) < 0.011 ? t('3 A คือค่าเฉลี่ยเฉพาะช่วงที่กระแสไหล (0–6 s) ต้องเฉลี่ยทั้งคาบ 8 s', '3 A averages only the part where current flows (0–6 s); average over the whole 8 s period') : '' });
+LS.stepper(document.getElementById('st4'), {
+  steps: [{ why: t('<b>เขียนสมการของกระแสในหนึ่งคาบ</b>: ขึ้นจาก 0 ถึง 6 A ใน 6 s ความชัน 1 A/s แล้วเป็นศูนย์ 2 s', '<b>Write the current over one period</b>: it rises from 0 to 6 A in 6 s (slope 1 A/s), then is zero for 2 s'),
+      tex: `i(t) = \\begin{cases} t\\ \\text{A} & 0 \\le t < 6\\ \\text{s} \\\\ 0 & 6 \\le t < 8\\ \\text{s} \\end{cases}` },
+    { why: t('<b>(a) ค่าเฉลี่ย</b> = พื้นที่ใต้กราฟหนึ่งคาบ ÷ คาบ (เส้นประม่วงบนภาพ)', '<b>(a) The average</b> = area under one period ÷ the period (dashed purple line)'),
+      tex: al(['i_{\\text{avg}} &= \\frac{1}{T}\\int_0^T i\\,dt = \\frac{1}{8}\\left[\\int_0^6 t\\,dt + \\int_6^8 0\\,dt\\right]', '&= \\frac{1}{8}\\cdot\\frac{6^2}{2} = \\frac{18}{8} = \\boxed{2.25\\ \\text{A}}']) },
+    { why: t('<b>(b) ช่วง 0 ≤ t < 6 s</b>: \\(q(t) = \\int_0^t i\\,dt + q(0)\\) โดย \\(q(0) = 0\\)', '<b>(b) For 0 ≤ t < 6 s</b>: \\(q(t) = \\int_0^t i\\,dt + q(0)\\) with \\(q(0) = 0\\)'), tex: al(['q(t) &= \\int_0^t t\'\\,dt\' = \\tfrac12 t^2', 'q(6) &= \\tfrac12(6)^2 = 18\\ \\text{C}']) },
+    { why: t('<b>ช่วง 6 ≤ t < 8 s</b>: กระแสเป็นศูนย์ ประจุไม่เพิ่ม (เส้นแนวนอน)', '<b>For 6 ≤ t < 8 s</b>: the current is zero, so no more charge (a flat line)'), tex: `q(t) = 18\\ \\text{C}` },
+    { why: t('<b>ช่วง 8 ≤ t < 16 s</b>: รูปเดิมซ้ำ เริ่มจาก 18 C', '<b>For 8 ≤ t < 16 s</b>: the same shape again, starting from 18 C'), tex: al(['q(t) &= 18 + \\tfrac12(t-8)^2 \\quad (8 \\le t < 14)', 'q(14) &= 18 + 18 = 36\\ \\text{C}', 'q(t) &= 36\\ \\text{C} \\quad (14 \\le t < 16)']) },
+    { why: t('<b>ช่วง 16 ≤ t < 20 s</b>', '<b>For 16 ≤ t < 20 s</b>'), tex: al(['q(t) &= 36 + \\tfrac12(t-16)^2', 'q(20) &= 36 + 8 = \\boxed{44\\ \\text{C}}']) }],
+  answer: t('(a) <b>2.25 A</b> · (b) q(t) ขึ้นเป็นพาราโบลาแล้วคงที่ สลับกันทุกคาบ: 18 C ที่ 6 s, 36 C ที่ 14 s, 44 C ที่ 20 s (ตรงกับเฉลยของผู้สอน)', '(a) <b>2.25 A</b> · (b) q(t) rises as a parabola, then stays flat, every period: 18 C at 6 s, 36 C at 14 s, 44 C at 20 s (as in the teacher\'s solution)'),
+  onStep: k => { k4 = k; } });
+});
+</script>
+</body>
+</html>

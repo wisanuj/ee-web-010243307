@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="4.1 — Nodal Analysis">4.1 — การวิเคราะห์แบบโนด</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การวิเคราะห์แบบโนด <span class="en">Nodal analysis — the unknowns are node voltages; write KCL at every node</span></h1>
+<h1 data-l="en">Nodal analysis <span class="en">The unknowns are node voltages; write KCL at every node</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch4/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4: steps to use nodal analysis. 1 identify the reference node (0 V), 2 label the node voltages, 3 apply KCL at each non-reference node (sum of currents leaving = 0), 4 handle current sources, 5 solve the system">
+    <figcaption data-l="th">สไลด์บทที่ 4 หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 4 slides, p. 4 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">วิธีโนดใช้<b>แรงดันโนด</b>เป็นตัวแปร คือแรงดันของแต่ละโนดเทียบกับ<b>โนดอ้างอิง</b> (กราวด์) ที่กำหนดให้เป็น 0 V วงจรที่มี N โนดจึงมีตัวแปร <b>N − 1 ตัว</b> และเขียนกฎกระแสของเคียร์ชอฟฟ์ (Kirchhoff's Current Law, KCL) ได้ N − 1 สมการ สไลด์หน้า 4 สรุปเป็นห้าขั้น ในภาพจำลอง <b>ลวดที่ต่อถึงกันมีสีเดียวกัน</b> (เป็นโนดเดียวกัน) ป้ายข้างโนดคือแรงดันโนด ("?" ถ้ายังไม่รู้) ในขั้น KCL <b>ลูกศรสีเหลืองชี้ออกจากโนดทุกกิ่ง</b> เพราะเราเขียนกระแสที่ไหลออกเสมอ และกระแสจะเริ่มไหลเมื่อแก้ระบบสมการเสร็จ หน้านี้มี <b>6 โจทย์ เรียงทีละข้อ</b>: Ex 1–3 และการบ้านข้อ 1 จากสไลด์ ตามด้วยแบบฝึกหัด Ex.1 และ Ex.6 ที่มีเฉลยลายมือ</p>
+    <p class="sub" data-l="en">Nodal analysis takes the <b>node voltages</b> as unknowns: the voltage of each node relative to the <b>reference node</b> (ground), which is set to 0 V. A circuit with N nodes therefore has <b>N − 1 unknowns</b> and gives N − 1 equations from Kirchhoff's Current Law (KCL). Slide p. 4 sums it up in five steps. In the simulations, <b>wires joined together share one colour</b> (they are one node), the tag beside a node is its voltage ("?" while unknown), in a KCL step <b>the yellow arrows point out of the node on every branch</b> because we always write the current leaving, and the current starts to flow once the system is solved. This page has <b>6 problems, one after another</b>: Ex 1–3 and homework 1 from the slides, then exercises Ex.1 and Ex.6, which come with handwritten solutions.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum I_{\text{out}} = 0 \ \text{ at every non-reference node} \\ I_{\text{out through } R} = \frac{v_{\text{this node}} - v_{\text{other end}}}{R} \\ \text{unknowns: } N - 1 \ \text{node voltages} \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>เลือกโนดอ้างอิง</b> (กราวด์ = 0 V) มักเลือกโนดที่ต่อกับกิ่งมากที่สุดหรือโนดล่างสุด แล้วตั้งชื่อแรงดันของโนดที่เหลือ → มีตัวแปร <b>N − 1 ตัว</b></li>
+  <li><b>เขียน KCL ที่ทุกโนดที่ไม่ใช่โนดอ้างอิง</b>: กระแสที่ไหลออกผ่านตัวต้านทาน = \((v_{\text{โนดนี้}} - v_{\text{อีกด้าน}})/R\) เสมอ จึง<b>ไม่ต้องเดาทิศกระแส</b></li>
+  <li><b>แหล่งจ่ายกระแสใส่ค่าลงไปตรง ๆ</b>: ชี้ออกจากโนดเขียน +, ชี้เข้าโนดเขียน − (ค่าติดลบก็ใส่ทั้งวงเล็บ)</li>
+  <li><b>แหล่งจ่ายแรงดันที่ต่อกับโนดอ้างอิงบอกแรงดันโนดนั้นทันที</b> ไม่ต้องเขียน KCL ที่โนดนั้น จำนวนสมการจึงลดลง (Ex 3)</li>
+  <li>รู้แรงดันโนดครบแล้ว <b>กระแสทุกกิ่งหาได้ด้วยกฎของโอห์ม</b> แรงดันโนดที่ติดลบแปลว่าโนดนั้นต่ำกว่าโนดอ้างอิง</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Choose a reference node</b> (ground = 0 V), usually the node joined to the most branches or the bottom node, and name the other node voltages → <b>N − 1 unknowns</b>.</li>
+  <li><b>Write KCL at every non-reference node</b>: the current leaving through a resistor is always \((v_{\text{this node}} - v_{\text{other end}})/R\), so <b>you never guess a current direction</b>.</li>
+  <li><b>A current source goes in as its value</b>: pointing out of the node +, pointing in − (a negative value goes in with its brackets).</li>
+  <li><b>A voltage source to the reference gives that node voltage at once</b>; no KCL is needed there, so there are fewer equations (Ex 3).</li>
+  <li>With every node voltage known, <b>every branch current follows from Ohm's law</b>. A negative node voltage means the node is below the reference.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#ex3"><b>3</b>Ex 3</a><a href="#ex4"><b>4</b>การบ้านข้อ 1</a><a href="#ex5"><b>5</b>แบบฝึกหัด Ex.1</a><a href="#ex6"><b>6</b>แบบฝึกหัด Ex.6</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 1</a><a href="#ex2"><b>2</b>Ex 2</a><a href="#ex3"><b>3</b>Ex 3</a><a href="#ex4"><b>4</b>Homework 1</a><a href="#ex5"><b>5</b>Exercise Ex.1</a><a href="#ex6"><b>6</b>Exercise Ex.6</a></nav>
+
+<div class="group-head"><h2 data-l="th">โนดอ้างอิงและจำนวนสมการ (สไลด์หน้า 2–3)</h2><h2 data-l="en">The reference node and the number of equations (slides pp. 2–3)</h2></div>
+<p class="lead" data-l="th">สไลด์หน้า 2: <b>วงจร N โนดต้องการแรงดันโนด N − 1 ตัว และสมการ KCL N − 1 สมการ</b> หน้า 3: เลือกโนดที่ต่อกับกิ่งมากที่สุด (หรือโนดล่างสุด) เป็นโนดอ้างอิง รูปขวาของหน้า 3 คือวงจรเดิมที่วาดใหม่ให้เห็นว่ามีแค่ 3 โนด ในห้องเขียนกำกับว่า \(V_{AB} = V_A - V_B\) คือแรงดันของ A เทียบกับ B</p>
+<p class="lead" data-l="en">Slide p. 2: <b>an N-node circuit needs N − 1 node voltages and N − 1 KCL equations</b>. Page 3: choose the node joined to the most branches (or the bottom node) as the reference. The right-hand drawing on page 3 is the same circuit redrawn to show it has only 3 nodes. In class it was noted that \(V_{AB} = V_A - V_B\) is the voltage of A relative to B.</p>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch4/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: an N-node circuit will need N − 1 voltages and N − 1 equations, each a simple KCL equation; one node is designated as the reference">
+    <figcaption data-l="th">สไลด์หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 2 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch4/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3: choose the node with the most branches, or the bottom node, as the reference; a circuit with 3.1 A, 2 ohm, 5 ohm, 1 ohm and −1.4 A redrawn with its three nodes numbered 1, 2, 3">
+    <figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 2–3 ที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See slides pp. 2–3 as written in class (December 2025)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch4/K03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 2: objective, determine the node voltages of all nodes; sum of currents leaving = 0 next to the KCL equation; V_ref = 0 with a ground symbol"><figcaption data-l="th">หน้า 2: เป้าหมายคือแรงดันโนดทุกโนด \(\sum I_{out} = 0\) และ \(V_{ref} = 0\)</figcaption><figcaption data-l="en">p. 2: the aim is every node voltage; \(\sum I_{out} = 0\) and \(V_{ref} = 0\)</figcaption></figure>
+    <figure class="slide"><img src="slides/ch4/K04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 3: N = 3, so equations = N − 1 = 2 with V_ref = 0; V_AB = V_A − V_B and V_BA = V_B − V_A; nodes V_A, V_B and V_C marked on the circuit"><figcaption data-l="th">หน้า 3: N = 3 จึงมี 2 สมการ และ \(V_{AB} = V_A - V_B\)</figcaption><figcaption data-l="en">p. 3: N = 3 gives 2 equations, and \(V_{AB} = V_A - V_B\)</figcaption></figure></div></details>
+
+<!-- ======================= problems from the slides ======================= -->
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 1: หาแรงดันโนด \(v_1\) และ \(v_2\)</h2><h2 data-l="en">Ex 1: find the node voltages \(v_1\) and \(v_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 5 · Hayt Practice 4.1</div><div class="src" data-l="en">Chapter 4 slides, p. 5 · Hayt Practice 4.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p05q.webp" width="1285" height="665" loading="lazy" decoding="async" alt="Ex 1: determine the nodal voltages v1 and v2. 5 A source pointing down on the left, 2 ohm and 3 ohm in series down the middle-left, 15 ohm along the top, 4 ohm down the middle-right, 2 A source pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 5 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <div id="dr1"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 5: N = 3, two equations; the 2 ohm and 3 ohm combined into 5 ohm on a redrawn circuit; KCL at node v1: 5 A + (v1 − v3)/5 + (v1 − v2)/15 = 0, giving equation (1) 4v1 − v2 = −75"><figcaption data-l="th">หน้า 5: KCL ที่โนด \(v_1\) ได้ \(4v_1 - v_2 = -75\)</figcaption><figcaption data-l="en">p. 5: KCL at node \(v_1\) gives \(4v_1 - v_2 = -75\)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch4/K07.webp" width="1100" height="846" loading="lazy" decoding="async" alt="Handwritten page after slide 5: KCL at node v2: (v2 − v1)/15 + (v2 − v3)/4 + (−2) = 0, giving (2) −4v1 + 19v2 = 120; the matrix equation gives v1 = −18.125 V and v2 = 2.5 V; I2 = (v1 − v3)/5 = −3.625 A"><figcaption data-l="th">หน้าลายมือต่อ: \(-4v_1 + 19v_2 = 120\) ได้ \(v_1 = -18.125\) V, \(v_2 = 2.5\) V และ \(I_2 = -3.625\) A</figcaption><figcaption data-l="en">Handwritten page: \(-4v_1 + 19v_2 = 120\), so \(v_1 = -18.125\) V, \(v_2 = 2.5\) V and \(I_2 = -3.625\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 2: หาแรงดันคร่อมแหล่งจ่ายกระแสแต่ละตัว</h2><h2 data-l="en">Ex 2: find the voltage across each current source</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 6 · Hayt Practice 4.2 · ในห้องไม่ได้เขียนวิธีทำข้อนี้</div><div class="src" data-l="en">Chapter 4 slides, p. 6 · Hayt Practice 4.2 · not worked in class</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p06q.webp" width="1441" height="682" loading="lazy" decoding="async" alt="Ex 2: compute the voltage across each current source. 3 A pointing down on the left, 1 ohm and 4 ohm along the middle, 2 ohm across the top, 3 ohm and 5 ohm down to the bottom wire, 7 A pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 6 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <div id="dr2"></div>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">Ex 3: หากำลังที่แหล่งจ่าย 2 V จ่าย</h2><h2 data-l="en">Ex 3: find the power supplied by the 2 V source</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 7 · Hayt Example 4.7</div><div class="src" data-l="en">Chapter 4 slides, p. 7 · Hayt Example 4.7</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p07q.webp" width="1233" height="677" loading="lazy" decoding="async" alt="Ex 3: determine the power supplied by the 2 V source. 5 V on the left (+ at the top), 5 ohm and 5 ohm along the top, 2 ohm down the middle to a 2 V source with its + at the bottom, 1 V on the right (+ at the top)">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 7 (ตัวต้านทานซ้ายบนพิมพ์เป็น 5 Ω) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 7 (the top-left resistor is printed as 5 Ω) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ฉบับแจกพิมพ์ตัวต้านทานซ้ายบนเป็น 5 Ω แต่ในห้องแก้เป็น <b>4 Ω</b> ซึ่งตรงกับ Ex 7 (วงจรเดียวกันในหน้า 4.3) และ Hayt Example 4.7 หน้านี้ใช้ 4 Ω</div>
+    <div class="warnbox" data-l="en">The handout prints the top-left resistor as 5 Ω, but it was corrected to <b>4 Ω</b> in class, as in Ex 7 (the same circuit on page 4.3) and Hayt Example 4.7. This page uses 4 Ω.</div>
+    <div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 7: the 5 ohm overwritten as 4 ohm; V_E = V_ref = 0, V_A = 5 V, V_C = 1 V, V_D = −2 V; KCL at node V_B: (V_B − V_A)/4 + (V_B − V_D)/2 + (V_B − V_C)/5 = 0 gives V_B = 0.47 V; I2 = (V_B − V_D)/2 = 1.235 A; P supplied by the 2 V source = (2)(1.235) = 2.47 W"><figcaption data-l="th">หน้า 7: แก้ 5 Ω เป็น 4 Ω ได้ \(V_B = 0.47\) V, \(I_2 = 1.235\) A และกำลัง 2.47 W</figcaption><figcaption data-l="en">p. 7: 5 Ω corrected to 4 Ω; \(V_B = 0.47\) V, \(I_2 = 1.235\) A and 2.47 W</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">การบ้านข้อ 1: ใช้วิธีโนดหา \(v_1 - v_2\)</h2><h2 data-l="en">Homework 1: use nodal analysis to find \(v_1 - v_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 20 (ในห้องให้เป็นการบ้านโดยเขียนป้ายว่า HW 2)</div><div class="src" data-l="en">Chapter 4 slides, p. 20 (set as homework in class, labelled "HW 2")</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p20q.webp" width="1498" height="683" loading="lazy" decoding="async" alt="Homework 1: with nodal analysis, determine v1 − v2. 2 A pointing up on the left, 5 ohm and 4 ohm in series down from v1, 1 ohm between v1 and v2 along the top, 2 ohm down from v2, 15 A pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 20 (ปิดคำตอบที่พิมพ์ไว้ข้างรูป) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 20 (the answer printed beside it is covered) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <div id="dr4"></div>
+</section>
+
+<!-- ======================= exercise sheet ======================= -->
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด Ex_Ch4 พร้อมเฉลยลายมือ)</h2><h2 data-l="en">More practice (exercise sheet Ex_Ch4, with handwritten solutions)</h2></div>
+<p class="lead" data-l="th">แบบฝึกหัดชุดนี้มี 7 ข้อ ข้อที่ใช้วิธีโนดโดยไม่มีซูเปอร์โนดอยู่ในหน้านี้ (Ex.1, Ex.6) ข้อ Ex.4 อยู่ในหน้า 4.2 และข้อที่ใช้วิธีเมชอยู่ในหน้า 4.3–4.4 ไฟล์เฉลยลายมือตั้งชื่อ Ex.1–Ex.6 ซึ่งไม่ตรงกับเลขข้อ (เช่นไฟล์ Ex.2 คือเฉลยของข้อ Ex.6) ในหน้านี้จึงอ้างตามเลขข้อของโจทย์</p>
+<p class="lead" data-l="en">The sheet has 7 problems. Those solved by nodal analysis without a supernode are on this page (Ex.1, Ex.6); Ex.4 is on page 4.2 and the mesh problems are on pages 4.3–4.4. The handwritten solution files are named Ex.1–Ex.6, which does not match the problem numbers (file Ex.2, for instance, solves problem Ex.6), so this page always quotes the problem number.</p>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">แบบฝึกหัด Ex.1: หาแรงดันคร่อม 2 Ω และกระแสใน 20 Ω</h2><h2 data-l="en">Exercise Ex.1: find the voltage across the 2 Ω and the current in the 20 Ω</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.1 · เฉลยลายมือไฟล์ Ex.1</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.1 · handwritten solution, file Ex.1</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx1q.webp" width="1300" height="617" loading="lazy" decoding="async" alt="Exercise Ex.1: use nodal analysis to determine the voltage across the 2 ohm resistance and the current in the 20 ohm resistance. A 9 A source and a 4 ohm across the top between A's side and C's side; 2 ohm from A to B, 5 ohm from B to C; 4 ohm and a 12 V source (+ at the top) down from A; 100 ohm down from B; 20 ohm down from C">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.1 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.1 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <div id="dr5"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.1)</span><span data-l="en">See the handwritten solution (file Ex.1)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol1.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.1: V_E = 0 is the reference and V_D = 12 V; KCL at nodes A, B and C gives 4V_A − 2V_B − V_C = −24, −50V_A + 71V_B − 20V_C = 0 and −5V_A − 4V_B + 10V_C = 180; V_A = 6.35294 V, V_B = 11.7647 V, V_C = 25.88233 V; V across 2 ohm = 5.41176 V and I in 20 ohm = 1.29412 A"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.1</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.1</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">แบบฝึกหัด Ex.6: หากระแส \(I_x\) และแรงดัน \(V_x\)</h2><h2 data-l="en">Exercise Ex.6: find the current \(I_x\) and the voltage \(V_x\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.6 · เฉลยลายมือไฟล์ Ex.2</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.6 · handwritten solution, file Ex.2</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx6q.webp" width="1300" height="569" loading="lazy" decoding="async" alt="Exercise Ex.6: using nodal analysis determine current Ix and voltage Vx. 75 V source on the left (+ at the top), 100 ohm across the top, 25 ohm with Vx (+ on the left) and 10 ohm with Ix (arrow to the left) along the middle, 50 ohm and 25 ohm down to the bottom wire">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.6 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv6"></canvas></div><div class="card solve"><div id="ask6"></div><div id="st6"></div></div></div>
+  <div id="dr6"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.2)</span><span data-l="en">See the handwritten solution (file Ex.2)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol6.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.6: V_D = 0, V_A = 75 V; KCL at node B gives 8V_B − 5V_C = 150 and at node C −10V_B + 15V_C = 75; V_B = 37.5 V, V_C = 30 V; Vx = V_A − V_B = 37.5 V and Ix = (V_C − V_B)/10 = −0.75 A"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.6</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.6</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — แรงดันโนดติดลบ</h3>
+    <ol><li>ข้อ 1 (Ex 1): \(v_1 = -18.125\) V แปลว่า <b>โนด \(v_1\) ต่ำกว่าโนดอ้างอิง</b> ป้ายของ \(v_1\) บนภาพแสดงค่าลบ</li>
+    <li>กระแสใน 2 Ω + 3 Ω คิดได้ \(-3.625\) A ตามทิศที่เขียน (ลง) <b>จุดในกิ่งนั้นจึงวิ่งขึ้น</b></li>
+    <li>ชี้เมาส์ที่ 2 Ω เพื่ออ่านกระแสจริง แล้วเทียบกับขั้นสุดท้ายของเฉลย</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — แหล่งจ่ายแรงดันช่วยลดงาน</h3>
+    <ol><li>ข้อ 3 (Ex 3): มี 4 โนดที่ไม่ใช่โนดอ้างอิง แต่แหล่งจ่ายแรงดันสามตัวต่อกับโนดอ้างอิง จึงรู้ \(V_A, V_C, V_D\) ทันที <b>เหลือสมการเดียว</b></li>
+    <li>ข้อ 5 (แบบฝึกหัด Ex.1): แหล่งจ่าย 12 V ทำให้ \(V_D = 12\) V พจน์ของ 4 Ω ระหว่าง A กับ D จึงเป็น \((V_A - 12)/4\)</li>
+    <li>คำถาม: ถ้าใน Ex 3 เลือกโนดบนกลาง (\(V_B\)) เป็นโนดอ้างอิงแทน จะมีตัวแปรกี่ตัว และทำไมจึงยุ่งกว่าเดิม</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ตรวจคำตอบด้วย KCL</h3>
+    <ol><li>เมื่อแก้เสร็จ ชี้เมาส์ที่อุปกรณ์ทุกตัวที่ต่อกับโนดหนึ่ง แล้วรวมกระแสที่ไหลออก <b>ต้องได้ศูนย์</b> (นับแหล่งจ่ายกระแสด้วย)</li>
+    <li>ข้อ 4 (การบ้านข้อ 1): \(v_1 - v_2 = -1\) V แปลว่า 1 Ω มีกระแส 1 A ไหลจาก \(v_2\) ไป \(v_1\) จุดบน 1 Ω จึงวิ่งไปทางซ้าย</li>
+    <li>เปิด "ทางลัด: เขียนเมทริกซ์ G โดยการดู" ใต้โจทย์ เติมให้ครบ แล้วดูว่า<b>คูณแต่ละแถวด้วย ค.ร.น. ก็ได้สมการเดียวกับที่เขียนจาก KCL</b></li></ol>
+    <div class="book">สไลด์บทที่ 4 หน้า 2–7, 20 · แบบฝึกหัด Ex.1 และ Ex.6 พร้อมเฉลย · Hayt §4.1, Practice 4.1, 4.2 และ Example 4.7</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — a negative node voltage</h3>
+    <ol><li>Problem 1 (Ex 1): \(v_1 = -18.125\) V means <b>node \(v_1\) is below the reference</b>; its tag on the drawing shows the negative value.</li>
+    <li>The current in 2 Ω + 3 Ω works out to \(-3.625\) A in the direction written (down), <b>so the dots in that branch run up</b>.</li>
+    <li>Hover over the 2 Ω to read the real current and compare it with the last step of the solution.</li></ol></div>
+  <div class="card"><h3>Try this 2 — voltage sources save work</h3>
+    <ol><li>Problem 3 (Ex 3): there are 4 non-reference nodes, but three voltage sources go to the reference, so \(V_A, V_C, V_D\) are known at once and <b>only one equation is left</b>.</li>
+    <li>Problem 5 (exercise Ex.1): the 12 V source makes \(V_D = 12\) V, so the term of the 4 Ω between A and D is \((V_A - 12)/4\).</li>
+    <li>Question: in Ex 3, if the top-middle node (\(V_B\)) were the reference instead, how many unknowns would there be, and why is that messier?</li></ol></div>
+  <div class="card"><h3>Try this 3 — check the answer with KCL</h3>
+    <ol><li>Once solved, hover over every element joined to one node and add the currents leaving: <b>they must add to zero</b> (count the current sources too).</li>
+    <li>Problem 4 (homework 1): \(v_1 - v_2 = -1\) V means the 1 Ω carries 1 A from \(v_2\) to \(v_1\), so its dots run to the left.</li>
+    <li>Open "Shortcut: write the matrix G by inspection" under a problem, complete it, and see that <b>multiplying each row by its LCD gives the very equation written from KCL</b>.</li></ol>
+    <div class="book">Chapter 4 slides, pp. 2–7, 20 · exercises Ex.1 and Ex.6 with solutions · Hayt §4.1, Practice 4.1, 4.2 and Example 4.7</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t;
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.006, 0.004 * Math.abs(y)));
+
+/* 1: Ex 1 = Hayt Practice 4.1 */
+CH4.problem(1, 'ex1', 'nodal', { drill: true,
+  ask: () => ({ fields: [{ label: 'v₁ (V) =', ok: x => near(x, -18.125), w: 5 }, { label: 'v₂ (V) =', ok: x => near(x, 2.5), w: 5 }],
+    check: v => near(v[0], 18.125) ? t('ขนาดของ \\(v_1\\) ถูก แต่เครื่องหมายผิด: แหล่งจ่าย 5 A ชี้ลง คือดึงกระแสออกจากโนด \\(v_1\\)', 'The size of \\(v_1\\) is right but not the sign: the 5 A points down, pulling current out of node \\(v_1\\)') : '' }),
+  answer: t('\\(v_1 = -145/8 = -18.125\\) V และ \\(v_2 = 5/2 = 2.5\\) V ตรงกับเฉลยในห้องและ Hayt Practice 4.1 · ในห้องหาต่อว่ากระแสลงผ่าน 2 Ω + 3 Ω คือ \\(I_2 = -3.625\\) A (ขั้นสุดท้าย) ค่าลบแปลว่ากระแสจริงไหลขึ้น',
+    '\\(v_1 = -145/8 = -18.125\\) V and \\(v_2 = 5/2 = 2.5\\) V, as in class and Hayt Practice 4.1 · the class went on to the current down through 2 Ω + 3 Ω, \\(I_2 = -3.625\\) A (last step); negative means it really flows up') });
+
+/* 2: Ex 2 = Hayt Practice 4.2 (= Ex 8 by mesh) */
+CH4.problem(2, 'ex2', 'nodal', { drill: true,
+  ask: () => ({ fields: [{ label: t('คร่อม 3 A (V) =', 'across 3 A (V) ='), ok: x => near(x, 89 / 17, 0.01), w: 5 }, { label: t('คร่อม 7 A (V) =', 'across 7 A (V) ='), ok: x => near(x, 195 / 17, 0.02), w: 5 }] }),
+  answer: t('แรงดันคร่อมแหล่งจ่าย 3 A = 89/17 ≈ 5.235 V และคร่อมแหล่งจ่าย 7 A = 195/17 ≈ 11.47 V (ขั้ว + ด้านบนทั้งคู่) ตรงกับ Hayt Practice 4.2 · วงจรเดียวกันนี้ทำด้วยวิธีเมชอีกครั้งใน Ex 8 (หน้า 4.3 ข้อ 4) ได้ค่าเดียวกัน',
+    'Across the 3 A source 89/17 ≈ 5.235 V and across the 7 A source 195/17 ≈ 11.47 V (+ at the top in both), as in Hayt Practice 4.2 · the same circuit is solved again by mesh analysis as Ex 8 (page 4.3, problem 4) with the same values') });
+
+/* 3: Ex 3 = Hayt Example 4.7 (4 Ω as corrected in class) */
+CH4.problem(3, 'ex3', 'nodal', {
+  ask: () => ({ fields: [{ label: t('P ที่จ่าย (W) =', 'P supplied (W) ='), ok: x => near(x, 47 / 19, 0.006), w: 5 }],
+    check: v => near(v[0], 20 / 9, 0.006) ? t('นี่คือคำตอบเมื่อใช้ 5 Ω ตามที่พิมพ์ ข้อนี้ใช้ 4 Ω ตามที่แก้ในห้อง', 'That is the answer with the printed 5 Ω; this problem uses the 4 Ω corrected in class') : near(v[0], -47 / 19, 0.006) ? t('ขนาดถูก: กระแส 1.237 A ไหลออกจากขั้ว + จึงเป็นกำลังที่<b>จ่าย</b> (บวก)', 'Right size: the 1.237 A leaves the + terminal, so the power <b>supplied</b> is positive') : '' }),
+  answer: t('กำลังที่แหล่งจ่าย 2 V จ่าย = 47/19 ≈ 2.474 W ตรงกับในห้อง (2.47 W) และ Hayt Example 4.7 · ถ้าใช้ 5 Ω ตามที่พิมพ์จะได้ 20/9 ≈ 2.222 W · วงจรเดียวกันทำด้วยวิธีเมชใน Ex 7 (หน้า 4.3 ข้อ 3)',
+    'The 2 V source supplies 47/19 ≈ 2.474 W, as in class (2.47 W) and Hayt Example 4.7 · with the printed 5 Ω it would be 20/9 ≈ 2.222 W · the same circuit is solved by mesh analysis as Ex 7 (page 4.3, problem 3)') });
+
+/* 4: homework 1 */
+CH4.problem(4, 'hw1', 'nodal', { drill: true,
+  ask: () => ({ fields: [{ label: 'v₁ − v₂ (V) =', ok: x => near(x, -1), w: 5 }], check: v => near(v[0], 1) ? t('เครื่องหมายกลับ: \\(v_2\\) สูงกว่า \\(v_1\\)', 'Wrong sign: \\(v_2\\) is higher than \\(v_1\\)') : '' }),
+  answer: t('\\(v_1 = 27\\) V และ \\(v_2 = 28\\) V จึงได้ \\(v_1 - v_2 = -1\\) V ตรงกับคำตอบที่พิมพ์ข้างรูปในสไลด์ (รูปโจทย์ด้านบนปิดไว้)',
+    '\\(v_1 = 27\\) V and \\(v_2 = 28\\) V, so \\(v_1 - v_2 = -1\\) V, matching the answer printed beside the figure on the slide (covered in the picture above)') });
+
+/* 5: exercise sheet Ex.1 */
+CH4.problem(5, 'sx1', 'nodal', { drill: true,
+  ask: () => ({ fields: [{ label: 'V₂Ω (V) =', ok: x => near(x, 92 / 17, 0.01), w: 5 }, { label: 'I₂₀Ω (A) =', ok: x => near(x, 22 / 17, 0.004), w: 5 }] }),
+  answer: t('\\(V_{2\\Omega} = V_B - V_A = 92/17 \\approx 5.412\\) V และ \\(I_{20\\Omega} = 22/17 \\approx 1.294\\) A ตรงกับเฉลย (5.41176 V, 1.29412 A) · วงจรเดียวกันใช้อีกครั้งในแบบฝึกหัด Ex.2 ด้วยวิธีเมช (หน้า 4.3 ข้อ 5)',
+    '\\(V_{2\\Omega} = V_B - V_A = 92/17 \\approx 5.412\\) V and \\(I_{20\\Omega} = 22/17 \\approx 1.294\\) A, as in the solution (5.41176 V, 1.29412 A) · the same circuit returns in exercise Ex.2, by mesh analysis (page 4.3, problem 5)') });
+
+/* 6: exercise sheet Ex.6 */
+CH4.problem(6, 'sx6', 'nodal', { drill: true,
+  ask: () => ({ fields: [{ label: 'Vₓ (V) =', ok: x => near(x, 37.5), w: 5 }, { label: 'Iₓ (A) =', ok: x => near(x, -0.75, 0.003), w: 5 }],
+    check: v => near(v[1], 0.75, 0.003) ? t('ขนาดของ \\(I_x\\) ถูก แต่ลูกศรของ \\(I_x\\) ชี้ไปทางซ้าย (จาก C ไป B)', 'The size of \\(I_x\\) is right, but its arrow points to the left (from C to B)') : '' }),
+  answer: t('\\(V_x = 37.5\\) V และ \\(I_x = -0.75\\) A ตรงกับเฉลย ค่าลบของ \\(I_x\\) แปลว่ากระแสจริงใน 10 Ω ไหลไปทางขวา (สวนลูกศร) ดูจุดในกิ่งนั้น',
+    '\\(V_x = 37.5\\) V and \\(I_x = -0.75\\) A, as in the solution. The negative \\(I_x\\) means the real current in the 10 Ω flows to the right (against the arrow); watch the dots there') });
+});
+</script>
+</body>
+</html>

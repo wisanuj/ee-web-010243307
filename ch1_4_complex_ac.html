@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="1.4 — Why AC Circuits Need Complex Numbers">1.4 — ทำไมวงจรกระแสสลับต้องใช้จำนวนเชิงซ้อน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch1.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ทำไมวงจรกระแสสลับต้องใช้จำนวนเชิงซ้อน <span class="en">Why AC circuits need complex numbers — a spinning arrow, its shadow, and the current in the wire</span></h1>
+<h1 data-l="en">Why AC circuits need complex numbers <span class="en">A spinning arrow, its shadow, and the current in the wire</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch1/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13: the fundamental signal in electrical engineering is the sinusoid; it can be expressed in terms of the complex exponential">
+    <figcaption data-l="th">สไลด์บทที่ 1 หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 1 slides, p. 13 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 13 บอกว่า <b>สัญญาณพื้นฐานของวิศวกรรมไฟฟ้าคือคลื่นไซน์ และคลื่นไซน์เขียนได้ด้วยจำนวนเชิงซ้อน</b> หน้านี้แสดงว่าทำไม: ไฟบ้าน 220 V 50 Hz ขึ้นลงเป็นคลื่นไซน์ ถ้ามองคลื่นไซน์เป็น <b>เงาของลูกศรที่หมุนบนแกนจินตภาพ</b> (ลูกศรนี้เรียกว่าเฟเซอร์, phasor) การหากระแสเหลือแค่ <b>การหารจำนวนเชิงซ้อนครั้งเดียว</b> \(\mathbf{I} = \mathbf{V}/Z\) หน้านี้มี <b>7 โจทย์ เรียงทีละข้อ</b> ห้าข้อแรกเป็นวงจรกระแสสลับ (กระแสจะไหลเมื่อคำนวณ I ได้) ข้อ 6 คือการบ้านข้อ 2 ของสไลด์</p>
+    <p class="sub" data-l="en">Slide p. 13 says that <b>the basic signal of electrical engineering is the sinusoid, and a sinusoid can be written with complex numbers</b>. This page shows why. Mains at 220 V 50 Hz rises and falls as a sine wave. If you see the sine wave as <b>the shadow of a spinning arrow on the imaginary axis</b> (the arrow is called a phasor), finding the current becomes <b>one complex division</b>, \(\mathbf{I} = \mathbf{V}/Z\). This page has <b>7 problems, one after another</b>: the first five are AC circuits (the current flows once you have found I), and problem 6 is homework problem 2 of the slides.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} v(t) = V_m\sin(\omega t + \theta) = \mathrm{Im}\!\left[V_m e^{j\theta}e^{j\omega t}\right] \;\Longleftrightarrow\; \mathbf{V} = V_m\angle\theta \\ Z = R + jX,\qquad \mathbf{I} = \frac{\mathbf{V}}{Z} \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>คลื่นไซน์คือเงาของจำนวนเชิงซ้อนที่หมุน</b> บนแกนจินตภาพ: \(v(t) = \mathrm{Im}[\mathbf{V}e^{j\omega t}] = V_m\sin(\omega t + \theta)\)</li><li><b>อิมพีแดนซ์ \(Z = R + jX\)</b> รวม R, L, C เป็นจำนวนเชิงซ้อนตัวเดียว โดย \(X_L = \omega L\) และ \(X_C = 1/(\omega C)\)</li><li><b>\(\mathbf{I} = \mathbf{V}/Z\)</b> คือการหารจำนวนเชิงซ้อนครั้งเดียว</li><li><b>แรงดันต้องบวกแบบเชิงซ้อน</b>: \(|V_R| + |V_L| \ne |V|\) เพราะถึงค่ายอดไม่พร้อมกัน</li><li>หน้านี้ใช้แบบแผนของวิชา: <b>อ้างอิง sin และขนาดเป็นค่ายอด</b> แหล่งจ่าย \(v(t) = 220\sin(100\pi t)\) V จึงเขียนเป็น \(\mathbf{V} = 220\angle 0^\circ\) V (ไฟบ้านจริง 220 V เป็นค่ายังผล (root mean square, rms) มีค่ายอด \(220\sqrt2 \approx 311\) V)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>A sine wave is the shadow of a rotating complex number</b> on the imaginary axis: \(v(t) = \mathrm{Im}[\mathbf{V}e^{j\omega t}] = V_m\sin(\omega t + \theta)\).</li><li><b>Impedance \(Z = R + jX\)</b> combines R, L and C into one complex number, with \(X_L = \omega L\) and \(X_C = 1/(\omega C)\).</li><li><b>\(\mathbf{I} = \mathbf{V}/Z\)</b> is a single complex division.</li><li><b>Voltages must be added as complex numbers</b>: \(|V_R| + |V_L| \ne |V|\), because they do not peak together.</li><li>This page follows the course convention: <b>sine reference, peak values</b>. The source \(v(t) = 220\sin(100\pi t)\) V is written \(\mathbf{V} = 220\angle 0^\circ\) V (real 220 V mains is an rms (root-mean-square) value, with a peak of \(220\sqrt2 \approx 311\) V).</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>R ล้วน</a><a href="#ex2"><b>2</b>L ล้วน</a><a href="#ex3"><b>3</b>C ล้วน</a><a href="#ex4"><b>4</b>R + L</a><a href="#ex5"><b>5</b>R + C</a><a href="#ex6"><b>6</b>การบ้านข้อ 2</a><a href="#ex7"><b>7</b>ใส่โจทย์เอง</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>R only</a><a href="#ex2"><b>2</b>L only</a><a href="#ex3"><b>3</b>C only</a><a href="#ex4"><b>4</b>R + L</a><a href="#ex5"><b>5</b>R + C</a><a href="#ex6"><b>6</b>Homework 2</a><a href="#ex7"><b>7</b>Your own system</a></nav>
+
+<div id="acbox"></div>
+
+<!-- ============ 6: homework 2 ============ -->
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div>
+    <h2 data-l="th">การบ้านข้อ 2: กฎของคราเมอร์กับสัมประสิทธิ์เชิงซ้อน</h2><h2 data-l="en">Homework problem 2: Cramer's rule with complex coefficients</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 1 หน้า 22 · สไลด์ให้คำตอบมาแล้ว · วงจรกระแสสลับสองโนดหรือสองเมชให้ระบบแบบนี้ (บทที่ 7)</div><div class="src" data-l="en">Chapter 1 slides, p. 22 · the slide gives the answer · an AC circuit with two nodes or two meshes gives exactly such a system (chapter 7)</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch1/p22q.webp" width="1131" height="403" loading="lazy" decoding="async" alt="Slide 22: Homework 2. Use Cramer's rule for the complex equations (2j)V1 + (3∠25°)V2 = 220; (10∠−120°)V1 + (10)V2 = j110. Answer: V1 = 47.213∠−94.29°, V2 = 42.012∠−21.79°">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 22 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 22 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">กฎของคราเมอร์ใช้ได้เหมือนเดิมทุกอย่าง เพียงแต่ <b>คูณในรูปเชิงขั้ว (ขนาดคูณ มุมบวก) แล้วลบในรูปคาร์ทีเซียน</b> ระนาบทางซ้ายวาดการลบแต่ละครั้งเป็นการต่อลูกศร: ผลคูณตัวแรก (เหลือง) ต่อด้วยลบผลคูณตัวที่สอง (ฟ้าประ) ได้ผลลัพธ์ (ชมพู)</p>
+  <p class="lead" data-l="en">Cramer's rule works unchanged; just <b>multiply in polar form (sizes multiply, angles add), then subtract in Cartesian form</b>. The plane on the left draws each subtraction as joined arrows: the first product (yellow), then minus the second product (dashed blue), giving the result (pink).</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv6"></canvas></div>
+    <div class="card solve"><div class="given"><div class="gl" data-l="th">โจทย์: หา V₁ และ V₂</div><div class="gl" data-l="en">Problem: find V₁ and V₂</div><div id="g6"></div></div><div id="st6"></div></div>
+  </div>
+</section>
+
+<!-- ============ 7: your own complex system ============ -->
+<section class="prob" id="ex7">
+  <div class="prob-head"><span class="prob-no">7</span><div>
+    <h2 data-l="th">ใส่ระบบ 2×2 เชิงซ้อนของคุณเอง</h2><h2 data-l="en">Your own complex 2×2 system</h2>
+    <div class="src" data-l="th">พิมพ์ได้ทั้ง <code>2j</code>, <code>3∠25</code>, <code>10&lt;-120</code>, <code>-4-j3</code> แล้วกด "แก้ระบบนี้"</div><div class="src" data-l="en">Type <code>2j</code>, <code>3∠25</code>, <code>10&lt;-120</code> or <code>-4-j3</code>, then press "Solve this system"</div></div></div>
+  <div class="card solve">
+    <div class="given"><div class="gl" data-l="th">ระบบของคุณ</div><div class="gl" data-l="en">Your system</div><div class="matrow" id="g7"></div>
+      <div class="toggles"><button type="button" class="btn on" id="go7"></button><span id="msg7" class="hint" style="margin:0;align-self:center"></span></div></div>
+    <div id="st7"></div>
+  </div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — เงาของลูกศรที่หมุน</h3>
+    <ol><li>กดหยุดแล้วดูเฟเซอร์ <b>V</b>: เส้นประแนวนอนพาปลายลูกศรไปที่จุดบนแกนจินตภาพ ความสูงของจุดนั้นเป็นสัดส่วนกับค่า v(t) ที่ปลายขวาของกราฟพอดี <b>คลื่นไซน์จึงเป็นเพียงเงาของลูกศรที่หมุนบนแกนจินตภาพ</b></li>
+    <li>จุดในสายไฟหยุดนิ่งชั่วขณะเมื่อเงาของ <b>I</b> เป็นศูนย์ (ลูกศร <b>I</b> นอนตามแกนจริง) และวิ่งเร็วที่สุดเมื่อ <b>I</b> ตั้งตามแกนจินตภาพ</li>
+    <li>ข้อ 4: เปลี่ยนความถี่ ลูกศรหมุนเร็วขึ้น และมุมระหว่าง <b>V</b> กับ <b>I</b> เปลี่ยนด้วย เพราะ \(X_L = \omega L\) ขึ้นกับความถี่</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — หาร j คือหมุน −90°</h3>
+    <ol><li>ข้อ 1–3 มีขนาด 40 Ω เท่ากัน กระแสจึงเป็น 5.5 A เท่ากันทุกข้อ <b>ต่างกันแค่มุม</b>: 0°, −90°, +90°</li>
+    <li>ตัวเหนี่ยวนำ: \(Z = j\omega L\) กระแส <b>ตามหลัง</b> แรงดัน 90° (หารด้วย j คือหมุน −90°)</li>
+    <li>ตัวเก็บประจุ: \(Z = -j/(\omega C)\) กระแส <b>นำหน้า</b> แรงดัน 90°</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — กฎแรงดันต้องบวกแบบเชิงซ้อน</h3>
+    <ol><li>ข้อ 4 ค่าตั้งต้น: \(|V_R| = 132\) V และ \(|V_L| = 176\) V รวมกันได้ 308 V มากกว่าแหล่งจ่าย 220 V! ผิดหรือ? ไม่ผิด เพราะทั้งสองไม่ได้ถึงยอดพร้อมกัน</li>
+    <li>บวกแบบจำนวนเชิงซ้อนได้ \(220\angle 0^\circ\) พอดี (สามเหลี่ยม 3-4-5) <b>นี่คือเหตุผลที่ต้องใช้จำนวนเชิงซ้อน</b></li>
+    <li>คำถาม: ถ้าปรับ L จน \(X_L = R\) มุมของกระแสจะเป็นเท่าไร และ \(|Z|\) เป็นกี่เท่าของ R</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 1 หน้า 13 และการบ้านข้อ 2 หน้า 22 (ภาพสไลด์อยู่ในหน้านี้แล้ว) · ต่อยอดในบทที่ 6–7</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the shadow of a spinning arrow</h3>
+    <ol><li>Pause and look at phasor <b>V</b>: the horizontal dashed line carries its tip to a dot on the imaginary axis, and the dot's height is in proportion to v(t) at the right end of the graph. <b>A sine wave is just the shadow of a spinning arrow on the imaginary axis.</b></li>
+    <li>The dots in the wire stop for an instant when the shadow of <b>I</b> is zero (the arrow <b>I</b> lies along the real axis), and run fastest when <b>I</b> stands along the imaginary axis.</li>
+    <li>Problem 4: change the frequency. The arrows spin faster, and the angle between <b>V</b> and <b>I</b> changes too, because \(X_L = \omega L\) depends on frequency.</li></ol></div>
+  <div class="card"><h3>Try this 2 — dividing by j is a −90° turn</h3>
+    <ol><li>Problems 1–3 all have a size of 40 Ω, so the current is 5.5 A in each; <b>only the angle differs</b>: 0°, −90°, +90°.</li>
+    <li>Inductor: \(Z = j\omega L\), and the current <b>lags</b> the voltage by 90° (dividing by j is a −90° turn).</li>
+    <li>Capacitor: \(Z = -j/(\omega C)\), and the current <b>leads</b> the voltage by 90°.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the voltage law needs complex addition</h3>
+    <ol><li>Problem 4 with the starting values: \(|V_R| = 132\) V and \(|V_L| = 176\) V add up to 308 V, more than the 220 V source! Wrong? No: the two do not peak at the same moment.</li>
+    <li>Added as complex numbers they give exactly \(220\angle 0^\circ\) (a 3-4-5 triangle). <b>That is why we need complex numbers.</b></li>
+    <li>Question: if L is set so that \(X_L = R\), what is the current's angle, and \(|Z|\) is how many times R?</li></ol>
+    <div class="book">Source: chapter 1 slides, p. 13 and homework problem 2, p. 22 (the slide pictures are on this page) · built on in chapters 6–7</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const C = ALG, cx = C.cx, PC = CH1.PC, d = LS.d, u = LS.u, tx = (s, dd) => MC.tex(s, dd), t = MC.t, ui = MC.ui;
+const O = cx(0, 0), mag = z => C.cabs(z), deg = z => C.cargd(z), neg = z => cx(-z.re, -z.im);
+const K = (z, n = 3) => `${d(z.re, n)} ${z.im < 0 ? '-' : '+'} j${d(Math.abs(z.im), n)}`;
+const Pt = (z, n = 3, a = 2) => `${d(mag(z), n)}\\angle{${d(deg(z), a)}^\\circ}`;
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+const sgn = x => x < 0 ? '-' : '+';
+
+/* ================= 1–5: AC circuits ================= */
+/* the steps for one load; returns {steps, kI (step that finds I), kP (step that finds V_R and V_X), I, Z} */
+function acSteps(S) {
+  const f = S.f, w = 2 * Math.PI * f, XL = w * S.L, XC = 1 / (w * S.C), L = S.load, hasR = L === 'R' || L === 'RL' || L === 'RC';
+  const Z = cx(hasR ? S.R : 0, L === 'L' || L === 'RL' ? XL : L === 'C' || L === 'RC' ? -XC : 0), I = C.cdiv(cx(S.Vm, 0), Z), steps = [];
+  if (L === 'L' || L === 'RL') steps.push({ why: t('<b>รีแอกแตนซ์ของตัวเหนี่ยวนำ</b> \\(X_L = \\omega L\\) (ω = 2πf)', '<b>Reactance of the inductor</b>, \\(X_L = \\omega L\\) (ω = 2πf)'), tex: `X_L = \\omega L = 2\\pi(${f})(${d(S.L, 4)}) = ${d(XL, 2)}\\;\\Omega` });
+  if (L === 'C' || L === 'RC') steps.push({ why: t('<b>รีแอกแตนซ์ของตัวเก็บประจุ</b> \\(X_C = 1/(\\omega C)\\)', '<b>Reactance of the capacitor</b>, \\(X_C = 1/(\\omega C)\\)'), tex: `X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi(${f})(${d(S.C * 1e6, 2)}\\times 10^{-6})} = ${d(XC, 2)}\\;\\Omega` });
+  const zSym = { R: 'R', L: 'jX_L', C: '-jX_C', RL: 'R + jX_L', RC: 'R - jX_C' }[L];
+  if (L === 'RL' || L === 'RC') {
+    steps.push({ why: t('<b>เขียนอิมพีแดนซ์เป็นจำนวนเชิงซ้อน</b> (รูปคาร์ทีเซียน): ตัวต้านทานเป็นส่วนจริง รีแอกแตนซ์เป็นส่วนจินตภาพ', '<b>Write the impedance as a complex number</b> (Cartesian form): the resistor is the real part, the reactance the imaginary part'), tex: `Z = ${zSym} = ${K(Z, 2)}\\;\\Omega` });
+    steps.push({ why: t('<b>แปลง Z เป็นรูปเชิงขั้ว</b> (หน้า 1.3) เพราะขั้นต่อไปเป็นการหาร', '<b>Convert Z to polar form</b> (page 1.3), because the next step is a division'),
+      tex: al([`|Z| &= \\sqrt{R^2 + X^2} = \\sqrt{${d(Z.re, 2)}^2 + ${d(Math.abs(Z.im), 2)}^2} = ${d(mag(Z), 2)}\\;\\Omega`, `\\theta_Z &= \\arctan\\frac{${d(Z.im, 2)}}{${d(Z.re, 2)}} = ${d(deg(Z), 2)}^\\circ`, `Z &= ${Pt(Z, 2)}\\;\\Omega`]) });
+  } else steps.push({ why: L === 'R' ? t('<b>อิมพีแดนซ์</b> ของตัวต้านทานเป็นจำนวนจริงล้วน (มุม 0°)', '<b>Impedance</b> of a resistor is purely real (angle 0°)') : L === 'L' ? t('<b>อิมพีแดนซ์</b> ของตัวเหนี่ยวนำเป็นจินตภาพล้วน ชี้ขึ้น (มุม +90°)', '<b>Impedance</b> of an inductor is purely imaginary, pointing up (angle +90°)') : t('<b>อิมพีแดนซ์</b> ของตัวเก็บประจุเป็นจินตภาพล้วน ชี้ลง (มุม −90°)', '<b>Impedance</b> of a capacitor is purely imaginary, pointing down (angle −90°)'),
+      tex: `Z = ${zSym} = ${K(Z, 2)} = ${Pt(Z, 2)}\\;\\Omega` });
+  steps.push({ why: t('<b>กฎของโอห์มแบบเชิงซ้อน</b> \\(\\mathbf{I} = \\mathbf{V}/Z\\): หารในรูปเชิงขั้ว ขนาดหารกัน มุมลบกัน … <b>กระแสเริ่มไหล</b>', '<b>Complex Ohm\'s law</b>, \\(\\mathbf{I} = \\mathbf{V}/Z\\): divide in polar form, sizes divide and angles subtract … <b>the current starts to flow</b>'),
+    tex: al([`\\mathbf{I} &= \\frac{\\mathbf{V}}{Z} = \\frac{${S.Vm}\\angle{0^\\circ}}{${Pt(Z, 2)}}`, `&= \\frac{${S.Vm}}{${d(mag(Z), 2)}}\\angle{\\big(0^\\circ - (${d(deg(Z), 2)}^\\circ)\\big)} = \\boxed{${Pt(I)}\\;\\text{A}}`]) });
+  const kI = steps.length, ai = deg(I);
+  const rel = Math.abs(ai) < 0.05 ? t('กระแส<b>เฟสเดียวกับ</b>แรงดัน', 'the current is <b>in phase with</b> the voltage') : ai < 0 ? t(`กระแส<b>ตามหลัง</b>แรงดัน ${d(-ai, 2)}°`, `the current <b>lags</b> the voltage by ${d(-ai, 2)}°`) : t(`กระแส<b>นำหน้า</b>แรงดัน ${d(ai, 2)}°`, `the current <b>leads</b> the voltage by ${d(ai, 2)}°`);
+  steps.push({ why: t(`<b>เขียนกลับเป็นฟังก์ชันของเวลา</b> (อ้างอิง sin ขนาดของเฟเซอร์เป็นค่ายอดอยู่แล้ว) · ${rel}`, `<b>Back to a function of time</b> (sine reference; the phasor size is already the peak) · ${rel}`),
+    tex: al([`i(t) &= ${d(mag(I))}\\sin(2\\pi(${S.f})t ${sgn(ai)} ${d(Math.abs(ai), 2)}^\\circ)`, `&= ${d(mag(I))}\\sin(${d(w, 1)}\\,t ${sgn(ai)} ${d(Math.abs(ai), 2)}^\\circ)\\;\\text{A}`]) });
+  let kP = 99;
+  if (L === 'RL' || L === 'RC') { const X = L === 'RL' ? 'L' : 'C', VR = C.cmul(I, cx(S.R, 0)), VX = C.cmul(I, cx(0, Z.im)), sum = C.cadd(VR, VX);
+    steps.push({ why: t(`<b>แรงดันคร่อมแต่ละตัว</b> (ลูกศรสีม่วงและเขียวบนเฟเซอร์)`, `<b>The voltage across each part</b> (the purple and green arrows on the phasor plane)`),
+      tex: al([`\\mathbf{V}_R &= \\mathbf{I}R = (${Pt(I)})(${d(S.R, 2)}) = ${Pt(VR, 2)}\\;\\text{V}`, `\\mathbf{V}_${X} &= \\mathbf{I}(${L === 'RL' ? 'jX_L' : '-jX_C'}) = (${Pt(I)})(${Pt(cx(0, Z.im), 2)}) = ${Pt(VX, 2)}\\;\\text{V}`]) }); kP = steps.length;
+    steps.push({ why: t(`<b>ตรวจด้วยกฎแรงดันของเคียร์ชอฟฟ์</b>: บวกแบบจำนวนเชิงซ้อน (รูปคาร์ทีเซียน) ต้องได้แรงดันแหล่งจ่าย ส่วนขนาดบวกกันตรง ๆ ได้ ${d(mag(VR) + mag(VX), 1)} V ซึ่ง<b>ไม่ใช่</b> ${S.Vm} V เพราะสองแรงดันถึงยอดไม่พร้อมกัน`, `<b>Check with Kirchhoff's voltage law</b>: added as complex numbers (Cartesian form) they must give the source voltage. Adding the sizes directly gives ${d(mag(VR) + mag(VX), 1)} V, which is <b>not</b> ${S.Vm} V, because the two voltages do not peak together.`),
+      tex: al([`\\mathbf{V}_R + \\mathbf{V}_${X} &= (${K(VR, 2)}) + (${K(VX, 2)})`, `&= ${K(sum, 2)} = ${Pt(sum, 2)}\\;\\text{V} \\;\\checkmark`]) }); }
+  return { steps, kI, kP, I, Z, rel };
+}
+/* one AC problem section */
+const ACP = [
+  { id: 'ex1', no: 1, load: 'R', R: 40, th: 'ตัวต้านทานล้วน R = 40 Ω', en: 'A resistor only, R = 40 Ω', sth: 'ตัวอย่างประกอบ · แหล่งจ่าย v(t) = 220 sin(100πt) V (ค่ายอด 220 V, 50 Hz)', sen: 'An example · source v(t) = 220 sin(100πt) V (peak 220 V, 50 Hz)' },
+  { id: 'ex2', no: 2, load: 'L', L: 40 / (2 * Math.PI * 50), th: 'ตัวเหนี่ยวนำล้วน L = 127.3 mH (X_L = 40 Ω)', en: 'An inductor only, L = 127.3 mH (X_L = 40 Ω)', sth: 'ขนาดของอิมพีแดนซ์เท่าข้อ 1 แต่ทิศต่างกัน', sen: 'The same impedance size as problem 1, but a different direction' },
+  { id: 'ex3', no: 3, load: 'C', C: 1 / (2 * Math.PI * 50 * 40), th: 'ตัวเก็บประจุล้วน C = 79.58 µF (X_C = 40 Ω)', en: 'A capacitor only, C = 79.58 µF (X_C = 40 Ω)', sth: 'ขนาดของอิมพีแดนซ์เท่าข้อ 1 อีกเช่นกัน', sen: 'Again the same impedance size as problem 1' },
+  { id: 'ex4', no: 4, load: 'RL', R: 30, L: 0.4 / Math.PI, sliders: true, th: 'R + L ต่ออนุกรม (ตัวอย่างหลัก): R = 30 Ω, X_L = 40 Ω', en: 'R and L in series (the main example): R = 30 Ω, X_L = 40 Ω', sth: 'เลื่อน R, L, f ได้ เฉลยคำนวณใหม่ตาม · ค่าตั้งต้นให้สามเหลี่ยม 3-4-5', sen: 'Move R, L, f and the solution is recomputed · the starting values give a 3-4-5 triangle' },
+  { id: 'ex5', no: 5, load: 'RC', R: 30, C: 1 / (2 * Math.PI * 50 * 40), th: 'R + C ต่ออนุกรม: R = 30 Ω, X_C = 40 Ω', en: 'R and C in series: R = 30 Ω, X_C = 40 Ω', sth: 'เหมือนข้อ 4 แต่รีแอกแตนซ์ติดลบ ลองเดาก่อนว่ากระแสนำหรือตามหลัง', sen: 'Like problem 4 but the reactance is negative; guess first whether the current leads or lags' }];
+const acbox = document.getElementById('acbox');
+ACP.forEach(P => {
+  const sec = document.createElement('section'); sec.className = 'prob'; sec.id = P.id;
+  sec.innerHTML = `<div class="prob-head"><span class="prob-no">${P.no}</span><div><h2>${t(P.th, P.en).replace(/X_L/g, 'X<sub>L</sub>').replace(/X_C/g, 'X<sub>C</sub>')}</h2><div class="src">${t(P.sth, P.sen)}</div></div></div>
+    <div class="duo wide-sim"><div class="card sim"><canvas></canvas><div class="ctl"></div></div><div class="card solve"><div class="given"></div><div class="st"></div></div></div>`;
+  acbox.appendChild(sec);
+  const sim = new CH1.AC(sec.querySelector('canvas'), { load: P.load, R: P.R ?? 30, L: P.L ?? 0.4 / Math.PI, C: P.C ?? 1 / (2 * Math.PI * 50 * 40) }), S = sim.S;
+  const given = sec.querySelector('.given');
+  const renderGiven = () => { const parts = { R: `R = ${d(S.R, 2)}\\;\\Omega`, L: `L = ${d(S.L * 1000, 1)}\\;\\text{mH}`, C: `C = ${d(S.C * 1e6, 2)}\\;\\mu\\text{F}`, RL: `R = ${d(S.R, 2)}\\;\\Omega,\\; L = ${d(S.L * 1000, 1)}\\;\\text{mH}`, RC: `R = ${d(S.R, 2)}\\;\\Omega,\\; C = ${d(S.C * 1e6, 2)}\\;\\mu\\text{F}` }[S.load];
+    given.innerHTML = `<div class="gl">${t('โจทย์: หาเฟเซอร์กระแส I (ค่ายอด) และ i(t)', 'Problem: find the current phasor I (peak) and i(t)')}</div>` + tx(`\\begin{gathered} v(t) = ${S.Vm}\\sin(2\\pi(${S.f})t)\\;\\text{V} \\;\\Rightarrow\\; \\mathbf{V} = ${S.Vm}\\angle{0^\\circ}\\;\\text{V} \\\\ ${parts} \\end{gathered}`, true); };
+  const st = LS.stepper(sec.querySelector('.st'), { steps: () => acSteps(S).steps,
+    answer: () => { const r = acSteps(S); return `${tx(`\\mathbf{I} = ${Pt(r.I)}\\;\\text{A}`)} &nbsp; · ${r.rel}`; },
+    onStep: k => { const r = acSteps(S); sim.setKnown(k >= r.kI); S.parts = k >= r.kP; } });
+  const ctl = sec.querySelector('.ctl');
+  if (P.sliders) {
+    ui.slider(ctl, { id: P.id + 'R', label: 'R', min: 1, max: 100, step: 1, value: S.R, fmt: v => `${v} Ω`, oninput: v => { sim.set({ R: v }); renderGiven(); st.refresh(); } });
+    ui.slider(ctl, { id: P.id + 'L', label: 'L', min: 10, max: 500, step: 1, value: Math.round(S.L * 1000), fmt: v => `${v} mH`, oninput: v => { sim.set({ L: v / 1000 }); renderGiven(); st.refresh(); } });
+    ui.slider(ctl, { id: P.id + 'f', label: t('ความถี่ f', 'frequency f'), min: 10, max: 200, step: 5, value: S.f, fmt: v => `${v} Hz`, oninput: v => { sim.set({ f: v }); renderGiven(); st.refresh(); } }); }
+  ui.slider(ctl, { id: P.id + 'slow', label: t('เล่นช้าลง', 'slow motion'), min: 25, max: 400, step: 25, value: S.slow, fmt: v => `${v}×`, oninput: v => { S.slow = v; } });
+  ui.buttons(ctl, [{ label: t('หยุด', 'Pause'), on: true, onclick: el => { S.run = !S.run; el.textContent = S.run ? t('หยุด', 'Pause') : t('เล่นต่อ', 'Resume'); el.classList.toggle('on', S.run); } }]);
+  renderGiven();
+});
+
+/* ================= 6: homework 2 ================= */
+const HW = { a11: C.cparse('2j'), a12: C.cpolar(3, 25), a21: C.cpolar(10, -120), a22: cx(10, 0), b1: cx(220, 0), b2: cx(0, 110) };
+/* complex 2×2 Cramer: steps plus the pictures (first product, second product, result) for each determinant */
+function c2(v) {
+  const m = C.cmul, sub = C.csub, prs = [[v.a11, v.a22, v.a12, v.a21], [v.b1, v.a22, v.a12, v.b2], [v.a11, v.b2, v.b1, v.a21]];
+  const Ds = prs.map(([x, y, p, q]) => ({ p1: m(x, y), p2: m(p, q), r: sub(m(x, y), m(p, q)), f: [x, y, p, q] }));
+  const names = ['\\Delta', '\\Delta_1', '\\Delta_2'];
+  const lines = (nm, D) => al([`${nm} &= (${Pt(D.f[0])})(${Pt(D.f[1])}) - (${Pt(D.f[2])})(${Pt(D.f[3])})`, `&= ${Pt(D.p1)} - ${Pt(D.p2)}`, `&= (${K(D.p1)}) - (${K(D.p2)})`, `&= ${K(D.r)} = ${Pt(D.r)}`]);
+  const steps = [{ why: t('<b>เขียนสัมประสิทธิ์และค่าทางขวาในรูปเชิงขั้ว</b> (คูณง่ายกว่า): \\(j = 1\\angle 90^\\circ\\) และจำนวนจริงบวกมีมุม 0°', '<b>Write the coefficients and right-hand sides in polar form</b> (easier to multiply): \\(j = 1\\angle 90^\\circ\\), and a positive real number has angle 0°'),
+    tex: `\\begin{bmatrix} ${Pt(v.a11)} & ${Pt(v.a12)} \\\\ ${Pt(v.a21)} & ${Pt(v.a22)} \\end{bmatrix}\\begin{bmatrix} V_1 \\\\ V_2 \\end{bmatrix} = \\begin{bmatrix} ${Pt(v.b1)} \\\\ ${Pt(v.b2)} \\end{bmatrix}` }];
+  steps.push({ why: t('<b>ดีเทอร์มิแนนต์หลัก</b> \\(\\Delta = a_{11}a_{22} - a_{12}a_{21}\\): คูณในรูปเชิงขั้ว แล้วแปลงเป็นคาร์ทีเซียนเพื่อลบ', '<b>Main determinant</b> \\(\\Delta = a_{11}a_{22} - a_{12}a_{21}\\): multiply in polar form, then convert to Cartesian form to subtract'), tex: lines(names[0], Ds[0]) });
+  if (mag(Ds[0].r) < 1e-12) { steps.push({ body: `<div class="badbox">${t('<b>Δ = 0</b> ใช้กฎของคราเมอร์ไม่ได้', '<b>Δ = 0</b>: Cramer\'s rule cannot be used')}</div>` }); return { steps, Ds, ok: false }; }
+  steps.push({ why: t('<b>\\(\\Delta_1\\)</b>: นำ \\(b\\) ไปแทนคอลัมน์ที่ 1 \\(\\;\\Delta_1 = b_1 a_{22} - a_{12} b_2\\)', '<b>\\(\\Delta_1\\)</b>: put \\(b\\) in place of column 1, \\(\\;\\Delta_1 = b_1 a_{22} - a_{12} b_2\\)'), tex: lines(names[1], Ds[1]) });
+  steps.push({ why: t('<b>\\(\\Delta_2\\)</b>: นำ \\(b\\) ไปแทนคอลัมน์ที่ 2 \\(\\;\\Delta_2 = a_{11} b_2 - b_1 a_{21}\\)', '<b>\\(\\Delta_2\\)</b>: put \\(b\\) in place of column 2, \\(\\;\\Delta_2 = a_{11} b_2 - b_1 a_{21}\\)'), tex: lines(names[2], Ds[2]) });
+  const V1 = C.cdiv(Ds[1].r, Ds[0].r), V2 = C.cdiv(Ds[2].r, Ds[0].r);
+  const dv = (nm, i, V) => `${nm} = \\frac{\\Delta_${i}}{\\Delta} = \\frac{${Pt(Ds[i].r)}}{${Pt(Ds[0].r)}} = \\frac{${d(mag(Ds[i].r))}}{${d(mag(Ds[0].r))}}\\angle{\\big(${d(deg(Ds[i].r), 2)}^\\circ - ${d(deg(Ds[0].r), 2)}^\\circ\\big)} = \\boxed{${Pt(V)}}`;
+  steps.push({ why: t('<b>หาร</b> \\(V_1 = \\Delta_1/\\Delta\\) ในรูปเชิงขั้ว: ขนาดหาร มุมลบ', '<b>Divide</b>, \\(V_1 = \\Delta_1/\\Delta\\), in polar form: sizes divide, angles subtract'), tex: dv('V_1', 1, V1) });
+  steps.push({ why: t('<b>หาร</b> \\(V_2 = \\Delta_2/\\Delta\\)', '<b>Divide</b>, \\(V_2 = \\Delta_2/\\Delta\\)'), tex: dv('V_2', 2, V2) });
+  return { steps, Ds, V1, V2, ok: true };
+}
+const H = c2(HW); let k6 = 0;
+document.getElementById('g6').innerHTML = tx(al(['(2j)\\,V_1 + (3\\angle 25^\\circ)\\,V_2 &= 220', '(10\\angle{-120^\\circ})\\,V_1 + (10)\\,V_2 &= j110']), true);
+/* picture of a determinant: first product, minus the second from its tip, and the result */
+function detPic(p, D, nm) { p.vec(O, D.p1, PC.z1); p.vec(D.p1, C.csub(D.p1, D.p2), PC.z2, { dash: [6, 4] }); p.vec(O, D.r, PC.res, { width: 3.4 });
+  p.dot(D.p1, PC.z1, t('ผลคูณที่ 1', 'product 1')); p.dot(D.r, PC.res, nm, { below: true }); p.note(`${nm} = ${C.cfmt(D.r, 2)} = ${C.cfmtPolar(D.r, 2, 2)}`, PC.res); p.note(t('ฟ้าประ = ลบผลคูณที่ 2', 'dashed blue = minus product 2'), PC.z2, { line: 1 }); }
+const pl6 = new CH1.Plane(document.getElementById('cv6'), { R: 5, scene: p => {
+  if (k6 <= 1) { p.note(t('กดเปิดเฉลย แล้วระนาบนี้จะวาดการคำนวณแต่ละขั้น', 'Open the steps and this plane draws each calculation'), PC.muted); return; }
+  if (k6 === 2) detPic(p, H.Ds[0], 'Δ'); else if (k6 === 3) detPic(p, H.Ds[1], 'Δ₁'); else if (k6 === 4) detPic(p, H.Ds[2], 'Δ₂');
+  else { p.vec(O, H.V1, PC.res, { width: 3.4 }); p.dot(H.V1, PC.res, 'V₁', { below: true }); p.arc(0, deg(H.V1), PC.res, { r: 34, label: `${u(deg(H.V1), 2)}°` }); p.note(`V₁ = ${C.cfmtPolar(H.V1, 3, 2)}`, PC.res, { line: k6 >= 6 ? 1 : 0 });
+    if (k6 >= 6) { p.vec(O, H.V2, PC.good, { width: 3.4 }); p.dot(H.V2, PC.good, 'V₂'); p.arc(0, deg(H.V2), PC.good, { r: 54, label: `${u(deg(H.V2), 2)}°` }); p.note(`V₂ = ${C.cfmtPolar(H.V2, 3, 2)}`, PC.good); } } } });
+LS.stepper(document.getElementById('st6'), { steps: H.steps,
+  answer: `${tx(`V_1 = ${Pt(H.V1)},\\qquad V_2 = ${Pt(H.V2)}`)} &nbsp; ${t('สไลด์ให้ \\(V_1 = 47.213\\angle{-94.29^\\circ}\\), \\(V_2 = 42.012\\angle{-21.79^\\circ}\\) <b>ตรงกัน</b> (ต่างกันแค่การปัดเศษหลักสุดท้ายของมุม)', 'The slide gives \\(V_1 = 47.213\\angle{-94.29^\\circ}\\), \\(V_2 = 42.012\\angle{-21.79^\\circ}\\): <b>the same</b>, apart from rounding the last digit of the angle')}`,
+  onStep: k => { k6 = k; const D = H.Ds; const pts = k <= 1 ? [cx(4, 4)] : k === 2 ? [D[0].p1, D[0].r, C.csub(D[0].p1, D[0].p2)] : k === 3 ? [D[1].p1, D[1].r, C.csub(D[1].p1, D[1].p2)] : k === 4 ? [D[2].p1, D[2].r, C.csub(D[2].p1, D[2].p2)] : [H.V1, H.V2];
+    pl6.fit(pts, 2); pl6.play(0.8); } });
+
+/* ================= 7: your own complex system ================= */
+const CIN = [['a11', 'a_{11}', '2j'], ['a12', 'a_{12}', '3∠25'], ['b1', 'b_1', '220'], ['a21', 'a_{21}', '10∠-120'], ['a22', 'a_{22}', '10'], ['b2', 'b_2', 'j110']];
+const g7 = document.getElementById('g7');
+g7.innerHTML = `<div>${tx('a_{11}V_1 + a_{12}V_2 = b_1')}<br>${tx('a_{21}V_1 + a_{22}V_2 = b_2')}</div><div style="display:grid;grid-template-columns:repeat(3,auto);gap:6px 12px">` +
+  CIN.map(([k, lab, v]) => `<label style="display:inline-flex;align-items:center;gap:4px">${tx(lab)} <input class="mi" id="ci_${k}" style="width:6.6em" value="${v}" autocomplete="off"></label>`).join('') + '</div>';
+let V7 = null;
+const read7 = () => { const v = {}; let bad = false; CIN.forEach(([k]) => { const el = document.getElementById('ci_' + k), z = C.cparse(el.value); el.classList.toggle('no', !z); if (!z) bad = true; v[k] = z; }); return bad ? null : v; };
+const st7 = LS.stepper(document.getElementById('st7'), { steps: () => V7 ? c2(V7).steps : [],
+  answer: () => { if (!V7) return ''; const r = c2(V7); return r.ok ? tx(`V_1 = ${Pt(r.V1)} = ${K(r.V1)},\\qquad V_2 = ${Pt(r.V2)} = ${K(r.V2)}`) : ''; },
+  hint: t('กด <b>แก้ระบบนี้</b> แล้วเปิดเฉลยทีละขั้น', 'Press <b>Solve this system</b>, then open the steps one at a time') });
+const go = () => { const v = read7(); document.getElementById('msg7').textContent = v ? '' : t('อ่านค่าบางช่องไม่ได้ ตรวจรูปแบบอีกครั้ง', 'Some boxes could not be read; check the format'); if (!v) return; V7 = v; st7.refresh(false); };
+const gb = document.getElementById('go7'); gb.textContent = t('แก้ระบบนี้', 'Solve this system'); gb.addEventListener('click', go);
+CIN.forEach(([k]) => document.getElementById('ci_' + k).addEventListener('keydown', e => { if (e.key === 'Enter') go(); }));
+go();
+});
+</script>
+</body>
+</html>

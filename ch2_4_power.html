@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="2.4 — Power: Who Supplies, Who Absorbs">2.4 — กำลังไฟฟ้า: ใครจ่าย ใครรับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">กำลังไฟฟ้า: ใครจ่าย ใครรับ <span class="en">Power: who supplies, who absorbs — look at where the current enters</span></h1>
+<h1 data-l="en">Power: who supplies, who absorbs <span class="en">Look at where the current enters</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch2/power_types.svg" width="1200" height="860" loading="lazy" decoding="async" alt="Type of Power: absorbed power P_abs = V_AB × I when the current I enters the + terminal A of an element; supplied power P_supp = V_AB × I when I leaves the + terminal A; P_abs = −P_supp">
+    <figcaption data-l="th">วาดใหม่จากหน้าที่ผู้สอนเขียนในห้อง (แทรกหลังสไลด์หน้า 13) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Redrawn from the teacher's in-class page (inserted after slide p. 13) · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">อุปกรณ์ทุกตัวในวงจรทำได้สองอย่าง <b style="color:#2f9e44">จ่ายกำลัง</b> หรือ <b style="color:#e03131">รับกำลัง</b> วิธีดูตามที่สอนในห้อง: <b>ตั้งขั้ว + เป็น A ขั้ว − เป็น B แล้วดูว่ากระแสไหลเข้าหรือออกจากขั้ว +</b> แหล่งจ่ายไม่จำเป็นต้องจ่ายเสมอ แบตเตอรี่ที่ถูกชาร์จคือแหล่งจ่ายที่กำลังรับกำลัง หน้านี้มี <b>เครื่องมือ 2 ชิ้น (A, B)</b> และ <b>โจทย์ 8 ข้อ</b> (Ex 6 สามข้อ การบ้านข้อ 1 สามข้อ การบ้านข้อ 2 และแบบฝึกหัดข้อ 5) เรียงทีละข้อ</p>
+    <p class="sub" data-l="en">Every part in a circuit does one of two things: it <b style="color:#2f9e44">supplies power</b> or <b style="color:#e03131">absorbs power</b>. As taught in class: <b>call the + terminal A and the − terminal B, then see whether the current enters or leaves the + terminal</b>. A source does not always supply: a battery being charged is a source absorbing power. This page has <b>2 tools (A, B)</b> and <b>8 problems</b> (the three parts of Ex 6, the three parts of homework 1, homework 2 and exercise 5), one after another.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \text{I enters +: } P_{\text{abs}} = V_{AB}\,I,\qquad \text{I leaves +: } P_{\text{supp}} = V_{AB}\,I,\qquad P_{\text{abs}} = -P_{\text{supp}} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>กระแสไหลเข้าขั้ว + → \(P_{\text{abs}} = V_{AB}I\)</b> · <b>ไหลออกจากขั้ว + → \(P_{\text{supp}} = V_{AB}I\)</b></li><li><b>\(P_{\text{abs}} = -P_{\text{supp}}\)</b>: ค่าติดลบแปลว่าอุปกรณ์ทำหน้าที่ตรงข้าม</li><li><b>\(\sum P_{\text{abs}} = 0\) ในทุกวงจร</b> (กำลังที่จ่าย = กำลังที่รับ) ใช้ตรวจคำตอบได้เสมอ</li><li><b>แหล่งจ่ายรับกำลังได้</b> เช่น แบตเตอรี่ที่กำลังถูกชาร์จ</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>Current enters + → \(P_{\text{abs}} = V_{AB}I\)</b> · <b>current leaves + → \(P_{\text{supp}} = V_{AB}I\)</b>.</li><li><b>\(P_{\text{abs}} = -P_{\text{supp}}\)</b>: a negative value means the part does the opposite job.</li><li><b>\(\sum P_{\text{abs}} = 0\) in every circuit</b> (power supplied = power absorbed), a check you can always use.</li><li><b>A source can absorb power</b>, e.g. a battery being charged.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>จ่ายหรือรับ</a><a href="#ex6"><b>6a–6c</b>Ex 6</a><a href="#hw1"><b>H1a–H1c</b>การบ้านข้อ 1</a><a href="#hw2"><b>H2</b>การบ้านข้อ 2</a><a href="#sh5"><b>S5</b>แบบฝึกหัดข้อ 5</a><a href="#tB"><b>B</b>แบตเตอรี่ชาร์จกัน</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Supply or absorb</a><a href="#ex6"><b>6a–6c</b>Ex 6</a><a href="#hw1"><b>H1a–H1c</b>Homework 1</a><a href="#hw2"><b>H2</b>Homework 2</a><a href="#sh5"><b>S5</b>Exercise 5</a><a href="#tB"><b>B</b>Battery charging</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เครื่องมือ: จ่ายหรือรับ ขึ้นกับทิศของกระแสที่ขั้ว +</h2><h2 data-l="en">Tool: supply or absorb depends on the current at the + terminal</h2>
+    <div class="src" data-l="th">สไลด์หน้า 14: เมื่อ v และ i เป็นไปตามหลักเครื่องหมายแบบพาสซีฟ (passive sign convention: กระแสเข้าขั้ว +) กำลังที่ได้คือกำลังที่รับ</div><div class="src" data-l="en">Slide p. 14: when v and i follow the passive sign convention (current enters +), the power is the power absorbed</div></div></div>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cvA"></canvas><div class="ctl" id="ctlA"></div></div>
+    <div class="card solve"><figure class="slide" style="margin:0 0 8px"><img src="slides/ch2/p14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14: power absorption, passive sign convention, p = vi = i^2 R = v^2/R"><figcaption data-l="th">สไลด์หน้า 14</figcaption><figcaption data-l="en">Slide p. 14</figcaption></figure>
+      <div id="wA"></div></div>
+  </div>
+</section>
+
+<div class="group-head" id="ex6"><h2 data-l="th">Ex 6: กำลังที่อุปกรณ์แต่ละตัวรับ (สไลด์หน้า 19 = แบบฝึกหัดข้อ 1)</h2><h2 data-l="en">Ex 6: the power each element absorbs (slide p. 19 = exercise 1)</h2></div>
+<figure class="slide q wide"><img src="slides/ch2/p19q.webp" width="1197" height="539" loading="lazy" decoding="async" alt="Slide 19, Ex 6: determine the power absorbed by each element. (a) a box with 6 V, + at right, 1 pA entering the right terminal; (b) a resistor with 1 V, + at left, 10 mA to the right; (c) a 2 A current source with 10 V, + at top, 2 A leaving the bottom terminal to the left">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 19 · Hayt Practice 2.4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 19 · Hayt Practice 2.4 · tap to enlarge</figcaption></figure>
+<div id="items6"></div>
+<details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียน (สไลด์หน้า 19 ในห้อง และแบบฝึกหัดข้อ 1)</span><span data-l="en">See the teacher's working (slide p. 19 in class, and exercise 1)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch2/L21.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 19: 6 pW, 10 mW, −20 W"><figcaption data-l="th">สไลด์หน้า 19 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 19, in class</figcaption></figure>
+    <figure class="slide"><img src="slides/ch2/sol1.webp" width="1240" height="1605" loading="lazy" decoding="async" alt="Handwritten solution to exercise 1"><figcaption data-l="th">เฉลยแบบฝึกหัดข้อ 1</figcaption><figcaption data-l="en">Solution to exercise 1</figcaption></figure></div></details>
+
+<div class="group-head" id="hw1"><h2 data-l="th">การบ้านข้อ 1: กำลังที่อุปกรณ์แต่ละตัวรับ (สไลด์หน้า 21 = แบบฝึกหัดข้อ 2)</h2><h2 data-l="en">Homework 1: the power each element absorbs (slide p. 21 = exercise 2)</h2></div>
+<figure class="slide q wide"><img src="slides/ch2/p21q.webp" width="1154" height="659" loading="lazy" decoding="async" alt="Slide 21, homework 1: (a) an element with 2 V, − at top, 1 A entering the top; (b) an inductor with −16e^-t V, + at left, 8e^-t mA to the right, t = 500 ms; (c) a dependent current source 10^-3 i1 with 2 V, + at top, i1 = 100 mA. Answers: −2 W, −47.09 mW, −200 µW">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 21 (สไลด์ให้คำตอบมาแล้ว) · Hayt Practice 2.4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 21 (the slide gives the answers) · Hayt Practice 2.4 · tap to enlarge</figcaption></figure>
+<div id="itemsH1"></div>
+<details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน (แบบฝึกหัดข้อ 2)</span><span data-l="en">See the teacher's handwritten solution (exercise 2)</span></summary>
+  <figure class="slide" style="max-width:720px"><img src="slides/ch2/sol2.webp" width="1240" height="1605" loading="lazy" decoding="async" alt="Handwritten solution to exercise 2: −2 W, −47.09 mW, −200 µW"><figcaption data-l="th">เฉลยแบบฝึกหัดข้อ 2</figcaption><figcaption data-l="en">Solution to exercise 2</figcaption></figure></details>
+
+<section class="prob" id="hw2">
+  <div class="prob-head"><span class="prob-no">H2</span><div><h2 data-l="th">การบ้านข้อ 2: วงจรห้าแหล่งจ่าย ใครจ่าย ใครรับ</h2><h2 data-l="en">Homework 2: five sources, who supplies, who absorbs</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 22 = แบบฝึกหัดข้อ 4 · สไลด์ถามเฉพาะตัวซ้ายสุด (ตอบ 4 W) ในห้องทำครบทุกตัว · Hayt ข้อ 2.8</div><div class="src" data-l="en">Chapter 2 slides, p. 22 = exercise 4 · the slide asks only for the leftmost part (answer 4 W); in class every part was worked · Hayt problem 2.8</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch2/p22q.webp" width="1344" height="653" loading="lazy" decoding="async" alt="Slide 22, homework 2: determine the power supplied by the leftmost element. A 2 A current source with 2 V, an 8 V source, a −4 A current source with 10 V, a 10 V source with 5 A, and a −3 A current source with 10 V. Answer: 4 W">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 22 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 22 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim">
+    <div class="card sim hscroll"><canvas id="cvH2"></canvas><div class="simnote" data-l="th">ลูกศรม่วง = ทิศและค่าที่เขียนในโจทย์ · จุดเหลือง = กระแสที่ไหลจริง · วงเขียว = จ่าย วงแดง = รับ (ปรากฏทีละตัวตามขั้นที่เปิด)</div><div class="simnote" data-l="en">Purple arrows = direction and value written in the problem · yellow dots = the real current · green halo = supplies, red = absorbs (appearing part by part as the steps open)</div></div>
+    <div class="card solve"><div id="askH2"></div><div id="stH2"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยของผู้สอน (สไลด์หน้า 22 ในห้อง และแบบฝึกหัดข้อ 4)</span><span data-l="en">See the teacher's working (slide p. 22 in class, and exercise 4)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch2/L24.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 22: P_supp = 4, 16, −40, 50, −30 W; sum = 0"><figcaption data-l="th">สไลด์หน้า 22 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 22, in class</figcaption></figure>
+      <figure class="slide"><img src="slides/ch2/sol4.webp" width="1240" height="1605" loading="lazy" decoding="async" alt="Handwritten solution to exercise 4"><figcaption data-l="th">เฉลยแบบฝึกหัดข้อ 4</figcaption><figcaption data-l="en">Solution to exercise 4</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="sh5">
+  <div class="prob-head"><span class="prob-no">S5</span><div><h2 data-l="th">แบบฝึกหัดข้อ 5: วงจรที่มีแหล่งจ่ายไม่อิสระ \(0.25v_x\)</h2><h2 data-l="en">Exercise 5: a circuit with a dependent source \(0.25v_x\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัดบทที่ 2 ข้อ 5 · Hayt ข้อ 2.12 · มีเฉลยลายมือของผู้สอนท้ายข้อ</div><div class="src" data-l="en">Chapter 2 exercise 5 · Hayt problem 2.12 · the teacher's handwritten solution is at the end</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch2/ex5q.webp" width="903" height="362" loading="lazy" decoding="async" alt="Exercise 5: find the power absorbed by each element: a 7 A source with 8 V, a box with 8 V and 2 A, a box with 12 V carrying 5 A with vx across it, a box with 20 V and 8 A, and a dependent current source 0.25 vx with 20 V">
+    <figcaption data-l="th">โจทย์จากแบบฝึกหัดข้อ 5 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, exercise 5 · tap to enlarge</figcaption></figure>
+  <div class="duo big-sim">
+    <div class="card sim hscroll"><canvas id="cvS5"></canvas></div>
+    <div class="card solve"><div id="askS5"></div><div id="stS5"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือของผู้สอน (แบบฝึกหัดข้อ 5)</span><span data-l="en">See the teacher's handwritten solution (exercise 5)</span></summary>
+    <figure class="slide" style="max-width:720px"><img src="slides/ch2/sol5.webp" width="1240" height="1605" loading="lazy" decoding="async" alt="Handwritten solution to exercise 5: −56, 16, −60, 160, −60 W"><figcaption data-l="th">เฉลยแบบฝึกหัดข้อ 5</figcaption><figcaption data-l="en">Solution to exercise 5</figcaption></figure></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">เครื่องมือ: แบตเตอรี่ชาร์จกัน แหล่งจ่ายที่กำลังรับกำลัง</h2><h2 data-l="en">Tool: one battery charging another, a source absorbing power</h2>
+    <div class="src" data-l="th">ตัวอย่างประกอบ · เลื่อนแรงดันของแบตเตอรี่ตัวขวาให้เกิน 12 V แล้วดูว่าใครจ่ายใครรับ</div><div class="src" data-l="en">An extra example · raise the right battery above 12 V and see who supplies and who absorbs</div></div></div>
+  <div class="duo wide-sim">
+    <div class="card sim hscroll"><canvas id="cvB"></canvas><div class="ctl" id="ctlB"></div></div>
+    <div class="card solve"><div class="metrics" id="roB"></div>
+      <p class="lead" data-l="th" style="margin-top:8px">แบตเตอรี่ 12 V ดันกระแสเข้าขั้ว + ของแบตเตอรี่ 9 V แบตเตอรี่ 9 V จึง <b>รับ</b> กำลัง (กำลังถูกชาร์จ) แม้จะเป็นแหล่งจ่าย เมื่อแบตเตอรี่ตัวขวาเกิน 12 V กระแสกลับทิศ <b>ตัวที่จ่ายกับตัวที่รับสลับบทบาทกันทันที</b> ส่วนตัวต้านทานรับกำลังเสมอ</p>
+      <p class="lead" data-l="en" style="margin-top:8px">The 12 V battery pushes current into the + terminal of the 9 V battery, so the 9 V battery <b>absorbs</b> power (it is being charged), although it is a source. Above 12 V the current reverses and <b>supplier and absorber swap roles at once</b>; the resistor always absorbs.</p></div>
+  </div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ดูทั้งเครื่องหมายและทิศ</h3>
+    <ol><li>การบ้านข้อ 2 อุปกรณ์ 3 เขียนว่า −4 A ลูกศรชี้ขึ้น แต่จุดวิ่งลง กระแสจริง 4 A ไหลเข้าขั้ว + จึงรับกำลัง 40 W</li>
+    <li><b>ค่าที่เขียนในโจทย์ติดลบ = ไหลสวนลูกศร</b> ใช้ค่าติดลบนั้นแทนในสูตรได้เลย ไม่ต้องกลับลูกศรเอง</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ผลรวมเป็นศูนย์เสมอ</h3>
+    <ol><li>การบ้านข้อ 2: \(P_{\text{supp}}\) = 4 + 16 − 40 + 50 − 30 = 0 · แบบฝึกหัดข้อ 5: \(P_{\text{abs}}\) = −56 + 16 − 60 + 160 − 60 = 0</li>
+    <li>ถ้าผลรวมไม่เป็นศูนย์ แปลว่ามีอุปกรณ์ตัวหนึ่งคิดเครื่องหมายผิด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แหล่งจ่ายไม่อิสระ</h3>
+    <ol><li>แบบฝึกหัดข้อ 5: \(v_x = -12\) V จึงได้ \(0.25v_x = -3\) A ตามลูกศร (กระแสจริงไหลขึ้น 3 A) แหล่งจ่ายไม่อิสระจ่ายกำลัง 60 W</li>
+    <li>คำถาม: ถ้าอ่าน \(v_x = +12\) V (กลับขั้ว) ผลรวมของ \(P_{\text{abs}}\) จะเป็นเท่าไร และบอกอะไรเรา</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 2 หน้า 14, 19, 21–22 และแบบฝึกหัดข้อ 1, 2, 4, 5 (ภาพและเฉลยของผู้สอนอยู่ในหน้านี้แล้ว) · Hayt §2.2</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — both the sign and the direction</h3>
+    <ol><li>Homework 2, part 3 says −4 A with the arrow pointing up, but the dots run down: a real 4 A enters the + terminal, so it absorbs 40 W.</li>
+    <li><b>A negative written value = flowing against the arrow</b>; put the negative value straight into the formula, no need to flip the arrow yourself.</li></ol></div>
+  <div class="card"><h3>Try this 2 — the sum is always zero</h3>
+    <ol><li>Homework 2: \(P_{\text{supp}}\) = 4 + 16 − 40 + 50 − 30 = 0 · exercise 5: \(P_{\text{abs}}\) = −56 + 16 − 60 + 160 − 60 = 0.</li>
+    <li>If the sum is not zero, one part has a sign mistake.</li></ol></div>
+  <div class="card"><h3>Try this 3 — a dependent source</h3>
+    <ol><li>Exercise 5: \(v_x = -12\) V, so \(0.25v_x = -3\) A along its arrow (a real 3 A upward); the dependent source supplies 60 W.</li>
+    <li>Question: if you read \(v_x = +12\) V (the polarity flipped), what would the sum of \(P_{\text{abs}}\) be, and what does it tell you?</li></ol>
+    <div class="book">Source: chapter 2 slides, pp. 14, 19, 21–22 and exercises 1, 2, 4, 5 (the pictures and the teacher's solutions are on this page) · Hayt §2.2</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), t = MC.t, ui = MC.ui, fd = (x, n = 2) => ALG.fmtDec(x, n);
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* ---------- A: one element, live ---------- */
+const SA = { V: 6, I: 2, dir: 'in' };
+const elA = new CH2.Elem(document.getElementById('cvA'), {}); elA.set(3);
+const updA = () => { const enters = SA.dir === 'in', P = enters ? SA.V * SA.I : -SA.V * SA.I;
+  elA.d = { kind: 'box', orient: 'h', plus: 'a', vText: `${SA.V < 0 ? '−' : ''}${Math.abs(SA.V)} V`, iText: `${SA.I} A`, iFrom: enters ? 'a' : 'b', iSign: SA.I >= 0 ? 1 : -1, P, Ptext: `${P < 0 ? '−' : ''}${fd(Math.abs(P))} W` };
+  document.getElementById('wA').innerHTML = tx(enters ? al([`P_{\\text{abs}} &= V_{AB}\\,I = (${SA.V})(${SA.I}) = ${fd(P)}\\ \\text{W}`]) : al([`P_{\\text{supp}} &= V_{AB}\\,I = (${SA.V})(${SA.I}) = ${fd(-P)}\\ \\text{W}`, `P_{\\text{abs}} &= -P_{\\text{supp}} = ${fd(P)}\\ \\text{W}`]), true) +
+    `<div class="${P < 0 ? 'answer' : P > 0 ? 'badbox' : 'warnbox'}">${P < 0 ? t(`อุปกรณ์ <b>จ่าย</b> กำลัง ${fd(-P)} W`, `The part <b>supplies</b> ${fd(-P)} W`) : P > 0 ? t(`อุปกรณ์ <b>รับ</b> กำลัง ${fd(P)} W`, `The part <b>absorbs</b> ${fd(P)} W`) : t('ไม่มีกำลัง', 'No power')}</div>`; };
+ui.slider(document.getElementById('ctlA'), { id: 'sVA', label: 'V_AB', min: -12, max: 12, step: 1, value: 6, fmt: v => `${v} V`, oninput: v => { SA.V = v; updA(); } });
+ui.slider(document.getElementById('ctlA'), { id: 'sIA', label: 'I', min: 0, max: 5, step: 0.5, value: 2, fmt: v => `${v} A`, oninput: v => { SA.I = v; updA(); } });
+ui.radio(document.getElementById('ctlA'), [{ id: 'dIn', label: t('กระแสเข้าขั้ว +', 'current enters +'), on: true }, { id: 'dOut', label: t('กระแสออกจากขั้ว +', 'current leaves +') }], id => { SA.dir = id === 'dIn' ? 'in' : 'out'; updA(); });
+updA();
+
+/* ---------- single elements: Ex 6 and homework 1 ---------- */
+/* each: d for CH2.Elem; ask unit; the reasoning in three steps */
+function single(box, id, no, title, d, unit, ans, lines) {
+  const s = document.createElement('section'); s.className = 'prob sub-item'; s.id = id;
+  s.innerHTML = `<div class="prob-head"><span class="prob-no">${no}</span><div><h2>${title}</h2></div></div>
+    <div class="duo"><div class="card sim"><canvas></canvas></div><div class="card solve"><div class="askbox"></div><div class="st"></div></div></div>`;
+  box.appendChild(s); MC.renderMath(s.querySelector('.prob-head'));
+  const el = new CH2.Elem(s.querySelector('canvas'), d);
+  LS.ask(s.querySelector('.askbox'), { fields: [{ label: `P_abs (${unit}) =`, ok: x => Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans) * 0.005) }],
+    check: v => Math.abs(Math.abs(v[0]) - Math.abs(ans)) <= Math.max(0.011, Math.abs(ans) * 0.005) ? t('ขนาดถูก แต่เครื่องหมายผิด: กระแสเข้าหรือออกจากขั้ว + ?', 'Right size, wrong sign: does the current enter or leave +?') : '' });
+  LS.stepper(s.querySelector('.st'), { steps: lines, answer: d.answer, onStep: k => el.set(k) });
+}
+const enterLine = (who, I, enters) => enters ? t(`<b>ดูกระแส</b>: ${who} ไหล<b>เข้า</b>ขั้ว + (A) จึงใช้ \\(P_{\\text{abs}} = V_{AB}\\,I\\) ได้ตรง ๆ`, `<b>Look at the current</b>: ${who} <b>enters</b> the + terminal (A), so \\(P_{\\text{abs}} = V_{AB}\\,I\\) applies directly`)
+  : t(`<b>ดูกระแส</b>: ${who} ไหล<b>ออกจาก</b>ขั้ว + (A) จึงคิด \\(P_{\\text{supp}} = V_{AB}\\,I\\) ก่อน แล้ว \\(P_{\\text{abs}} = -P_{\\text{supp}}\\)`, `<b>Look at the current</b>: ${who} <b>leaves</b> the + terminal (A), so first \\(P_{\\text{supp}} = V_{AB}\\,I\\), then \\(P_{\\text{abs}} = -P_{\\text{supp}}\\)`);
+const nameLine = (where, v) => ({ why: t(`<b>ตั้งชื่อขั้ว</b>: ขั้ว + (${where.th}) เป็น A ขั้ว − เป็น B`, `<b>Name the terminals</b>: the + terminal (${where.en}) is A, the − terminal is B`), tex: `V_{AB} = ${v}` });
+const box6 = document.getElementById('items6'), boxH = document.getElementById('itemsH1');
+single(box6, 'ex6a', '6a', t('(a) กล่อง 6 V มีกระแส 1 pA', '(a) a 6 V box carrying 1 pA'),
+  { kind: 'box', orient: 'h', plus: 'b', vText: '6 V', iText: '1 pA', iFrom: 'b', iSign: 1, P: 6e-12, Ptext: '6 pW', answer: t('<b>P<sub>abs</sub> = 6 pW</b> (รับ) ตรงกับเฉลยในห้อง', '<b>P<sub>abs</sub> = 6 pW</b> (absorbs), as in class') }, 'pW', 6,
+  [nameLine({ th: 'ขั้วขวา', en: 'the right end' }, '6\\ \\text{V}'), { why: enterLine(t('กระแส 1 pA', 'the 1 pA'), 1, true) }, { why: t('<b>คำนวณ</b>', '<b>Compute</b>'), tex: `P_{\\text{abs}} = V_{AB}\\,I = (6)(1\\times10^{-12}) = \\boxed{6\\ \\text{pW}}` }]);
+single(box6, 'ex6b', '6b', t('(b) ตัวต้านทาน 1 V มีกระแส 10 mA', '(b) a resistor with 1 V carrying 10 mA'),
+  { kind: 'res', orient: 'h', plus: 'a', vText: '1 V', iText: '10 mA', iFrom: 'a', iSign: 1, P: 0.01, Ptext: '10 mW', answer: t('<b>P<sub>abs</sub> = 10 mW</b> (รับ) ตัวต้านทานรับกำลังเสมอ', '<b>P<sub>abs</sub> = 10 mW</b> (absorbs); a resistor always absorbs') }, 'mW', 10,
+  [nameLine({ th: 'ขั้วซ้าย', en: 'the left end' }, '1\\ \\text{V}'), { why: enterLine(t('กระแส 10 mA', 'the 10 mA'), 1, true) }, { why: t('<b>คำนวณ</b>', '<b>Compute</b>'), tex: `P_{\\text{abs}} = V_{AB}\\,I = (1)(10\\times10^{-3}) = \\boxed{10\\ \\text{mW}}` }]);
+single(box6, 'ex6c', '6c', t('(c) แหล่งจ่ายกระแส 2 A คร่อม 10 V', '(c) a 2 A current source across 10 V'),
+  { kind: 'isrc', orient: 'v', plus: 'a', vText: '10 V', iText: '2 A', iFrom: 'b', iSign: 1, P: -20, Ptext: '−20 W', answer: t('<b>P<sub>abs</sub> = −20 W</b> แหล่งจ่าย<b>จ่าย</b>กำลัง 20 W (ในห้อง: กลับรูปให้ A อยู่บน แล้วได้ −20 W เท่ากัน)', '<b>P<sub>abs</sub> = −20 W</b>: the source <b>supplies</b> 20 W (in class the figure was turned so A is on top, giving the same −20 W)') }, 'W', -20,
+  [nameLine({ th: 'ขั้วบน', en: 'the top' }, '10\\ \\text{V}'), { why: enterLine(t('แหล่งจ่ายดันกระแส 2 A ขึ้น จึงเป็นกระแสที่', 'the source pushes 2 A upward, so the current'), 1, false) }, { why: t('<b>คำนวณ</b>', '<b>Compute</b>'), tex: al(['P_{\\text{supp}} &= V_{AB}\\,I = (10)(2) = 20\\ \\text{W}', 'P_{\\text{abs}} &= -P_{\\text{supp}} = \\boxed{-20\\ \\text{W}}']) }]);
+single(boxH, 'hw1a', 'H1a', t('(a) อุปกรณ์ 2 V มีกระแส 1 A ไหลเข้าขั้วบน', '(a) a 2 V element with 1 A entering the top'),
+  { kind: 'blob', orient: 'v', plus: 'b', vText: '2 V', iText: '1 A', iFrom: 'a', iSign: 1, P: -2, Ptext: '−2 W', answer: t('<b>P<sub>abs</sub> = −2 W</b> ตรงกับคำตอบในสไลด์', '<b>P<sub>abs</sub> = −2 W</b>, as in the slide answer') }, 'W', -2,
+  [nameLine({ th: 'ขั้วล่าง', en: 'the bottom' }, '2\\ \\text{V}'), { why: enterLine(t('กระแส 1 A ไหลลง เข้าขั้วบน (ขั้ว −) จึงเป็นกระแสที่', 'the 1 A flows down into the top (the − terminal), so the current'), 1, false) }, { why: t('<b>คำนวณ</b>', '<b>Compute</b>'), tex: al(['P_{\\text{supp}} &= V_{AB}\\,I = (2)(1) = 2\\ \\text{W}', 'P_{\\text{abs}} &= -P_{\\text{supp}} = \\boxed{-2\\ \\text{W}}']) }]);
+single(boxH, 'hw1b', 'H1b', t('(b) ตัวเหนี่ยวนำ: \\(-16e^{-t}\\) V และ \\(8e^{-t}\\) mA ที่ \\(t = 500\\) ms', '(b) an inductor: \\(-16e^{-t}\\) V and \\(8e^{-t}\\) mA at \\(t = 500\\) ms'),
+  { kind: 'ind', orient: 'h', plus: 'a', vText: '−16e⁻ᵗ V', iText: '8e⁻ᵗ mA', iFrom: 'a', iSign: 1, P: -0.04709, Ptext: '−47.09 mW', answer: t('<b>P<sub>abs</sub> = −47.09 mW</b> ตรงกับคำตอบในสไลด์ (แรงดันติดลบ ตัวเหนี่ยวนำกำลังคืนพลังงานที่สะสมไว้)', '<b>P<sub>abs</sub> = −47.09 mW</b>, as in the slide answer (the voltage is negative: the inductor is giving back stored energy)') }, 'mW', -128 * Math.exp(-1),
+  [nameLine({ th: 'ขั้วซ้าย', en: 'the left end' }, '-16e^{-t}\\ \\text{V}'), { why: enterLine(t('กระแส \\(8e^{-t}\\) mA', 'the \\(8e^{-t}\\) mA'), 1, true) },
+    { why: t('<b>คำนวณ</b> แล้วแทน \\(t = 0.5\\) s', '<b>Compute</b>, then put in \\(t = 0.5\\) s'), tex: al(['P_{\\text{abs}} &= (-16e^{-t})(8e^{-t}\\times10^{-3}) = -0.128\\,e^{-2t}\\ \\text{W}', '&= -0.128\\,e^{-1} = \\boxed{-47.09\\ \\text{mW}}']) }]);
+single(boxH, 'hw1c', 'H1c', t('(c) แหล่งจ่ายกระแสไม่อิสระ \\(10^{-3}i_1\\) คร่อม 2 V โดย \\(i_1 = 100\\) mA', '(c) a dependent current source \\(10^{-3}i_1\\) across 2 V, with \\(i_1 = 100\\) mA'),
+  { kind: 'dep', orient: 'v', plus: 'a', vText: '2 V', iText: '10⁻³ i₁', iFrom: 'b', iSign: 1, P: -2e-4, Ptext: '−200 µW', answer: t('<b>P<sub>abs</sub> = −200 µW</b> ตรงกับคำตอบในสไลด์', '<b>P<sub>abs</sub> = −200 µW</b>, as in the slide answer') }, 'µW', -200,
+  [nameLine({ th: 'ขั้วบน', en: 'the top' }, '2\\ \\text{V}'),
+    { why: t('<b>หาค่ากระแสของแหล่งจ่ายไม่อิสระ</b> แล้วดูทิศ: ลูกศรชี้ขึ้น กระแสจึงไหล<b>ออกจาก</b>ขั้ว + (บน)', '<b>Find the dependent source\'s current</b>, then its direction: the arrow points up, so the current <b>leaves</b> the + terminal (top)'), tex: `I = 10^{-3}\\,i_1 = 10^{-3}(100\\times10^{-3}) = 0.1\\ \\text{mA}` },
+    { why: t('<b>คำนวณ</b>', '<b>Compute</b>'), tex: al(['P_{\\text{supp}} &= V_{AB}\\,I = (2)(0.1\\times10^{-3}) = 200\\ \\mu\\text{W}', 'P_{\\text{abs}} &= -P_{\\text{supp}} = \\boxed{-200\\ \\mu\\text{W}}']) }]);
+
+/* ---------- whole circuits ---------- */
+const HW2 = { ground: 'cb', nodes: { bl: [0, 3], tl: [0, 0], n1: [2.6, 0], ct: [4.2, 0], cb: [4.2, 3], dt: [7.8, 0], db: [7.8, 3], tr: [10.2, 0], br: [10.2, 3] },
+  parts: [{ id: 'A', type: 'I', a: 'bl', b: 'tl', value: 2 }, { id: 'B', type: 'V', a: 'n1', b: 'tl', value: 8 }, { id: 'C', type: 'I', a: 'cb', b: 'ct', value: -4 }, { id: 'D', type: 'V', a: 'dt', b: 'db', value: 10 }, { id: 'E', type: 'I', a: 'db', b: 'br', value: -3 },
+    { type: 'W', a: 'n1', b: 'ct' }, { type: 'W', a: 'ct', b: 'dt' }, { type: 'W', a: 'dt', b: 'tr' }, { type: 'W', a: 'tr', b: 'br' }, { type: 'W', a: 'bl', b: 'cb' }, { type: 'W', a: 'cb', b: 'db' }],
+  els: [{ id: 'A', plus: 'tl', v: 2, ref: { from: 'bl', val: 2 }, lab: 'L' }, { id: 'B', plus: 'n1', v: 8, ref: { from: 'tl', val: 2 }, lab: 'U', refShow: false }, { id: 'C', plus: 'ct', v: 10, ref: { from: 'cb', val: -4 }, lab: 'L' },
+    { id: 'D', plus: 'dt', v: 10, ref: { from: 'db', val: 5 }, lab: 'R' }, { id: 'E', plus: 'br', v: 10, ref: { from: 'db', val: -3 }, lab: 'D' }] };
+const pcH2 = new CH2.PowerCkt(document.getElementById('cvH2'), HW2);
+const supStep = (k, kind, v, I, extra) => ({ why: t(`<b>อุปกรณ์ ${k}</b> (${kind.th}): ขั้ว + เป็น A จึง \\(V_{AB} = ${v}\\) V · กระแส ${I} A ตามลูกศรไหล<b>ออกจาก</b>ขั้ว + จึงใช้ \\(P_{\\text{supp}} = V_{AB}\\,I\\)${extra ? ' · ' + extra.th : ''}`, `<b>Part ${k}</b> (${kind.en}): the + terminal is A, so \\(V_{AB} = ${v}\\) V · the ${I} A along the arrow <b>leaves</b> the + terminal, so \\(P_{\\text{supp}} = V_{AB}\\,I\\)${extra ? ' · ' + extra.en : ''}`),
+  tex: `P_{\\text{supp},${k}} = (${v})(${I}) = \\boxed{${v * I}\\ \\text{W}}` });
+LS.ask(document.getElementById('askH2'), { fields: [{ label: t('P_supp ของตัวซ้ายสุด (W) =', 'P_supp of the leftmost (W) ='), ok: x => Math.abs(x - 4) < 1e-6, w: 5 }] });
+LS.stepper(document.getElementById('stH2'), {
+  steps: [supStep(1, { th: 'แหล่งจ่ายกระแส 2 A', en: '2 A current source' }, 2, 2), supStep(2, { th: 'แหล่งจ่ายแรงดัน 8 V', en: '8 V voltage source' }, 8, 2, { th: 'กระแส 2 A เดียวกันไหลผ่าน เข้าทางขั้ว − ออกทางขั้ว +', en: 'the same 2 A passes through, in at − and out at +' }),
+    supStep(3, { th: 'แหล่งจ่ายกระแส −4 A', en: '−4 A current source' }, 10, -4, { th: 'ค่าติดลบ: กระแสจริงไหลลง เข้าขั้ว + จึงรับกำลัง', en: 'negative: the real current flows down into +, so it absorbs' }),
+    supStep(4, { th: 'แหล่งจ่ายแรงดัน 10 V', en: '10 V voltage source' }, 10, 5), supStep(5, { th: 'แหล่งจ่ายกระแส −3 A', en: '−3 A current source' }, 10, -3, { th: 'ค่าติดลบ: จริง ๆ แล้วรับกำลัง 30 W', en: 'negative: it really absorbs 30 W' }),
+    { why: t('<b>ตรวจคำตอบ</b>: กำลังที่จ่ายรวมกันต้องเป็นศูนย์ (สิ่งที่จ่ายออก = สิ่งที่รับเข้า)', '<b>Check</b>: the supplied powers must add to zero (what goes out = what comes in)'), tex: `\\sum P_{\\text{supp}} = 4 + 16 - 40 + 50 - 30 = 0 \\;\\checkmark` }],
+  answer: t('<b>ตัวซ้ายสุดจ่าย 4 W</b> (ตรงกับคำตอบในสไลด์) · ทั้งหมด: P<sub>supp</sub> = 4, 16, −40, 50, −30 W ตรงกับเฉลยในห้อง', '<b>The leftmost part supplies 4 W</b> (the slide answer) · all of them: P<sub>supp</sub> = 4, 16, −40, 50, −30 W, as in class'),
+  onStep: k => { pcH2.focus = k >= 1 && k <= 5 ? k - 1 : -1; pcH2.shown = new Set([...Array(Math.min(k, 5)).keys()]); pcH2.sumShown = k >= 6; } });
+
+const S5 = { ground: 'b0', nodes: { b0: [0, 3], t0: [0, 0], L: [3, 0], lb: [3, 3], l3: [4.2, 0], r3: [6.6, 0], Rn: [7.8, 0], rb: [7.8, 3], dt: [10.6, 0], db: [10.6, 3] },
+  parts: [{ id: 'X1', type: 'I', a: 'b0', b: 't0', value: 7 }, { type: 'W', a: 't0', b: 'L' }, { type: 'W', a: 'L', b: 'l3' }, { id: 'X2', type: 'R', a: 'L', b: 'lb', value: 4, draw: 'box' },
+    { id: 'X3', type: 'V', a: 'r3', b: 'l3', value: 12, draw: 'box' }, { type: 'W', a: 'r3', b: 'Rn' }, { id: 'X4', type: 'R', a: 'Rn', b: 'rb', value: 2.5, draw: 'box' }, { type: 'W', a: 'Rn', b: 'dt' },
+    { id: 'X5', type: 'G', a: 'dt', b: 'db', gain: 0.25, c: 'l3', d: 'r3' }, { type: 'W', a: 'b0', b: 'lb' }, { type: 'W', a: 'lb', b: 'rb' }, { type: 'W', a: 'rb', b: 'db' }],
+  els: [{ id: 'X1', plus: 't0', v: 8, ref: { from: 'b0', val: 7 }, lab: 'L', refY: 0.28 }, { id: 'X2', plus: 'L', v: 8, ref: { from: 'L', val: 2 }, lab: 'R', refY: 0.72 }, { id: 'X3', plus: 'r3', v: 12, ref: { from: 'l3', val: 5 }, lab: 'U' },
+    { id: 'X4', plus: 'Rn', v: 20, ref: { from: 'Rn', val: 8 }, lab: 'R', refY: 0.28, labY: 0.62 }, { id: 'X5', plus: 'dt', v: 20, ref: { from: 'dt', val: null, txt: '0.25vₓ' }, lab: 'R', refY: 0.72 }] };
+const pcS5 = new CH2.PowerCkt(document.getElementById('cvS5'), S5);
+LS.ask(document.getElementById('askS5'), { fields: [{ label: t('P_abs ของกล่อง 4 (W) =', 'P_abs of box 4 (W) ='), ok: x => Math.abs(x - 160) < 1e-6, w: 5 }] });
+const absStep = (k, what, v, I, inPlus, val) => ({ why: inPlus ? t(`<b>อุปกรณ์ ${k}</b> (${what.th}): กระแส ${Math.abs(I)} A ไหล<b>เข้า</b>ขั้ว + → \\(P_{\\text{abs}} = V_{AB}\\,I\\)`, `<b>Part ${k}</b> (${what.en}): ${Math.abs(I)} A <b>enters</b> the + terminal → \\(P_{\\text{abs}} = V_{AB}\\,I\\)`)
+    : t(`<b>อุปกรณ์ ${k}</b> (${what.th}): กระแส ${Math.abs(I)} A ไหล<b>ออกจาก</b>ขั้ว + → \\(P_{\\text{abs}} = -V_{AB}\\,I\\)`, `<b>Part ${k}</b> (${what.en}): ${Math.abs(I)} A <b>leaves</b> the + terminal → \\(P_{\\text{abs}} = -V_{AB}\\,I\\)`),
+  tex: `P_{\\text{abs},${k}} = ${inPlus ? '' : '-'}(${v})(${Math.abs(I)}) = \\boxed{${val}\\ \\text{W}}` });
+LS.stepper(document.getElementById('stS5'), {
+  steps: [{ why: t('<b>หา \\(v_x\\) ก่อน</b>: เครื่องหมาย + ของ \\(v_x\\) อยู่ทางซ้ายของกล่อง 3 แต่ 12 V มี + อยู่ทางขวา (สองค่านี้กลับขั้วกัน) แล้วแหล่งจ่ายไม่อิสระให้กระแส \\(0.25v_x\\) ตามลูกศร (ชี้ลง)', '<b>Find \\(v_x\\) first</b>: the + of \\(v_x\\) is at the left of box 3, while the 12 V has its + at the right (opposite polarities). The dependent source then gives \\(0.25v_x\\) along its arrow (pointing down)'),
+      tex: al(['v_x &= -12\\ \\text{V}', '0.25\\,v_x &= 0.25(-12) = -3\\ \\text{A}\\quad(\\text{3 A }\\uparrow)']) },
+    absStep(1, { th: 'แหล่งจ่ายกระแส 7 A', en: '7 A current source' }, 8, 7, false, -56), absStep(2, { th: 'กล่อง 8 V', en: '8 V box' }, 8, 2, true, 16),
+    { why: t('<b>อุปกรณ์ 3</b> (กล่อง 12 V): กระแส 5 A ไหลเข้าทางซ้ายซึ่งเป็นขั้ว − จึงออกทางขั้ว + → จ่ายกำลัง (ในห้องเขียน \\(P_{\\text{abs}} = (12)(-5)\\))', '<b>Part 3</b> (12 V box): the 5 A enters at the left, the − terminal, so it leaves through + → it supplies (in class: \\(P_{\\text{abs}} = (12)(-5)\\))'), tex: `P_{\\text{abs},3} = (12)(-5) = \\boxed{-60\\ \\text{W}}` },
+    absStep(4, { th: 'กล่อง 20 V', en: '20 V box' }, 20, 8, true, 160),
+    { why: t('<b>อุปกรณ์ 5</b> (แหล่งจ่ายไม่อิสระ): กระแสตามลูกศร (ชี้ลง เข้าขั้ว +) คือ \\(0.25v_x = -3\\) A', '<b>Part 5</b> (dependent source): the current along its arrow (down, into +) is \\(0.25v_x = -3\\) A'), tex: `P_{\\text{abs},5} = (20)(0.25)(-12) = \\boxed{-60\\ \\text{W}}` },
+    { why: t('<b>ตรวจคำตอบ</b>: ผลรวมของกำลังที่รับต้องเป็นศูนย์', '<b>Check</b>: the absorbed powers must add to zero'), tex: `\\sum P_{\\text{abs}} = -56 + 16 - 60 + 160 - 60 = 0 \\;\\checkmark` }],
+  answer: t('<b>P<sub>abs</sub> = −56, 16, −60, 160, −60 W</b> ตรงกับเฉลยของผู้สอน · ตัว 1, 3, 5 จ่าย ตัว 2, 4 รับ', '<b>P<sub>abs</sub> = −56, 16, −60, 160, −60 W</b>, as in the teacher\'s solution · parts 1, 3, 5 supply, parts 2, 4 absorb'),
+  onStep: k => { const map = [-1, 2, 0, 1, 2, 3, 4, -1]; pcS5.focus = map[Math.min(k, 7)]; pcS5.shown = new Set(k <= 1 ? [] : [...Array(Math.min(k - 1, 5)).keys()]); pcS5.sumShown = k >= 7; } });
+
+/* ---------- B: battery charging ---------- */
+const CHG = { ground: 'g', nodes: { a: [0, 0], g: [0, 3], b: [5.4, 0], h: [5.4, 3] },
+  parts: [{ id: 'B1', type: 'V', a: 'a', b: 'g', value: 12, battery: true }, { id: 'R', type: 'R', a: 'a', b: 'b', value: 1.5 }, { id: 'B2', type: 'V', a: 'b', b: 'h', value: 9, battery: true }, { type: 'W', a: 'g', b: 'h' }],
+  els: [{ id: 'B1', plus: 'a', v: 12, ref: { from: 'g', val: null }, lab: 'L' }, { id: 'R', plus: 'a', v: null, ref: { from: 'a', val: null }, lab: 'U' }, { id: 'B2', plus: 'b', v: 9, ref: { from: 'b', val: null }, lab: 'R' }] };
+const pcB = new CH2.PowerCkt(document.getElementById('cvB'), CHG); pcB.shown = new Set([0, 1, 2]); pcB.sumShown = true;
+const roB = () => { const P = [0, 1, 2].map(k => pcB.info(k).P); document.getElementById('roB').innerHTML = ui.kv(P.map((p, k) => [`${k + 1} ${[t('แบตเตอรี่ 12 V', '12 V battery'), t('ตัวต้านทาน 1.5 Ω', '1.5 Ω resistor'), t(`แบตเตอรี่ ${CHG.els[2].v} V`, `${CHG.els[2].v} V battery`)][k]}`, p < 0 ? t(`จ่าย ${fd(-p)} W`, `supplies ${fd(-p)} W`) : t(`รับ ${fd(p)} W`, `absorbs ${fd(p)} W`)])); };
+ui.slider(document.getElementById('ctlB'), { id: 'sV2', label: t('แบตเตอรี่ตัวขวา', 'right battery'), min: 0, max: 18, step: 0.5, value: 9, fmt: v => `${v} V`, oninput: v => { pcB.ckt.set('B2', 'value', v); pcB.ckt.solve(); CHG.els[2].v = v; roB(); } });
+roB();
+});
+</script>
+</body>
+</html>

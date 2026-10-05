@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="8.1 — Instantaneous and Average Power">8.1 — กำลังไฟฟ้าขณะใด ๆ และกำลังเฉลี่ย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">กำลังไฟฟ้าขณะใด ๆ และกำลังเฉลี่ย <span class="en">Instantaneous and average power — p(t) = v(t) i(t) and its mean P</span></h1>
+<h1 data-l="en">Instantaneous and average power <span class="en">p(t) = v(t) i(t) and its mean P</span></h1>
+
+<p class="sub" data-l="th">ในวงจรกระแสตรง กำลังคือ \(P = VI\) ค่าเดียวที่คงที่ แต่เมื่อแรงดันและกระแสเป็นคลื่นไซน์ ผลคูณ \(p(t) = v(t)\,i(t)\) ก็เปลี่ยนไปตามเวลา สไลด์หน้า 3 จึงนิยาม<b>กำลังไฟฟ้าขณะใด ๆ</b> ก่อน แล้วหน้า 4–5 หา<b>กำลังเฉลี่ย \(P\)</b> ซึ่งเป็นตัวเลขเดียวที่บอกว่าอุปกรณ์รับพลังงานไปใช้จริงเท่าใด ในบางช่วงของคาบ \(p(t)\) ติดลบ แปลว่าอุปกรณ์<b>คืนพลังงานกลับ</b>ให้แหล่งจ่าย ตัวเหนี่ยวนำและตัวเก็บประจุคืนพลังงานที่รับไว้ทั้งหมด กำลังเฉลี่ยของมันจึงเป็นศูนย์ หน้านี้มีภาพจำลอง \(p(t)\) (ส่วน A) ที่มาของสูตรกำลังเฉลี่ยและกรณีของ R, L, C (ส่วน B) และโจทย์สไลด์หน้า 7 (ข้อ 1)</p>
+<p class="sub" data-l="en">In a DC circuit power is the single constant \(P = VI\). When the voltage and the current are sinusoids, the product \(p(t) = v(t)\,i(t)\) changes with time. Slide p. 3 therefore defines the <b>instantaneous power</b> first, and pp. 4–5 find the <b>average power \(P\)</b>, the one number that says how much energy a device really takes. During part of each cycle \(p(t)\) is negative: the device <b>returns energy</b> to the source. Inductors and capacitors return all the energy they take, so their average power is zero. This page has a \(p(t)\) simulation (section A), where the average-power formula comes from and the cases of R, L and C (section B), and the problem of slide p. 7 (problem 1).</p>
+<div class="equation-box">$$ \begin{aligned} p(t) &= v(t)\,i(t) \\ P &= \frac{1}{T}\int_0^T p(t)\,dt \\ &= \tfrac12 V_m I_m\cos(\theta-\phi) \\ &= V_{\text{eff}}\,I_{\text{eff}}\cos(\theta-\phi)\ \ \text{W} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>\(p(t) = v(t)\,i(t)\)</b> ตามหลักเครื่องหมายแบบพาสซีฟ (passive sign convention: กระแสไหลเข้าขั้ว + ของแรงดัน): <b>\(p > 0\) อุปกรณ์รับพลังงาน</b> และ <b>\(p < 0\) อุปกรณ์คืนพลังงาน</b></li>
+  <li>ถ้า \(v = V_m\sin(\omega t + \theta)\) และ \(i = I_m\sin(\omega t + \phi)\) จะได้ \(p(t) = \tfrac12 V_m I_m\cos(\theta-\phi) - \tfrac12 V_m I_m\cos(2\omega t + \theta + \phi)\) คือ<b>ค่าคงที่บวกคลื่นที่ความถี่สองเท่า</b></li>
+  <li><b>กำลังเฉลี่ย \(P = \tfrac12 V_m I_m\cos(\theta-\phi) = V_{\text{eff}}I_{\text{eff}}\cos(\theta-\phi)\)</b> หน่วยวัตต์ (watt, W) โดย \(V_{\text{eff}} = V_m/\sqrt2\) คือค่ายังผล (effective value หรือ root mean square, rms) ของบทที่ 6 · \(P\) ขึ้นกับ<b>มุมต่างเฟส \(\theta-\phi\) เท่านั้น</b></li>
+  <li>ตัวต้านทาน: \(\theta-\phi = 0\) ได้ \(P_R = V_{\text{eff}}I_{\text{eff}} = I_{\text{eff}}^2R = V_{\text{eff}}^2/R\) · ตัวเหนี่ยวนำ (\(+90^\circ\)) และตัวเก็บประจุ (\(-90^\circ\)): <b>\(P_L = P_C = 0\)</b></li>
+  <li>ในวงจรหนึ่ง <b>กำลังเฉลี่ยที่แหล่งจ่ายส่งออกเท่ากับกำลังเฉลี่ยที่ตัวต้านทานรับ</b> (สไลด์หน้า 7: 50 W = 25 W + 25 W)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>\(p(t) = v(t)\,i(t)\)</b> with the passive sign convention (current entering the + terminal of the voltage): <b>\(p > 0\) the device takes energy</b>, <b>\(p < 0\) it gives energy back</b>.</li>
+  <li>With \(v = V_m\sin(\omega t + \theta)\) and \(i = I_m\sin(\omega t + \phi)\), \(p(t) = \tfrac12 V_m I_m\cos(\theta-\phi) - \tfrac12 V_m I_m\cos(2\omega t + \theta + \phi)\): <b>a constant plus a wave at twice the frequency</b>.</li>
+  <li><b>Average power \(P = \tfrac12 V_m I_m\cos(\theta-\phi) = V_{\text{eff}}I_{\text{eff}}\cos(\theta-\phi)\)</b> in watts (W), where \(V_{\text{eff}} = V_m/\sqrt2\) is the effective (root mean square, rms) value of chapter 6 · \(P\) depends <b>only on the phase difference \(\theta-\phi\)</b>.</li>
+  <li>Resistor: \(\theta-\phi = 0\) gives \(P_R = V_{\text{eff}}I_{\text{eff}} = I_{\text{eff}}^2R = V_{\text{eff}}^2/R\) · inductor (\(+90^\circ\)) and capacitor (\(-90^\circ\)): <b>\(P_L = P_C = 0\)</b>.</li>
+  <li>In a circuit, <b>the average power sent out by the sources equals the average power taken by the resistors</b> (slide p. 7: 50 W = 25 W + 25 W).</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<figure class="slide q wide"><img src="slides/ch8/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2, Introduction: often an integral part of circuit analysis is the determination of power delivered or absorbed; in the context of ac power the simple approach taken previously does not give a convenient picture, so several different power related quantities are introduced in this chapter">
+  <figcaption data-l="th">สไลด์หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 2 · tap to enlarge</figcaption></figure>
+<details class="orig"><summary><span data-l="th">ดูภาพรวมของบทที่ผู้สอนเขียนในห้อง (สไลด์ปี 2561)</span><span data-l="en">See the chapter overview the instructor wrote in class (2018 slides)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch8/L01.webp" width="1100" height="1380" loading="lazy" decoding="async" alt="2018 title slide and outline with handwriting: XL, XC give Q, the reactive power; R gives P, the average power; S, the apparent or complex power, S = P + jQ = |S| at angle theta minus phi; 0 &lt; p.f. ≤ 1; XL = jωL, XC = −j/ωC; I = 3 + 4j gives I* = 3 − 4j, I = 5∠30 gives I* = 5∠−30; p(t) = v(t) i(t); S = Vrms I*rms = P + jQ; cos(θ − φ) = p.f., lagging or leading">
+    <figcaption data-l="th">\(X_L, X_C \to Q\), \(R \to P\), \(\mathbf{S} = P + jQ = |\mathbf{S}|\angle(\theta-\phi)\), สังยุค \(\mathbf{I}^*\) และ \(\cos(\theta-\phi) = \) PF ตามหลังหรือนำหน้า</figcaption><figcaption data-l="en">\(X_L, X_C \to Q\), \(R \to P\), \(\mathbf{S} = P + jQ = |\mathbf{S}|\angle(\theta-\phi)\), the conjugate \(\mathbf{I}^*\), and \(\cos(\theta-\phi) = \) PF, lagging or leading</figcaption></figure></div></details>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>p(t) = v·i</a><a href="#tB"><b>B</b>กำลังเฉลี่ยและ R, L, C</a><a href="#ex1"><b>1</b>สไลด์หน้า 7</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>p(t) = v·i</a><a href="#tB"><b>B</b>Average power and R, L, C</a><a href="#ex1"><b>1</b>Slide p. 7</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">p(t) = v(t)·i(t): พลังงานไหลเข้าและไหลกลับ</h2><h2 data-l="en">p(t) = v(t)·i(t): energy flowing in and back</h2>
+    <div class="src" data-l="th">สไลด์หน้า 3 · Hayt §11.1, Example 11.2</div><div class="src" data-l="en">Slide p. 3 · Hayt §11.1, Example 11.2</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch8/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3, Instantaneous Power: the instantaneous power delivered to any device is the product of the instantaneous voltage across it and the instantaneous current through it (passive sign convention); p(t) = v(t)i(t) = i²R = v²/R for a resistor, L i di/dt for an inductor and C v dv/dt for a capacitor, with a source driving R and L in series">
+    <figcaption data-l="th">สไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 3 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แหล่งจ่าย \(v_s = V_m\sin(\omega t + \theta)\) ต่อกับโหลด \(Z = R + jX\) ค่าตั้งต้นคือ Hayt Example 11.2: ตำราให้ \(v = 4\cos(\pi t/6)\) V ซึ่งต้อง<b>แปลงเป็น sin ก่อน</b> \(v = 4\sin(\pi t/6 + 90^\circ)\) V จึงได้ \(\mathbf{V} = 4\angle 90^\circ\) V คร่อม \(Z = 2\angle 60^\circ\ \Omega\) กราฟแรกคือ \(v\) กับ \(i\) กราฟที่สองคือผลคูณ \(p = vi\): <b>พื้นที่สีเขียวคือพลังงานที่โหลดรับ พื้นที่สีแดงคือพลังงานที่คืนกลับ</b> และเส้นประสีเขียวคือค่าเฉลี่ย \(P\) ลูกศรบนลวดด้านบนบอกทิศของพลังงานในขณะนั้น และแท่ง \(w\) ข้างตัวเหนี่ยวนำหรือตัวเก็บประจุคือพลังงานที่มันสะสมไว้ ลองกด "L ล้วน": พื้นที่เขียวกับแดงเท่ากันพอดี จึงได้ \(P = 0\) แล้วเลื่อนมุม \(\theta\) ของแหล่งจ่าย: \(p(t)\) เลื่อนตาม แต่ \(P\) ไม่เปลี่ยน</p>
+  <p class="lead" data-l="en">A source \(v_s = V_m\sin(\omega t + \theta)\) drives a load \(Z = R + jX\). The default is Hayt Example 11.2: the book gives \(v = 4\cos(\pi t/6)\) V, which must <b>first be turned into sin</b>, \(v = 4\sin(\pi t/6 + 90^\circ)\) V, so \(\mathbf{V} = 4\angle 90^\circ\) V across \(Z = 2\angle 60^\circ\ \Omega\). The first graph shows \(v\) and \(i\); the second their product \(p = vi\): <b>green area is energy the load takes, red area is energy it gives back</b>, and the dashed green line is the average \(P\). The arrow above the top wire shows which way energy flows at this instant, and the bar \(w\) beside an inductor or capacitor is the energy it stores. Press "L only": the green and red areas are equal, so \(P = 0\). Then move the source angle \(\theta\): \(p(t)\) shifts, but \(P\) does not change.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">กำลังเฉลี่ย: ทำไมจึงเป็น ½VmIm cos(θ − φ) และกรณีของ R, L, C</h2><h2 data-l="en">Average power: why it is ½VmIm cos(θ − φ), and the cases of R, L, C</h2>
+    <div class="src" data-l="th">สไลด์หน้า 4–6 · Hayt §11.2</div><div class="src" data-l="en">Slides pp. 4–6 · Hayt §11.2</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch8/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4, Average Power (P): the average value is denoted by the capital letter P, since it is not a function of time; P = 1/(t2 − t1) times the integral of p(t) dt from t1 to t2; this dependence on a specific time interval may be expressed more simply if p(t) is periodic">
+      <figcaption data-l="th">สไลด์หน้า 4</figcaption><figcaption data-l="en">Slide p. 4</figcaption></figure>
+    <figure class="slide"><img src="slides/ch8/p05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5, Average Power (P): if v(t) = Vm sin(ωt + θ) = Vm∠θ and i(t) = Im sin(ωt + φ) = Im∠φ through an element, p(t) = v(t)i(t) = VmIm sin(ωt + θ) sin(ωt + φ); p(t) = ½VmIm cos(θ − φ) = ½VmIm cos(2ωt + θ + φ); boxed: P = ½VmIm cos(θ − φ) = Veff Ieff cos(θ − φ) watt">
+      <figcaption data-l="th">สไลด์หน้า 5</figcaption><figcaption data-l="en">Slide p. 5</figcaption></figure></div>
+  <div class="warnbox" data-l="th"><b>สไลด์หน้า 5 พิมพ์เครื่องหมายระหว่างสองพจน์ของ \(p(t)\) เป็น "="</b> ที่ถูกคือ "−" ตามเอกลักษณ์ในขั้นที่ 2 ข้างล่าง (Hayt ใช้อ้างอิงโคไซน์ \(v = V_m\cos(\omega t + \theta)\) จึงได้ "+")</div>
+  <div class="warnbox" data-l="en"><b>Slide p. 5 prints "=" between the two terms of \(p(t)\).</b> It should be "−", by the identity in step 2 below (Hayt uses the cosine reference \(v = V_m\cos(\omega t + \theta)\), which gives "+").</div>
+  <div class="card solve"><div id="stB"></div></div>
+  <figure class="slide q wide"><img src="slides/ch8/p06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6, the average power at each element: resistor, voltage phasor equals current phasor, PR = VR·IR = VR²/R = IR²·R; capacitor, voltage lags current by 90 degrees, θ − φ = −90, PC = 0; inductor, voltage leads current by 90 degrees, θ − φ = +90, PL = 0">
+    <figcaption data-l="th">สไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 6 · tap to enlarge</figcaption></figure>
+  <div class="card eqcard" style="overflow-x:auto;position:relative">
+    <table class="tbl" style="min-width:520px" data-l="th"><tr><th>อุปกรณ์</th><th>มุมของ V เทียบ I</th><th>กำลังเฉลี่ย</th></tr>
+      <tr><td>ตัวต้านทาน</td><td>\(\theta - \phi = 0^\circ\) (เฟสเดียวกัน)</td><td>\(P_R = \tfrac12 V_m I_m = V_{\text{eff}}I_{\text{eff}} = I_{\text{eff}}^2 R = V_{\text{eff}}^2/R\)</td></tr>
+      <tr><td>ตัวเหนี่ยวนำ</td><td>\(\theta - \phi = +90^\circ\) (V นำหน้า)</td><td>\(P_L = \tfrac12 V_m I_m\cos 90^\circ = 0\)</td></tr>
+      <tr><td>ตัวเก็บประจุ</td><td>\(\theta - \phi = -90^\circ\) (V ตามหลัง)</td><td>\(P_C = \tfrac12 V_m I_m\cos(-90^\circ) = 0\)</td></tr></table>
+    <table class="tbl" style="min-width:520px" data-l="en"><tr><th>Element</th><th>Angle of V relative to I</th><th>Average power</th></tr>
+      <tr><td>Resistor</td><td>\(\theta - \phi = 0^\circ\) (in phase)</td><td>\(P_R = \tfrac12 V_m I_m = V_{\text{eff}}I_{\text{eff}} = I_{\text{eff}}^2 R = V_{\text{eff}}^2/R\)</td></tr>
+      <tr><td>Inductor</td><td>\(\theta - \phi = +90^\circ\) (V leads)</td><td>\(P_L = \tfrac12 V_m I_m\cos 90^\circ = 0\)</td></tr>
+      <tr><td>Capacitor</td><td>\(\theta - \phi = -90^\circ\) (V lags)</td><td>\(P_C = \tfrac12 V_m I_m\cos(-90^\circ) = 0\)</td></tr></table>
+    <div class="answer" data-l="th">สไลด์หน้า 6 เขียน \(P_R = V_R I_R = V_R^2/R = I_R^2 R\) ซึ่ง<b>ใช้ได้เมื่อ \(V_R\), \(I_R\) เป็นค่ายังผล</b> ถ้าใช้ค่ายอดต้องมี ½ เช่น \(P_R = \tfrac12 I_m^2 R\) (Hayt สมการ 12: "อย่าลืมตัวประกอบ ½")</div>
+    <div class="answer" data-l="en">Slide p. 6 writes \(P_R = V_R I_R = V_R^2/R = I_R^2 R\), which <b>holds when \(V_R\), \(I_R\) are effective values</b>. With peak values a ½ appears, e.g. \(P_R = \tfrac12 I_m^2 R\) (Hayt Eq. 12: "do not forget the factor of ½").</div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 5–6 ที่ผู้สอนเขียนในห้อง (สไลด์ปี 2561)</span><span data-l="en">See slides pp. 5–6 as written in class (2018 slides)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L03b.webp" width="1100" height="645" loading="lazy" decoding="async" alt="2018 slide 5 with handwriting: Vrms = Vm/√2 and Irms = Im/√2, so Vrms Irms = ½ Vm Im; Vm, θ, Im, φ circled in v(t) and i(t); P = |Vrms||Irms| times p.f.; the boxed P = ½VmIm cos(θ − φ) = Veff Ieff cos(θ − φ) watt marked with #">
+      <figcaption data-l="th">\(V_{\text{rms}} = V_m/\sqrt2\), \(I_{\text{rms}} = I_m/\sqrt2\) จึงได้ \(V_{\text{rms}}I_{\text{rms}} = \tfrac12 V_m I_m\) และ \(\cos(\theta-\phi)\) คือตัวประกอบกำลัง</figcaption><figcaption data-l="en">\(V_{\text{rms}} = V_m/\sqrt2\), \(I_{\text{rms}} = I_m/\sqrt2\), so \(V_{\text{rms}}I_{\text{rms}} = \tfrac12 V_m I_m\), and \(\cos(\theta-\phi)\) is the power factor</figcaption></figure>
+    <figure class="slide"><img src="slides/ch8/L04a.webp" width="1100" height="664" loading="lazy" decoding="async" alt="2018 slide 6 with handwriting: V = 6∠30, I = 3∠30 across a 2 Ω resistor; P = |Vrms||Irms| cos(θ − φ) = (6)(3) = 18; the resistor, capacitor and inductor cases highlighted, VC lags IC, VL leads IL">
+      <figcaption data-l="th">ตัวอย่างในห้อง: \(\mathbf{V} = 6\angle 30^\circ\), \(\mathbf{I} = 3\angle 30^\circ\) ได้ \(P = (6)(3) = 18\) W โดยถือว่า 6 และ 3 เป็นค่ายังผล ถ้าเป็นค่ายอดจะได้ \(\tfrac12(6)(3) = 9\) W</figcaption><figcaption data-l="en">The class example: \(\mathbf{V} = 6\angle 30^\circ\), \(\mathbf{I} = 3\angle 30^\circ\) gives \(P = (6)(3) = 18\) W, taking 6 and 3 as effective values; as peak values it would be \(\tfrac12(6)(3) = 9\) W</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">หากำลังเฉลี่ยที่อุปกรณ์พาสซีฟทั้งสามตัวดูดกลืน และกำลังเฉลี่ยที่แหล่งจ่ายแต่ละตัวจ่าย</h2><h2 data-l="en">Find the average power absorbed by each of the three passive elements, and the average power supplied by each source</h2>
+    <div class="src" data-l="th">สไลด์หน้า 7 · Hayt Example 11.4 · เฉลยในห้องปี 2561</div><div class="src" data-l="en">Slide p. 7 · Hayt Example 11.4 · 2018 class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch8/p07q.webp" width="1107" height="557" loading="lazy" decoding="async" alt="Slide 7 practice: find the average power absorbed by each of the three passive elements in the figure, as well as the average power supplied by each source. A 20∠0° V source on the left, j2 Ω across the top to the middle node, 2 Ω from the middle node down, −j2 Ω across the top to a 10∠0° V source on the right, clockwise mesh currents I1 and I2">
+    <figcaption data-l="th">สไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 7 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แหล่งจ่ายเป็นเฟเซอร์ค่ายอด ภาพจำลองเปลี่ยนตามขั้น: ชิ้นส่วนของเมชที่กำลังเขียน KVL เรืองแสง จุดเริ่มวิ่งเมื่อได้กระแสเมช ระนาบแสดงกระแส แล้วเปลี่ยนเป็น<b>แท่ง \(p(t)\) ของแต่ละอุปกรณ์ในขณะนั้น</b> (บวก = รับ ลบ = จ่าย ◆ = ค่าเฉลี่ย) สังเกตว่าแท่งของ L และ C แกว่งขึ้นลงแต่ค่าเฉลี่ยเป็นศูนย์ และเมื่อครบทุกตัว<b>ผลรวมของทุกแท่งเป็นศูนย์ทุกขณะ</b> ปุ่มใต้ภาพกลับขั้วแหล่งจ่ายขวาแล้วคิดใหม่ทุกขั้น</p>
+  <p class="lead" data-l="en">The sources are peak phasors. The simulation follows the steps: the parts of the mesh whose KVL is being written glow, the dots start once the mesh currents are known, the plane shows the currents, and then it turns into <b>bars of the instantaneous \(p(t)\) of each element</b> (positive = takes, negative = gives, ◆ = average). The L and C bars swing up and down but average zero, and with every element shown <b>the bars add up to zero at every instant</b>. The button under the picture flips the right source and redoes every step.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas><div class="ctl" id="ctl1"></div></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2561)</span><span data-l="en">See the solution written in class (2018)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L05.webp" width="1100" height="1380" loading="lazy" decoding="async" alt="Handwritten solution of slide 7: find I1 and I2 using mesh analysis; mesh I1: −20∠0 + j2I1 + 2(I1 − I2) = 0, (2 + 2j)I1 − 2I2 = 20∠0; mesh I2: +10∠0 + 2(I2 − I1) + (−2j)I2 = 0, −2I1 + (2 − 2j)I2 = −10∠0; Δ = 4, ΔI1 = 20 − 40j, ΔI2 = 20 − 20j; I1 = 5 − 10j A, I2 = 5 − 5j A; IR = −5j = 5∠−90 A, IC = 5√2∠−45 A, IL = 11.18∠−63.4 A; VR = 10∠−90, VL = 22.36∠26.6, VC = 10√2∠−135; PR = ½(10)(5)cos(−90 − (−90)) = 25 watt; QC = −50 VAR; QL = 124 VAR; S20V = (20/√2)(11.18/√2)∠63.4 = 111.8∠63.4 VA = 50.08 + 99.96j VA; p.f. = cos(63.4) = 0.447 lagging">
+      <figcaption data-l="th">เมช → กระแส → แรงดัน → \(P_R = 25\) W ทางขวาของกระดาษหาต่อถึง \(Q_C\), \(Q_L\), \(\mathbf{S}\) และ PF ของแหล่งจ่าย 20 V ซึ่งใช้ในหน้า 8.2 ข้อ 1</figcaption><figcaption data-l="en">Meshes → currents → voltages → \(P_R = 25\) W; the right-hand column goes on to \(Q_C\), \(Q_L\), \(\mathbf{S}\) and the PF of the 20 V source, which page 8.2, problem 1 uses</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · เฟเซอร์ในข้อ 1–3 และ 5 เป็นค่ายอด</div><div class="src" data-l="en">Give at least 3 decimal places · the phasors in questions 1–3 and 5 are peak values</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — R ล้วน กับ L ล้วน</h3>
+    <ol><li>ส่วน A กด "R ล้วน": \(p(t)\) ไม่ติดลบเลย ค่าสูงสุด \(V_mI_m\) และค่าเฉลี่ย \(P = \tfrac12 V_mI_m\) พอดีครึ่งหนึ่ง</li>
+    <li>กด "L ล้วน": พื้นที่เขียวกับแดงเท่ากัน \(P = 0\) แท่ง \(w_L\) เต็มและว่าง<b>สองครั้งต่อหนึ่งรอบของกระแส</b></li>
+    <li>กด "C ล้วน": เหมือน L แต่จังหวะตรงข้าม ช่วงที่ตัวเหนี่ยวนำรับพลังงาน ตัวเก็บประจุกลับคืนพลังงาน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — P ขึ้นกับมุมต่างเฟสเท่านั้น</h3>
+    <ol><li>ใช้ค่าของ Hayt Example 11.2 (\(\theta = 90^\circ\)) แล้วเลื่อน \(\theta\) ไปที่ 0°: \(v\) และ \(i\) เลื่อนไปพร้อมกัน แต่ \(P = 2\) W เท่าเดิม</li>
+    <li>\(p(t)\) ติดลบเป็นเวลา \(|\theta-\phi|/180^\circ\) ของคาบ: ที่ 60° คือหนึ่งในสามของเวลา</li>
+    <li>คำถาม: ถ้าเพิ่ม \(V_m\) เป็นสองเท่าโดยโหลดเท่าเดิม \(P\) เพิ่มกี่เท่า</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แหล่งจ่ายรับหรือจ่าย</h3>
+    <ol><li>ข้อ 1: แหล่งจ่าย 20 V จ่าย 50 W แต่แหล่งจ่าย 10 V <b>รับ</b> 25 W</li>
+    <li>กด "กลับขั้วแหล่งจ่ายขวา" (10∠180° V) แล้วเปิดขั้นที่ 6: ตอนนี้แหล่งจ่ายทั้งสองตัวจ่าย 150 W และ 75 W รวม 225 W เท่ากับที่ตัวต้านทานรับ</li>
+    <li>สรุป: <b>แหล่งจ่ายจะรับหรือจ่ายขึ้นกับวงจรทั้งหมด</b> ไม่ใช่ขึ้นกับตัวมันเองตัวเดียว</li></ol>
+    <div class="book">สไลด์บทที่ 8 หน้า 2–7 · สไลด์ปี 2561 · Hayt §11.1–11.2 (Examples 11.2–11.4, Practice 11.1–11.4)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — R only and L only</h3>
+    <ol><li>In section A press "R only": \(p(t)\) never goes negative; its peak is \(V_mI_m\) and its average \(P = \tfrac12 V_mI_m\), exactly half.</li>
+    <li>Press "L only": the green and red areas are equal, \(P = 0\), and the bar \(w_L\) fills and empties <b>twice per cycle of the current</b>.</li>
+    <li>Press "C only": the same as L but in opposite timing; while an inductor takes energy, a capacitor gives it back.</li></ol></div>
+  <div class="card"><h3>Try this 2 — P depends only on the phase difference</h3>
+    <ol><li>With Hayt Example 11.2 (\(\theta = 90^\circ\)), move \(\theta\) to 0°: \(v\) and \(i\) shift together, but \(P = 2\) W stays.</li>
+    <li>\(p(t)\) is negative for \(|\theta-\phi|/180^\circ\) of each period: at 60° that is one third of the time.</li>
+    <li>Question: if \(V_m\) doubles with the same load, how many times larger is \(P\)?</li></ol></div>
+  <div class="card"><h3>Try this 3 — does a source take or give?</h3>
+    <ol><li>Problem 1: the 20 V source supplies 50 W, but the 10 V source <b>absorbs</b> 25 W.</li>
+    <li>Press "flip the right source" (10∠180° V) and open step 6: now both sources supply, 150 W and 75 W, 225 W in total, equal to what the resistor takes.</li>
+    <li>Conclusion: <b>whether a source takes or gives depends on the whole circuit</b>, not on the source alone.</li></ol>
+    <div class="book">Chapter 8 slides, pp. 2–7 · 2018 slides · Hayt §11.1–11.2 (Examples 11.2–11.4, Practice 11.1–11.4)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+  const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), sg = (x, d = 2) => fd(x, d).replace('-', '−'), PURPLE = '#c792ea', AMBER = '#ffd166';
+  const angT = a => Math.abs(a) < 1e-9 ? '' : `${a < 0 ? '-' : '+'} ${fd(Math.abs(a), 2)}^\\circ`;   // "+ 30^\circ" / "- 60^\circ" / nothing for 0
+  CH8.problem(1, 'ex4');
+
+  /* =================================================================== A: one load, p(t) */
+  const S1 = { R: 1, X: Math.sqrt(3), Vm: 4, th: 90 };   // Hayt Example 11.2: 4 cos(πt/6) V = 4 sin(πt/6 + 90°) V across 2∠60° Ω
+  const hayt112 = () => Math.abs(S1.R - 1) + Math.abs(S1.X - Math.sqrt(3)) + Math.abs(S1.Vm - 4) + Math.abs(S1.th - 90) < 1e-9;
+  const ld = bd => { const c = bd.ckt, V = c.Vab('Vs'), I = c.I('wt'), S = Cx.scale(Cx.mul(V, Cx.conj(I)), 0.5); return { c, V, I, S, A: 0.5 * Cx.abs(V) * Cx.abs(I) }; };
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, pad: 1.3, cktFrac: 0.5, topAsp: 0.42, cktAspM: 0.46, view: { acPower: 'P' },
+    side: (ctx, b, bd) => { const { V, I } = ld(bd), d = CH6.wrap(CH6.deg(V) - CH6.deg(I));
+      CH6.plane(ctx, b, [{ z: V, color: COL.V, label: 'V', g: 'v' }, { z: I, color: COL.I, label: 'I', g: 'i' }],
+        { title: bd.short ? t('เฟเซอร์ (คนละสเกล)', 'phasors (own scales)') : t('เฟเซอร์ที่ t = 0 (ค่ายอด คนละสเกล)', 'phasors at t = 0 (peak, own scales)'), arcs: [{ a: 1, b: 0, color: AMBER, r: 0.34, text: `θ − φ = ${sg(d, 1)}°` }] }); },
+    waves: [
+      { title: ['แรงดันและกระแส', 'voltage and current'], sigs: bd => { const { V, I } = ld(bd);
+        return [{ mag: Cx.abs(V), ang: CH6.deg(V), color: COL.V, label: 'v', unit: 'V', g: 'v', w: 2.6 }, { mag: Cx.abs(I), ang: CH6.deg(I), color: COL.I, label: 'i', unit: 'A', g: 'i', w: 2.6 }]; } },
+      { title: bd => bd.short ? 'p(t) = v·i' : t('p(t) = v(t)·i(t) · เขียว = รับพลังงาน · แดง = คืนพลังงาน', 'p(t) = v(t)·i(t) · green = energy in · red = energy back'),
+        sigs: bd => { const { V, I, S, A } = ld(bd); return CH8.pSigs(d => CH8.atDeg(V, d) * CH8.atDeg(I, d), { P: S.re, mag: Math.abs(S.re) + A }); } } ],
+    after: (v, bd) => { const { V, I } = ld(bd), ph = bd.clk.ph, p = CH8.at(V, ph) * CH8.at(I, ph), A = 0.5 * Cx.abs(V) * Cx.abs(I);
+      CH8.flow(v, 's', 'a', p, { eps: A * 1e-3, text: q => bd.narrow ? `p = ${sg(q)} W` : q >= 0 ? t(`p = ${sg(q)} W → โหลดรับ`, `p = ${sg(q)} W → load takes`) : t(`p = ${sg(q)} W ← คืนแหล่งจ่าย`, `p = ${sg(q)} W ← back to source`) });
+      const x = v.ckt.part('X'); if (x) { if (x.type === 'L') { const i = CH8.at(I, ph); CH8.tank(v, 'X', (i * i) / Math.max(Cx.abs(I) ** 2, 1e-12), { label: 'w_L', color: PURPLE }); }
+        else { const Vc = v.ckt.Vab('X'), vc = CH8.at(Vc, ph); CH8.tank(v, 'X', (vc * vc) / Math.max(Cx.abs(Vc) ** 2, 1e-12), { label: 'w_C', color: COL.V }); } } } });
+  const pA = $('pA'), wA = $('wA');
+  function buildA() { let { R: Rv, X } = S1; if (Math.hypot(Rv, X) < 0.05) Rv = 0.05;
+    BA.set(CH8C.one({ amp: S1.Vm, phase: S1.th, R: Rv, X, srcName: 'v_s', srcVal: `${fd(S1.Vm, 2)}∠${sg(S1.th, 0)}° V` }));
+    const { V, I, S, A } = ld(BA), d = CH6.wrap(CH6.deg(V) - CH6.deg(I)), Z = Cx.div(V, I);
+    mA.innerHTML = ui.kv([['Z', `${CH6.rect(Z, 3).replace('-', '−')} Ω = ${CH6.polTxt(Z, 'Ω', 3, 2)}`], ['V', CH6.polTxt(V, 'V', 3, 2)], ['I', CH6.polTxt(I, 'A', 3, 2)], ['θ − φ', `${sg(d, 2)}°`],
+      ['P = ½VₘIₘcos(θ − φ)', `${sg(S.re, 3)} W`], [t('p สูงสุด / ต่ำสุด', 'p max / min'), `${sg(S.re + A, 3)} / ${sg(S.re - A, 3)} W`], [t('p < 0 นาน', 'p < 0 for'), `${fd(Math.abs(d) / 180 * 100, 1)} % ${t('ของคาบ', 'of the period')}`]]);
+    const th = CH6.deg(V), ph = CH6.deg(I), sum = CH6.wrap(th + ph), rows = [
+      R`v(t) &= ${fd(Cx.abs(V), 3)}\sin(\omega t ${angT(th)})\ \text{V}`, R`i(t) &= ${fd(Cx.abs(I), 4)}\sin(\omega t ${angT(ph)})\ \text{A}`,
+      R`p(t) &= \tfrac12(${fd(Cx.abs(V), 3)})(${fd(Cx.abs(I), 4)})\cos(${fd(d, 2)}^\circ) - \tfrac12(${fd(Cx.abs(V), 3)})(${fd(Cx.abs(I), 4)})\cos(2\omega t ${angT(sum)})`,
+      R`&= ${fd(S.re, 4)} - ${fd(A, 4)}\cos(2\omega t ${angT(sum)})\ \text{W}`, R`P &= \boxed{${fd(S.re, 4)}\ \text{W}}`];
+    wA.innerHTML = `<h3>${t('คำนวณจากค่าปัจจุบัน', 'Worked from the current settings')}</h3>` + tx(LS.fitIn(wA, R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`), true) +
+      `<div class="answer">${t(`${hayt112() ? 'ค่าของ Hayt Example 11.2: แปลง \\(v = 4\\cos(\\pi t/6)\\) เป็น \\(4\\sin(\\pi t/6 + 90^\\circ)\\) ก่อน แล้วได้ \\(p = 2 - 4\\cos(\\pi t/3 + 120^\\circ) = 2 + 4\\cos(\\pi t/3 - 60^\\circ)\\) W ตรงกับคำตอบของ Hayt ' : ''}ค่าเฉลี่ย \\(P\\) คือค่าคงที่หน้าคลื่นความถี่สองเท่า คลื่นนั้นเฉลี่ยหนึ่งคาบได้ศูนย์`, `${hayt112() ? 'Hayt Example 11.2: turn \\(v = 4\\cos(\\pi t/6)\\) into \\(4\\sin(\\pi t/6 + 90^\\circ)\\) first; then \\(p = 2 - 4\\cos(\\pi t/3 + 120^\\circ) = 2 + 4\\cos(\\pi t/3 - 60^\\circ)\\) W, as Hayt finds. ' : ''}The average \\(P\\) is the constant in front of the double-frequency wave, which averages to zero over a period.`)}</div>`;
+    MC.renderMath(wA); }
+  ui.h2(pA, t('โหลด Z = R + jX', 'Load Z = R + jX'));
+  const sA = {}, setA = o => { Object.assign(S1, o); Object.keys(sA).forEach(k => sA[k].set(S1[k])); buildA(); };
+  ui.buttons(pA, [{ label: 'Hayt Ex 11.2 (2∠60° Ω)', onclick: () => setA({ R: 1, X: Math.sqrt(3), Vm: 4, th: 90 }) }, { label: t('R ล้วน', 'R only'), onclick: () => setA({ R: 2, X: 0 }) },
+    { label: t('L ล้วน', 'L only'), onclick: () => setA({ R: 0, X: 2 }) }, { label: t('C ล้วน', 'C only'), onclick: () => setA({ R: 0, X: -2 }) }]);
+  sA.R = ui.slider(pA, { id: 'sAR', label: 'R', min: 0, max: 4, step: 0.01, value: S1.R, fmt: v => `${fd(v, 2)} Ω`, oninput: v => { S1.R = v; buildA(); } });
+  sA.X = ui.slider(pA, { id: 'sAX', label: t('X (บวก = L, ลบ = C)', 'X (+ = L, − = C)'), min: -4, max: 4, step: 0.01, value: S1.X, fmt: v => `${v < 0 ? '−' : ''}j${fd(Math.abs(v), 2)} Ω`, oninput: v => { S1.X = v; buildA(); } });
+  ui.h2(pA, t('แหล่งจ่าย', 'Source'));
+  sA.Vm = ui.slider(pA, { id: 'sAV', label: 'V<sub>m</sub>', min: 1, max: 10, step: 0.5, value: S1.Vm, fmt: v => `${fd(v, 1)} V`, oninput: v => { S1.Vm = v; buildA(); } });
+  sA.th = ui.slider(pA, { id: 'sAth', label: t('มุม θ', 'angle θ'), min: -180, max: 180, step: 1, value: S1.th, fmt: v => `${sg(v, 0)}°`, oninput: v => { S1.th = v; buildA(); } });
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, BA.clk);
+  const mA = ui.metrics(pA);
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => { BA.resize(); buildA(); });
+  LS.onFonts(buildA); LS.watchWidth(wA, buildA);
+
+  /* =================================================================== B: the derivation, one step at a time */
+  let listB = null;
+  const stepsB = () => listB || (listB = LS.withCol($('stB').clientWidth, () => [
+    LS.step(t('<b>คูณแรงดันกับกระแส</b> (สไลด์หน้า 5) ตามหลักเครื่องหมายแบบพาสซีฟ', '<b>Multiply the voltage and the current</b> (slide p. 5), passive sign convention'),
+      LS.block([R`p(t) &= v(t)\,i(t)`, R`&= V_m I_m \sin(\omega t + \theta)\,\sin(\omega t + \phi)`])),
+    LS.step(t('<b>ใช้เอกลักษณ์ผลคูณเป็นผลต่าง</b> \\(\\sin A\\sin B = \\tfrac12[\\cos(A-B) - \\cos(A+B)]\\) ได้ค่าคงที่บวกคลื่นที่ความถี่สองเท่า', '<b>Use the product-to-sum identity</b> \\(\\sin A\\sin B = \\tfrac12[\\cos(A-B) - \\cos(A+B)]\\): a constant plus a wave at twice the frequency'),
+      LS.block([R`p(t) &= \tfrac12 V_m I_m\cos(\theta - \phi)`, R`&\quad - \tfrac12 V_m I_m\cos(2\omega t + \theta + \phi)`]),
+      t('พจน์แรกไม่ขึ้นกับเวลา พจน์ที่สองแกว่งด้วยความถี่ \\(2\\omega\\) (ดูกราฟ \\(p(t)\\) ในส่วน A)', 'The first term does not depend on time; the second swings at \\(2\\omega\\) (see the \\(p(t)\\) graph in section A).')),
+    LS.step(t('<b>เฉลี่ยตลอดหนึ่งคาบ</b> (สไลด์หน้า 4): พจน์ \\(\\cos(2\\omega t + \\cdots)\\) เฉลี่ยได้ศูนย์', '<b>Average over one period</b> (slide p. 4): the \\(\\cos(2\\omega t + \\cdots)\\) term averages to zero'),
+      LS.block([R`P &= \frac{1}{T}\int_0^T p(t)\,dt`, R`&= \tfrac12 V_m I_m\cos(\theta - \phi) - 0`, R`&= \boxed{\tfrac12 V_m I_m\cos(\theta - \phi)}`])),
+    LS.step(t('<b>เขียนด้วยค่ายังผล</b> \\(V_m = \\sqrt2\\,V_{\\text{eff}}\\), \\(I_m = \\sqrt2\\,I_{\\text{eff}}\\)', '<b>Write it with effective values</b>, \\(V_m = \\sqrt2\\,V_{\\text{eff}}\\), \\(I_m = \\sqrt2\\,I_{\\text{eff}}\\)'),
+      LS.block([R`P &= \tfrac12(\sqrt2\,V_{\text{eff}})(\sqrt2\,I_{\text{eff}})\cos(\theta - \phi)`, R`&= \boxed{V_{\text{eff}}\,I_{\text{eff}}\cos(\theta - \phi)\ \ \text{W}}`]),
+      t('ค่ายอดต้องมี ½ ค่ายังผลไม่มี ½ · \\(\\cos(\\theta-\\phi)\\) เรียกว่าตัวประกอบกำลัง (หน้า 8.3)', 'Peak values need the ½, effective values do not · \\(\\cos(\\theta-\\phi)\\) is called the power factor (page 8.3).'))]));
+  const stB = LS.stepper($('stB'), { steps: stepsB, answer: () => t('\\(P = \\tfrac12 V_m I_m\\cos(\\theta-\\phi) = V_{\\text{eff}}I_{\\text{eff}}\\cos(\\theta-\\phi)\\) วัตต์ ขึ้นกับมุมต่างเฟสเท่านั้น', '\\(P = \\tfrac12 V_m I_m\\cos(\\theta-\\phi) = V_{\\text{eff}}I_{\\text{eff}}\\cos(\\theta-\\phi)\\) watts, which depends only on the phase difference.'), onStep: () => {} });
+  LS.onFonts(() => { listB = null; stB.refresh(true); }); LS.watchWidth($('stB'), () => { listB = null; stB.refresh(true); });
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const Zq = CH6.polar(6, 25), Iq = cx(2, 5), Pq = 0.5 * Cx.abs(Iq) ** 2 * Zq.re;
+  const Vm2 = 115 * Math.SQRT2, Im2 = Vm2 / 16.26, P2 = 0.5 * Vm2 * Im2 * Math.cos(19.3 * Math.PI / 180), A2 = 0.5 * Vm2 * Im2;
+  /* Hayt Practice 11.4: 10∠50° V | j45 Ω | 2 Ω | −j100 Ω | 5∠0° V */
+  const a11 = cx(2, 45), a22 = cx(2, -100), Vl = CH6.polar(10, 50), D = CH8C.det2(a11, cx(-2), cx(-2), a22), I1 = Cx.div(CH8C.det2(Vl, cx(-2), cx(-5), a22), D), I2 = Cx.div(CH8C.det2(a11, Vl, cx(-2), cx(-5)), D);
+  const PR4 = 0.5 * Cx.abs(Cx.sub(I1, I2)) ** 2 * 2, Pl4 = CH8C.Spk(Vl, I1).re;
+  /* Hayt Practice 11.1: 12 cos 2000t A ∥ 200 Ω ∥ 0.2 H at t = 1 ms. Sine reference: 12 cos 2000t = 12 sin(2000t + 90°) ⇒ I_s = 12∠90° A;
+     a value at time t is |P| sin(ωt + ∠P). vBad: what forgetting the conversion (I_s = 12∠0°) would give */
+  const w = 2000, Y = Cx.add(cx(1 / 200), Cx.inv(cx(0, w * 0.2))), V = Cx.div(CH6.polar(12, 90), Y), IL1 = Cx.div(V, cx(0, 400)), wt1 = w * 1e-3 * 180 / Math.PI,
+    sv = z => Cx.abs(z) * Math.sin(w * 1e-3 + Cx.arg(z)), v1 = sv(V), iL1 = sv(IL1), pR1 = v1 * v1 / 200, pL1 = v1 * iL1, vBad = sv(Cx.div(cx(12), Y));
+  CH6.quiz('quiz', [
+    { q: t('1) Hayt Example 11.3: กระแส \\(\\mathbf{I} = 5\\angle 20^\\circ\\) A ไหลผ่าน \\(Z_L = 8 - j11\\ \\Omega\\) จงหากำลังเฉลี่ย', '1) Hayt Example 11.3: a current \\(\\mathbf{I} = 5\\angle 20^\\circ\\) A flows through \\(Z_L = 8 - j11\\ \\Omega\\). Find the average power.'),
+      fields: [{ key: 'x', lab: 'P =', ans: 100, unit: 'W' }], work: work(R`P = \tfrac12 |\mathbf{I}|^2 R = \tfrac12(5^2)(8) = 100\ \text{W}`, `<div class="answer">${t('ส่วน \\(-j11\\) ไม่ดูดกลืนกำลังเฉลี่ย', 'The \\(-j11\\) part takes no average power.')}</div>`) },
+    { q: t('2) Hayt Practice 11.3: กระแส \\(\\mathbf{I} = 2 + j5\\) A ไหลผ่าน \\(Z = 6\\angle 25^\\circ\\ \\Omega\\) จงหากำลังเฉลี่ย', '2) Hayt Practice 11.3: a current \\(\\mathbf{I} = 2 + j5\\) A flows through \\(Z = 6\\angle 25^\\circ\\ \\Omega\\). Find the average power.'),
+      fields: [{ key: 'x', lab: 'P =', ans: Pq, unit: 'W' }], work: work(R`P = \tfrac12 |\mathbf{I}|^2\,\text{Re}(Z) = \tfrac12(29)(6\cos 25^\circ) = ${fd(Pq, 3)}\ \text{W}`, `<div class="answer">Hayt: 78.85 W</div>`) },
+    { q: t('3) \\(v = 100\\sin(\\omega t + 30^\\circ)\\) V และ \\(i = 2\\sin(\\omega t - 15^\\circ)\\) A จงหากำลังเฉลี่ย และค่าต่ำสุดของ \\(p(t)\\)', '3) \\(v = 100\\sin(\\omega t + 30^\\circ)\\) V and \\(i = 2\\sin(\\omega t - 15^\\circ)\\) A. Find the average power and the minimum of \\(p(t)\\).'),
+      fields: [{ key: 'x', lab: 'P =', ans: 100 * Math.cos(Math.PI / 4), unit: 'W' }, { key: 'y', lab: 'p<sub>min</sub> =', ans: 100 * Math.cos(Math.PI / 4) - 100, unit: 'W' }],
+      work: work(R`\begin{aligned} P &= \tfrac12(100)(2)\cos(30^\circ - (-15^\circ)) = 100\cos 45^\circ = 70.711\ \text{W} \\ p_{\min} &= P - \tfrac12 V_m I_m = 70.711 - 100 = -29.289\ \text{W} \end{aligned}`) },
+    { q: t('4) Hayt Practice 11.2: \\(\\mathbf{V} = 115\\sqrt2\\angle 45^\\circ\\) V คร่อม \\(Z = 16.26\\angle 19.3^\\circ\\ \\Omega\\) ที่ \\(\\omega = 50\\) rad/s จงหากำลังเฉลี่ย และขนาดของพจน์ที่ความถี่ \\(2\\omega\\) ใน \\(p(t)\\)', '4) Hayt Practice 11.2: \\(\\mathbf{V} = 115\\sqrt2\\angle 45^\\circ\\) V across \\(Z = 16.26\\angle 19.3^\\circ\\ \\Omega\\) at \\(\\omega = 50\\) rad/s. Find the average power and the amplitude of the \\(2\\omega\\) term of \\(p(t)\\).'),
+      fields: [{ key: 'x', lab: 'P =', ans: P2, unit: 'W' }, { key: 'y', lab: t('ขนาด =', 'amplitude ='), ans: A2, unit: 'W' }],
+      work: work(R`\begin{aligned} I_m &= \frac{162.635}{16.26} = ${fd(Im2, 4)}\ \text{A} \\ \phi &= 45^\circ - 19.3^\circ = 25.7^\circ \\ P &= \tfrac12(162.635)(${fd(Im2, 4)})\cos 19.3^\circ = ${fd(P2, 2)}\ \text{W} \\ \tfrac12 V_m I_m &= ${fd(A2, 2)}\ \text{W} \\ p(t) &= ${fd(P2, 1)} - ${fd(A2, 1)}\cos(100t + 70.7^\circ)\ \text{W} \end{aligned}`,
+        `<div class="answer">${t('วิชานี้อ่านเฟเซอร์ด้วย sin: \\(v = 162.6\\sin(50t + 45^\\circ)\\) V จึงได้ \\(p(t)\\) ตามบรรทัดสุดท้ายข้างบน (พจน์ที่สองเป็นลบ) ส่วน Hayt อ่านเฟเซอร์เดียวกันด้วย cos จึงได้ \\(767.5 + 813.2\\cos(100t + 70.7^\\circ)\\) W ค่าเฉลี่ยและขนาดของพจน์ความถี่สองเท่าเท่ากัน (ปัดเศษต่างกันเล็กน้อย) ต่างกันแค่เครื่องหมาย', 'This course reads phasors with sin, \\(v = 162.6\\sin(50t + 45^\\circ)\\) V, which gives \\(p(t)\\) on the last line above (minus before the second term). Hayt reads the same phasor with cos and gets \\(767.5 + 813.2\\cos(100t + 70.7^\\circ)\\) W. The average and the size of the double-frequency term agree (up to rounding); only the sign differs.')}</div>`) },
+    { q: t('5) Hayt Practice 11.4: วงจรแบบเดียวกับข้อ 1 แต่แหล่งจ่ายซ้าย \\(10\\angle 50^\\circ\\) V, ตัวเหนี่ยวนำ \\(j45\\ \\Omega\\), ตัวต้านทาน 2 Ω ตรงกลาง, ตัวเก็บประจุ \\(-j100\\ \\Omega\\) และแหล่งจ่ายขวา \\(5\\angle 0^\\circ\\) V จงหากำลังเฉลี่ยของตัวต้านทาน และกำลังที่แหล่งจ่ายซ้ายจ่าย (หน่วยมิลลิวัตต์, mW)', '5) Hayt Practice 11.4: the same circuit as problem 1 with a \\(10\\angle 50^\\circ\\) V left source, a \\(j45\\ \\Omega\\) inductor, the 2 Ω resistor in the middle, a \\(-j100\\ \\Omega\\) capacitor and a \\(5\\angle 0^\\circ\\) V right source. Find the average power of the resistor and the power the left source supplies (in milliwatts, mW).'),
+      fields: [{ key: 'x', lab: 'P<sub>R</sub> =', ans: PR4 * 1000, unit: 'mW' }, { key: 'y', lab: t('P<sub>ซ้าย</sub> =', 'P<sub>left</sub> ='), ans: Pl4 * 1000, unit: 'mW' }],
+      work: work(R`\begin{aligned} (2 + j45)\mathbf{I}_1 - 2\mathbf{I}_2 &= 10\angle 50^\circ \\ -2\mathbf{I}_1 + (2 - j100)\mathbf{I}_2 &= -5 \\ \mathbf{I}_1 &= ${P(I1)}\ \text{A} \\ \mathbf{I}_2 &= ${P(I2)}\ \text{A} \\ P_R &= \tfrac12|\mathbf{I}_1 - \mathbf{I}_2|^2(2) = ${fd(PR4 * 1000, 2)}\ \text{mW} \\ P_{\text{${t('ซ้าย', 'left')}}} &= \tfrac12\,\text{Re}\{(10\angle 50^\circ)\mathbf{I}_1^*\} = ${fd(Pl4 * 1000, 2)}\ \text{mW} \end{aligned}`,
+        `<div class="answer">${t('Hayt: 37.6 mW และ 42.0 mW ส่วนแหล่งจ่ายขวารับ 4.4 mW (Hayt เขียน −4.4 mW ในฐานะกำลังที่จ่าย)', 'Hayt: 37.6 mW and 42.0 mW; the right source absorbs 4.4 mW (Hayt lists −4.4 mW as power supplied).')}</div>`) },
+    { q: t('6) Hayt Practice 11.1: แหล่งจ่ายกระแส \\(12\\cos 2000t\\) A ต่อขนานกับ 200 Ω และ 0.2 H ในสภาวะคงตัว จงหากำลังขณะ \\(t = 1\\) ms ของตัวต้านทานและตัวเหนี่ยวนำ (หน่วยกิโลวัตต์, kW)', '6) Hayt Practice 11.1: a current source \\(12\\cos 2000t\\) A in parallel with 200 Ω and 0.2 H in the steady state. Find the power of the resistor and of the inductor at \\(t = 1\\) ms (in kilowatts, kW).'),
+      fields: [{ key: 'x', lab: 'p<sub>R</sub> =', ans: pR1 / 1000, unit: 'kW' }, { key: 'y', lab: 'p<sub>L</sub> =', ans: pL1 / 1000, unit: 'kW' }],
+      work: work(R`\begin{aligned} i_s &= 12\cos 2000t = 12\sin(2000t + 90^\circ) \\ \mathbf{I}_s &= 12\angle 90^\circ\ \text{A} \\ Y &= \tfrac{1}{200} + \tfrac{1}{j400} = 0.005 - j0.0025\ \text{S} \\ \mathbf{V} &= \frac{\mathbf{I}_s}{Y} = ${P(V)}\ \text{V} \\ \mathbf{I}_L &= \frac{\mathbf{V}}{j400} = ${P(IL1)}\ \text{A} \\ \omega t &= (2000)(10^{-3}) = 2\ \text{rad} = ${fd(wt1, 2)}^\circ \\ v &= ${fd(Cx.abs(V), 1)}\sin(${fd(wt1, 2)}^\circ + ${fd(CH6.deg(V), 2)}^\circ) = ${fd(v1, 2)}\ \text{V} \\ i_L &= ${fd(Cx.abs(IL1), 4)}\sin(${fd(wt1, 2)}^\circ + ${fd(CH6.deg(IL1), 2)}^\circ) = ${fd(iL1, 4)}\ \text{A} \\ p_R &= \frac{v^2}{200} = ${fd(pR1 / 1000, 3)}\ \text{kW} \\ p_L &= v\,i_L = ${fd(pL1 / 1000, 3)}\ \text{kW} \end{aligned}`,
+        `<div class="answer">${t(`Hayt: 13.98 kW และ −5.63 kW ตรงกันเพราะ<b>แปลง cos เป็น sin ก่อน</b> จึงเป็นฟังก์ชันเวลาเดียวกับของ Hayt ถ้าลืมแปลงแล้วใช้ \\(\\mathbf{I}_s = 12\\angle 0^\\circ\\) A จะได้ \\(v(1\\ \\text{ms}) = ${fd(vBad, 1)}\\) V และ \\(p_R = ${fd(vBad * vBad / 200000, 2)}\\) kW ซึ่งผิด`, `Hayt: 13.98 kW and −5.63 kW. They agree because <b>the cos was turned into sin first</b>, so the time function is the same as Hayt's. Forgetting that and using \\(\\mathbf{I}_s = 12\\angle 0^\\circ\\) A would give \\(v(1\\ \\text{ms}) = ${fd(vBad, 1)}\\) V and \\(p_R = ${fd(vBad * vBad / 200000, 2)}\\) kW, which is wrong.`)}</div>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

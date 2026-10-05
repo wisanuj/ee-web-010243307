@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="7.1 — Nodal and Mesh Analysis with Phasors">7.1 — วิธีโนดและวิธีเมชด้วยเฟเซอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">วิธีโนดและวิธีเมชด้วยเฟเซอร์ <span class="en">Nodal and mesh analysis with phasors — chapter 4 again, with complex numbers</span></h1>
+<h1 data-l="en">Nodal and mesh analysis with phasors <span class="en">Chapter 4 again, with complex numbers</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch7/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: introduction. We previously achieved a great deal with nodal and mesh analysis techniques, and it is reasonable to ask if a similar procedure might be valid in terms of phasors and impedances for the sinusoidal steady state. Both of Kirchhoff's laws are valid for phasors, and the passive elements have an Ohm's law V = ZI, so nodal and mesh methods are valid as well">
+    <figcaption data-l="th">สไลด์บทที่ 7 หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 7 slides, p. 2 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">บทที่ 4 แก้วงจรกระแสตรงด้วยการเขียนกฎกระแสของเคียร์ชอฟฟ์ (Kirchhoff's current law, KCL) ที่โนด หรือกฎแรงดันของเคียร์ชอฟฟ์ (Kirchhoff's voltage law, KVL) รอบเมช แล้วแก้ระบบสมการด้วยกฎของคราเมอร์ สไลด์หน้า 2 บอกว่าวิธีเดียวกันใช้กับวงจรกระแสสลับในสภาวะคงตัวได้ทันที เพราะ<b>กฎของเคียร์ชอฟฟ์ใช้กับเฟเซอร์ได้</b> และอุปกรณ์ทุกตัวมี<b>กฎของโอห์มแบบเฟเซอร์ \(\mathbf{V} = Z\mathbf{I}\)</b> ต่างกันเพียงตัวเลขเป็นจำนวนเชิงซ้อน ในห้องผู้สอนเขียนกำกับไว้ว่าใช้ได้เมื่อแหล่งจ่ายทุกตัวมีความถี่เดียวกัน (f₁ = f₂) หน้านี้มี <b>Ex 1–2</b> (วงจรเดียวกัน แก้ด้วยวิธีโนดและวิธีเมช) <b>การบ้านทั้งสามข้อ</b> และโจทย์เพิ่มเติมสองข้อจากสไลด์ปี 2561</p>
+    <p class="sub" data-l="en">Chapter 4 solved DC circuits by writing Kirchhoff's current law (KCL) at nodes or Kirchhoff's voltage law (KVL) around meshes, then solving the system with Cramer's rule. Slide p. 2 says the same procedure works for AC circuits in the steady state right away, because <b>Kirchhoff's laws hold for phasors</b> and every element has <b>a phasor Ohm's law, \(\mathbf{V} = Z\mathbf{I}\)</b>; only the numbers are complex. In class the teacher noted that this needs all sources at one frequency (f₁ = f₂). This page has <b>Ex 1–2</b> (one circuit, solved by nodal and by mesh analysis), <b>all three homework problems</b>, and two extra problems from the 2018 slides.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{aligned} \text{KCL:}\quad \sum \mathbf{I}_{out} &= 0, \qquad \mathbf{I}_{ab} = \frac{\mathbf{V}_a - \mathbf{V}_b}{Z} \\ \text{KVL:}\quad \sum_{\text{loop}} Z\,\mathbf{I} &= \sum \mathbf{V}_s, \qquad Z = \frac{1}{Y} \end{aligned} $$</div>
+  </div>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์ปกที่ผู้สอนเขียนสรุปไว้ในห้อง</span><span data-l="en">See the cover slide the teacher annotated in class</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch7/K01.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class cover slide of chapter 7 with notes: ω = 2πf = 2π/T rad/s; V = Vm∠θ = Vrms∠θ with Vm = √2 Vrms; I = Im∠φ = Irms∠φ with Im = √2 Irms; R in ohms, L in henries gives X_L = jωL Ω, C in farads gives X_C = −j/(ωC) Ω">
+    <figcaption data-l="th">สรุปก่อนเริ่มบท: \(\omega = 2\pi f\), เฟเซอร์ \(V_m\angle\theta\) (ค่ายอด \(V_m = \sqrt2\,V_{rms}\)), \(X_L = j\omega L\) และ \(X_C = -j/(\omega C)\)</figcaption><figcaption data-l="en">The summary before the chapter: \(\omega = 2\pi f\), the phasor \(V_m\angle\theta\) (peak \(V_m = \sqrt2\,V_{rms}\)), \(X_L = j\omega L\) and \(X_C = -j/(\omega C)\)</figcaption></figure></div></details>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>KCL และ KVL ใช้กับเฟเซอร์ได้</b> (แหล่งจ่ายทุกตัวต้องมีความถี่เดียวกัน) และ \(\mathbf{V} = Z\mathbf{I}\) ทุกขั้นตอนของบทที่ 4 จึงใช้ได้เหมือนเดิม</li>
+  <li>โจทย์ที่ให้<b>แอดมิตแตนซ์ (หน่วยซีเมนส์ S หรือ mS)</b> แปลงเป็นอิมพีแดนซ์ด้วย \(Z = 1/Y\): −j25 mS → j40 Ω (ตัวเหนี่ยวนำ), j50 mS → −j20 Ω (ตัวเก็บประจุ), 40 mS → 25 Ω</li>
+  <li><b>วิธีโนด</b>: เขียนผลรวมกระแสที่ไหลออก = 0 ที่ทุกโนดที่ไม่รู้ค่า ได้ระบบสมการเชิงซ้อน แล้วแก้ด้วยกฎของคราเมอร์ (คูณหารในรูปเชิงขั้ว บวกลบในรูปคาร์ทีเซียน)</li>
+  <li><b>วิธีเมช</b>: แหล่งจ่ายกระแสที่อยู่บนขอบนอกกำหนดกระแสเมชนั้นทันที Ex 2 จึงเหลือสมการเดียว <b>เลือกวิธีที่มีสมการน้อยกว่า</b></li>
+  <li><b>ตรวจคำตอบด้วยแผนภาพเฟเซอร์</b>: กระแสที่ไหลออกจากโนดต่อหัวต่อหางแล้วต้องปิดเป็นรูปหลายเหลี่ยม (KCL) แรงดันรอบเมชก็ต้องปิดเช่นกัน (KVL)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>KCL and KVL hold for phasors</b> (all sources at one frequency) and \(\mathbf{V} = Z\mathbf{I}\), so every step of chapter 4 still works.</li>
+  <li>Problems that give <b>admittances (siemens, S or mS)</b> convert them with \(Z = 1/Y\): −j25 mS → j40 Ω (inductor), j50 mS → −j20 Ω (capacitor), 40 mS → 25 Ω.</li>
+  <li><b>Nodal</b>: write "currents leaving = 0" at every unknown node, get a complex system and solve it with Cramer's rule (multiply and divide in polar form, add and subtract in Cartesian form).</li>
+  <li><b>Mesh</b>: a current source on an outer edge fixes that mesh current at once, so Ex 2 needs only one equation. <b>Pick the method with fewer equations.</b></li>
+  <li><b>Check with a phasor diagram</b>: the currents leaving a node, placed head to tail, must close into a polygon (KCL); so must the voltages around a mesh (KVL).</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 1 วิธีโนด</a><a href="#ex2"><b>2</b>Ex 2 วิธีเมช</a><a href="#ex3"><b>3</b>การบ้าน 1</a><a href="#ex4"><b>4</b>การบ้าน 2</a><a href="#ex5"><b>5</b>การบ้าน 3</a><a href="#ex6"><b>6</b>ฝึกเพิ่ม: \(v_1(t), v_2(t)\)</a><a href="#ex7"><b>7</b>ฝึกเพิ่ม: \(I_1, I_2, I_3\)</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 1 nodal</a><a href="#ex2"><b>2</b>Ex 2 mesh</a><a href="#ex3"><b>3</b>Homework 1</a><a href="#ex4"><b>4</b>Homework 2</a><a href="#ex5"><b>5</b>Homework 3</a><a href="#ex6"><b>6</b>Extra: \(v_1(t), v_2(t)\)</a><a href="#ex7"><b>7</b>Extra: \(I_1, I_2, I_3\)</a></nav>
+
+<div class="group-head" id="g12"><h2 data-l="th">Ex 1 และ Ex 2 (สไลด์หน้า 4–5): วงจรเดียวกัน หา \(v_1\) และ \(v_2\)</h2><h2 data-l="en">Ex 1 and Ex 2 (slides pp. 4–5): one circuit, find \(v_1\) and \(v_2\)</h2></div>
+<p class="lead" data-l="th">Ex 1 ให้ใช้วิธีโนด Ex 2 ให้ใช้วิธีเมช ค่าในรูปเป็น<b>แอดมิตแตนซ์</b> หน่วยมิลลิซีเมนส์ (mS) ซึ่งเป็นส่วนกลับของอิมพีแดนซ์ โจทย์ไม่ได้ให้ ω จึงตอบเป็นเฟเซอร์ (Hayt Practice 10.12) ภาพจำลองของแต่ละข้อยังไม่มีจุดวิ่งจนกว่าจะแก้วงจรเสร็จ</p>
+<p class="lead" data-l="en">Ex 1 asks for nodal analysis, Ex 2 for mesh analysis. The values in the figure are <b>admittances</b> in millisiemens (mS), the reciprocals of impedances. No ω is given, so the answers are phasors (Hayt Practice 10.12). Each simulation shows no moving dots until the circuit is solved.</p>
+<figure class="slide q"><img src="slides/ch7/p04c.webp" width="748" height="562" loading="lazy" decoding="async" alt="The circuit of Ex 1 and Ex 2: a 20∠0° mA current source into node v1; j50 mS from v1 to ground; −j25 mS between v1 and v2 with a 50∠−90° mA current source above it from v1 to v2; 40 mS from v2 to ground">
+  <figcaption data-l="th">วงจรของ Ex 1–2 (สไลด์หน้า 4) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The circuit of Ex 1–2 (slide p. 4) · tap to enlarge</figcaption></figure>
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 4 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 4 as written in class</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch7/K04.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 4: Y = 1/Z in siemens; Z_L = 1/Y_L = 1/(−j25×10⁻³) = 40j Ω; R = 1/G = 1/(40×10⁻³) = 25 Ω; Z_C = 1/Y_C = 1/(j50×10⁻³) = −20j Ω">
+    <figcaption data-l="th">ในห้องแปลงเป็นอิมพีแดนซ์ก่อน: \(Z_L = j40\ \Omega\), \(R = 25\ \Omega\), \(Z_C = -j20\ \Omega\)</figcaption><figcaption data-l="en">In class the admittances were turned into impedances first: \(Z_L = j40\ \Omega\), \(R = 25\ \Omega\), \(Z_C = -j20\ \Omega\)</figcaption></figure></div></details>
+
+<section class="prob sub-item" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 1: ใช้วิธีโนดหา \(v_1\) และ \(v_2\)</h2><h2 data-l="en">Ex 1: find \(v_1\) and \(v_2\) by nodal analysis</h2>
+    <div class="src" data-l="th">สไลด์หน้า 4 · Hayt Practice 10.12 · เฉลยในห้องหน้า 5</div><div class="src" data-l="en">Slide p. 4 · Hayt Practice 10.12 · class solution p. 5</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยวิธีโนดที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the nodal solution written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K05.webp" width="1100" height="1525" loading="lazy" decoding="async" alt="Handwritten nodal solution: KCL at v1 gives 0.025j V1 + 0.025j V2 = 0.02 + 0.05j (1); KCL at v2 gives 0.025j V1 + (0.04 − 0.025j) V2 = −0.05j (2); Δ = 1.25×10⁻³ + 1×10⁻³ j, ΔV1 = 8×10⁻⁴ + 1.5×10⁻³ j, ΔV2 = 2.5×10⁻³ − 5×10⁻⁴ j; V1 = 1.062∠23.3 V, V2 = 1.593∠−49.969 V">
+      <figcaption data-l="th">สมการ (1), (2) ดีเทอร์มิแนนต์ และ \(V_1 = 1.062\angle 23.3^\circ\) V, \(V_2 = 1.593\angle{-49.969^\circ}\) V</figcaption><figcaption data-l="en">Equations (1), (2), the determinants, and \(V_1 = 1.062\angle 23.3^\circ\) V, \(V_2 = 1.593\angle{-49.969^\circ}\) V</figcaption></figure></div></details>
+</section>
+
+<section class="prob sub-item" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 2: ใช้วิธีเมชหา \(v_1\) และ \(v_2\)</h2><h2 data-l="en">Ex 2: find \(v_1\) and \(v_2\) by mesh analysis</h2>
+    <div class="src" data-l="th">สไลด์หน้า 5 · เฉลยในห้องหน้า 7</div><div class="src" data-l="en">Slide p. 5 · class solution p. 7</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 5 และเฉลยวิธีเมชที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 5 and the mesh solution written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K06.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 5: v1 and v2 marked as V1 − V3 and V2 − V3 with V3 = 0 at the ground; the impedances 40j, 25 and −20j written on the circuit">
+      <figcaption data-l="th">แรงดันโนดวัดเทียบโนดอ้างอิง (\(V_3 = 0\)) และค่าอิมพีแดนซ์บนวงจร</figcaption><figcaption data-l="en">The node voltages against the reference (\(V_3 = 0\)) and the impedances on the circuit</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/K07.webp" width="1100" height="860" loading="lazy" decoding="async" alt="Handwritten mesh solution: i1 = 0.02∠0 A, i2 = 0.05∠−90 A; KVL around mesh i3: (−20j)(i3 − i1) + 40j(i3 − i2) + 25 i3 = 0, i3 = (2 − 0.4j)/(25 + 20j) = 0.0637∠−49.969 A; V1 = (i1 − i3)(−20j) = 1.062∠23.3 V; V2 = i3 R = 1.593∠−49.969 V">
+      <figcaption data-l="th">\(i_3 = 0.0637\angle{-49.969^\circ}\) A แล้วได้ \(V_1\), \(V_2\) เท่ากับวิธีโนด</figcaption><figcaption data-l="en">\(i_3 = 0.0637\angle{-49.969^\circ}\) A, giving the same \(V_1\), \(V_2\) as nodal analysis</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="ghw"><h2 data-l="th">การบ้าน (สไลด์หน้า 10–12)</h2><h2 data-l="en">Homework (slides pp. 10–12)</h2></div>
+<p class="lead" data-l="th">ในห้องผู้สอนแก้คำตอบที่พิมพ์ไว้ของการบ้านข้อ 1 และเขียนคำตอบข้อ 2 ไว้ เฉลยละเอียดทั้งสามข้ออยู่ในไฟล์เฉลยการบ้าน (Sol HW) ปี 2561 ทั้งสามข้อเป็นโจทย์ของ Hayt (Problems 10.50, 10.53, 10.55)</p>
+<p class="lead" data-l="en">In class the teacher corrected the printed answer of homework 1 and wrote the answer of homework 2. Full solutions of all three are in the 2018 homework solutions file (Sol HW). All three come from Hayt (Problems 10.50, 10.53, 10.55).</p>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">การบ้าน 1: หา \(\mathbf{I}_1\) และ \(\mathbf{I}_2\) เมื่อ \(\mathbf{V}_1 = 10\angle{-80^\circ}\), \(\mathbf{V}_2 = 4\angle 0^\circ\), \(\mathbf{V}_3 = 2\angle{-23^\circ}\) V</h2><h2 data-l="en">Homework 1: find \(\mathbf{I}_1\) and \(\mathbf{I}_2\) with \(\mathbf{V}_1 = 10\angle{-80^\circ}\), \(\mathbf{V}_2 = 4\angle 0^\circ\), \(\mathbf{V}_3 = 2\angle{-23^\circ}\) V</h2>
+    <div class="src" data-l="th">สไลด์หน้า 10 · Hayt Problem 10.50 · เฉลยปี 2561 ใช้วิธีเมช</div><div class="src" data-l="en">Slide p. 10 · Hayt Problem 10.50 · the 2018 solution uses meshes</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p10q.webp" width="1343" height="666" loading="lazy" decoding="async" alt="Slide 10 homework 1: in the phasor-domain circuit, let v1 = 10∠−80° V, v2 = 4∠0° V and v3 = 2∠−23° V; calculate i1 and i2. Three branches between a top and a bottom wire: j30 Ω over v1, 55 Ω over v2, −j20 Ω over v3; i1 flows right along the top wire into the middle node, i2 from the middle node to the right">
+    <figcaption data-l="th">สไลด์หน้า 10 (ตัดคำตอบที่พิมพ์ไว้ออก ดูกล่องเตือน) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 (the printed answers are cut off; see the warning box) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <div class="warnbox" data-l="th"><b>คำตอบที่พิมพ์ในสไลด์ผิด:</b> 0.6247 + j0.3339 = 0.71∠28.12° และ 0.4838 + j0.4956 = 0.69∠45.69° (ฉบับแจก 2568 ยังพิมพ์ชื่อเป็น \(i_1\) ทั้งสองบรรทัด) มาจากคู่มือเฉลยของ Hayt ซึ่งคิดเหมือนใช้ \(\mathbf{V}_1 = 10\angle 80^\circ\) และ \(\mathbf{V}_3 = 2\angle 23^\circ\) (เครื่องหมายลบของมุมหายไป) ถ้าใส่มุมบวกในวงจรนี้จะได้ตัวเลขชุดนั้นพอดี ผู้สอนแก้ในห้องเป็น 0.61∠−156.595° A และ 0.534∠−136.354° A ซึ่งถูกต้อง</div>
+  <div class="warnbox" data-l="en"><b>The answer printed on the slide is wrong:</b> 0.6247 + j0.3339 = 0.71∠28.12° and 0.4838 + j0.4956 = 0.69∠45.69° (the 2025 handout even labels both lines \(i_1\)) come from Hayt's solution manual, which effectively used \(\mathbf{V}_1 = 10\angle 80^\circ\) and \(\mathbf{V}_3 = 2\angle 23^\circ\) (the minus signs of the angles were lost); putting those positive angles into this circuit gives exactly those numbers. The teacher corrected them in class to 0.61∠−156.595° A and 0.534∠−136.354° A, which is right.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 10 ที่ผู้สอนแก้ในห้อง และเฉลยปี 2561</span><span data-l="en">See slide p. 10 as corrected in class, and the 2018 solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K16.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 10, homework 1: the printed answers crossed out; written in a box: I1 = 0.61∠−156.595 A, I2 = 0.534∠−136.354 A">
+      <figcaption data-l="th">ผู้สอนขีดฆ่าคำตอบที่พิมพ์ไว้ แล้วเขียน \(\mathbf{I}_1 = 0.61\angle{-156.595^\circ}\) A, \(\mathbf{I}_2 = 0.534\angle{-136.354^\circ}\) A</figcaption><figcaption data-l="en">The printed answers crossed out and replaced by \(\mathbf{I}_1 = 0.61\angle{-156.595^\circ}\) A, \(\mathbf{I}_2 = 0.534\angle{-136.354^\circ}\) A</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/S2.webp" width="1100" height="1501" loading="lazy" decoding="async" alt="2018 handwritten solution of homework 1 by meshes Ix and Iy: (−5 + 30j... ) mesh equations, the matrix [(55 + 30j) −55; −55 (55 − 20j)], Δ = 600 + 550j, ΔIx = −202.682 − 453.436j, ΔIy = −24.157 − 433.914j, I1 = 0.61∠−156.595 A, I2 = 0.534∠−136.354 A">
+      <figcaption data-l="th">เฉลยปี 2561: \(\Delta = 600 + j550\) แล้วได้คำตอบชุดเดียวกับที่แก้ในห้อง</figcaption><figcaption data-l="en">The 2018 solution: \(\Delta = 600 + j550\), giving the same answers as corrected in class</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">การบ้าน 2: หา \(\mathbf{I}_B\) เมื่อ \(\mathbf{I}_1 = 5\angle{-18^\circ}\) A และ \(\mathbf{I}_2 = 2\angle 5^\circ\) A</h2><h2 data-l="en">Homework 2: find \(\mathbf{I}_B\) with \(\mathbf{I}_1 = 5\angle{-18^\circ}\) A and \(\mathbf{I}_2 = 2\angle 5^\circ\) A</h2>
+    <div class="src" data-l="th">สไลด์หน้า 11 · Hayt Problem 10.53 · เฉลยปี 2561 ใช้วิธีเมช</div><div class="src" data-l="en">Slide p. 11 · Hayt Problem 10.53 · the 2018 solution uses meshes</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p11q.webp" width="1297" height="617" loading="lazy" decoding="async" alt="Slide 11 homework 2: determine iB in the circuit if i1 = 5∠−18° A and i2 = 2∠5° A. A current source i1 at the left (arrow down), j2 Ω down from the left node, −j4 Ω between the left and right nodes, 2 Ω down from the right node, a current source i2 at the right (arrow up), and a top branch of j3.8 Ω in series with 1 Ω between the two nodes carrying iB">
+    <figcaption data-l="th">สไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 11 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูคำตอบในห้อง และเฉลยปี 2561</span><span data-l="en">See the class answer and the 2018 solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K17.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 11, homework 2, with the answer written in a box: IB = 2.732∠152.102 A, and IB marked on the 1 Ω">
+      <figcaption data-l="th">คำตอบในห้อง \(\mathbf{I}_B = 2.732\angle 152.102^\circ\) A</figcaption><figcaption data-l="en">The class answer \(\mathbf{I}_B = 2.732\angle 152.102^\circ\) A</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/S4.webp" width="1100" height="1501" loading="lazy" decoding="async" alt="2018 handwritten solution of homework 2: Ix = −I1 = −5∠−18 A, Iw = −I2 = −2∠5 A; KVL around meshes Iy and Iz: (1 − 0.2j) Iy + 4j Iz = 0 and 4j Iy + (2 − 2j) Iz = 12.155∠−125.6; Δ = 17.6 − 2.4j, ΔIy = 48.54∠144.336; IB = Iy = 2.732∠152.102 A">
+      <figcaption data-l="th">เฉลยปี 2561: เมชสี่วง \(I_x = -\mathbf{I}_1\), \(I_w = -\mathbf{I}_2\) และ \(\Delta = 17.6 - j2.4\)</figcaption><figcaption data-l="en">The 2018 solution: four meshes with \(I_x = -\mathbf{I}_1\), \(I_w = -\mathbf{I}_2\) and \(\Delta = 17.6 - j2.4\)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">การบ้าน 3: ใช้เฟเซอร์หา \(v_x\)</h2><h2 data-l="en">Homework 3: find \(v_x\) with phasors</h2>
+    <div class="src" data-l="th">สไลด์หน้า 12 · Hayt Problem 10.55 · เฉลยปี 2561 ใช้เมช 3×3 · เลือก ω ใต้ภาพได้</div><div class="src" data-l="en">Slide p. 12 · Hayt Problem 10.55 · the 2018 solution uses 3×3 meshes · choose ω under the picture</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p12q.webp" width="1447" height="667" loading="lazy" decoding="async" alt="Slide 12 homework 3: employ phasor analysis to obtain an expression for vx as labeled in the circuit. A source 4 cos 2t V in series with 2 Ω on the left, 4.7 Ω down to a middle node, 100 mH from the middle node to the bottom, 890 mF on the right top, 2 Ω from the middle node to the right node, and 1 Ω from the right node to the bottom">
+    <figcaption data-l="th">สไลด์หน้า 12 (ฉบับแจกพิมพ์ \(4\cos 2t\) V และไม่มีป้าย \(v_x\)) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 12 (the handout prints \(4\cos 2t\) V and has no \(v_x\) label) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas><div class="ctl" id="ctl5"></div></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <div class="warnbox" data-l="th"><b>ค่า ω ของโจทย์:</b> ฉบับแจก 2568 พิมพ์แหล่งจ่าย \(4\cos 2t\) V แต่ Hayt Problem 10.55 และสไลด์ปี 2561 ใช้ \(4\cos 20t\) V และรูปในฉบับแจกไม่มีป้าย \(v_x\) (ใน Hayt คือแรงดันคร่อม 1 Ω ขั้วบวกด้านบน) ค่าเริ่มต้นจึงใช้ ω = 20 rad/s เลือก ω = 2 rad/s ใต้ภาพได้ · <b>เฉลยปี 2561</b> รวมพจน์ของซาร์รัสถูก (108.9564 + j91.4784 และ 66.27 + j52.404) แต่ลบส่วนจินตภาพได้ 38.0764 ที่ถูกคือ 39.0744 จึงได้ 1.149∠102.899° แทน 1.136∠102.16°</div>
+  <div class="warnbox" data-l="en"><b>The ω of the problem:</b> the 2025 handout prints the source as \(4\cos 2t\) V, but Hayt Problem 10.55 and the 2018 slides use \(4\cos 20t\) V, and the handout figure has no \(v_x\) label (in Hayt it is the voltage across the 1 Ω, + at the top). The default is therefore ω = 20 rad/s; choose ω = 2 rad/s under the picture. · <b>The 2018 solution</b> sums the Sarrus terms correctly (108.9564 + j91.4784 and 66.27 + j52.404) but subtracts the imaginary parts as 38.0764; the correct value is 39.0744, so it got 1.149∠102.899° instead of 1.136∠102.16°.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ปี 2561 และเฉลยปี 2561</span><span data-l="en">See the 2018 slide and the 2018 solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/S3b.webp" width="1100" height="671" loading="lazy" decoding="async" alt="The 2018 homework slide: the same circuit with the source 4 cos 20t V, vx marked across the 1 Ω with + at the top and the current ix, and the answer 1.14 cos(20t + 12°) V">
+      <figcaption data-l="th">สไลด์ปี 2561 ใช้ \(4\cos 20t\) V มีป้าย \(v_x\) คร่อม 1 Ω และคำตอบของ Hayt \(1.14\cos(20t + 12^\circ)\) V</figcaption><figcaption data-l="en">The 2018 slide uses \(4\cos 20t\) V, labels \(v_x\) across the 1 Ω, and gives Hayt's answer \(1.14\cos(20t + 12^\circ)\) V</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/S5.webp" width="1100" height="1529" loading="lazy" decoding="async" alt="2018 handwritten solution of homework 3 with ω = 20: Vs = 4∠90 V, ZL = j2 Ω, ZC = −0.056j Ω; three mesh equations and the 3×3 matrix; Δ = 42.6864 + 38.0764j; ΔIz = −53.6 + 38.048j; Iz = 1.149∠102.899 A; vx(t) = 1.149 sin(20t + 102.899°) = 1.149 cos(20t + 12.899°)">
+      <figcaption data-l="th">เฉลยปี 2561 (ω = 20): ส่วนจินตภาพของ \(\Delta\) ควรเป็น 39.0744 ไม่ใช่ 38.0764</figcaption><figcaption data-l="en">The 2018 solution (ω = 20): the imaginary part of \(\Delta\) should be 39.0744, not 38.0764</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="gx"><h2 data-l="th">ฝึกเพิ่มจากสไลด์ปี 2561</h2><h2 data-l="en">Extra practice from the 2018 slides</h2></div>
+<p class="lead" data-l="th">สไลด์ชุดปี 2561 ที่ผู้สอนใช้สอนมีโจทย์อีกสองข้อที่ฉบับแจก 2568 ไม่มี ข้อแรกมีเฉลยในห้อง ข้อที่สองไม่มีเฉลย หน้านี้เฉลยให้และตรวจทั้งสองวิธี</p>
+<p class="lead" data-l="en">The 2018 slides the teacher used hold two more problems that the 2025 handout dropped. The first has a class solution; the second has none, so this page solves it and checks it both ways.</p>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">หาแรงดันโนด \(v_1(t)\) และ \(v_2(t)\) ในรูปฟังก์ชันเวลา</h2><h2 data-l="en">Find the time-domain node voltages \(v_1(t)\) and \(v_2(t)\)</h2>
+    <div class="src" data-l="th">สไลด์ปี 2561 หน้า 3 · Hayt Example 10.9 · เฉลยในห้องใช้วิธีโนด</div><div class="src" data-l="en">2018 slides, p. 3 · Hayt Example 10.9 · the class solution uses nodal analysis</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/L02q.webp" width="1076" height="438" loading="lazy" decoding="async" alt="2018 slide: find the time-domain node voltages v1(t) and v2(t) in the circuit. A 1∠0° A source into V1; 5 Ω and −j10 Ω from V1 to ground; −j5 Ω in parallel with j10 Ω between V1 and V2; j5 Ω and 10 Ω from V2 to ground; a 0.5∠−90° A source from V2 to ground">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2018 slides, p. 3 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim hscroll"><canvas id="cv6"></canvas></div><div class="card solve"><div id="ask6"></div><div id="st6"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the solution written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/L03.webp" width="1100" height="1501" loading="lazy" decoding="async" alt="Handwritten nodal solution: KCL at V1 gives (0.2 + 0.2j) V1 − 0.1j V2 = 1∠0 (1); KCL at V2 with the source written as −0.5j gives −0.1j V1 + (0.1 − 0.1j) V2 = 0.5j (2); Δ = 0.05, ΔV1 = 0.05 − 0.1j, ΔV2 = −0.1 + 0.2j; V1 = 2.236∠−63.4, v1(t) = 2.236 sin(ωt − 63.4°); V2 = 4.47∠116.56, v2(t) = 4.47 sin(ωt + 116.56°)">
+      <figcaption data-l="th">\(\Delta = 0.05\) และ \(v_1(t) = 2.236\sin(\omega t - 63.4^\circ)\), \(v_2(t) = 4.47\sin(\omega t + 116.56^\circ)\) V</figcaption><figcaption data-l="en">\(\Delta = 0.05\), and \(v_1(t) = 2.236\sin(\omega t - 63.4^\circ)\), \(v_2(t) = 4.47\sin(\omega t + 116.56^\circ)\) V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex7">
+  <div class="prob-head"><span class="prob-no">7</span><div><h2 data-l="th">หากระแส \(\mathbf{I}_1\), \(\mathbf{I}_2\), \(\mathbf{I}_3\) ด้วยวิธีโนด (และวิธีเมช)</h2><h2 data-l="en">Find the currents \(\mathbf{I}_1\), \(\mathbf{I}_2\), \(\mathbf{I}_3\) by nodal (and mesh) analysis</h2>
+    <div class="src" data-l="th">สไลด์ปี 2561 หน้า 4–5 (สองสไลด์ วงจรเดียวกัน ถามด้วยวิธีโนดและวิธีเมช) · ไม่มีเฉลย</div><div class="src" data-l="en">2018 slides, pp. 4–5 (two slides, one circuit, asked by nodal and by mesh analysis) · no solution given</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/L04q.webp" width="1071" height="451" loading="lazy" decoding="async" alt="2018 slide: find the currents I1, I2, I3 by nodal analysis. A 100∠0° V source, −j5 Ω in series carrying I1 to a node; 5 Ω carrying I2 and j5 Ω carrying I3 from that node to the bottom">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2018 slides, p. 4 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv7"></canvas></div><div class="card solve"><div id="ask7"></div><div id="st7"></div></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — คำตอบเดียวกัน ทางต่างกัน</h3>
+    <ol><li>เปิดเฉลย Ex 1 และ Ex 2 จนครบ: \(V_1\), \(V_2\) เท่ากันทุกหลัก แต่วิธีโนดแก้ 2 สมการ ส่วนวิธีเมชแก้สมการเดียว</li>
+    <li>ขั้นสุดท้ายของ Ex 1: ลูกศรกระแสสี่ตัวต่อกันแล้วกลับถึงจุดเริ่มพอดี นี่คือ \(\sum \mathbf{I}_{out} = 0\) ในรูปภาพ</li>
+    <li>ชี้เมาส์ที่ตัวต้านทาน 40 mS เมื่อแก้เสร็จ: กระแสคือ \(0.0637\angle{-49.97^\circ}\) A เท่ากับ \(i_3\) ของวิธีเมช</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — การบ้าน 1 สองวิธี</h3>
+    <ol><li>วิธีเมชตามเฉลยของผู้สอนใช้ 2 สมการ แต่วิธีโนดมีโนดที่ไม่รู้ค่าเพียงโนดเดียว จึงใช้สมการเดียว (ขั้นสุดท้าย)</li>
+    <li>คำตอบที่พิมพ์ในสไลด์ (0.71∠28.12°) ได้จากการใช้มุม +80° และ +23° แทน −80° และ −23° <b>เครื่องหมายของมุมสำคัญมาก</b></li>
+    <li>ข้อ 7: \(|\mathbf{I}_1| = 28.28\) A แต่ \(|\mathbf{I}_2| + |\mathbf{I}_3| = 40\) A ดูลูกศรต่อหัวต่อหางในขั้นที่ 3 ว่าทำไม</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ความถี่เปลี่ยน คำตอบเปลี่ยน</h3>
+    <ol><li>การบ้าน 3 สลับ ω = 20 กับ ω = 2 rad/s ใต้ภาพ: \(Z_L\) และ \(Z_C\) เปลี่ยน คำตอบ \(v_x\) จึงเปลี่ยนด้วย</li>
+    <li>เพราะอิมพีแดนซ์ขึ้นกับ ω ทุกคำตอบที่เป็นเฟเซอร์จึงต้องบอก ω กำกับเสมอ</li>
+    <li>คำถาม: ทำไมใน Ex 1 และข้อ 6 จึงตอบได้โดยไม่ต้องรู้ ω (ดูว่าโจทย์ให้อะไรมา)</li></ol>
+    <div class="book">สไลด์บทที่ 7 หน้า 2–5, 10–12 · ฉบับในห้อง 2569 · สไลด์และเฉลยการบ้านปี 2561 · Hayt §10.6, Practice 10.12, Example 10.9, Problems 10.50, 10.53, 10.55</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — same answer, different work</h3>
+    <ol><li>Open all the steps of Ex 1 and Ex 2: \(V_1\), \(V_2\) agree to every digit, but nodal solves 2 equations and mesh only one.</li>
+    <li>The last step of Ex 1: the four current arrows chain back exactly to the start. That is \(\sum \mathbf{I}_{out} = 0\) as a picture.</li>
+    <li>Hover over the 40 mS resistor once solved: its current is \(0.0637\angle{-49.97^\circ}\) A, the \(i_3\) of the mesh method.</li></ol></div>
+  <div class="card"><h3>Try this 2 — homework 1 both ways</h3>
+    <ol><li>The instructor's mesh solution uses 2 equations, but there is only one unknown node, so nodal needs just one (the last step).</li>
+    <li>The answer printed on the slide (0.71∠28.12°) comes from using +80° and +23° instead of −80° and −23°. <b>The sign of an angle matters.</b></li>
+    <li>Problem 7: \(|\mathbf{I}_1| = 28.28\) A while \(|\mathbf{I}_2| + |\mathbf{I}_3| = 40\) A; see the head-to-tail arrows of step 3 for why.</li></ol></div>
+  <div class="card"><h3>Try this 3 — change the frequency, change the answer</h3>
+    <ol><li>In homework 3 switch between ω = 20 and ω = 2 rad/s under the picture: \(Z_L\) and \(Z_C\) change, so \(v_x\) changes too.</li>
+    <li>Because impedances depend on ω, every phasor answer must state its ω.</li>
+    <li>Question: why can Ex 1 and problem 6 be answered without knowing ω? (Look at what the problems give.)</li></ol>
+    <div class="book">Chapter 7 slides, pp. 2–5, 10–12 · in class, 2026 · 2018 slides and homework solutions · Hayt §10.6, Practice 10.12, Example 10.9, Problems 10.50, 10.53, 10.55</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  ['ex1', 'ex2', 'hw1', 'hw2', 'hw3', 'x1', 'x2'].forEach((key, i) => CH7.problem(i + 1, key));
+});
+</script>
+</body>
+</html>

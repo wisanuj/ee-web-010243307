@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="3.3 — Combining Sources and Resistors">3.3 — การรวมแหล่งจ่ายและตัวต้านทาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch3.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การรวมแหล่งจ่ายและตัวต้านทาน <span class="en">Combining sources and resistors — make the circuit smaller, keep the answer the same</span></h1>
+<h1 data-l="en">Combining sources and resistors <span class="en">Make the circuit smaller, keep the answer the same</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch3/p12.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 12: voltage sources in series add algebraically, v1 + v2 − v3; parallel current sources add algebraically, i1 − i2 + i3">
+    <figcaption data-l="th">สไลด์บทที่ 3 หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 3 slides, p. 12 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 12: <b>แหล่งจ่ายแรงดันที่ต่ออนุกรมกันรวมเป็นตัวเดียวได้</b> โดยบวกแรงดันแบบมีเครื่องหมาย และ<b>แหล่งจ่ายกระแสที่ต่อขนานกันก็รวมเป็นตัวเดียวได้</b> โดยบวกกระแสแบบมีเครื่องหมาย สไลด์หน้า 15 และ 17 ใช้หลักเดียวกันกับตัวต้านทาน อนุกรมให้บวกกัน ขนานให้บวกส่วนกลับ ทุกขั้นที่ยุบวงจร <b>ค่าที่โจทย์ถามต้องเท่าเดิม</b> ในภาพจำลอง กลุ่มที่จะรวมในขั้นถัดไปเรืองแสงสีเหลือง ตัวสมมูลที่เพิ่งได้เรืองแสงสีชมพู และกระแสจะเริ่มไหลเมื่อหาคำตอบได้ หน้านี้มี <b>5 โจทย์ เรียงทีละข้อ</b> (Ex 5–9) และเครื่องมือหนึ่งชิ้นที่แสดงว่าทำไมห้ามต่อแหล่งจ่ายแรงดันค่าต่างกันขนานกัน</p>
+    <p class="sub" data-l="en">Slide p. 12: <b>voltage sources in series can be replaced by one</b>, adding their voltages with signs, and <b>current sources in parallel can be replaced by one</b>, adding their currents with signs. Slides pp. 15 and 17 do the same for resistors: in series they add, in parallel their reciprocals add. At every step of the reduction <b>the asked value stays the same</b>. In the simulations, the group to combine next glows yellow, the equivalent just formed glows pink, and the current starts to flow once the answer is found. This page has <b>5 problems, one after another</b> (Ex 5–9) and one tool that shows why voltage sources of different values must not be put in parallel.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} V_{eq} = \textstyle\sum \pm v_k, \qquad I_{eq} = \sum \pm i_k \\ R_{eq} = R_1 + R_2 + \cdots \ (\text{series}) \\ \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots \ (\text{parallel}) \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แหล่งจ่ายแรงดันอนุกรม</b> (กระแสเดียวกัน) รวมเป็นตัวเดียว: \(V_{eq}\) คือผลรวมแบบมีเครื่องหมาย ตัวที่ขั้วกลับทิศเป็นลบ</li>
+  <li><b>แหล่งจ่ายกระแสขนาน</b> (แรงดันเดียวกัน) รวมเป็นตัวเดียว: \(I_{eq}\) คือผลรวมของกระแสที่ชี้เข้าโนดเดียวกัน ตัวที่ชี้ออกเป็นลบ</li>
+  <li><b>ตัวต้านทานอนุกรม</b> \(R_{eq} = R_1 + R_2 + \cdots\) · <b>ขนาน</b> \(1/R_{eq} = 1/R_1 + 1/R_2 + \cdots\) และสำหรับสองตัว \(R_{eq} = R_1R_2/(R_1 + R_2)\)</li>
+  <li><b>ค่าที่ถามไม่เปลี่ยนระหว่างยุบวงจร</b> ตราบใดที่ไม่ยุบอุปกรณ์ตัวที่มีค่านั้นทิ้ง (กำลังของแหล่งจ่าย 80 V ใน Ex 7 จึงต้องคิดในวงจรเดิม)</li>
+  <li><b>ห้ามต่อแหล่งจ่ายแรงดันค่าต่างกันขนานกัน</b> (ขัดกับ KVL) และห้ามต่อแหล่งจ่ายกระแสค่าต่างกันอนุกรมกัน (ขัดกับ KCL)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Voltage sources in series</b> (one current) combine into one: \(V_{eq}\) is the signed sum; a source turned the other way counts negative.</li>
+  <li><b>Current sources in parallel</b> (one voltage) combine into one: \(I_{eq}\) is the sum of the currents pointing into the same node; those pointing out count negative.</li>
+  <li><b>Resistors in series</b>: \(R_{eq} = R_1 + R_2 + \cdots\) · <b>in parallel</b>: \(1/R_{eq} = 1/R_1 + 1/R_2 + \cdots\), and for two of them \(R_{eq} = R_1R_2/(R_1 + R_2)\).</li>
+  <li><b>The asked value does not change during a reduction</b>, as long as the element that carries it is not merged away (so the power of the 80 V source in Ex 7 must be found in the original circuit).</li>
+  <li><b>Never put voltage sources of different values in parallel</b> (it breaks KVL), nor current sources of different values in series (it breaks KCL).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 5 แหล่งจ่ายแรงดันอนุกรม</a><a href="#ex2"><b>2</b>Ex 6 แหล่งจ่ายกระแสขนาน</a><a href="#ex3"><b>3</b>Ex 7</a><a href="#ex4"><b>4</b>Ex 8</a><a href="#ex5"><b>5</b>Ex 9</a><a href="#tA"><b>A</b>ห้ามต่อขนาน</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 5 series voltage sources</a><a href="#ex2"><b>2</b>Ex 6 parallel current sources</a><a href="#ex3"><b>3</b>Ex 7</a><a href="#ex4"><b>4</b>Ex 8</a><a href="#ex5"><b>5</b>Ex 9</a><a href="#tA"><b>A</b>Forbidden parallel</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 5: รวมแหล่งจ่ายเป็นแหล่งจ่ายแรงดันตัวเดียวก่อน แล้วหากระแส \(i\)</h2><h2 data-l="en">Ex 5: combine the sources into one voltage source first, then find the current \(i\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 13 · Hayt Example 3.8</div><div class="src" data-l="en">Chapter 3 slides, p. 13 · Hayt Example 3.8</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p13q.webp" width="1261" height="585" loading="lazy" decoding="async" alt="Ex 5: determine i by first combining the sources into one voltage source. 9 V and 3 V on the left (+ at the top), 100 ohm along the top, 5 V on the right (+ at the bottom), 220 ohm and a 1 V source along the bottom; on the right the equivalent 16 V with 100 and 220 ohm">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 13 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สองชุด)</span><span data-l="en">See the teacher's in-class working (two versions)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/L15.webp" width="1600" height="901" loading="lazy" decoding="async" alt="In-class slide 13, July 2026: the series path highlighted for Veq"><figcaption data-l="th">สไลด์หน้า 13 ฉบับในห้อง ก.ค. 2569</figcaption><figcaption data-l="en">Slide p. 13, in class, July 2026</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/L16.webp" width="1300" height="878" loading="lazy" decoding="async" alt="Handwritten page, July 2026: Veq = +9 V + 3 V − 1 V + 5 V = 16 V; from KVL −16 V + 100 i + 220 i = 0, i = 0.05 A"><figcaption data-l="th">หน้าลายมือ ก.ค. 2569: \(-16 + 100i + 220i = 0\)</figcaption><figcaption data-l="en">Handwritten page, July 2026: \(-16 + 100i + 220i = 0\)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K21.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025, with the printed lines −3 − 9 − 5 + 1 = 16 V and 16 + 100 i + 220 i = 0"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568 (บรรทัดที่พิมพ์มีเครื่องหมายผิด)</figcaption><figcaption data-l="en">In class, December 2025 (the printed lines have sign errors)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch3/K22.webp" width="760" height="1198" loading="lazy" decoding="async" alt="Handwritten page, December 2025: the four sources drawn in a column, Veq = 9 V + 3 V − 1 V + 5 V = 16 V"><figcaption data-l="th">หน้าลายมือ ธ.ค. 2568</figcaption><figcaption data-l="en">Handwritten page, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 6: รวมแหล่งจ่ายเป็นแหล่งจ่ายกระแสตัวเดียวก่อน แล้วหาแรงดัน \(v\)</h2><h2 data-l="en">Ex 6: combine the sources into one current source first, then find the voltage \(v\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 14 · Hayt Example 3.9</div><div class="src" data-l="en">Chapter 3 slides, p. 14 · Hayt Example 3.9</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p14q.webp" width="1514" height="619" loading="lazy" decoding="async" alt="Ex 6: determine v by first combining the sources into one current source. 2.5 A up, 5 ohm with v, 2.5 A down, 5 ohm, 3 A down; the equivalent −3 A up with two 5 ohm resistors">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 14 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง ธ.ค. 2568 (มีสมการที่เครื่องหมายผิด)</span><span data-l="en">See the in-class slide of December 2025 (its equation has a sign error)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K23.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: Ieq = +2.5 A − 2.5 A − 3 A = −3 A, and the printed equation −3 + v/5 + v/5 = 0"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">ตัวต้านทานอนุกรมและขนาน (สไลด์หน้า 15, 17)</h2><h2 data-l="en">Resistors in series and in parallel (slides pp. 15, 17)</h2></div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch3/p15.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 15: resistors in series carry the same current; vs = Req i with Req = R1 + R2 + … + RN"><figcaption data-l="th">สไลด์หน้า 15: อนุกรม · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15: series · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch3/p17.webp" width="1600" height="901" loading="lazy" decoding="async" alt="Slide 17: resistors in parallel share the same voltage; 1/Req = 1/R1 + 1/R2 + … + 1/RN"><figcaption data-l="th">สไลด์หน้า 17: ขนาน · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 17: parallel · tap to enlarge</figcaption></figure>
+</div>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">Ex 7: หากระแส \(i\) และกำลังที่แหล่งจ่าย 80 V จ่าย</h2><h2 data-l="en">Ex 7: find the current \(i\) and the power delivered by the 80 V source</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 16 · Hayt Example 3.11</div><div class="src" data-l="en">Chapter 3 slides, p. 16 · Hayt Example 3.11</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p16q.webp" width="1365" height="534" loading="lazy" decoding="async" alt="Ex 7: use resistance and source combinations to find i and the power of the 80 V source. 80 V on the left, 10 ohm, a 30 V battery (+ on the right), 7 ohm, 5 ohm, 20 V on the right (+ at the top), 8 ohm along the bottom">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 16 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 16 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ฉบับ ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K26.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: Veq = 30 + 80 − 20 = 90 V, Req = 10 + 7 + 5 + 8 = 30 ohm, i = 90/30 = 3 A, P80V = (80)(3) = 240 W"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">Ex 8: รวมแหล่งจ่ายกระแสทั้งสาม แล้วรวมตัวต้านทาน 10 Ω สองตัว จากนั้นหา \(v\)</h2><h2 data-l="en">Ex 8: combine the three current sources, then the two 10 Ω resistors, then find \(v\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 18 · Hayt Practice 3.13</div><div class="src" data-l="en">Chapter 3 slides, p. 18 · Hayt Practice 3.13</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p18q.webp" width="1436" height="523" loading="lazy" decoding="async" alt="Ex 8: 5 A up, 10 ohm with v, 1 A down, 10 ohm, 6 A up, all in parallel">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 18 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 18 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ฉบับ ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K28.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: Ieq = +5 A − 1 A + 6 A = 10 A, Req = (10)(10)/(10 + 10) = 5 ohm, v = (10)(5) = 50 V"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">Ex 9: จงหาแรงดัน \(v_x\)</h2><h2 data-l="en">Ex 9: find the voltage \(v_x\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 3 หน้า 19 · Hayt Practice 3.14 · ยุบหลายชั้น</div><div class="src" data-l="en">Chapter 3 slides, p. 19 · Hayt Practice 3.14 · several layers</div></div></div>
+  <figure class="slide q"><img src="slides/ch3/p19q.webp" width="1056" height="678" loading="lazy" decoding="async" alt="Ex 9: 1 A source with vx, 6 ohm and 9 ohm in parallel, and a ladder: 3 ohm parallel 3 ohm, 5 ohm, 5 ohm, 3 ohm parallel 3 ohm in series">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 19 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 19 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ฉบับ ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch3/K29.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide, December 2025: 1/Req = 1/6 + 1/9 + 1/13, Req = 2.819 ohm, vx = (1)(2.819) = 2.819 V"><figcaption data-l="th">ฉบับในห้อง ธ.ค. 2568</figcaption><figcaption data-l="en">In class, December 2025</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เครื่องมือ: ทำไมห้ามต่อแหล่งจ่ายแรงดันค่าต่างกันขนานกัน</h2><h2 data-l="en">Tool: why voltage sources of different values must not be in parallel</h2>
+    <div class="src" data-l="th">Hayt Example 3.10 · แหล่งจ่ายจริงมีความต้านทานภายในเล็ก ๆ (ใส่ไว้ 0.05 Ω)</div><div class="src" data-l="en">Hayt Example 3.10 · a real source has a small internal resistance (0.05 Ω here)</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvA"></canvas><div class="ctl" id="ctlA"></div></div>
+    <div class="card solve"><div class="status" id="stA"></div>
+      <p class="lead" data-l="th">แหล่งจ่ายแรงดันในอุดมคติบังคับแรงดันคร่อมตัวเองให้คงที่ ถ้าแหล่งจ่าย 10 V ต่อขนานกับแหล่งจ่ายที่ไม่ใช่ 10 V แรงดันคร่อมคู่นั้นจะต้องเป็นสองค่าพร้อมกัน ซึ่งขัดกับ KVL ในวงจรจริงจึงเกิด<b>กระแสวนขนาดใหญ่</b>ระหว่างแหล่งจ่ายทั้งสอง (จำกัดด้วยความต้านทานภายในเท่านั้น) เลื่อน \(V_2\) ให้เท่ากับ 10 V แล้วกระแสวนจะหายไป</p>
+      <p class="lead" data-l="en">An ideal voltage source forces its own voltage. If a 10 V source is put in parallel with a source that is not 10 V, the pair would need two voltages at once, which breaks KVL. In a real circuit <b>a large current circulates</b> between the two sources, limited only by their internal resistance. Slide \(V_2\) to 10 V and the circulating current disappears.</p></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ค่าที่ถามคงที่ทุกขั้น</h3>
+    <ol><li>เปิดเฉลยของข้อ 1 จนครบ แล้วกด "ย้อนกลับ" ทีละขั้น ป้ายบนภาพยังบอก \(i = 50\) mA เท่าเดิมทุกขั้น เพราะวงจรที่ยุบแล้วสมมูลกับวงจรเดิม</li>
+    <li>ข้อ 3: กำลังของแหล่งจ่าย 80 V ต้องคิดในวงจรเดิม เพราะในวงจรที่ยุบแล้วแหล่งจ่าย 80 V ไม่มีอยู่ (รวมเป็น 90 V)</li>
+    <li>ข้อ 5: แรงดัน \(v_x\) อยู่คร่อมแหล่งจ่ายกระแส ซึ่งไม่ถูกยุบ จึงยุบตัวต้านทานได้ทั้งหมด</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เครื่องหมายของแหล่งจ่ายสมมูล</h3>
+    <ol><li>ข้อ 1: เดินตามเข็มนาฬิกาแบบ KVL ได้ \(-3 - 9 - 5 + 1 = -16\) แปลว่าแหล่งจ่ายสมมูล 16 V มีขั้ว + อยู่บน ในห้องเขียน \(V_{eq} = 9 + 3 - 1 + 5 = 16\) V ซึ่งเป็นแรงดันของแหล่งจ่ายสมมูล (ขั้ว + บน) เลขเดียวกัน</li>
+    <li>ข้อ 2: \(I_{eq} = -3\) A ชี้เข้าโนดบน แปลว่าจริง ๆ แล้วดึงกระแส 3 A ออกจากโนดบน จุดในตัวต้านทานจึงวิ่ง<b>ขึ้น</b> และ \(v\) ติดลบ</li>
+    <li>คำถาม: ถ้ากลับทิศแหล่งจ่าย 1 V ในข้อ 1 กระแส \(i\) จะเป็นเท่าไร</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ห้ามต่อขนาน</h3>
+    <ol><li>เครื่องมือ A: ตั้ง \(V_2 = 5\) V กระแสวนหลายสิบแอมแปร์ แม้โหลดจะรับแค่ประมาณ 0.75 A</li>
+    <li>ตั้ง \(V_2 = 10\) V พอดี กระแสวนเป็นศูนย์ ต่อขนานได้ (แบตเตอรี่ที่ต่อขนานกันจึงต้องมีแรงดันเท่ากัน)</li>
+    <li>คำถาม: ทำไมแหล่งจ่ายกระแสค่าต่างกันจึงต่ออนุกรมกันไม่ได้ (ใช้ KCL ที่จุดต่อระหว่างสองตัว)</li></ol>
+    <div class="book">สไลด์บทที่ 3 หน้า 12–19 · Hayt §3.6–3.7, Examples 3.8–3.11, Practice 3.13–3.14</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the asked value stays the same</h3>
+    <ol><li>Open all the steps of problem 1, then press "Back" step by step: the label still says \(i = 50\) mA at every stage, because each reduced circuit is equivalent to the original.</li>
+    <li>Problem 3: the power of the 80 V source must be found in the original circuit, because in the reduced circuit the 80 V source no longer exists (it is merged into 90 V).</li>
+    <li>Problem 5: \(v_x\) sits across the current source, which is not merged, so every resistor can be combined.</li></ol></div>
+  <div class="card"><h3>Try this 2 — the sign of an equivalent source</h3>
+    <ol><li>Problem 1: walking clockwise as in KVL gives \(-3 - 9 - 5 + 1 = -16\), so the equivalent 16 V source has its + at the top. The class wrote \(V_{eq} = 9 + 3 - 1 + 5 = 16\) V, the voltage of that equivalent source (+ at the top): the same number.</li>
+    <li>Problem 2: \(I_{eq} = -3\) A pointing into the top node really pulls 3 A out of it, so the dots in the resistors run <b>up</b> and \(v\) is negative.</li>
+    <li>Question: if the 1 V source in problem 1 is turned round, what is \(i\)?</li></ol></div>
+  <div class="card"><h3>Try this 3 — forbidden parallel</h3>
+    <ol><li>Tool A: with \(V_2 = 5\) V, tens of amperes circulate, even though the load takes only about 0.75 A.</li>
+    <li>Set \(V_2 = 10\) V exactly: no current circulates, so the connection is allowed (batteries in parallel must have equal voltages).</li>
+    <li>Question: why can current sources of different values not be put in series? (Use KCL at the point between them.)</li></ol>
+    <div class="book">Chapter 3 slides, pp. 12–19 · Hayt §3.6–3.7, Examples 3.8–3.11, Practice 3.13–3.14</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const W_ = (a, b) => ({ type: 'W', a, b });
+const near = (x, y, tol = 0.011) => Math.abs(x - y) < tol;
+const AL = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+/* o.stage(k): stage shown after k open steps; the asked value and the current appear once every step is open */
+function stages(n, spec, o) {
+  const sim = new CH3.Stages($('cv' + n), spec);
+  if (o.ask) LS.ask($('ask' + n), o.ask);
+  LS.stepper($('st' + n), { steps: o.steps, answer: o.answer, onStep: (k, N) => { sim.set(o.stage(k)); if (k === N) sim.reveal(true); if (k === 0) sim.reveal(false); } });
+  return sim;
+}
+
+/* 1: Ex 5, series voltage sources */
+stages(1, { speed: 900, ground: 'bl', quant: { th: 'i (ตามเข็มนาฬิกา)', en: 'i (clockwise)', get: c => c.I('R100').re, unit: 'A' },
+  stages: [
+    { nodes: { tl: [0, 0], tr: [5.6, 0], l1: [0, 1.8], bl: [0, 3.6], b1: [3, 3.6], br: [5.6, 3.6] },
+      parts: [{ id: 'V9', type: 'V', a: 'tl', b: 'l1', value: 9, name: '9 V', valText: '', side: -1 }, { id: 'V3', type: 'V', a: 'l1', b: 'bl', value: 3, name: '3 V', valText: '', side: -1 },
+        { id: 'R100', type: 'R', a: 'tl', b: 'tr', value: 100, name: '100 Ω', valText: '' }, { id: 'V5', type: 'V', a: 'br', b: 'tr', value: 5, name: '5 V', valText: '', side: 1 },
+        { id: 'V1', type: 'V', a: 'br', b: 'b1', value: 1, name: '1 V', valText: '', side: -1 }, { id: 'R220', type: 'R', a: 'b1', b: 'bl', value: 220, name: '220 Ω', valText: '', side: -1 }],
+      group: ['V9', 'V3', 'V5', 'V1'] },
+    { nodes: { tl: [0, 0], tr: [5.6, 0], bl: [0, 3.6], br: [5.6, 3.6] },
+      parts: [{ id: 'V16', type: 'V', a: 'tl', b: 'bl', value: 16, name: 'V_eq = 16 V', valText: '', side: -1 }, { id: 'R100', type: 'R', a: 'tl', b: 'tr', value: 100, name: '100 Ω', valText: '' },
+        W_('tr', 'br'), { id: 'R220', type: 'R', a: 'br', b: 'bl', value: 220, name: '220 Ω', valText: '', side: -1 }],
+      born: ['V16'], group: ['R100', 'R220'] },
+    { nodes: { tl: [0, 0], tr: [5.6, 0], bl: [0, 3.6], br: [5.6, 3.6] },
+      parts: [{ id: 'V16', type: 'V', a: 'tl', b: 'bl', value: 16, name: '16 V', valText: '', side: -1 }, { id: 'R100', type: 'R', a: 'tr', b: 'br', value: 320, name: 'R_eq = 320 Ω', valText: '', side: -1 }, W_('tl', 'tr'), W_('br', 'bl')],
+      born: ['R100'] }] }, {
+  ask: { fields: [{ label: 'i (mA) =', ok: x => near(x, 50, 0.2), w: 4 }], check: v => near(v[0], -50, 0.2) ? t('ขนาดถูก แต่ทิศ: แหล่งจ่ายสมมูลมีขั้ว + อยู่บน', 'Right size, wrong direction: the equivalent source has its + at the top') : near(v[0], 1000 * 18 / 320, 0.3) || near(v[0], 1000 * 14 / 320, 0.3) ? t('ดูขั้วของแหล่งจ่าย 1 V และ 5 V อีกครั้ง', 'Check the polarity of the 1 V and the 5 V sources again') : '' },
+  steps: [
+    { why: t('<b>ตรวจว่าอนุกรมกัน</b>: วงจรนี้เป็นวงเดียว กระแส \\(i\\) เดียวกันไหลผ่านทุกตัว แหล่งจ่ายทั้งสี่ (เรืองแสงเหลือง) จึงรวมกันได้', '<b>Check they are in series</b>: the circuit is a single loop, so the same \\(i\\) flows through every element, and the four sources (glowing yellow) can be combined') },
+    { why: t('<b>รวมแหล่งจ่าย</b>: เดินตามเข็มนาฬิกาจากมุมล่างซ้ายแบบ KVL ได้ \\(-3 - 9 - 5 + 1 = -16\\) จึงแทนด้วยแหล่งจ่าย 16 V ขั้ว + อยู่บน (ในห้องเขียนเป็นแรงดันของแหล่งจ่ายสมมูลโดยตรง)', '<b>Combine the sources</b>: walking clockwise from the bottom left as in KVL gives \\(-3 - 9 - 5 + 1 = -16\\), so they become one 16 V source with its + at the top (the class wrote the equivalent voltage directly)'),
+      tex: `V_{eq} = 9 + 3 + 5 - 1 = \\boxed{16\\ \\text{V}}` },
+    { why: t('<b>รวมตัวต้านทานอนุกรม</b>', '<b>Combine the resistors in series</b>'), tex: `R_{eq} = 100 + 220 = 320\\ \\Omega` },
+    { why: t('<b>KVL รอบวง</b> (เข้าขั้ว − ของ 16 V) … กระแสเริ่มไหลตามเข็มนาฬิกา', '<b>KVL round the loop</b> (in at the − of the 16 V) … the current starts to flow clockwise'), tex: AL(['-16 + 100i + 220i &= 0', 'i &= \\frac{16}{320} = \\boxed{50\\ \\text{mA}}']) }],
+  answer: t('\\(i = 50\\) mA (0.05 A) ตรงกับเฉลยในห้อง ก.ค. 2569 และ Hayt Example 3.8 <div class="warnbox" style="margin-top:8px"><b>สไลด์ฉบับในห้อง ธ.ค. 2568</b> พิมพ์ \\(-3 - 9 - 5 + 1 = 16\\) V และ \\(16 + 100i + 220i = 0\\) ซึ่งเครื่องหมายผิด ผลรวมที่ถูกคือ \\(-16\\) และสมการคือ \\(-16 + 100i + 220i = 0\\) (Hayt Example 3.8) จึงได้ \\(i = +50\\) mA ตามเข็มนาฬิกา ฉบับ ก.ค. 2569 เขียนถูกแล้ว</div>',
+    '\\(i = 50\\) mA (0.05 A), as in class (July 2026) and Hayt Example 3.8 <div class="warnbox" style="margin-top:8px"><b>The in-class slides of December 2025</b> print \\(-3 - 9 - 5 + 1 = 16\\) V and \\(16 + 100i + 220i = 0\\), which have the wrong sign. The sum is \\(-16\\) and the equation is \\(-16 + 100i + 220i = 0\\) (Hayt Example 3.8), giving \\(i = +50\\) mA clockwise. The July 2026 version writes it correctly.</div>'),
+  stage: k => k <= 1 ? 0 : k === 2 ? 1 : 2 });
+
+/* 2: Ex 6, parallel current sources */
+const rails = (n, dx) => { const nodes = {}, parts = []; for (let k = 0; k < n; k++) { nodes['t' + k] = [k * dx, 0]; nodes['b' + k] = [k * dx, 3]; if (k) { parts.push(W_('t' + (k - 1), 't' + k), W_('b' + (k - 1), 'b' + k)); } } return { nodes, parts }; };
+const ex6s = (() => { const r5 = rails(5, 2), r3 = rails(3, 2.6), r2 = rails(2, 3.2);
+  return [
+    { nodes: r5.nodes, parts: [{ id: 'I1', type: 'I', a: 'b0', b: 't0', value: 2.5, name: '2.5 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 5, name: '5 Ω', valText: '', side: -1 },
+      { id: 'I2', type: 'I', a: 't2', b: 'b2', value: 2.5, name: '2.5 A', valText: '', side: 1 }, { id: 'R2', type: 'R', a: 't3', b: 'b3', value: 5, name: '5 Ω', valText: '', side: 1 },
+      { id: 'I3', type: 'I', a: 't4', b: 'b4', value: 3, name: '3 A', valText: '', side: 1 }, ...r5.parts], group: ['I1', 'I2', 'I3'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'R' }] },
+    { nodes: r3.nodes, parts: [{ id: 'Ieq', type: 'I', a: 'b0', b: 't0', value: -3, name: 'I_eq = −3 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 5, name: '5 Ω', valText: '', side: -1 },
+      { id: 'R2', type: 'R', a: 't2', b: 'b2', value: 5, name: '5 Ω', valText: '', side: 1 }, ...r3.parts], born: ['Ieq'], group: ['R1', 'R2'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'R' }] },
+    { nodes: r2.nodes, parts: [{ id: 'Ieq', type: 'I', a: 'b0', b: 't0', value: -3, name: '−3 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 2.5, name: 'R_eq = 2.5 Ω', valText: '', side: 1 }, ...r2.parts],
+      born: ['R1'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'L' }] }]; })();
+stages(2, { speed: 22, ground: 'b0', quant: { th: 'v (บนเทียบล่าง)', en: 'v (top to bottom)', get: c => c.V('t0').re - c.V('b0').re, unit: 'V' }, stages: ex6s }, {
+  ask: { fields: [{ label: 'v (V) =', ok: x => near(x, -7.5), w: 4 }], check: v => near(v[0], 7.5) ? t('นี่คือคำตอบใน Hayt และสไลด์ชุดก่อน ซึ่งเครื่องหมายผิด: แหล่งจ่าย −3 A ชี้เข้าโนดบนคือดึง 3 A ออก', 'That is the answer printed in Hayt and the earlier slides, with the wrong sign: −3 A pointing into the top node pulls 3 A out of it') : '' },
+  steps: [
+    { why: t('<b>ตรวจว่าขนานกัน</b>: แหล่งจ่ายกระแสทั้งสาม (เรืองแสงเหลือง) ต่อคร่อมลวดบนกับลวดล่างคู่เดียวกัน จึงมีแรงดันเดียวกันและรวมกันได้', '<b>Check they are in parallel</b>: the three current sources (glowing yellow) all sit across the same top and bottom wires, so they share one voltage and can be combined') },
+    { why: t('<b>รวมแหล่งจ่ายกระแส</b>: นับกระแสที่ชี้<b>เข้า</b>โนดบนเป็นบวก ตัวที่ชี้ลง (ออกจากโนดบน) เป็นลบ ได้แหล่งจ่ายสมมูลที่ชี้ขึ้นเข้าโนดบน', '<b>Combine the current sources</b>: currents pointing <b>into</b> the top node count positive, those pointing down (out of it) negative; the equivalent source points up into the top node'), tex: `I_{eq} = +2.5 - 2.5 - 3 = \\boxed{-3\\ \\text{A}}` },
+    { why: t('<b>รวมตัวต้านทานขนาน</b>', '<b>Combine the parallel resistors</b>'), tex: `R_{eq} = 5 \\parallel 5 = \\frac{(5)(5)}{5 + 5} = 2.5\\ \\Omega` },
+    { why: t('<b>KCL ที่โนดบน</b> (\\(\\sum I_{\\text{out}} = 0\\)): แหล่งจ่าย −3 A ชี้เข้า แปลว่าดึง 3 A <b>ออก</b> · ตัวต้านทานแต่ละตัวมี \\(v/5\\) ไหลออก … กระแสเริ่มไหล', '<b>KCL at the top node</b> (\\(\\sum I_{\\text{out}} = 0\\)): the −3 A pointing in really pulls 3 A <b>out</b> · each resistor carries \\(v/5\\) out … the current starts to flow'),
+      tex: AL(['3 + \\frac{v}{5} + \\frac{v}{5} &= 0', 'v &= I_{eq} R_{eq}', '&= (-3)(2.5) = \\boxed{-7.5\\ \\text{V}}']) }],
+  answer: t('\\(v = -7.5\\) V: จุดในตัวต้านทานวิ่ง<b>ขึ้น</b> โนดบนจึงต่ำกว่าโนดล่าง <div class="warnbox" style="margin-top:8px"><b>Hayt Example 3.9 และสไลด์ฉบับในห้อง ธ.ค. 2568</b> เขียน \\(-3 + v/5 + v/5 = 0\\) แล้วได้ \\(v = 7.5\\) V ซึ่งเครื่องหมายผิด: แหล่งจ่าย −3 A ที่ชี้เข้าโนดบนคือแหล่งจ่าย 3 A ที่ชี้ออก กระแสที่ออกจากโนดบนรวมกันต้องเป็นศูนย์ \\(3 + v/5 + v/5 = 0\\) จึงได้ \\(v = -7.5\\) V</div>',
+    '\\(v = -7.5\\) V: the dots in the resistors run <b>up</b>, so the top node is lower than the bottom one <div class="warnbox" style="margin-top:8px"><b>Hayt Example 3.9 and the in-class slides of December 2025</b> write \\(-3 + v/5 + v/5 = 0\\) and get \\(v = 7.5\\) V, which has the wrong sign: a −3 A source pointing into the top node is a 3 A source pointing out. The currents leaving the top node must sum to zero, \\(3 + v/5 + v/5 = 0\\), so \\(v = -7.5\\) V.</div>'),
+  stage: k => k <= 1 ? 0 : k === 2 ? 1 : 2 });
+
+/* 3: Ex 7, a series loop */
+stages(3, { speed: 16, ground: 'bl', quant: { th: 'i (ตามเข็มนาฬิกา)', en: 'i (clockwise)', get: c => c.I('R10').re, unit: 'A' },
+  stages: [
+    { nodes: { tl: [0, 0], t1: [2.4, 0], t2: [4.8, 0], t3: [7.2, 0], tr: [9.6, 0], br: [9.6, 3.4], bm: [4.8, 3.4], bl: [0, 3.4] },
+      parts: [{ id: 'V80', type: 'V', a: 'tl', b: 'bl', value: 80, name: '80 V', valText: '', side: -1 }, { id: 'R10', type: 'R', a: 'tl', b: 't1', value: 10, name: '10 Ω', valText: '' },
+        { id: 'V30', type: 'V', a: 't2', b: 't1', value: 30, name: '30 V', valText: '', battery: true, side: -1 }, { id: 'R7', type: 'R', a: 't2', b: 't3', value: 7, name: '7 Ω', valText: '' },
+        { id: 'R5', type: 'R', a: 't3', b: 'tr', value: 5, name: '5 Ω', valText: '' }, { id: 'V20', type: 'V', a: 'tr', b: 'br', value: 20, name: '20 V', valText: '', side: 1 },
+        W_('br', 'bm'), { id: 'R8', type: 'R', a: 'bm', b: 'bl', value: 8, name: '8 Ω', valText: '', side: -1 }],
+      group: ['V80', 'V30', 'V20'], refs: [{ id: 'R10', from: 'tl', text: 'i', side: 'D' }] },
+    { nodes: { tl: [0, 0], t1: [3.2, 0], t3: [6.4, 0], tr: [9.6, 0], br: [9.6, 3.4], bm: [4.8, 3.4], bl: [0, 3.4] },
+      parts: [{ id: 'V90', type: 'V', a: 'tl', b: 'bl', value: 90, name: 'V_eq = 90 V', valText: '', side: -1 }, { id: 'R10', type: 'R', a: 'tl', b: 't1', value: 10, name: '10 Ω', valText: '' },
+        { id: 'R7', type: 'R', a: 't1', b: 't3', value: 7, name: '7 Ω', valText: '' }, { id: 'R5', type: 'R', a: 't3', b: 'tr', value: 5, name: '5 Ω', valText: '' },
+        W_('tr', 'br'), W_('br', 'bm'), { id: 'R8', type: 'R', a: 'bm', b: 'bl', value: 8, name: '8 Ω', valText: '', side: -1 }],
+      born: ['V90'], group: ['R10', 'R7', 'R5', 'R8'], refs: [{ id: 'R10', from: 'tl', text: 'i', side: 'D' }] },
+    { nodes: { tl: [0, 0], tr: [9.6, 0], br: [9.6, 3.4], bl: [0, 3.4] },
+      parts: [{ id: 'V90', type: 'V', a: 'tl', b: 'bl', value: 90, name: '90 V', valText: '', side: -1 }, W_('tl', 'tr'), { id: 'R10', type: 'R', a: 'tr', b: 'br', value: 30, name: 'R_eq = 30 Ω', valText: '', side: -1 }, W_('br', 'bl')],
+      born: ['R10'] }] }, {
+  ask: { fields: [{ label: 'i (A) =', ok: x => near(x, 3), w: 4 }, { label: 'P₈₀ (W) =', ok: x => near(x, 240, 0.5), w: 4 }], check: v => near(v[1], 270, 0.5) ? t('กำลังของแหล่งจ่าย 80 V ต้องใช้ 80 V ไม่ใช่ 90 V', 'The power of the 80 V source uses 80 V, not 90 V') : '' },
+  steps: [
+    { why: t('<b>ทุกตัวอยู่ในวงเดียว</b> (อนุกรม) จึงย้ายตำแหน่งได้โดยรักษาขั้วไว้ รวมแหล่งจ่ายสามตัว (เหลือง) ก่อน', '<b>Every element is in one loop</b> (series), so they may be moved around as long as their polarities are kept; combine the three sources (yellow) first') },
+    { why: t('<b>รวมแหล่งจ่าย</b> (ทิศตามเข็มนาฬิกา): 80 V และแบตเตอรี่ 30 V (ขั้ว + ขวา) ดันกระแสไปทางเดียวกัน ส่วน 20 V (ขั้ว + บน) ดันสวน', '<b>Combine the sources</b> (clockwise): the 80 V and the 30 V battery (+ on the right) push the same way, the 20 V (+ at the top) pushes against them'), tex: `V_{eq} = 80 + 30 - 20 = \\boxed{90\\ \\text{V}}` },
+    { why: t('<b>รวมตัวต้านทานอนุกรม</b>', '<b>Combine the resistors in series</b>'), tex: `R_{eq} = 10 + 7 + 5 + 8 = 30\\ \\Omega` },
+    { why: t('<b>กฎของโอห์ม</b> … กระแสเริ่มไหล แล้ว<b>กลับไปคิดกำลังในวงจรเดิม</b>: กระแส 3 A ออกจากขั้ว + ของแหล่งจ่าย 80 V จึงเป็นกำลังที่จ่าย', '<b>Ohm\'s law</b> … the current starts to flow; then <b>go back to the original circuit for the power</b>: the 3 A leaves the + of the 80 V source, so it is power delivered'), tex: AL(['i &= \\frac{V_{eq}}{R_{eq}} = \\frac{90}{30} = \\boxed{3\\ \\text{A}}', 'P_{80\\,\\text{V}} &= (80)(3) = \\boxed{240\\ \\text{W}}']) }],
+  answer: t('\\(i = 3\\) A และแหล่งจ่าย 80 V จ่ายกำลัง 240 W ตรงกับเฉลยในห้องและ Hayt Example 3.11', '\\(i = 3\\) A and the 80 V source delivers 240 W, as in class and Hayt Example 3.11'),
+  stage: k => k <= 1 ? 0 : k === 2 ? 1 : 2 });
+
+/* 4: Ex 8, three current sources and two 10 Ω */
+const ex8s = (() => { const r5 = rails(5, 2), r3 = rails(3, 2.6), r2 = rails(2, 3.2);
+  return [
+    { nodes: r5.nodes, parts: [{ id: 'I1', type: 'I', a: 'b0', b: 't0', value: 5, name: '5 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 10, name: '10 Ω', valText: '', side: -1 },
+      { id: 'I2', type: 'I', a: 't2', b: 'b2', value: 1, name: '1 A', valText: '', side: 1 }, { id: 'R2', type: 'R', a: 't3', b: 'b3', value: 10, name: '10 Ω', valText: '', side: 1 },
+      { id: 'I3', type: 'I', a: 'b4', b: 't4', value: 6, name: '6 A', valText: '', side: 1 }, ...r5.parts], group: ['I1', 'I2', 'I3'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'R' }] },
+    { nodes: r3.nodes, parts: [{ id: 'Ieq', type: 'I', a: 'b0', b: 't0', value: 10, name: 'I_eq = 10 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 10, name: '10 Ω', valText: '', side: -1 },
+      { id: 'R2', type: 'R', a: 't2', b: 'b2', value: 10, name: '10 Ω', valText: '', side: 1 }, ...r3.parts], born: ['Ieq'], group: ['R1', 'R2'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'R' }] },
+    { nodes: r2.nodes, parts: [{ id: 'Ieq', type: 'I', a: 'b0', b: 't0', value: 10, name: '10 A', valText: '', side: -1 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 5, name: 'R_eq = 5 Ω', valText: '', side: 1 }, ...r2.parts],
+      born: ['R1'], pols: [{ id: 'R1', plus: 't1', text: 'v', side: 'L' }] }]; })();
+stages(4, { speed: 7, ground: 'b0', quant: { th: 'v (บนเทียบล่าง)', en: 'v (top to bottom)', get: c => c.V('t0').re - c.V('b0').re, unit: 'V' }, stages: ex8s }, {
+  ask: { fields: [{ label: 'v (V) =', ok: x => near(x, 50), w: 4 }], check: v => near(v[0], 30) || near(v[0], 20) ? t('แหล่งจ่าย 1 A ชี้ลง (ออกจากโนดบน) ส่วน 5 A กับ 6 A ชี้ขึ้น', 'The 1 A points down (out of the top node); the 5 A and 6 A point up') : '' },
+  steps: [
+    { why: t('<b>แหล่งจ่ายกระแสทั้งสามขนานกัน</b> (เหลือง) รวมได้', '<b>The three current sources are in parallel</b> (yellow) and can be combined') },
+    { why: t('<b>รวมแหล่งจ่ายกระแส</b>: 5 A และ 6 A ชี้ขึ้นเข้าโนดบน · 1 A ชี้ลง', '<b>Combine the current sources</b>: the 5 A and 6 A point up into the top node · the 1 A points down'), tex: `I_{eq} = +5 - 1 + 6 = \\boxed{10\\ \\text{A}}` },
+    { why: t('<b>รวมตัวต้านทาน 10 Ω สองตัวขนาน</b>', '<b>Combine the two 10 Ω resistors in parallel</b>'), tex: `R_{eq} = \\frac{(10)(10)}{10 + 10} = 5\\ \\Omega` },
+    { why: t('<b>กฎของโอห์ม</b> … กระแสเริ่มไหล', '<b>Ohm\'s law</b> … the current starts to flow'), tex: `v = I_{eq}R_{eq} = (10)(5) = \\boxed{50\\ \\text{V}}` }],
+  answer: t('\\(v = 50\\) V ตรงกับเฉลยในห้องและ Hayt Practice 3.13', '\\(v = 50\\) V, as in class and Hayt Practice 3.13'),
+  stage: k => k <= 1 ? 0 : k === 2 ? 1 : 2 });
+
+/* 5: Ex 9, several layers */
+const ex9s = (() => { const rail = (xs, pre) => xs.slice(1).map((x, k) => W_(pre + xs[k], pre + x)), N = (xs, y, pre) => Object.fromEntries(xs.map(x => [pre + x, [x, y]]));
+  const left = [{ id: 'I1', type: 'I', a: 'G0', b: 'T0', value: 1, name: '1 A', valText: '', side: -1 }, { id: 'R6', type: 'R', a: 'T2', b: 'G2', value: 6, name: '6 Ω', valText: '', side: 1 }, { id: 'R9', type: 'R', a: 'T4', b: 'G4', value: 9, name: '9 Ω', valText: '', side: 1 }];
+  const vx = [{ id: 'I1', plus: 'T0', text: 'vₓ', side: 'R' }];
+  return [
+    { nodes: { ...N([0, 2, 4, 6, 8], 0, 'T'), ...N([0, 2, 4, 6, 8], 5, 'G'), A6: [6, 1.3], A7: [7, 1.3], A8: [8, 1.3], M: [7, 2.5], B6: [6, 3.7], B7: [7, 3.7], B8: [8, 3.7] },
+      parts: [...left, { id: 'Ra', type: 'R', a: 'T6', b: 'A6', value: 3, name: '3 Ω', valText: '', side: -1, bodyLen: 0.8 }, { id: 'Rb', type: 'R', a: 'T8', b: 'A8', value: 3, name: '3 Ω', valText: '', side: 1, bodyLen: 0.8 },
+        W_('A6', 'A7'), W_('A7', 'A8'), { id: 'R5a', type: 'R', a: 'A7', b: 'M', value: 5, name: '5 Ω', valText: '', side: 1, bodyLen: 0.8 }, { id: 'R5b', type: 'R', a: 'M', b: 'B7', value: 5, name: '5 Ω', valText: '', side: 1, bodyLen: 0.8 },
+        W_('B6', 'B7'), W_('B7', 'B8'), { id: 'Rc', type: 'R', a: 'B6', b: 'G6', value: 3, name: '3 Ω', valText: '', side: -1, bodyLen: 0.8 }, { id: 'Rd', type: 'R', a: 'B8', b: 'G8', value: 3, name: '3 Ω', valText: '', side: 1, bodyLen: 0.8 },
+        ...rail([0, 2, 4, 6, 8], 'T'), ...rail([0, 2, 4, 6, 8], 'G')], group: ['Ra', 'Rb', 'Rc', 'Rd'], pols: vx },
+    { nodes: { ...N([0, 2, 4, 7], 0, 'T'), ...N([0, 2, 4, 7], 5, 'G'), A7: [7, 1.3], M: [7, 2.5], B7: [7, 3.7] },
+      parts: [...left, { id: 'Rp1', type: 'R', a: 'T7', b: 'A7', value: 1.5, name: '1.5 Ω', valText: '', side: 1, bodyLen: 0.8 }, { id: 'R5a', type: 'R', a: 'A7', b: 'M', value: 5, name: '5 Ω', valText: '', side: 1, bodyLen: 0.8 },
+        { id: 'R5b', type: 'R', a: 'M', b: 'B7', value: 5, name: '5 Ω', valText: '', side: 1, bodyLen: 0.8 }, { id: 'Rp2', type: 'R', a: 'B7', b: 'G7', value: 1.5, name: '1.5 Ω', valText: '', side: 1, bodyLen: 0.8 },
+        ...rail([0, 2, 4, 7], 'T'), ...rail([0, 2, 4, 7], 'G')], born: ['Rp1', 'Rp2'], group: ['Rp1', 'R5a', 'R5b', 'Rp2'], pols: vx },
+    { nodes: { ...N([0, 2, 4, 6], 0, 'T'), ...N([0, 2, 4, 6], 5, 'G') },
+      parts: [...left, { id: 'R13', type: 'R', a: 'T6', b: 'G6', value: 13, name: '13 Ω', valText: '', side: 1 }, ...rail([0, 2, 4, 6], 'T'), ...rail([0, 2, 4, 6], 'G')], born: ['R13'], group: ['R6', 'R9', 'R13'], pols: vx },
+    { nodes: { ...N([0, 3], 0, 'T'), ...N([0, 3], 5, 'G') },
+      parts: [left[0], { id: 'Req', type: 'R', a: 'T3', b: 'G3', value: 1 / (1 / 6 + 1 / 9 + 1 / 13), name: 'R_eq = 2.819 Ω', valText: '', side: 1 }, W_('T0', 'T3'), W_('G0', 'G3')], born: ['Req'], pols: vx }]; })();
+stages(5, { speed: 60, ground: 'G0', aspect: 0.66, aspectN: 0.92, quant: { th: 'vₓ', en: 'vₓ', get: c => c.V('T0').re - c.V('G0').re, unit: 'V', sig: 4 }, stages: ex9s }, {
+  ask: { fields: [{ label: 'vₓ (V) =', ok: x => near(x, 2.819, 0.002), w: 4.4 }], check: v => near(v[0], 3.6, 0.01) ? t('อย่าลืมกิ่งขวา (13 Ω) ที่ขนานกับ 6 Ω และ 9 Ω ด้วย', 'Do not forget the right branch (13 Ω), in parallel with the 6 Ω and the 9 Ω') : '' },
+  steps: [
+    { why: t('<b>เริ่มจากด้านในสุด</b>: 3 Ω สองตัวด้านบนขนานกัน และสองตัวด้านล่างก็ขนานกัน (เหลือง)', '<b>Start from the innermost part</b>: the two 3 Ω at the top are in parallel, and so are the two at the bottom (yellow)') },
+    { why: t('<b>รวม 3 Ω ขนานกัน</b> (ทั้งสองคู่)', '<b>Combine each 3 Ω pair in parallel</b> (both pairs)'), tex: `3 \\parallel 3 = \\frac{(3)(3)}{3 + 3} = 1.5\\ \\Omega` },
+    { why: t('<b>กิ่งขวาเป็นอนุกรม</b>: 1.5 Ω, 5 Ω, 5 Ω และ 1.5 Ω', '<b>The right branch is in series</b>: 1.5 Ω, 5 Ω, 5 Ω and 1.5 Ω'), tex: `1.5 + 5 + 5 + 1.5 = 13\\ \\Omega` },
+    { why: t('<b>สามกิ่งขนานกัน</b> (6 Ω, 9 Ω, 13 Ω) แล้วใช้กฎของโอห์มกับแหล่งจ่าย 1 A … กระแสเริ่มไหล', '<b>Three branches in parallel</b> (6 Ω, 9 Ω, 13 Ω), then Ohm\'s law with the 1 A source … the current starts to flow'),
+      tex: AL(['\\frac{1}{R_{eq}} &= \\frac{1}{6} + \\frac{1}{9} + \\frac{1}{13}', 'R_{eq} &= 2.819\\ \\Omega', 'v_x &= (1)(2.819) = \\boxed{2.819\\ \\text{V}}']) }],
+  answer: t('\\(v_x = 2.819\\) V ตรงกับเฉลยในห้องและ Hayt Practice 3.14', '\\(v_x = 2.819\\) V, as in class and Hayt Practice 3.14'),
+  stage: k => k <= 1 ? 0 : k - 1 });
+
+/* A: two voltage sources in parallel */
+{ const sim = new CH3.Parallel($('cvA'));
+  const show = () => { const I = sim.circ(), IL = sim.ckt.I('RL').re, ok = Math.abs(sim.S.V2 - 10) < 1e-9;
+    $('stA').innerHTML = (ok ? `<span class="pill good">✓</span> ${t('ต่อขนานได้ ไม่มีกระแสวน', 'allowed: nothing circulates')}` : `<span class="pill bad">✗</span> ${t('ผิดกฎแรงดัน: แหล่งจ่ายดันกระแสใส่กัน', 'breaks KVL: the sources drive current into each other')}`) +
+      `<br>${t('กระแสในแหล่งจ่ายตัวที่สอง', 'current in the second source')}: <b>${CK.eng(Math.abs(I), 'A')}</b> ${I < -1e-9 ? t('(ถูกดันเข้าทางขั้ว +)', '(forced in at its +)') : ''} · ${t('กระแสในโหลด 10 Ω', 'current in the 10 Ω load')}: <b>${CK.eng(IL, 'A')}</b>`; };
+  MC.ui.slider($('ctlA'), { id: 'sV2', label: 'V₂', min: 0, max: 15, step: 0.5, value: 5, fmt: v => `${v} V`, oninput: v => { sim.set({ V2: v }); show(); } });
+  show(); }
+});
+</script>
+</body>
+</html>

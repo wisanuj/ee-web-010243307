@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
+<script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
+<script src="assets/ch6.js?v=102"></script><script src="assets/ch6_circuits.js?v=102"></script>
+<script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script>
+<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
+<script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script><script src="assets/ch1.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+<style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1><span data-l="th">ชุดทดสอบตัวเลข </span><span class="en">Numeric tests — the circuit engine, the chapter 1 math and the chapter 4–7 analysis against hand calculations and the course slides</span></h1>
+<p class="sub" data-l="th">ทุกหน้าใช้ตัวแก้วงจร (circuit.js) และเครื่องมือพีชคณิต (alg.js) ชุดเดียวกัน หน้านี้ตรวจทั้งสองไฟล์ รวมถึงเครื่องมือของบทที่ 4–7 กับค่าที่คำนวณด้วยมือและคำตอบในสไลด์ เปิดแล้วต้องขึ้น <b>ALL PASS</b></p>
+<p class="sub" data-l="en">Every page uses the same circuit solver (circuit.js) and algebra tools (alg.js). This page checks both, and the chapter 4–7 tools, against hand calculations and the answers on the slides. It must show <b>ALL PASS</b>.</p>
+<div id="sum" class="status"></div>
+<div style="overflow-x:auto"><table class="tbl" id="tbl"><thead><tr><th>#</th><th>test</th><th>got</th><th>expected</th><th></th></tr></thead><tbody></tbody></table></div>
+</div>
+<script>
+(function(){
+const rows = []; let n = 0, bad = 0;
+const near = (a, b, tol) => Math.abs(a - b) <= tol;
+function T(name, got, exp, tol = 1e-6) { n++; let ok;
+  if (typeof exp === 'string') ok = String(got) === exp; else ok = near(+got, exp, tol);
+  if (!ok) bad++; rows.push(`<tr><td>${n}</td><td>${name}</td><td>${typeof got === 'number' ? +got.toPrecision(10) : got}</td><td>${exp}</td><td class="${ok ? 't-ok' : 't-bad'}">${ok ? 'PASS' : 'FAIL'}</td></tr>`); }
+const { Circuit, Cx } = CK; const C = ALG;
+
+/* --- engine: page 1.1 two-mesh circuit --- */
+function two(V1, V2, R1, R2, R3) { const c = new Circuit({ ground: 'g', nodes: { a: [0, 0], b: [4.6, 0], c: [9.2, 0], g: [0, 3.2], e: [4.6, 3.2], f: [9.2, 3.2] },
+  parts: [{ id: 'V1', type: 'V', a: 'a', b: 'g', value: V1 }, { id: 'R1', type: 'R', a: 'a', b: 'b', value: R1 }, { id: 'R2', type: 'R', a: 'b', b: 'c', value: R2 }, { id: 'R3', type: 'R', a: 'b', b: 'e', value: R3 },
+    { id: 'V2', type: 'V', a: 'c', b: 'f', value: V2 }, { id: 'w1', type: 'W', a: 'g', b: 'e' }, { id: 'w2', type: 'W', a: 'e', b: 'f' }] }); c.solve(); return c; }
+let c = two(12, 10, 3, 4, 2);
+T('1.1 I1 (R1 current)', c.I('R1').re, 2); T('1.1 I2 (R2 current)', c.I('R2').re, -1); T('1.1 I_R3 = I1 − I2', c.I('R3').re, 3);
+T('1.1 V2 branch current upward', -c.I('V2').re, 1); T('1.1 wire e–f carries −I2', c.I('w2').re, 1, 1e-6);
+T('1.1 power balance (W)', -c.P('V1') - c.P('V2'), c.P('R1') + c.P('R2') + c.P('R3'), 1e-6);
+T('1.1 V1 = 25 V makes I2 = 0', two(25, 10, 3, 4, 2).I('R2').re, 0, 1e-7);
+/* elimination and substitution agree with the engine on random circuits */
+let worstE = 0, worstS = 0;
+for (let k = 0; k < 200; k++) { const R = () => 1 + Math.floor(Math.random() * 10), V = () => Math.floor(Math.random() * 31);
+  const v1 = V(), v2 = V(), r1 = R(), r2 = R(), r3 = R(); const cc = two(v1, v2, r1, r2, r3);
+  const E1 = C.eq([r1 + r3, -r3], v1), E2 = C.eq([-r3, r2 + r3], -v2); const e = C.elim2(E1, E2, ['I_1', 'I_2']), s = C.subst2(E1, E2, ['I_1', 'I_2']);
+  worstE = Math.max(worstE, Math.abs(+e.sol[0] - cc.I('R1').re), Math.abs(+e.sol[1] - cc.I('R2').re)); worstS = Math.max(worstS, Math.abs(+s.sol[0] - cc.I('R1').re), Math.abs(+s.sol[1] - cc.I('R2').re)); }
+T('elim2 vs engine, 200 random circuits (max error A)', worstE, 0, 1e-6); T('subst2 vs engine, 200 random circuits (max error A)', worstS, 0, 1e-6);
+/* slide 4x4 example */
+const e1 = C.eq([1, 2, 3, 1], 4), e2 = C.eq([2, 1, 1, 1], 3), e3 = C.eq([1, 3, 1, 0], 2), e4 = C.eq([0, 1, 1, 2], 1);
+const e5 = C.combine(e1, 1, e2, -1), e6 = C.combine(e1, 2, e4, -1), e7 = C.combine(e5, 1, e3, 1), e8 = C.combine(e5, 2, e6, 1), e9 = C.combine(e7, 5, e8, -4);
+T('slide (5) = (1) − (2)', C.texEq(e5, ['x', 'y', 'z', 't']), '-x + y + 2z = 1'); T('slide (6) = 2(1) − (4)', C.texEq(e6, ['x', 'y', 'z', 't']), '2x + 3y + 5z = 7');
+T('slide (7) = (5) + (3)', C.texEq(e7, ['x', 'y', 'z', 't']), '4y + 3z = 3'); T('slide (8) = 2(5) + (6)', C.texEq(e8, ['x', 'y', 'z', 't']), '5y + 9z = 9'); T('slide (9) = 5(7) − 4(8)', C.texEq(e9, ['x', 'y', 'z', 't']), '-21z = -21');
+
+/* --- page 1.2: three-mesh circuit and Cramer --- */
+const c3 = new Circuit({ ground: 'g', nodes: { a: [0, 0], b: [3.8, 0], c: [7.6, 0], d: [11.4, 0], g: [0, 3.2], e: [3.8, 3.2], f: [7.6, 3.2], h: [11.4, 3.2] },
+  parts: [{ id: 'V1', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R1', type: 'R', a: 'a', b: 'b', value: 1 }, { id: 'R2', type: 'R', a: 'b', b: 'c', value: 3 }, { id: 'R3', type: 'R', a: 'c', b: 'd', value: 6 },
+    { id: 'R4', type: 'R', a: 'b', b: 'e', value: 2 }, { id: 'R5', type: 'R', a: 'c', b: 'f', value: 1 }, { id: 'V2', type: 'V', a: 'd', b: 'h', value: 15 },
+    { type: 'W', a: 'g', b: 'e' }, { type: 'W', a: 'e', b: 'f' }, { type: 'W', a: 'f', b: 'h' }] }); c3.solve();
+const A3 = [[3, -2, 0], [-2, 6, -1], [0, -1, 7]], B3 = [10, 0, -15];
+T('1.2 Δ of the circuit', C.det3(A3), 95); [380, 95, -190].forEach((v, i) => T(`1.2 Δ${i + 1}`, C.det3(C.replaceCol(A3, B3, i)), v));
+T('1.2 I1 engine', c3.I('R1').re, 4); T('1.2 I2 engine', c3.I('R2').re, 1); T('1.2 I3 engine', c3.I('R3').re, -2);
+const A = [[7, -3, -4], [-7, 4, 9], [0, -1, 1]], B = [-11, 28, 22];
+T('slide Ex1 Δ', C.det3(A), 42); T('slide Ex1 Δ1 (slide p.11 prints −18)', C.det3(C.replaceCol(A, B, 0)), -189); T('slide Ex1 Δ2', C.det3(C.replaceCol(A, B, 1)), -651); T('slide Ex1 Δ3', C.det3(C.replaceCol(A, B, 2)), 273);
+T('slide Ex1 Sarrus term order', C.sarrus(A).terms.map(t => (t.s > 0 ? '+' : '-') + t.f.map(x => `(${x})`).join('')).join(''), '+(7)(4)(1)+(-3)(9)(0)+(-4)(-7)(-1)-(0)(4)(-4)-(-1)(9)(7)-(1)(-7)(-3)');
+const H = [[-1, 2, -3], [3, 1, -4], [2, -5, 1]], hb = [10, 5, 2]; const dH = C.det3(H);
+[-2.8125, -2.3125, -3.9375].forEach((v, i) => T(`homework 1 x${i + 1}`, C.det3(C.replaceCol(H, hb, i)) / dH, v));
+T('Δ = 0 preset', C.det3([[1, 2, 3], [2, 4, 1], [3, 6, 4]]), 0);
+
+/* --- page 1.3: complex numbers, slide answers --- */
+const P = s => C.cparse(s);
+T('Ex1.1 |3+j2|', C.cabs(P('3+j2')), 3.6056, 1e-4); T('Ex1.1 ∠', C.cargd(P('3+j2')), 33.690, 1e-3);
+T('Ex1.2 ∠(1−j)', C.cargd(P('1-j')), -45); T('Ex1.3 ∠(−1+j) (quadrant II)', C.cargd(P('-1+j')), 135);
+T('Ex1.4 |−√6−j√2|', C.cabs(C.cx(-Math.sqrt(6), -Math.sqrt(2))), Math.sqrt(8)); T('Ex1.4 ∠ (quadrant III)', C.cargd(C.cx(-Math.sqrt(6), -Math.sqrt(2))), -150, 1e-9);
+T('Ex2.2 −5∠120° re', C.cpolar(-5, 120).re, 2.5, 1e-9); T('Ex2.2 −5∠120° im', C.cpolar(-5, 120).im, -4.3301, 1e-4);
+T('Ex2.4 −4∠−150° re', C.cpolar(-4, -150).re, 3.4641, 1e-4); T('Ex2.4 −4∠−150° im', C.cpolar(-4, -150).im, 2, 1e-9);
+const r1 = C.cadd(P('3-j5'), P('-4-j6')); T('Ex3.1 re', r1.re, -1); T('Ex3.1 im', r1.im, -11);
+const r2 = C.csub(C.cpolar(2, 30), P('-5+j')); T('Ex3.2 re', r2.re, 6.7321, 1e-4); T('Ex3.2 im', r2.im, 0, 1e-12);
+const r3 = C.cmul(P('-3-j'), P('2+j4')); T('Ex3.3 re', r3.re, -2); T('Ex3.3 im', r3.im, -14);
+const r4 = C.cdiv(P('2-j3'), P('-1+j4')); T('Ex3.4 re', r4.re, -14 / 17, 1e-12); T('Ex3.4 im', r4.im, -5 / 17, 1e-12);
+T('parser rejects "3+"', String(P('3+')), 'null'); T('parser polar "10<-120" re', P('10<-120').re, -5, 1e-9);
+
+/* --- page 1.4: AC circuit and complex Cramer --- */
+const ca = new Circuit({ ground: 'g', mode: 'ac', w: 2 * Math.PI * 50, nodes: { a: [0, 0], b: [3, 0], g: [0, 3], h: [3, 3] },
+  parts: [{ id: 'V', type: 'VAC', a: 'a', b: 'g', amp: 220 }, { id: 'R', type: 'R', a: 'a', b: 'b', value: 30 }, { id: 'L', type: 'L', a: 'b', b: 'h', value: 0.4 / Math.PI }, { type: 'W', a: 'h', b: 'g' }] }); ca.solve();
+const Ipk = ca.I('R'); // page 1.4 uses peak phasors with the sine reference: v(t) = 220 sin(100πt) V ⇄ 220∠0° V
+T('1.4 |I| peak (220∠0° V, 30 + j40 Ω)', Cx.abs(Ipk), 4.4, 1e-9); T('1.4 ∠I', Cx.arg(Ipk) * 180 / Math.PI, -53.1301, 1e-4);
+const VR = ca.Vab('R'), VL = ca.Vab('L');
+T('1.4 |V_R|', Cx.abs(VR), 132, 1e-6); T('1.4 |V_L|', Cx.abs(VL), 176, 1e-6); T('1.4 V_R + V_L = 220∠0° (re)', Cx.add(VR, VL).re, 220, 1e-9); T('1.4 V_R + V_L (im)', Cx.add(VR, VL).im, 0, 1e-9);
+T('1.4 average power ½|I|²R with peak phasors', ca.P('R'), 0.5 * 4.4 * 4.4 * 30, 1e-6); T('1.4 inductor average power', ca.P('L'), 0, 1e-9);
+T('1.4 sine reference: CH1.sv(P) = |P| sin(ωt + ∠P) (i(t) = 4.4 sin(100πt − 53.13°) at t = 3.1 ms)', CH1.sv(Ipk, 100 * Math.PI, 3.1e-3), 4.4 * Math.sin(100 * Math.PI * 3.1e-3 - 53.1301024 * Math.PI / 180), 1e-6);
+T('1.4 sine reference = the engine clock a quarter period behind: Re[P e^{jω(t − T/4)}]', CH1.sv(Ipk, 100 * Math.PI, 3.1e-3), Cx.inst(Ipk, 100 * Math.PI, 3.1e-3 - 0.5 / 100), 1e-9);
+const a11 = P('2j'), a12 = P('3∠25'), a21 = P('10∠-120'), a22 = P('10'), b1 = P('220'), b2 = P('j110');
+const D = C.csub(C.cmul(a11, a22), C.cmul(a12, a21)), D1 = C.csub(C.cmul(b1, a22), C.cmul(a12, b2)), D2 = C.csub(C.cmul(a11, b2), C.cmul(b1, a21));
+const V1 = C.cdiv(D1, D), V2 = C.cdiv(D2, D);
+T('homework 2 |V1| (slide 47.213)', C.cabs(V1), 47.213, 5e-4); T('homework 2 ∠V1 (slide −94.29)', C.cargd(V1), -94.29, 6e-3);
+T('homework 2 |V2| (slide 42.012)', C.cabs(V2), 42.012, 5e-4); T('homework 2 ∠V2 (slide −21.79)', C.cargd(V2), -21.79, 6e-3);
+/* --- chapter 1 rebuild: the step lists of ch1.js (Cramer in the slide order, 2×2 elimination / substitution) --- */
+{ const k1r = CH1.cramer3Steps([[7, -3, -4], [-7, 4, 9], [0, -1, 1]], [-11, 28, 22], ['x_1', 'x_2', 'x_3']);
+  T('ch1.js slide Ex 1: Δ', k1r.D, 42); [-189, -651, 273].forEach((v, i) => T(`ch1.js slide Ex 1: Δ${i + 1}`, k1r.Ds[i], v)); [-4.5, -15.5, 6.5].forEach((v, i) => T(`ch1.js slide Ex 1: x${i + 1}`, k1r.x[i], v));
+  T('ch1.js slide Ex 1: 8 steps (Step 1, Step 2, four determinants, divide, check)', k1r.steps.length, 8);
+  const k1h = CH1.cramer3Steps([[-1, 2, -3], [3, 1, -4], [2, -5, 1]], [10, 5, 2], ['x', 'y', 'z']); [-2.8125, -2.3125, -3.9375].forEach((v, i) => T(`ch1.js homework 1: x${i + 1}`, k1h.x[i], v));
+  const k1s = CH1.cramer3Steps([[1, 2, 3], [2, 4, 1], [3, 6, 4]], [6, 7, 13], ['x', 'y', 'z']); T('ch1.js Δ = 0 stops after Δ (3 steps, not ok)', k1s.steps.length + (k1s.ok ? 100 : 0), 3);
+  const k1S3 = { V1: 10, V2: 15, R1: 1, R2: 3, R3: 6, R4: 2, R5: 1 }, k1y = CH1.sys3(k1S3), k1c = CH1.cramer3Steps(k1y.A, k1y.B, ['I_1', 'I_2', 'I_3']);
+  const k1m = new Circuit(CH1.spec3(k1S3)); k1m.solve();
+  ['R1', 'R2', 'R3'].forEach((id, i) => T(`ch1.js three-window circuit I${i + 1}: Cramer = engine`, k1c.x[i], k1m.I(id).re, 1e-9));
+  const k1w = CH1.cramer2Steps([[5, -2], [-2, 6]], [12, -10], ['I_1', 'I_2']); T('ch1.js 2×2 warm-up Δ', k1w.D, 26); T('ch1.js 2×2 Δ1', k1w.D1, 52); T('ch1.js 2×2 Δ2', k1w.D2, -26); T('ch1.js 2×2 I1', k1w.x[0], 2); T('ch1.js 2×2 I2', k1w.x[1], -1);
+  const k1E = CH1.sys2({ V1: 12, V2: 10, R1: 3, R2: 4, R3: 2 }), k1e1 = C.eq(k1E.A[0], k1E.B[0], '(1)'), k1e2 = C.eq(k1E.A[1], k1E.B[1], '(2)');
+  const k1el = CH1.lin2Steps(k1e1, k1e2, ['I_1', 'I_2'], 'elim'), k1su = CH1.lin2Steps(k1e1, k1e2, ['I_1', 'I_2'], 'subst');
+  T('ch1.js elimination: I1 = 2, I2 = −1', `${k1el.sol[0]},${k1el.sol[1]}`, '2,-1'); T('ch1.js elimination: 4 steps (combine, solve, back-substitute, check)', k1el.steps.length, 4);
+  T('ch1.js substitution: I1 = 2, I2 = −1', `${k1su.sol[0]},${k1su.sol[1]}`, '2,-1'); T('ch1.js substitution: 5 steps (isolate, plug in, solve, back-substitute, check)', k1su.steps.length, 5);
+  T('ch1.js check step: no stray ";" before the tick (only the TeX space \;)', /(^|[^\\]);\\checkmark/.test(k1el.steps[3].tex) ? 'stray' : 'clean', 'clean'); }
+
+/* --- engine: transients and KCL --- */
+const rc = new Circuit({ ground: 'g', mode: 'tran', nodes: { a: [0, 0], b: [1, 0], g: [0, 1] }, parts: [{ id: 'V', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R', type: 'R', a: 'a', b: 'b', value: 1000 }, { id: 'C', type: 'C', a: 'b', b: 'g', value: 1e-3 }] });
+for (let k = 0; k < 2000; k++) rc.step(5e-4); T('RC charge after one τ (V, ±0.01)', rc.part('C').vc, 10 * (1 - Math.exp(-1)), 0.01);
+let worstKCL = 0; for (let k = 0; k < 50; k++) { const cc = two(Math.random() * 30, Math.random() * 30, 1 + Math.random() * 9, 1 + Math.random() * 9, 1 + Math.random() * 9);
+  const sums = {}; cc.parts.forEach(p => { const i = cc.I(p.id).re; sums[p.a] = (sums[p.a] || 0) - i; sums[p.b] = (sums[p.b] || 0) + i; }); Object.values(sums).forEach(s => { worstKCL = Math.max(worstKCL, Math.abs(s)); }); }
+T('KCL at every node incl. wires, 50 random circuits (max A)', worstKCL, 0, 1e-6);
+const sh = new Circuit({ ground: 'g', nodes: { a: [0, 0], g: [0, 2] }, parts: [{ id: 'V', type: 'V', a: 'a', b: 'g', value: 5 }, { type: 'W', a: 'a', b: 'g' }] });
+T('shorted source is flagged', sh.solve().error, 'short');
+
+/* --- chapter 2 --- */
+// homework 2 / exercise 4: five sources
+const h2 = new Circuit({ ground: 'cb', nodes: { bl: [0, 3], tl: [0, 0], n1: [2.6, 0], ct: [4.2, 0], cb: [4.2, 3], dt: [7.8, 0], db: [7.8, 3], tr: [10.2, 0], br: [10.2, 3] },
+  parts: [{ id: 'A', type: 'I', a: 'bl', b: 'tl', value: 2 }, { id: 'B', type: 'V', a: 'n1', b: 'tl', value: 8 }, { id: 'C', type: 'I', a: 'cb', b: 'ct', value: -4 }, { id: 'D', type: 'V', a: 'dt', b: 'db', value: 10 }, { id: 'E', type: 'I', a: 'db', b: 'br', value: -3 },
+    { type: 'W', a: 'n1', b: 'ct' }, { type: 'W', a: 'ct', b: 'dt' }, { type: 'W', a: 'dt', b: 'tr' }, { type: 'W', a: 'tr', b: 'br' }, { type: 'W', a: 'bl', b: 'cb' }, { type: 'W', a: 'cb', b: 'db' }] }); h2.solve();
+[['A', 4], ['B', 16], ['C', -40], ['D', 50], ['E', -30]].forEach(([id, ps]) => T(`HW2 P_supp ${id} (class solution ${ps} W)`, -h2.P(id), ps, 1e-6));
+T('HW2 voltage across element 1 (2 V in the figure)', h2.V('tl').re - h2.V('bl').re, 2, 1e-6);
+T('HW2 sum of absorbed power', ['A', 'B', 'C', 'D', 'E'].reduce((a, id) => a + h2.P(id), 0), 0, 1e-6);
+// exercise 5 with the dependent source
+const x5c = new Circuit({ ground: 'b0', nodes: { b0: [0, 3], t0: [0, 0], L: [3, 0], lb: [3, 3], l3: [4.2, 0], r3: [6.6, 0], Rn: [7.8, 0], rb: [7.8, 3], dt: [10.6, 0], db: [10.6, 3] },
+  parts: [{ id: 'X1', type: 'I', a: 'b0', b: 't0', value: 7 }, { type: 'W', a: 't0', b: 'L' }, { type: 'W', a: 'L', b: 'l3' }, { id: 'X2', type: 'R', a: 'L', b: 'lb', value: 4 },
+    { id: 'X3', type: 'V', a: 'r3', b: 'l3', value: 12 }, { type: 'W', a: 'r3', b: 'Rn' }, { id: 'X4', type: 'R', a: 'Rn', b: 'rb', value: 2.5 }, { type: 'W', a: 'Rn', b: 'dt' },
+    { id: 'X5', type: 'G', a: 'dt', b: 'db', gain: 0.25, c: 'l3', d: 'r3' }, { type: 'W', a: 'b0', b: 'lb' }, { type: 'W', a: 'lb', b: 'rb' }, { type: 'W', a: 'rb', b: 'db' }] }); x5c.solve();
+[['X1', -56], ['X2', 16], ['X3', -60], ['X4', 160], ['X5', -60]].forEach(([id, pa]) => T(`Ex5 P_abs ${id} (class solution ${pa} W)`, x5c.P(id), pa, 1e-6));
+T('Ex5 v_x = V(l3) − V(r3) = −12 V', x5c.V('l3').re - x5c.V('r3').re, -12, 1e-6); T('Ex5 dependent current 0.25 v_x = −3 A', x5c.I('X5').re, -3, 1e-6);
+// Hayt Example 2.2 (VCVS) and the other controlled sources
+const vc = new Circuit({ ground: 'g', nodes: { a: [0, 0], b: [3, 0], g: [0, 3], h: [3, 3], c: [6, 0], d: [6, 3], e: [9, 0], f: [9, 3] },
+  parts: [{ id: 'Vs', type: 'V', a: 'a', b: 'g', value: 6 }, { id: 'R1', type: 'R', a: 'a', b: 'b', value: 1000 }, { id: 'R2', type: 'R', a: 'b', b: 'h', value: 1000 }, { type: 'W', a: 'h', b: 'g' },
+    { id: 'E', type: 'E', a: 'c', b: 'd', gain: 5, c: 'b', d: 'h' }, { type: 'W', a: 'c', b: 'e' }, { id: 'RL', type: 'R', a: 'e', b: 'f', value: 100 }, { type: 'W', a: 'f', b: 'd' }] }); vc.solve();
+T('Hayt Ex 2.2 v2', vc.Vab('R2').re, 3, 1e-6); T('Hayt Ex 2.2 vL = 5 v2 (floating loop)', vc.Vab('RL').re, 15, 1e-6);
+const cc = new Circuit({ ground: 'g', nodes: { a: [0, 0], b: [2, 0], g: [0, 2], h: [2, 2], c: [4, 0], d: [4, 2] },
+  parts: [{ id: 'Vs', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R1', type: 'R', a: 'a', b: 'b', value: 5 }, { id: 'Vm', type: 'V', a: 'b', b: 'h', value: 0 }, { type: 'W', a: 'h', b: 'g' },
+    { id: 'F1', type: 'F', a: 'd', b: 'c', gain: 3, ctrl: 'Vm' }, { id: 'RL', type: 'R', a: 'c', b: 'd', value: 2 }, { type: 'W', a: 'd', b: 'g' }] }); cc.solve();
+T('CCCS 3·i (i = 2 A) into 2 Ω gives 12 V', cc.Vab('RL').re, 12, 1e-6);
+const ch = new Circuit({ ground: 'g', nodes: { a: [0, 0], b: [2, 0], g: [0, 2], c: [4, 0] },
+  parts: [{ id: 'Vs', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R1', type: 'R', a: 'a', b: 'b', value: 5 }, { type: 'W', a: 'b', b: 'g' }, { id: 'H1', type: 'H', a: 'c', b: 'g', gain: 4, ctrl: 'R1' }, { id: 'RL', type: 'R', a: 'c', b: 'g', value: 8 }] }); ch.solve();
+T('CCVS 4·i_R1 (i = 2 A) = 8 V', ch.Vab('H1').re, 8, 1e-6);
+// real battery on a load (page 2.2)
+const rb = new Circuit({ ground: 'g', nodes: { a: [0, 0], m: [0, 1.6], g: [0, 3.2], t: [3.4, 0], h: [3.4, 3.2] },
+  parts: [{ id: 'S', type: 'V', a: 'm', b: 'g', value: 12 }, { id: 'Ri', type: 'R', a: 'a', b: 'm', value: 1 }, { type: 'W', a: 'a', b: 't' }, { id: 'RL', type: 'R', a: 't', b: 'h', value: 3 }, { type: 'W', a: 'h', b: 'g' }] }); rb.solve();
+T('battery 12 V, r = 1 Ω into 3 Ω: terminal voltage 9 V', rb.V('a').re, 9, 1e-6);
+// page 2.2 probe circuit node potentials
+const pc = new Circuit({ ground: 'G', nodes: { A: [0, 0], B: [3.6, 0], C: [7.2, 0], G: [0, 3.2], Gm: [3.6, 3.2], Gr: [7.2, 3.2] },
+  parts: [{ id: 'V1', type: 'V', a: 'A', b: 'G', value: 12 }, { id: 'R1', type: 'R', a: 'A', b: 'B', value: 3 }, { id: 'R2', type: 'R', a: 'B', b: 'Gm', value: 6 }, { id: 'R3', type: 'R', a: 'B', b: 'C', value: 3 }, { id: 'R4', type: 'R', a: 'C', b: 'Gr', value: 3 },
+    { type: 'W', a: 'G', b: 'Gm' }, { type: 'W', a: 'Gm', b: 'Gr' }] }); pc.solve();
+T('probe circuit V_B', pc.V('B').re, 6, 1e-6); T('probe circuit V_C', pc.V('C').re, 3, 1e-6); T('probe circuit V_AC', pc.V('A').re - pc.V('C').re, 9, 1e-6);
+// Ex 4, Ex 7, Ex 5 (charge) and the sawtooth
+T('Ex 4 v = iR (V)', 0.0424 * 560, 23.744, 1e-9); T('Ex 4 p = i²R (W)', 0.0424 * 0.0424 * 560, 1.006746, 1e-6);
+T('Ex 7a 1 mV / 4.7 kΩ (µA)', 1e-3 / 4700 * 1e6, 0.21277, 1e-5); T('Ex 7d amplitude 100/4.7k (mA)', 100 / 4700 * 1e3, 21.2766, 1e-4); T('Ex 7e |−7/4.7k| (mA)', 7 / 4700 * 1e3, 1.4894, 1e-4);
+T('Ex 5 i(1.1) = 20(1.1) − 22 (mA)', 20 * 1.1 - 22, 0, 1e-9);
+/* ch2.js number text for the prefix ladder (Ex 1, Ex 2) */
+T('ch2.js ladder: 248 nm in mm', CH2.num(248e-9 / 1e-3), '0.000248'); T('ch2.js ladder: 248 nm in µm', CH2.num(248e-9 / 1e-6), '0.248'); T('ch2.js ladder: 248 nm in Å', CH2.num(248e-9 / 1e-10), '2480');
+T('ch2.js ladder: 248 nm in m', CH2.num(248e-9), '2.48 × 10⁻⁷'); T('ch2.js ladder: 12 ps in ns', CH2.num(12e-12 / 1e-9), '0.012'); T('ch2.js ladder: negative numbers use a real minus', CH2.num(-0.5), '−0.5'); T('Ex 5 q(1.1) (mC)', 10 * 1.1 * 1.1 - 22 * 1.1, -12.1, 1e-9);
+const saw = tt => { const k = Math.floor(tt / 8), u = tt - 8 * k; return 18 * k + (u < 6 ? u * u / 2 : 18); };
+T('sawtooth average over a period (A)', saw(8) / 8, 2.25, 1e-12); T('sawtooth q(20) (C)', saw(20), 44, 1e-12);
+T('HW1(b) P_abs at t = 0.5 s (mW)', -16 * Math.exp(-0.5) * 8 * Math.exp(-0.5), -47.0886, 1e-4);
+
+/* --- chapter 3 --- */
+const W3 = (a, b) => ({ type: 'W', a, b });
+const mk = (ground, nodes, parts) => { const c = new Circuit({ ground, nodes, parts }); c.solve(); return c; };
+// topology of the slide circuits and homework (page 3.1)
+const ta = mk('D', { A: [0, 0], B: [3.2, 0], C: [6.4, 0], D: [0, 3], Dm: [3.2, 3], Dr: [6.4, 3] }, [{ id: 'Vs', type: 'V', a: 'A', b: 'D', value: 12 }, { id: 'R1', type: 'R', a: 'A', b: 'B', value: 2 }, { id: 'R2', type: 'R', a: 'B', b: 'C', value: 3 }, { id: 'R3', type: 'R', a: 'B', b: 'Dm', value: 6 }, { id: 'R4', type: 'R', a: 'C', b: 'Dr', value: 3 }, W3('D', 'Dm'), W3('Dm', 'Dr')]).topology();
+T('slide p.3 left: nodes / branches / meshes / loops', [ta.n, ta.b, ta.meshes, ta.loops.length].join('/'), '4/5/2/3');
+const tb = mk('Am', { A: [0, 0], B: [3.2, 0], C: [6.4, 0], Am: [0, 2.2], Cm: [3.2, 2.2], Cr: [6.4, 2.2], Ab: [0, 4.4], Cb: [6.4, 4.4] }, [{ id: 'R1', type: 'R', a: 'A', b: 'B', value: 2 }, { id: 'R2', type: 'R', a: 'B', b: 'C', value: 4 }, { id: 'R3', type: 'R', a: 'B', b: 'Cm', value: 4 }, { id: 'Is', type: 'I', a: 'Cm', b: 'Am', value: 2 }, { id: 'R4', type: 'R', a: 'Ab', b: 'Cb', value: 4 }, W3('A', 'Am'), W3('Am', 'Ab'), W3('C', 'Cr'), W3('Cr', 'Cb'), W3('Cm', 'Cr')]).topology();
+T('slide p.3 middle: nodes / branches / meshes / loops', [tb.n, tb.b, tb.meshes, tb.loops.length].join('/'), '3/5/3/6');
+const h1c = mk('D', { A: [0, 0], B1: [3, 0], B2: [6, 0], C: [9, 0], D: [0, 3], D1: [3, 3], D2: [6, 3], D3: [9, 3], T1: [3, -1.5], T2: [6, -1.5] }, [{ id: 'Is1', type: 'I', a: 'D', b: 'A', value: 2 }, { id: 'Ra', type: 'R', a: 'A', b: 'B1', value: 2 }, { id: 'Rx', type: 'R', a: 'B1', b: 'B2', value: 5 }, { id: 'Rb', type: 'R', a: 'B1', b: 'D1', value: 4 }, { id: 'Rc', type: 'R', a: 'B2', b: 'D2', value: 4 }, { id: 'Rd', type: 'R', a: 'B2', b: 'C', value: 2 }, { id: 'Is2', type: 'I', a: 'D3', b: 'C', value: 1 }, W3('D', 'D1'), W3('D1', 'D2'), W3('D2', 'D3'), W3('B1', 'T1'), W3('T2', 'B2'), { id: 'Sx', type: 'S', a: 'T1', b: 'T2', closed: true }]);
+const th1 = h1c.topology(); T('3.1 extra counting (Dec 2025 homework 1; class: 4 nodes, 6 elements, 3 meshes, 6 loops)', [th1.n, th1.b, th1.meshes, th1.loops.length].join('/'), '4/6/3/6');
+T('3.1 extra counting: shorted resistor carries no current', Math.abs(h1c.I('Rx').re), 0, 1e-9);
+h1c.set('Sx', 'closed', false); h1c.solve(); const th1b = h1c.topology(); T('3.1 extra counting without the short: nodes / branches / meshes', [th1b.n, th1b.b, th1b.meshes].join('/'), '5/7/3');
+const h4 = mk('BL', { TL: [0, 0], TM: [3.2, 0], TR: [6.4, 0], ML: [0, 2.2], MM: [3.2, 2.2], MR: [6.4, 2.2], BL: [0, 4.4], BM: [3.2, 4.4], BR: [6.4, 4.4] }, [{ id: 'R1k', type: 'R', a: 'TL', b: 'ML', value: 1000 }, { id: 'I3', type: 'I', a: 'TM', b: 'MM', value: 3e-3 }, { id: 'R28', type: 'R', a: 'MM', b: 'MR', value: 2800 }, { id: 'I5', type: 'I', a: 'ML', b: 'BL', value: 5e-3 }, { id: 'R47', type: 'R', a: 'MM', b: 'BM', value: 4700 }, W3('TL', 'TM'), W3('TM', 'TR'), W3('TR', 'MR'), W3('MR', 'BR'), W3('BL', 'BM'), W3('BM', 'BR'), W3('ML', 'MM')]);
+const th4 = h4.topology(); T('homework 3 is a single node pair (2 nodes)', th4.n, 2);
+T('homework 3 v_AB (V)', h4.V('MM').re - h4.V('TL').re, -1.27396, 1e-5);
+[['R1k', 1.623e-3], ['R47', 0.3453e-3], ['R28', 0.5796e-3]].forEach(([id, pw]) => T(`homework 3 P(${id}) (class answer)`, h4.P(id), pw, 2e-7));
+T('homework 3: 5 mA source supplies 6.370 mW', -h4.P('I5'), 6.370e-3, 1e-6); T('homework 3: 3 mA source absorbs 3.822 mW (slide table: 3.833)', h4.P('I3'), 3.822e-3, 1e-6);
+// KCL problems (page 3.1, part 2)
+const k1 = mk('g', { a: [0, 0], b1: [3, 0], b2: [5.6, 0], b3: [8.2, 0], g: [0, 3], g1: [3, 3], g2: [5.6, 3], g3: [8.2, 3] }, [{ id: 'V', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R1', type: 'R', a: 'a', b: 'b1', value: 2 }, { id: 'R2', type: 'R', a: 'b1', b: 'g1', value: 2 }, { id: 'R3', type: 'R', a: 'b2', b: 'g2', value: 2 / 3 }, { id: 'I5', type: 'I', a: 'g3', b: 'b3', value: 5 }, W3('b1', 'b2'), W3('b2', 'b3'), W3('g', 'g1'), W3('g1', 'g2'), W3('g2', 'g3')]);
+T('Ex 1: source supplies 3 A', k1.I('R1').re, 3, 1e-9); T('Ex 1: i through R3 = 6 A', k1.I('R3').re, 6, 1e-9);
+const k2 = mk('g', { a: [0, 0], a1: [2.6, 0], a2: [5.2, 0], bn: [8.4, 0], g: [0, 3], g1: [2.6, 3], g2: [5.2, 3], g3: [8.4, 3] }, [{ id: 'V18', type: 'V', a: 'a', b: 'g', value: 18 }, { id: 'RA', type: 'R', a: 'a1', b: 'g1', value: 1 }, { id: 'R6', type: 'R', a: 'a2', b: 'g2', value: 6 }, { id: 'R5', type: 'R', a: 'a2', b: 'bn', value: 5 }, { id: 'Vx', type: 'V', a: 'bn', b: 'g3', value: 83 }, W3('a', 'a1'), W3('a1', 'a2'), W3('g', 'g1'), W3('g1', 'g2'), W3('g2', 'g3')]);
+T('Ex 2: 18 V source delivers 8 A', -k2.I('V18').re, 8, 1e-9); T('Ex 2: 13 A in the 5 Ω (leftward)', -k2.I('R5').re, 13, 1e-9); T('Ex 2: i_x = 3 A', k2.I('R6').re, 3, 1e-9); T('Ex 2: I_A = 18 A so R_A = 1 Ω', k2.I('RA').re, 18, 1e-9);
+const k3 = mk('g', { a: [0, 0], n1: [3, 0], n2: [5.6, 0], n3: [8.2, 0], g: [0, 3], g1: [3, 3], g2: [5.6, 3], g3: [8.2, 3] }, [{ id: 'V', type: 'V', a: 'a', b: 'g', value: -2 }, { id: 'R1', type: 'R', a: 'a', b: 'n1', value: 1 }, { id: 'R2', type: 'R', a: 'n1', b: 'g1', value: 1 }, { id: 'R3', type: 'R', a: 'n2', b: 'g2', value: 1 }, { id: 'I7', type: 'I', a: 'n3', b: 'g3', value: 7 }, W3('n1', 'n2'), W3('n2', 'n3'), W3('g', 'g1'), W3('g1', 'g2'), W3('g2', 'g3')]);
+T('homework 2: 1 A out of + into R1', k3.I('R1').re, 1, 1e-9); T('homework 2: R3 carries −3 A downward', k3.I('R3').re, -3, 1e-9); T('homework 2: i2 = −3 A (class answer)', k3.I('R2').re, -3, 1e-9);
+const k4 = mk('g0', { t0: [0, 0], t1: [2.6, 0], t2: [5.2, 0], t3: [7.8, 0], g0: [0, 3], g1: [2.6, 3], g2: [5.2, 3] }, [{ id: 'I9', type: 'I', a: 'g0', b: 't0', value: 9 }, { id: 'R1v', type: 'R', a: 't1', b: 'g1', value: 1 }, { id: 'R1h', type: 'R', a: 't1', b: 't2', value: 1 }, { id: 'R5', type: 'R', a: 't2', b: 'g2', value: 5 }, { id: 'Rd', type: 'R', a: 't2', b: 't3', value: 1 }, W3('t0', 't1'), W3('g0', 'g1'), W3('g1', 'g2')]);
+T('homework 1(c): floating resistor current = 0', Math.abs(k4.I('Rd').re), 0, 1e-9);
+// KVL problems (page 3.2)
+const v3 = mk('C', { A: [0, 0], B: [4, 0], C: [0, 3], Cr: [4, 3] }, [{ id: 'V5', type: 'V', a: 'A', b: 'C', value: 5 }, { id: 'V7', type: 'V', a: 'B', b: 'A', value: 7 }, { id: 'R', type: 'R', a: 'B', b: 'Cr', value: 100 }, W3('C', 'Cr')]);
+T('KVL Ex 3: v_x = 12 V', v3.Vab('R').re, 12, 1e-9); T('KVL Ex 3: i_x = 0.12 A', v3.I('R').re, 0.12, 1e-12);
+const v4 = mk('bl', { tl: [0, 0], tm: [3.2, 0], n54: [6.4, 0], tr: [9.6, 0], bl: [0, 3.4], bm: [3.2, 3.4], br: [9.6, 3.4] }, [{ id: 'V36', type: 'V', a: 'tm', b: 'tl', value: 36 }, { id: 'R6', type: 'R', a: 'bl', b: 'tl', value: 1 }, { id: 'R2', type: 'R', a: 'tm', b: 'bm', value: 16 }, { id: 'R5', type: 'R', a: 'tm', b: 'n54', value: 6 }, { id: 'R4', type: 'R', a: 'n54', b: 'tr', value: 7 }, { id: 'BB', type: 'R', a: 'tr', b: 'br', value: 3 }, W3('bl', 'bm'), W3('bm', 'br')]);
+T('KVL Ex 4: R6 shows 4 V (+ at the bottom)', v4.V('bl').re - v4.V('tl').re, 4, 1e-9); T('KVL Ex 4: R5 12 V and R4 14 V', v4.Vab('R5').re * 100 + v4.Vab('R4').re, 1214, 1e-6);
+T('KVL Ex 4: v_R2 = 32 V (class answer)', v4.Vab('R2').re, 32, 1e-9); T('KVL Ex 4: v_x = 6 V (class answer)', v4.Vab('BB').re, 6, 1e-9);
+T('3.2 sign drill (Hayt P3.3; key says 4 V): mesh 1 gives v_R2 = 20 V', -(-8) + 12, 20); T('3.2 sign drill: mesh 2 gives v_R3 = −24 V', -20 + 7 - 9 - 3 + 1, -24);
+const v6 = mk('bl', { D: [0, 0], A: [3, 0], C: [6.4, 0], Cx: [9.2, 0], bl: [0, 3], bA: [3, 3], bC: [6.4, 3], bx: [9.2, 3] }, [{ id: 'V60', type: 'V', a: 'D', b: 'bl', value: 60 }, { id: 'R8', type: 'R', a: 'D', b: 'A', value: 8 }, { id: 'R10', type: 'R', a: 'A', b: 'bA', value: 10 }, { id: 'R4', type: 'R', a: 'A', b: 'C', value: 4 }, { id: 'R2', type: 'R', a: 'C', b: 'bC', value: 2 }, { id: 'Ix', type: 'I', a: 'bx', b: 'Cx', value: 1 }, W3('C', 'Cx'), W3('bl', 'bA'), W3('bA', 'bC'), W3('bC', 'bx')]);
+T('3.2 KVL + KCL (Hayt Ex 3.4, extra 5): 5 A through 8 Ω', v6.I('R8').re, 5, 1e-9); T('3.2 KVL + KCL: v10 = 20 V', v6.Vab('R10').re, 20, 1e-9); T('3.2 KVL + KCL: v_x = 8 V (class answer)', v6.Vab('R2').re, 8, 1e-9);
+// combinations (page 3.3)
+const c6a = mk('bl', { tl: [0, 0], tr: [5.6, 0], l1: [0, 1.8], bl: [0, 3.6], b1: [3, 3.6], br: [5.6, 3.6] }, [{ id: 'V9', type: 'V', a: 'tl', b: 'l1', value: 9 }, { id: 'V3', type: 'V', a: 'l1', b: 'bl', value: 3 }, { id: 'R100', type: 'R', a: 'tl', b: 'tr', value: 100 }, { id: 'V5', type: 'V', a: 'br', b: 'tr', value: 5 }, { id: 'V1', type: 'V', a: 'br', b: 'b1', value: 1 }, { id: 'R220', type: 'R', a: 'b1', b: 'bl', value: 220 }]);
+T('Ex 5 series sources: i = +50 mA clockwise (Hayt Ex 3.8)', c6a.I('R100').re, 0.05, 1e-9);
+const c9 = mk('bl', { tl: [0, 0], t1: [2.4, 0], t2: [4.8, 0], t3: [7.2, 0], tr: [9.6, 0], br: [9.6, 3.4], bm: [4.8, 3.4], bl: [0, 3.4] }, [{ id: 'V80', type: 'V', a: 'tl', b: 'bl', value: 80 }, { id: 'R10', type: 'R', a: 'tl', b: 't1', value: 10 }, { id: 'V30', type: 'V', a: 't2', b: 't1', value: 30 }, { id: 'R7', type: 'R', a: 't2', b: 't3', value: 7 }, { id: 'R5', type: 'R', a: 't3', b: 'tr', value: 5 }, { id: 'V20', type: 'V', a: 'tr', b: 'br', value: 20 }, W3('br', 'bm'), { id: 'R8', type: 'R', a: 'bm', b: 'bl', value: 8 }]);
+T('Ex 7: i = 3 A', c9.I('R10').re, 3, 1e-9); T('Ex 7: 80 V source delivers 240 W', -c9.P('V80'), 240, 1e-6);
+const c7 = mk('b0', { t0: [0, 0], t1: [2, 0], t2: [4, 0], t3: [6, 0], t4: [8, 0], b0: [0, 3], b1: [2, 3], b2: [4, 3], b3: [6, 3], b4: [8, 3] }, [{ id: 'I1', type: 'I', a: 'b0', b: 't0', value: 2.5 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 5 }, { id: 'I2', type: 'I', a: 't2', b: 'b2', value: 2.5 }, { id: 'R2', type: 'R', a: 't3', b: 'b3', value: 5 }, { id: 'I3', type: 'I', a: 't4', b: 'b4', value: 3 }, W3('t0', 't1'), W3('t1', 't2'), W3('t2', 't3'), W3('t3', 't4'), W3('b0', 'b1'), W3('b1', 'b2'), W3('b2', 'b3'), W3('b3', 'b4')]);
+T('Ex 6 parallel sources: v = −7.5 V (Hayt Ex 3.9 prints +7.5 V)', c7.V('t0').re - c7.V('b0').re, -7.5, 1e-9); T('Ex 6: resistor current flows upward', c7.I('R1').re, -1.5, 1e-9);
+const c8 = mk('b0', { t0: [0, 0], t1: [2, 0], t2: [4, 0], t3: [6, 0], t4: [8, 0], b0: [0, 3], b1: [2, 3], b2: [4, 3], b3: [6, 3], b4: [8, 3] }, [{ id: 'I1', type: 'I', a: 'b0', b: 't0', value: 5 }, { id: 'R1', type: 'R', a: 't1', b: 'b1', value: 10 }, { id: 'I2', type: 'I', a: 't2', b: 'b2', value: 1 }, { id: 'R2', type: 'R', a: 't3', b: 'b3', value: 10 }, { id: 'I3', type: 'I', a: 'b4', b: 't4', value: 6 }, W3('t0', 't1'), W3('t1', 't2'), W3('t2', 't3'), W3('t3', 't4'), W3('b0', 'b1'), W3('b1', 'b2'), W3('b2', 'b3'), W3('b3', 'b4')]);
+T('Ex 8: v = 50 V', c8.V('t0').re - c8.V('b0').re, 50, 1e-9);
+T('Ex 9: v_x = 1 A × (6 ∥ 9 ∥ 13) = 2.819 V', 1 / (1 / 6 + 1 / 9 + 1 / 13), 2.8193, 1e-4);
+const cbad = mk('b0', { t0: [0, 0], t1: [3, 0], t2: [6, 0], b0: [0, 3], b1: [3, 3], b2: [6, 3] }, [{ id: 'V1', type: 'V', a: 't0', b: 'b0', value: 10, r: 0.05 }, { id: 'V2', type: 'V', a: 't1', b: 'b1', value: 10, r: 0.05 }, { id: 'RL', type: 'R', a: 't2', b: 'b2', value: 10 }, W3('t0', 't1'), W3('t1', 't2'), W3('b0', 'b1'), W3('b1', 'b2')]);
+T('equal parallel sources share the load equally', -cbad.I('V1').re, -cbad.I('V2').re, 1e-9);
+// dividers (page 3.4)
+const d12 = mk('g', { a: [0, 0], b: [2.6, 0], c: [5.2, 0], d: [7.8, 0], g: [0, 3], gc: [5.2, 3], gd: [7.8, 3] }, [{ id: 'V10', type: 'V', a: 'a', b: 'g', value: 10 }, { id: 'R2', type: 'R', a: 'a', b: 'b', value: 2 }, { id: 'R3', type: 'R', a: 'b', b: 'c', value: 3 }, { id: 'Ra', type: 'R', a: 'c', b: 'gc', value: 10 }, { id: 'Rb', type: 'R', a: 'd', b: 'gd', value: 10 }, W3('c', 'd'), W3('g', 'gc'), W3('gc', 'gd')]);
+T('Ex 10: v_x = 2 V (class answer)', d12.Vab('R2').re, 2, 1e-9);
+const dx2 = mk('g', { a: [0, 0], b: [2.6, 0], c: [5.4, 0], g: [0, 3.2], gc: [5.4, 3.2] }, [{ id: 'V6', type: 'V', a: 'a', b: 'g', value: 6 }, { id: 'R3', type: 'R', a: 'a', b: 'b', value: 2 }, { id: 'R2', type: 'R', a: 'b', b: 'c', value: 6 }, { id: 'R1', type: 'R', a: 'c', b: 'gc', value: 4 }, W3('gc', 'g')]);
+T('extra 2: i = 0.5 A', dx2.I('R2').re, 0.5, 1e-9); T('extra 2: v1 = 3 V', dx2.Vab('R2').re, 3, 1e-9); T('extra 2: v2 (+ at the bottom) = −2 V', dx2.V('gc').re - dx2.V('c').re, -2, 1e-9);
+T('extra 2: source delivers 3 W', -dx2.P('V6'), 3, 1e-9); T('extra 2: R1 absorbs 1 W', dx2.P('R1'), 1, 1e-9);
+const dx3 = mk('g', { A: [0, 0], B: [2.4, 0], C: [5.4, 0], Ct: [8.4, 0], D: [5.4, 2.1], Dl: [4.6, 2.1], Dr: [6.2, 2.1], g: [0, 4.4], gB: [2.4, 4.4], gDl: [4.6, 4.4], gDr: [6.2, 4.4], g8: [8.4, 4.4] }, [{ id: 'V50', type: 'V', a: 'A', b: 'g', value: 50 }, { id: 'R1', type: 'R', a: 'A', b: 'B', value: 1 }, { id: 'R90', type: 'R', a: 'B', b: 'gB', value: 90 }, { id: 'R4', type: 'R', a: 'B', b: 'C', value: 4 }, W3('C', 'Ct'), { id: 'R22', type: 'R', a: 'C', b: 'D', value: 22 }, W3('Dl', 'D'), W3('D', 'Dr'), { id: 'R4a', type: 'R', a: 'Dl', b: 'gDl', value: 4 }, { id: 'R4b', type: 'R', a: 'Dr', b: 'gDr', value: 4 }, { id: 'R8', type: 'R', a: 'Ct', b: 'g8', value: 8 }, W3('g', 'gB'), W3('gB', 'gDl'), W3('gDl', 'gDr'), W3('gDr', 'g8')]);
+T('extra 3: I_t = 5 A (R_t = 10 Ω)', dx3.I('R1').re, 5, 1e-9); T('extra 3: i = 0.5 A', dx3.I('R90').re, 0.5, 1e-9); T('extra 3: i1 = 1.125 A', dx3.I('R22').re, 1.125, 1e-9);
+const dx4 = mk('C', { A: [0, 0], B: [3, 0], Bt: [6, 0], C: [0, 3], gB: [3, 3], gBt: [6, 3] }, [{ id: 'V9', type: 'V', a: 'A', b: 'C', value: 9 }, { id: 'R2', type: 'R', a: 'A', b: 'B', value: 2 }, { id: 'R9', type: 'R', a: 'B', b: 'gB', value: 9 }, W3('B', 'Bt'), { id: 'R72', type: 'R', a: 'Bt', b: 'gBt', value: 72 }, W3('C', 'gB'), W3('gB', 'gBt')]);
+T('extra 4: i = 0.9 A', dx4.I('R2').re, 0.9, 1e-9); T('extra 4: i1 = 0.8 A', dx4.I('R9').re, 0.8, 1e-9); T('extra 4: v = 7.2 V', dx4.Vab('R9').re, 7.2, 1e-9);
+const dx6 = mk('g', { A: [0, 0], B: [2.6, 0], C: [5.4, 0], Ct: [8, 0], g: [0, 3], gB: [2.6, 3], gC: [5.4, 3], gCt: [8, 3] }, [{ id: 'V20', type: 'V', a: 'A', b: 'g', value: 20 }, { id: 'R5', type: 'R', a: 'A', b: 'B', value: 5 }, { id: 'R6', type: 'R', a: 'B', b: 'gB', value: 6 }, { id: 'R10', type: 'R', a: 'B', b: 'C', value: 10 }, { id: 'R28', type: 'R', a: 'C', b: 'gC', value: 28 }, W3('C', 'Ct'), { id: 'R4', type: 'R', a: 'Ct', b: 'gCt', value: 4 }, W3('g', 'gB'), W3('gB', 'gC'), W3('gC', 'gCt')]);
+T('extra 6: V_x = 9.0756 V (class answer)', dx6.Vab('R6').re, 9.0756, 1e-4); T('extra 6: I_x = 0.08403 A (class answer)', dx6.I('R28').re, 0.08403, 1e-5);
+
+// chapter 3 rebuild (Oct 2026): new problems on the problem-by-problem pages
+const tc = mk('BM', { TL: [0, 0], TM: [3.2, 0], TR: [6.4, 0], ML: [0, 2.4], CM: [3.2, 2.4], MR: [6.4, 2.4], BL: [0, 4.8], BM: [3.2, 4.8], BR: [6.4, 4.8] }, [{ id: 'R1', type: 'R', a: 'TL', b: 'TM', value: 2 }, { id: 'R2', type: 'R', a: 'TM', b: 'TR', value: 3 },
+  { id: 'R3', type: 'R', a: 'TM', b: 'CM', value: 4 }, { id: 'R7', type: 'R', a: 'TR', b: 'MR', value: 2 }, { id: 'Is', type: 'I', a: 'CM', b: 'ML', value: 2 }, { id: 'R4', type: 'R', a: 'CM', b: 'MR', value: 3 },
+  { id: 'Vs', type: 'V', a: 'CM', b: 'BM', value: 12 }, { id: 'R6', type: 'R', a: 'BL', b: 'BM', value: 2 }, { id: 'R5', type: 'R', a: 'BM', b: 'BR', value: 3 }, W3('TL', 'ML'), W3('ML', 'BL'), W3('MR', 'BR')]).topology();
+T('3.1 slide p.3 right (class: 6 nodes, 4 meshes, 13 loops): nodes / branches / meshes / loops', [tc.n, tc.b, tc.meshes, tc.loops.length].join('/'), '6/9/4/13');
+const x12 = mk('nBM', { nd: [0, 0], na: [3.4, 0], nTR: [6.8, 0], nML: [0, 2.4], nb: [3.4, 2.4], nBL: [0, 4.8], nBM: [3.4, 4.8], nBR: [6.8, 4.8] }, [{ id: 'R4', type: 'R', a: 'nd', b: 'na', value: 1 }, { id: 'R0', type: 'R', a: 'nd', b: 'nML', value: 1.5 },
+  W3('nML', 'nb'), { id: 'R1', type: 'R', a: 'na', b: 'nb', value: 1.25 }, W3('na', 'nTR'), { id: 'R2', type: 'R', a: 'nTR', b: 'nBR', value: 0.5 }, { id: 'Vs', type: 'V', a: 'nML', b: 'nBL', value: 12 },
+  { id: 'R3', type: 'R', a: 'nb', b: 'nBM', value: 4 }, { id: 'R5', type: 'R', a: 'nBL', b: 'nBM', value: 0.5 }, W3('nBM', 'nBR')]);
+T('3.1 extra 1.2: the chosen resistors give I0, I1, I2, I3, IS = −2, −4, 6, 2, 8 A', [x12.I('R0').re, x12.I('R1').re, x12.I('R2').re, x12.I('R3').re, -x12.I('Vs').re].map(x => +x.toFixed(9)).join(', '), '-2, -4, 6, 2, 8');
+const h1a = mk('g', { a: [0, 0], n: [3.4, 0], r: [6.8, 0], g: [0, 3], gm: [3.4, 3], gr: [6.8, 3] }, [{ id: 'V', type: 'V', a: 'a', b: 'g', value: 1.5 }, { id: 'RL', type: 'R', a: 'a', b: 'n', value: 0.1 },
+  { id: 'Rm', type: 'R', a: 'n', b: 'gm', value: 0.8 / 6 }, { id: 'RR', type: 'R', a: 'n', b: 'r', value: 0.8 }, W3('r', 'gr'), W3('g', 'gm'), W3('gm', 'gr')]);
+T('homework 1(a): 7 A in, 6 A down, I = 1 A', [h1a.I('RL').re, h1a.I('Rm').re, h1a.I('RR').re].map(x => +x.toFixed(9)).join(' '), '7 6 1');
+const vneg = mk('C', { A: [0, 0], B: [4, 0], C: [0, 3], Cr: [4, 3] }, [{ id: 'V3', type: 'V', a: 'A', b: 'C', value: -3 }, { id: 'V1', type: 'V', a: 'B', b: 'A', value: -1 }, { id: 'R', type: 'R', a: 'B', b: 'Cr', value: 100 }, W3('C', 'Cr')]);
+T('3.2 Ex 3 with −3 V and −1 V (Hayt P3.2 with 100 Ω): v_x = −4 V, i_x = −40 mA', `${+vneg.Vab('R').re.toFixed(9)} ${+(1000 * vneg.I('R').re).toFixed(9)}`, '-4 -40');
+T('3.2 extra 1.1: V1, V4, V5 = −5, 0, 5 V from the three mesh equations', [5 - 5 - 5, 5 - 5, 5 - 0].join(', '), '-5, 0, 5');
+T('3.2 extra 1.3: R_A, R_B, R_C = 0.48, 0.6, −1.08 Ω and 300 + 375 = 675 W', [-12 / -25, 15 / 25, 27 / -25, (-12) * (-25) + 15 * 25, -(27 * -25)].map(x => +x.toFixed(9)).join(', '), '0.48, 0.6, -1.08, 675, 675');
+T('3.2 extra 1.4: boxes A–E deliver 500 W and absorb 500 W', [-(100 * -4) - (100 * -1), 10 * 4 + (-10) * (-1) + 90 * 5].join(' = '), '500 = 500');
+
+/* --- chapter 4: nodal and mesh analysis (ana.js) on every circuit of ch4_circuits.js --- */
+const K4 = CH4C; const mk4 = (k, edit) => { const d = K4[k]; const c = new Circuit({ ground: d.ground, nodes: d.nodes, parts: d.parts.map(q => ({ ...q, ...((edit || {})[q.id] || {}) })) }); c.solve(); return c; };
+const NA = {}, MA = {};
+Object.keys(K4).forEach(k => { const ck = mk4(k); const A = ANA.nodal(ck, K4[k].nodal); NA[k] = A;
+  let w = 0; Object.keys(K4[k].nodal.nv).forEach(node => { w = Math.max(w, Math.abs(+A.S.v(node) - ck.V(node).re)); });
+  T(`4: ${k} nodal answers = MNA solver (worst |error|)`, w, 0, 1e-6);
+  const M = ANA.mesh(ck, K4[k].mesh); MA[k] = M; let wm = 0;
+  M.G.H.forEach(h => { const p = h.part; if (h.from !== p.a || p.type !== 'R') return; const im = h.face.mesh ? +M.sol.get(h.face.mesh) : 0, io = h.twin.face.mesh ? +M.sol.get(h.twin.face.mesh) : 0; wm = Math.max(wm, Math.abs(im - io - ck.I(p.id).re)); });
+  T(`4: ${k} mesh answers → every resistor current = MNA solver`, wm, 0, 1e-6);
+  T(`4: ${k} meshes found in the drawing = B − N + 1`, M.meshes.length, M.T.meshes); });
+const nv4 = (k, node) => NA[k].S.v(node).toString(), mi4 = (k, n) => MA[k].S.i(n).toString();
+const qe4 = (A, i) => A.eqs[i].c.map(String).join(',') + '=' + A.eqs[i].r;
+// node voltages and mesh currents, exact (fractions as in the solutions)
+T('Ex 1: v1 = −145/8 V (Hayt P4.1)', nv4('ex1', 'n1'), '-145/8'); T('Ex 1: v2 = 5/2 V', nv4('ex1', 'n2'), '5/2'); T('Ex 1: I2 = v1/5 = −3.625 A (class)', +NA.ex1.S.v('n1') / 5, -3.625);
+T('Ex 1 by mesh: one unknown, i2 = −11/8 A', mi4('ex1', 'i_2'), '-11/8');
+T('Ex 2: V_A = 89/17 (v_3A = 5.235 V, Hayt P4.2)', nv4('ex2', 'A'), '89/17'); T('Ex 2: V_C = 195/17 (v_7A = 11.47 V)', nv4('ex2', 'C'), '195/17');
+T('Ex 8: I_B = −53/17 (class −3.117 A)', mi4('ex2', 'I_B'), '-53/17'); T('Ex 8: I_C = −80/17 (class −4.706 A)', mi4('ex2', 'I_C'), '-80/17');
+T('Ex 3: V_B = 9/19 V (class 0.47 V)', nv4('ex3', 'B'), '9/19'); T('Ex 3: P supplied by 2 V = 2.474 W', 2 * (+NA.ex3.S.v('B') + 2) / 2, 2.4737, 1e-4);
+T('Ex 7: i1 = 43/38 A (Hayt Ex 4.7)', mi4('ex3', 'i_1'), '43/38'); T('Ex 7: i2 = −2/19 A', mi4('ex3', 'i_2'), '-2/19');
+T('Ex 3 with the printed 5 Ω: P = 20/9 W (class uses 4 Ω)', (() => { const ck = mk4('ex3', { R4: { value: 5 } }); return 2 * (-ck.I('V2').re); })(), 20 / 9, 1e-9);
+T('sheet Ex.1: V_A = 108/17 (6.35294 V)', nv4('sx1', 'A'), '108/17'); T('sheet Ex.1: V_B = 200/17', nv4('sx1', 'B'), '200/17'); T('sheet Ex.1: V_C = 440/17', nv4('sx1', 'Cn'), '440/17');
+T('sheet Ex.1: V across 2 Ω = 5.41176 V', +NA.sx1.S.v('B') - +NA.sx1.S.v('A'), 5.41176, 1e-5); T('sheet Ex.1: I in 20 Ω = 1.29412 A', +NA.sx1.S.v('Cn') / 20, 1.29412, 1e-5);
+T('sheet Ex.2: I2 = 70/17, I3 = 24/17, I4 = 22/17', [mi4('sx1', 'I_2'), mi4('sx1', 'I_3'), mi4('sx1', 'I_4')].join(' '), '70/17 24/17 22/17');
+T('sheet Ex.2: P_abs 12 V = −16.94118 W', -12 * +MA.sx1.S.i('I_3'), -16.94118, 1e-5); T('sheet Ex.2: P_abs 9 A = −175.7647 W', 36 * (+MA.sx1.S.i('I_2') - 9), -175.7647, 1e-4);
+T('sheet Ex.6: V_B = 75/2, V_C = 30', nv4('sx6', 'B') + ' ' + nv4('sx6', 'Cn'), '75/2 30'); T('sheet Ex.6: I_x = −0.75 A', (+NA.sx6.S.v('Cn') - +NA.sx6.S.v('B')) / 10, -0.75);
+T('homework 1: v1 = 27, v2 = 28 V', nv4('hw1', 'n1') + ' ' + nv4('hw1', 'n2'), '27 28');
+T('Ex 5: v1 = 43/8 (5.375 V), v2 = 3/8 (375 mV)', nv4('ex5', 'L') + ' ' + nv4('ex5', 'Rn'), '43/8 3/8');
+T('Ex 4: v1 = 15/14 (1.071 V), v2 = 21/2, v3 = 65/2', [nv4('ex4', 'n1'), nv4('ex4', 'n2'), nv4('ex4', 'n3')].join(' '), '15/14 21/2 65/2');
+T('sheet Ex.4: V1 = −653/30, V2 = 107/6 (17.8333, solution prints 17.8833), V3 = −25/6', [nv4('sx4', 'n1'), nv4('sx4', 'n2'), nv4('sx4', 'n3')].join(' '), '-653/30 107/6 -25/6');
+T('sheet Ex.4: I_x = 4.4 A', (+NA.sx4.S.v('n3') - +NA.sx4.S.v('n1')) / 4, 4.4, 1e-9);
+T('homework 2: v1..v4 = 45/11, 5, −21/11, 13/3', [nv4('hw2', 'tl'), nv4('hw2', 'tm'), nv4('hw2', 'ml'), nv4('hw2', 'mm')].join(' '), '45/11 5 -21/11 13/3');
+T('homework 2 with the printed 11 Ω: v1 = −5, v3 = −11 V', (() => { const ck = mk4('hw2', { R1: { value: 11 } }); return [ck.V('tl').re, ck.V('ml').re].map(x => +x.toFixed(9)).join(' '); })(), '-5 -11');
+T('homework 3: i_x = −1/11, i_y = −17/66, i_z = 21/11', [mi4('hw2', 'i_x'), mi4('hw2', 'i_y'), mi4('hw2', 'i_z')].join(' '), '-1/11 -17/66 21/11');
+T('mesh intro (Hayt Fig 4.15): i1 = 6, i2 = 4 A', mi4('hm', 'i_1') + ' ' + mi4('hm', 'i_2'), '6 4');
+T('Ex 6: i1 = 7/38 (184.2 mA), i2 = −3/19 (−157.9 mA)', mi4('ex6', 'i_1') + ' ' + mi4('ex6', 'i_2'), '7/38 -3/19');
+T('supermesh example (Hayt Ex 4.11): 9, 5/2, 2 A', [mi4('h411', 'i_1'), mi4('h411', 'i_2'), mi4('h411', 'i_3')].join(' '), '9 5/2 2');
+T('Ex 9: i1 = I_x = −29/15 (−1.93 A, Hayt P4.9)', mi4('ex9', 'I_x'), '-29/15');
+T('Ex 9 with the printed 6 V: i1 = −2.2 A', (() => { const ck = mk4('ex9', { V10: { value: 6 } }); return +ANA.mesh(ck, K4.ex9.mesh).S.i('I_x'); })(), -2.2, 1e-12);
+T('sheet Ex.5: I1 = −4, I2 = 5/3, I3 = −7/3, V_x = −70/3 V', [mi4('sx5', 'I_1'), mi4('sx5', 'I_2'), mi4('sx5', 'I_3'), MA.sx5.S.i('I_3').mul(10).toString()].join(' '), '-4 5/3 -7/3 -70/3');
+T('sheet Ex.7: i1 = 88/19, i2 = 12/19, i3 = 28/19, V_x = 120/19 V', [mi4('sx7', 'i_1'), mi4('sx7', 'i_2'), mi4('sx7', 'i_3'), MA.sx7.S.i('i_1').sub(MA.sx7.S.i('i_3')).mul(2).toString()].join(' '), '88/19 12/19 28/19 120/19');
+T('sheet Ex.3: i1 = −2, i2 = 0, i3 = −5 A', [mi4('sx3', 'i_1'), mi4('sx3', 'i_2'), mi4('sx3', 'i_3')].join(' '), '-2 0 -5');
+T('sheet Ex.3: total power = 0', (() => { const ck = mk4('sx3'); return ck.parts.reduce((s, p) => s + (p.type === 'W' ? 0 : ck.P(p.id)), 0); })(), 0, 1e-9);
+// the written equations, coefficient by coefficient (as in the class solutions and Hayt)
+T('Ex 1 eq (1): 4v1 − v2 = −75', qe4(NA.ex1, 0), '4,-1=-75'); T('Ex 1 eq (2): −4v1 + 19v2 = 120', qe4(NA.ex1, 1), '-4,19=120');
+T('sheet Ex.1 eq (1): 4V_A − 2V_B − V_C = −24', qe4(NA.sx1, 0), '4,-2,-1=-24'); T('sheet Ex.1 eq (2): −50V_A + 71V_B − 20V_C = 0', qe4(NA.sx1, 1), '-50,71,-20=0'); T('sheet Ex.1 eq (3): −5V_A − 4V_B + 10V_C = 180', qe4(NA.sx1, 2), '-5,-4,10=180');
+T('Ex 4 eq (1): 7v1 − 4v2 − 3v3 = −132', qe4(NA.ex4, 0), '7,-4,-3=-132'); T('Ex 4 supernode: −35v1 + 80v2 + 27v3 = 1680', qe4(NA.ex4, 1), '-35,80,27=1680'); T('Ex 4 constraint: v3 − v2 = 22', qe4(NA.ex4, 2), '0,-1,1=22');
+T('sheet Ex.4 eq (1): 5V1 − 2V2 − 3V3 = −132', qe4(NA.sx4, 0), '5,-2,-3=-132'); T('sheet Ex.4 supernode: −25V1 + 70V2 + 27V3 = 1680', qe4(NA.sx4, 1), '-25,70,27=1680'); T('sheet Ex.4 constraint: V2 − V3 = 22', qe4(NA.sx4, 2), '0,1,-1=22');
+T('Ex 5 supernode: 2v1 + 6v2 = 13', qe4(NA.ex5, 0), '2,6=13'); T('Ex 5 constraint: v1 − v2 = 5', qe4(NA.ex5, 1), '1,-1=5');
+T('homework 2: v1 + 10v3 = −15, v1 − v3 = 6, 3v4 = 13', [0, 1, 2].map(i => qe4(NA.hw2, i)).join(' '), '1,10,0=-15 1,-1,0=6 0,0,3=13');
+T('mesh intro: 9i1 − 3i2 = 42, −3i1 + 7i2 = 10', qe4(MA.hm, 0) + ' ' + qe4(MA.hm, 1), '9,-3=42 -3,7=10');
+T('Ex 6: 24i1 − 10i2 = 6, −10i1 + 20i2 = −5', qe4(MA.ex6, 0) + ' ' + qe4(MA.ex6, 1), '24,-10=6 -10,20=-5');
+T('Ex 7: 6i1 − 2i2 = 7, −2i1 + 7i2 = −3 (Hayt)', qe4(MA.ex3, 0) + ' ' + qe4(MA.ex3, 1), '6,-2=7 -2,7=-3');
+T('Ex 8: 7I_B − 4I_C = −3, −4I_B + 12I_C = −44 (class)', qe4(MA.ex2, 0) + ' ' + qe4(MA.ex2, 1), '7,-4=-3 -4,12=-44');
+T('sheet Ex.2 eq (1) is 11I2 − 2I3 − 5I4 = 36 (solution writes 0)', qe4(MA.sx1, 0), '11,-2,-5=36'); T('sheet Ex.2 eqs (2), (3)', qe4(MA.sx1, 1) + ' ' + qe4(MA.sx1, 2), '-2,106,-100=12 -5,-100,125=0');
+T('Hayt Ex 4.11: supermesh i1 − 4i2 + 4i3 = 7, i1 − i3 = 7, −i1 + 6i2 − 3i3 = 0', [0, 1, 2].map(i => qe4(MA.h411, i)).join(' '), '1,-4,4=7 1,0,-1=7 -1,6,-3=0');
+T('Ex 9: 4I_x − 14I_y + 18I_z = 10, I_z − I_x = 3, −4I_x + 28I_y − 10I_z = 0 (class)', [0, 1, 2].map(i => qe4(MA.ex9, i)).join(' '), '4,-14,18=10 -1,0,1=3 -4,28,-10=0');
+T('sheet Ex.5: 5I2 + 10I3 = −15, I2 − I3 = 4 (class)', qe4(MA.sx5, 0) + ' ' + qe4(MA.sx5, 1), '5,10=-15 1,-1=4');
+T('sheet Ex.7: 2i1 + 12i2 − 6i3 = 8, i1 − i2 = 4, −2i1 − 4i2 + 8i3 = 0 (class)', [0, 1, 2].map(i => qe4(MA.sx7, i)).join(' '), '2,12,-6=8 1,-1,0=4 -2,-4,8=0');
+T('homework 3: 14i_x − 6i_y + 3i_z = 6, i_z − i_x = 2, −4i_x + 6i_y − 2i_z = −5', [0, 1, 2].map(i => qe4(MA.hw2, i)).join(' '), '14,-6,3=6 -1,0,1=2 -4,6,-2=-5');
+T('sheet Ex.3: 6i2 + 2i3 = −10, i2 − i3 = 5', qe4(MA.sx3, 0) + ' ' + qe4(MA.sx3, 1), '6,2=-10 1,-1=5');
+// "by inspection" matrices used by the drills
+const gG4 = CH4.nodalG(NA.sx1); T('G by inspection, sheet Ex.1: G11 = 1, G22 = 0.71, i = [−6, 0, 9]', [+gG4.M[0][0], +gG4.M[1][1], gG4.b.map(String).join(',')].join(' '), '1 0.71 -6,0,9');
+const rR4 = CH4.meshR(MA.hm); T('R by inspection, mesh intro: [[9, −3], [−3, 7]], v = [42, 10]', rR4.M.map(r => r.map(String).join(',')).join(';') + ' | ' + rR4.b.map(String).join(','), '9,-3;-3,7 | 42,10');
+const rR8 = CH4.meshR(MA.ex2); T('R by inspection, Ex 8 (known meshes moved right): [[7, −4], [−4, 12]], v = [−3, −44]', rR8.M.map(r => r.map(String).join(',')).join(';') + ' | ' + rR8.b.map(String).join(','), '7,-4;-4,12 | -3,-44');
+T('exact 3×3 determinant (sheet Ex.1)', ANA.det(NA.sx1.eqs.map(e => e.c)).toString(), '765');
+T('inset of a clockwise unit square', JSON.stringify(ANA.inset([[0, 0], [1, 0], [1, 1], [0, 1]], 0.1)[0].map(x => +x.toFixed(9))), '[0.1,0.1]');
+// chapter 4 in the problem-by-problem format (Oct 2026)
+T('4 new: homework 2 v1 = 45/11 → 4.091 V (the handout prints 4.019, corrected in class)', (+NA.hw2.S.v('tl')).toFixed(3), '4.091');
+T('4 new: Ex 8 V_AD = (I_A − I_B) + 3(I_A − I_C) = 89/17 (class 5.236 from rounded values)', MA.ex2.S.i('I_A').sub(MA.ex2.S.i('I_B')).add(MA.ex2.S.i('I_A').sub(MA.ex2.S.i('I_C')).mul(3)).toString(), '89/17');
+{ const cnt = k => `${NA[k].vars.length - NA[k].cons.length}/${MA[k].vars.length - MA[k].cons.length}`;
+  T('4 new: equations to solve, nodal/mesh (table A of page 4.4): Ex 1, Ex 3, Ex 9, sheet Ex.5, homework 2', ['ex1', 'ex3', 'ex9', 'sx5', 'hw2'].map(cnt).join(' '), '2/1 1/2 4/2 2/1 2/2'); }
+{ let same = 0, tot = 0; Object.keys(K4).forEach(k => { const N = NA[k], M = MA[k], chain = new Set((K4[k].nodal.series || []).flat());
+    M.G.H.forEach(h => { const p = h.part; if (p.type !== 'R' || h.from !== p.a || chain.has(p.id)) return; tot++; const In = N.S.v(p.a).sub(N.S.v(p.b)).div(ANA.FX(p.value));
+      const Im = (h.face.mesh ? M.sol.get(h.face.mesh) : C.F(0)).sub(h.twin.face.mesh ? M.sol.get(h.twin.face.mesh) : C.F(0)); if (In.eq(Im)) same++; }); });
+  T('4 new: every resistor current is exactly equal by nodal and by mesh analysis (all 17 circuits)', same === tot && tot > 60 ? 'yes' : `${same}/${tot}`, 'yes'); }
+{ ANA.colW = 320; const tex = ANA.sysTex(NA.sx1.eqs, NA.sx1.vars); ANA.colW = 900; const wide = ANA.sysTex(NA.sx1.eqs, NA.sx1.vars); ANA.colW = 0;
+  T('4 new: a narrow column gets the system as a tight alignedat (4 column pairs for 3 unknowns), a wide one the array', [/alignedat\}\{4\}/.test(tex), (tex.match(/\\\\/g) || []).length, /array/.test(wide)].join(' '), 'true 2 true'); }
+T('4 new: sheet Ex.3 powers 0, 4, 9/4, 25/4 W (resistors) and −5/2, −10 W (sources) add to zero', (() => { const i1 = MA.sx3.S.i('i_1'), i2 = MA.sx3.S.i('i_2'), i3 = MA.sx3.S.i('i_3');
+  const P = [i2.mul(i2).div(2), i2.sub(i1).mul(i2.sub(i1)), i1.sub(i3).mul(i1.sub(i3)).div(4), i3.mul(i3).div(4), i1.sub(i2).add(i1.sub(i3).div(4)).mul(2), i3.div(4).sub(i1.sub(i3).div(4)).mul(5)];
+  return P.map(String).join(', ') + ' | ' + P.reduce((a, b) => a.add(b), C.F(0)).toString(); })(), '0, 4, 9/4, 25/4, -5/2, -10 | 0');
+
+/* --- chapter 5: superposition, Thévenin, Norton, maximum power (ch5.js, exact fractions) --- */
+const S5 = CH5S, T5 = CH5T; const fs = q => q.toString();
+const sup = k => CH5.superpose(S5[k].spec, S5[k].srcs, S5[k].ask);
+Object.keys(S5).forEach(k => { const r = sup(k); const sum = r.parts.reduce((a, q) => a.add(q), ALG.F(0)); T(`5: ${k} partial responses add up to the full response`, sum.eq(r.total) ? 'yes' : 'no', 'yes');
+  const c = new Circuit(S5[k].spec); c.solve(); const a = S5[k].ask, p = c.part(a.id || 'x') || {}; const num = a.kind === 'I' ? c.I(a.id).re * ((a.from ?? p.a) === p.a ? 1 : -1) : a.kind === 'V' ? c.Vab(a.id).re * (a.plus === p.a ? 1 : -1) : c.V(a.node).re;
+  T(`5: ${k} exact total = MNA solver`, +r.total, num, 1e-6); });
+T('5.1 linearity (Hayt Fig 5.1): v1 = 3/2·i_a + 1/4·i_b at i_a = 4, i_b = 2', fs(sup('lin').total), '13/2');
+T('Ex 1 (Hayt Ex 5.1): i_x\' = 0.2, i_x\'\' = 0.8, i_x = 1 A', sup('ex1').parts.map(fs).join(' ') + ' ' + fs(sup('ex1').total), '1/5 4/5 1');
+T('Ex 2 (Hayt P5.1): 0.8 + (−0.14) = 0.66 A', sup('ex2').parts.map(fs).join(' ') + ' ' + fs(sup('ex2').total), '4/5 -7/50 33/50');
+T('sheet 5.1 Ex.1: 0 + 4 − 1.5 mA = 3.9985 A', sup('s1').parts.map(fs).join(' ') + ' ' + fs(sup('s1').total), '0 4 -3/2000 7997/2000');
+T('sheet 5.1 Ex.2: 0 + 2/7 − 4/35 = 6/35 A (0.1714)', sup('s2').parts.map(fs).join(' ') + ' ' + fs(sup('s2').total), '0 2/7 -4/35 6/35');
+T('homework 1: 14/19 + 21/19 − 10/19 = 25/19 V (1.316)', sup('hw1').parts.map(fs).join(' ') + ' ' + fs(sup('hw1').total), '14/19 21/19 -10/19 25/19');
+T('Ex 1 trap: powers do not add (9 W vs 6.12 W)', 1 * 1 * 9 - (0.2 * 0.2 * 9 + 0.8 * 0.8 * 9), 2.88, 1e-9);
+const tn = k => CH5.solveTN(T5[k].spec); const tri = k => { const r = tn(k); return [r.voc, r.rth, r.isc].map(fs).join(' '); };
+T('Ex 3/4 (Hayt P5.6): V_th = 18/7, R_th = 55/7, I_N = 18/55', tri('ex3'), '18/7 55/7 18/55');
+T('Ex 3: I_2Ω = 6/23 A (Hayt 260.8 mA)', fs(tn('ex3').voc.div(tn('ex3').rth.add(2))), '6/23');
+T('Ex 5 (Hayt P5.7): V_th = −55/7 V, R_th = 17000/7 Ω, I_N = −11/3400 A (−3.235 mA)', tri('ex5'), '-55/7 17000/7 -11/3400');
+T('sheet 5.2 Ex.1/2: V_th = −2669 V, R_th = 2000/3 Ω, I_N = −8007/2000 A (solution: −4.002)', tri('s1'), '-2669 2000/3 -8007/2000');
+T('sheet 5.2 Ex.3/4: V_th = −0.8 V, R_th = 2.4 Ω, I_N = −1/3 A', tri('s3'), '-4/5 12/5 -1/3');
+T('sheet 5.2 Ex.5/6: V_th = 100 V, R_th = 15 Ω, I_N = 20/3 A', tri('s5'), '100 15 20/3');
+T('sheet 5.2 Ex.5/6: V_L = 40 V at R_L = 10 Ω', fs(tn('s5').voc.mul(10).div(tn('s5').rth.add(10))), '40');
+T('homework 2: V_th = 142 V, R_th = 800 Ω, I_N = 0.1775 A', tri('hw2'), '142 800 71/400');
+T('Ex 6 (Hayt P5.10): V_th = −35 V, R_th = 1 kΩ', fs(tn('ex6').voc) + ' ' + fs(tn('ex6').rth), '-35 1000');
+Object.keys(T5).forEach(k => { const r = tn(k); T(`5: ${k} V_oc = I_sc·R_th (source transformation)`, r.voc.eq(r.isc.mul(r.rth)) ? 'yes' : 'no', 'yes');
+  const c = new Circuit(T5[k].spec); c.solve(); T(`5: ${k} exact V_oc = MNA solver`, +r.voc, c.V(T5[k].spec.A).re - c.V(T5[k].spec.B).re, 1e-6 * Math.max(1, Math.abs(+r.voc)));
+  const RL = 1.7 * +r.rth; const c2 = new Circuit(CH5.withLoad(T5[k].spec, RL)); c2.solve(); T(`5: ${k} real circuit + R_L = Thévenin prediction`, c2.I('RL').re, +r.voc / (+r.rth + RL), 1e-6 * Math.max(1, Math.abs(+r.voc / +r.rth))); });
+const ex6h = CH5.clone(T5.ex6.spec); ex6h.parts.find(p => p.id === 'Rl').value = 5000; const r6 = CH5.solveTN(ex6h);
+T('Ex 6 with the handout\'s 5 kΩ: V_th = −170/7 V, R_th = 10000/7 Ω', fs(r6.voc) + ' ' + fs(r6.rth), '-170/7 10000/7');
+const P3k = (() => { const e = CH5.exact(CH5.withLoad(T5.ex6.spec, 3000)); const i = e.I('RL'); return i.mul(i).mul(3000); })();
+T('Ex 6 (a): P at R_out = 3 kΩ = 147/640 W (229.7 mW)', fs(P3k), '147/640');
+const pm = r => r.voc.mul(r.voc).div(r.rth.mul(4));
+T('Ex 6 (b): P_max = 49/160 W (306.25 mW)', fs(pm(tn('ex6'))), '49/160');
+T('Ex 6 (c): 20 mW at R = 16.88 Ω (Hayt)', (() => { const V = -35, R = 1000, P = 0.02; const b = 2 * P * R - V * V, c = P * R * R; return (-b - Math.sqrt(b * b - 4 * P * c)) / (2 * P); })(), 16.88, 0.005);
+T('Ex 7: P_max of the Ex 5 circuit = 121/19040 W (6.355 mW)', fs(pm(tn('ex5'))), '121/19040');
+T('sheet 5.2 Ex.7: P_max = 500/3 W at R_L = 15 Ω', fs(pm(tn('s5'))), '500/3');
+T('homework 2: P_max = 5041/800 W (6.301 W) at R_L = 800 Ω', fs(pm(tn('hw2'))), '5041/800');
+T('Δ–Y (Hayt Ex 5.12): R_in of the bridge = 159/71 Ω', (() => { const a = 1, b = 4, c = 3, s = a + b + c; const rT = a * b / s, rL = a * c / s, rR = b * c / s; const x = rL + 2, y = rR + 5; return x * y / (x + y) + rT; })(), 159 / 71, 1e-12);
+T('Δ–Y: bridge solved directly (MNA) gives the same R_in', (() => { const c = new Circuit({ ground: 'B', nodes: { T: [0, 0], L: [-1, 1], R: [1, 1], B: [0, 2] }, parts: [{ id: 'V', type: 'V', a: 'T', b: 'B', value: 1 }, { id: 'a', type: 'R', a: 'T', b: 'L', value: 1 }, { id: 'b', type: 'R', a: 'T', b: 'R', value: 4 }, { id: 'c', type: 'R', a: 'L', b: 'R', value: 3 }, { id: 'd', type: 'R', a: 'L', b: 'B', value: 2 }, { id: 'e', type: 'R', a: 'R', b: 'B', value: 5 }] }); c.solve(); return 1 / -c.I('V').re; })(), 159 / 71, 1e-9);
+T('engine: open part O carries no current', (() => { const c = new Circuit({ ground: 'b', nodes: { a: [0, 0], b: [0, 1], c: [1, 0], d: [1, 1] }, parts: [{ id: 'V', type: 'V', a: 'a', b: 'b', value: 5 }, { id: 'O', type: 'O', a: 'a', b: 'c' }, { id: 'R', type: 'R', a: 'c', b: 'd', value: 1 }, { type: 'W', a: 'd', b: 'b' }] }); c.solve(); return c.I('R').re; })(), 0, 1e-9);
+/* chapter 5 rebuilt (Oct 2026): one problem per canvas, steps for LS.stepper, formulas fitted to their column */
+const box5 = document.createElement('div'); box5.style.cssText = 'position:absolute;left:-9999px;top:0;width:620px'; document.body.appendChild(box5);
+const cv5 = () => { const c = document.createElement('canvas'); box5.appendChild(c); return c; };
+{ const sp = new CH5.SupProb(cv5(), 'ex1'); const st = sp.steps; sp.set(2); const a = sp.P.items.map(it => `${+!!it.on}${+!!it.focus}${+!!it.dim}`).join(' '); sp.set(4); const b = sp.P.items.map(it => `${+!!it.on}${+!!it.focus}${+!!it.dim}`).join(' ');
+  T('5 new: Ex 1 superposition has 5 steps (count, ①, ②, sum, power trap); after step 2 only panel ① runs and the others are dimmed; at the sum every panel runs and the real circuit is framed', `${st.length} | ${a} | ${b}`, '5 | 110 001 001 | 100 100 110'); }
+T('5 new: superposition steps = sources + 2 (+ the extras): Ex 1, Ex 2, sheet Ex.1, sheet Ex.2, homework 1', ['ex1', 'ex2', 's1', 's2', 'hw1'].map(k => new CH5.SupProb(cv5(), k).steps.length).join(' '), '5 4 5 5 5');
+T('5 new: Thévenin / Norton stages by mode (Ex 3 thev, Ex 4 nort, Ex 5 both, homework 2 both + maximum power)', [['ex3', 'thev'], ['ex3', 'nort'], ['ex5', 'both'], ['hw2', 'both', { mp: true }]].map(([k, m, o]) => { const p = new CH5.TNProb(cv5(), k, m, o); return `${p.stages.join(',')}/${p.steps.length}`; }).join(' | '),
+  'prob,bare,voc,dead,eqT,load/5 | prob,bare,isc,dead,eqN,load/5 | prob,bare,voc,dead,eqT,isc,eqN/6 | prob,bare,voc,dead,eqT,isc,eqN,max/7');
+{ const p = new CH5.TNProb(cv5(), 'hw2', 'both', { mp: true }), s = p.steps, tx = x => x.tex || x.body || ''; p.set(7); const two = p.two; p.set(4); 
+  T('5 new: homework 2 steps hold the class values (V_th 142 V, R_th 800 Ω, I_N R_N = 142 V, P_max 6.30125 W); the last stage draws two circuits', [tx(s[1]).includes('142'), tx(s[3]).includes('800'), /I_N R_N &= 142/.test(tx(s[5])), tx(s[6]).includes('6.30125'), two, p.two].join(' '), 'true true true true true false'); }
+{ const m = new CH5.MPProb(cv5(), 'ex6'); const f = m.raw.map(x => [x.RL ? 'RL' : '', x.curve ? 'curve' : '', x.peak ? 'peak' : ''].filter(Boolean).join('+')).join('|'); m.set(1); const c1 = m.curve; m.set(3); const c3 = `${m.curve} ${m.peak} ${Math.round(m.RL)}`;
+  m.vi = 1; m.build(); T('5 new: Ex 6 maximum power: steps RL|curve|RL+peak|RL; the curve appears at step 2 and the peak at step 3 (R_out = 1 kΩ); the 5 kΩ variant gives V_th = −170/7 V and 3 steps', `${f} ${c1} ${c3} ${m.T.voc} ${m.raw.length}`, 'RL|curve|RL+peak|RL false true true 1000 -170/7 3'); }
+T('5 new: every maximum-power problem reveals the curve once and the peak once', Object.keys(CH5M).map(k => { const d = CH5M[k], r = CH5.solveTN(CH5T[d.net].spec), st = d.steps({ voc: r.voc, rth: r.rth, isc: r.isc, nm: CH5.nm, bx: CH5.bx, vl: CH5.vl, F: ALG.F, FX: ANA.FX, exact: CH5.exact, spec: CH5T[d.net].spec, withLoad: CH5.withLoad });
+  return `${k}:${st.filter(x => x.curve).length}${st.filter(x => x.peak).length}`; }).join(' '), 'ex6:11 ex5:11 s5:11');
+T('5 new: sheet 5.1 Ex.3 source transformation: i in the 13 MΩ = −41/71 µA at every stage (exact) and by MNA', CH5X.st3.stages.map(st => { const sp = { ground: st.ground, nodes: st.nodes, parts: st.parts }; const c = new Circuit(sp); c.solve(); return `${CH5.exact(sp).I('R13').mul(1000000)}@${(c.I('R13').re * 1e6).toFixed(4)}`; }).join(' '),
+  Array(5).fill('-41/71@-0.5775').join(' '));
+{ const long = '\\begin{aligned} 3i_1 + 7i_1 + 15i_1 + 5(i_1 - i_2) &= 0 &&\\Rightarrow\\; 30i_1 - 5i_2 = 0 \\\\ i_x = i_1 &= \\frac{-3.5}{25} = \\boxed{-0.14\\,\\text{A}} \\end{aligned}';
+  LS.colW = 300; const f = CH5.fit(long); LS.colW = 1400; const g = CH5.fit(long); LS.colW = 0; const bare = x => x.replace(/\\begin\{aligned\}|\\end\{aligned\}|\\\\|&|\{\}|\\quad|\s/g, '');
+  T('5 new: CH5.fit breaks a formula too wide for a 300 px column into more rows, keeps every symbol, and leaves it alone in a wide column', `${(f.match(/\\\\/g) || []).length > (long.match(/\\\\/g) || []).length} ${bare(f) === bare(long)} ${g === long}`, 'true true true'); }
+
+/* --- chapter 6: sinusoids, phasors, R/L/C, impedance (ch6.js, ch6_circuits.js) against the class answers and Hayt --- */
+const s6v1 = { A: 120, fn: 'cos', w: 120 * Math.PI, wTex: '120\\pi', ph: -40 }; const s6V = CH6.toSine(s6v1, 'v_1');
+T('6.1 v₁ = 120 cos(120πt − 40°) = 120 sin(120πt + 50°)', `${s6V.mag} ${s6V.ang}`, '120 50');
+[[{ A: 2.5, fn: 'cos', ph: 20 }, -60], [{ A: 1.4, fn: 'sin', ph: -70 }, 120], [{ A: -0.8, fn: 'cos', ph: -110 }, -110]].forEach(([s, lag], k) => {
+  const r = CH6.toSine({ ...s, w: s6v1.w }, 'i_1'); T(`6.1 practice 1(${'abc'[k]}): i₁ lags v₁ by ${lag}° (Hayt Practice 10.1)`, CH6.lag(s6V.ang, r.ang), lag, 1e-9); });
+T('6.1 slide p. 6: V cos(5t + 10°) leads V sin(5t − 30°) by 130°', CH6.lag(CH6.toSine({ A: 1, fn: 'cos', w: 5, ph: 10 }).ang, CH6.toSine({ A: 1, fn: 'sin', w: 5, ph: -30 }).ang), 130, 1e-9);
+T('6.1 angle wrap: 200° → −160°, −180° → 180°, 540° → 180°', `${CH6.wrap(200)} ${CH6.wrap(-180)} ${CH6.wrap(540)}`, '-160 180 180');
+T('6.1 the rewritten sine equals the original function at every instant', (() => { let e = 0; [s6v1, { A: -0.8, fn: 'cos', w: 1, ph: -110 }, { A: -3, fn: 'sin', w: 2, ph: 170 }].forEach(s => { const r = CH6.toSine(s);
+  for (let k = 0; k < 60; k++) { const x = k * 0.31; e = Math.max(e, Math.abs(CH6.sigAt(s, x) - r.mag * Math.sin(x + r.ang * Math.PI / 180))); } }); return e; })(), 0, 1e-9);
+T('6.2 220 V rms → peak 311.13 V, peak-to-peak 622.25 V', `${(220 * Math.SQRT2).toFixed(2)} ${(440 * Math.SQRT2).toFixed(2)}`, '311.13 622.25');
+T('6.2 rms from a numerical mean of v² over one period = V_m/√2', (() => { const N = 20000; let q = 0; for (let k = 0; k < N; k++) { const v = 311 * Math.sin(2 * Math.PI * (k + 0.5) / N); q += v * v; } return Math.sqrt(q / N); })(), 311 / Math.SQRT2, 1e-6);
+T('6.2 −10 cos(2000t − 30°) → 10∠−120° A', (() => { const r = CH6.toSine({ A: -10, fn: 'cos', w: 2000, ph: -30 }); return `${r.mag} ${r.ang}`; })(), '10 -120');
+T('6.2 the class form −10∠60° is the same phasor as 10∠−120°', Cx.abs(Cx.sub(CH6.polar(-10, 60), CH6.polar(10, -120))), 0, 1e-12);
+T('6.2 effective values 310/√2, 10/√2, 220/√2, 100/√2', [310, 10, 220, 100].map(x => (x / Math.SQRT2).toFixed(2)).join(' '), '219.20 7.07 155.56 70.71');
+T('6.2 0.5∠−62° + 2∠28° = 2.0616∠13.964° (not 2.5)', CH6.pol(Cx.add(CH6.polar(0.5, -62), CH6.polar(2, 28))), '2.0616\\angle{13.964^\\circ}');
+T('6.2 sine-referenced clock: engine dots follow |P| sin(ωt + ∠P)', (() => { const k6 = CH6.clock(), P0 = CH6.polar(3, 30); let e = 0; for (let k = 0; k < 40; k++) { k6.ph = k * 0.29; e = Math.max(e, Math.abs(Cx.inst(P0, 7, k6.at(7)) - 3 * Math.sin(k6.ph + Math.PI / 6))); } return e; })(), 0, 1e-12);
+T('6.3 R: 5∠30° V / 2 Ω = 2.5∠30° A', CH6.pol(Cx.div(CH6.polar(5, 30), Cx.c(2, 0))), '2.5\\angle{30^\\circ}');
+T('6.3 L: (j2 Ω)(3∠30° A) = 6∠120° V', CH6.pol(Cx.mul(Cx.c(0, 2), CH6.polar(3, 30))), '6\\angle{120^\\circ}');
+T('6.3 C: (−j2 Ω)(3∠30° A) = 6∠−60° V', CH6.pol(Cx.mul(Cx.c(0, -2), CH6.polar(3, 30))), '6\\angle{-60^\\circ}');
+const rl6 = type => { const c = new Circuit({ ground: 'g', mode: 'ac', w: 2, nodes: { s: [0, 0], g: [0, 1] }, parts: [{ id: 'V', type: 'VAC', a: 's', b: 'g', amp: 3, phase: 30 }, { id: 'X', type, a: 's', b: 'g', value: type === 'L' ? 1 : 0.25 }] }); c.solve(); return CH6.wrap(CH6.deg(c.Vab('X')) - CH6.deg(c.I('X'))); };
+T('6.3 engine: inductor voltage leads its current by 90°', rl6('L'), 90, 1e-9);
+T('6.3 engine: capacitor voltage lags its current by 90°', rl6('C'), -90, 1e-9);
+T('6.3 Hayt Example 10.4: 8∠−50° V on 4 H at 100 rad/s → 0.02∠−140° A', CH6.pol(Cx.div(CH6.polar(8, -50), Cx.c(0, 400))), '0.02\\angle{-140^\\circ}');
+T('6.4 practice 1 (Hayt Ex 10.6): Z_AB = 4.2549 + j4.9288 Ω', CH6.rect(CH6C.p1.Zab), '4.2549 + j4.9288');
+T('6.4 practice 1: Z_AB = 6.5113∠49.197° Ω (class 6.5112, rounding)', CH6.pol(CH6C.p1.Zab), '6.5113\\angle{49.197^\\circ}');
+T('6.4 practice 1: Z_a = 0.0265 − j0.3982, Z_b = 0.0265 + j8.6018 Ω', `${CH6.rect(CH6C.p1.Za)}, ${CH6.rect(CH6C.p1.Zb)}`, '0.0265 - j0.3982, 0.0265 + j8.6018');
+T('6.4 practice 1: every reduction stage draws the same test current', CH6C.p1.stages.reduce((m, st) => { const c = new Circuit(st); c.solve(); return Math.max(m, Cx.abs(Cx.sub(Cx.neg(c.I('Vt')), Cx.inv(CH6C.p1.Zab)))); }, 0), 0, 1e-9);
+T('6.4 practice 2 (Hayt Ex 10.7): Δ = 3 500 000 − j500 000', CH6.rect(CH6C.p2.D), '3500000 - j500000');
+T('6.4 practice 2: Δ₁ = 40 000 − j40 000, Δ₂ = j40 000', `${CH6.rect(CH6C.p2.D1)}, ${CH6.rect(CH6C.p2.D2)}`, '40000 - j40000, j40000');
+T('6.4 practice 2: I₁ = Δ₁/Δ = 0.016∠−36.87° A', CH6.pol(CH6C.p2.I1, 4, 2), '0.016\\angle{-36.87^\\circ}');
+T('6.4 practice 2: Z_eq = 2000 + j1500 Ω', CH6.rect(CH6C.p2.Zeq), '2000 + j1500');
+T('6.4 practice 2: the engine (MNA) agrees with Cramer in the 1.5 kΩ', (() => { const c = new Circuit(CH6C.p2.spec); c.solve(); return Cx.abs(Cx.sub(c.I('R1'), CH6C.p2.I1)); })(), 0, 1e-9); // the engine's 1e-12 S GMIN shunts move the 11th digit
+T('6.4 homework: V_C = 1∠−62° V, I_R2 = 0.5∠−62° A', `${CH6.pol(CH6C.hw.VC)} ${CH6.pol(CH6C.hw.IR2)}`, '1\\angle{-62^\\circ} 0.5\\angle{-62^\\circ}');
+T('6.4 homework (Hayt Ex 10.5 prints 1.5∠−62°: erratum): I_s = 2.0616∠13.964° A', CH6.pol(CH6C.hw.Is), '2.0616\\angle{13.964^\\circ}');
+T('6.4 homework: the engine gives I_C = 2∠28° A whatever V_s is', [0, 3, 7.5, 10].reduce((m, v) => { const c = new Circuit(CH6C.hw.spec(v)); c.solve(); return Math.max(m, Cx.abs(Cx.sub(c.I('C'), CH6C.hw.IC))); }, 0), 0, 1e-9);
+T('6.4 Y of 3 + j4 Ω = 0.12 − j0.16 S', CH6.rect(Cx.inv(Cx.c(3, 4))), '0.12 - j0.16');
+T('engine: acPeak readouts use the peak (factor 1), otherwise rms (1/√2)', (() => { const c = new Circuit(CH6C.p2.spec); c.solve(); const cv = document.createElement('canvas'); return `${new CK.View(cv, c, { acPeak: true }).acK()} ${new CK.View(cv, c, {}).acK().toFixed(6)}`; })(), '1 0.707107');
+/* chapter 6 rebuilt (Oct 2026): the ch6ui.js problem classes, CH6.askPh, LS.fit's ± fallback and LS.fitIn's font ratio */
+const box6 = document.createElement('div'); box6.style.cssText = 'position:absolute;left:-9999px;top:0;width:620px'; document.body.appendChild(box6);
+const cv6 = () => { const c = document.createElement('canvas'); box6.appendChild(c); return c; };
+const w6n = 120 * Math.PI, u6 = { A: 120, fn: 'cos', w: w6n, wTex: '120\\pi', ph: -40, name: 'v_1', unit: 'V' }, tx6 = x => x.tex || x.body || '';
+T('6 new: LagProb: slide p. 6 takes 4 steps and v₁ leads v₂ by 130°; practice 1(c) gives −110°; unequal frequencies stop at rule 3 (3 steps)', [
+  (() => { const p = new CH6.LagProb(cv6(), { a: { A: 1, Atex: 'V_{m_1}', fn: 'cos', w: 5, ph: 10, name: 'v_1', unit: 'V' }, b: { A: 0.8, Atex: 'V_{m_2}', fn: 'sin', w: 5, ph: -30, name: 'v_2', unit: 'V' } }); return `${p.steps.length}/${p.d}`; })(),
+  (() => { const p = new CH6.LagProb(cv6(), { a: u6, b: { A: -0.8, fn: 'cos', w: w6n, wTex: '120\\pi', ph: -110, name: 'i_1', unit: 'A' } }); return `${p.steps.length}/${p.d}`; })(),
+  (() => { const p = new CH6.LagProb(cv6(), { a: { ...u6, w: 5, wTex: null }, b: { A: 1, fn: 'sin', w: 7, ph: 0, name: 'i', unit: 'A' } }); return `${p.steps.length}/${p.same}`; })()].join(' '), '4/130 4/-110 3/false');
+T('6 new: PhasorProb: −10 cos(2000t − 30°) → 10∠−120° in 3 steps (effective 7.0711 A); 220∠90° at 120 rad/s → 2 steps; mains 220 V 50 Hz → 3 steps, V_m 311.13 V, ω 314.16 rad/s', [
+  (() => { const p = new CH6.PhasorProb(cv6(), { kind: 'toPhasor', s: { A: -10, fn: 'cos', w: 2000, ph: -30, name: 'i_1', unit: 'A' } }); return `${p.M} ${p.ang} ${p.steps.length} ${CH6.fd(p.eff)}`; })(),
+  (() => { const p = new CH6.PhasorProb(cv6(), { kind: 'toTime', M: 220, ang: 90, w: 120, name: 'v', unit: 'V' }); return `${p.steps.length} ${/220\\sin\(120t \+ 90/.test(tx6(p.steps[0]))}`; })(),
+  (() => { const p = new CH6.PhasorProb(cv6(), { kind: 'rms', Veff: 220, f: 50 }); return `${p.steps.length} ${CH6.fd(p.M, 2)} ${CH6.fd(p.w, 2)}`; })()].join(' | '), '10 -120 3 7.0711 | 2 true | 3 311.13 314.16');
+T('6 new: ElemProb: R 5∠30° V / 2 Ω = 2.5∠30° A, solved from step 2; L given as j2 Ω starts from it, V = 6∠120° V; Hayt 10.4 draws i in mA (20 mA peak)', [
+  (() => { const p = new CH6.ElemProb(cv6(), { el: 'R', value: 2, w: 2, given: 'V', M: 5, ang: 30, sub: 'R' }); p.set(1); const a = p.solved; p.set(2); return `${CH6.pol(p.U)} ${p.steps.length} ${a}${p.solved}`; })(),
+  (() => { const p = new CH6.ElemProb(cv6(), { el: 'L', value: 1, w: 2, given: 'I', M: 3, ang: 30, sub: 'L', Ztex: 'j2' }); return `${CH6.pol(p.U)} ${/Z_L\s*&?=\s*j2/.test(tx6(p.steps[0]))}`; })(),
+  (() => { const p = new CH6.ElemProb(cv6(), { el: 'L', value: 4, w: 100, given: 'V', M: 8, ang: -50, sub: 'L', unitI: 'mA' }); p.set(3); const sg = p.T.o.sigs(p.T); return `${CH6.pol(p.U)} ${CH6.fd(sg[1].mag, 4)} ${sg[1].unit}`; })()].join(' | '),
+  '2.5\\angle{30^\\circ} 3 falsetrue | 6\\angle{120^\\circ} true | 0.02\\angle{-140^\\circ} 20 mA');
+{ const z = new CH6.ZProb(cv6(), {}), st = [0, 1, 2, 3, 4, 5].map(k => z.stageOf(k)).join(''), ids = []; [1, 2, 3, 4].forEach(k => { z.set(k); ids.push(z.ckt.parts.filter(p => p.type === 'Z').map(p => p.id).join('+') || '-'); });
+  T('6 new: ZProb: steps 1–4 show stages 0–3 (the original, Z_a, Z_b, Z_AB) and the test current is 1/Z_AB = 0.1536∠−49.197° A', `${z.steps.length} ${st} ${ids.join(' ')} ${CH6.pol(z.Itest)}`, '4 001233 - Za Zb Zab 0.1536\\angle{-49.197^\\circ}'); }
+{ const m = new CH6.MeshProb(cv6(), {}); m.set(3); const a = m.solved; m.set(4);
+  T('6 new: MeshProb: 5 steps, the dots start at step 4 (I₁ found), and the last step checks the answer with Z_eq', `${m.steps.length} ${a} ${m.solved} ${tx6(m.steps[4]).includes('Z_{eq}')}`, '5 false true true'); }
+{ const h = new CH6.HwProb(cv6(), {}); h.set(1); const v1 = h.T.o.vecs(h.T); h.set(4); const v4 = h.T.o.vecs(h.T);
+  T('6 new: HwProb: 4 steps; step 1 shows only I_C, the last adds I_R2 and I_C head to tail: I_s = 2.0616∠13.964° A', `${h.steps.length} ${v1.map(x => x.label).join(',')} ${v4.map(x => x.label).join(',')} ${CH6.pol(v4[2].z)}`, '4 I_C I_{R2},I_C,I_s 2.0616\\angle{13.964^\\circ}'); }
+{ const a = CH6.askPh('I', 10, -120, 'A', { eff: true, traps: [[10, 60, 'rule2'], [2.5, null, 'sizes']] })(), ok = v => a.fields.every((f, i) => f.ok(v[i], v));
+  T('6 new: CH6.askPh checks a phasor as one complex number (−10∠60° = 10∠−120°), names slips by size and angle or by size alone, and checks the effective value', [ok([-10, 60, 7.071]), ok([10, -120, 7.07]), ok([10, 60, 7.071]), a.check([10, 60, 7.071]), a.check([2.5, 33, 1]), a.check([1, 1, 14.142]) !== ''].join(' '), 'true true false rule2 sizes true'); }
+{ const row = '\\begin{aligned} \\mathbf{I} &= \\mathbf{I}_1 + \\mathbf{I}_2 \\\\ &= (0.2347 + 1.7659) + j(-0.4415 + 0.9389) \\end{aligned}', w = LS.texW('{}= (0.2347 + 1.7659) + j(-0.4415 + 0.9389)');
+  LS.colW = 0.8 * w + 60; const f = LS.fit(row); LS.colW = 0; const bare = x => x.replace(/\\begin\{aligned\}|\\end\{aligned\}|\\\\|&|\{\}|\\quad|\s/g, '');
+  T('6 new: LS.fit breaks a right side with no "=" left before a top-level + (… + j(…)) and keeps every symbol', `${f.includes('&\\quad + j(')} ${bare(f) === bare(row)} ${LS.texW(f) <= 0.8 * w + 12}`, 'true true true'); }
+{ const long = '\\begin{aligned} Y &= \\frac{1}{Z} = \\frac{1}{3 + j4} \\cdot \\frac{3 - j4}{3 - j4} = \\frac{3 - j4}{3^2 + 4^2} = 0.12 - j0.16\\ \\text{S} \\end{aligned}';
+  const bx = document.createElement('div'); bx.style.cssText = 'position:absolute;left:-9999px;top:0;width:330px;font-size:21px'; document.body.appendChild(bx);
+  const f = LS.fitIn(bx, long), m = document.createElement('div'); m.style.cssText = 'position:absolute;visibility:hidden'; bx.appendChild(m); m.innerHTML = katex.renderToString(f, { displayMode: true });
+  const w = m.querySelector('.katex-display').getBoundingClientRect().width; bx.remove();
+  T('6 new: LS.fitIn scales the column by the KaTeX size of its box (a 21 px box draws formulas larger than a step), so the result fits the box itself', `${w <= 330} ${f !== long}`, 'true true'); }
+T('engine: Cx.fmtRect trims zeros', `${Cx.fmtRect(Cx.c(4.2549, 4.9288))} | ${Cx.fmtRect(Cx.c(0, -10))}`, '4.255 + j4.929 | 0 − j10');
+
+/* --- chapter 7: AC nodal / mesh, superposition, Thévenin, phasor diagrams (ch7_circuits.js) against the class answers and Hayt --- */
+const q7 = CH7C, q7s = sp => { const c = new Circuit(sp); c.solve(); return c; }, q7p = (z, d = 4, ad = 2) => CH6.pol(z, d, ad);
+T('7.1 Ex 1 (Hayt P10.12): V1 = 1.062∠23.27° V', q7p(q7.ex1.V1), '1.062\\angle{23.27^\\circ}');
+T('7.1 Ex 1: V2 = 1.5927∠−49.97° V (class 1.593∠−49.969°)', q7p(q7.ex1.V2), '1.5927\\angle{-49.97^\\circ}');
+T('7.1 Ex 1: Δ, ΔV1, ΔV2 as in class', `${CH7.rsci(q7.ex1.D)} | ${CH7.rsci(q7.ex1.D1)} | ${CH7.rsci(q7.ex1.D2)}`, '1.25\\times 10^{-3} + j1\\times 10^{-3} | 8\\times 10^{-4} + j1.5\\times 10^{-3} | 2.5\\times 10^{-3} - j5\\times 10^{-4}');
+T('7.1 Ex 1: the engine (MNA) gives the same node voltages', Math.max(Cx.abs(Cx.sub(q7s(q7.ex1.spec()).V('v1'), q7.ex1.V1)), Cx.abs(Cx.sub(q7s(q7.ex1.spec()).V('v2'), q7.ex1.V2))), 0, 1e-9);
+T('7.1 Ex 2 (mesh): i3 = (2 − j0.4)/(25 + j20) = 0.0637∠−49.97° A', q7p(q7.ex1.i3), '0.0637\\angle{-49.97^\\circ}');
+T('7.1 Ex 2: V1 = (i1 − i3)(−j20) and V2 = 25 i3 agree with nodal', Math.max(Cx.abs(Cx.sub(Cx.mul(Cx.sub(q7.ex1.i1, q7.ex1.i3), q7.ex1.ZC), q7.ex1.V1)), Cx.abs(Cx.sub(Cx.scale(q7.ex1.i3, 25), q7.ex1.V2))), 0, 1e-12);
+T('7.2 Ex 3 (Hayt P10.14): V1′ = 0.1951 − j0.5561 V', CH6.rect(q7.ex1.sup1.V1), '0.1951 - j0.5561');
+T('7.2 Ex 3: V1″ = 0.7805 + j0.9756 V', CH6.rect(q7.ex1.sup2.V1), '0.7805 + j0.9756');
+T('7.2 Ex 3: V1′ + V1″ = V1 of Ex 1', Cx.abs(Cx.sub(Cx.add(q7.ex1.sup1.V1, q7.ex1.sup2.V1), q7.ex1.V1)), 0, 1e-12);
+T('7.2 Ex 3: engine with one source killed gives the partial responses', Math.max(Cx.abs(Cx.sub(q7s(q7.ex1.spec({ k2: true })).V('v1'), q7.ex1.sup1.V1)), Cx.abs(Cx.sub(q7s(q7.ex1.spec({ k1: true })).V('v1'), q7.ex1.sup2.V1))), 0, 1e-9);
+T('7.2 Ex 4: V_L′ = 2∠180° V at 200 rad/s, V_L″ = 0.5∠180° V at 100 rad/s', `${q7p(q7.ex4.parts[0].VL, 2, 0)} ${q7p(q7.ex4.parts[1].VL, 2, 0)}`, '2\\angle{180^\\circ} 0.5\\angle{180^\\circ}');
+T('7.2 Ex 4: v_s3 alone drives no current (engine)', Cx.abs(q7s(q7.ex4.spec(['vs3'], 200)).I('L')), 0, 1e-9);
+T('7.2 Ex 4: superposition equals L d(i_s1 + i_s2)/dt at 50 instants', (() => { let e = 0; for (let k = 0; k < 50; k++) { const tt = k * 0.0013; const sup = 2 * Math.sin(200 * tt + Math.PI) + 0.5 * Math.sin(100 * tt + Math.PI); const der = 5e-3 * (-400 * Math.sin(200 * tt) - 100 * Math.sin(100 * tt)); e = Math.max(e, Math.abs(sup - der)); } return e; })(), 0, 1e-12);
+T('7.2 shared clock (base ω = 100): a 200 rad/s phasor follows |P| sin(200t + ∠P)', (() => { const k7 = CH6.clock({ base: 100 }), P0 = CH6.polar(2, 90); let e = 0; for (let k = 0; k < 30; k++) { k7.ph = k * 0.37; const tt = k7.ph / 100; e = Math.max(e, Math.abs(Cx.inst(P0, 200, k7.at(200)) - 2 * Math.sin(200 * tt + Math.PI / 2))); } return e; })(), 0, 1e-12);
+T('7.3 Ex 5: V_th = 158.11∠108.43° V (= −50 + j150)', `${q7p(q7.ex5.Vth, 2, 2)} ${CH6.rect(q7.ex5.Vth, 2)}`, '158.11\\angle{108.43^\\circ} -50 + j150');
+T('7.3 Ex 5: Z_th = (−j300) ∥ (j100) = j150 Ω', CH6.rect(q7.ex5.Zth), 'j150');
+T('7.3 Ex 5: I_N = V_th/Z_th = I_sc = 1.0541∠18.43° A', `${q7p(q7.ex5.IN)} ${Cx.abs(Cx.sub(q7.ex5.IN, q7.ex5.Isc)) < 1e-12}`, '1.0541\\angle{18.43^\\circ} true');
+T('7.3 Ex 5: engine V_oc, Z_th (test source) and I_sc', (() => { const vo = q7s(q7.ex5.spec({ load: 'meter' })).Vab('MET'), k = q7s(q7.ex5.spec({ kill: true, test: true })), zt = Cx.div(Cx.c(1, 0), Cx.neg(k.I('Vt'))), sc = q7s(q7.ex5.spec({ load: 'short' })).I('MET');
+  return Math.max(Cx.abs(Cx.sub(vo, q7.ex5.Vth)) / 158, Cx.abs(Cx.sub(zt, q7.ex5.Zth)) / 150, Cx.abs(Cx.sub(sc, q7.ex5.Isc))); })(), 0, 1e-8);
+T('7.3 Ex 5: real, Thévenin and Norton circuits give the same load current for four loads', [Cx.c(100, 0), Cx.c(50, -80), Cx.c(10, -150), Cx.c(200, 300)].reduce((m, zl) => { const r = q7s(q7.ex5.spec({ load: zl })).I('ZL'); return Math.max(m, Cx.abs(Cx.sub(r, q7s(q7.ex5.thev(zl)).I('ZL'))), Cx.abs(Cx.sub(r, q7s(q7.ex5.nort(zl)).I('ZL')))); }, 0), 0, 1e-8);
+T('7.1 homework 1 (Hayt 10.50): I1 = 0.6102∠−156.6° A, I2 = 0.5343∠−136.36° A (class correction)', `${q7p(q7.hw1.I1)} ${q7p(q7.hw1.I2)}`, '0.6102\\angle{-156.6^\\circ} 0.5343\\angle{-136.36^\\circ}');
+T('7.1 homework 1: Δ = 600 + j550 (instructor\'s mesh solution)', CH6.rect(q7.hw1.D), '600 + j550');
+T('7.1 homework 1: engine currents and the one-node shortcut agree', (() => { const c = q7s(q7.hw1.spec); return Math.max(Cx.abs(Cx.sub(c.I('wI1'), q7.hw1.I1)), Cx.abs(Cx.sub(c.I('wI2'), q7.hw1.I2)), Cx.abs(Cx.sub(c.V('tM'), q7.hw1.Vt)) / 9); })(), 0, 1e-9);
+T('7.1 homework 1: the printed 0.6247 + j0.3339 / 0.4838 + j0.4956 come from +80° and +23°', (() => { const sp = JSON.parse(JSON.stringify(q7.hw1.spec)); sp.parts.find(q => q.id === 'V1').phase = 80; sp.parts.find(q => q.id === 'V3').phase = 23; const c = q7s(sp); return `${CH6.rect(c.I('wI1'))} ${CH6.rect(c.I('wI2'))}`; })(), '0.6247 + j0.3339 0.4838 + j0.4956');
+T('7.1 homework 2 (Hayt 10.53): I_B = 2.7327∠152.1° A (class 2.732∠152.102°)', q7p(q7.hw2.IB, 4, 1), '2.7327\\angle{152.1^\\circ}');
+T('7.1 homework 2: Δ = 17.6 − j2.4, engine agrees', `${CH6.rect(q7.hw2.D)} ${Cx.abs(Cx.sub(q7s(q7.hw2.spec).I('R1'), q7.hw2.IB)) < 1e-9}`, '17.6 - j2.4 true');
+T('7.1 homework 3 (Hayt 10.55, ω = 20): v_x = 1.1359∠102.16° V → 1.14 cos(20t + 12°) V', q7p(q7.hw3(20).Iz), '1.1359\\angle{102.16^\\circ}');
+T('7.1 homework 3: Δ = 42.6899 + j39.0708 (the 2018 solution subtracted to j38.0764)', CH6.rect(q7.hw3(20).D), '42.6899 + j39.0708');
+T('7.1 homework 3: engine v_x equals the mesh I_z at ω = 20 and ω = 2', [20, 2].reduce((m, w) => { const h = q7.hw3(w); return Math.max(m, Cx.abs(Cx.sub(q7s(h.spec).Vab('R1'), h.Iz))); }, 0), 0, 1e-9);
+T('7.1 homework 3 at ω = 2 (as printed in the 2025 handout): v_x = 0.8873∠107.69° V', q7p(q7.hw3(2).Iz), '0.8873\\angle{107.69^\\circ}');
+T('7.4 Hayt Fig. 10.38: (6 + j8) + (3 − j4) = 9 + j4 = 9.8489∠23.96° V', `${CH6.rect(Cx.add(Cx.c(6, 8), Cx.c(3, -4)))} ${q7p(Cx.add(Cx.c(6, 8), Cx.c(3, -4)))}`, '9 + j4 9.8489\\angle{23.96^\\circ}');
+T('7.4 Hayt Example 10.13: I_x = 0.2236∠−26.57°, I_s = 0.2828∠45° A', (() => { const Ix = Cx.c(0.2, -0.1), Is = Cx.add(Cx.c(0, 0.3), Ix); return `${q7p(Ix)} ${q7p(Is)}`; })(), '0.2236\\angle{-26.57^\\circ} 0.2828\\angle{45^\\circ}');
+T('7.4 Hayt Practice 10.17: |Vs|/|V1|, |V1|/|V2|, |Vs|/|VR| = 1.897, 1, 2.121', (() => { const IC = Cx.c(1, 0), V2 = Cx.c(2, -1), I = Cx.add(IC, Cx.div(V2, Cx.c(0, 2))), V1 = Cx.scale(I, 2), Vs = Cx.add(V1, V2); return [Cx.abs(Vs) / Cx.abs(V1), Cx.abs(V1) / Cx.abs(V2), Cx.abs(Vs) / 2].map(x => x.toFixed(3)).join(' '); })(), '1.897 1.000 2.121');
+T('7.4 series RLC (Hayt Fig. 10.40) at resonance: V_s = V_R = 10∠0° V, |V_L| = |V_C| = 50 V', (() => { const c = q7s({ ground: 'g', mode: 'ac', w: 1, nodes: { s: [0, 0], a: [1, 0], b: [2, 0], g: [0, 1], h: [2, 1] }, parts: [{ id: 'V', type: 'VAC', a: 's', b: 'g', amp: 10, phase: 0 }, { id: 'L', type: 'L', a: 's', b: 'a', value: 50 }, { id: 'R', type: 'R', a: 'a', b: 'b', value: 10 }, { id: 'C', type: 'C', a: 'b', b: 'h', value: 0.02 }, { type: 'W', a: 'h', b: 'g' }] });
+  return `${q7p(c.Vab('R'), 3, 1)} ${Cx.abs(c.Vab('L')).toFixed(3)} ${Cx.abs(c.Vab('C')).toFixed(3)}`; })(), '10\\angle{0^\\circ} 50.000 50.000');
+
+/* chapter 7 rebuilt (Oct 2026): the extras of the 2018 lecture, the phasor-diagram circuits and the ch7ui.js classes */
+const box7 = document.createElement('div'); box7.style.cssText = 'position:absolute;left:-9999px;top:0;width:620px'; document.body.appendChild(box7);
+const cv7n = () => { const c = document.createElement('canvas'); box7.appendChild(c); return c; }, rc7 = z => CH6.rect(z, 4);
+T('7 new: 2018 extra 1 (Hayt Ex 10.9): Δ = 0.05, ΔV1 = 0.05 − j0.1, ΔV2 = −0.1 + j0.2, V1 = 1 − j2, V2 = −2 + j4 V (class), and the engine agrees', (() => { const X = CH7C.x1, c = q7s(X.spec);
+  return `${rc7(X.D)} | ${rc7(X.D1)} | ${rc7(X.D2)} | ${rc7(X.V1)} | ${rc7(X.V2)} | ${Cx.abs(Cx.sub(c.V('t1'), X.V1)) < 1e-9 && Cx.abs(Cx.sub(c.V('t6'), X.V2)) < 1e-9}`; })(), '0.05 | 0.05 - j0.1 | -0.1 + j0.2 | 1 - j2 | -2 + j4 | true');
+T('7 new: 2018 extra 2: V = j100 V, I1 = 20 + j20 (28.28∠45°), I2 = j20, I3 = 20 A; the mesh check gives Ia = I1, Ib = I3; the engine agrees', (() => { const X = CH7C.x2, c = q7s(X.spec);
+  return `${rc7(X.V)} | ${q7p(X.I1)} | ${rc7(X.I2)} | ${rc7(X.I3)} | ${Cx.abs(Cx.sub(X.Ia, X.I1)) < 1e-12 && Cx.abs(Cx.sub(X.Ib, X.I3)) < 1e-12} | ${Cx.abs(Cx.sub(c.I('C'), X.I1)) < 1e-9 && Cx.abs(Cx.sub(c.I('L'), X.I3)) < 1e-9}`; })(), 'j100 | 28.2843\\angle{45^\\circ} | j20 | 20 | true | true');
+T('7 new: 2018 extra 3 (Hayt Ex 10.11): V_th = 6 − j3 V, Z_th = 6 + j2 Ω, I = 0.6 + j0.3 A, V1 = 1 − j2 V (= extra 1); the engine measures V_oc, Z_th and V1', (() => { const X = CH7C.x3, c = q7s(X.spec()), m = q7s(X.spec({ open: true, meter: true })), d = q7s(X.spec({ open: true, kill: true, test: true }));
+  return `${rc7(X.Voc)} | ${rc7(X.Zth)} | ${rc7(X.I)} | ${rc7(X.V1)} | ${Cx.abs(Cx.sub(m.Vab('MET'), X.Voc)) < 1e-6} ${Cx.abs(Cx.sub(Cx.inv(Cx.neg(d.I('Vt'))), X.Zth)) < 1e-6} ${Cx.abs(Cx.sub(c.V('A'), X.V1)) < 1e-9}`; })(), '6 - j3 | 6 + j2 | 0.6 + j0.3 | 1 - j2 | true true true');
+T('7 new: Hayt Example 10.13 circuit: with V = 1∠0° the source is 0.2 + j0.2 A and leads I_x by 71.57°; the true 1∠0° A source gives V = 3.5355∠−45° V', (() => { const D = CH7C.pd13, c = q7s(D.spec(false)), c1 = q7s(D.spec(true));
+  return `${rc7(D.Is)} ${CH6.fd(CH6.wrap(CH6.deg(D.Is) - CH6.deg(D.Ix)), 2)} ${Cx.abs(Cx.sub(c.V('t'), Cx.c(1, 0))) < 1e-9} ${q7p(c1.V('t'))}`; })(), '0.2 + j0.2 71.57 true 3.5355\\angle{-45^\\circ}');
+T('7 new: Hayt Practice 10.17 circuit: V_s = 3 − j3 V makes I_C = 1∠0° A (engine) and |V_s|/|V_1| = 1.897', (() => { const D = CH7C.pd17, c = q7s(D.spec); return `${rc7(D.Vs)} ${Cx.abs(Cx.sub(c.I('C'), Cx.c(1, 0))) < 1e-9} ${CH6.fd(D.ratio, 3)}`; })(), '3 - j3 true 1.897');
+{ const p = new CH7.Prob(cv7n(), CH7.DEF.ex1), n = p.steps.length, v4 = (p.set(4), p.vecs().length), d4 = p.solved; p.set(5); const v5 = p.vecs().map(x => x.label).join(','), d5 = p.solved; p.set(6); const sum = p.vecs().reduce((a, x) => Cx.add(a, x.z), Cx.c(0));
+  T('7 new: CH7.Prob Ex 1: 6 steps; nothing on the plane and no dots before step 5; V1, V2 at step 5; at step 6 the KCL arrows at v1 add to zero', `${n} ${v4} ${d4} ${v5} ${d5} ${Cx.abs(sum) < 1e-9}`, '6 0 false V_1,V_2 true true'); }
+{ const g = new CH7.GridProb(cv7n(), CH7.DEF.ex3), runs = [1, 2, 3, 4].map(k => { g.set(k); return g.G.items.map(it => +!!it.view.o.dots).join(''); }).join(' ');
+  T('7 new: CH7.GridProb Ex 3: 4 steps; the dots start panel by panel (① at step 2, ② at step 3, the real circuit at step 4)', `${g.steps.length} ${runs}`, '4 000 100 110 111'); }
+{ const s = new CH7.Stages(cv7n(), CH7.DEF.ex5); s.set(3); const t3 = `${!!s.VL.ckt.part('Vt')} ${!s.VR}`; s.set(4); const a = s.VL.ckt.I('ZL'), b = s.VR.ckt.I('ZL'); s.set(5); const c = s.VR.ckt.I('ZL');
+  T('7 new: CH7.Stages Ex 5: 5 steps; step 3 drives A–B with the test source (no second circuit); the Thévenin (step 4) and Norton (step 5) circuits draw the load current of the real circuit', `${s.steps.length} ${t3} ${Cx.abs(Cx.sub(a, b)) < 1e-9} ${Cx.abs(Cx.sub(a, c)) < 1e-9}`, '5 true true true true'); }
+{ const h = new CH7.Prob(cv7n(), CH7.DEF.hw3), a20 = q7p(CH7C.hw3(20).Iz, 4, 2); h.st.w = 2; h.refresh(); const a2 = q7p(CH7C.hw3(2).Iz, 4, 2), ok = h.steps.length === 4 && h.steps[0].why.includes('\\omega = 2\\)');
+  T('7 new: homework 3 switches ω: v_x = 1.1359∠102.16° V at ω = 20 (Hayt, class 1.136∠102.16°) and 0.8873∠107.69° V at ω = 2 (the handout); the steps are rebuilt for ω = 2', `${a20} ${a2} ${ok}`, '1.1359\\angle{102.16^\\circ} 0.8873\\angle{107.69^\\circ} true'); }
+{ const a = CH7.askZ([['V', Cx.c(0, 100), 'V'], ['I', CH6.polar(28.2843, 45), 'A']], [[0, 100, -90, 'sign']]), ok = v => a.fields.every((f, i) => f.ok(v[i], v));
+  T('7 new: CH7.askZ checks each phasor as one complex number (−100∠−90° = 100∠90°) and names a known slip', `${ok([100, 90, 28.28, 45])} ${ok([-100, -90, 28.284, 45])} ${ok([100, -90, 28.28, 45])} ${a.check([100, -90, 1, 1])}`, 'true true false sign'); }
+/* --- chapter 8: AC power and power factor (ch8_circuits.js, ch8.js, engine S(id)) against the class answers and Hayt --- */
+const w8 = CH8C, w8s = sp => { const c = new Circuit(sp); c.solve(); return c; }, w8p = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), w8f = (x, d = 4) => CH6.fd(x, d);
+{ const E = w8.ex4;
+T('8.1 slide 7 (Hayt Ex 11.4): Δ = 4, ΔI1 = 20 − j40, ΔI2 = 20 − j20 (class)', `${CH6.rect(E.D)} | ${CH6.rect(E.D1)} | ${CH6.rect(E.D2)}`, '4 | 20 - j40 | 20 - j20');
+T('8.1 slide 7: I1 = 5 − j10 = 11.1803∠−63.43° A, I2 = 5 − j5 = 7.0711∠−45° A', `${CH6.rect(E.I1)} ${w8p(E.I1)} ${CH6.rect(E.I2)} ${w8p(E.I2)}`, '5 - j10 11.1803\\angle{-63.43^\\circ} 5 - j5 7.0711\\angle{-45^\\circ}');
+T('8.1 slide 7: P_R = 25, P_L = P_C = 0, left source supplies 50, right source absorbs 25 W', [E.SR.re, E.SL.re, E.SC.re, E.SlDel.re, E.SrAbs.re].map(x => w8f(x)).join(' '), '25 0 0 50 25');
+T('8.1 slide 7: engine P(id) of Vl, L, R, C, Vr = −50, 0, 25, 0, 25 W and the sum is 0', (() => { const c = w8s(E.spec()), P = ['Vl', 'L', 'R', 'C', 'Vr'].map(id => c.P(id)); return Math.max(Math.abs(P[0] + 50), Math.abs(P[1]), Math.abs(P[2] - 25), Math.abs(P[3]), Math.abs(P[4] - 25), Math.abs(P.reduce((a, b) => a + b, 0))); })(), 0, 1e-9);
+T('8.1 slide 7: Σ p_k(t) = 0 at every instant (7 instants, engine)', (() => { const c = w8s(E.spec()); let m = 0; for (let k = 0; k < 7; k++) { const d = 17 + 51 * k; m = Math.max(m, Math.abs(['Vl', 'L', 'R', 'C', 'Vr'].reduce((s, id) => s + CH8.pOf(c, id)(d), 0))); } return m; })(), 0, 1e-9);
+T('8.1 slide 7 with the right source flipped: sources supply 150 W and 75 W, P_R = 225 W', (() => { const F = w8.ex4.make(180); return [F.SlDel.re, -F.SrAbs.re, F.SR.re].map(x => w8f(x)).join(' '); })(), '150 75 225');
+}
+T('8.1 Hayt Ex 11.2 in the sine reference: 4 cos(πt/6) = 4 sin(πt/6 + 90°) → 4∠90° V; P = 2 W and p(t) = 2 − 4 cos(2ωt + 120°) = 2 + 4 cos(2ωt − 60°) W (Hayt) at 6 instants', (() => { const c = w8s(w8.one({ amp: 4, phase: 90, R: 1, X: Math.sqrt(3) })), f = CH8.pOf(c, 'Vs'); let m = Math.abs(-c.P('Vs') - 2);
+  for (let k = 0; k < 6; k++) { const d = 13 + 61 * k; m = Math.max(m, Math.abs(-f(d) - (2 + 4 * Math.cos((2 * d - 60) * Math.PI / 180)))); } return m; })(), 0, 1e-9);
+{ const Y = Cx.add(Cx.c(1 / 200), Cx.inv(Cx.c(0, 400))), sv = z => Cx.abs(z) * Math.sin(2 + Cx.arg(z)), V = Cx.div(CH6.polar(12, 90), Y), IL = Cx.div(V, Cx.c(0, 400)), Vbad = Cx.div(Cx.c(12), Y);
+T('8.1 Hayt Practice 11.1 in the sine reference: 12 cos 2000t = 12 sin(2000t + 90°) → p_R(1 ms) = 13.98 kW, p_L(1 ms) = −5.63 kW (Hayt)', `${(sv(V) ** 2 / 200e3).toFixed(2)} ${(sv(V) * sv(IL) / 1e3).toFixed(2)}`, '13.98 -5.63');
+T('8.1 Practice 11.1 trap: forgetting the cos → sin conversion (I_s = 12∠0°) gives p_R = 9.06 kW', (sv(Vbad) ** 2 / 200e3).toFixed(2), '9.06'); }
+T('8.1 the mean of p(t) over one period equals ½VmIm cos(θ − φ) (numerical, load 2 − j3 Ω, 7∠25° V)', (() => { const c = w8s(w8.one({ amp: 7, phase: 25, R: 2, X: -3 })), f = CH8.pOf(c, 'X'), g = CH8.pOf(c, 'R'); let s = 0; const N = 3600; for (let k = 0; k < N; k++) s += f(360 * k / N) + g(360 * k / N);
+  const V = c.V('a'), I = c.I('wt'); return Math.abs(s / N - 0.5 * Cx.abs(V) * Cx.abs(I) * Math.cos(CH6.deg(V) * Math.PI / 180 - CH6.deg(I) * Math.PI / 180)); })(), 0, 1e-9);
+{ const E = w8.ex4;
+T('8.2 slide 7: Q_L = 125 VAR (class wrote 124), Q_C = −50 VAR, S_20V = 50 + j100 VA', `${w8f(E.SL.im, 3)} ${w8f(E.SC.im, 3)} ${CH6.rect(E.SlDel)}`, '125 -50 50 + j100');
+T('8.2 slide 7: the class value 111.8∠63.4° VA rounds to 50.06 + j99.97 (exact 50 + j100)', CH6.rect(CH6.polar(111.8, 63.4), 2), '50.06 + j99.97');
+T('8.2 complex power is conserved: S sent = S_R + S_L + S_C + S_right (also with the right source flipped)', [0, 180].reduce((m, ph) => { const F = w8.ex4.make(ph), c = w8s(F.spec()); const sum = ['L', 'R', 'C', 'Vr'].reduce((s, id) => Cx.add(s, c.S(id)), Cx.c(0)); return Math.max(m, Cx.abs(Cx.add(sum, c.S('Vl'))), Cx.abs(Cx.sub(Cx.neg(c.S('Vl')), F.SlDel))); }, 0), 0, 1e-9);
+}
+T('8.2 R ∥ L at 100 V rms (25 Ω, 33.33 Ω): P = 400 W, Q = 300 VAR, |S| = 500 VA', (() => { const c = w8s(w8.par({ amp: 100 * Math.SQRT2, R: 25, X: 100 / 3 })), S = Cx.neg(c.S('Vs')); return `${w8f(S.re, 3)} ${w8f(S.im, 3)} ${w8f(Cx.abs(S), 3)}`; })(), '400 300 500');
+T('8.2 p_X(t) = v i_X swings ±|Q| and p_R(t) = v i_R averages P (R ∥ C)', (() => { const c = w8s(w8.par({ amp: 100 * Math.SQRT2, R: 20, X: -40 })), pX = CH8.pOf(c, 'X'), pR = CH8.pOf(c, 'R'); let mx = 0, s = 0; const N = 3600;
+  for (let k = 0; k < N; k++) { const d = 360 * k / N; mx = Math.max(mx, Math.abs(pX(d))); s += pR(d); } return Math.max(Math.abs(mx - Math.abs(c.S('X').im)), Math.abs(s / N - c.S('R').re)); })(), 0, 1e-6);
+T('8.2 Hayt Practice 11.9: 26.6 + j0, 0 − j1331, 532 + j1065 VA; the source absorbs −559 + j266 VA', (() => { const c = w8s({ ground: 'g', mode: 'ac', w: 1, nodes: { s: [0, 0], a: [1, 0], g: [0, 1], b: [1, 1] }, parts: [{ id: 'V', type: 'VAC', a: 's', b: 'g', amp: 120 * Math.SQRT2, phase: 0 }, { id: 'R', type: 'R', a: 's', b: 'a', value: 1 },
+  { id: 'C', type: 'Z', a: 'a', b: 'b', value: Cx.c(0, -10) }, { id: 'Z', type: 'Z', a: 'a', b: 'b', value: Cx.c(5, 10) }, { id: 'w', type: 'W', a: 'b', b: 'g' }] }); return ['R', 'C', 'Z', 'V'].map(id => CH6.rect(c.S(id), 0)).join(' | '); })(), '27 | -j1331 | 532 + j1065 | -559 + j266');
+{ const X = w8.ex8.ex, H = w8.ex8.hw;
+T('8.3 slide 13 (Hayt Ex 11.8): I = 12∠−53.13° A rms; P1 = 288 W, P2 = 144 W, |S| = 720 VA, PF = 0.6 lagging', `${w8p(X.I)} ${w8f(X.P1)} ${w8f(X.P2)} ${w8f(X.Sap)} ${w8f(X.PF)} ${X.lag}`, '12\\angle{-53.13^\\circ} 288 144 720 0.6 true');
+T('8.3 slide 13: S1 = 288 − j144 VA (class 287.91 − j143.95), S2 = 144 + j720 VA', `${CH6.rect(X.S1)} | ${CH6.rect(X.S2)}`, '288 - j144 | 144 + j720');
+T('8.3 slide 13: the engine (60√2 V peak source) gives the same S of each load', (() => { const c = w8s(w8.ex8.spec(w8.ex8.Z2)); return Math.max(Cx.abs(Cx.sub(c.S('Z1'), X.S1)), Cx.abs(Cx.sub(c.S('ZL'), X.S2))) / 720; })(), 0, 1e-10);
+T('8.3 homework slide 16 (Hayt Practice 11.8, Z_L = 10 Ω): PF = 12/√145 = 0.9965 leading', `${w8f(H.PF)} ${H.lead} ${Math.abs(H.PF - 12 / Math.sqrt(145)) < 1e-12}`, '0.9965 true true');
+}
+T('8.3 Hayt Practice 11.10: 14.21 kW, 14.49 kVA, 2.131 kW, 16.34 kW, 16.59 kVA, PF 0.985', (() => { const I = Cx.div(Cx.c(440), Cx.c(11.5, 2)), SL = Cx.scale(Cx.c(10, 2), Cx.abs(I) ** 2), Ss = Cx.mul(Cx.c(440), Cx.conj(I));
+  return [SL.re / 1e3, Cx.abs(SL) / 1e3, 1.5 * Cx.abs(I) ** 2 / 1e3, Ss.re / 1e3, Cx.abs(Ss) / 1e3, w8.pf(Ss)].map((x, k) => x.toFixed(k === 2 || k === 5 ? 3 : 2)).join(' '); })(), '14.21 14.49 2.131 16.34 16.59 0.985');
+{ const E = w8.ex9;
+T('8.4 slide 15 (Hayt Ex 11.9): S1 = 50 + j37.5 kVA, S = 50 + j16.43 kVA, Q_C = −21 065.79 VAR', `${CH6.rect(Cx.scale(E.S1, 1e-3), 2)} | ${CH6.rect(Cx.scale(E.Snew, 1e-3), 2)} | ${w8f(E.Qc, 2)}`, '50 + j37.5 | 50 + j16.43 | -21065.79');
+T('8.4 slide 15: C = 1.2676 mF at 50 Hz (class), 1056.3 µF at 60 Hz (Hayt)', `${w8f(E.C50 * 1e3)} ${w8f(E.C60 * 1e6, 1)}`, '1.2676 1056.3');
+T('8.4 slide 15: the class rounds the angles (18.19°, 36.86°): Q_C = −21 057.01 VAR, C = 1.267 mF', `${w8f(E.QcClass, 2)} ${w8f(E.C50Class * 1e3, 3)}`, '-21057.01 1.267');
+T('8.4 slide 15: Hayt\'s route I2 = j91.59 A, Z2 = −j2.5112 Ω', `${CH6.rect(E.I2, 2)} ${CH6.rect(E.Z2)}`, 'j91.59 -j2.5112');
+T('8.4 slide 15 engine: with C(50 Hz) the source sees PF 0.95 lagging and 228.83 A rms; the motor keeps 271.74 A rms', (() => { const c = w8s(E.spec(E.C50, 50, true)), S = Cx.neg(c.S('Vs')); return `${w8f(w8.pf(S))} ${S.im > 0} ${w8f(Cx.abs(c.I('wI')) / Math.SQRT2, 2)} ${w8f(Cx.abs(c.I('M')) / Math.SQRT2, 2)}`; })(), '0.95 true 228.83 271.74');
+T('8.4 slide 15 engine: switch open (no C) → PF 0.8 lagging, line current = motor current', (() => { const c = w8s(E.spec(E.C50, 50, false)), S = Cx.neg(c.S('Vs')); return `${w8f(w8.pf(S))} ${Cx.abs(Cx.sub(c.I('wI'), c.I('M'))) < 1e-9}`; })(), '0.8 true');
+}
+{ const H = w8.house, r = H.all;
+T('8.4 house (2018 p. 19): P = 5780 W, Q = 4764.05 VAR, |S| = 7490.3 VA, PF = 0.7717, I = 34.047 A', `${w8f(r.P, 2)} ${w8f(r.Q, 2)} ${w8f(r.Sap, 2)} ${w8f(r.PF)} ${w8f(r.I, 3)}`, '5780 4764.05 7490.3 0.7717 34.047');
+T('8.4 house: Q_C = −2864.25 VAR (class −2863.67), C = 188.37 µF (class 188.33), I = 27.656 A, drop 18.77 %', `${w8f(r.Qc, 2)} ${w8f(r.C * 1e6, 2)} ${w8f(r.Inew, 3)} ${w8f(r.dropPct, 2)}`, '-2864.25 188.37 27.656 18.77');
+T('8.4 house: 1734 kWh and 4335 baht a month', (() => { const b = H.bill(r.P); return `${w8f(b.kWh)} ${w8f(b.baht)}`; })(), '1734 4335');
+T('8.4 house engine: everything on with C → PF 0.95 lagging, 27.656 A rms; the fridge alone → 1100 VA, 5 A', (() => { const c = w8s(H.spec([true, true, true, true], r.C)), S = Cx.neg(c.S('Vs')), f = w8s(H.spec([true, false, false, false], 0)), Sf = Cx.neg(f.S('Vs'));
+  return `${w8f(w8.pf(S))} ${S.im > 0} ${w8f(Cx.abs(c.I('Vs')) / Math.SQRT2, 3)} ${w8f(Cx.abs(Sf), 2)} ${w8f(Cx.abs(f.I('Vs')) / Math.SQRT2, 3)}`; })(), '0.95 true 27.656 1100 5');
+}
+T('8.4 unity PF: 10 kW at PF 0.6 lagging on 220 V, 50 Hz needs C = 876.9 µF', w8f(10000 * Math.tan(Math.acos(0.6)) / (2 * Math.PI * 50 * 220 * 220) * 1e6, 1), '876.9');
+T('8 formats: CH8.cfmt / CH8.fmt', `${CH8.cfmt(Cx.c(50000, 37500))} | ${CH8.cfmt(Cx.c(288, -144))} | ${CH8.fmt(-21065.79, 'VAR')} | ${CH8.fmt(25, 'W')}`, '50 + j37.5 kVA | 288 − j144 VA | −21.07 kVAR | 25 W');
+
+/* chapter 8 rebuilt (Oct 2026): the Board layouts and the problems of ch8ui.js */
+const box8 = document.createElement('div'); box8.style.cssText = 'position:absolute;left:-9999px;top:0;width:820px'; document.body.appendChild(box8);
+const cv8n = (w = 602) => { const d = document.createElement('div'); d.style.width = w + 'px'; box8.appendChild(d); const c = document.createElement('canvas'); d.appendChild(c); return c; };
+{ const B = new CH8.Board(cv8n(602), { mid: true, side: () => {}, waves: [{ sigs: () => [] }] }); B.resize(); const b = B.box;
+  T('8 new: CH8.Board mid layout at 590 px: the circuit takes the full width, the side panel and the wave panel sit side by side below it, and the half-width side panel is slim (short labels)', `${B.mid} ${B.wide} ${b.ckt.w === B.W} ${b.side.y === b.waves[0].y && b.side.x === 0 && b.waves[0].x > b.side.w} ${B.slim}`, 'true false true true true'); }
+{ const mk = o => { const B = new CH8.Board(cv8n(800), Object.assign({ mid: true, side: () => {}, waves: [{ sigs: () => [] }] }, o)); B.resize(); return B; }, B = mk({}), B2 = mk({ wideAt: 1e9 });
+  T('8 new: CH8.Board at 788 px: the wide layout (circuit beside the side panel), unless wideAt keeps the mid layout (the house circuit)', `${B.wide} ${B.slim} ${B2.wide} ${B2.mid}`, 'true false false true'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.ex4), n = p.steps.length, s2 = (p.set(2), p.solved), g1 = CH8.DEF.ex4.glow(1).join(','); p.set(3); const s3 = p.solved;
+  p.st.ph = 180; p.refresh(); const E = CH8C.ex4.make(180), txt = JSON.stringify(p.steps[5]);
+  T('8 new: slide 7 (8.1 problem 1): 7 steps; the dots start at step 3 (mesh currents found); step 1 glows mesh 1; flipping the right source rebuilds the steps (both sources supply: 150 W and 75 W)', `${n} ${s2} ${s3} ${g1} ${CH6.fd(E.SlDel.re, 2)} ${CH6.fd(-E.SrAbs.re, 2)} ${txt.includes('{150')} ${txt.includes('{-75')}`, '7 false true Vl,L,R,wb1 150 75 true true'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.ex4q), c = p.ckt, sum = ['Vl', 'L', 'R', 'C', 'Vr'].reduce((a, id) => Cx.add(a, c.S(id)), Cx.c(0)), E = CH8C.ex4;
+  T('8 new: slide 7 continued (8.2 problem 1): 7 steps; Q_C = −50 VAR, Q_L = 125 VAR (class 124), S of the 20 V source = 50 + j100 VA, PF 0.447; the solver\'s S of all five parts adds to zero', `${p.steps.length} ${CH6.fd(E.SC.im, 3)} ${CH6.fd(E.SL.im, 3)} ${CH6.rect(E.SlDel, 3)} ${CH6.fd(CH8C.pf(E.SlDel), 3)} ${Cx.abs(sum) < 1e-9}`, '7 -50 125 50 + j100 0.447 true'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.ex8), c = p.ckt, X = CH8C.ex8.ex, s0 = (p.set(0), p.solved), s1 = (p.set(1), p.solved);
+  T('8 new: slide 13 (8.3 problem 1): 6 steps, the dots from step 1; S1 = 288 − j144, S2 = 144 + j720, S_s = 432 + j576 VA (class 287.91 − j143.95 …), PF 0.6; the solver gives the same S for each load', `${p.steps.length} ${s0} ${s1} ${CH6.rect(X.S1, 2)} | ${CH6.rect(X.S2, 2)} | ${CH6.rect(X.S, 2)} ${CH6.fd(X.PF, 3)} ${Cx.abs(Cx.sub(c.S('Z1'), X.S1)) < 1e-6 && Cx.abs(Cx.sub(c.S('ZL'), X.S2)) < 1e-6}`, '6 false true 288 - j144 | 144 + j720 | 432 + j576 0.6 true'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.hw), X = CH8C.ex8.hw;
+  T('8 new: homework p. 16 (8.3 problem 2): 4 steps; S = 297.93 − j24.83 VA, PF = 12/√145 = 0.9965 leading', `${p.steps.length} ${CH6.rect(X.S, 2)} ${CH6.fd(X.PF, 4)} ${X.lead}`, '4 297.93 - j24.83 0.9965 true'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.ex9), sw = k => (p.set(k), p.ckt.part('Sw').closed), a = `${sw(3)} ${sw(4)}`, S = Cx.neg(p.ckt.S('Vs'));
+  p.st.f = 60; p.refresh(); const C60 = p.ckt.part('C').value;
+  T('8 new: slide 15 (8.4 problem 1): 6 steps; the capacitor switch closes at step 4 and the source then sees PF 0.95; choosing 60 Hz rebuilds the circuit with 1056 µF (Hayt)', `${p.steps.length} ${a} ${CH6.fd(CH8C.pf(S), 4)} ${CH6.fd(C60 * 1e6, 1)}`, '6 false true 0.95 1056.3'); }
+{ const p = new CH8.Prob(cv8n(), CH8.DEF.house), on = k => (p.set(k), [0, 1, 2, 3].map(i => p.ckt.part('S' + i).closed ? 1 : 0).join(''));
+  const a = `${on(0)} ${on(2)} ${on(5)}`, cap5 = p.ckt.part('SC').closed, cap6 = (p.set(6), p.ckt.part('SC').closed), S6 = Cx.neg(p.ckt.S('Vs'));
+  p.st.on[3] = false; p.build(true); const S6b = Cx.neg(p.ckt.S('Vs'));
+  T('8 new: the house (8.4 problem 2): 8 steps; the appliances connect one per step (0000 → 1100 → 1111), the capacitor at step 6 gives PF 0.95; with the air conditioner off the same capacitor makes the house leading', `${p.steps.length} ${a} ${cap5} ${cap6} ${CH6.fd(CH8C.pf(S6), 3)} ${S6b.im < 0}`, '8 0000 1100 1111 false true 0.95 true'); }
+{ const a = CH8.DEF.ex4.ask({ st: { ph: 0 } }), b = CH8.DEF.ex9.ask({ st: { f: 50 } });
+  T('8 new: try-first boxes: slide 7 accepts 25, 50 and 25 W and names the missing ½ (50 W for P_R); slide 15 names the 60 Hz value when 50 Hz is chosen', `${[25, 50, 25].every((x, i) => a.fields[i].ok(x))} ${!!a.check([50, 1, 1])} ${b.fields[0].ok(1.2676)} ${!!b.check([1.0563])}`, 'true true true true'); }
+/* --- chapter 9: polyphase circuits (ch9_circuits.js) against the class answers and Hayt (rms values throughout) --- */
+const h9 = CH9C, h9s = sp => { const c = new Circuit(sp); c.solve(); return c; }, h9p = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), h9r = z => Cx.scale(z, 1 / Math.SQRT2), h9f = (x, d = 4) => CH6.fd(x, d);
+T('9.1 slide 5 (Hayt §12.1): V_ab = 100∠0° − 100∠−120° = 173.2051∠30° V', h9p(h9.lines(h9.phases(100, 0, 1))[0]), '173.2051\\angle{30^\\circ}');
+T('9.1 class note, negative sequence V_an = 120∠0°: V_ab, V_bc, V_ca = 207.8461∠−30°, ∠90°, ∠−150° V', h9.lines(h9.phases(120, 0, -1)).map(z => h9p(z)).join(' '), '207.8461\\angle{-30^\\circ} 207.8461\\angle{90^\\circ} 207.8461\\angle{-150^\\circ}');
+T('9.1 class note, positive sequence V_an = 10∠30°: V_ab, V_bc, V_ca = 17.3205∠60°, ∠−60°, ∠180° V', h9.lines(h9.phases(10, 30, 1)).map(z => h9p(z)).join(' '), '17.3205\\angle{60^\\circ} 17.3205\\angle{-60^\\circ} 17.3205\\angle{180^\\circ}');
+T('9.1 balanced phase voltages add to zero (both sequences, five angles)', (() => { let m = 0; [1, -1].forEach(q => [0, 30, -45, 100, 170].forEach(th => { m = Math.max(m, Cx.abs(h9.phases(230, th, q).reduce((sm, z) => Cx.add(sm, z), Cx.c(0)))); })); return m; })(), 0, 1e-9);
+T('9.1 engine voltmeters on the Y source read V_ab = √3·V_p = 173.205 V and V_bn = 100 V (rms)', (() => { const c = h9s(h9.src({ Vp: 100 })); return `${h9f(Cx.abs(h9r(c.Vab('Mab'))), 3)} ${h9f(Cx.abs(h9r(c.Vab('Mbn'))), 3)}`; })(), '173.205 100');
+T('9.2 Ex 1 (Hayt Ex 12.2): I_aA, I_bB, I_cC = 2∠−60°, 2∠−180°, 2∠60° A rms', h9.ex1.I.map(z => h9p(z, 4, 0)).join(' '), '2\\angle{-60^\\circ} 2\\angle{180^\\circ} 2\\angle{60^\\circ}');
+T('9.2 Ex 1: S = 1200∠60° VA → P = 600 W, Q = 1039.23 VAR (class)', `${h9f(h9.ex1.St.re, 2)} ${h9f(h9.ex1.St.im, 2)}`, '600 1039.23');
+T('9.2 Ex 1 engine: line currents equal the per-phase values with and without the neutral; I_Nn = 0', [true, false].reduce((m, nb) => { const c = h9s(h9.yy({ Vp: 200, Z: h9.ex1.Z, neutral: nb })); return Math.max(m, ...['wa', 'wb', 'wc'].map((id, k) => Cx.abs(Cx.sub(h9r(c.I(id)), h9.ex1.I[k]))), nb ? Cx.abs(c.I('wn')) : 0); }, 0), 0, 1e-9);
+T('9.2 Ex 1 engine: the total instantaneous power is 600 W at every instant (9 instants)', (() => { const c = h9s(h9.yy({ Vp: 200, Z: h9.ex1.Z, neutral: 'none' })), f = ['ZA', 'ZB', 'ZC'].map(id => CH8.pOf(c, id)); let m = 0; for (let k = 0; k < 9; k++) { const d = 7 + 41 * k; m = Math.max(m, Math.abs(f[0](d) + f[1](d) + f[2](d) - 600)); } return m; })(), 0, 1e-9);
+T('9.2 unbalanced Z_C = 50∠60°: neutral connected I_Nn = 2∠60° A; neutral open V_Nn = 50∠120° V and |V_AN|, |V_BN|, |V_CN| = 229.13, 229.13, 150 V', (() => { const ZC = CH6.polar(50, 60), a = h9s(h9.yy({ Vp: 200, Z: h9.ex1.Z, ZC, neutral: true })), b = h9s(h9.yy({ Vp: 200, Z: h9.ex1.Z, ZC, neutral: false }));
+  return `${h9p(h9r(a.I('wn')), 4, 0)} ${h9p(h9r(b.V('N')), 4, 0)} ${['ZA', 'ZB', 'ZC'].map(id => h9f(Cx.abs(h9r(b.Vab(id))), 2)).join(' ')}`; })(), '2\\angle{60^\\circ} 50\\angle{120^\\circ} 229.13 229.13 150');
+T('9.2 Ex 2 (Hayt Ex 12.3): V_p = 173.205 V, I_L = 2.8868 A, Z_p = 60∠−36.87° = 48 − j36 Ω', `${h9f(h9.ex2.Vp, 3)} ${h9f(h9.ex2.IL)} ${h9p(h9.ex2.Z, 4, 2)} ${CH6.rect(h9.ex2.Z)}`, '173.205 2.8868 60\\angle{-36.87^\\circ} 48 - j36');
+T('9.2 Ex 2 engine: the Y load of 60∠−36.87° Ω at 300 V draws 2.8868 A and 1200 W', (() => { const c = h9s(h9.yy({ Vp: h9.ex2.Vsrc, Z: h9.ex2.Z, neutral: 'none' })); return `${h9f(Cx.abs(h9r(c.I('wa'))))} ${h9f(['ZA', 'ZB', 'ZC'].reduce((s, id) => s + c.S(id).re, 0), 2)}`; })(), '2.8868 1200');
+T('9.2 2017 quiz (Hayt Ex 12.6): rms answer 2.8868 A; the class took 300 V as a peak value → 4.0825 A', `${h9f(h9.q2017.IL)} ${h9f(h9.q2017.cls.IL)}`, '2.8868 4.0825');
+T('9.3 Ex 3 (Hayt Ex 12.5): I_p = 1.6667 A, I_L = 2.8868 A, Z_p = 180∠36.87° = 144 + j108 Ω', `${h9f(h9.ex3.Ip)} ${h9f(h9.ex3.IL)} ${h9p(h9.ex3.Z, 4, 2)} ${CH6.rect(h9.ex3.Z)}`, '1.6667 2.8868 180\\angle{36.87^\\circ} 144 + j108');
+T('9.3 2017 class solution: I = 2.357 A (300 V as peak), Z = 300/2.36 = 127.12∠36.86° (mixed); taking 300 V as peak throughout gives 90∠36.87° Ω', `${h9f(h9.ex3.cls.Ip, 3)} ${h9p(h9.ex3.cls.Z, 2, 2)} ${h9p(h9.ex3.cls.Zconsistent, 2, 2)}`, '2.357 127.12\\angle{36.86^\\circ} 90\\angle{36.87^\\circ}');
+T('9.3 Ex 3 engine: I_aA = I_AB − I_CA, |I_aA|/|I_AB| = √3, I_aA − I_AB = −30° (positive) and +30° (negative sequence)', [1, -1].map(q => { const c = h9s(h9.yd({ Vp: 300 / Math.sqrt(3), seq: q, Z: h9.ex3.Z })), IAB = c.I('ZAB'), IaA = c.I('wa');
+  return `${Cx.abs(Cx.sub(IaA, Cx.sub(IAB, c.I('ZCA')))) < 1e-9} ${h9f(Cx.abs(IaA) / Cx.abs(IAB))} ${h9f(CH6.wrap(CH6.deg(IaA) - CH6.deg(IAB)), 2)}`; }).join(' | '), 'true 1.7321 -30 | true 1.7321 30');
+T('9.3 a delta of Z_Δ and a Y of Z_Δ/3 draw the same line currents (engine, three loads)', [CH6.polar(180, 36.87), Cx.c(30, -40), Cx.c(100, 0)].reduce((m, ZD) => { const d = h9s(h9.yd({ Vp: 230, Z: ZD })), y = h9s(h9.yy({ Vp: 230, Z: Cx.scale(ZD, 1 / 3), neutral: 'none' }));
+  return Math.max(m, ...['wa', 'wb', 'wc'].map(id => Cx.abs(Cx.sub(d.I(id), y.I(id))))); }, 0), 0, 1e-9);
+T('9.4 homework p. 20: I_L = 4.7847 A, Z_p = 45.98∠18.19° = 43.681 + j14.357 Ω', `${h9f(h9.hw.IL)} ${h9p(h9.hw.Z, 2, 2)} ${CH6.rect(h9.hw.Z, 3)}`, '4.7847 45.98\\angle{18.19^\\circ} 43.681 + j14.357');
+T('9.4 homework engine: |I_aA| = 4.7847 A and P = 3000 W in negative and positive sequence', [-1, 1].map(q => { const c = h9s(h9.yy({ Vp: 220, seq: q, Z: h9.hw.Z, neutral: 'none' })); return `${h9f(Cx.abs(h9r(c.I('wa'))))} ${h9f(['ZA', 'ZB', 'ZC'].reduce((s, id) => s + c.S(id).re, 0), 2)}`; }).join(' | '), '4.7847 3000 | 4.7847 3000');
+T('9.4 P = √3 V_L I_L cos θ equals the engine total for Y and delta loads (five cases)', [['Y', 380, 5000, 0.85, false], ['D', 380, 5000, 0.85, false], ['Y', 400, 12000, 0.7, true], ['D', 220, 800, 0.95, true], ['D', 300, 1200, 0.8, false]].reduce((m, [conn, VL, Pw, pf, lead]) => {
+  const r = h9.perPhase({ conn, VL, P: Pw, pf, lead }), c = h9s(conn === 'Y' ? h9.yy({ Vp: VL / Math.sqrt(3), Z: r.Z, neutral: 'none' }) : h9.yd({ Vp: VL / Math.sqrt(3), Z: r.Z })), Pe = (conn === 'Y' ? ['ZA', 'ZB', 'ZC'] : ['ZAB', 'ZBC', 'ZCA']).reduce((s, id) => s + c.S(id).re, 0);
+  return Math.max(m, Math.abs(Pe - Pw) / Pw, Math.abs(Math.sqrt(3) * VL * r.IL * pf - Pw) / Pw, Math.abs(Cx.abs(h9r(c.I('wa'))) - r.IL) / r.IL); }, 0), 0, 1e-9);
+T('9 Hayt Practice 12.4: Z_p = 50 Ω, V_an = 230.94∠−30° V, I_aA = 4.6188∠−30° A, P = 3200 W', (() => { const Y = Cx.add(Cx.add(Cx.c(0, 0.01), Cx.c(0.01)), Cx.inv(Cx.c(50, 50))), Z = Cx.inv(Y), Van = CH6.polar(400 / Math.sqrt(3), -30), I = Cx.div(Van, Z);
+  return `${CH6.rect(Z)} ${h9p(Van)} ${h9p(I)} ${h9f(3 * Cx.mul(Van, Cx.conj(I)).re, 2)}`; })(), '50 230.9401\\angle{-30^\\circ} 4.6188\\angle{-30^\\circ} 3200');
+T('9 Hayt Practice 12.5 / 12.7 / 12.8: 97.53 A, 83.02 kW, PF 0.983 · 1.1576 A, 2.0051 A, 693.16 W · 75.2541∠−12.46° A', (() => { const Z5 = Cx.div(Cx.mul(Cx.c(7, -2), Cx.c(4, 2)), Cx.c(11)), I5 = 500 / Math.sqrt(3) / Cx.abs(Z5);
+  const w = 400, Zp7 = Cx.add(Cx.c(0, w * 0.2), Cx.div(Cx.mul(Cx.c(200), Cx.c(0, -500)), Cx.c(200, -500))), Ip7 = 200 / Cx.abs(Zp7);
+  const Vab = CH6.polar(440, 30), S1 = CH6.polar(40000, Math.acos(0.8) * 180 / Math.PI), S2 = Cx.c(24000, -24000 * Math.tan(Math.acos(0.9))), IAB = Cx.add(Cx.conj(Cx.div(Cx.scale(S1, 1 / 3), Vab)), Cx.conj(Cx.div(Cx.scale(S2, 1 / 3), Vab))), IaA = Cx.mul(IAB, CH6.polar(Math.sqrt(3), -30));
+  return `${h9f(I5, 2)} ${h9f(3 * I5 * I5 * Z5.re / 1000, 2)} ${h9f(Z5.re / Cx.abs(Z5), 3)} · ${h9f(Ip7)} ${h9f(Math.sqrt(3) * Ip7)} ${h9f(3 * Ip7 * Ip7 * Zp7.re, 2)} · ${h9p(IaA)}`; })(), '97.53 83.02 0.983 · 1.1576 2.0051 693.16 · 75.2541\\angle{-12.46^\\circ}');
+
+/* --- formatting regressions --- */
+T('fmtDec(40, 0)', C.fmtDec(40, 0), '40'); T('fmtDec(2.10, 2)', C.fmtDec(2.1, 2), '2.1'); T('eng(0.0024 A)', CK.eng(0.0024, 'A'), '2.4 mA'); T('eng(3 Ω)', CK.eng(3, 'Ω'), '3 Ω');
+
+document.querySelector('#tbl tbody').innerHTML = rows.join('');
+document.getElementById('sum').innerHTML = bad ? `<span class="pill bad">FAIL</span> ${bad} / ${n} tests failed` : `<span class="pill good">ALL PASS</span> ${n} / ${n} tests`;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="9.1 — Three-Phase Sources">9.1 — แหล่งจ่ายสามเฟส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8.js?v=102"></script><script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">แหล่งจ่ายสามเฟส <span class="en">Three-phase sources — phase sequence, double subscripts and line voltages</span></h1>
+<h1 data-l="en">Three-phase sources <span class="en">Phase sequence, double subscripts and line voltages</span></h1>
+
+<div class="equation-box">
+  <div class="label"><span data-l="th">แหล่งจ่ายสามเฟสที่สมดุล (balanced three-phase source) มีแรงดันเฟสขนาดเท่ากันและห่างกัน 120° · <b>ทุกค่าในบทนี้เป็นค่ายังผล (root mean square, rms)</b> ตามธรรมเนียมของระบบไฟฟ้ากำลัง · สไลด์บทที่ 9 หน้า 2–10 · Hayt §12.1, §12.3</span><span data-l="en">A balanced three-phase source has phase voltages of equal size, 120° apart · <b>every value in this chapter is an effective (root mean square, rms) value</b>, as is customary in power systems · chapter 9 slides, pp. 2–10 · Hayt §12.1, §12.3</span></div>
+  $$ \mathbf{V}_{an} = V_p\angle 0^\circ \quad \mathbf{V}_{bn} = V_p\angle{-120^\circ} \quad \mathbf{V}_{cn} = V_p\angle{-240^\circ} \qquad \mathbf{V}_{an} + \mathbf{V}_{bn} + \mathbf{V}_{cn} = 0 \qquad \mathbf{V}_{ab} = \mathbf{V}_{an} - \mathbf{V}_{bn} = \sqrt3\,V_p\angle 30^\circ $$
+</div>
+
+<p class="sub" data-l="th">ไฟฟ้าที่การไฟฟ้าผลิตและส่งมาเป็นระบบ<b>สามเฟส</b>: เครื่องกำเนิดไฟฟ้ามีขดลวดสามชุดวางห่างกัน 120° รอบแม่เหล็กที่หมุน จึงได้แรงดันสามตัวขนาดเท่ากันแต่ห่างกันหนึ่งในสามของรอบ สไลด์หน้า 3 บอกว่าระบบสามเฟสได้เปรียบทั้งด้านเครื่องจักรกลที่หมุนและด้านการส่งกำลัง (หน้า 9.2 จะแสดงว่ากำลังรวมขณะใด ๆ คงที่) ตลอดบทนี้ใช้<b>ค่ายังผล</b>ตามที่สไลด์หน้า 7 นิยาม \(V_p\) และ Hayt เขียนไว้ในเชิงอรรถของบทที่ 12 ส่วนชื่อจุดใช้ตามที่ผู้สอนจดไว้: <b>ฝั่งแหล่งจ่ายใช้ตัวพิมพ์เล็ก a, b, c, n และฝั่งโหลดใช้ตัวพิมพ์ใหญ่ A, B, C, N</b></p>
+<p class="sub" data-l="en">The power a utility generates and delivers is <b>three-phase</b>: a generator has three coils placed 120° apart around a turning magnet, so it produces three voltages of equal size, one third of a cycle apart. Slide p. 3 notes the advantages in rotating machinery and in transmission (page 9.2 shows that the total instantaneous power is constant). This chapter uses <b>effective values</b> throughout, as slide p. 7 defines \(V_p\) and as Hayt states in a footnote to chapter 12. Point names follow the instructor's note: <b>lower-case a, b, c, n at the source and upper-case A, B, C, N at the load</b>.</p>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แหล่งจ่ายสามเฟสสมดุล</b>: แรงดันเฟส (phase voltage, แรงดันระหว่างสายกับนิวทรัล) สามตัวขนาดเท่ากัน \(V_p\) ห่างกัน 120° จึงรวมกันได้ศูนย์ \(\mathbf{V}_{an} + \mathbf{V}_{bn} + \mathbf{V}_{cn} = 0\) ทุกขณะ</li>
+  <li><b>ลำดับเฟสบวก</b> (positive sequence หรือ abc): \(\mathbf{V}_{bn} = V_p\angle{-120^\circ}\), \(\mathbf{V}_{cn} = V_p\angle{-240^\circ}\) · <b>ลำดับเฟสลบ</b> (negative หรือ cba): \(V_p\angle 120^\circ\), \(V_p\angle 240^\circ\) สลับสายคู่ใดคู่หนึ่งก็กลับลำดับได้</li>
+  <li><b>สัญกรณ์ตัวห้อยคู่</b> (double-subscript notation): \(\mathbf{V}_{ab}\) คือแรงดันของจุด a เทียบกับจุด b (ขั้ว + ที่ a) จึงเขียนกฎแรงดันของเคียร์ชอฟฟ์ (Kirchhoff's voltage law, KVL) ได้โดยไม่ต้องดูรูป: \(\mathbf{V}_{ab} = \mathbf{V}_{an} + \mathbf{V}_{nb} = \mathbf{V}_{an} - \mathbf{V}_{bn}\)</li>
+  <li><b>แรงดันสาย</b> (line voltage, ระหว่างสายสองเส้น) \(V_L = \sqrt3\,V_p\) · ลำดับบวก \(\mathbf{V}_{ab}\) <b>นำหน้า</b> \(\mathbf{V}_{an}\) อยู่ 30° · ลำดับลบ<b>ตามหลัง</b> 30°</li>
+  <li>ทุกค่าเป็นค่ายังผล: ไฟบ้าน 220–230 V คือ \(V_p\) และไฟสามเฟส 380–400 V คือ \(V_L \approx \sqrt3 \times 220\) ค่ายอดของ 220 V คือ \(220\sqrt2 = 311.1\) V</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Balanced three-phase source</b>: three phase voltages (line to neutral) of equal size \(V_p\), 120° apart, so they add to zero, \(\mathbf{V}_{an} + \mathbf{V}_{bn} + \mathbf{V}_{cn} = 0\), at every instant.</li>
+  <li><b>Positive sequence</b> (abc): \(\mathbf{V}_{bn} = V_p\angle{-120^\circ}\), \(\mathbf{V}_{cn} = V_p\angle{-240^\circ}\) · <b>negative sequence</b> (cba): \(V_p\angle 120^\circ\), \(V_p\angle 240^\circ\). Swapping any two lines reverses the sequence.</li>
+  <li><b>Double-subscript notation</b>: \(\mathbf{V}_{ab}\) is the voltage of point a with respect to point b (+ at a), so Kirchhoff's voltage law (KVL) can be written without looking at the figure: \(\mathbf{V}_{ab} = \mathbf{V}_{an} + \mathbf{V}_{nb} = \mathbf{V}_{an} - \mathbf{V}_{bn}\).</li>
+  <li><b>Line voltage</b> (between two lines) \(V_L = \sqrt3\,V_p\) · in positive sequence \(\mathbf{V}_{ab}\) <b>leads</b> \(\mathbf{V}_{an}\) by 30° · in negative sequence it <b>lags</b> by 30°.</li>
+  <li>Everything is rms: household 220–230 V is \(V_p\), three-phase 380–400 V is \(V_L \approx \sqrt3 \times 220\); the peak of 220 V is \(220\sqrt2 = 311.1\) V.</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<h2 data-l="th">ส่วนที่ 1 · เครื่องกำเนิดไฟฟ้าสามเฟสและลำดับเฟส (สไลด์หน้า 3, 6–8)</h2><h2 data-l="en">Part 1 · The three-phase generator and phase sequence (slides pp. 3, 6–8)</h2>
+<p class="sub" data-l="th">แม่เหล็กที่หมุนผ่านขดลวด a, b, c ซึ่งวางห่างกัน 120° ขดลวดจะสว่างเมื่อขั้วเหนือหันเข้าหา (แรงดันของมันใกล้ค่ายอด) ภาพขวาคือเฟเซอร์ทั้งสามที่หมุนไปพร้อมกัน เงาบนแกนจินตภาพคือค่าขณะนั้นในกราฟด้านล่าง (อ้างอิงฟังก์ชันไซน์ ค่ายอด \(V_p\sqrt2\)) <b>ลำดับเฟสบวก</b>: ยอดของ a มาก่อน แล้ว b แล้ว c ตามที่สไลด์หน้า 3 วาดไว้ กด "ลำดับเฟสลบ" แม่เหล็กหมุนกลับ ยอดจึงมาเรียง a, c, b กด "ผลรวม" เพื่อดูว่าเฟเซอร์สามตัวต่อหัวต่อหางแล้วปิดพอดี และ \(v_{an} + v_{bn} + v_{cn} = 0\) ทุกขณะ</p>
+<p class="sub" data-l="en">A magnet turns past the coils a, b, c, placed 120° apart; a coil lights up when the north pole faces it (its voltage is near its peak). On the right are the three phasors turning together; their shadows on the imaginary axis are the instantaneous values in the graph below (sine reference, peak \(V_p\sqrt2\)). <b>Positive sequence</b>: a peaks first, then b, then c, as slide p. 3 draws it. Press "negative sequence": the magnet turns the other way and the peaks come a, c, b. Press "sum" to see the three phasors close head to tail and \(v_{an} + v_{bn} + v_{cn} = 0\) at every instant.</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv1"></canvas></div>
+  <aside class="card panel" id="panel1"></aside>
+</div>
+
+<h2 data-l="th">ส่วนที่ 2 · สัญกรณ์ตัวห้อยคู่และแรงดันสาย (สไลด์หน้า 4–5, 9–10)</h2><h2 data-l="en">Part 2 · Double subscripts and line voltages (slides pp. 4–5, 9–10)</h2>
+<p class="sub" data-l="th">วงจรคือแหล่งจ่ายต่อแบบวาย (Y) ของสไลด์หน้า 4 (Hayt รูป 12.3) มีขั้วสาย A, B, C และขั้วนิวทรัล N โวลต์มิเตอร์ตัวบนวัดระหว่างสาย a กับ b (แรงดันสาย) ตัวล่างวัดระหว่างสาย b กับนิวทรัล (แรงดันเฟส) อ่านได้ \(V_L = \sqrt3\,V_p\) ภาพขวาสร้าง \(\mathbf{V}_{ab} = \mathbf{V}_{an} + \mathbf{V}_{nb}\) แบบหัวต่อหาง (เส้นประคือ \(\mathbf{V}_{nb} = -\mathbf{V}_{bn}\)) ตามสไลด์หน้า 5 ปุ่มด้านขวามีโจทย์ที่ผู้สอนทำในห้องสองข้อ: ลำดับเฟสลบที่ \(\mathbf{V}_{an} = 120\angle 0^\circ\) V และลำดับบวกที่ \(\mathbf{V}_{an} = 10\angle 30^\circ\) V</p>
+<p class="sub" data-l="en">The circuit is the Y-connected source of slide p. 4 (Hayt Fig. 12.3) with line terminals A, B, C and the neutral terminal N. The upper voltmeter reads between lines a and b (a line voltage), the lower one between line b and the neutral (a phase voltage): \(V_L = \sqrt3\,V_p\). The picture on the right builds \(\mathbf{V}_{ab} = \mathbf{V}_{an} + \mathbf{V}_{nb}\) head to tail (dashed: \(\mathbf{V}_{nb} = -\mathbf{V}_{bn}\)), as on slide p. 5. The buttons include the instructor's two in-class problems: negative sequence with \(\mathbf{V}_{an} = 120\angle 0^\circ\) V and positive sequence with \(\mathbf{V}_{an} = 10\angle 30^\circ\) V.</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv2"></canvas></div>
+  <aside class="card panel" id="panel2"></aside>
+</div>
+<section class="card eqcard"><div id="work2"></div></section>
+
+<h2 data-l="th">ส่วนที่ 3 · ฝึกเพิ่ม</h2><h2 data-l="en">Part 3 · More practice</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง มุมเป็นองศา · ทุกค่าเป็นค่ายังผล</p><p class="lead" data-l="en">Give at least 3 decimal places, angles in degrees · all values are rms.</p>
+  <div id="quiz"></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ลำดับเฟส</h3>
+    <ol><li>ส่วนที่ 1 ดูกราฟ: ลำดับบวก ยอดของสีแดง (a) มาก่อน ตามด้วยสีเหลือง (b) แล้วสีฟ้า (c)</li>
+    <li>กด "ลำดับเฟสลบ": แม่เหล็กหมุนกลับ และยอดมาเรียง a, c, b แทน</li>
+    <li>ในมอเตอร์สามเฟส <b>การสลับสายคู่ใดคู่หนึ่งทำให้มอเตอร์หมุนกลับ</b> (เรื่องนี้จะกลับมาในบทที่ 12)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ผลรวมเป็นศูนย์</h3>
+    <ol><li>กด "ผลรวม": เฟเซอร์สามตัวต่อหัวต่อหางเป็นสามเหลี่ยมด้านเท่าที่ปิดพอดี</li>
+    <li>ในกราฟ ผลรวม \(v_{an} + v_{bn} + v_{cn}\) เป็นเส้นศูนย์ตลอด แม้แต่ละตัวจะสูงถึง 311 V</li>
+    <li>คำถาม: ถ้าเฟส c อ่อนลงเหลือ 90 % ผลรวมยังเป็นศูนย์หรือไม่ (นี่คือระบบไม่สมดุล)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แรงดันสาย</h3>
+    <ol><li>ส่วนที่ 2 กด "สไลด์หน้า 5": มิเตอร์บนอ่าน 173.2 V มิเตอร์ล่างอ่าน 100 V อัตราส่วน \(\sqrt3\) พอดี</li>
+    <li>สลับเป็นลำดับลบ: ขนาดเท่าเดิม แต่ \(\mathbf{V}_{ab}\) ย้ายจาก +30° ไปเป็น −30°</li>
+    <li>เลือก \(\mathbf{V}_{ca}\): ต้องใช้ \(\mathbf{V}_{cn} - \mathbf{V}_{an}\) ไม่ใช่ \(\mathbf{V}_{an} - \mathbf{V}_{cn}\) ตัวห้อยตัวแรกคือขั้วบวก</li></ol>
+    <div class="book">สไลด์บทที่ 9 หน้า 2–10 · Hayt §12.1, §12.3 (รูป 12.1–12.4, 12.11–12.13, Practice 12.1)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — phase sequence</h3>
+    <ol><li>In Part 1 watch the graph: in positive sequence the red peak (a) comes first, then yellow (b), then blue (c).</li>
+    <li>Press "negative sequence": the magnet turns the other way and the peaks come a, c, b instead.</li>
+    <li>In a three-phase motor <b>swapping any two lines makes the motor turn the other way</b> (this comes back in chapter 12).</li></ol></div>
+  <div class="card"><h3>Try this 2 — the sum is zero</h3>
+    <ol><li>Press "sum": the three phasors, head to tail, form an equilateral triangle that closes exactly.</li>
+    <li>In the graph, \(v_{an} + v_{bn} + v_{cn}\) stays on the zero line, although each voltage reaches 311 V.</li>
+    <li>Question: if phase c weakens to 90 %, is the sum still zero? (That is an unbalanced system.)</li></ol></div>
+  <div class="card"><h3>Try this 3 — line voltages</h3>
+    <ol><li>In Part 2 press "slide p. 5": the upper meter reads 173.2 V and the lower one 100 V, a ratio of exactly \(\sqrt3\).</li>
+    <li>Switch to negative sequence: the size stays, but \(\mathbf{V}_{ab}\) moves from +30° to −30°.</li>
+    <li>Choose \(\mathbf{V}_{ca}\): it is \(\mathbf{V}_{cn} - \mathbf{V}_{an}\), not \(\mathbf{V}_{an} - \mathbf{V}_{cn}\); the first subscript is the + terminal.</li></ol>
+    <div class="book">Chapter 9 slides, pp. 2–10 · Hayt §12.1, §12.3 (Figs. 12.1–12.4, 12.11–12.13, Practice 12.1)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const R = String.raw; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, C9 = CH9.COL;
+const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+const al = rows => tx(R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`, true);
+const RT2 = Math.SQRT2, RT3 = Math.sqrt(3), D2R = Math.PI / 180;
+
+/* =================================================================== Part 1: generator */
+const S1 = { Vp: 220, th: 0, seq: 1, sum: false, unbal: false };
+const clk1 = CH6.clock({ T: 4 }), cv1 = document.getElementById('cv1'); let L1 = null;
+function resize1() { const W = Math.max(320, Math.floor(cv1.parentElement.clientWidth - 12));
+  if (W >= 640) { const h = Math.round(Math.max(300, W * 0.46)), hw = Math.round(Math.max(210, W * 0.27)); L1 = { W, H: h + 6 + hw, g: { x: 0, y: 0, w: W / 2 - 3, h }, p: { x: W / 2 + 3, y: 0, w: W / 2 - 3, h }, wv: { x: 0, y: h + 6, w: W, h: hw } }; }
+  else { const hg = Math.round(W * 0.82), hp = Math.round(W * 0.84), hw = Math.round(Math.max(210, W * 0.66)); L1 = { W, H: hg + hp + hw + 12, g: { x: 0, y: 0, w: W, h: hg }, p: { x: 0, y: hg + 6, w: W, h: hp }, wv: { x: 0, y: hg + hp + 12, w: W, h: hw } }; }
+  L1.ctx = CK.setup(cv1, L1.W, L1.H); }
+const ph1 = () => { const V = CH9C.phases(S1.Vp, S1.th, S1.seq); if (S1.unbal) V[2] = Cx.scale(V[2], 0.9); return V; };
+function frame1(dt) { if (!L1) return; clk1.tick(dt); const ctx = L1.ctx, ph = clk1.ph; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L1.W, L1.H);
+  const V = ph1(), Vm = V.map(v => Cx.scale(v, RT2)), th = S1.th * D2R, wt = ph + th, alpha = S1.seq > 0 ? wt : Math.PI - wt;
+  const e = Vm.map(v => CH8.at(v, ph) / (S1.Vp * RT2));
+  CH9.generator(ctx, L1.g, { alpha, e, dir: S1.seq, title: MC.t('เครื่องกำเนิดไฟฟ้า: ขดลวด a, b, c ห่างกัน 120°', 'generator: coils a, b, c, 120° apart'),
+    values: Vm.map(v => `${sg(CH8.at(v, ph), 0)} V`) });
+  const vecs = CH9.set(Vm, ['V_{an}', 'V_{bn}', 'V_{cn}']);
+  if (S1.sum) { let f = cx(0); Vm.forEach((z, k) => { vecs.push({ z, from: f, color: 'rgba(232,236,247,.45)', w: 1.8, dash: [5, 4], proj: false }); f = Cx.add(f, z); }); }
+  CH6.plane(ctx, L1.p, vecs, { rot: ph, proj: true, title: MC.t('เฟเซอร์ (ค่ายอด) หมุนด้วย ωt', 'phasors (peak) turning with ωt'), max: { v: S1.Vp * RT2 * 1.02 } });
+  const sigs = Vm.map((v, k) => ({ mag: Cx.abs(v), ang: CH6.deg(v), color: C9[CH9.K[k]], label: ['v_{an}', 'v_{bn}', 'v_{cn}'][k], unit: 'V', g: 'v', w: 2.6, peak: k === 0 }));
+  if (S1.sum) { const s = Vm.reduce((a, z) => Cx.add(a, z), cx(0)); sigs.push({ mag: Cx.abs(s), ang: CH6.deg(s), color: '#e8ecf7', label: 'Σv', unit: 'V', g: 'v', w: 2.2, dash: [6, 4] }); }
+  CH6.waves(ctx, L1.wv, sigs, { now: ph, title: L1.W < 640 ? '' : MC.t('แรงดันเฟส (ค่ายอด 311 V ที่ 220 V rms)', 'phase voltages (peak 311 V at 220 V rms)'), max: { v: S1.Vp * RT2 * 1.02 }, values: true });
+  CK.badge(ctx, clk1.run ? MC.t(`▶ เล่นช้า: 1 รอบใช้ ${clk1.T} วินาที`, `▶ slow motion: one cycle takes ${clk1.T} s`) : MC.t('❚❚ หยุดชั่วคราว', '❚❚ paused'), clk1.run ? 'ok' : 'wait', L1.g.x + 8, L1.g.y + L1.g.h - 34); }
+function info1() { const V = ph1(), s = V.reduce((a, z) => Cx.add(a, z), cx(0));
+  m1.innerHTML = ui.kv([['V_an', CH6.polTxt(V[0], 'V', 2, 1)], ['V_bn', CH6.polTxt(V[1], 'V', 2, 1)], ['V_cn', CH6.polTxt(V[2], 'V', 2, 1)], [t('ค่ายอด', 'peak'), `${fd(S1.Vp * RT2, 1)} V`],
+    [t('ลำดับ', 'sequence'), S1.seq > 0 ? t('บวก (abc)', 'positive (abc)') : t('ลบ (cba)', 'negative (cba)')], ['V_an + V_bn + V_cn', Cx.abs(s) < 1e-9 ? '0' : CH6.polTxt(s, 'V', 2, 1)]]); }
+const panel1 = document.getElementById('panel1');
+ui.h2(panel1, t('ลำดับเฟส', 'Phase sequence'));
+ui.radio(panel1, [{ id: 'q1_p', label: t('ลำดับบวก (abc)', 'positive (abc)'), on: true }, { id: 'q1_n', label: t('ลำดับลบ (cba)', 'negative (cba)') }], id => { S1.seq = id === 'q1_p' ? 1 : -1; info1(); });
+ui.h2(panel1, t('แรงดันเฟส (ค่ายังผล)', 'Phase voltage (rms)'));
+ui.slider(panel1, { id: 's1V', label: 'V<sub>p</sub>', min: 50, max: 400, step: 10, value: S1.Vp, fmt: v => `${v} V`, oninput: v => { S1.Vp = v; info1(); } });
+ui.slider(panel1, { id: 's1th', label: t('มุมของ V<sub>an</sub>', 'angle of V<sub>an</sub>'), min: -180, max: 180, step: 5, value: S1.th, fmt: v => `${sg(v, 0)}°`, oninput: v => { S1.th = v; info1(); } });
+ui.buttons(panel1, [{ label: t('ผลรวม', 'Sum'), onclick: el => { S1.sum = !S1.sum; el.classList.toggle('on', S1.sum); } }, { label: t('เฟส c เหลือ 90 %', 'phase c at 90 %'), onclick: el => { S1.unbal = !S1.unbal; el.classList.toggle('on', S1.unbal); info1(); } }]);
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, clk1);
+const m1 = ui.metrics(panel1);
+
+/* =================================================================== Part 2: double subscripts and line voltages */
+const S2 = { Vp: 100, th: 0, seq: 1, line: 0 };
+const NAMES = [['a', 'b'], ['b', 'c'], ['c', 'a']];
+const B2 = new CH8.Board('cv2', { T: 4, pad: 1.2, cktFrac: 0.55, topAsp: 0.46, view: { acPeak: false, acPower: false },
+  side: (ctx, b, bd) => { const V = CH9C.phases(S2.Vp, S2.th, S2.seq), k = S2.line, [x, y] = NAMES[k], i = k, j = (k + 1) % 3, VL = Cx.sub(V[i], V[j]);
+    const vecs = [...CH9.set(V, ['V_{an}', 'V_{bn}', 'V_{cn}'], { w: 2.2 }), { z: Cx.neg(V[j]), from: V[i], color: C9[CH9.K[j]], dash: [6, 4], w: 2.4, label: `V_{n${y}}`, lmid: -1 },
+      { z: VL, color: C9.L, label: `V_{${x}${y}}`, w: 3.8 }];
+    CH6.plane(ctx, b, vecs, { title: MC.t(`V_${x}${y} = V_${x}n + V_n${y} (ค่ายังผล)`, `V_${x}${y} = V_${x}n + V_n${y} (rms)`), max: { v: Cx.abs(VL) * 1.05 },
+      arcs: [{ a: i, b: 4, color: '#7ee787', r: 0.26, text: `${S2.seq > 0 ? '+' : '−'}30°` }] }); },
+  waves: [{ title: bd => bd.narrow ? '' : MC.t('แรงดันเฟสและแรงดันสาย (ค่ายอด)', 'phase and line voltages (peak)'), sigs: () => { const V = CH9C.phases(S2.Vp, S2.th, S2.seq), k = S2.line, i = k, j = (k + 1) % 3, [x, y] = NAMES[k], VL = Cx.sub(V[i], V[j]);
+    return [{ mag: Cx.abs(V[i]) * RT2, ang: CH6.deg(V[i]), color: C9[CH9.K[i]], label: `v_{${x}n}`, unit: 'V', g: 'v', w: 2.2 }, { mag: Cx.abs(V[j]) * RT2, ang: CH6.deg(V[j]), color: C9[CH9.K[j]], label: `v_{${y}n}`, unit: 'V', g: 'v', w: 2.2 },
+      { mag: Cx.abs(VL) * RT2, ang: CH6.deg(VL), color: C9.L, label: `v_{${x}${y}}`, unit: 'V', g: 'v', w: 3.2, peak: true }]; } }],
+  after: (v, bd) => { CH9.letters(v, { a: [-0.35, 0.05], b: [0.35, 0.05], c: [-0.35, 0.1], n: [-0.4, 0] });
+    CH9.letters(v, { tA: [0.35, 0], tB: [0.35, 0], tN: [0.35, 0], tC: [0.35, 0] }, { text: { tA: 'A', tB: 'B', tN: 'N', tC: 'C' }, color: '#e8ecf7' });
+    const V = CH9C.phases(S2.Vp, S2.th, S2.seq), lab = k => bd.narrow ? '' : ` = ${fd(Cx.abs(V[k]), 1)}∠${sg(CH6.deg(V[k]), 0)}°`;
+    CH9.partTag(v, 'Va', `V_{an}${lab(0)}`, { dx: -0.45, dy: 0.55, align: 'right', color: C9.a }); CH9.partTag(v, 'Vb', `V_{bn}${lab(1)}`, { dx: 0.5, dy: 0.5, align: 'left', color: C9.b });
+    CH9.partTag(v, 'Vc', `V_{cn}${lab(2)}`, { dx: 0.5, dy: 0, align: 'left', color: C9.c }); } });
+function build2() { B2.set(CH9C.src({ Vp: S2.Vp, th: S2.th, seq: S2.seq }));
+  const V = CH9C.phases(S2.Vp, S2.th, S2.seq), L = CH9C.lines(V);
+  m2.innerHTML = ui.kv([['V_an', CH6.polTxt(V[0], 'V', 3, 1)], ['V_bn', CH6.polTxt(V[1], 'V', 3, 1)], ['V_cn', CH6.polTxt(V[2], 'V', 3, 1)], ['V_ab', CH6.polTxt(L[0], 'V', 4, 1)], ['V_bc', CH6.polTxt(L[1], 'V', 4, 1)], ['V_ca', CH6.polTxt(L[2], 'V', 4, 1)], ['V_L / V_p', fd(Cx.abs(L[0]) / S2.Vp, 4)]]);
+  const rows = [0, 1, 2].map(k => { const [x, y] = NAMES[k], i = k, j = (k + 1) % 3;
+    return R`\mathbf{V}_{${x}${y}} &= \mathbf{V}_{${x}n} - \mathbf{V}_{${y}n} = (${P(V[i], 4, 0)}) - (${P(V[j], 4, 0)}) = \boxed{${P(L[k], 4, 2)}\ \text{V}}`; });
+  const exact = Math.abs(S2.Vp - 100) + Math.abs(S2.th) < 1e-9 && S2.seq > 0, neg = Math.abs(S2.Vp - 120) + Math.abs(S2.th) < 1e-9 && S2.seq < 0, ten = Math.abs(S2.Vp - 10) + Math.abs(S2.th - 30) < 1e-9 && S2.seq > 0;
+  document.getElementById('work2').innerHTML = `<h3>${MC.t('แรงดันสายจากค่าปัจจุบัน', 'Line voltages from the current settings')}</h3>` +
+    al([R`\mathbf{V}_{an} &= ${P(V[0], 4, 0)}, \quad \mathbf{V}_{bn} = ${P(V[1], 4, 0)}, \quad \mathbf{V}_{cn} = ${P(V[2], 4, 0)}\ \text{V}\quad (\text{${S2.seq > 0 ? MC.t('ลำดับบวก', 'positive sequence') : MC.t('ลำดับลบ', 'negative sequence')}})`, ...rows]) +
+    `<div class="answer">${MC.t(`กฎทั่วไป: ลำดับบวก \\(\\mathbf{V}_{ab} = \\sqrt3\\,V_p\\angle(\\theta_a + 30^\\circ)\\) ลำดับลบ \\(\\mathbf{V}_{ab} = \\sqrt3\\,V_p\\angle(\\theta_a - 30^\\circ)\\) ${exact ? '· ตรงกับสไลด์หน้า 5: \\(173.2\\angle 30^\\circ\\) V' : neg ? '· ตรงกับที่ผู้สอนทำในห้อง: \\(207.84\\angle{-30^\\circ}\\), \\(207.84\\angle 90^\\circ\\), \\(207.84\\angle{-150^\\circ}\\) V' : ten ? '· ตรงกับที่ผู้สอนทำในห้อง: \\(17.32\\angle 60^\\circ\\), \\(17.32\\angle{-60^\\circ}\\), \\(17.32\\angle 180^\\circ\\) V' : ''}`,
+      `General rule: positive sequence \\(\\mathbf{V}_{ab} = \\sqrt3\\,V_p\\angle(\\theta_a + 30^\\circ)\\), negative sequence \\(\\mathbf{V}_{ab} = \\sqrt3\\,V_p\\angle(\\theta_a - 30^\\circ)\\) ${exact ? '· This matches slide p. 5: \\(173.2\\angle 30^\\circ\\) V.' : neg ? '· This matches the instructor\'s in-class answer: \\(207.84\\angle{-30^\\circ}\\), \\(207.84\\angle 90^\\circ\\), \\(207.84\\angle{-150^\\circ}\\) V.' : ten ? '· This matches the instructor\'s in-class answer: \\(17.32\\angle 60^\\circ\\), \\(17.32\\angle{-60^\\circ}\\), \\(17.32\\angle 180^\\circ\\) V.' : ''}`)}</div>` +
+    `<div class="warnbox">${MC.t('ในห้อง ผู้สอนขีดฆ่าสูตร \\(\\sqrt3V_p\\angle 30^\\circ,\\ \\sqrt3V_p\\angle{-90^\\circ},\\ \\sqrt3V_p\\angle{-210^\\circ}\\) ของสไลด์หน้า 9 แล้วเขียน \\(\\mathbf{V}_{an} - \\mathbf{V}_{bn}\\) แทน เพราะสูตรนั้นใช้ได้เฉพาะลำดับบวกที่ \\(\\mathbf{V}_{an}\\) อยู่ที่ 0° <b>คิดจากผลต่างของแรงดันเฟสเสมอแล้วจะไม่ผิด</b>', 'In class, the instructor crossed out the formulas \\(\\sqrt3V_p\\angle 30^\\circ,\\ \\sqrt3V_p\\angle{-90^\\circ},\\ \\sqrt3V_p\\angle{-210^\\circ}\\) of slide p. 9 and wrote \\(\\mathbf{V}_{an} - \\mathbf{V}_{bn}\\) instead, because those formulas hold only for positive sequence with \\(\\mathbf{V}_{an}\\) at 0°. <b>Always work from the difference of phase voltages and you cannot go wrong.</b>')}</div>`;
+  MC.renderMath(document.getElementById('work2')); }
+const panel2 = document.getElementById('panel2');
+ui.h2(panel2, t('ตัวอย่าง', 'Examples'));
+const s2 = {}, set2 = o => { Object.assign(S2, o); s2.Vp.set(S2.Vp); s2.th.set(S2.th); rq2.set(S2.seq > 0 ? 'q2_p' : 'q2_n'); build2(); };
+ui.buttons(panel2, [{ label: t('สไลด์หน้า 5: 100∠0°', 'slide p. 5: 100∠0°'), onclick: () => set2({ Vp: 100, th: 0, seq: 1 }) }, { label: t('ในห้อง: ลำดับลบ 120∠0°', 'class: negative, 120∠0°'), onclick: () => set2({ Vp: 120, th: 0, seq: -1 }) },
+  { label: t('ในห้อง: ลำดับบวก 10∠30°', 'class: positive, 10∠30°'), onclick: () => set2({ Vp: 10, th: 30, seq: 1 }) }, { label: t('ไฟบ้าน 220 V', 'mains 220 V'), onclick: () => set2({ Vp: 220, th: 0, seq: 1 }) }]);
+ui.h2(panel2, t('ลำดับเฟส', 'Phase sequence'));
+const rq2 = ui.radio(panel2, [{ id: 'q2_p', label: t('บวก', 'positive'), on: true }, { id: 'q2_n', label: t('ลบ', 'negative') }], id => { S2.seq = id === 'q2_p' ? 1 : -1; build2(); });
+ui.h2(panel2, t('แรงดันสายที่จะสร้าง', 'Line voltage to build'));
+ui.radio(panel2, [{ id: 'l2_0', label: 'V_ab', on: true }, { id: 'l2_1', label: 'V_bc' }, { id: 'l2_2', label: 'V_ca' }], id => { S2.line = +id.slice(3); });
+ui.h2(panel2, t('แรงดันเฟส', 'Phase voltage'));
+s2.Vp = ui.slider(panel2, { id: 's2V', label: 'V<sub>p</sub> (rms)', min: 10, max: 400, step: 10, value: S2.Vp, fmt: v => `${v} V`, oninput: v => { S2.Vp = v; build2(); } });
+s2.th = ui.slider(panel2, { id: 's2th', label: t('มุมของ V<sub>an</sub>', 'angle of V<sub>an</sub>'), min: -180, max: 180, step: 5, value: S2.th, fmt: v => `${sg(v, 0)}°`, oninput: v => { S2.th = v; build2(); } });
+ui.h2(panel2, t('การเล่น', 'Playback')); CH6.playBtns(panel2, B2.clk);
+const m2 = ui.metrics(panel2);
+
+/* =================================================================== quiz */
+function quiz() {
+  const Vad = Cx.add(cx(100, 0), CH6.polar(40, 80)), Vbc = Cx.sub(Cx.neg(cx(100, 0)), CH6.polar(70, 200)), Vcd = Cx.add(CH6.polar(70, 200), Vad);
+  CH6.quiz('quiz', [
+    { q: MC.t('1) สไลด์หน้า 5: \\(\\mathbf{V}_{an} = 100\\angle 0^\\circ\\) V ลำดับบวก จงหา \\(\\mathbf{V}_{ab}\\)', '1) Slide p. 5: \\(\\mathbf{V}_{an} = 100\\angle 0^\\circ\\) V, positive sequence. Find \\(\\mathbf{V}_{ab}\\).'), cz: Cx.sub(cx(100), CH6.polar(100, -120)),
+      fields: [{ key: 'm', lab: '=', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }], work: tx(R`\mathbf{V}_{ab} = 100\angle 0^\circ - 100\angle{-120^\circ} = 100 - (-50 - j86.6) = 173.2\angle 30^\circ\ \text{V}`, true) },
+    { q: MC.t('2) ในห้อง: ลำดับลบ \\(\\mathbf{V}_{an} = 120\\angle 0^\\circ\\) V จงหา \\(\\mathbf{V}_{bc}\\)', '2) In class: negative sequence, \\(\\mathbf{V}_{an} = 120\\angle 0^\\circ\\) V. Find \\(\\mathbf{V}_{bc}\\).'), cz: Cx.sub(CH6.polar(120, 120), CH6.polar(120, -120)),
+      fields: [{ key: 'm', lab: '=', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }], work: tx(R`\mathbf{V}_{bc} = \mathbf{V}_{bn} - \mathbf{V}_{cn} = 120\angle 120^\circ - 120\angle{-120^\circ} = 207.85\angle 90^\circ\ \text{V}`, true) },
+    { q: MC.t('3) ในห้อง: ลำดับบวก \\(\\mathbf{V}_{an} = 10\\angle 30^\\circ\\) V จงหา \\(\\mathbf{V}_{ca}\\)', '3) In class: positive sequence, \\(\\mathbf{V}_{an} = 10\\angle 30^\\circ\\) V. Find \\(\\mathbf{V}_{ca}\\).'), cz: Cx.sub(CH6.polar(10, 150), CH6.polar(10, 30)),
+      fields: [{ key: 'm', lab: '=', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }], work: tx(R`\mathbf{V}_{cn} = 10\angle 150^\circ \;\Rightarrow\; \mathbf{V}_{ca} = 10\angle 150^\circ - 10\angle 30^\circ = 17.32\angle 180^\circ\ \text{V}`, true) },
+    { q: MC.t('4) ระบบลำดับบวกมี \\(\\mathbf{V}_{bc} = 400\\angle 0^\\circ\\) V จงหา \\(\\mathbf{V}_{an}\\)', '4) A positive-sequence system has \\(\\mathbf{V}_{bc} = 400\\angle 0^\\circ\\) V. Find \\(\\mathbf{V}_{an}\\).'), cz: CH6.polar(400 / RT3, 90),
+      fields: [{ key: 'm', lab: '=', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }],
+      work: tx(R`\mathbf{V}_{bc} = \sqrt3\,V_p\angle(\theta_a - 90^\circ) \;\Rightarrow\; V_p = \tfrac{400}{\sqrt3} = 230.94\ \text{V},\ \ \theta_a = 90^\circ \;\Rightarrow\; \mathbf{V}_{an} = 230.94\angle 90^\circ\ \text{V}`, true) },
+    { q: MC.t('5) ไฟสามเฟสมีแรงดันสาย 380 V จงหาแรงดันเฟส และค่ายอดของแรงดันเฟส', '5) A three-phase supply has a line voltage of 380 V. Find the phase voltage and the peak of the phase voltage.'),
+      fields: [{ key: 'x', lab: 'V<sub>p</sub> =', ans: 380 / RT3, unit: 'V' }, { key: 'y', lab: MC.t('ค่ายอด =', 'peak ='), ans: 380 / RT3 * RT2, unit: 'V' }], work: tx(R`V_p = \frac{380}{\sqrt3} = 219.39\ \text{V (rms)}, \qquad V_{\text{peak}} = 219.39\sqrt2 = 310.27\ \text{V}`, true) },
+    { q: MC.t('6) Hayt Practice 12.1: \\(\\mathbf{V}_{ab} = 100\\angle 0^\\circ\\), \\(\\mathbf{V}_{bd} = 40\\angle 80^\\circ\\), \\(\\mathbf{V}_{ca} = 70\\angle 200^\\circ\\) V จงหา \\(\\mathbf{V}_{ad}\\) และ \\(\\mathbf{V}_{cd}\\) (ตอบขนาดและมุม)', '6) Hayt Practice 12.1: \\(\\mathbf{V}_{ab} = 100\\angle 0^\\circ\\), \\(\\mathbf{V}_{bd} = 40\\angle 80^\\circ\\), \\(\\mathbf{V}_{ca} = 70\\angle 200^\\circ\\) V. Find \\(\\mathbf{V}_{ad}\\) and \\(\\mathbf{V}_{cd}\\) (magnitude and angle).'),
+      fields: [{ key: 'x', lab: '|V<sub>ad</sub>| =', ans: Cx.abs(Vad) }, { key: 'y', lab: '∠', ans: CH6.deg(Vad), ang: true, unit: '°' }, { key: 'z', lab: '|V<sub>cd</sub>| =', ans: Cx.abs(Vcd) }, { key: 'w', lab: '∠', ans: CH6.deg(Vcd), ang: true, unit: '°' }],
+      work: tx(R`\begin{aligned} \mathbf{V}_{ad} &= \mathbf{V}_{ab} + \mathbf{V}_{bd} = 100 + 40\angle 80^\circ = ${P(Vad, 4, 2)}\ \text{V} \\ \mathbf{V}_{cd} &= \mathbf{V}_{ca} + \mathbf{V}_{ad} = 70\angle 200^\circ + ${P(Vad, 4, 2)} = ${P(Vcd, 4, 2)}\ \text{V} \\ \mathbf{V}_{bc} &= -\mathbf{V}_{ab} - \mathbf{V}_{ca} = ${P(Vbc, 4, 2)}\ \text{V}\ \ (\text{Hayt: } 114.0\angle 20.2^\circ,\ 41.8\angle 145.0^\circ,\ 44.0\angle 20.6^\circ) \end{aligned}`, true) } ], { wide: true });
+}
+
+document.addEventListener('mc:ready', () => {
+  resize1(); info1(); B2.resize(); build2(); quiz();
+  window.addEventListener('resize', () => { resize1(); B2.resize(); });
+  CK.loop(dt => { frame1(dt); B2.frame(dt); });
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="2.2 — Voltage, Polarity and Sources">2.2 — แรงดัน ขั้วของแรงดัน และแหล่งจ่าย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">แรงดัน ขั้วของแรงดัน และแหล่งจ่าย <span class="en">Voltage, polarity and sources — voltage is always measured between two points</span></h1>
+<h1 data-l="en">Voltage, polarity and sources <span class="en">Voltage is always measured between two points</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch2/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: voltage across a two-terminal element measures the work to move charge through it; 1 volt = 1 J/C">
+    <figcaption data-l="th">สไลด์บทที่ 2 หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 2 slides, p. 9 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">แรงดัน (voltage) คือ <b>ผลต่างศักย์ระหว่างสองขั้ว</b> ของอุปกรณ์ เป็นงานที่ใช้เคลื่อนประจุหนึ่งคูลอมบ์ผ่านอุปกรณ์ (1 V = 1 J/C) แรงดันจึงไม่ได้อยู่ที่จุดเดียว ต้องบอกเสมอว่า <b>วัดอะไรเทียบกับอะไร</b> หน้านี้มี <b>เครื่องมือ 4 ชิ้น (A–D)</b> และ <b>3 โจทย์ เรียงทีละข้อ</b> พร้อมภาพสไลด์และเฉลยที่เปิดทีละขั้น</p>
+    <p class="sub" data-l="en">Voltage is <b>the potential difference between the two terminals</b> of an element: the work to move one coulomb through it (1 V = 1 J/C). So a voltage never lives at one point; you must always say <b>what is measured against what</b>. This page has <b>4 tools (A–D)</b> and <b>3 problems, one after another</b>, with slide pictures and solutions opened step by step.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ v_{AB} = v_A - v_B,\qquad v_{BA} = -\,v_{AB},\qquad v_{AC} = v_{AB} + v_{BC} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>แรงดันวัดระหว่างสองจุดเสมอ</b>: \(v_{AB} = v_A - v_B\) และ \(v_{BA} = -v_{AB}\)</li><li><b>เครื่องหมาย + และ − บอกการอ้างอิง</b> ถ้าค่าติดลบ ขั้วที่มีเครื่องหมาย − คือขั้วที่สูงกว่าจริง</li><li><b>แหล่งจ่ายแรงดันรักษาแรงดัน</b> (กระแสขึ้นกับวงจร) · <b>แหล่งจ่ายกระแสรักษากระแส</b> (แรงดันขึ้นกับวงจร)</li><li><b>แหล่งจ่ายไม่อิสระ</b> (รูปข้าวหลามตัด) มีค่าตามแรงดันหรือกระแสที่จุดอื่นในวงจร</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>Voltage is always measured between two points</b>: \(v_{AB} = v_A - v_B\) and \(v_{BA} = -v_{AB}\).</li><li><b>The + and − marks set the reference</b>; if the value is negative, the terminal marked − is actually higher.</li><li><b>A voltage source holds its voltage</b> (the current depends on the circuit) · <b>a current source holds its current</b> (the voltage depends on the circuit).</li><li><b>A dependent source</b> (diamond) takes its value from a voltage or current elsewhere in the circuit.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>วัดแรงดันด้วยโพรบ</a><a href="#ex1"><b>1</b>สี่กรณีของขั้ว</a><a href="#ex2"><b>2</b>Ex 3</a><a href="#tB"><b>B–D</b>แหล่งจ่ายอิสระ</a><a href="#ex3"><b>3</b>แหล่งจ่ายไม่อิสระ</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Probing voltage</a><a href="#ex1"><b>1</b>Four polarity cases</a><a href="#ex2"><b>2</b>Ex 3</a><a href="#tB"><b>B–D</b>Independent sources</a><a href="#ex3"><b>3</b>Dependent source</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">วัดแรงดันด้วยมิเตอร์: แรงดันคือผลต่างของศักย์</h2><h2 data-l="en">Measuring voltage: a difference in potential</h2>
+    <div class="src" data-l="th">สีของลวดบอกศักย์ (แดง = สูง น้ำเงิน = ต่ำ) แถบข้างวงจรเรียงโนดตามความสูงของศักย์ ระยะห่างระหว่างสองโนดคือค่าที่มิเตอร์อ่าน</div><div class="src" data-l="en">Wire colour shows potential (red = high, blue = low); the bar stacks the nodes by potential, and the gap between two nodes is what the meter reads</div></div></div>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cvA"></canvas><div id="ctlA" style="padding:0 8px"></div></div>
+    <div class="card solve"><div class="status" id="stA"></div>
+      <h3 data-l="th">ทายก่อนวัด</h3><h3 data-l="en">Predict, then measure</h3>
+      <div class="simnote" id="qzA"></div>
+      <div class="matrow"><input class="mi" id="qzIn" style="width:6em" inputmode="decimal" aria-label="answer"><span>V</span><button type="button" class="btn on" id="qzChk"></button><button type="button" class="btn" id="qzNew"></button></div><div class="hint" id="qzMsg"></div>
+      <p class="lead" data-l="th" style="margin-top:10px">วัด \(v_{AB}\) และ \(v_{BC}\) แล้วบวกกัน <b>ต้องได้ \(v_{AC}\) พอดี</b> เหมือนบันไดสองขั้นรวมกันเป็นความสูงทั้งหมด (กฎแรงดันของเคียร์ชอฟฟ์ในบทที่ 3) วางโพรบทั้งสองบนลวดเส้นเดียวกัน มิเตอร์อ่าน 0 V</p>
+      <p class="lead" data-l="en" style="margin-top:10px">Measure \(v_{AB}\) and \(v_{BC}\) and add them: <b>you get exactly \(v_{AC}\)</b>, like two steps making the whole height (Kirchhoff's voltage law, chapter 3). Put both probes on the same wire and the meter reads 0 V.</p></div>
+  </div>
+</section>
+
+<div class="group-head"><h2 data-l="th">ขั้วของแรงดัน (สไลด์หน้า 10)</h2><h2 data-l="en">Voltage polarity (slide p. 10)</h2></div>
+<figure class="slide q wide"><img src="slides/ch2/p10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10: four cases. (a) + at A, v = −5 V and (b) + at B, v = 5 V: terminal B is 5 V positive with respect to A. (c) + at A, v = 5 V and (d) + at B, v = −5 V: terminal A is 5 V positive with respect to B">
+  <figcaption data-l="th">สไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">สี่กรณีในสไลด์หน้า 10: ขั้วไหนสูงกว่า</h2><h2 data-l="en">The four cases of slide p. 10: which terminal is higher?</h2>
+    <div class="src" data-l="th">เปิดทีละขั้น: ขั้นหนึ่งถามกรณีใหม่ ขั้นถัดไปเฉลย ลองตอบในใจก่อนกด</div><div class="src" data-l="en">Step by step: one step asks a new case, the next answers it; answer in your head before you press</div></div></div>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv1"></canvas></div>
+    <div class="card solve"><div id="st1"></div></div>
+  </div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 3: รู้ \(v_1 = 17\) V จงหา \(v_2\)</h2><h2 data-l="en">Ex 3: given \(v_1 = 17\) V, find \(v_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 11 · Hayt Practice 2.3</div><div class="src" data-l="en">Chapter 2 slides, p. 11 · Hayt Practice 2.3</div></div></div>
+  <figure class="slide q"><img src="slides/ch2/p11q.webp" width="972" height="559" loading="lazy" decoding="async" alt="Slide 11, Ex 3: for the element, v1 = 17 V. Determine v2. v1 has + at A and − at B; v2 has − at A and + at B">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 11 · tap to enlarge</figcaption></figure>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv2"></canvas></div>
+    <div class="card solve"><div id="ask2"></div><div id="st2"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 11)</span><span data-l="en">See the teacher's in-class working (slide p. 11)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch2/L12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 11: v1 = VAB = 17 V, v2 = −v1 = −17 V = VBA"><figcaption data-l="th">สไลด์หน้า 11 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 11, in class</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="tB"><h2 data-l="th">แหล่งจ่ายอิสระ: อะไรคงที่ อะไรเปลี่ยน (Hayt §2.3)</h2><h2 data-l="en">Independent sources: what stays fixed, what changes (Hayt §2.3)</h2></div>
+<p class="lead" data-l="th">สไลด์หน้า 2 บอกว่าบทนี้ใช้แหล่งจ่ายแรงดัน แหล่งจ่ายกระแส และแบตเตอรี่ สามเครื่องมือข้างล่างแยกกันทีละชนิด เลื่อนความต้านทานโหลด \(R_L\) แล้วดูจุดทำงานบนกราฟ ความผิดพลาดที่พบบ่อยคือคิดว่าแรงดันคร่อมแหล่งจ่ายกระแสเป็นศูนย์</p>
+<p class="lead" data-l="en">Slide p. 2 lists voltage sources, current sources and batteries. The three tools below take one kind each. Slide the load resistance \(R_L\) and watch the operating point on the graph. A common mistake is to think the voltage across a current source is zero.</p>
+
+<section class="prob" id="tBv">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">แหล่งจ่ายแรงดันอุดมคติ 12 V</h2><h2 data-l="en">An ideal 12 V voltage source</h2>
+    <div class="src" data-l="th">แรงดันคงที่ 12 V ไม่ว่าโหลดจะเป็นเท่าไร กระแสขึ้นกับโหลด: \(I = 12/R_L\)</div><div class="src" data-l="en">The voltage stays 12 V whatever the load; the current depends on the load: \(I = 12/R_L\)</div></div></div>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve" id="ctlB"><p class="lead" data-l="th">ลด \(R_L\) ลงเรื่อย ๆ: แรงดันยัง 12 V แต่กระแสพุ่ง กด "ลัดวงจร" กระแสต้องเป็นอนันต์ซึ่งเป็นไปไม่ได้ <b>แหล่งจ่ายอุดมคติจึงไม่มีอยู่จริง</b></p><p class="lead" data-l="en">Lower \(R_L\): the voltage stays 12 V but the current shoots up. Press "Short": the current would have to be infinite, which is impossible. <b>So an ideal source does not really exist.</b></p></div></div>
+</section>
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">แบตเตอรี่จริง 12 V มีความต้านทานภายใน r = 1 Ω</h2><h2 data-l="en">A real 12 V battery with internal resistance r = 1 Ω</h2>
+    <div class="src" data-l="th">แรงดันที่ขั้วตกลงเมื่อจ่ายกระแสมาก: \(V = 12 - rI\)</div><div class="src" data-l="en">The terminal voltage sags when it delivers a large current: \(V = 12 - rI\)</div></div></div>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cvC"></canvas></div><div class="card solve" id="ctlC"><p class="lead" data-l="th">เมื่อ \(R_L\) เล็ก แรงดันที่ขั้วตก เพราะแรงดันส่วนหนึ่งตกคร่อมความต้านทานภายใน (เหมือนไฟหรี่เมื่อเครื่องปรับอากาศเริ่มทำงาน) ลัดวงจรได้กระแสสูงสุด 12 A</p><p class="lead" data-l="en">With a small \(R_L\) the terminal voltage sags, because part of the voltage drops across the internal resistance (like lights dimming when an air conditioner starts). A short gives the largest current, 12 A.</p></div></div>
+</section>
+<section class="prob" id="tD">
+  <div class="prob-head"><span class="prob-no">D</span><div><h2 data-l="th">แหล่งจ่ายกระแสอุดมคติ 2 A</h2><h2 data-l="en">An ideal 2 A current source</h2>
+    <div class="src" data-l="th">กระแสคงที่ 2 A ไม่ว่าโหลดจะเป็นเท่าไร แรงดันขึ้นกับโหลด: \(V = 2R_L\)</div><div class="src" data-l="en">The current stays 2 A whatever the load; the voltage depends on the load: \(V = 2R_L\)</div></div></div>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cvD"></canvas></div><div class="card solve" id="ctlD"><p class="lead" data-l="th">เพิ่ม \(R_L\): กระแสคงที่ 2 A <b>แต่แรงดันคร่อมแหล่งจ่ายเพิ่มขึ้นตาม \(V = 2R_L\)</b> กด "เปิดวงจร" แรงดันต้องเป็นอนันต์</p><p class="lead" data-l="en">Raise \(R_L\): the current stays 2 A <b>but the voltage across the source grows as \(V = 2R_L\)</b>. Press "Open": the voltage would have to be infinite.</p></div></div>
+</section>
+
+<div class="group-head"><h2 data-l="th">แหล่งจ่ายไม่อิสระ (ควบคุมได้) สี่แบบ</h2><h2 data-l="en">The four dependent (controlled) sources</h2></div>
+<p class="lead" data-l="th">สัญลักษณ์รูปข้าวหลามตัดคือแหล่งจ่ายที่ค่าของมันขึ้นกับแรงดันหรือกระแสที่จุดอื่นในวงจร ใช้จำลองทรานซิสเตอร์และออปแอมป์ (operational amplifier, op-amp) จะได้ใช้ในการบ้านข้อ 1(c) และแบบฝึกหัดข้อ 5 ของหน้า 2.4</p>
+<p class="lead" data-l="en">A diamond symbol is a source whose value depends on a voltage or current elsewhere in the circuit, used to model transistors and operational amplifiers (op-amps). You will need it in homework 1(c) and exercise 5 on page 2.4.</p>
+<div id="depTable"></div>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">แหล่งจ่ายแรงดันควบคุมด้วยแรงดัน: หา \(v_L\)</h2><h2 data-l="en">A voltage-controlled voltage source: find \(v_L\)</h2>
+    <div class="src" data-l="th">Hayt Example 2.2 · ตัวอย่างประกอบ (ไม่อยู่ในสไลด์) · \(v_2 = 3\) V</div><div class="src" data-l="en">Hayt Example 2.2 · an extra example (not in the slides) · \(v_2 = 3\) V</div></div></div>
+  <p class="lead" data-l="th">แรงดัน \(v_2\) ในวงซ้ายควบคุมแหล่งจ่ายแรงดัน \(5v_2\) ในวงขวา <b>ทั้งที่สองวงไม่มีสายต่อถึงกันเลย</b> (เส้นประม่วงคือการควบคุม ไม่ใช่สายไฟ)</p>
+  <p class="lead" data-l="en">The voltage \(v_2\) in the left loop controls the \(5v_2\) voltage source in the right loop, <b>although the two loops share no wire at all</b> (the dashed purple line is the control, not a wire).</p>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cv3"></canvas><div class="ctl" id="ctl3"></div></div>
+    <div class="card solve"><div id="ask3"></div><div id="st3"></div></div>
+  </div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — แรงดันคือผลต่าง</h3>
+    <ol><li>เครื่องมือ A: วางโพรบแดงที่ A ดำที่ C แล้วกด "สลับโพรบ" <b>ค่าเปลี่ยนเครื่องหมายเป็น \(v_{CA} = -v_{AC}\) ขนาดเท่าเดิม</b></li>
+    <li>วัด \(v_{AB}\) และ \(v_{BC}\) แล้วบวกกัน ต้องได้ \(v_{AC}\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — แหล่งจ่ายอุดมคติไม่มีจริง</h3>
+    <ol><li>เครื่องมือ B: ลัดวงจรแล้วกระแสต้องเป็นอนันต์ · เครื่องมือ D: เปิดวงจรแล้วแรงดันต้องเป็นอนันต์</li>
+    <li>เครื่องมือ C: แบตเตอรี่จริงจ่ายกระแสได้สูงสุด \(E/r = 12\) A</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แหล่งจ่ายที่ถูกควบคุม</h3>
+    <ol><li>ข้อ 3: เปลี่ยน \(R_L\): \(v_L\) ไม่เปลี่ยนเพราะแหล่งจ่ายแรงดันรักษาแรงดันไว้ เปลี่ยน \(V_s\): \(v_L\) เปลี่ยนตามทันที</li>
+    <li>คำถาม: หน่วยของ \(g\) ในแหล่งจ่าย \(g\,v_x\) และของ \(r\) ใน \(r\,i_x\) คืออะไร ดูตารางด้านบน</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 2 หน้า 2, 9–11 (ภาพอยู่ในหน้านี้แล้ว) · Hayt §2.2–2.3, Example 2.2</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — voltage is a difference</h3>
+    <ol><li>Tool A: put the red probe on A and the black on C, then press "Swap probes": <b>the sign flips to \(v_{CA} = -v_{AC}\), same size</b>.</li>
+    <li>Measure \(v_{AB}\) and \(v_{BC}\) and add them: you get \(v_{AC}\).</li></ol></div>
+  <div class="card"><h3>Try this 2 — ideal sources do not exist</h3>
+    <ol><li>Tool B: a short would need infinite current · tool D: an open circuit would need infinite voltage.</li>
+    <li>Tool C: a real battery can give at most \(E/r = 12\) A.</li></ol></div>
+  <div class="card"><h3>Try this 3 — a controlled source</h3>
+    <ol><li>Problem 3: change \(R_L\): \(v_L\) does not change, because the voltage source holds it. Change \(V_s\): \(v_L\) follows at once.</li>
+    <li>Question: what are the units of \(g\) in a \(g\,v_x\) source and of \(r\) in \(r\,i_x\)? See the table above.</li></ol>
+    <div class="book">Source: chapter 2 slides, pp. 2, 9–11 (the pictures are on this page) · Hayt §2.2–2.3, Example 2.2</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), t = MC.t, ui = MC.ui, fd = (x, n = 2) => ALG.fmtDec(x, n);
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* ---------- A: probes ---------- */
+const pr = new CH2.Probe(document.getElementById('cvA'), document.getElementById('ctlA'));
+const stA = document.getElementById('stA'); let quiz = null;
+pr.onFrame = () => { const S = pr.S, r = pr.V(S.red) - pr.V(S.black);
+  ui.setStatus(stA, `V${pr.lab(S.red)}${pr.lab(S.black)}`, `= V${pr.lab(S.red)} − V${pr.lab(S.black)} = ${fd(pr.V(S.red))} − (${fd(pr.V(S.black))}) = <b>${fd(r)} V</b>`, r >= 0 ? 'good' : 'bad'); };
+const newQuiz = () => { const ns = ['A', 'B', 'C', 'G']; let a, b; do { a = ns[Math.floor(Math.random() * 4)]; b = ns[Math.floor(Math.random() * 4)]; } while (a === b); quiz = [a, b];
+  const el = document.getElementById('qzA'); el.innerHTML = t(`จากสีและแถบศักย์ ทาย \\(v_{${a}${b}}\\) แล้วค่อยวางโพรบตรวจ`, `From the colours and the potential bar, predict \\(v_{${a}${b}}\\), then probe to check`); MC.renderMath(el);
+  document.getElementById('qzIn').value = ''; document.getElementById('qzMsg').textContent = ''; };
+document.getElementById('qzNew').textContent = t('ข้อใหม่', 'New'); document.getElementById('qzChk').textContent = t('ตรวจ', 'Check');
+document.getElementById('qzNew').addEventListener('click', newQuiz);
+document.getElementById('qzChk').addEventListener('click', () => { const [a, b] = quiz, ans = pr.V(a) - pr.V(b), v = parseFloat(document.getElementById('qzIn').value.replace('−', '-')), ok = Math.abs(v - ans) < 0.051;
+  document.getElementById('qzMsg').innerHTML = ok ? `<span class="pill good">✓</span> v${a}${b} = ${fd(ans)} V` : `<span class="pill bad">✗</span> ${t('ยังไม่ใช่ ลองวางโพรบดู', 'Not yet; try the probes')}`; if (ok) { pr.S.red = a; pr.S.black = b; } });
+newQuiz();
+
+/* ---------- 1: the four cases ---------- */
+const CASES = [{ k: 'a', plus: 'A', v: -5 }, { k: 'b', plus: 'B', v: 5 }, { k: 'c', plus: 'A', v: 5 }, { k: 'd', plus: 'B', v: -5 }];
+const vab = c => c.plus === 'A' ? c.v : -c.v, high = c => vab(c) > 0 ? 'A' : 'B';
+const blob1 = new CH2.Blob(document.getElementById('cv1'));
+const state1 = (ci, answered) => { const c = CASES[ci]; blob1.set({ marks: [{ plus: c.plus, text: `v = ${c.v < 0 ? '−' : ''}${Math.abs(c.v)} V` }], meters: [{ red: 'A', black: 'B', value: answered ? vab(c) : null, caption: 'VAB' }],
+  high: answered ? high(c) : null, note: answered ? t(`(${c.k}) ขั้ว ${high(c)} สูงกว่า 5 V`, `(${c.k}) terminal ${high(c)} is 5 V higher`) : t(`(${c.k}) ขั้วไหนสูงกว่า?`, `(${c.k}) which terminal is higher?`) }); };
+const qStep = ci => { const c = CASES[ci]; return { why: t(`<b>กรณี (${c.k})</b>: เครื่องหมาย + อยู่ที่ขั้ว ${c.plus} และ \\(v = ${c.v}\\) V · ขั้วไหนสูงกว่า? (คิดก่อนกดขั้นถัดไป)`, `<b>Case (${c.k})</b>: the + mark is at terminal ${c.plus} and \\(v = ${c.v}\\) V · which terminal is higher? (think before the next step)`) }; };
+const aStep = ci => { const c = CASES[ci], h = high(c);
+  return { why: t(`<b>เฉลย (${c.k})</b>: ${c.plus === 'A' ? '+ ที่ A จึง \\(v = v_{AB}\\)' : '+ ที่ B จึง \\(v = v_{BA}\\)'} ${c.v < 0 ? 'ค่าติดลบ แปลว่าขั้วที่มีเครื่องหมาย − สูงกว่าจริง' : 'ค่าเป็นบวก ขั้ว + สูงกว่าจริง'} → <b>ขั้ว ${h} สูงกว่า 5 V</b>`,
+      `<b>Answer (${c.k})</b>: ${c.plus === 'A' ? '+ at A, so \\(v = v_{AB}\\)' : '+ at B, so \\(v = v_{BA}\\)'}; ${c.v < 0 ? 'a negative value means the terminal marked − is really higher' : 'a positive value means the + terminal is really higher'} → <b>terminal ${h} is 5 V higher</b>`),
+    tex: c.plus === 'A' ? `v_{AB} = v_A - v_B = ${c.v}\\ \\text{V}` : `v_{BA} = v_B - v_A = ${c.v}\\ \\text{V} \\;\\Rightarrow\\; v_{AB} = ${-c.v}\\ \\text{V}` }; };
+const steps1 = [aStep(0), qStep(1), aStep(1), qStep(2), aStep(2), qStep(3), aStep(3),
+  { why: t('<b>สรุป</b>: (a) กับ (b) บอกแรงดันเดียวกัน (B สูงกว่า 5 V) และ (c) กับ (d) บอกแรงดันเดียวกัน (A สูงกว่า 5 V) <b>กลับทั้งเครื่องหมาย + − และเครื่องหมายของค่า ได้แรงดันเดิม</b>', '<b>Summary</b>: (a) and (b) describe the same voltage (B is 5 V higher), and so do (c) and (d) (A is 5 V higher). <b>Flipping both the + − marks and the sign of the value gives the same voltage.</b>'),
+    tex: `v_{BA} = -\\,v_{AB}` }];
+const view1 = [[0, false], [0, true], [1, false], [1, true], [2, false], [2, true], [3, false], [3, true], [3, true]];
+LS.stepper(document.getElementById('st1'), { steps: steps1, hint: t('ดูภาพ: กรณี (a) มี + ที่ A และ \\(v = -5\\) V <b>ขั้วไหนสูงกว่า?</b> คิดก่อนแล้วกด ▶', 'Look at the picture: case (a) has + at A and \\(v = -5\\) V. <b>Which terminal is higher?</b> Think first, then press ▶'),
+  answer: t('(a) และ (b): <b>B สูงกว่า A 5 V</b> · (c) และ (d): <b>A สูงกว่า B 5 V</b> (ตรงกับสไลด์หน้า 10)', '(a) and (b): <b>B is 5 V above A</b> · (c) and (d): <b>A is 5 V above B</b> (as on slide p. 10)'),
+  onStep: k => { const [ci, ans] = view1[k]; state1(ci, ans); } });
+
+/* ---------- 2: Ex 3 ---------- */
+const blob2 = new CH2.Blob(document.getElementById('cv2'));
+const set2 = k => blob2.set({ marks: [{ plus: 'A', text: 'v₁', col: '#ff7eb6' }, { plus: 'B', text: 'v₂', col: '#5ad1ff' }], meters: [{ red: 'A', black: 'B', value: 17, caption: 'v₁ = VAB', col: '#ff7eb6' }, { red: 'B', black: 'A', value: k >= 3 ? -17 : null, caption: 'v₂ = VBA', col: '#5ad1ff' }],
+  high: k >= 3 ? 'A' : null, note: k >= 3 ? t('A สูงกว่า B 17 V', 'A is 17 V above B') : '' });
+LS.ask(document.getElementById('ask2'), { fields: [{ label: 'v₂ (V) =', ok: x => Math.abs(x + 17) < 1e-6 }], check: v => Math.abs(v[0] - 17) < 1e-6 ? t('ขนาดถูก แต่ดูว่า + ของ \\(v_2\\) อยู่ขั้วไหน', 'Right size, but check which terminal carries the + of \\(v_2\\)') : '' });
+LS.stepper(document.getElementById('st2'), {
+  steps: [{ why: t('<b>อ่าน \\(v_1\\)</b>: + ของ \\(v_1\\) อยู่ที่ A และ − อยู่ที่ B จึงเป็นแรงดันของ A เทียบ B (มิเตอร์ตัวที่ 1: โพรบแดงที่ A)', '<b>Read \\(v_1\\)</b>: its + is at A and its − at B, so it is A measured against B (meter 1: red probe on A)'), tex: `v_1 = v_{AB} = 17\\ \\text{V}` },
+    { why: t('<b>อ่าน \\(v_2\\)</b>: + ของ \\(v_2\\) อยู่ที่ B และ − อยู่ที่ A จึงเป็นแรงดันของ B เทียบ A (มิเตอร์ตัวที่ 2: โพรบแดงที่ B)', '<b>Read \\(v_2\\)</b>: its + is at B and its − at A, so it is B measured against A (meter 2: red probe on B)'), tex: `v_2 = v_{BA}` },
+    { why: t('<b>สลับขั้วการวัด เครื่องหมายกลับ</b>: \\(v_{BA} = -v_{AB}\\)', '<b>Swapping the terminals flips the sign</b>: \\(v_{BA} = -v_{AB}\\)'), tex: `v_2 = v_{BA} = -\\,v_{AB} = -v_1 = \\boxed{-17\\ \\text{V}}` }],
+  answer: t('<b>\\(v_2 = -17\\) V</b> (ตรงกับเฉลยในห้อง) · ขนาดเท่า \\(v_1\\) แต่ขั้วอ้างอิงกลับกัน', '<b>\\(v_2 = -17\\) V</b> (as worked in class) · the same size as \\(v_1\\), with the reference reversed'),
+  onStep: k => set2(k) });
+
+/* ---------- B, C, D: sources ---------- */
+new CH2.SourceLoad(document.getElementById('cvB'), 'V', document.getElementById('ctlB'));
+new CH2.SourceLoad(document.getElementById('cvC'), 'B', document.getElementById('ctlC'));
+new CH2.SourceLoad(document.getElementById('cvD'), 'I', document.getElementById('ctlD'));
+
+/* ---------- dependent-source table ---------- */
+{ const ink = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+  const dia = arrowUp => `<svg viewBox="0 0 70 70" width="60" height="60" xmlns="http://www.w3.org/2000/svg"><line x1="35" y1="0" x2="35" y2="14" stroke="${ink}" stroke-width="2.5"/><line x1="35" y1="56" x2="35" y2="70" stroke="${ink}" stroke-width="2.5"/>
+    <polygon points="35,14 56,35 35,56 14,35" fill="none" stroke="${ink}" stroke-width="2.5"/>${arrowUp ? `<line x1="35" y1="46" x2="35" y2="27" stroke="${ink}" stroke-width="2.5"/><polygon points="35,22 30,30 40,30" fill="${ink}"/>` : `<text x="35" y="31" text-anchor="middle" font-size="14" fill="${ink}" font-family="IBM Plex Mono">+</text><text x="35" y="50" text-anchor="middle" font-size="16" fill="${ink}" font-family="IBM Plex Mono">−</text>`}</svg>`;
+  const rows = [[dia(true), t('แหล่งจ่ายกระแสควบคุมด้วยกระแส (current-controlled current source, CCCS)', 'current-controlled current source (CCCS)'), 'K\\,i_x', t('ไม่มีหน่วย', 'dimensionless')],
+    [dia(true), t('แหล่งจ่ายกระแสควบคุมด้วยแรงดัน (voltage-controlled current source, VCCS)', 'voltage-controlled current source (VCCS)'), 'g\\,v_x', 'A/V = S'],
+    [dia(false), t('แหล่งจ่ายแรงดันควบคุมด้วยแรงดัน (voltage-controlled voltage source, VCVS)', 'voltage-controlled voltage source (VCVS)'), 'K\\,v_x', t('ไม่มีหน่วย', 'dimensionless')],
+    [dia(false), t('แหล่งจ่ายแรงดันควบคุมด้วยกระแส (current-controlled voltage source, CCVS)', 'current-controlled voltage source (CCVS)'), 'r\\,i_x', 'V/A = Ω']];
+  document.getElementById('depTable').innerHTML = `<div style="overflow-x:auto;position:relative"><table class="tbl"><tr><th></th><th>${t('ชนิด', 'type')}</th><th>${t('ค่า', 'value')}</th><th>${t('หน่วยของตัวคูณ', 'unit of the gain')}</th></tr>` +
+    rows.map(r => `<tr><td style="width:66px">${r[0]}</td><td>${r[1]}</td><td>${tx(r[2])}</td><td>${r[3]}</td></tr>`).join('') + '</table></div>'; }
+
+/* ---------- 3: Hayt Example 2.2 ---------- */
+const dep = new CH2.Dep(document.getElementById('cv3'));
+ui.slider(document.getElementById('ctl3'), { id: 'sVs', label: 'V_s', min: -12, max: 12, step: 1, value: 6, fmt: v => `${v} V`, oninput: v => { dep.set('Vs', v); } });
+ui.slider(document.getElementById('ctl3'), { id: 'sRL3', label: 'R_L', min: 20, max: 500, step: 10, value: 100, fmt: v => `${v} Ω`, oninput: v => { dep.set('RL', v); } });
+LS.ask(document.getElementById('ask3'), { fields: [{ label: 'v_L (V) =', ok: x => Math.abs(x - 15) < 1e-6 }], check: v => Math.abs(v[0] - 3) < 1e-6 ? t('3 V คือ \\(v_2\\) ตัวควบคุม ไม่ใช่ \\(v_L\\)', '3 V is the controlling \\(v_2\\), not \\(v_L\\)') : '' });
+LS.stepper(document.getElementById('st3'), {
+  steps: [{ why: t('<b>อ่านสัญลักษณ์</b>: รูปข้าวหลามตัดที่มีเครื่องหมาย + − คือ<b>แหล่งจ่ายแรงดัน</b> ค่าของมันคือ \\(5v_2\\) ขึ้นกับแรงดัน \\(v_2\\) ในวงซ้าย จึงเป็นแหล่งจ่ายแรงดันควบคุมด้วยแรงดัน (VCVS)', '<b>Read the symbol</b>: a diamond with + − marks is a <b>voltage source</b>; its value \\(5v_2\\) depends on the voltage \\(v_2\\) in the left loop, so it is a voltage-controlled voltage source (VCVS)') },
+    { why: t('<b>แรงดันควบคุม</b>: โจทย์ให้ \\(v_2 = 3\\) V (ในภาพ \\(V_s = 6\\) V แบ่งครึ่งบนตัวต้านทาน 1 kΩ สองตัว)', '<b>The controlling voltage</b>: the problem gives \\(v_2 = 3\\) V (in the picture \\(V_s = 6\\) V splits in half across two 1 kΩ resistors)'), tex: `v_2 = 3\\ \\text{V}` },
+    { why: t('<b>แหล่งจ่ายแรงดันกำหนดแรงดันคร่อมตัวเอง</b> และ \\(R_L\\) ต่อขนานกับมันโดยตรง', '<b>A voltage source fixes the voltage across itself</b>, and \\(R_L\\) is connected straight across it'), tex: `v_L = 5\\,v_2 = 5(3) = \\boxed{15\\ \\text{V}}` }],
+  answer: t('<b>\\(v_L = 15\\) V</b> ตรงกับ Hayt Example 2.2 · \\(v_L\\) ไม่ขึ้นกับ \\(R_L\\) (ลองเลื่อนดู) แต่ขึ้นกับ \\(V_s\\)', '<b>\\(v_L = 15\\) V</b>, as in Hayt Example 2.2 · \\(v_L\\) does not depend on \\(R_L\\) (try it) but does depend on \\(V_s\\)'),
+  onStep: (k, n) => dep.setKnown(k === n) });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="6.2 — Effective Value and Phasors">6.2 — ค่ายังผลและเฟเซอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch6ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ค่ายังผลและเฟเซอร์ <span class="en">Effective (rms) value and phasors — what "220 V" means, and a sinusoid frozen into one complex number</span></h1>
+<h1 data-l="en">Effective (rms) value and phasors <span class="en">What "220 V" means, and a sinusoid frozen into one complex number</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch6/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8: effective value, root mean square (RMS): Veff is the square root of (1/T) times the integral of v² over one period; for v = Vm sin ωt the integral of sin² gives Veff = Vm/√2">
+    <figcaption data-l="th">สไลด์บทที่ 6 หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 6 slides, p. 8 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">ไฟบ้าน "220 V" ไม่ได้แปลว่าแรงดันเท่ากับ 220 V ตลอดเวลา แรงดันจริงแกว่งระหว่าง +311 V กับ −311 V ตัวเลข 220 V คือ<b>ค่ายังผล</b> (effective value) หรือ<b>ค่ารากที่สองของค่าเฉลี่ยของกำลังสอง</b> (root mean square, rms) แปลว่า<b>แรงดันกระแสตรงที่ทำให้ตัวต้านทานร้อนเท่ากัน</b> (สไลด์หน้า 8) ครึ่งหลังของหน้าเปลี่ยนคลื่นไซน์ทั้งลูกเป็นจำนวนเชิงซ้อนตัวเดียวที่เรียกว่า<b>เฟเซอร์</b> (หน้า 9) หน้านี้มีภาพจำลองหลอดไฟ (ส่วน A) <b>โจทย์ไฟบ้านหนึ่งข้อ แบบฝึกหัดเฟเซอร์สี่ข้อย่อย</b> และการบวกคลื่นไซน์ด้วยเฟเซอร์ (ส่วน B)</p>
+    <p class="sub" data-l="en">Mains "220 V" does not mean the voltage is 220 V all the time: it swings between +311 V and −311 V. The 220 V is the <b>effective value</b>, also called the <b>root-mean-square (rms) value</b>, and it means <b>the DC voltage that heats a resistor just as much</b> (slide p. 8). The second half of the page turns a whole sine wave into a single complex number called a <b>phasor</b> (p. 9). This page has a lamp simulation (section A), <b>one mains problem, one phasor practice with four items</b>, and adding sinusoids with phasors (section B).</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} V_{eff} = \sqrt{\frac{1}{T}\int_0^T v^2\,dt} = \frac{V_m}{\sqrt2} \\ v(t) = V_m\sin(\omega t + \theta) \;\Longleftrightarrow\; \mathbf{V} = V_m\angle\theta \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ค่ายังผลคือแรงดันกระแสตรงที่ให้ความร้อนเฉลี่ยเท่ากัน</b> สำหรับคลื่นไซน์ \(V_{eff} = V_m/\sqrt2 \approx 0.707\,V_m\)</li>
+  <li><b>ไฟบ้าน 220 V คือค่ายังผล</b>: ค่ายอด \(V_m = 220\sqrt2 \approx 311\) V และค่ายอดถึงยอด \(V_{p\text{-}p} = 2V_m \approx 622\) V มิเตอร์ทั่วไปอ่านเป็นค่ายังผล</li>
+  <li><b>เฟเซอร์ตามสไลด์: \(v(t) = V_m\sin(\omega t + \theta) \Rightarrow \mathbf{V} = V_m\angle\theta\)</b> คือตำแหน่งของลูกศรหมุนเมื่อ \(t = 0\) ส่วน \(\omega\) ไม่อยู่ในเฟเซอร์ ต้องจำไว้เอง</li>
+  <li>ก่อนเขียนเฟเซอร์ต้อง<b>เปลี่ยนเป็น sin และทำแอมพลิจูดให้เป็นบวก</b> เช่น \(-10\cos(2000t - 30^\circ) = 10\sin(2000t - 120^\circ) \Rightarrow 10\angle{-120^\circ}\)</li>
+  <li><b>คลื่นไซน์ความถี่เดียวกันบวกกันด้วยเฟเซอร์</b>: \(0.5\angle{-62^\circ} + 2\angle 28^\circ = 2.062\angle 13.96^\circ\) <b>ไม่ใช่ 2.5</b> เพราะทั้งสองไม่ถึงยอดพร้อมกัน</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>The effective value is the DC voltage that gives the same average heat</b>; for a sinusoid \(V_{eff} = V_m/\sqrt2 \approx 0.707\,V_m\).</li>
+  <li><b>Mains 220 V is an effective value</b>: the peak is \(V_m = 220\sqrt2 \approx 311\) V and the peak-to-peak value \(V_{p\text{-}p} = 2V_m \approx 622\) V. Ordinary meters read effective values.</li>
+  <li><b>The phasor of the slides: \(v(t) = V_m\sin(\omega t + \theta) \Rightarrow \mathbf{V} = V_m\angle\theta\)</b>, the position of the spinning arrow at \(t = 0\). \(\omega\) is not part of the phasor; you must remember it yourself.</li>
+  <li>Before writing a phasor, <b>turn the function into a sine with a positive amplitude</b>, e.g. \(-10\cos(2000t - 30^\circ) = 10\sin(2000t - 120^\circ) \Rightarrow 10\angle{-120^\circ}\).</li>
+  <li><b>Same-frequency sinusoids add as phasors</b>: \(0.5\angle{-62^\circ} + 2\angle 28^\circ = 2.062\angle 13.96^\circ\), <b>not 2.5</b>, because the two do not peak together.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>หลอดไฟสองดวง</a><a href="#ex1"><b>1</b>ไฟบ้าน 220 V</a><a href="#ex2"><b>2</b>แบบฝึกหัดหน้า 9</a><a href="#tB"><b>B</b>บวกด้วยเฟเซอร์</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Two lamps</a><a href="#ex1"><b>1</b>Mains 220 V</a><a href="#ex2"><b>2</b>Practice, p. 9</a><a href="#tB"><b>B</b>Adding with phasors</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ค่ายังผล: แรงดันกระแสตรงที่ร้อนเท่ากัน</h2><h2 data-l="en">The effective value: the DC voltage that heats the same</h2>
+    <div class="src" data-l="th">หลอดไฟ 100 W ที่ 220 V (484 Ω) สองดวง · ที่มาของสูตรอยู่ใต้แผงควบคุม</div><div class="src" data-l="en">Two 100 W, 220 V lamps (484 Ω) · the derivation is under the panel</div></div></div>
+  <p class="lead" data-l="th">ดวงซ้ายต่อกับแหล่งจ่ายกระแสสลับ ดวงขวาต่อกับแหล่งจ่ายกระแสตรงที่ปรับได้ ภาพเล่นช้ามากจน<b>หลอดซ้ายกะพริบตามกำลังขณะนั้น \(p = v^2/R\)</b> สว่างที่สุดสองครั้งต่อหนึ่งรอบ (ที่ยอดบวกและยอดลบ เพราะ \(v^2\) เป็นบวกเสมอ) กราฟล่างคือ \(p(t)\) เส้นประคือกำลังเฉลี่ย <b>เลื่อน \(V_{DC}\) จนเส้นสีเขียวทับเส้นประพอดี</b> จะได้ \(V_{DC} = V_m/\sqrt2\)</p>
+  <p class="lead" data-l="en">The left lamp is fed by an AC source, the right one by an adjustable DC source. It runs so slowly that <b>the left lamp flickers with its instantaneous power \(p = v^2/R\)</b>, brightest twice per cycle (at the positive and the negative peak, since \(v^2\) is always positive). The lower graph is \(p(t)\) and the dashed line is the average power. <b>Slide \(V_{DC}\) until the green line lies exactly on the dashed one</b>: then \(V_{DC} = V_m/\sqrt2\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div>
+    <details class="derive"><summary><span data-l="th">ที่มาของ \(V_{eff} = V_m/\sqrt2\) (สไลด์หน้า 8)</span><span data-l="en">Where \(V_{eff} = V_m/\sqrt2\) comes from (slide p. 8)</span></summary>
+      <div data-l="th"><p>ความร้อนในตัวต้านทานขึ้นกับ \(v^2\) ค่ายังผลจึงนิยามจากค่าเฉลี่ยของ \(v^2\) ในหนึ่งคาบ แล้วถอดรากที่สอง ใช้ \(\sin^2 x = \tfrac12(1 - \cos 2x)\) ส่วนที่เป็น cos มีค่าเฉลี่ยเป็นศูนย์</p></div>
+      <div data-l="en"><p>The heat in a resistor depends on \(v^2\), so the effective value is defined from the average of \(v^2\) over one period, then the square root is taken. Use \(\sin^2 x = \tfrac12(1 - \cos 2x)\); the cosine part averages to zero.</p></div>
+      <div id="drvA"></div></details></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">ไฟบ้าน 220 V 50 Hz: ค่ายอด ค่ายอดถึงยอด และฟังก์ชันเวลาเป็นเท่าไร</h2><h2 data-l="en">Mains 220 V 50 Hz: what are the peak, the peak-to-peak value and the time function?</h2>
+    <div class="src" data-l="th">ตัวอย่างที่ผู้สอนเขียนบนสไลด์หน้า 8 ในห้อง</div><div class="src" data-l="en">The example the teacher wrote on slide p. 8 in class</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 8 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 8 as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K10.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 8: 220 V, 50 Hz written at the top; 220 V is the RMS, the maximum is Vm = Vrms√2 = 220√2 = 311; a sketch of the sine between +311 and −311 with Vp-p ≈ 622 V; Vrms = Veff = Vm/√2 boxed">
+      <figcaption data-l="th">220 V คือค่ายังผล ค่ายอด \(V_m = 220\sqrt2 = 311\) V และ \(V_{p\text{-}p} \approx 622\) V</figcaption><figcaption data-l="en">220 V is the effective value; the peak is \(V_m = 220\sqrt2 = 311\) V and \(V_{p\text{-}p} \approx 622\) V</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="ex2"><h2 data-l="th">แบบฝึกหัด: แปลงเป็นเฟเซอร์หรือฟังก์ชันไซน์ และหาค่ายังผล (สไลด์หน้า 9)</h2><h2 data-l="en">Practice: convert to a phasor or a sine function and find the effective value (slide p. 9)</h2></div>
+<p class="lead" data-l="th">สไลด์หน้า 9 นิยามเฟเซอร์ \(v(t) = V_m\sin(\omega t + \theta_1) \Rightarrow \mathbf{V} = V_m\angle\theta_1\) คือลูกศรหมุนของหน้า 6.1 ที่หยุดไว้ที่ \(t = 0\) ทุกตัวในวงจรหมุนด้วย \(\omega\) เท่ากัน จึงจดเฉพาะความยาวกับมุมเริ่มต้น ข้อ 2a–2b แปลงเป็นเฟเซอร์ ข้อ 2c–2d แปลงกลับเป็นฟังก์ชันเวลา ทุกข้อหาค่ายังผลด้วย</p>
+<p class="lead" data-l="en">Slide p. 9 defines the phasor \(v(t) = V_m\sin(\omega t + \theta_1) \Rightarrow \mathbf{V} = V_m\angle\theta_1\): the spinning arrow of page 6.1 frozen at \(t = 0\). Everything in a circuit turns at the same \(\omega\), so only the length and the starting angle are written down. Items 2a–2b convert to phasors, items 2c–2d back to time functions, and every item finds the effective value.</p>
+<figure class="slide q wide"><img src="slides/ch6/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: phasor. Use the polar form instead of the sine function: v(t) = Vm sin(ωt + θ1) becomes V = Vm∠θ1. Practices: convert to phasor or sine function and calculate the effective value: v1(t) = 310 sin(1000t − 30°), i1(t) = −10 cos(2000t − 30°), V = 220∠90°, I = 100∠−45° with ω = 120 rad/s">
+  <figcaption data-l="th">สไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 9 · tap to enlarge</figcaption></figure>
+<details class="orig"><summary><span data-l="th">ดูคำตอบที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class answers</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch6/K11.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 9: V1 = 310∠−30° V; i1(t) = −10 sin(2000t + 90° − 30°), I1 = −10∠60° A; v(t) = 220 sin(120t + 90°) V; i(t) = 100 sin(120t − 45°) A">
+    <figcaption data-l="th">ในห้องเขียน \(\mathbf{I}_1 = -10\angle 60^\circ\) ซึ่งเป็นเฟเซอร์เดียวกับ \(10\angle{-120^\circ}\) แต่ขนาดของเฟเซอร์ควรเป็นบวก (กฎข้อ 2)</figcaption><figcaption data-l="en">In class \(\mathbf{I}_1 = -10\angle 60^\circ\) was written; it is the same phasor as \(10\angle{-120^\circ}\), but a phasor's size should be positive (rule 2)</figcaption></figure></div></details>
+
+<section class="prob sub-item" id="ex2a">
+  <div class="prob-head"><span class="prob-no">2a</span><div><h2 data-l="th">\(v_1(t) = 310\sin(1000t - 30^\circ)\) V → เฟเซอร์และค่ายังผล</h2><h2 data-l="en">\(v_1(t) = 310\sin(1000t - 30^\circ)\) V → phasor and effective value</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2a"></canvas></div><div class="card solve"><div id="ask2a"></div><div id="st2a"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex2b">
+  <div class="prob-head"><span class="prob-no">2b</span><div><h2 data-l="th">\(i_1(t) = -10\cos(2000t - 30^\circ)\) A → เฟเซอร์และค่ายังผล</h2><h2 data-l="en">\(i_1(t) = -10\cos(2000t - 30^\circ)\) A → phasor and effective value</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2b"></canvas></div><div class="card solve"><div id="ask2b"></div><div id="st2b"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex2c">
+  <div class="prob-head"><span class="prob-no">2c</span><div><h2 data-l="th">\(\mathbf{V} = 220\angle 90^\circ\) V, \(\omega = 120\) rad/s → ฟังก์ชันเวลาและค่ายังผล</h2><h2 data-l="en">\(\mathbf{V} = 220\angle 90^\circ\) V, \(\omega = 120\) rad/s → time function and effective value</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2c"></canvas></div><div class="card solve"><div id="ask2c"></div><div id="st2c"></div></div></div>
+</section>
+<section class="prob sub-item" id="ex2d">
+  <div class="prob-head"><span class="prob-no">2d</span><div><h2 data-l="th">\(\mathbf{I} = 100\angle{-45^\circ}\) A, \(\omega = 120\) rad/s → ฟังก์ชันเวลาและค่ายังผล</h2><h2 data-l="en">\(\mathbf{I} = 100\angle{-45^\circ}\) A, \(\omega = 120\) rad/s → time function and effective value</h2></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cv2d"></canvas></div><div class="card solve"><div id="ask2d"></div><div id="st2d"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">บวกคลื่นไซน์ด้วยเฟเซอร์: กระแสที่จุดต่อ</h2><h2 data-l="en">Adding sinusoids with phasors: currents at a junction</h2>
+    <div class="src" data-l="th">ค่าเริ่มต้นคือ \(\mathbf{I}_{R2}\) และ \(\mathbf{I}_C\) ของการบ้านในหน้า 6.4</div><div class="src" data-l="en">The start values are \(\mathbf{I}_{R2}\) and \(\mathbf{I}_C\) of the homework on page 6.4</div></div></div>
+  <p class="lead" data-l="th">แหล่งจ่ายกระแสสองตัวความถี่เดียวกันป้อนเข้าจุดต่อเดียวกัน กฎกระแสของเคียร์ชอฟฟ์ (Kirchhoff's current law, KCL) เป็นจริงทุกขณะ กระแสในตัวต้านทานจึงเป็น \(i = i_1 + i_2\) ทุกจุดบนกราฟ <b>บวกด้วยเฟเซอร์ได้ 2.062 A ไม่ใช่ 0.5 + 2 = 2.5 A</b> เพราะลูกศรสองตัวทำมุม 90° กัน ลูกศรต่อหัวต่อหางในระนาบเฟเซอร์คือการบวกเวกเตอร์</p>
+  <p class="lead" data-l="en">Two current sources of the same frequency feed one junction. Kirchhoff's current law (KCL) holds at every instant, so the resistor carries \(i = i_1 + i_2\) at every point of the graph. <b>Added as phasors they give 2.062 A, not 0.5 + 2 = 2.5 A</b>, because the two arrows are 90° apart. The head-to-tail arrows on the phasor plane are a vector sum.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div>
+    <h3 data-l="th">บวกเฟเซอร์ด้วยรูปคาร์ทีเซียน</h3><h3 data-l="en">Adding phasors in Cartesian form</h3>
+    <p class="sub2" data-l="th">บวกในรูปเชิงขั้วตรง ๆ ไม่ได้ (ยกเว้นมุมเท่ากัน) ต้องแปลงเป็น \(a + jb\) ก่อนด้วย \(r\angle\theta = r\cos\theta + j\,r\sin\theta\) บวกส่วนจริงกับส่วนจริง ส่วนจินตภาพกับส่วนจินตภาพ แล้วแปลงกลับ</p>
+    <p class="sub2" data-l="en">Polar forms cannot be added directly (unless the angles are equal): convert to \(a + jb\) first with \(r\angle\theta = r\cos\theta + j\,r\sin\theta\), add real to real and imaginary to imaginary, then convert back.</p>
+    <div id="wB"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูหน้าที่ผู้สอนเขียนเรื่องจำนวนเชิงซ้อนในห้อง</span><span data-l="en">See the teacher's in-class page on complex numbers</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch6/K09.webp" width="1100" height="323" loading="lazy" decoding="async" alt="Handwritten page, complex numbers: j = √−1; the Cartesian form x + jy and the polar form r∠θ; 3 + 4j becomes 5∠53.13°, with the amplitude and the angle labelled">
+      <figcaption data-l="th">รูปคาร์ทีเซียน \(x + jy\) กับรูปเชิงขั้ว \(r\angle\theta\): \(3 + j4 = 5\angle 53.13^\circ\)</figcaption><figcaption data-l="en">The Cartesian form \(x + jy\) and the polar form \(r\angle\theta\): \(3 + j4 = 5\angle 53.13^\circ\)</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — หาค่ายังผลด้วยตาเอง</h3>
+    <ol><li>ส่วน A เลื่อน \(V_{DC}\) จนกำลังเฉลี่ยเท่ากัน จะได้ประมาณ 220 V เมื่อ \(V_m\) = 311 V (กดปุ่ม "\(V_{DC} = V_m/\sqrt2\)" เพื่อตรวจ)</li>
+    <li>ดูกราฟล่าง: ส่วนของ \(p(t)\) ที่เกินเส้นประพอดีเติมช่องที่ต่ำกว่าเส้นประ นี่คือความหมายของคำว่า "เฉลี่ย"</li>
+    <li>ลด \(V_m\) ลงครึ่งหนึ่ง: กำลังเฉลี่ยลดเหลือหนึ่งในสี่ เพราะกำลังแปรตาม \(V^2\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ลูกศรที่ t = 0</h3>
+    <ol><li>ข้อ 2b: ขั้นที่เปลี่ยน cos เป็น sin กับขั้นทำแอมพลิจูดให้เป็นบวกไม่ทำให้กราฟขยับเลย</li>
+    <li>ความสูงของปลายลูกศร \(10\angle{-120^\circ}\) คือ \(10\sin(-120^\circ) = -8.66\) A เท่ากับค่าของคลื่นที่ \(\omega t = 0\)</li>
+    <li>ข้อ 2c: \(220\angle 90^\circ\) เริ่มที่ยอดพอดี เพราะ \(\sin(\omega t + 90^\circ) = \cos\omega t\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — บวกไม่ได้ 2.5</h3>
+    <ol><li>ส่วน B กด "เฟสเดียวกัน": ลูกศรเรียงเป็นเส้นตรงและผลรวม 2.5 A จริง กรณีนี้กรณีเดียวที่บวกขนาดตรง ๆ ได้</li>
+    <li>กด "ตรงข้ามเฟส": ผลรวมเหลือ 1.5 A ผลรวมจึงอยู่ระหว่าง 1.5 ถึง 2.5 A แล้วแต่มุม</li>
+    <li>คำถาม: ตำรา Hayt ตัวอย่าง 10.5 บวก \(1\angle{-62^\circ} + \tfrac12\angle{-62^\circ}\) ได้ 1.5 A ผิดตรงไหน (ดูการบ้านหน้า 6.4)</li></ol>
+    <div class="book">สไลด์บทที่ 6 หน้า 8–9 · ฉบับในห้อง ก.ย. 2566 · Hayt §10.3–10.4 (เฟเซอร์), §11.4 (ค่ายังผล)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — find the effective value by eye</h3>
+    <ol><li>In section A slide \(V_{DC}\) until the average powers match; with \(V_m\) = 311 V you land near 220 V (press "\(V_{DC} = V_m/\sqrt2\)" to check).</li>
+    <li>Look at the lower graph: the part of \(p(t)\) above the dashed line exactly fills the gaps below it. That is what "average" means.</li>
+    <li>Halve \(V_m\): the average power drops to a quarter, because power goes with \(V^2\).</li></ol></div>
+  <div class="card"><h3>Try this 2 — the arrow at t = 0</h3>
+    <ol><li>Problem 2b: the steps that turn cos into sin and make the amplitude positive do not move the graph at all.</li>
+    <li>The height of the tip of \(10\angle{-120^\circ}\) is \(10\sin(-120^\circ) = -8.66\) A, the value of the wave at \(\omega t = 0\).</li>
+    <li>Problem 2c: \(220\angle 90^\circ\) starts right at the peak, since \(\sin(\omega t + 90^\circ) = \cos\omega t\).</li></ol></div>
+  <div class="card"><h3>Try this 3 — not 2.5</h3>
+    <ol><li>In section B press "In phase": the arrows line up and the sum really is 2.5 A. This is the only case where magnitudes add directly.</li>
+    <li>Press "Opposite": the sum drops to 1.5 A, so the sum lies between 1.5 and 2.5 A depending on the angle.</li>
+    <li>Question: Hayt's Example 10.5 adds \(1\angle{-62^\circ} + \tfrac12\angle{-62^\circ}\) and gets 1.5 A. What went wrong? (See the homework on page 6.4.)</li></ol>
+    <div class="book">Chapter 6 slides, pp. 8–9 · in class, September 2023 · Hayt §10.3–10.4 (phasors), §11.4 (effective value)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+const sg = (x, d = 3) => fd(x, d).replace('-', '−');
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.01, 0.004 * Math.abs(y)));
+const angOk = ans => x => Math.abs(CH6.wrap(x - ans)) <= 0.6;
+
+/* =================================================================== A: two lamps */
+const R = 484, PR = 311.13 ** 2 / R; // lamp: 100 W at 220 V; full glow at the AC peak power
+const S = { Vm: 311, Vdc: 150 };
+const clk1 = CH6.clock({ T: 4 }); const cv1 = $('cvA'); let L1 = null;
+const lampSpec = ac => ({ ground: 'g', nodes: { a: [0, 0], b: [2.6, 0], g: [0, 2.4], h: [2.6, 2.4] },
+  parts: [{ id: 'V', type: 'V', a: 'a', b: 'g', value: 0, name: ac ? 'v(t)' : 'V_{DC}', valText: '', side: -1, ...(ac ? { draw: 'VAC' } : {}) }, { type: 'W', a: 'a', b: 'b' },
+    { id: 'L', type: 'lamp', a: 'b', b: 'h', value: R, rated: PR, name: t('หลอด', 'lamp'), valText: '484 Ω', side: 1 }, { type: 'W', a: 'h', b: 'g' }] });
+const ckA = new CK.Circuit(lampSpec(true)), ckD = new CK.Circuit(lampSpec(false));
+const vo = { speed: 95 / (311 / R), ground: false, showI: false, pad: 1.0, tips: true };
+const vwA = new CK.View(cv1, ckA, vo), vwD = new CK.View(cv1, ckD, vo);
+/* the lamps side by side from 540 px, stacked on phones; the voltage and the power under them */
+function resize1() { const W = Math.max(300, Math.floor(cv1.parentElement.clientWidth - 12)), B = {};
+  if (W >= 540) { const top = Math.round(Math.max(230, W * 0.34)), ph = Math.round(Math.max(160, W * 0.22)); B.a = { x: 0, y: 34, w: W / 2 - 3, h: top - 34 - 30 }; B.d = { x: W / 2 + 3, y: 34, w: W / 2 - 3, h: top - 34 - 30 };
+    B.barA = { x: 16, y: top - 26, w: W / 2 - 36 }; B.barD = { x: W / 2 + 19, y: top - 26, w: W / 2 - 36 }; B.v = { x: 0, y: top + 6, w: W, h: ph }; B.p = { x: 0, y: top + 12 + ph, w: W, h: ph }; B.H = top + 12 + 2 * ph; }
+  else { const ch = Math.round(Math.max(200, W * 0.6)), ph = Math.round(Math.max(170, W * 0.5)); B.a = { x: 0, y: 34, w: W, h: ch - 34 - 30 }; B.barA = { x: 16, y: ch - 24, w: W - 32 }; B.d = { x: 0, y: ch + 40, w: W, h: ch - 34 - 30 }; B.barD = { x: 16, y: 2 * ch + 12, w: W - 32 };
+    B.v = { x: 0, y: 2 * ch + 40, w: W, h: ph }; B.p = { x: 0, y: 2 * ch + 46 + ph, w: W, h: ph }; B.H = 2 * ch + 46 + 2 * ph; }
+  L1 = { ...B, W, wide: W >= 540, ctx: CK.setup(cv1, W, B.H) }; [vwA, vwD].forEach(v => { v.ctx = L1.ctx; }); vwA.fit(B.a); vwD.fit(B.d); }
+function bar(ctx, b, P, col, txt) { const full = PR * 0.75; const f = Math.min(1, P / full); ctx.save(); ctx.fillStyle = '#0b0e1c'; ctx.fillRect(b.x, b.y, b.w, 14); ctx.fillStyle = col; ctx.fillRect(b.x, b.y, b.w * f, 14); ctx.strokeStyle = '#3a4160'; ctx.strokeRect(b.x + 0.5, b.y + 0.5, b.w - 1, 13); ctx.restore();
+  CH6.text(ctx, txt, b.x, b.y - 9, { align: 'left', color: col, size: 12.5, weight: '600' }); }
+function frame1(dt) {
+  if (!L1) return; clk1.tick(dt); const ctx = L1.ctx; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L1.W, L1.H);
+  const v = S.Vm * Math.sin(clk1.ph); ckA.part('V').value = v; ckA.solve(); ckD.part('V').value = S.Vdc; ckD.solve();
+  if (clk1.run) { vwA.advance(dt); vwD.advance(dt); } vwA.draw(); vwD.draw();
+  const Pac = S.Vm ** 2 / (2 * R), Pdc = S.Vdc ** 2 / R, pNow = v * v / R, same = Math.abs(Pac - Pdc) <= 0.01 * Math.max(Pac, 1e-9);
+  CH6.text(ctx, t('กระแสสลับ', 'AC'), L1.a.x + L1.a.w - 12, L1.a.y + 4, { align: 'right', color: COL.V, size: 14, weight: '700' });
+  CH6.text(ctx, t('กระแสตรง', 'DC'), L1.d.x + L1.d.w - 12, L1.d.y + 4, { align: 'right', color: COL.ref, size: 14, weight: '700' });
+  const [ax, ay] = vwA.P('a'); CH6.text(ctx, `v = ${sg(v, 0)} V · p = ${fd(pNow, 0)} W`, ax, ay - vwA.u * 0.45, { align: 'left', color: COL.V, size: 13, weight: '700' });
+  const [dx, dy] = vwD.P('a'); CH6.text(ctx, `V = ${fd(S.Vdc, 0)} V · P = ${fd(Pdc, 1)} W`, dx, dy - vwD.u * 0.45, { align: 'left', color: COL.ref, size: 13, weight: '700' });
+  bar(ctx, L1.barA, Pac, COL.I, t(`ความร้อนเฉลี่ย ${fd(Pac, 1)} W`, `average heat ${fd(Pac, 1)} W`)); bar(ctx, L1.barD, Pdc, same ? COL.ref : '#9aa3c7', t(`ความร้อนเฉลี่ย ${fd(Pdc, 1)} W`, `average heat ${fd(Pdc, 1)} W`));
+  CH6.waves(ctx, L1.v, [{ mag: S.Vm, ang: 0, color: COL.V, label: 'v', unit: 'V' }, { f: () => S.Vdc, mag: S.Vdc, color: COL.ref, label: 'V_{DC}', unit: 'V', w: 2, noValue: true },
+    { f: () => S.Vm / Math.SQRT2, mag: 0, color: '#ffd166', dash: [5, 4], w: 1.4 }, { f: () => -S.Vm / Math.SQRT2, mag: 0, color: '#ffd166', dash: [5, 4], w: 1.4 }],
+    { now: clk1.ph, title: t(`แรงดัน: เส้นประ ±V_m/√2 = ±${fd(S.Vm / Math.SQRT2, 1)} V`, `voltage: dashed ±V_m/√2 = ±${fd(S.Vm / Math.SQRT2, 1)} V`) });
+  const Pm = Math.max(S.Vm ** 2 / R, Pdc, 1);
+  CH6.waves(ctx, L1.p, [{ f: d => (S.Vm * Math.sin(d * Math.PI / 180)) ** 2 / R, mag: Pm, color: COL.I, fill: 'rgba(255,209,102,.16)', label: 'p', unit: 'W' }, { f: () => Pac, mag: 0, color: COL.I, dash: [6, 4], w: 1.6 },
+    { f: () => Pdc, mag: 0, color: COL.ref, w: 2 }], { now: clk1.ph, pos: true, title: t(`กำลัง p = v²/R · เฉลี่ย ${fd(Pac, 1)} W (เส้นประ)`, `power p = v²/R · average ${fd(Pac, 1)} W (dashed)`) });
+  if (same) CK.badge(ctx, t(`✓ ร้อนเท่ากัน: V_DC = V_m/√2 = ${fd(S.Vm / Math.SQRT2, 1)} V`, `✓ same heat: V_DC = V_m/√2 = ${fd(S.Vm / Math.SQRT2, 1)} V`), 'ok', L1.d.x + 8, L1.d.y - 28);
+  CK.badge(ctx, clk1.run ? t('▶ เล่นช้ามาก', '▶ very slow motion') : t('❚❚ หยุดชั่วคราว', '❚❚ paused'), clk1.run ? 'ok' : 'wait');
+}
+const panel1 = $('pA');
+ui.h2(panel1, t('แรงดัน', 'Voltages'));
+const sVm = ui.slider(panel1, { id: 'sVm', label: t('ค่ายอด V<sub>m</sub> (กระแสสลับ)', 'peak V<sub>m</sub> (AC)'), min: 0, max: 400, step: 1, value: S.Vm, fmt: v => `${v} V`, oninput: v => { S.Vm = v; met1(); } });
+const sVd = ui.slider(panel1, { id: 'sVd', label: t('V<sub>DC</sub> (กระแสตรง)', 'V<sub>DC</sub> (DC)'), min: 0, max: 400, step: 1, value: S.Vdc, fmt: v => `${fd(v, 1)} V`, oninput: v => { S.Vdc = v; met1(); } });
+ui.buttons(panel1, [{ label: 'V_DC = V_m/√2', onclick: () => { S.Vdc = S.Vm / Math.SQRT2; sVd.set(S.Vdc); met1(); } }, { label: t('ไฟบ้าน 220 V', 'mains 220 V'), onclick: () => { S.Vm = 311.13; sVm.set(311); met1(); } }]);
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, clk1);
+const m1 = ui.metrics(panel1);
+function met1() { const Pac = S.Vm ** 2 / (2 * R), Pdc = S.Vdc ** 2 / R;
+  m1.innerHTML = ui.kv([[t('ค่ายอด V<sub>m</sub>', 'peak V<sub>m</sub>'), `${fd(S.Vm, 2)} V`], [t('ค่ายังผล V<sub>m</sub>/√2', 'effective V<sub>m</sub>/√2'), `${fd(S.Vm / Math.SQRT2, 2)} V`], [t('ยอดถึงยอด 2V<sub>m</sub>', 'peak-to-peak 2V<sub>m</sub>'), `${fd(2 * S.Vm, 2)} V`],
+    [t('กำลังเฉลี่ย (กระแสสลับ)', 'average power (AC)'), `${fd(Pac, 2)} W`], [t('กำลัง (กระแสตรง)', 'power (DC)'), `${fd(Pdc, 2)} W`], ['V<sub>DC</sub> / V<sub>m</sub>', S.Vm ? fd(S.Vdc / S.Vm, 4) : '—']]); }
+ui.html(panel1, t('เมื่อความร้อนเท่ากัน อัตราส่วน V<sub>DC</sub>/V<sub>m</sub> = 1/√2 = 0.7071 เสมอ ไม่ว่า V<sub>m</sub> จะเท่าไร', 'When the heat matches, V<sub>DC</sub>/V<sub>m</sub> = 1/√2 = 0.7071, whatever V<sub>m</sub> is.'), 'hint');
+const drv = () => { $('drvA').innerHTML = tx(LS.fitIn($('pA'), '\\begin{aligned} V_{eff}^2 &= \\frac{1}{T}\\int_0^T V_m^2\\sin^2\\omega t\\,dt \\\\ &= \\frac{V_m^2}{T}\\int_0^T \\frac{1 - \\cos 2\\omega t}{2}\\,dt = \\frac{V_m^2}{2} \\\\ V_{eff} &= \\frac{V_m}{\\sqrt2} \\approx 0.7071\\,V_m \\\\ P_{avg} &= \\frac{V_{eff}^2}{R} = \\frac{V_m^2}{2R} \\end{aligned}', $('drvA')), true); };
+resize1(); met1(); drv(); LS.anim(cv1, frame1);
+
+/* =================================================================== 1: mains 220 V 50 Hz (the in-class example on slide p. 8) */
+CH6.problem(1, 'phasor', { kind: 'rms', Veff: 220, f: 50 }, {
+  ask: () => ({ fields: [{ label: 'V<sub>m</sub> (V) =', ok: x => near(x, 311.13, 0.6), w: 4.5 }, { label: 'V<sub>p-p</sub> (V) =', ok: x => near(x, 622.25, 1.2), w: 4.5 }],
+    check: v => near(v[0], 155.56, 0.6) ? t('นั่นคือ 220/√2 แต่ 220 V เป็นค่ายังผลอยู่แล้ว ค่ายอดต้องคูณ √2', 'That is 220/√2, but 220 V is already the effective value: the peak multiplies by √2') : near(v[1], 311.13, 0.6) ? t('ค่ายอดถึงยอดคือสองเท่าของค่ายอด', 'The peak-to-peak value is twice the peak') : '' }),
+  answer: t('\\(V_m = 220\\sqrt2 = 311.13\\) V, \\(V_{p\\text{-}p} = 622.25\\) V และ \\(v(t) = 311.13\\sin(314.16t)\\) V ตรงกับที่ผู้สอนเขียนในห้อง (311 V และประมาณ 622 V)', '\\(V_m = 220\\sqrt2 = 311.13\\) V, \\(V_{p\\text{-}p} = 622.25\\) V and \\(v(t) = 311.13\\sin(314.16t)\\) V, as the teacher wrote in class (311 V and about 622 V)') });
+
+/* =================================================================== 2: the practices of slide p. 9 */
+const askT = (M, A, u) => () => ({ fields: [{ label: t('แอมพลิจูด =', 'amplitude ='), ok: x => near(x, M), w: 4 }, { label: t('มุมเฟส (°) =', 'phase (°) ='), ok: angOk(A), w: 4 },
+  { label: t(`ค่ายังผล (${u}) =`, `effective (${u}) =`), ok: x => near(x, M / Math.SQRT2), w: 4.5 }] });
+CH6.problem('2a', 'phasor', { kind: 'toPhasor', s: { A: 310, fn: 'sin', w: 1000, ph: -30, name: 'v_1', unit: 'V' } }, { ask: CH6.askPh('V<sub>1</sub>', 310, -30, 'V', { eff: true }),
+  answer: t('\\(\\mathbf{V}_1 = 310\\angle{-30^\\circ}\\) V ตรงกับในห้อง และ \\(V_{1,\\text{eff}} = 219.2\\) V', '\\(\\mathbf{V}_1 = 310\\angle{-30^\\circ}\\) V, as in class, and \\(V_{1,\\text{eff}} = 219.2\\) V') });
+CH6.problem('2b', 'phasor', { kind: 'toPhasor', s: { A: -10, fn: 'cos', w: 2000, ph: -30, name: 'i_1', unit: 'A' } }, {
+  ask: CH6.askPh('I<sub>1</sub>', 10, -120, 'A', { eff: true, traps: [[10, 60, t('ลืมกฎข้อ 2: แอมพลิจูด −10 ติดลบ ต้องเลื่อน 180°', 'Rule 2 is missing: the amplitude −10 is negative, so shift by 180°')],
+    [10, -30, t('cos ต้องเปลี่ยนเป็น sin ก่อน (กฎข้อ 1)', 'cos must be turned into sin first (rule 1)')], [-10, -30, t('cos ต้องเปลี่ยนเป็น sin ก่อน (กฎข้อ 1)', 'cos must be turned into sin first (rule 1)')]] }),
+  answer: t('\\(\\mathbf{I}_1 = 10\\angle{-120^\\circ}\\) A (ในห้องเขียน \\(-10\\angle 60^\\circ\\) ซึ่งเป็นเฟเซอร์เดียวกัน) และ \\(I_{1,\\text{eff}} = 7.071\\) A', '\\(\\mathbf{I}_1 = 10\\angle{-120^\\circ}\\) A (the class wrote \\(-10\\angle 60^\\circ\\), the same phasor) and \\(I_{1,\\text{eff}} = 7.071\\) A') });
+CH6.problem('2c', 'phasor', { kind: 'toTime', M: 220, ang: 90, w: 120, name: 'v', unit: 'V' }, { ask: askT(220, 90, 'V'),
+  answer: t('\\(v(t) = 220\\sin(120t + 90^\\circ)\\) V ตรงกับในห้อง และ \\(V_{\\text{eff}} = 155.6\\) V', '\\(v(t) = 220\\sin(120t + 90^\\circ)\\) V, as in class, and \\(V_{\\text{eff}} = 155.6\\) V') });
+CH6.problem('2d', 'phasor', { kind: 'toTime', M: 100, ang: -45, w: 120, name: 'i', unit: 'A' }, { ask: askT(100, -45, 'A'),
+  answer: t('\\(i(t) = 100\\sin(120t - 45^\\circ)\\) A ตรงกับในห้อง และ \\(I_{\\text{eff}} = 70.71\\) A', '\\(i(t) = 100\\sin(120t - 45^\\circ)\\) A, as in class, and \\(I_{\\text{eff}} = 70.71\\) A') });
+
+/* =================================================================== B: KCL with phasors */
+const S3 = { m1: 0.5, a1: -62, m2: 2, a2: 28 };
+const P3 = new CH6.Trio('cvB', { T: 4, mid: true, cktFrac: 0.52,
+  vecs: () => { const I1 = CH6.polar(S3.m1, S3.a1), I2 = CH6.polar(S3.m2, S3.a2), I = Cx.add(I1, I2);
+    return [{ z: I2, color: 'rgba(199,146,234,.45)', w: 2, dash: [5, 4], proj: false }, { z: I1, color: COL.V, label: 'I_1' }, { z: I2, from: I1, color: COL.purple, label: 'I_2', lmid: -1 }, { z: I, color: COL.I, label: 'I = I_1 + I_2', w: 3.6 }]; },
+  sigs: () => { const I = Cx.add(CH6.polar(S3.m1, S3.a1), CH6.polar(S3.m2, S3.a2));
+    return [{ mag: S3.m1, ang: S3.a1, color: COL.V, label: 'i_1', unit: 'A' }, { mag: S3.m2, ang: S3.a2, color: COL.purple, label: 'i_2', unit: 'A' }, { mag: Cx.abs(I), ang: CH6.deg(I), color: COL.I, label: 'i', unit: 'A', w: 3, peak: true }]; },
+  after: v => { const c = v.ckt; v.refArrow(c.part('w12'), 't1', 'i_1', { side: 'U', color: COL.V, off: 0.42 }); v.refArrow(c.part('w23'), 't2', 'i = i_1 + i_2', { side: 'U', color: COL.I, off: 0.42 }); },
+  waveTitle: ['i = i₁ + i₂ ทุกขณะ', 'i = i₁ + i₂ at every instant'] });
+function build3() { P3.set({ ground: 'b1', mode: 'ac', w: 2, nodes: { t1: [0, 0], t2: [3.4, 0], t3: [6.4, 0], b1: [0, 3], b2: [3.4, 3], b3: [6.4, 3] },
+  parts: [{ id: 'I1', type: 'IAC', a: 'b1', b: 't1', amp: S3.m1, phase: S3.a1, name: 'I_1', valText: `${fd(S3.m1, 2)}∠${sg(S3.a1, 0)}° A`, side: 1 },
+    { id: 'I2', type: 'IAC', a: 'b2', b: 't2', amp: S3.m2, phase: S3.a2, name: 'I_2', valText: `${fd(S3.m2, 2)}∠${sg(S3.a2, 0)}° A`, side: 1 },
+    { id: 'w12', type: 'W', a: 't1', b: 't2' }, { id: 'w23', type: 'W', a: 't2', b: 't3' }, { id: 'R', type: 'R', a: 't3', b: 'b3', value: 1, name: 'R', valText: '1 Ω', side: 1 },
+    { type: 'W', a: 'b3', b: 'b2' }, { type: 'W', a: 'b2', b: 'b1' }] }); render3(); }
+const panel3 = $('pB');
+ui.h2(panel3, t('กระแสสองตัว (ค่ายอด)', 'The two currents (peak)'));
+const s3 = {};
+s3.m1 = ui.slider(panel3, { id: 's3m1', label: '|I<sub>1</sub>|', min: 0, max: 3, step: 0.05, value: S3.m1, fmt: v => `${fd(v, 2)} A`, oninput: v => { S3.m1 = v; build3(); } });
+s3.a1 = ui.slider(panel3, { id: 's3a1', label: '∠I<sub>1</sub>', min: -180, max: 180, step: 1, value: S3.a1, fmt: v => `${sg(v, 0)}°`, oninput: v => { S3.a1 = v; build3(); } });
+s3.m2 = ui.slider(panel3, { id: 's3m2', label: '|I<sub>2</sub>|', min: 0, max: 3, step: 0.05, value: S3.m2, fmt: v => `${fd(v, 2)} A`, oninput: v => { S3.m2 = v; build3(); } });
+s3.a2 = ui.slider(panel3, { id: 's3a2', label: '∠I<sub>2</sub>', min: -180, max: 180, step: 1, value: S3.a2, fmt: v => `${sg(v, 0)}°`, oninput: v => { S3.a2 = v; build3(); } });
+const set3 = o => { Object.assign(S3, o); Object.keys(s3).forEach(k => s3[k].set(S3[k])); build3(); };
+ui.buttons(panel3, [{ label: t('การบ้าน (0.5∠−62°, 2∠28°)', 'homework (0.5∠−62°, 2∠28°)'), onclick: () => set3({ m1: 0.5, a1: -62, m2: 2, a2: 28 }) },
+  { label: t('เฟสเดียวกัน', 'In phase'), onclick: () => set3({ m1: 0.5, a1: 28, m2: 2, a2: 28 }) }, { label: t('ตรงข้ามเฟส', 'Opposite'), onclick: () => set3({ m1: 0.5, a1: -152, m2: 2, a2: 28 }) }]);
+ui.h2(panel3, t('การเล่น', 'Playback')); CH6.playBtns(panel3, P3.clk, P3);
+const m3 = ui.metrics(panel3);
+function render3() { const I1 = CH6.polar(S3.m1, S3.a1), I2 = CH6.polar(S3.m2, S3.a2), I = Cx.add(I1, I2), r = z => CH6.rect(z, 4), gap = fd(Math.abs(CH6.wrap(S3.a2 - S3.a1)), 1);
+  const re = x => fd(x, 4), im = (a, b) => `${re(a)} ${b < 0 ? '-' : '+'} ${re(Math.abs(b))}`;
+  $('wB').innerHTML = tx(LS.fitIn($('wB'), `\\begin{aligned} \\mathbf{I}_1 &= ${CH6.polMA(S3.m1, S3.a1)} = ${r(I1)} \\\\ \\mathbf{I}_2 &= ${CH6.polMA(S3.m2, S3.a2)} = ${r(I2)} \\\\ \\mathbf{I} &= \\mathbf{I}_1 + \\mathbf{I}_2 \\\\ &= (${im(I1.re, I2.re)}) + j(${im(I1.im, I2.im)}) \\\\ &= ${r(I)} = \\boxed{${CH6.pol(I)}\\ \\text{A}} \\\\ i(t) &= ${fd(Cx.abs(I), 4)}\\sin(2t ${CH6.deg(I) < 0 ? '-' : '+'} ${fd(Math.abs(CH6.deg(I)), 3)}^\\circ)\\ \\text{A} \\end{aligned}`), true) +
+    `<div class="warnbox">${t(`บวกขนาดตรง ๆ ได้ ${fd(S3.m1 + S3.m2, 3)} A แต่ขนาดจริงของผลรวมคือ ${fd(Cx.abs(I), 4)} A เพราะลูกศรทั้งสองทำมุมกัน ${gap}° บวกขนาดตรง ๆ ได้เฉพาะเมื่อมุมเท่ากัน`, `Adding the sizes gives ${fd(S3.m1 + S3.m2, 3)} A, but the true size of the sum is ${fd(Cx.abs(I), 4)} A, because the two arrows are ${gap}° apart. Sizes add directly only when the angles are equal.`)}</div>`;
+  m3.innerHTML = ui.kv([['|I₁| + |I₂|', `${fd(S3.m1 + S3.m2, 3)} A`], ['|I₁ + I₂|', `${fd(Cx.abs(I), 4)} A`], [t('มุมของผลรวม', 'angle of the sum'), `${sg(CH6.deg(I), 2)}°`], [t('มุมระหว่าง I₁, I₂', 'angle between I₁, I₂'), `${gap}°`]]); }
+P3.resize(); build3(); LS.anim($('cvB'), dt => P3.frame(dt));
+
+window.addEventListener('resize', () => { resize1(); drv(); P3.resize(); render3(); });
+LS.onFonts(() => { drv(); render3(); });
+});
+</script>
+</body>
+</html>

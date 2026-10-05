@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="1.1 — Linear Equations: Substitution and Elimination">1.1 — ระบบสมการเชิงเส้น: วิธีแทนค่าและวิธีกำจัดตัวแปร</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch1.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ระบบสมการเชิงเส้น: วิธีแทนค่าและวิธีกำจัดตัวแปร <span class="en">Linear equations: substitution and elimination — solve the equations and the current starts to flow</span></h1>
+<h1 data-l="en">Linear equations: substitution and elimination <span class="en">Solve the equations and the current starts to flow</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch1/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2: a system of n linear equations in n unknowns, coefficient matrix a_ij, det(A) nonzero">
+    <figcaption data-l="th">สไลด์บทที่ 1 หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 1 slides, p. 2 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้านี้คือ <b>ระบบสมการเชิงเส้น n สมการ n ตัวแปร</b> เขียนย่อเป็น \(A\mathbf{x} = \mathbf{b}\) โดย \(a_{ij}\) คือสัมประสิทธิ์ และต้องมี \(\det A \neq 0\) จึงจะมีคำตอบเดียว วงจรไฟฟ้าที่มีแหล่งจ่ายหลายตัวให้ระบบสมการแบบนี้เสมอ เพราะกระแสในแต่ละช่องของวงจรขึ้นต่อกัน หน้านี้มี <b>4 โจทย์ เรียงทีละข้อ</b> แต่ละข้อมีภาพจำลองของตัวเอง และ <b>เฉลยที่เปิดได้ทีละขั้นด้วยปุ่ม ▶</b> เหมือนผู้สอนค่อย ๆ เปิดบนกระดาน</p>
+    <p class="sub" data-l="en">This slide is <b>a system of n linear equations in n unknowns</b>, written \(A\mathbf{x} = \mathbf{b}\), where \(a_{ij}\) are the coefficients; it has exactly one answer when \(\det A \neq 0\). A circuit with several sources always gives such a system, because the currents in its windows depend on each other. This page has <b>4 problems, one after another</b>. Each has its own simulation and <b>a worked solution you open one step at a time with the ▶ button</b>, the way a teacher uncovers a board.</p>
+    <div class="equation-box" style="margin:10px 0 0">
+      $$ \begin{aligned} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \\ &\;\;\vdots \\ a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n &= b_n \end{aligned} \quad\Longleftrightarrow\quad A\mathbf{x} = \mathbf{b} $$
+    </div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>วงจรที่มีแหล่งจ่ายหลายตัวให้ระบบสมการเชิงเส้น</b> ต้องแก้พร้อมกันจึงได้กระแสทุกตัว</li><li><b>วิธีกำจัดตัวแปร</b>: คูณสมการให้สัมประสิทธิ์ของตัวแปรหนึ่งเท่ากัน แล้วบวกหรือลบให้ตัวแปรนั้นหายไป</li><li><b>วิธีแทนค่า</b>: ย้ายข้างให้ตัวแปรหนึ่งอยู่ตัวเดียว แล้วแทนลงในอีกสมการ</li><li><b>คำตอบติดลบไม่ได้แปลว่าผิด</b> แปลว่ากระแสจริงไหลสวนทิศที่สมมติไว้</li><li><b>ตรวจคำตอบทุกครั้ง</b>: แทนกลับในทุกสมการ หรือดูว่ากำลังที่จ่าย = กำลังที่ใช้</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>A circuit with several sources gives a system of linear equations</b>, solved together to get every current.</li><li><b>Elimination</b>: scale the equations so one unknown has equal coefficients, then add or subtract to remove it.</li><li><b>Substitution</b>: make one unknown the subject, then put it into the other equation.</li><li><b>A negative answer is not a mistake</b>: the real current flows against the assumed direction.</li><li><b>Always check</b>: substitute back into every equation, or confirm that power supplied = power used.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>วงจรสองช่อง · กำจัดตัวแปร</a><a href="#ex2"><b>2</b>วงจรเดิม · แทนค่า</a><a href="#ex3"><b>3</b>ตัวอย่างในสไลด์ · 4 ตัวแปร</a><a href="#ex4"><b>4</b>ฝึกทำเอง</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Two-window circuit · elimination</a><a href="#ex2"><b>2</b>Same circuit · substitution</a><a href="#ex3"><b>3</b>Slide example · 4 unknowns</a><a href="#ex4"><b>4</b>Practice</a></nav>
+
+<!-- ============ problem 1 ============ -->
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div>
+    <h2 data-l="th">วงจรสองช่อง: แก้ด้วยวิธีกำจัดตัวแปร</h2><h2 data-l="en">A two-window circuit, solved by elimination</h2>
+    <div class="src" data-l="th">ตัวอย่างประกอบของหน้านี้ · ใช้หลักเดียวกับตัวอย่างในสไลด์หน้า 3–6 (ข้อ 3)</div><div class="src" data-l="en">An example for this page · the same idea as the slide example on pp. 3–6 (problem 3)</div></div></div>
+  <p class="lead" data-l="th">แบตเตอรี่สองก้อนดันกระแสสู้กัน กระแสในช่องซ้าย \(I_1\) กับช่องขวา \(I_2\) ขึ้นต่อกันผ่าน \(R_3\) ที่ทั้งสองช่องใช้ร่วมกัน จึงได้ <b>สองสมการ สองตัวแปร</b> <b>จุดสีเหลืองจะยังไม่วิ่งจนกว่าจะเปิดเฉลยครบทุกขั้น</b> เพราะก่อนหน้านั้นเรายังไม่รู้ว่ากระแสเป็นเท่าไรและไปทางไหน</p>
+  <p class="lead" data-l="en">Two batteries push against each other. The left-window current \(I_1\) and the right-window current \(I_2\) are tied together through \(R_3\), which both windows share, so we get <b>two equations in two unknowns</b>. <b>The yellow dots stay still until every step is open</b>, because until then we do not know how big the currents are or which way they go.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv1"></canvas><div class="ctl" id="ctl1"></div><div class="readout metrics" id="ro1"></div>
+      <div class="simnote" data-l="th">วงแหวนสีม่วง = กระแสเมชที่ <b>สมมติ</b> ทิศตามเข็มนาฬิกา · ลูกปัดบนวงแหวนวิ่งตามทิศจริง · หลังแก้เสร็จ ชี้เมาส์ที่อุปกรณ์เพื่ออ่าน V, I, P</div>
+      <div class="simnote" data-l="en">Purple rings = mesh currents, <b>assumed</b> clockwise · the beads on a ring move the real way · once solved, hover over a part to read V, I, P</div></div>
+    <div class="card solve">
+      <div class="given" id="g1"><div class="gl" data-l="th">โจทย์: หา I₁ และ I₂</div><div class="gl" data-l="en">Problem: find I₁ and I₂</div><div class="gtex"></div>
+        <details class="derive" style="margin:2px 0 4px"><summary><span data-l="th">สมการ (1) และ (2) มาจากไหน (อ่านเพิ่ม · จะเรียนเต็มในบทที่ 4)</span><span data-l="en">Where do equations (1) and (2) come from? (optional · full treatment in chapter 4)</span></summary><div id="why1" style="font-size:15px"></div></details></div>
+      <div id="st1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ problem 2 ============ -->
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div>
+    <h2 data-l="th">วงจรเดิม: แก้ด้วยวิธีแทนค่า</h2><h2 data-l="en">The same circuit, solved by substitution</h2>
+    <div class="src" data-l="th">ค่าตั้งต้นเท่ากับข้อ 1 · ทั้งสองวิธีต้องได้คำตอบเดียวกันเสมอ</div><div class="src" data-l="en">Same starting values as problem 1 · both methods must always give the same answer</div></div></div>
+  <p class="lead" data-l="th">วิธีแทนค่า: ย้ายข้างให้ตัวแปรหนึ่งอยู่ตัวเดียว แล้วแทนลงในอีกสมการ <b>มักมีเศษส่วนโผล่กลางทาง</b> ส่วนวิธีกำจัดตัวแปรในข้อ 1 ใช้ตัวคูณที่เป็นจำนวนเต็มได้ ลองเปลี่ยนค่าในวงจรนี้ให้สัมประสิทธิ์ตัวหนึ่งเป็น 1 แล้วดูว่าวิธีไหนสั้นกว่า</p>
+  <p class="lead" data-l="en">Substitution: make one unknown the subject, then put it into the other equation. <b>Fractions often appear half way</b>, while elimination in problem 1 can use whole-number multipliers. Change the values here so one coefficient becomes 1 and see which method is shorter.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv2"></canvas><div class="ctl" id="ctl2"></div><div class="readout metrics" id="ro2"></div></div>
+    <div class="card solve">
+      <div class="given" id="g2"><div class="gl" data-l="th">โจทย์: หา I₁ และ I₂</div><div class="gl" data-l="en">Problem: find I₁ and I₂</div><div class="gtex"></div></div>
+      <div id="st2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ problem 3 ============ -->
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div>
+    <h2 data-l="th">ตัวอย่างในสไลด์: 4 สมการ 4 ตัวแปร</h2><h2 data-l="en">The slide example: four equations, four unknowns</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 1 หน้า 3–6 (โจทย์อยู่ในรูปด้านล่าง เฉลยของผู้สอนอยู่ท้ายข้อ)</div><div class="src" data-l="en">Chapter 1 slides, pp. 3–6 (the problem is in the picture below; the teacher's worked slides are at the end)</div></div></div>
+  <figure class="slide q"><img src="slides/ch1/p03q.webp" width="963" height="348" loading="lazy" decoding="async" alt="Slide 3: Determine linear equation: x + 2y + 3z + t = 4 (1); 2x + y + z + t = 3 (2); x + 3y + z = 2 (3); y + z + 2t = 1 (4)">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 3 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">หลักเดียวกับข้อ 1 แต่ทำซ้ำหลายรอบ: <b>กำจัดตัวแปรทีละตัวจนเหลือสมการตัวแปรเดียว แล้วแทนค่าย้อนกลับขึ้นไป</b> พจน์สีชมพูที่ถูกขีดฆ่าคือพจน์ที่หักล้างกันในขั้นนั้น ป้ายด้านล่างบอกว่าหาตัวแปรไหนได้แล้วบ้าง</p>
+  <p class="lead" data-l="en">The same idea as problem 1, repeated: <b>eliminate one unknown at a time until one equation has a single unknown, then substitute back upward</b>. Pink struck-out terms are the ones that cancel in that step. The tags below show which unknowns are found so far.</p>
+  <div class="card solve">
+    <div class="given"><div class="gl" data-l="th">โจทย์: หา x, y, z และ t</div><div class="gl" data-l="en">Problem: find x, y, z and t</div><div id="g3"></div></div>
+    <div class="chips" id="chips3"></div>
+    <div id="st3"></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์เฉลยต้นฉบับของผู้สอน (หน้า 3–6)</span><span data-l="en">See the teacher's original worked slides (pp. 3–6)</span></summary>
+    <div class="slides">
+      <figure class="slide"><img src="slides/ch1/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3: eliminate t: (1) − (2) gives (5), 2×(1) − (4) gives (6), keep (3)"><figcaption>p. 3</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4: eliminate x and y, z = 1"><figcaption>p. 4</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5: substitute back, y = 0 and x = 1"><figcaption>p. 5</figcaption></figure>
+      <figure class="slide"><img src="slides/ch1/p06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6: t = 0; x = 1, y = 0, z = 1, t = 0"><figcaption>p. 6</figcaption></figure>
+    </div></details>
+</section>
+
+<!-- ============ problem 4 ============ -->
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div>
+    <h2 data-l="th">ฝึกทำเอง: โจทย์สุ่ม</h2><h2 data-l="en">Practice: random problems</h2>
+    <div class="src" data-l="th">กด "โจทย์ใหม่" เพื่อสุ่มค่าอุปกรณ์ใหม่ · คำตอบเป็นจำนวนเต็มเสมอ</div><div class="src" data-l="en">Press "New problem" for new part values · the answers are always whole numbers</div></div></div>
+  <p class="lead" data-l="th">แก้สมการ (1) และ (2) ด้วยมือก่อน แล้วใส่ \(I_1\) และ \(I_2\) (ใส่เครื่องหมายลบถ้าติดลบ) <b>ถ้าถูก กระแสจะไหลทันที</b> ถ้าติดตรงไหน เปิดเฉลยทีละขั้นได้</p>
+  <p class="lead" data-l="en">Solve equations (1) and (2) by hand first, then enter \(I_1\) and \(I_2\) (with a minus sign if negative). <b>If you are right, the current flows at once.</b> If you get stuck, open the solution step by step.</p>
+  <div class="duo">
+    <div class="card sim"><canvas id="cv4"></canvas>
+      <div class="toggles" style="padding:2px 8px"><button type="button" class="btn on" id="new4"></button><span class="score" id="score4" style="align-self:center"></span></div>
+      <div class="readout metrics" id="ro4"></div></div>
+    <div class="card solve">
+      <div class="given" id="g4"><div class="gl" data-l="th">โจทย์: หา I₁ และ I₂</div><div class="gl" data-l="en">Problem: find I₁ and I₂</div><div class="gtex"></div></div>
+      <div id="ask4"></div>
+      <div id="st4"></div>
+    </div>
+  </div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — คำตอบติดลบแปลว่าอะไร</h3>
+    <ol><li>ข้อ 1 ด้วยค่าตั้งต้นได้ \(I_2 = -1\) A ดูช่องขวา: ลูกปัดบนวงแหวน \(I_2\) วิ่ง <b>ทวน</b> เข็มนาฬิกา สวนลูกศรที่สมมติไว้ และจุดใน \(V_2\) วิ่งขึ้น แปลว่าแบตเตอรี่ 10 V ก้อนนี้ก็จ่ายกระแสด้วย</li>
+    <li><b>เครื่องหมายลบไม่ได้แปลว่าผิด</b> แปลว่าทิศที่เราสมมติไว้ตรงข้ามกับทิศจริง ขนาดของกระแสยังเป็น 1 A</li>
+    <li>ในข้อ 1 เพิ่ม \(V_1\) ทีละ 1 V <b>หาค่า \(V_1\) ที่ทำให้ \(I_2 = 0\) พอดี</b> เกิดอะไรกับจุดใน \(V_2\) และทำไม</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — แทนค่า หรือ กำจัดตัวแปร</h3>
+    <ol><li>เทียบข้อ 1 กับข้อ 2 ด้วยค่าเดียวกัน <b>ทั้งสองวิธีได้คำตอบเดียวกันเสมอ</b></li>
+    <li>วิธีแทนค่ามักมีเศษส่วนโผล่กลางทาง ส่วนวิธีกำจัดตัวแปรใช้ตัวคูณที่เป็นจำนวนเต็มได้</li>
+    <li>เมื่อมีสามหรือสี่ตัวแปร (ข้อ 3) <b>วิธีกำจัดตัวแปรเป็นระบบกว่ามาก</b> และเป็นพื้นฐานของกฎของคราเมอร์ในหน้า 1.2</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ตรวจคำตอบด้วยฟิสิกส์</h3>
+    <ol><li>ดูแถว "แหล่งจ่ายให้ / ตัวต้านทานใช้" ใต้วงจรหลังแก้เสร็จ: <b>กำลังที่แหล่งจ่ายให้ต้องเท่ากับกำลังที่ตัวต้านทานใช้เสมอ</b> (พลังงานไม่หายไปไหน) เป็นวิธีตรวจคำตอบที่ไม่ต้องแก้สมการซ้ำ</li>
+    <li>คำถาม: ทำไมกระแสใน \(R_3\) จึงเท่ากับ \(I_1 - I_2\) ไม่ใช่ \(I_1 + I_2\)</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 1 หน้า 2–6 (ภาพสไลด์อยู่ในหน้านี้แล้ว) · Hayt, Kemmerly &amp; Durbin, ภาคผนวก 2 (การแก้สมการพร้อมกัน)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — what a negative answer means</h3>
+    <ol><li>Problem 1 with the starting values gives \(I_2 = -1\) A. Look at the right window: the beads on the \(I_2\) ring run <b>anticlockwise</b>, against the assumed arrow, and the dots in \(V_2\) run upward, so this 10 V battery is supplying current too.</li>
+    <li><b>The minus sign does not mean a mistake.</b> It means the direction we assumed is opposite to the real one; the size of the current is still 1 A.</li>
+    <li>In problem 1, raise \(V_1\) 1 V at a time. <b>Find the \(V_1\) that makes \(I_2 = 0\) exactly.</b> What happens to the dots in \(V_2\), and why?</li></ol></div>
+  <div class="card"><h3>Try this 2 — substitution or elimination</h3>
+    <ol><li>Compare problems 1 and 2 with the same values: <b>both methods always give the same answer</b>.</li>
+    <li>Substitution often produces fractions half way, while elimination can use whole-number multipliers.</li>
+    <li>With three or four unknowns (problem 3), <b>elimination is far more systematic</b>, and it is the basis of Cramer's rule on page 1.2.</li></ol></div>
+  <div class="card"><h3>Try this 3 — check the answer with physics</h3>
+    <ol><li>Look at the row "sources give / resistors use" under a solved circuit: <b>the power the sources deliver always equals the power the resistors use</b> (energy does not vanish). That checks an answer without solving again.</li>
+    <li>Question: why is the current in \(R_3\) equal to \(I_1 - I_2\) and not \(I_1 + I_2\)?</li></ol>
+    <div class="book">Source: chapter 1 slides, pp. 2–6 (the slide pictures are on this page) · Hayt, Kemmerly &amp; Durbin, Appendix 2 (solution of simultaneous equations)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), ui = MC.ui, V = ['I_1', 'I_2'], UA = '\\,\\text{A}';
+const unitA = q => `${ALG.texNum(q)}${UA}`;
+const eqsOf = S => { const { A, B } = CH1.sys2(S); return [ALG.eq(A[0], B[0], '(1)'), ALG.eq(A[1], B[1], '(2)')]; };
+const givenTex = S => tx(`\\begin{aligned} (R_1+R_3)\\,I_1 - R_3\\,I_2 &= V_1 &&(1) \\\\ -R_3\\,I_1 + (R_2+R_3)\\,I_2 &= -V_2 &&(2) \\end{aligned}`, true) +
+  `<div style="font-size:15px;color:var(--muted)">${MC.t('แทนค่าอุปกรณ์ในวงจร:', 'with the part values:')}</div>` + tx(ALG.texSystem(eqsOf(S), V), true);
+/* the answer box under the last step */
+function answerHTML(S, method) {
+  const [E1, E2] = eqsOf(S), r = CH1.lin2Steps(E1, E2, V, method); if (!r.ok) return ''; const s = r.sol, neg = +s[0] < 0 || +s[1] < 0;
+  return tx(`I_1 = ${unitA(s[0])}, \\qquad I_2 = ${unitA(s[1])}, \\qquad I_{R_3} = I_1 - I_2 = ${unitA(s[0].sub(s[1]))}`) +
+    (neg ? `<div class="warnbox">${MC.t(`<b>คำตอบติดลบ</b> แปลว่ากระแสจริงไหลสวนทิศที่สมมติไว้ ดูวงแหวน${+s[1] < 0 ? 'ขวา' : 'ซ้าย'}บนวงจร: ลูกปัดวิ่งทวนเข็มนาฬิกา`, `<b>A negative answer</b> means the real current flows against the assumed direction. Look at the ${+s[1] < 0 ? 'right' : 'left'} ring: its beads run anticlockwise.`)}</div>` : '');
+}
+/* a two-window circuit problem with its own sliders and stepper */
+function circuitProblem(n, method) {
+  const mesh = new CH1.Mesh(document.getElementById('cv' + n), { n: 2 }), S = mesh.S;
+  const gtex = document.querySelector(`#g${n} .gtex`), ro = document.getElementById('ro' + n);
+  const st = LS.stepper(document.getElementById('st' + n), {
+    steps: () => { const [E1, E2] = eqsOf(S); return CH1.lin2Steps(E1, E2, V, method, { flow: true }).steps; },
+    answer: () => answerHTML(S, method),
+    onStep: (k, nn) => { mesh.setSolved(k === nn && nn > 0); ro.innerHTML = mesh.readout(); } });
+  const ctl = document.getElementById('ctl' + n);
+  [['V1', 'V₁', 0, 30, 'V'], ['V2', 'V₂', 0, 30, 'V'], ['R1', 'R₁', 1, 10, 'Ω'], ['R2', 'R₂', 1, 10, 'Ω'], ['R3', 'R₃', 1, 10, 'Ω']].forEach(([k, lab, mn, mx, un]) =>
+    ui.slider(ctl, { id: `s${n}${k}`, label: lab, min: mn, max: mx, step: 1, value: S[k], fmt: v => `${v} ${un}`, oninput: v => { mesh.set({ [k]: v }); gtex.innerHTML = givenTex(S); st.refresh(); } }));
+  gtex.innerHTML = givenTex(S);
+  return { mesh, st };
+}
+circuitProblem(1, 'elim'); circuitProblem(2, 'subst');
+document.getElementById('why1').innerHTML = MC.t(
+  `<p>เดินรอบช่องซ้ายตามเข็มนาฬิกา (ทิศของ \\(I_1\\)) แรงดันที่ตกคร่อมตัวต้านทานรวมกันต้องเท่ากับแรงดันที่แบตเตอรี่ยกขึ้น ตัวต้านทาน \\(R_3\\) มีกระแส \\(I_1\\) ไหลลงและ \\(I_2\\) ไหลขึ้น กระแสสุทธิที่ไหลลงจึงเป็น \\(I_1 - I_2\\):</p>` +
+  tx(`R_1 I_1 + R_3 (I_1 - I_2) = V_1 \\;\\Longrightarrow\\; (R_1+R_3) I_1 - R_3 I_2 = V_1`, true) +
+  `<p>ช่องขวาตามเข็มนาฬิกา (ทิศของ \\(I_2\\)) ผ่าน \\(R_2\\) แล้วลงผ่าน \\(V_2\\) จากขั้วบวกไปขั้วลบ ซึ่งเป็นแรงดันตก \\(V_2\\) แล้วขึ้นผ่าน \\(R_3\\):</p>` +
+  tx(`R_2 I_2 + V_2 + R_3 (I_2 - I_1) = 0 \\;\\Longrightarrow\\; -R_3 I_1 + (R_2+R_3) I_2 = -V_2`, true),
+  `<p>Walk clockwise round the left window (the direction of \\(I_1\\)). The voltage drops across the resistors must add up to the voltage the battery raises. \\(R_3\\) carries \\(I_1\\) downward and \\(I_2\\) upward, so its net downward current is \\(I_1 - I_2\\):</p>` +
+  tx(`R_1 I_1 + R_3 (I_1 - I_2) = V_1 \\;\\Longrightarrow\\; (R_1+R_3) I_1 - R_3 I_2 = V_1`, true) +
+  `<p>Clockwise round the right window (the direction of \\(I_2\\)): through \\(R_2\\), down through \\(V_2\\) from + to −, which is a drop of \\(V_2\\), then up through \\(R_3\\):</p>` +
+  tx(`R_2 I_2 + V_2 + R_3 (I_2 - I_1) = 0 \\;\\Longrightarrow\\; -R_3 I_1 + (R_2+R_3) I_2 = -V_2`, true));
+MC.renderMath(document.getElementById('why1'));
+
+/* ---------- problem 3: the slide example with 4 unknowns ---------- */
+const X = ['x', 'y', 'z', 't'];
+const e1 = ALG.eq([1, 2, 3, 1], 4, '(1)'), e2 = ALG.eq([2, 1, 1, 1], 3, '(2)'), e3 = ALG.eq([1, 3, 1, 0], 2, '(3)'), e4 = ALG.eq([0, 1, 1, 2], 1, '(4)');
+const e5 = ALG.combine(e1, 1, e2, -1, '(5)'), e6 = ALG.combine(e1, 2, e4, -1, '(6)'), e7 = ALG.combine(e5, 1, e3, 1, '(7)'), e8 = ALG.combine(e5, 2, e6, 1, '(8)'), e9 = ALG.combine(e7, 5, e8, -4, '(9)');
+const stack = (rows, cancel) => tx(ALG.texStack(rows, X, { cancel }), true);
+const SL = [
+  { th: '<b>กำจัด \\(t\\)</b>: นำ (1) ลบด้วย (2)', en: '<b>Eliminate \\(t\\)</b>: (1) minus (2)', found: {}, body: () => stack([{ e: e1, tag: '(1)' }, { e: ALG.scale(e2, -1), tag: '−(2)' }, { e: e5, tag: '(5)' }], 3) },
+  { th: '<b>กำจัด \\(t\\) อีกครั้ง</b>: 2×(1) ลบด้วย (4)', en: '<b>Eliminate \\(t\\) again</b>: 2×(1) minus (4)', found: {}, body: () => stack([{ e: ALG.scale(e1, 2), tag: '2×(1)' }, { e: ALG.scale(e4, -1), tag: '−(4)' }, { e: e6, tag: '(6)' }], 3) },
+  { th: 'สมการ (3) ไม่มี \\(t\\) อยู่แล้ว ใช้ได้เลย <b>ตอนนี้เหลือสามสมการ สามตัวแปร</b>: (5), (6), (3)', en: 'Equation (3) has no \\(t\\) already, so keep it. <b>Now three equations in three unknowns</b>: (5), (6), (3)', found: {}, body: () => tx(ALG.texSystem([e5, e6, e3], X), true) },
+  { th: '<b>กำจัด \\(x\\)</b>: (5) บวก (3)', en: '<b>Eliminate \\(x\\)</b>: (5) plus (3)', found: {}, body: () => stack([{ e: e5, tag: '(5)' }, { e: e3, tag: '(3)' }, { e: e7, tag: '(7)' }], 0) },
+  { th: '<b>กำจัด \\(x\\) อีกครั้ง</b>: 2×(5) บวก (6)', en: '<b>Eliminate \\(x\\) again</b>: 2×(5) plus (6)', found: {}, body: () => stack([{ e: ALG.scale(e5, 2), tag: '2×(5)' }, { e: e6, tag: '(6)' }, { e: e8, tag: '(8)' }], 0) },
+  { th: '<b>กำจัด \\(y\\)</b>: 5×(7) ลบด้วย 4×(8)', en: '<b>Eliminate \\(y\\)</b>: 5×(7) minus 4×(8)', found: {}, body: () => stack([{ e: ALG.scale(e7, 5), tag: '5×(7)' }, { e: ALG.scale(e8, -4), tag: '−4×(8)' }, { e: e9, tag: '(9)' }], 1) },
+  { th: '<b>เหลือตัวแปรเดียว</b>: หาค่า \\(z\\) จาก (9)', en: '<b>One unknown left</b>: \\(z\\) from (9)', found: { 2: 1 }, body: () => tx(`\\begin{aligned} -21z &= -21 \\\\ z &= \\frac{-21}{-21} = \\boxed{1} \\end{aligned}`, true) },
+  { th: '<b>แทน \\(z\\) ลงใน (7)</b> เพื่อหา \\(y\\)', en: '<b>Substitute \\(z\\) into (7)</b> to find \\(y\\)', found: { 2: 1, 1: 0 }, body: () => tx(ALG.backSub(e7, X, { 2: 1 }).chain(''), true) },
+  { th: '<b>แทน \\(y\\) และ \\(z\\) ลงใน (3)</b> เพื่อหา \\(x\\)', en: '<b>Substitute \\(y\\) and \\(z\\) into (3)</b> to find \\(x\\)', found: { 2: 1, 1: 0, 0: 1 }, body: () => tx(ALG.backSub(e3, X, { 1: 0, 2: 1 }).chain(''), true) },
+  { th: '<b>แทน \\(x, y, z\\) ลงใน (1)</b> เพื่อหา \\(t\\)', en: '<b>Substitute \\(x, y, z\\) into (1)</b> to find \\(t\\)', found: { 2: 1, 1: 0, 0: 1, 3: 0 }, body: () => tx(ALG.backSub(e1, X, { 0: 1, 1: 0, 2: 1 }).chain(''), true) }
+];
+document.getElementById('g3').innerHTML = tx(ALG.texSystem([e1, e2, e3, e4], X), true);
+const chips = document.getElementById('chips3');
+LS.stepper(document.getElementById('st3'), {
+  steps: SL.map(s => ({ why: MC.t(s.th, s.en), body: s.body })),
+  answer: () => `${tx('x = 1,\\quad y = 0,\\quad z = 1,\\quad t = 0')} &nbsp; ${MC.t('ตรงกับคำตอบในสไลด์หน้า 6', 'matches the answer on slide p. 6')}`,
+  onStep: k => { const f = k ? SL[k - 1].found : {}; chips.innerHTML = `<span style="font-size:14px;color:var(--muted);align-self:center">${MC.t('หาได้แล้ว:', 'found so far:')}</span>` +
+    X.map((v, i) => `<span class="pill ${f[i] !== undefined ? 'good' : ''}">${v} = ${f[i] !== undefined ? f[i] : '?'}</span>`).join(''); } });
+
+/* ---------- problem 4: random practice ---------- */
+const mesh4 = new CH1.Mesh(document.getElementById('cv4'), { n: 2, wait: MC.t('? ยังไม่รู้กระแส: แก้เองแล้วใส่คำตอบ', '? Currents unknown: solve it and enter your answer') });
+const S4 = mesh4.S, ro4 = document.getElementById('ro4'); let ok4 = false, score = 0, tries = 0;
+const sol4 = () => { const [E1, E2] = eqsOf(S4); return CH1.lin2Steps(E1, E2, V, 'elim').sol; };
+const st4 = LS.stepper(document.getElementById('st4'), {
+  steps: () => { const [E1, E2] = eqsOf(S4); return CH1.lin2Steps(E1, E2, V, 'elim', { flow: true }).steps; },
+  answer: () => answerHTML(S4, 'elim'),
+  hint: MC.t('ติดตรงไหน กด <b>▶ เริ่มเฉลย</b> เพื่อดูวิธีทำทีละขั้น', 'Stuck? Press <b>▶ Start</b> to see the working one step at a time'),
+  onStep: (k, n) => { mesh4.setSolved(ok4 || (k === n && n > 0)); ro4.innerHTML = mesh4.readout(); } });
+const ask4 = LS.ask(document.getElementById('ask4'), {
+  fields: [{ label: 'I₁ (A) =', ok: x => Math.abs(x - sol4()[0]) < 0.011 }, { label: 'I₂ (A) =', ok: x => Math.abs(x - sol4()[1]) < 0.011 }],
+  check: v => { tries++; const [E1, E2] = eqsOf(S4); const r1 = +E1.c[0] * v[0] + +E1.c[1] * v[1], r2 = +E2.c[0] * v[0] + +E2.c[1] * v[1]; const bad = [];
+    if (Math.abs(r1 - E1.r) > 1e-6) bad.push(`(1): ${ALG.fmtN(r1, 3)} ≠ ${ALG.fmtN(+E1.r)}`); if (Math.abs(r2 - E2.r) > 1e-6) bad.push(`(2): ${ALG.fmtN(r2, 3)} ≠ ${ALG.fmtN(+E2.r)}`);
+    showScore(); return MC.t('ยังไม่ใช่ แทนค่าของคุณลงในสมการแล้วได้ ', 'Not yet. Your values give ') + bad.join(', '); },
+  onOk: () => { tries++; if (!ok4) score++; ok4 = true; mesh4.setSolved(true); ro4.innerHTML = mesh4.readout(); showScore(); } });
+function showScore() { document.getElementById('score4').innerHTML = `${MC.t('ทำถูก', 'correct')} <b>${score}</b> · ${MC.t('ตรวจไป', 'checks')} ${tries}`; }
+function newProblem() {
+  const Rs = [1, 2, 3, 4, 5, 6, 8, 10], Vs = [5, 6, 9, 10, 12, 15, 18, 20, 24], pick = a => a[Math.floor(Math.random() * a.length)];
+  for (let k = 0; k < 20000; k++) { const R1 = pick(Rs), R2 = pick(Rs), R3 = pick(Rs), V1 = pick(Vs), V2 = pick(Vs);
+    const d = (R1 + R3) * (R2 + R3) - R3 * R3, n1 = V1 * (R2 + R3) - R3 * V2, n2 = -(R1 + R3) * V2 + R3 * V1;
+    if (n1 % d === 0 && n2 % d === 0 && n1 !== 0 && n2 !== 0 && Math.abs(n1 / d) <= 8 && Math.abs(n2 / d) <= 8 && !(R1 === S4.R1 && R2 === S4.R2 && R3 === S4.R3 && V1 === S4.V1 && V2 === S4.V2)) {
+      mesh4.set({ V1, V2, R1, R2, R3 }); break; } }
+  ok4 = false; ask4.reset(); document.querySelector('#g4 .gtex').innerHTML = givenTex(S4) +
+    `<div style="font-size:15px;color:var(--muted)">${MC.t('ค่าในวงจร:', 'circuit values:')} V₁ = ${S4.V1} V, V₂ = ${S4.V2} V, R₁ = ${S4.R1} Ω, R₂ = ${S4.R2} Ω, R₃ = ${S4.R3} Ω</div>`;
+  st4.refresh(false);
+}
+const nb = document.getElementById('new4'); nb.textContent = MC.t('🎲 โจทย์ใหม่', '🎲 New problem'); nb.addEventListener('click', newProblem);
+newProblem(); showScore();
+});
+</script>
+</body>
+</html>

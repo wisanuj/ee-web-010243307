@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="1.3 — Complex Numbers: Cartesian and Polar Forms">1.3 — จำนวนเชิงซ้อน: รูปคาร์ทีเซียนและรูปเชิงขั้ว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch1.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">จำนวนเชิงซ้อน: รูปคาร์ทีเซียนและรูปเชิงขั้ว <span class="en">Complex numbers: Cartesian and polar forms — one point, two addresses</span></h1>
+<h1 data-l="en">Complex numbers: Cartesian and polar forms <span class="en">One point, two addresses</span></h1>
+
+<p class="sub" data-l="th">จำนวนเชิงซ้อนคือคู่อันดับ \((a, b)\) ที่วางเป็นจุดบนระนาบได้ แกนนอนคือส่วนจริง แกนตั้งคือส่วนจินตภาพ จุดเดียวกันบอกตำแหน่งได้สองแบบ: <b>รูปคาร์ทีเซียน \(a + jb\)</b> (เดินไปทางขวา a เดินขึ้น b) และ <b>รูปเชิงขั้ว \(r\angle\theta\)</b> (หันไปมุม θ แล้วเดินไป r) วิศวกรไฟฟ้าใช้ \(j\) แทน \(i\) เพราะ \(i\) ใช้แทนกระแส หน้านี้มี <b>ทฤษฎี 5 เรื่อง (A–E) แต่ละเรื่องมีระนาบที่ลากจุดได้</b> ตามด้วย <b>แบบฝึกหัดจากสไลด์ 12 ข้อ แยกทีละข้อ</b> แต่ละข้อมีระนาบของตัวเองและเฉลยที่เปิดทีละขั้น</p>
+<p class="sub" data-l="en">A complex number is an ordered pair \((a, b)\) that sits as a point on a plane: the horizontal axis is the real part, the vertical axis the imaginary part. The same point has two addresses: <b>Cartesian form \(a + jb\)</b> (go right a, go up b) and <b>polar form \(r\angle\theta\)</b> (turn to angle θ, then go r). Electrical engineers write \(j\) instead of \(i\) because \(i\) means current. This page has <b>5 theory topics (A–E), each with a plane you can drag</b>, then <b>the 12 slide exercises, one at a time</b>, each with its own plane and a solution that opens step by step.</p>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li>\(z = a + jb = r\angle\theta\), <b>\(r = \sqrt{a^2+b^2}\)</b>, <b>\(\theta = \arctan(b/a)\)</b> แต่ <b>ถ้า \(a < 0\) ต้องบวกหรือลบ 180°</b></li><li><b>บวกลบใช้รูปคาร์ทีเซียน</b> · <b>คูณหารใช้รูปเชิงขั้ว</b> (ขนาดคูณหรือหาร มุมบวกหรือลบ)</li><li><b>หารในรูปคาร์ทีเซียน</b>: คูณทั้งเศษและส่วนด้วยสังยุคของตัวส่วน</li><li><b>คูณด้วย \(j\) = หมุน 90°</b> โดยขนาดเท่าเดิม เพราะ \(j^2 = -1\)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li>\(z = a + jb = r\angle\theta\), <b>\(r = \sqrt{a^2+b^2}\)</b>, <b>\(\theta = \arctan(b/a)\)</b>, but <b>if \(a < 0\) add or subtract 180°</b>.</li><li><b>Add and subtract in Cartesian form</b> · <b>multiply and divide in polar form</b> (sizes multiply or divide, angles add or subtract).</li><li><b>To divide in Cartesian form</b>, multiply top and bottom by the conjugate of the bottom.</li><li><b>Multiplying by \(j\) is a 90° turn</b> with the size unchanged, because \(j^2 = -1\).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#thA"><b>A</b>สองรูปแบบ</a><a href="#thB"><b>B</b>สังยุค</a><a href="#thC"><b>C</b>คูณด้วย j</a><a href="#thD"><b>D</b>บวก ลบ</a><a href="#thE"><b>E</b>คูณ หาร</a><a href="#ex1"><b>Ex 1</b>คาร์ทีเซียน → เชิงขั้ว</a><a href="#ex2"><b>Ex 2</b>เชิงขั้ว → คาร์ทีเซียน</a><a href="#ex3"><b>Ex 3</b>หาผลลัพธ์</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#thA"><b>A</b>Two forms</a><a href="#thB"><b>B</b>Conjugate</a><a href="#thC"><b>C</b>Times j</a><a href="#thD"><b>D</b>Add, subtract</a><a href="#thE"><b>E</b>Multiply, divide</a><a href="#ex1"><b>Ex 1</b>Cartesian → polar</a><a href="#ex2"><b>Ex 2</b>Polar → Cartesian</a><a href="#ex3"><b>Ex 3</b>Results</a></nav>
+
+<!-- ================= theory ================= -->
+<div class="group-head"><h2 data-l="th">ทฤษฎี: รูปคาร์ทีเซียนและรูปเชิงขั้ว (สไลด์หน้า 13, 14, 16)</h2><h2 data-l="en">Theory: Cartesian and polar forms (slides pp. 13, 14, 16)</h2></div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch1/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13: a complex number is an ordered pair (a,b) = a + jb = r angle theta"><figcaption data-l="th">สไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 13 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch1/p14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14: Cartesian form, a is the real part, b the imaginary part, z = a + jb"><figcaption data-l="th">สไลด์หน้า 14</figcaption><figcaption data-l="en">Slide p. 14</figcaption></figure>
+  <figure class="slide"><img src="slides/ch1/p16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 16: polar form, r = |z| = sqrt(a^2 + b^2), theta = arctan(b/a), a = r cos theta, b = r sin theta"><figcaption data-l="th">สไลด์หน้า 16</figcaption><figcaption data-l="en">Slide p. 16</figcaption></figure>
+</div>
+
+<section class="prob" id="thA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">จุดเดียว สองรูปแบบ: \(a + jb\) และ \(r\angle\theta\)</h2><h2 data-l="en">One point, two forms: \(a + jb\) and \(r\angle\theta\)</h2>
+    <div class="src" data-l="th">ลากจุด z บนระนาบ หรือพิมพ์ค่า · ลองลากไปทางซ้ายของแกนตั้ง (a ติดลบ) เพื่อดูกับดักของ arctan</div><div class="src" data-l="en">Drag z on the plane or type a value · drag it left of the vertical axis (negative a) to see the arctan trap</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvA"></canvas><div class="ctl" id="ctlA"></div></div>
+    <div class="card solve"><h3 data-l="th">การคำนวณ (เปลี่ยนตามจุดที่ลาก)</h3><h3 data-l="en">The arithmetic (follows the point you drag)</h3><div id="wA"></div></div></div>
+</section>
+
+<div class="group-head"><h2 data-l="th">ทฤษฎี: สังยุคและการคูณด้วย j (สไลด์หน้า 15)</h2><h2 data-l="en">Theory: the conjugate and multiplying by j (slide p. 15)</h2></div>
+<figure class="slide q wide"><img src="slides/ch1/p15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 15: complex conjugate z* = Re[z] − j Im[z]; adding keeps real and imaginary parts separate; j times a real number is imaginary, j(jb) = −b because j^2 = −1">
+  <figcaption data-l="th">สไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="thB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">สังยุค \(z^*\): ภาพสะท้อนข้ามแกนจริง</h2><h2 data-l="en">The conjugate \(z^*\): a mirror image in the real axis</h2>
+    <div class="src" data-l="th">ส่วนจริงเท่าเดิม ส่วนจินตภาพกลับเครื่องหมาย · ลากจุด z ดู</div><div class="src" data-l="en">Same real part, imaginary part with the opposite sign · drag z</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvB"></canvas><div class="ctl" id="ctlB"></div></div>
+    <div class="card solve"><h3 data-l="th">การคำนวณ</h3><h3 data-l="en">The arithmetic</h3><div id="wB"></div></div></div>
+</section>
+
+<section class="prob" id="thC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">คูณด้วย \(j\): หมุนไป 90° ขนาดเท่าเดิม</h2><h2 data-l="en">Multiplying by \(j\): a 90° turn, same size</h2>
+    <div class="src" data-l="th">สไลด์หน้า 15 บรรทัดสุดท้าย: \(j \cdot a\) เป็นจินตภาพ และ \(j(jb) = -b\) เป็นจริง · เส้นจาง ๆ คือ \(j^2 z\) และ \(j^3 z\)</div><div class="src" data-l="en">The last lines of slide p. 15: \(j \cdot a\) is imaginary and \(j(jb) = -b\) is real · the faint arrows are \(j^2 z\) and \(j^3 z\)</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvC"></canvas><div class="ctl" id="ctlC"></div></div>
+    <div class="card solve"><h3 data-l="th">การคำนวณ</h3><h3 data-l="en">The arithmetic</h3><div id="wC"></div></div></div>
+</section>
+
+<div class="group-head"><h2 data-l="th">ทฤษฎี: บวก ลบ คูณ (สไลด์หน้า 17)</h2><h2 data-l="en">Theory: add, subtract, multiply (slide p. 17)</h2></div>
+<figure class="slide q wide"><img src="slides/ch1/p17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 17: (z1 ± z2) = (a1 ± a2) + j(b1 ± b2); z1 z2 = a1a2 − b1b2 + j(a1b2 + a2b1)">
+  <figcaption data-l="th">สไลด์หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 17 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="thD">
+  <div class="prob-head"><span class="prob-no">D</span><div><h2 data-l="th">บวกและลบ: ต่อลูกศรหัวต่อหาง</h2><h2 data-l="en">Add and subtract: arrows head to tail</h2>
+    <div class="src" data-l="th">ลาก z₁ และ z₂ · การลบคือการบวกกับ −z₂ (ลูกศรกลับทิศ)</div><div class="src" data-l="en">Drag z₁ and z₂ · subtracting is adding −z₂ (the arrow reversed)</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvD"></canvas><div class="ctl" id="ctlD"></div></div>
+    <div class="card solve"><h3 data-l="th">การคำนวณ</h3><h3 data-l="en">The arithmetic</h3><div id="wD"></div></div></div>
+</section>
+
+<section class="prob" id="thE">
+  <div class="prob-head"><span class="prob-no">E</span><div><h2 data-l="th">คูณและหาร: ยืดและหมุน</h2><h2 data-l="en">Multiply and divide: stretch and turn</h2>
+    <div class="src" data-l="th">สไลด์คูณในรูปคาร์ทีเซียน · รูปเชิงขั้วง่ายกว่ามาก: ขนาดคูณกัน มุมบวกกัน (หาร: ขนาดหาร มุมลบ)</div><div class="src" data-l="en">The slide multiplies in Cartesian form · polar form is far easier: sizes multiply, angles add (divide: sizes divide, angles subtract)</div></div></div>
+  <div class="duo"><div class="card sim"><canvas id="cvE"></canvas><div class="ctl" id="ctlE"></div></div>
+    <div class="card solve"><h3 data-l="th">การคำนวณ</h3><h3 data-l="en">The arithmetic</h3><div id="wE"></div></div></div>
+</section>
+
+<!-- ================= exercises ================= -->
+<div class="group-head" id="ex1"><h2 data-l="th">Ex 1: แปลงจากรูปคาร์ทีเซียนเป็นรูปเชิงขั้ว (สไลด์หน้า 18)</h2><h2 data-l="en">Ex 1: Cartesian to polar form (slide p. 18)</h2></div>
+<figure class="slide q"><img src="slides/ch1/p18q.webp" width="1257" height="657" loading="lazy" decoding="async" alt="Slide 18: Ex 1. Convert from Cartesian to polar form: 1) 3 + j2; 2) 1 − j; 3) −1 + j; 4) −√6 − j√2">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 18 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problems, slide p. 18 · tap to enlarge</figcaption></figure>
+<p class="lead" data-l="th">ทำทีละข้อ: <b>ลองตอบก่อน</b> (r และ θ เป็นองศา ทศนิยมอย่างน้อย 2 ตำแหน่ง มุม −150° กับ 210° ถือว่าเท่ากัน) แล้วเปิดเฉลยทีละขั้น ระนาบจะวาดตามขั้นที่เปิด</p>
+<p class="lead" data-l="en">One at a time: <b>try first</b> (r, and θ in degrees, to at least 2 decimal places; −150° and 210° count as the same angle), then open the solution step by step. The plane draws along with the open steps.</p>
+<div id="items1"></div>
+
+<div class="group-head" id="ex2"><h2 data-l="th">Ex 2: แปลงจากรูปเชิงขั้วเป็นรูปคาร์ทีเซียน (สไลด์หน้า 19)</h2><h2 data-l="en">Ex 2: polar to Cartesian form (slide p. 19)</h2></div>
+<figure class="slide q"><img src="slides/ch1/p19q.webp" width="1316" height="653" loading="lazy" decoding="async" alt="Slide 19: Ex 2. Convert from polar to Cartesian form: 1) 2∠30°; 2) −5∠120°; 3) 3∠−45°; 4) −4∠−150°">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 19 (หัวสไลด์พิมพ์ว่า Series and Parallel Connected Sources ซึ่งคัดลอกมาจากบทอื่น) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problems, slide p. 19 (its header reads "Series and Parallel Connected Sources", copied from another chapter) · tap to enlarge</figcaption></figure>
+<div id="items2"></div>
+
+<div class="group-head" id="ex3"><h2 data-l="th">Ex 3: หาผลลัพธ์ของจำนวนเชิงซ้อน (สไลด์หน้า 20)</h2><h2 data-l="en">Ex 3: find the results (slide p. 20)</h2></div>
+<figure class="slide q"><img src="slides/ch1/p20q.webp" width="852" height="678" loading="lazy" decoding="async" alt="Slide 20: Ex 3. Determine the results: 1) (3 − j5) + (−4 − j6); 2) (2∠30°) − (−5 + j); 3) (−3 − j) × (2 + j4); 4) (2 − j3)/(−1 + j4)">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 20 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problems, slide p. 20 · tap to enlarge</figcaption></figure>
+<p class="lead" data-l="th">ตอบในรูป \(a + jb\) (ใส่ส่วนจริงและส่วนจินตภาพ)</p><p class="lead" data-l="en">Answer as \(a + jb\) (enter the real and imaginary parts).</p>
+<div id="items3"></div>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กับดักของ arctan</h3>
+    <ol><li>ทฤษฎี A: ลาก z ไปที่ \(-1 + j\) (จตุภาคที่ 2) เครื่องคิดเลขให้ \(\arctan(1/{-1}) = -45^\circ\) ซึ่งชี้ไปจตุภาคที่ 4 (เส้นแดง) <b>มุมที่ถูกคือ \(-45^\circ + 180^\circ = 135^\circ\)</b> (เส้นเขียว)</li>
+    <li>Ex 1 ข้อ 4: arctan ให้ \(30^\circ\) แต่มุมจริงคือ \(30^\circ - 180^\circ = -150^\circ\)</li>
+    <li>สรุป: <b>ดูเครื่องหมายของ a ก่อนเสมอ</b> ถ้า a ติดลบ ต้องบวกหรือลบ 180° เครื่องคิดเลขหลายรุ่นมีปุ่ม Pol( ) หรือ atan2 ที่จัดการให้</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — คูณคือหมุน</h3>
+    <ol><li>ทฤษฎี C: ลาก z ไปรอบ ๆ <b>jz อยู่ห่างจากจุดกำเนิดเท่าเดิมแต่หมุนนำไป 90° เสมอ</b> เพราะ \(j = 1\angle 90^\circ\) แล้ว \(j^2 z\) กับ \(j^3 z\) อยู่ตรงไหน</li>
+    <li>ทฤษฎี E: ผลคูณมีขนาด \(r_1 r_2\) มุม \(\theta_1 + \theta_2\) ลองให้ \(|z_2| = 1\) ผลคูณจะเป็นการหมุนล้วน ๆ</li>
+    <li>ทฤษฎี E แบบหาร: มุมลบกัน ขนาดหารกัน <b>รูปเชิงขั้วจึงง่ายกว่ามากสำหรับคูณและหาร</b> ส่วนบวกและลบใช้รูปคาร์ทีเซียนง่ายกว่า</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — สังยุคและขนาดติดลบ</h3>
+    <ol><li>ทฤษฎี B: <b>\(z\,z^* = |z|^2\) เป็นจำนวนจริงเสมอ</b> นี่คือเหตุผลที่การหารใช้การคูณด้วยสังยุค (Ex 3 ข้อ 4)</li>
+    <li>Ex 2 ข้อ 2: เครื่องหมายลบหน้าขนาดแปลว่าหมุนไปอีก 180°: \(-5\angle 120^\circ = 5\angle -60^\circ\)</li>
+    <li>คำถาม: \(j^3\) และ \(j^4\) มีค่าเท่าไร</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 1 หน้า 13–20 (ภาพสไลด์อยู่ในหน้านี้แล้ว) · Hayt, Kemmerly &amp; Durbin, ภาคผนวก 5 (จำนวนเชิงซ้อน)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the arctan trap</h3>
+    <ol><li>Theory A: drag z to \(-1 + j\) (second quadrant). A calculator gives \(\arctan(1/{-1}) = -45^\circ\), which points into the fourth quadrant (red line). <b>The right angle is \(-45^\circ + 180^\circ = 135^\circ\)</b> (green line).</li>
+    <li>Ex 1, item 4: arctan gives \(30^\circ\), but the true angle is \(30^\circ - 180^\circ = -150^\circ\).</li>
+    <li>Rule: <b>always look at the sign of a first</b>. If a is negative, add or subtract 180°. Many calculators have a Pol( ) or atan2 key that does this for you.</li></ol></div>
+  <div class="card"><h3>Try this 2 — multiplying is turning</h3>
+    <ol><li>Theory C: drag z around. <b>jz stays the same distance from the origin but is always turned 90° ahead</b>, because \(j = 1\angle 90^\circ\). Where are \(j^2 z\) and \(j^3 z\)?</li>
+    <li>Theory E: the product has size \(r_1 r_2\) and angle \(\theta_1 + \theta_2\). Make \(|z_2| = 1\) and the product is a pure turn.</li>
+    <li>Theory E, divide: angles subtract and sizes divide. So <b>polar form is far easier for multiplying and dividing</b>, while Cartesian form is easier for adding and subtracting.</li></ol></div>
+  <div class="card"><h3>Try this 3 — conjugates and negative sizes</h3>
+    <ol><li>Theory B: <b>\(z\,z^* = |z|^2\) is always real</b>, which is why division multiplies by the conjugate (Ex 3, item 4).</li>
+    <li>Ex 2, item 2: a minus sign in front of the size means a further 180° turn, \(-5\angle 120^\circ = 5\angle -60^\circ\).</li>
+    <li>Question: what are \(j^3\) and \(j^4\)?</li></ol>
+    <div class="book">Source: chapter 1 slides, pp. 13–20 (the slide pictures are on this page) · Hayt, Kemmerly &amp; Durbin, Appendix 5 (complex numbers)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const C = ALG, cx = C.cx, PC = CH1.PC, d = LS.d, u = LS.u, tx = (s, dd) => MC.tex(s, dd), t = MC.t, ui = MC.ui;
+const O = cx(0, 0), mag = z => C.cabs(z), deg = z => C.cargd(z), neg = z => cx(-z.re, -z.im), sc = (z, k) => cx(z.re * k, z.im * k);
+const K = (z, n = 3) => `${d(z.re, n)} ${z.im < 0 ? '-' : '+'} j${d(Math.abs(z.im), n)}`;           // Cartesian, TeX
+const Pt = (z, n = 3) => `${d(mag(z), n)}\\angle{${d(deg(z), 2)}^\\circ}`;                          // polar, TeX
+const ktxt = z => C.cfmt(z, 3), ptxt = z => C.cfmtPolar(z, 3, 2);
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+const naive = z => Math.atan(z.im / z.re) * 180 / Math.PI;
+const quad = z => z.re >= 0 ? (z.im >= 0 ? 1 : 4) : (z.im >= 0 ? 2 : 3);
+const QEN = ['', 'I', 'II', 'III', 'IV'];
+const angEq = (x, y, tol = 0.6) => Math.abs((((x - y) % 360) + 540) % 360 - 180) <= tol;
+const near = (x, y) => Math.abs(x - y) <= Math.max(0.011, 0.006 * Math.abs(y));
+/* shade one quadrant of the plane */
+function shadeQ(p, q, col) { const c = p.ctx, x0 = p.cx0, y0 = p.cy0; c.save(); c.fillStyle = col; c.globalAlpha = 0.09;
+  c.fillRect(q === 1 || q === 4 ? x0 : 0, q <= 2 ? 0 : y0, q === 1 || q === 4 ? p.W - x0 : x0, q <= 2 ? y0 : p.H - y0); c.restore(); }
+/* z drawn with its two forms: arrow, drop lines, angle (correct green; plain arctan red when a < 0) */
+function forms(p, z, o = {}) {
+  p.vec(O, z, o.col || PC.z1); if (o.proj !== false) p.proj(z, o.col || PC.z1, { aLab: 'a = ' + u(z.re), bLab: 'b = ' + u(z.im) });
+  const r = mag(z); if (r < 1e-9) return; const th = deg(z), rp = Math.max(26, Math.min(48, r * p.sc * 0.42));
+  p.arc(0, th, PC.good, { r: rp, label: 'θ = ' + u(th, 2) + '°' });
+  if (o.trap !== false && z.re < 0) { const nv = naive(z); p.vec(O, C.cpolar(Math.max(r, p.R * 0.5) * 0.92, nv), PC.bad, { dash: [6, 5], width: 2 }); p.arc(0, nv, PC.bad, { r: rp * 0.6, width: 1.8, label: 'arctan(b/a) = ' + u(nv, 2) + '° ✗', lr: 10 }); }
+}
+/* a text box for typing a complex value */
+function zInput(parent, label, get, set) { const w = ui.html(parent, `<div class="row"><label style="font-weight:700">${label}</label><input class="mi" style="width:8.5em" autocomplete="off"></div>`); const el = w.querySelector('input');
+  const show = () => { el.value = C.cfmt(get(), 3).replace(/\s/g, '').replace(/−/g, '-'); };
+  const apply = () => { const z = C.cparse(el.value); el.classList.toggle('no', !z); if (z) set(z); };
+  el.addEventListener('change', apply); el.addEventListener('keydown', e => { if (e.key === 'Enter') apply(); }); show(); return { show }; }
+const hintTxt = t('พิมพ์ได้ทั้ง <code>3+j2</code>, <code>-1-j</code>, <code>2∠30</code> หรือ <code>2&lt;30</code> แล้วกด Enter · หรือลากจุดบนระนาบ', 'Type <code>3+j2</code>, <code>-1-j</code>, <code>2∠30</code> or <code>2&lt;30</code> and press Enter · or drag the points');
+const expand = (p, zs) => { const m = Math.max(...zs.map(z => Math.max(Math.abs(z.re), Math.abs(z.im)))); if (m > p.R * 0.92) p.fit(zs); };
+
+/* ================= theory sims ================= */
+/* A: two forms */
+{ const S = { z: cx(4, 3) }, w = document.getElementById('wA');
+  const pl = new CH1.Plane(document.getElementById('cvA'), { R: 6, scene: p => { if (S.z.re < 0) shadeQ(p, quad(S.z), PC.bad); forms(p, S.z); p.dot(S.z, PC.z1, 'z'); p.note(`z = ${ktxt(S.z)} = ${ptxt(S.z)}`, PC.z1); },
+    drag: { pts: () => ({ z: S.z }), move: (k, z) => { S.z = z; render(); inA.show(); } } });
+  const render = () => { const z = S.z, a = z.re, b = z.im, r = mag(z), th = deg(z), L = [`z &= ${K(z)}`, `r &= \\sqrt{a^2 + b^2} = \\sqrt{(${d(a)})^2 + (${d(b)})^2} = ${d(r)}`];
+    if (Math.abs(a) < 1e-12) L.push(`\\theta &= ${b >= 0 ? '90' : '-90'}^\\circ \\quad (a = 0)`);
+    else if (a > 0) L.push(`\\theta &= \\arctan\\frac{b}{a} = \\arctan\\frac{${d(b)}}{${d(a)}} = ${d(th, 2)}^\\circ`);
+    else { L.push(`\\theta &= \\arctan\\frac{${d(b)}}{${d(a)}} ${b >= 0 ? '+' : '-'} 180^\\circ`); L.push(`&= ${d(naive(z), 2)}^\\circ ${b >= 0 ? '+' : '-'} 180^\\circ = ${d(th, 2)}^\\circ`); }
+    L.push(`z &= \\boxed{${Pt(z)}}`); L.push(`a &= r\\cos\\theta = ${d(r)}\\cos(${d(th, 2)}^\\circ) = ${d(a)}`); L.push(`b &= r\\sin\\theta = ${d(r)}\\sin(${d(th, 2)}^\\circ) = ${d(b)}`);
+    w.innerHTML = tx(al(L), true) + (a < 0 ? `<div class="warnbox">${t('<b>a ติดลบ</b> จุดอยู่ทางซ้ายของแกนจินตภาพ arctan ของเครื่องคิดเลขตอบได้แค่ −90° ถึง 90° จึงต้องปรับ 180° (เส้นแดงบนระนาบคือคำตอบที่ผิด)', '<b>a is negative</b>, so the point is left of the imaginary axis. A calculator\'s arctan only returns −90° to 90°, so adjust by 180° (the red line on the plane is the wrong answer).')}</div>` : '');
+    pl.redraw(); };
+  const inA = zInput(document.getElementById('ctlA'), 'z =', () => S.z, z => { S.z = z; pl.fit([z], 3); render(); });
+  ui.html(document.getElementById('ctlA'), hintTxt, 'hint'); render(); }
+
+/* B: conjugate */
+{ const S = { z: cx(3, 2) }, w = document.getElementById('wB');
+  const pl = new CH1.Plane(document.getElementById('cvB'), { R: 5, scene: (p, e) => { const z = S.z, zc = cx(z.re, z.im * (1 - 2 * e)); const [x1, y1] = p.P(z), [x2, y2] = p.P(cx(z.re, -z.im));
+      const c = p.ctx; c.save(); c.setLineDash([3, 5]); c.strokeStyle = PC.muted; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); c.restore();
+      p.vec(O, z, PC.z1); p.vec(O, zc, PC.res, { dash: e < 1 ? [6, 4] : null }); p.dot(z, PC.z1, 'z'); p.note(`z = ${ktxt(z)}`, PC.z1, { line: 1 }); if (e >= 1) { p.dot(zc, PC.res, 'z*', { below: true }); p.note(`z* = ${ktxt(zc)}`, PC.res); }
+      if (Math.abs(z.im) > 1e-9) { p.arc(0, deg(z), PC.z1, { r: 34, label: u(deg(z), 1) + '°' }); if (e >= 1) p.arc(0, -deg(z), PC.res, { r: 34, label: u(-deg(z), 1) + '°' }); } },
+    drag: { pts: () => ({ z: S.z }), move: (k, z) => { S.z = z; render(); inB.show(); } } });
+  const render = () => { const z = S.z, zc = cx(z.re, -z.im);
+    w.innerHTML = tx(al([`z &= ${K(z)} = ${Pt(z)}`, `z^* &= ${K(zc)} = ${Pt(zc)}`, `z\\,z^* &= a^2 + b^2 = (${d(z.re)})^2 + (${d(z.im)})^2 = ${d(z.re * z.re + z.im * z.im)} = |z|^2`]), true) +
+      `<div class="callout">${t('<b>ผลคูณ \\(z\\,z^*\\) เป็นจำนวนจริงเสมอ</b> (ไม่มี j) เพราะพจน์ \\(+jab\\) กับ \\(-jab\\) หักล้างกัน นี่คือเหตุผลที่การหารใช้การคูณด้วยสังยุค', '<b>\\(z\\,z^*\\) is always real</b> (no j), because the \\(+jab\\) and \\(-jab\\) terms cancel. That is why division multiplies by the conjugate.')}</div>`;
+    MC.renderMath(w); pl.redraw(); };
+  const inB = zInput(document.getElementById('ctlB'), 'z =', () => S.z, z => { S.z = z; pl.fit([z], 3); pl.play(); render(); });
+  ui.buttons(document.getElementById('ctlB'), [{ label: t('⟲ เล่นการสะท้อนซ้ำ', '⟲ Replay the mirror'), onclick: () => pl.play() }]); render(); }
+
+/* C: times j */
+{ const S = { z: cx(3, 1) }, w = document.getElementById('wC');
+  const pl = new CH1.Plane(document.getElementById('cvC'), { R: 5, scene: (p, e) => { const z = S.z, r = mag(z), th = deg(z), cur = C.cpolar(r, th + 90 * e);
+      if (e >= 1) { [2, 3].forEach(n => p.vec(O, C.cpolar(r, th + 90 * n), PC.muted, { alpha: 0.35, dash: [4, 4], width: 2 })); p.label('j²z = −z', C.cpolar(r, th + 180), PC.muted, { dx: 6, dy: 14, size: 12.5 }); p.label('j³z', C.cpolar(r, th + 270), PC.muted, { dx: 6, dy: 14, size: 12.5 }); }
+      p.vec(O, z, PC.z1); p.arc(th, th + 90 * e, PC.res, { r: 40, dash: [5, 4], label: e >= 1 ? '+90°' : '' }); p.vec(O, cur, PC.res, { width: 3.2 });
+      p.dot(z, PC.z1, 'z'); p.note(`z = ${ktxt(z)}`, PC.z1, { line: 1 }); if (e >= 1) { p.dot(cur, PC.res, 'jz'); p.note(`jz = ${ktxt(C.cmul(z, cx(0, 1)))}`, PC.res); } },
+    drag: { pts: () => ({ z: S.z }), move: (k, z) => { S.z = z; render(); inC.show(); } } });
+  const render = () => { const z = S.z, jz = C.cmul(z, cx(0, 1));
+    w.innerHTML = tx(al([`jz &= j(${K(z)}) = j(${d(z.re)}) + j^2(${d(z.im)})`, `&= ${K(jz)} \\qquad (j^2 = -1)`, `\\text{polar: } jz &= (1\\angle 90^\\circ)(${Pt(z)}) = ${Pt(jz)}`]), true) +
+      `<div class="callout">${t('ส่วนจริงเดิม \\(a\\) กลายเป็นส่วนจินตภาพ และส่วนจินตภาพเดิม \\(b\\) กลายเป็นส่วนจริงที่ติดลบ \\(-b\\) <b>บนระนาบคือการหมุน 90° ทวนเข็มนาฬิกา</b> ตัวเหนี่ยวนำทำแบบนี้กับกระแสในหน้า 1.4', 'The old real part \\(a\\) becomes the imaginary part and the old imaginary part \\(b\\) becomes a negative real part \\(-b\\): <b>on the plane it is a 90° anticlockwise turn</b>. An inductor does this to current on page 1.4.')}</div>`;
+    MC.renderMath(w); pl.redraw(); };
+  const inC = zInput(document.getElementById('ctlC'), 'z =', () => S.z, z => { S.z = z; pl.fit([z], 3); pl.play(); render(); });
+  ui.buttons(document.getElementById('ctlC'), [{ label: t('⟲ เล่นการหมุนซ้ำ', '⟲ Replay the turn'), onclick: () => pl.play() }]); render(); }
+
+/* D: add / subtract */
+{ const S = { z1: cx(3, 1), z2: cx(1, 2), mode: 'add' }, w = document.getElementById('wD');
+  const res = () => S.mode === 'add' ? C.cadd(S.z1, S.z2) : C.csub(S.z1, S.z2);
+  const pl = new CH1.Plane(document.getElementById('cvD'), { R: 5, scene: (p, e) => { const wv = S.mode === 'add' ? S.z2 : neg(S.z2), R = res();
+      p.vec(O, S.z1, PC.z1); p.vec(O, S.z2, PC.z2, { alpha: S.mode === 'sub' ? 0.45 : 1 }); if (S.mode === 'sub') { p.vec(O, wv, PC.z2, { dash: [6, 4] }); p.label('−z₂', wv, PC.z2, { dx: 8, dy: 14, size: 13 }); }
+      const sh = sc(S.z1, e); p.vec(sh, C.cadd(sh, wv), PC.z2, { dash: [6, 4], alpha: 0.9 });
+      if (e >= 1) { p.vec(O, R, PC.res, { width: 3.4 }); p.dot(R, PC.res, S.mode === 'add' ? 'z₁ + z₂' : 'z₁ − z₂'); p.note(`${S.mode === 'add' ? 'z₁ + z₂' : 'z₁ − z₂'} = ${ktxt(R)}`, PC.res); }
+      p.dot(S.z1, PC.z1, 'z₁'); p.dot(S.z2, PC.z2, 'z₂', { below: true }); },
+    drag: { pts: () => ({ z1: S.z1, z2: S.z2 }), move: (k, z) => { S[k] = z; expand(pl, [S.z1, S.z2, res()]); render(); i1.show(); i2.show(); } } });
+  const render = () => { const R = res(), s = S.mode === 'add' ? '+' : '-';
+    w.innerHTML = tx(al([`z_1 ${s} z_2 &= (${K(S.z1)}) ${s} (${K(S.z2)})`, `&= (${d(S.z1.re)} ${s} (${d(S.z2.re)})) + j(${d(S.z1.im)} ${s} (${d(S.z2.im)}))`, `&= \\boxed{${K(R)}} = ${Pt(R)}`]), true) +
+      `<div class="callout">${t('<b>บวกลบใช้รูปคาร์ทีเซียน</b>: ส่วนจริงกับส่วนจริง ส่วนจินตภาพกับส่วนจินตภาพ ห้ามบวกขนาดในรูปเชิงขั้วตรง ๆ', '<b>Add and subtract in Cartesian form</b>: real with real, imaginary with imaginary. Never add polar magnitudes directly.')}</div>`; pl.redraw(); };
+  const ctl = document.getElementById('ctlD');
+  ui.radio(ctl, [{ id: 'mAdd', label: t('บวก (+)', 'Add (+)'), on: true }, { id: 'mSub', label: t('ลบ (−)', 'Subtract (−)') }], id => { S.mode = id === 'mAdd' ? 'add' : 'sub'; pl.fit([S.z1, S.z2, res()], 4); pl.play(1.3); render(); });
+  const i1 = zInput(ctl, 'z₁ =', () => S.z1, z => { S.z1 = z; pl.fit([S.z1, S.z2, res()], 4); pl.play(); render(); }), i2 = zInput(ctl, 'z₂ =', () => S.z2, z => { S.z2 = z; pl.fit([S.z1, S.z2, res()], 4); pl.play(); render(); });
+  render(); pl.play(1.3); }
+
+/* E: multiply / divide */
+{ const S = { z1: cx(2, 1), z2: cx(1, 1.5), mode: 'mul' }, w = document.getElementById('wE');
+  const res = () => S.mode === 'mul' ? C.cmul(S.z1, S.z2) : C.cdiv(S.z1, S.z2);
+  const pl = new CH1.Plane(document.getElementById('cvE'), { R: 5, scene: (p, e) => { const z2 = S.z2, r1 = mag(S.z1), t1 = deg(S.z1), r2 = mag(z2), t2 = deg(z2), sg = S.mode === 'div' ? -1 : 1, k = S.mode === 'div' ? 1 / r2 : r2;
+      const cur = C.cpolar(r1 * Math.pow(k, e), t1 + sg * t2 * e);
+      p.vec(O, S.z1, PC.z1); p.vec(O, z2, PC.z2); p.arc(t1, t1 + sg * t2 * e, PC.res, { r: 52, dash: [5, 4], label: e >= 1 ? (sg > 0 ? '+θ₂' : '−θ₂') : '' }); p.vec(O, cur, PC.res, { width: 3.4 });
+      if (e >= 1) { p.dot(cur, PC.res, S.mode === 'mul' ? 'z₁z₂' : 'z₁/z₂'); p.note(`${S.mode === 'mul' ? 'z₁z₂' : 'z₁/z₂'} = ${ktxt(res())}`, PC.res); } p.dot(S.z1, PC.z1, 'z₁'); p.dot(z2, PC.z2, 'z₂', { below: true });
+      p.note(S.mode === 'div' ? t('หมุน −θ₂ และย่อ ÷r₂', 'turn by −θ₂, scale by ÷r₂') : t('หมุน +θ₂ และยืด ×r₂', 'turn by +θ₂, scale by ×r₂'), PC.muted, { line: 1 }); },
+    drag: { pts: () => ({ z1: S.z1, z2: S.z2 }), move: (k, z) => { if (k === 'z2' && mag(z) < 1e-9) z = cx(0.5, 0); S[k] = z; expand(pl, [S.z1, S.z2, res()]); render(); i1.show(); i2.show(); } } }); // never divide by zero
+  const render = () => { const R = res(), z1 = S.z1, z2 = S.z2, L = [];
+    if (S.mode === 'mul') { L.push(`z_1 z_2 &= (${K(z1)})(${K(z2)})`); L.push(`&= a_1a_2 - b_1b_2 + j(a_1b_2 + a_2b_1)`);
+      L.push(`&= (${d(z1.re)})(${d(z2.re)}) - (${d(z1.im)})(${d(z2.im)}) + j\\big[(${d(z1.re)})(${d(z2.im)}) + (${d(z2.re)})(${d(z1.im)})\\big]`); L.push(`&= \\boxed{${K(R)}}`);
+      L.push(`\\text{polar: } z_1 z_2 &= (${d(mag(z1))})(${d(mag(z2))})\\angle(${d(deg(z1), 2)}^\\circ + ${d(deg(z2), 2)}^\\circ) = ${Pt(R)}`); }
+    else { const c2 = cx(z2.re, -z2.im), num = C.cmul(z1, c2), den = z2.re * z2.re + z2.im * z2.im;
+      L.push(`\\frac{z_1}{z_2} &= \\frac{${K(z1)}}{${K(z2)}}\\cdot\\frac{${K(c2)}}{${K(c2)}} = \\frac{${K(num)}}{${d(den)}}`); L.push(`&= \\boxed{${K(R)}}`);
+      L.push(`\\text{polar: } \\frac{z_1}{z_2} &= \\frac{${d(mag(z1))}}{${d(mag(z2))}}\\angle(${d(deg(z1), 2)}^\\circ - (${d(deg(z2), 2)}^\\circ)) = ${Pt(R)}`); }
+    w.innerHTML = tx(al(L), true) + `<div class="callout">${S.mode === 'mul' ? t('<b>รูปเชิงขั้ว: ขนาดคูณกัน มุมบวกกัน</b> ได้คำตอบเดียวกับการกระจายในรูปคาร์ทีเซียนตามสไลด์หน้า 17', '<b>Polar form: sizes multiply, angles add</b>, the same answer as expanding in Cartesian form as on slide p. 17.')
+      : t('<b>หารในรูปคาร์ทีเซียน</b>: คูณเศษและส่วนด้วยสังยุคของตัวส่วน ตัวส่วนจะเป็นจำนวนจริง <b>รูปเชิงขั้ว: ขนาดหารกัน มุมลบกัน</b>', '<b>Dividing in Cartesian form</b>: multiply top and bottom by the conjugate of the bottom, which makes the bottom real. <b>Polar form: sizes divide, angles subtract.</b>')}</div>`; pl.redraw(); };
+  const ctl = document.getElementById('ctlE');
+  ui.radio(ctl, [{ id: 'mMul', label: t('คูณ (×)', 'Multiply (×)'), on: true }, { id: 'mDiv', label: t('หาร (÷)', 'Divide (÷)') }], id => { S.mode = id === 'mMul' ? 'mul' : 'div'; pl.fit([S.z1, S.z2, res()], 4); pl.play(1.3); render(); });
+  const i1 = zInput(ctl, 'z₁ =', () => S.z1, z => { S.z1 = z; pl.fit([S.z1, S.z2, res()], 4); pl.play(); render(); }), i2 = zInput(ctl, 'z₂ =', () => S.z2, z => { S.z2 = mag(z) < 1e-9 ? cx(0.5, 0) : z; pl.fit([S.z1, S.z2, res()], 4); pl.play(); render(); });
+  render(); pl.play(1.3); }
+
+/* ================= exercises: one section per item ================= */
+function section(box, id, no, title, src) {
+  const s = document.createElement('section'); s.className = 'prob sub-item'; s.id = id;
+  s.innerHTML = `<div class="prob-head"><span class="prob-no">${no}</span><div><h2>${title}</h2>${src ? `<div class="src">${src}</div>` : ''}</div></div>
+    <div class="duo"><div class="card sim"><canvas></canvas></div><div class="card solve"><div class="askbox"></div><div class="st"></div></div></div>`;
+  box.appendChild(s); MC.renderMath(s.querySelector('.prob-head')); return s;
+}
+/* item = { steps: [...], scene(p, k, e), fit: [z...], ask: {fields, check}, answer } */
+function item(box, id, no, title, src, it) {
+  const s = section(box, id, no, title, src); let k = 0;
+  const pl = new CH1.Plane(s.querySelector('canvas'), { R: 4, scene: (p, e) => it.scene(p, k, e) }); pl.fit(it.fit, 2);
+  LS.ask(s.querySelector('.askbox'), it.ask);
+  LS.stepper(s.querySelector('.st'), { steps: it.steps, answer: it.answer, onStep: kk => { const was = k; k = kk; if (kk > was) pl.play(0.9); else pl.redraw(); } });
+}
+
+/* ---- Ex 1: Cartesian → polar ---- */
+const Q1 = [{ z: cx(3, 2), aT: '3', bT: '2', s2: [9, 4], q: '3 + j2' }, { z: cx(1, -1), aT: '1', bT: '-1', s2: [1, 1], q: '1 - j' },
+            { z: cx(-1, 1), aT: '-1', bT: '1', s2: [1, 1], q: '-1 + j' }, { z: cx(-Math.sqrt(6), -Math.sqrt(2)), aT: '-\\sqrt{6}', bT: '-\\sqrt{2}', s2: [6, 2], q: '-\\sqrt{6} - j\\sqrt{2}' }];
+Q1.forEach((q, i) => { const z = q.z, r = mag(z), th = deg(z), qd = quad(z), nv = naive(z), sum = q.s2[0] + q.s2[1], left = z.re < 0;
+  const rT = Number.isInteger(Math.sqrt(sum)) ? String(Math.sqrt(sum)) : `\\sqrt{${sum}} = ${d(r)}`;
+  const steps = [
+    { why: t(`<b>ระบุ a และ b</b>: ส่วนจริง \\(a = ${q.aT}\\) ส่วนจินตภาพ \\(b = ${q.bT}\\) จุดนี้อยู่<b>จตุภาคที่ ${qd}</b>${left ? ' (a ติดลบ: อยู่ทางซ้าย ระวังมุม!)' : ''}`, `<b>Read off a and b</b>: real part \\(a = ${q.aT}\\), imaginary part \\(b = ${q.bT}\\). The point is in <b>quadrant ${QEN[qd]}</b>${left ? ' (a is negative: it is on the left, so watch the angle!)' : ''}`) },
+    { why: t('<b>ขนาด</b> \\(r\\) คือความยาวลูกศรจากจุดกำเนิด (ทฤษฎีบทพีทาโกรัส)', '<b>Size</b> \\(r\\) is the length of the arrow from the origin (Pythagoras)'), tex: al([`r &= \\sqrt{a^2 + b^2} = \\sqrt{(${q.aT})^2 + (${q.bT})^2}`, `&= \\sqrt{${q.s2[0]} + ${q.s2[1]}} = ${rT}`]) }];
+  if (!left) steps.push({ why: t('<b>มุม</b> \\(\\theta\\): a เป็นบวก ใช้ arctan ได้ตรง ๆ', '<b>Angle</b> \\(\\theta\\): a is positive, so arctan works directly'), tex: `\\theta = \\arctan\\frac{b}{a} = \\arctan\\frac{${q.bT}}{${q.aT}} = ${d(th, 2)}^\\circ` });
+  else { steps.push({ why: t(`<b>มุม: ลองกด arctan ตรง ๆ</b> ได้ \\(${d(nv, 2)}^\\circ\\) ซึ่งชี้ไปจตุภาคที่ ${quad(C.cpolar(1, nv))} (เส้นแดง) <b>ผิด!</b> เพราะ arctan ของเครื่องคิดเลขตอบได้แค่ −90° ถึง 90°`, `<b>Angle: try plain arctan</b>: it gives \\(${d(nv, 2)}^\\circ\\), which points into quadrant ${QEN[quad(C.cpolar(1, nv))]} (red line). <b>Wrong!</b> A calculator's arctan only returns −90° to 90°.`), tex: `\\arctan\\frac{b}{a} = \\arctan\\frac{${q.bT}}{${q.aT}} = ${d(nv, 2)}^\\circ` });
+    steps.push({ why: t(`<b>แก้มุม</b>: a ติดลบ จึง${z.im >= 0 ? 'บวก' : 'ลบ'} 180° ให้มุมชี้เข้าจตุภาคที่ ${qd} (เส้นเขียว)`, `<b>Fix the angle</b>: a is negative, so ${z.im >= 0 ? 'add' : 'subtract'} 180° to point into quadrant ${QEN[qd]} (green line)`), tex: `\\theta = ${d(nv, 2)}^\\circ ${z.im >= 0 ? '+' : '-'} 180^\\circ = ${d(th, 2)}^\\circ` }); }
+  item(document.getElementById('items1'), 'ex1_' + (i + 1), '1.' + (i + 1), t(`แปลง \\(${q.q}\\) เป็นรูปเชิงขั้ว`, `Convert \\(${q.q}\\) to polar form`), '', {
+    steps, fit: [z, cx(Math.sign(z.re || 1) * 0.5, 0)],
+    answer: tx(`${q.q} = ${d(r)}\\angle{${d(th, 2)}^\\circ}`) + (qd === 3 ? ` &nbsp; ${t('(หรือเขียนเป็น', '(or')} ${tx(`${d(r)}\\angle{${d(th + 360, 2)}^\\circ}`)}${t(' ก็ได้)', ')')}` : ''),
+    ask: { fields: [{ label: 'r =', ok: x => near(x, r) }, { label: 'θ (°) =', ok: x => angEq(x, th) }],
+      check: v => (left && angEq(v[1], nv)) ? t('<b>ติดกับดัก arctan!</b> ดูเครื่องหมายของ a', '<b>The arctan trap!</b> Check the sign of a') : '' },
+    scene: (p, k, e) => { if (k >= 1) shadeQ(p, qd, left ? PC.bad : PC.good);
+      if (k >= 1) p.proj(z, PC.z1, { aLab: `a = ${u(z.re)}`, bLab: `b = ${u(z.im)}` });
+      if (k >= 2) { const zz = k === 2 ? sc(z, e) : z; p.vec(O, zz, PC.z1, { width: 3 }); p.label(`r = ${u(r)}`, sc(z, 0.5), PC.z1, { dx: left ? -10 : 10, dy: -10, align: left ? 'right' : 'left', weight: '700' }); }
+      const rp = Math.max(28, Math.min(46, r * p.sc * 0.42));
+      if (k >= 3 && left) { const a1 = k === 3 ? nv * e : nv; p.vec(O, C.cpolar(r * 0.95, a1), PC.bad, { dash: [6, 5], width: 2 }); p.arc(0, a1, PC.bad, { r: rp * 0.62, width: 1.8, label: `${u(nv, 2)}° ✗`, lr: 10 }); }
+      const th3 = left ? 4 : 3; if (k >= th3) { const a1 = k === th3 ? th * e : th; p.arc(0, a1, PC.good, { r: rp, width: 2.4, label: `θ = ${u(th, 2)}°` }); }
+      const qs = q.q.replace(/\\sqrt\{(\d)\}/g, '√$1').replace(/-/g, '−'); p.dot(z, PC.z1, k === 0 ? qs : ''); if (k >= steps.length) p.note(`${qs} = ${u(r)}∠${u(th, 2)}°`, PC.good); } }); });
+
+/* ---- Ex 2: polar → Cartesian ---- */
+const Q2 = [{ r: 2, a: 30 }, { r: -5, a: 120 }, { r: 3, a: -45 }, { r: -4, a: -150 }];
+Q2.forEach((q, i) => { const z = C.cpolar(q.r, q.a), negR = q.r < 0, ap = negR ? (q.a > 0 ? q.a - 180 : q.a + 180) : q.a, R = Math.abs(q.r);
+  const cs = Math.cos(q.a * Math.PI / 180), sn = Math.sin(q.a * Math.PI / 180), qT = `${q.r}\\angle{${q.a}^\\circ}`;
+  const steps = [{ why: t(`<b>มุม</b> \\(\\theta = ${q.a}^\\circ\\) วัดจากแกนจริง${q.a >= 0 ? 'ทวน' : 'ตาม'}เข็มนาฬิกา (มุม${q.a >= 0 ? 'บวก' : 'ลบ'})`, `<b>Angle</b> \\(\\theta = ${q.a}^\\circ\\) is measured from the real axis, ${q.a >= 0 ? 'anticlockwise (a positive angle)' : 'clockwise (a negative angle)'}`) }];
+  if (negR) steps.push({ why: t(`<b>ขนาดติดลบ</b> แปลว่าลูกศรชี้ไป<b>ทางตรงข้าม</b> (หมุนเพิ่ม 180°) ลูกศรจริงยาว ${R} ที่มุม ${u(ap, 0)}°`, `<b>A negative size</b> means the arrow points <b>the opposite way</b> (a further 180° turn): the real arrow has length ${R} at ${u(ap, 0)}°`), tex: `${qT} = ${R}\\angle(${q.a}^\\circ ${q.a > 0 ? '-' : '+'} 180^\\circ) = ${R}\\angle{${ap}^\\circ}` });
+  else steps.push({ why: t(`<b>วางลูกศร</b> ยาว \\(r = ${q.r}\\) ตามมุมนั้น`, `<b>Draw the arrow</b> of length \\(r = ${q.r}\\) at that angle`) });
+  steps.push({ why: t('<b>ส่วนจริง</b> \\(a = r\\cos\\theta\\) คือเงาของลูกศรบนแกนจริง', '<b>Real part</b> \\(a = r\\cos\\theta\\) is the shadow of the arrow on the real axis'), tex: al([`a &= r\\cos\\theta = (${q.r})\\cos(${q.a}^\\circ)`, `&= (${q.r})(${d(cs, 4)}) = ${d(z.re)}`]) });
+  steps.push({ why: t('<b>ส่วนจินตภาพ</b> \\(b = r\\sin\\theta\\) คือเงาบนแกนจินตภาพ', '<b>Imaginary part</b> \\(b = r\\sin\\theta\\) is the shadow on the imaginary axis'), tex: al([`b &= r\\sin\\theta = (${q.r})\\sin(${q.a}^\\circ)`, `&= (${q.r})(${d(sn, 4)}) = ${d(z.im)}`]) });
+  item(document.getElementById('items2'), 'ex2_' + (i + 1), '2.' + (i + 1), t(`แปลง \\(${qT}\\) เป็นรูปคาร์ทีเซียน`, `Convert \\(${qT}\\) to Cartesian form`), '', {
+    steps, fit: [z, C.cpolar(R, q.a)],
+    answer: tx(`${qT} = ${K(z)}`),
+    ask: { fields: [{ label: 'a =', ok: x => near(x, z.re) }, { label: 'b =', ok: x => near(x, z.im) }],
+      check: v => negR && near(v[0], -z.re) && near(v[1], -z.im) ? t('เครื่องหมายกลับกันทั้งคู่: <b>ลืมเครื่องหมายลบหน้าขนาด</b>', 'Both signs are flipped: <b>the minus sign in front of the size was dropped</b>') : '' },
+    scene: (p, k, e) => { const rr = p.R * 0.95;
+      if (k >= 1) { const a1 = k === 1 ? q.a * e : q.a; p.vec(O, C.cpolar(rr, a1), PC.muted, { dash: [5, 5], width: 1.6, alpha: 0.8 }); p.arc(0, a1, PC.good, { r: 40, label: `${q.a}°` }); }
+      if (k >= 2) { if (negR) { p.vec(O, C.cpolar(R, q.a), PC.z1, { dash: [6, 4], alpha: 0.45, width: 2.4 }); const a2 = k === 2 ? q.a + (ap - q.a) * e : ap; p.arc(q.a, a2, PC.res, { r: 58, dash: [5, 4], label: k > 2 || e >= 1 ? '180°' : '' }); p.vec(O, C.cpolar(R, a2), PC.z1, { width: 3 }); }
+        else p.vec(O, C.cpolar(k === 2 ? R * e : R, q.a), PC.z1, { width: 3 }); }
+      if (k >= 3) p.proj(z, PC.z2, { b: false, aLab: `a = ${u(z.re)}` });
+      if (k >= 4) p.proj(z, PC.res, { a: false, bLab: `b = ${u(z.im)}` });
+      if (k >= steps.length) { p.dot(z, PC.z1, ''); p.note(`${q.r}∠${q.a}° = ${ktxt(z)}`.replace(/-/g, '−'), PC.good); } } }); });
+
+/* ---- Ex 3: results ---- */
+const Q3 = [{ op: 'add', z1: cx(3, -5), z2: cx(-4, -6), q: '(3 - j5) + (-4 - j6)' }, { op: 'sub', z1: C.cpolar(2, 30), z2: cx(-5, 1), q: '(2\\angle 30^\\circ) - (-5 + j)' },
+            { op: 'mul', z1: cx(-3, -1), z2: cx(2, 4), q: '(-3 - j)\\times(2 + j4)' }, { op: 'div', z1: cx(2, -3), z2: cx(-1, 4), q: '\\dfrac{2 - j3}{-1 + j4}' }];
+const res3 = q => q.op === 'add' ? C.cadd(q.z1, q.z2) : q.op === 'sub' ? C.csub(q.z1, q.z2) : q.op === 'mul' ? C.cmul(q.z1, q.z2) : C.cdiv(q.z1, q.z2);
+Q3.forEach((q, i) => { const R = res3(q), steps = []; let scene;
+  const polarStep = () => ({ why: t('<b>เขียนผลลัพธ์ในรูปเชิงขั้ว</b> (ดูมุมให้ถูกจตุภาค)', '<b>Write the result in polar form</b> (mind the quadrant)'),
+    tex: R.re < 0 ? `|z| = \\sqrt{(${d(R.re)})^2 + (${d(R.im)})^2} = ${d(mag(R))},\\quad \\theta = \\arctan\\frac{${d(R.im)}}{${d(R.re)}} ${R.im >= 0 ? '+' : '-'} 180^\\circ = ${d(deg(R), 2)}^\\circ` : `|z| = \\sqrt{(${d(R.re)})^2 + (${d(R.im)})^2} = ${d(mag(R))},\\quad \\theta = ${d(deg(R), 2)}^\\circ` });
+  const base = (p, k) => { p.vec(O, q.z1, PC.z1); p.dot(q.z1, PC.z1, 'z₁'); p.vec(O, q.z2, PC.z2); p.dot(q.z2, PC.z2, 'z₂', { below: true }); };
+  if (q.op === 'add') {
+    steps.push({ why: t('<b>บวกในรูปคาร์ทีเซียน</b>: ส่วนจริงบวกส่วนจริง ส่วนจินตภาพบวกส่วนจินตภาพ', '<b>Add in Cartesian form</b>: real with real, imaginary with imaginary'), tex: al([`z &= (3 + (-4)) + j(-5 + (-6))`, `&= \\boxed{-1 - j11}`]) });
+    steps.push(polarStep());
+    scene = (p, k, e) => { base(p, k); if (k >= 1) { const sh = sc(q.z1, k === 1 ? e : 1); p.vec(sh, C.cadd(sh, q.z2), PC.z2, { dash: [6, 4] }); if (k > 1 || e >= 1) { p.vec(O, R, PC.res, { width: 3.4 }); p.dot(R, PC.res, 'z₁ + z₂'); p.note(`z₁ + z₂ = ${ktxt(R)}`, PC.res); } }
+      if (k >= 2) p.arc(0, deg(R), PC.good, { r: 30, label: `${u(deg(R), 2)}°` }); };
+  } else if (q.op === 'sub') {
+    steps.push({ why: t('<b>แปลง \\(2\\angle 30^\\circ\\) เป็นรูปคาร์ทีเซียนก่อน</b> เพราะการลบต้องทำในรูปคาร์ทีเซียน', '<b>First convert \\(2\\angle 30^\\circ\\) to Cartesian form</b>, because subtraction is done in Cartesian form'), tex: al([`2\\angle 30^\\circ &= 2\\cos 30^\\circ + j\\,2\\sin 30^\\circ`, `&= 1.732 + j1`]) });
+    steps.push({ why: t('<b>ลบ</b>: ส่วนจริงลบส่วนจริง ส่วนจินตภาพลบส่วนจินตภาพ', '<b>Subtract</b>: real minus real, imaginary minus imaginary'), tex: al([`z &= (1.732 + j1) - (-5 + j1)`, `&= (1.732 + 5) + j(1 - 1)`, `&= \\boxed{6.732 + j0}`]) });
+    steps.push({ why: t('<b>ผลลัพธ์เป็นจำนวนจริงล้วน</b> (ส่วนจินตภาพหักล้างกันพอดี) จึงอยู่บนแกนจริง มุม 0°', '<b>The result is purely real</b> (the imaginary parts cancel exactly), so it lies on the real axis at 0°'), tex: `z = 6.732\\angle{0^\\circ}` });
+    scene = (p, k, e) => { base(p, k); if (k < 1) p.arc(0, 30, PC.z1, { r: 34, label: '30°' }); if (k >= 1) p.proj(q.z1, PC.z1, { aLab: 'a = 1.732', bLab: 'b = 1' });
+      if (k >= 2) { const w = neg(q.z2); p.vec(O, w, PC.z2, { dash: [6, 4], alpha: 0.7 }); p.label('−z₂', w, PC.z2, { dx: 8, dy: 14 }); const sh = sc(q.z1, k === 2 ? e : 1); p.vec(sh, C.cadd(sh, w), PC.z2, { dash: [6, 4] });
+        if (k > 2 || e >= 1) { p.vec(O, R, PC.res, { width: 3.4 }); p.dot(R, PC.res, 'z₁ − z₂', { below: true }); p.note(`z₁ − z₂ = ${ktxt(R)}`, PC.res); } } };
+  } else if (q.op === 'mul') {
+    steps.push({ why: t('<b>กระจายทีละพจน์</b> (หน้า × หน้า, หน้า × หลัง, หลัง × หน้า, หลัง × หลัง)', '<b>Expand term by term</b> (first × first, first × last, last × first, last × last)'), tex: al([`z &= (-3)(2) + (-3)(j4) + (-j)(2) + (-j)(j4)`, `&= -6 - j12 - j2 - j^2\\,4`]) });
+    steps.push({ why: t('<b>แทน \\(j^2 = -1\\)</b> แล้วรวมพจน์', '<b>Put \\(j^2 = -1\\)</b> and collect terms'), tex: al([`z &= -6 - j14 + 4`, `&= \\boxed{-2 - j14}`]) });
+    steps.push({ why: t('<b>ตรวจด้วยรูปเชิงขั้ว</b>: ขนาดคูณกัน มุมบวกกัน', '<b>Check in polar form</b>: sizes multiply, angles add'), tex: al([`z_1 z_2 &= (${Pt(q.z1)})(${Pt(q.z2)})`, `&= ${d(mag(q.z1) * mag(q.z2))}\\angle{(${d(deg(q.z1), 2)}^\\circ + ${d(deg(q.z2), 2)}^\\circ)} = ${Pt(R)} \\;\\checkmark`]) });
+    scene = (p, k, e) => { base(p, k); if (k >= 2) { const cur = k === 2 ? C.cpolar(mag(q.z1) * Math.pow(mag(q.z2), e), deg(q.z1) + deg(q.z2) * e) : R; p.vec(O, cur, PC.res, { width: 3.4 }); if (k > 2 || e >= 1) { p.dot(R, PC.res, 'z₁z₂'); p.note(`z₁z₂ = ${ktxt(R)}`, PC.res); } }
+      if (k >= 3) { p.arc(0, deg(q.z1), PC.z1, { r: 30, label: `${u(deg(q.z1), 1)}°` }); p.arc(0, deg(q.z2), PC.z2, { r: 44, label: `${u(deg(q.z2), 1)}°` }); p.arc(0, deg(R), PC.res, { r: 58, label: `${u(deg(R), 1)}°` }); } };
+  } else {
+    steps.push({ why: t('<b>คูณเศษและส่วนด้วยสังยุคของตัวส่วน</b> \\((-1 - j4)\\) เพื่อให้ตัวส่วนเป็นจำนวนจริง', '<b>Multiply top and bottom by the conjugate of the bottom</b>, \\((-1 - j4)\\), to make the bottom real'), tex: `z = \\frac{2 - j3}{-1 + j4}\\cdot\\frac{-1 - j4}{-1 - j4}` });
+    steps.push({ why: t('<b>ตัวเศษ</b>: กระจายแล้วแทน \\(j^2 = -1\\)', '<b>Top</b>: expand, then put \\(j^2 = -1\\)'), tex: al([`(2 - j3)(-1 - j4) &= -2 - j8 + j3 + j^2\\,12`, `&= -2 - j5 - 12 = -14 - j5`]) });
+    steps.push({ why: t('<b>ตัวส่วน</b>: \\(z\\,z^* = a^2 + b^2\\) เป็นจำนวนจริง', '<b>Bottom</b>: \\(z\\,z^* = a^2 + b^2\\) is real'), tex: `(-1 + j4)(-1 - j4) = (-1)^2 + 4^2 = 17` });
+    steps.push({ why: t('<b>หาร</b>ทั้งส่วนจริงและส่วนจินตภาพด้วย 17', '<b>Divide</b> both parts by 17'), tex: al([`z &= \\frac{-14 - j5}{17} = -\\frac{14}{17} - j\\frac{5}{17}`, `&= \\boxed{-0.8235 - j0.2941}`]) });
+    steps.push({ why: t('<b>ตรวจด้วยรูปเชิงขั้ว</b>: ขนาดหารกัน มุมลบกัน', '<b>Check in polar form</b>: sizes divide, angles subtract'), tex: al([`\\frac{z_1}{z_2} &= \\frac{${Pt(q.z1)}}{${Pt(q.z2)}}`, `&= ${d(mag(q.z1) / mag(q.z2), 4)}\\angle{(${d(deg(q.z1), 2)}^\\circ - ${d(deg(q.z2), 2)}^\\circ)} = ${d(mag(R), 4)}\\angle{${d(deg(R), 2)}^\\circ} \\;\\checkmark`]) });
+    scene = (p, k, e) => { base(p, k); if (k >= 1) { const c2 = cx(q.z2.re, -q.z2.im); p.vec(O, c2, PC.z2, { dash: [5, 4], alpha: 0.6 }); p.label('z₂*', c2, PC.z2, { dx: 8, dy: 12 }); }
+      if (k >= 4) { const cur = k === 4 ? sc(R, e) : R; p.vec(O, cur, PC.res, { width: 3.4 }); if (k > 4 || e >= 1) { p.dot(R, PC.res, 'z₁/z₂', { below: true }); p.note(`z₁/z₂ = ${ktxt(R)}`, PC.res); } }
+      if (k >= 5) { p.arc(0, deg(q.z1), PC.z1, { r: 30, label: `${u(deg(q.z1), 1)}°` }); p.arc(0, deg(q.z2), PC.z2, { r: 44, label: `${u(deg(q.z2), 1)}°` }); p.arc(0, deg(R), PC.res, { r: 58, label: `${u(deg(R), 1)}°` }); } };
+  }
+  item(document.getElementById('items3'), 'ex3_' + (i + 1), '3.' + (i + 1), t(`หา \\(${q.q}\\)`, `Find \\(${q.q}\\)`), '', {
+    steps, scene, fit: [q.z1, q.z2, R], answer: tx(`${q.q.replace('\\dfrac', '\\frac')} = ${K(R, 4)} = ${Pt(R)}`),
+    ask: { fields: [{ label: t('ส่วนจริง =', 'real ='), ok: x => near(x, R.re) }, { label: t('ส่วนจินตภาพ =', 'imag. ='), ok: x => near(x, R.im) }] } }); });
+});
+</script>
+</body>
+</html>

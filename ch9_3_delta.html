@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="9.3 — The Delta Load">9.3 — โหลดต่อแบบเดลตา</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch7.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">โหลดต่อแบบเดลตา (Δ) <span class="en">The delta (Δ) load — line voltage across each phase, line current √3 times the phase current</span></h1>
+<h1 data-l="en">The delta (Δ) load <span class="en">Line voltage across each phase, line current √3 times the phase current</span></h1>
+
+<div class="equation-box">
+  <div class="label"><span data-l="th">โหลดเดลตาสมดุล (balanced Δ-connected load) ต่ออิมพีแดนซ์ \(Z_p\) ระหว่างสายแต่ละคู่ ไม่มีจุดนิวทรัล · ทุกค่าเป็นค่ายังผล · สไลด์บทที่ 9 หน้า 15–18 · Hayt §12.4</span><span data-l="en">A balanced Δ-connected load puts an impedance \(Z_p\) between each pair of lines and has no neutral point · all values are rms · chapter 9 slides, pp. 15–18 · Hayt §12.4</span></div>
+  $$ \mathbf{I}_{AB} = \frac{\mathbf{V}_{ab}}{Z_p} \quad \mathbf{I}_{BC} = \frac{\mathbf{V}_{bc}}{Z_p} \quad \mathbf{I}_{CA} = \frac{\mathbf{V}_{ca}}{Z_p} \qquad \mathbf{I}_{aA} = \mathbf{I}_{AB} - \mathbf{I}_{CA} \qquad I_L = \sqrt3\,I_p \qquad Z_Y = \frac{Z_\Delta}{3} $$
+</div>
+
+<p class="sub" data-l="th">ในโหลดเดลตา อิมพีแดนซ์แต่ละตัวต่อคร่อมสายสองเส้น <b>แรงดันของแต่ละเฟสจึงเป็นแรงดันสาย</b> \(V_L\) (สไลด์หน้า 15) กระแสในอิมพีแดนซ์คือกระแสเฟส \(\mathbf{I}_{AB} = \mathbf{V}_{ab}/Z_p\) (หน้า 16) แต่กระแสในสายไม่ใช่กระแสเฟส: ที่มุม A มีกระแสเฟสสองตัวมาพบกัน กฎกระแสของเคียร์ชอฟฟ์ (Kirchhoff's current law, KCL) จึงให้ \(\mathbf{I}_{aA} = \mathbf{I}_{AB} - \mathbf{I}_{CA}\) ผลต่างของเฟเซอร์สองตัวที่ห่างกัน 120° ยาวกว่าแต่ละตัว \(\sqrt3\) เท่า (หน้า 17) ตรงกันข้ามกับโหลดวายที่กระแสเท่ากันแต่แรงดันสายโตกว่า \(\sqrt3\) เท่า</p>
+<p class="sub" data-l="en">In a delta load each impedance is connected across two lines, so <b>each phase sees the line voltage</b> \(V_L\) (slide p. 15). The current in an impedance is the phase current \(\mathbf{I}_{AB} = \mathbf{V}_{ab}/Z_p\) (p. 16), but the current in a line is not a phase current: two phase currents meet at corner A, so Kirchhoff's current law (KCL) gives \(\mathbf{I}_{aA} = \mathbf{I}_{AB} - \mathbf{I}_{CA}\). The difference of two phasors 120° apart is \(\sqrt3\) times longer than either (p. 17), the reverse of a Y load, where the currents are equal and the line voltage is \(\sqrt3\) times larger.</p>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li>โหลดเดลตา: <b>แรงดันเฟสของโหลด = แรงดันสาย</b> \(V_L\) และไม่มีสายนิวทรัล</li>
+  <li><b>กระแสเฟส</b> \(\mathbf{I}_{AB} = \mathbf{V}_{ab}/Z_p\) และ<b>กระแสสาย</b>จาก KCL ที่มุม: \(\mathbf{I}_{aA} = \mathbf{I}_{AB} - \mathbf{I}_{CA}\), \(\mathbf{I}_{bB} = \mathbf{I}_{BC} - \mathbf{I}_{AB}\), \(\mathbf{I}_{cC} = \mathbf{I}_{CA} - \mathbf{I}_{BC}\)</li>
+  <li>ระบบสมดุล: <b>\(I_L = \sqrt3\,I_p\)</b> และในลำดับบวก \(\mathbf{I}_{aA}\) ตามหลัง \(\mathbf{I}_{AB}\) อยู่ 30° (\(\mathbf{I}_{aA} = \sqrt3\angle{-30^\circ}\,\mathbf{I}_{AB}\))</li>
+  <li>กำลังรวม \(P = 3V_LI_p\cos\theta = \sqrt3V_LI_L\cos\theta\) <b>สูตรเดียวกับโหลดวาย</b> (\(\theta\) คือมุมของ \(Z_p\))</li>
+  <li><b>โหลดเดลตาสมดุลเทียบเท่าโหลดวายที่ \(Z_Y = Z_\Delta/3\)</b> (Hayt) แปลงแล้วใช้วิธีทีละเฟสของหน้า 9.2 ได้เลย</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li>Delta load: <b>the load phase voltage equals the line voltage</b> \(V_L\), and there is no neutral.</li>
+  <li><b>Phase current</b> \(\mathbf{I}_{AB} = \mathbf{V}_{ab}/Z_p\); <b>line currents</b> by KCL at the corners: \(\mathbf{I}_{aA} = \mathbf{I}_{AB} - \mathbf{I}_{CA}\), \(\mathbf{I}_{bB} = \mathbf{I}_{BC} - \mathbf{I}_{AB}\), \(\mathbf{I}_{cC} = \mathbf{I}_{CA} - \mathbf{I}_{BC}\).</li>
+  <li>Balanced: <b>\(I_L = \sqrt3\,I_p\)</b>, and in positive sequence \(\mathbf{I}_{aA}\) lags \(\mathbf{I}_{AB}\) by 30° (\(\mathbf{I}_{aA} = \sqrt3\angle{-30^\circ}\,\mathbf{I}_{AB}\)).</li>
+  <li>Total power \(P = 3V_LI_p\cos\theta = \sqrt3V_LI_L\cos\theta\), <b>the same formula as for a Y load</b> (\(\theta\) is the angle of \(Z_p\)).</li>
+  <li><b>A balanced delta is equivalent to a Y with \(Z_Y = Z_\Delta/3\)</b> (Hayt); after converting, the per-phase method of page 9.2 applies directly.</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<h2 data-l="th">ส่วนที่ 1 · กระแสเฟสและกระแสสายของโหลดเดลตา (สไลด์หน้า 15–17)</h2><h2 data-l="en">Part 1 · Phase and line currents of a delta load (slides pp. 15–17)</h2>
+<p class="sub" data-l="th">วงจรของ Hayt รูป 12.18: แหล่งจ่ายวายกับโหลดเดลตา ค่าตั้งต้นคือโหลดของ Ex 3 (\(180\angle 36.87^\circ\ \Omega\) ที่แรงดันสาย 300 V) จุดในสายวิ่งเร็วกว่าจุดในอิมพีแดนซ์ เพราะกระแสสายโตกว่า \(\sqrt3\) เท่า ภาพด้านขวาสร้าง \(\mathbf{I}_{aA} = \mathbf{I}_{AB} + (-\mathbf{I}_{CA})\) แบบหัวต่อหาง (เส้นประคือ \(-\mathbf{I}_{CA}\)) และแสดงมุม 30° ระหว่าง \(\mathbf{I}_{AB}\) กับ \(\mathbf{I}_{aA}\)</p>
+<p class="sub" data-l="en">The circuit of Hayt Fig. 12.18: a Y source and a delta load. The default is the load of Ex 3 (\(180\angle 36.87^\circ\ \Omega\) at a 300 V line voltage). The dots in the lines run faster than those in the impedances, because the line current is \(\sqrt3\) times larger. The picture on the right builds \(\mathbf{I}_{aA} = \mathbf{I}_{AB} + (-\mathbf{I}_{CA})\) head to tail (dashed: \(-\mathbf{I}_{CA}\)) and marks the 30° between \(\mathbf{I}_{AB}\) and \(\mathbf{I}_{aA}\).</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv1"></canvas></div>
+  <aside class="card panel" id="panel1"></aside>
+</div>
+
+<h2 data-l="th">ส่วนที่ 2 · Ex 3 (สไลด์หน้า 18)</h2><h2 data-l="en">Part 2 · Ex 3 (slide p. 18)</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">โจทย์ (Hayt Example 12.5): <b>จงหาขนาดของกระแสสายในระบบสามเฟสแรงดันสาย 300 V ที่จ่าย 1200 W ให้โหลดเดลตาที่ตัวประกอบกำลัง 0.8 ตามหลัง แล้วหาอิมพีแดนซ์ต่อเฟส</b></p>
+  <p class="lead" data-l="en">The problem (Hayt Example 12.5): <b>determine the amplitude of the line current in a three-phase system with a line voltage of 300 V that supplies 1200 W to a Δ-connected load at a lagging PF of 0.8; then find the phase impedance.</b></p>
+  <ol class="steps" id="steps2"></ol>
+</section>
+
+<h2 data-l="th">ส่วนที่ 3 · โหลดเดลตากับโหลดวายที่เทียบเท่า (Z_Y = Z_Δ/3)</h2><h2 data-l="en">Part 3 · A delta load and its equivalent Y (Z_Y = Z_Δ/3)</h2>
+<p class="sub" data-l="th">สองวงจรนี้ต่อกับแหล่งจ่ายเดียวกัน ซ้ายคือโหลดเดลตา \(Z_\Delta\) ขวาคือโหลดวาย \(Z_Y = Z_\Delta/3\) <b>จุดในสายทั้งสามเส้นของสองวงจรวิ่งพร้อมกันทุกจังหวะ</b> เพราะกระแสสายเท่ากันทุกตัว แหล่งจ่ายจึงแยกไม่ออกว่าต่อกับโหลดแบบใด ปรับ \(Z_\Delta\) ได้ตามต้องการ การแปลงนี้ทำให้โจทย์เดลตาใช้วิธีทีละเฟสของโหลดวายได้ (Hayt §12.4 ย่อหน้าสุดท้าย)</p>
+<p class="sub" data-l="en">Both circuits share the same source: on the left a delta load \(Z_\Delta\), on the right a Y load \(Z_Y = Z_\Delta/3\). <b>The dots in the three lines of both circuits move in step</b>, because every line current is equal; the source cannot tell which load it feeds. Adjust \(Z_\Delta\) freely. This conversion lets a delta problem use the per-phase method of a Y load (Hayt §12.4, last paragraph).</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv3"></canvas></div>
+  <aside class="card panel" id="panel3"></aside>
+</div>
+
+<h2 data-l="th">ส่วนที่ 4 · ฝึกเพิ่ม</h2><h2 data-l="en">Part 4 · More practice</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ทุกค่าเป็นค่ายังผล · มุมเป็นองศา</p><p class="lead" data-l="en">Give at least 3 decimal places · all values are rms · angles in degrees.</p>
+  <div id="quiz"></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — √3 มาจากไหน</h3>
+    <ol><li>ส่วนที่ 1 ดูภาพเฟเซอร์: \(\mathbf{I}_{AB}\) กับ \(-\mathbf{I}_{CA}\) ห่างกัน 60° ต่อหัวต่อหางแล้วได้ด้านยาว \(\sqrt3\) เท่าของสามเหลี่ยม 30°–30°–120°</li>
+    <li>เปลี่ยนมุมของ \(Z_p\): ทุกกระแสหมุนไปพร้อมกัน แต่อัตราส่วน \(I_L/I_p = 1.732\) และมุม 30° ไม่เปลี่ยน</li>
+    <li>สลับเป็นลำดับลบ: \(\mathbf{I}_{aA}\) <b>นำหน้า</b> \(\mathbf{I}_{AB}\) 30° แทน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — วายหรือเดลตา</h3>
+    <ol><li>ส่วนที่ 3 ตั้ง \(Z_\Delta = 180\angle 36.87^\circ\ \Omega\): ทั้งสองวงจรดึง 2.887 A และ 1200 W เท่ากัน</li>
+    <li>เทียบกับ Ex 2 ของหน้า 9.2: โหลดวาย 60 Ω ก็ดึง 2.887 A เช่นกัน เพราะ \(180/3 = 60\)</li>
+    <li>คำถาม: ถ้าต่ออิมพีแดนซ์ 180 Ω ชุดเดิมเป็นวายแทน กำลังรวมเหลือเท่าใด (คำตอบ: หนึ่งในสาม)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — อย่าหารด้วย √2 ซ้ำ</h3>
+    <ol><li>ใน Ex 3 แรงดัน 300 V เป็นค่ายังผลอยู่แล้ว จึงได้ \(I_p = 400/(300 \times 0.8) = 1.667\) A</li>
+    <li>เฉลยปี 2560 หาร 300 ด้วย \(\sqrt2\) ได้ 2.36 A แล้วหาร 300 (ค่ายอด) ด้วย 2.36 (ค่ายังผล) ได้ 127.12 Ω ซึ่งผสมสองแบบเข้าด้วยกัน</li>
+    <li>โจทย์ถาม<b>กระแสสาย</b> ต้องคูณ \(\sqrt3\) อีกครั้งเป็น 2.887 A</li></ol>
+    <div class="book">สไลด์บทที่ 9 หน้า 15–18 · Hayt §12.4 (รูป 12.18–12.19, Example 12.5, Practice 12.7–12.8)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — where √3 comes from</h3>
+    <ol><li>In Part 1 look at the phasors: \(\mathbf{I}_{AB}\) and \(-\mathbf{I}_{CA}\) are 60° apart; head to tail they give the long side, \(\sqrt3\) times longer, of a 30°–30°–120° triangle.</li>
+    <li>Change the angle of \(Z_p\): every current turns together, but the ratio \(I_L/I_p = 1.732\) and the 30° stay.</li>
+    <li>Switch to negative sequence: \(\mathbf{I}_{aA}\) now <b>leads</b> \(\mathbf{I}_{AB}\) by 30°.</li></ol></div>
+  <div class="card"><h3>Try this 2 — Y or delta</h3>
+    <ol><li>In Part 3 set \(Z_\Delta = 180\angle 36.87^\circ\ \Omega\): both circuits draw the same 2.887 A and 1200 W.</li>
+    <li>Compare Ex 2 of page 9.2: a 60 Ω Y load also draws 2.887 A, because \(180/3 = 60\).</li>
+    <li>Question: if the same 180 Ω impedances were connected in Y instead, what would the total power be? (Answer: one third.)</li></ol></div>
+  <div class="card"><h3>Try this 3 — do not divide by √2 twice</h3>
+    <ol><li>In Ex 3 the 300 V is already rms, so \(I_p = 400/(300 \times 0.8) = 1.667\) A.</li>
+    <li>The 2017 solution divided 300 by \(\sqrt2\) to get 2.36 A, then divided 300 (peak) by 2.36 (rms) to get 127.12 Ω, mixing the two.</li>
+    <li>The problem asks for the <b>line current</b>: multiply by \(\sqrt3\) once more, 2.887 A.</li></ol>
+    <div class="book">Chapter 9 slides, pp. 15–18 · Hayt §12.4 (Figs. 12.18–12.19, Example 12.5, Practice 12.7–12.8)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const R = String.raw; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, C9 = CH9.COL;
+const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+const li = (why, body, done) => `<li class="${done ? 'done' : ''}"><div><div class="why">${why}</div>${body}</div></li>`;
+const al = rows => tx(R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`, true);
+const RT2 = Math.SQRT2, RT3 = Math.sqrt(3), D2R = Math.PI / 180, K = ['a', 'b', 'c'], KU = ['A', 'B', 'C'], PH = ['AB', 'BC', 'CA'];
+const rms = z => Cx.scale(z, 1 / RT2), pt = (z, u, d = 3, ad = 1) => CH6.polTxt(rms(z), u, d, ad);
+const LET_SRC = { a: [-0.35, 0.05], b: [0.35, 0.05], c: [-0.35, 0.15], n: [-0.42, 0] }, LET_D = { A: [-0.38, 0.05], B: [0.38, 0.05], C: [-0.38, 0.2] };
+const lineTags = (v, narrow, I, o = {}) => { const u = v.u, tag = (txt, x, y, col) => { const [px, py] = v.P([x, y]); CH6.tag(v.ctx, txt, px, py, col, { size: Math.max(11.5, Math.min(13, u * 0.3)) }); }, val = z => narrow ? '' : ` = ${pt(z, 'A', 3, 1)}`;
+  tag(`I_{aA}${val(I[0])}`, 3.5, -0.62, C9.a); tag(`I_{bB}${val(I[1])}`, o.bx ?? 8.0, 0.05, C9.b); tag(`I_{cC}${val(I[2])}`, 5.0, 5.12, C9.c); };
+
+/* =================================================================== Part 1: delta load */
+const S1 = { VL: 300, Zm: 180, Za: Math.acos(0.8) / D2R, seq: 1 };
+const st1 = bd => { const c = bd.ckt; return { c, Vl: PH.map(k => c.Vab('Z' + k)), Ip: PH.map(k => c.I('Z' + k)), IL: ['wa', 'wb', 'wc'].map(id => c.I(id)) }; };
+const B1 = new CH8.Board('cv1', { T: 4, shortSpec: CH9.short, pad: 1.1, cktFrac: 0.58, topAsp: 0.46, view: { acPeak: false },
+  side: (ctx, b, bd) => { const { Vl, Ip, IL } = st1(bd), vecs = [{ z: rms(Vl[0]), color: C9.L, label: 'V_{AB}', g: 'v', w: 2.4 },
+      { z: rms(Ip[0]), color: C9.a, label: 'I_{AB}', g: 'i', w: 2.6 }, { z: rms(Ip[1]), color: C9.b, label: 'I_{BC}', g: 'i', w: 1.8 }, { z: rms(Ip[2]), color: C9.c, label: 'I_{CA}', g: 'i', w: 1.8 },
+      { z: Cx.neg(rms(Ip[2])), from: rms(Ip[0]), color: C9.c, label: '−I_{CA}', g: 'i', dash: [6, 4], w: 2.2, lmid: 1 }, { z: rms(IL[0]), color: '#ff9b9b', label: 'I_{aA}', g: 'i', w: 3.8 }];
+    CH6.plane(ctx, b, vecs, { title: MC.t('I_aA = I_AB + (−I_CA) (ค่ายังผล)', 'I_aA = I_AB + (−I_CA) (rms)'), max: { i: Cx.abs(rms(IL[0])) * 1.04 }, arcs: [{ a: 1, b: 5, color: '#7ee787', r: 0.26 }] }); },
+  waves: [{ title: bd => bd.narrow ? '' : MC.t('i_aA = i_AB − i_CA (ค่ายอด)', 'i_aA = i_AB − i_CA (peak)'),
+    sigs: bd => { const { Ip, IL } = st1(bd); return [{ mag: Cx.abs(Ip[0]), ang: CH6.deg(Ip[0]), color: C9.a, label: 'i_{AB}', unit: 'A', g: 'i', w: 2 }, { mag: Cx.abs(Ip[2]), ang: CH6.deg(Ip[2]), color: C9.c, label: 'i_{CA}', unit: 'A', g: 'i', w: 2 },
+      { mag: Cx.abs(IL[0]), ang: CH6.deg(IL[0]), color: '#ff9b9b', label: 'i_{aA}', unit: 'A', g: 'i', w: 3.4, peak: true }]; } }],
+  after: (v, bd) => { const { IL } = st1(bd); CH9.letters(v, LET_SRC); CH9.letters(v, LET_D, { color: '#e8ecf7' }); lineTags(v, bd.narrow, IL); } });
+function build1() { const Z = CH6.polar(S1.Zm, S1.Za); B1.set(CH9C.yd({ Vp: S1.VL / RT3, seq: S1.seq, Z, zt: CH9C.zp }));
+  const { Ip, IL } = st1(B1), S = PH.reduce((s, k) => Cx.add(s, B1.ckt.S('Z' + k)), cx(0)), ang = CH6.wrap(CH6.deg(IL[0]) - CH6.deg(Ip[0]));
+  m1.innerHTML = ui.kv([['V_L', `${fd(S1.VL, 1)} V`], ['Z_p', CH9C.zp(Z)], ['I_AB', pt(Ip[0], 'A', 4, 2)], ['I_BC', pt(Ip[1], 'A', 4, 2)], ['I_CA', pt(Ip[2], 'A', 4, 2)], ['I_aA', pt(IL[0], 'A', 4, 2)],
+    ['I_L / I_p', fd(Cx.abs(IL[0]) / Cx.abs(Ip[0]), 4)], [t('มุม I_aA − I_AB', 'angle I_aA − I_AB'), `${sg(ang, 2)}°`], [t('P รวม', 'total P'), `${fd(S.re, 2)} W`]]); }
+const panel1 = document.getElementById('panel1');
+ui.h2(panel1, t('โหลดเดลตา', 'Delta load'));
+const s1 = {}, set1 = o => { Object.assign(S1, o); ['VL', 'Zm', 'Za'].forEach(k => s1[k].set(S1[k])); build1(); };
+ui.buttons(panel1, [{ label: t('Ex 3: 180∠36.87° Ω, 300 V', 'Ex 3: 180∠36.87° Ω, 300 V'), onclick: () => set1({ VL: 300, Zm: 180, Za: Math.acos(0.8) / D2R }) }, { label: t('ตัวต้านทาน 100 Ω', 'resistor 100 Ω'), onclick: () => set1({ Zm: 100, Za: 0 }) }]);
+s1.VL = ui.slider(panel1, { id: 's1VL', label: 'V<sub>L</sub>', min: 100, max: 500, step: 10, value: S1.VL, fmt: v => `${v} V`, oninput: v => { S1.VL = v; build1(); } });
+s1.Zm = ui.slider(panel1, { id: 's1Zm', label: '|Z<sub>p</sub>|', min: 20, max: 300, step: 1, value: S1.Zm, fmt: v => `${v} Ω`, oninput: v => { S1.Zm = v; build1(); } });
+s1.Za = ui.slider(panel1, { id: 's1Za', label: t('มุมของ Z<sub>p</sub>', 'angle of Z<sub>p</sub>'), min: -90, max: 90, step: 0.01, value: S1.Za, fmt: v => `${sg(v, 2)}°`, oninput: v => { S1.Za = v; build1(); } });
+ui.h2(panel1, t('ลำดับเฟส', 'Phase sequence'));
+ui.radio(panel1, [{ id: 'q1_p', label: t('บวก', 'positive'), on: true }, { id: 'q1_n', label: t('ลบ', 'negative') }], id => { S1.seq = id === 'q1_p' ? 1 : -1; build1(); });
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, B1.clk);
+const m1 = ui.metrics(panel1);
+
+/* =================================================================== Part 2: Ex 3 */
+function steps2() { const E = CH9C.ex3; let h = '';
+  h += li(MC.t('หนึ่งเฟสของเดลตา: แรงดันคร่อม = แรงดันสาย, กำลัง = 1200/3, มุมจากตัวประกอบกำลัง', 'One phase of the delta: the voltage across it is the line voltage, power 1200/3, angle from the power factor'),
+    al([R`V_p &= V_L = 300\ \text{V}, \qquad P_p = \frac{1200}{3} = 400\ \text{W}, \qquad \theta = \cos^{-1}0.8 = +36.87^\circ\ (${MC.t('ตามหลัง', 'lagging')})`]));
+  h += li(MC.t('กระแสเฟสจาก \\(P_p = V_LI_p\\cos\\theta\\)', 'Phase current from \\(P_p = V_LI_p\\cos\\theta\\)'), al([R`400 &= (300)\,I_p\,(0.8) \;\Rightarrow\; I_p = ${fd(E.Ip, 4)}\ \text{A}`]));
+  h += li(MC.t('กระแสสาย (สิ่งที่โจทย์ถาม)', 'Line current (what the problem asks)'), al([R`I_L &= \sqrt3\,I_p = \sqrt3(${fd(E.Ip, 4)}) = \boxed{${fd(E.IL, 4)}\ \text{A}}`]));
+  h += li(MC.t('อิมพีแดนซ์ต่อเฟส', 'Phase impedance'), al([R`Z_p &= \frac{V_L}{I_p}\angle\theta = \frac{300}{${fd(E.Ip, 4)}}\angle{36.87^\circ} = \boxed{${fd(E.Zm, 2)}\angle{36.87^\circ}\ \Omega = ${RC(E.Z, 2)}\ \Omega}`]) +
+    `<div class="answer">${MC.t('ตรงกับ Hayt Example 12.5: \\(I_p = 1.667\\) A, \\(I_L = 2.89\\) A, \\(Z_p = 180\\angle 36.9^\\circ\\ \\Omega\\) (Hayt เตือนไว้ข้างโจทย์ว่า "ค่าทั้งหมดเป็นค่ายังผล") ตรวจด้วยวงจรในส่วนที่ 1 ได้ค่าเดียวกัน', 'This matches Hayt Example 12.5: \\(I_p = 1.667\\) A, \\(I_L = 2.89\\) A, \\(Z_p = 180\\angle 36.9^\\circ\\ \\Omega\\) (Hayt notes beside it that all values are rms). The circuit of Part 1 gives the same values.')}</div>` +
+    `<div class="warnbox">${MC.t(`<b>เฉลยในห้องปี 2560 ต่างจากนี้สองจุด</b> (1) ใช้ \\(400 = (300/\\sqrt2)\\,I\\,(0.8)\\) ได้ \\(I = 2.36\\) A คือถือว่า 300 V เป็นค่ายอด แล้วหา \\(Z_A = 300\\angle 0^\\circ/2.36\\angle{-36.86^\\circ} = 127.12\\angle 36.86^\\circ = 101.70 + j76.25\\ \\Omega\\) ซึ่งเอาแรงดันค่ายอดหารด้วยกระแสค่ายังผล (ถ้าถือเป็นค่ายอดจริงต้องได้ \\(90\\angle 36.87^\\circ\\ \\Omega\\)) (2) หยุดที่กระแสเฟส ไม่ได้คูณ \\(\\sqrt3\\) เป็นกระแสสายที่โจทย์ถาม · ตามนิยาม \\(V_p\\) ในสไลด์หน้า 7 และ Hayt คำตอบคือ <b>\\(I_L = 2.887\\) A และ \\(Z_p = 180\\angle 36.87^\\circ\\ \\Omega\\)</b>`,
+      `<b>The 2017 class solution differs in two places.</b> (1) It used \\(400 = (300/\\sqrt2)\\,I\\,(0.8)\\), giving \\(I = 2.36\\) A, i.e. it took 300 V as a peak value, then found \\(Z_A = 300\\angle 0^\\circ/2.36\\angle{-36.86^\\circ} = 127.12\\angle 36.86^\\circ = 101.70 + j76.25\\ \\Omega\\), dividing a peak voltage by an rms current (taking 300 V as peak consistently would give \\(90\\angle 36.87^\\circ\\ \\Omega\\)). (2) It stopped at the phase current instead of multiplying by \\(\\sqrt3\\) for the line current the problem asks for · With \\(V_p\\) defined as rms (slide p. 7) and Hayt, the answer is <b>\\(I_L = 2.887\\) A and \\(Z_p = 180\\angle 36.87^\\circ\\ \\Omega\\)</b>.`)}</div>`);
+  const el = document.getElementById('steps2'); el.innerHTML = h; MC.renderMath(el); }
+
+/* =================================================================== Part 3: delta vs equivalent Y */
+const S3 = { Zm: 180, Za: Math.acos(0.8) / D2R };
+const G3 = new CH7.Grid('cv3', { aspect: 0.66, view: { acPeak: false, acPower: true } });
+function build3() { const ZD = CH6.polar(S3.Zm, S3.Za), ZY = Cx.scale(ZD, 1 / 3), Vp = 300 / RT3;
+  const tagIt = (v, it) => { const c = v.ckt; lineTags(v, true, ['wa', 'wb', 'wc'].map(id => c.I(id)), { bx: 8.2 }); CH9.letters(v, LET_SRC); CH9.letters(v, it.k === 'D' ? LET_D : { A: [-0.38, 0], B: [0.38, 0], C: [-0.38, 0.1], N: [0.4, -0.05] }, { color: '#e8ecf7' }); };
+  G3.set([{ k: 'D', spec: CH9C.yd({ Vp, Z: ZD, zText: false }), title: [`โหลดเดลตา Z_Δ = ${CH9C.zp(ZD)}`, `delta load Z_Δ = ${CH9C.zp(ZD)}`], sub: ['แหล่งจ่าย 300 V (แรงดันสาย)', 'source 300 V (line voltage)'], after: tagIt, pad: 1.1 },
+    { k: 'Y', spec: CH9C.yy({ Vp, Z: ZY, neutral: 'none', zText: false }), title: [`โหลดวาย Z_Y = Z_Δ/3 = ${CH9C.zp(ZY)}`, `Y load Z_Y = Z_Δ/3 = ${CH9C.zp(ZY)}`], sub: ['แหล่งจ่ายเดียวกัน', 'the same source'], after: tagIt, pad: 1.1 }]);
+  G3.resize(); const cD = G3.items[0].ckt, cY = G3.items[1].ckt, PD = PH.reduce((s, k) => s + cD.S('Z' + k).re, 0), PY = ['ZA', 'ZB', 'ZC'].reduce((s, id) => s + cY.S(id).re, 0);
+  m3.innerHTML = ui.kv([['Z_Δ', CH9C.zp(ZD)], ['Z_Y = Z_Δ/3', CH9C.zp(ZY)], [t('I_aA (เดลตา)', 'I_aA (delta)'), pt(cD.I('wa'), 'A', 4, 2)], [t('I_aA (วาย)', 'I_aA (Y)'), pt(cY.I('wa'), 'A', 4, 2)],
+    [t('I_p เดลตา / วาย', 'I_p delta / Y'), `${fd(Cx.abs(cD.I('ZAB')) / RT2, 4)} / ${fd(Cx.abs(cY.I('ZA')) / RT2, 4)} A`], [t('P เดลตา / วาย', 'P delta / Y'), `${fd(PD, 2)} / ${fd(PY, 2)} W`]]); }
+const panel3 = document.getElementById('panel3');
+ui.h2(panel3, 'Z_Δ');
+const s3 = {};
+s3.Zm = ui.slider(panel3, { id: 's3Zm', label: '|Z<sub>Δ</sub>|', min: 30, max: 300, step: 1, value: S3.Zm, fmt: v => `${v} Ω`, oninput: v => { S3.Zm = v; build3(); } });
+s3.Za = ui.slider(panel3, { id: 's3Za', label: t('มุมของ Z<sub>Δ</sub>', 'angle of Z<sub>Δ</sub>'), min: -90, max: 90, step: 0.01, value: S3.Za, fmt: v => `${sg(v, 2)}°`, oninput: v => { S3.Za = v; build3(); } });
+ui.buttons(panel3, [{ label: t('Ex 3 (180∠36.87° Ω)', 'Ex 3 (180∠36.87° Ω)'), onclick: () => { Object.assign(S3, { Zm: 180, Za: Math.acos(0.8) / D2R }); s3.Zm.set(S3.Zm); s3.Za.set(S3.Za); build3(); } }]);
+ui.h2(panel3, t('การเล่น', 'Playback')); CH6.playBtns(panel3, G3.clk);
+const m3 = ui.metrics(panel3);
+
+/* =================================================================== quiz */
+function quiz() { const E = CH9C.ex3;
+  const w = 400, Zp7 = Cx.add(cx(0, w * 0.2), Cx.div(Cx.mul(cx(200), cx(0, -1 / (w * 5e-6))), Cx.add(cx(200), cx(0, -1 / (w * 5e-6))))), Ip7 = 200 / Cx.abs(Zp7);
+  const Vab = CH6.polar(440, 30), S1 = CH6.polar(40000, Math.acos(0.8) / D2R), S2 = cx(24000, -24000 * Math.tan(Math.acos(0.9))), IAB1 = Cx.conj(Cx.div(Cx.scale(S1, 1 / 3), Vab)), IAB2 = Cx.conj(Cx.div(Cx.scale(S2, 1 / 3), Vab)), IaA = Cx.mul(Cx.add(IAB1, IAB2), CH6.polar(RT3, -30));
+  CH6.quiz('quiz', [
+    { q: MC.t('1) Ex 3: กระแสเฟส กระแสสาย และขนาดของอิมพีแดนซ์ต่อเฟส', '1) Ex 3: the phase current, the line current and the size of the phase impedance'),
+      fields: [{ key: 'x', lab: 'I<sub>p</sub> =', ans: E.Ip, unit: 'A' }, { key: 'y', lab: 'I<sub>L</sub> =', ans: E.IL, unit: 'A' }, { key: 'z', lab: '|Z<sub>p</sub>| =', ans: E.Zm, unit: 'Ω' }], work: tx(R`I_p = \frac{400}{300(0.8)} = 1.667\ \text{A}, \quad I_L = \sqrt3 I_p = 2.887\ \text{A}, \quad |Z_p| = \frac{300}{1.667} = 180\ \Omega`, true) },
+    { q: MC.t('2) โหลดเดลตา \\(Z_p = 20 + j15\\ \\Omega\\) ต่อกับแรงดันสาย 400 V จงหากระแสเฟส กระแสสาย และกำลังรวม', '2) A delta load \\(Z_p = 20 + j15\\ \\Omega\\) on a 400 V line voltage. Find the phase current, the line current and the total power.'),
+      fields: [{ key: 'x', lab: 'I<sub>p</sub> =', ans: 16, unit: 'A' }, { key: 'y', lab: 'I<sub>L</sub> =', ans: 16 * RT3, unit: 'A' }, { key: 'z', lab: 'P =', ans: 3 * 256 * 20, unit: 'W' }], work: tx(R`I_p = \frac{400}{|20 + j15|} = \frac{400}{25} = 16\ \text{A}, \quad I_L = 16\sqrt3 = 27.713\ \text{A}, \quad P = 3I_p^2R = 3(16^2)(20) = 15\,360\ \text{W}`, true) },
+    { q: MC.t('3) แปลงโหลดเดลตา \\(Z_\\Delta = 30\\angle 45^\\circ\\ \\Omega\\) เป็นโหลดวายที่เทียบเท่า', '3) Convert the delta load \\(Z_\\Delta = 30\\angle 45^\\circ\\ \\Omega\\) to the equivalent Y.'), cz: CH6.polar(10, 45),
+      fields: [{ key: 'm', lab: 'Z<sub>Y</sub> =', aria: 'magnitude' }, { key: 'a', lab: '∠', unit: '°', aria: 'angle' }], work: tx(R`Z_Y = \frac{Z_\Delta}{3} = 10\angle 45^\circ\ \Omega`, true) },
+    { q: MC.t('4) Hayt Practice 12.7: แต่ละเฟสของโหลดเดลตาคือตัวเหนี่ยวนำ 200 mH อนุกรมกับตัวเก็บประจุ 5 µF ที่ขนานกับ 200 Ω แรงดันเฟส 200 V ที่ \\(\\omega = 400\\) rad/s จงหากระแสเฟส กระแสสาย และกำลังรวม', '4) Hayt Practice 12.7: each phase of a delta load is a 200 mH inductor in series with a 5 µF capacitor in parallel with 200 Ω; phase voltage 200 V at \\(\\omega = 400\\) rad/s. Find the phase current, the line current and the total power.'),
+      fields: [{ key: 'x', lab: 'I<sub>p</sub> =', ans: Ip7, unit: 'A' }, { key: 'y', lab: 'I<sub>L</sub> =', ans: RT3 * Ip7, unit: 'A' }, { key: 'z', lab: 'P =', ans: 3 * Ip7 * Ip7 * Zp7.re, unit: 'W' }],
+      work: tx(R`Z_p = j80 + \frac{200(-j500)}{200 - j500} = ${RC(Zp7, 3)}\ \Omega, \quad I_p = \frac{200}{${fd(Cx.abs(Zp7), 3)}} = ${fd(Ip7, 4)}\ \text{A}, \quad I_L = ${fd(RT3 * Ip7, 4)}\ \text{A}, \quad P = ${fd(3 * Ip7 * Ip7 * Zp7.re, 1)}\ \text{W}\ \ (\text{Hayt: } 1.158,\ 2.01,\ 693)`, true) },
+    { q: MC.t('5) Hayt Practice 12.8: โหลดเดลตาสองชุดขนานกัน ชุดแรก 40 kVA ที่ PF 0.8 ตามหลัง ชุดที่สอง 24 kW ที่ PF 0.9 นำหน้า \\(\\mathbf{V}_{ab} = 440\\angle 30^\\circ\\) V จงหากำลังรวม (kW) และ \\(\\mathbf{I}_{aA}\\)', '5) Hayt Practice 12.8: two delta loads in parallel, 40 kVA at PF 0.8 lagging and 24 kW at PF 0.9 leading, with \\(\\mathbf{V}_{ab} = 440\\angle 30^\\circ\\) V. Find the total power (kW) and \\(\\mathbf{I}_{aA}\\).'),
+      fields: [{ key: 'x', lab: 'P =', ans: 56, unit: 'kW' }, { key: 'y', lab: '|I<sub>aA</sub>| =', ans: Cx.abs(IaA), unit: 'A' }, { key: 'z', lab: '∠', ans: CH6.deg(IaA), ang: true, unit: '°' }],
+      work: tx(R`\begin{aligned} \mathbf{I}_{AB1} &= \left(\frac{\mathbf{S}_1/3}{\mathbf{V}_{ab}}\right)^* = ${P(IAB1, 4, 2)}\ \text{A}, \quad \mathbf{I}_{AB2} = ${P(IAB2, 4, 2)}\ \text{A} \\ \mathbf{I}_{aA} &= \sqrt3\angle{-30^\circ}\,(\mathbf{I}_{AB1} + \mathbf{I}_{AB2}) = ${P(IaA, 4, 2)}\ \text{A}\ \ (\text{Hayt: } 75.3\angle{-12.46^\circ}) \end{aligned}`, true) } ], { wide: true });
+}
+
+document.addEventListener('mc:ready', () => {
+  B1.resize(); build1(); steps2(); build3(); quiz();
+  window.addEventListener('resize', () => { B1.resize(); G3.resize(); });
+  CK.loop(dt => { B1.frame(dt); G3.frame(dt); });
+});
+})();
+</script>
+</body>
+</html>

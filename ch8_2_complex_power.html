@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="8.2 — Apparent, Reactive and Complex Power">8.2 — กำลังปรากฏ กำลังรีแอกทีฟ และกำลังเชิงซ้อน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">กำลังปรากฏ กำลังรีแอกทีฟ และกำลังเชิงซ้อน <span class="en">Apparent, reactive and complex power — S = V I* = P + jQ</span></h1>
+<h1 data-l="en">Apparent, reactive and complex power <span class="en">S = V I* = P + jQ</span></h1>
+
+<p class="sub" data-l="th">ผลคูณ \(V_{\text{eff}}I_{\text{eff}}\) ดู "เหมือน" กำลังแบบกระแสตรง แต่ไม่ใช่กำลังเฉลี่ย สไลด์หน้า 8 จึงเรียกว่า<b>กำลังปรากฏ</b> และใช้หน่วยโวลต์-แอมแปร์ (volt-ampere, VA) เพื่อไม่ให้สับสนกับวัตต์ ส่วนที่ขาดหายไปจากกำลังเฉลี่ยคือ<b>กำลังรีแอกทีฟ \(Q\)</b> หน่วยโวลต์-แอมแปร์รีแอกทีฟ (volt-ampere reactive, VAR) ซึ่งบอกว่าพลังงานไหลไปกลับระหว่างแหล่งจ่ายกับตัวเหนี่ยวนำและตัวเก็บประจุมากเท่าใด สไลด์หน้า 9 รวมทั้งสองเป็น<b>กำลังเชิงซ้อน \(\mathbf{S} = P + jQ\)</b> ขนาดของมันคือกำลังปรากฏ และมุมของมันคือมุมต่างเฟส \(\theta-\phi\) หน้านี้มีภาพจำลองที่แยกกระแสเป็นส่วนที่ทำงานกับส่วนที่ไหลไปกลับ (ส่วน A) เหตุผลที่ต้องใช้สังยุค (ส่วน B) และโจทย์สไลด์หน้า 7 ต่อตามที่ทำในห้อง (ข้อ 1)</p>
+<p class="sub" data-l="en">The product \(V_{\text{eff}}I_{\text{eff}}\) "looks like" DC power, but it is not the average power. Slide p. 8 therefore calls it the <b>apparent power</b> and gives it the unit volt-ampere (VA) to avoid confusion with watts. What is missing from the average power is the <b>reactive power \(Q\)</b>, in volt-ampere reactive (VAR), which says how much energy flows back and forth between the source and the inductors and capacitors. Slide p. 9 combines both into the <b>complex power \(\mathbf{S} = P + jQ\)</b>: its magnitude is the apparent power and its angle is the phase difference \(\theta-\phi\). This page has a simulation that splits the current into the part that does work and the part that flows back and forth (section A), why the conjugate is needed (section B), and the slide p. 7 problem continued as in class (problem 1).</p>
+<div class="equation-box">$$ \begin{aligned} |\mathbf{S}| &= V_{\text{eff}}I_{\text{eff}}\ \ \text{VA} \\ Q &= V_{\text{eff}}I_{\text{eff}}\sin(\theta-\phi)\ \ \text{VAR} \\ \mathbf{S} &= \mathbf{V}_{\text{eff}}\,\mathbf{I}^*_{\text{eff}} = P + jQ = |\mathbf{S}|\angle(\theta-\phi) \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>กำลังปรากฏ \(|\mathbf{S}| = V_{\text{eff}}I_{\text{eff}}\)</b> หน่วย VA ใช้กำหนดขนาดสายไฟ หม้อแปลง และเครื่องกำเนิดไฟฟ้า เพราะมันขึ้นกับกระแสทั้งหมดที่ไหล</li>
+  <li><b>กำลังรีแอกทีฟ \(Q = V_{\text{eff}}I_{\text{eff}}\sin(\theta-\phi)\)</b> หน่วย VAR คือขนาดของพลังงานที่ไหลไปกลับ ซึ่งเฉลี่ยแล้วเป็นศูนย์ · \(Q_R = 0\), <b>\(Q_L = I_{\text{eff}}^2X_L = V_{\text{eff}}^2/X_L > 0\)</b> และ <b>\(Q_C = -I_{\text{eff}}^2X_C = -V_{\text{eff}}^2/X_C < 0\)</b> (สไลด์หน้า 10)</li>
+  <li>แยกกระแสเป็นส่วนที่<b>เฟสเดียวกับแรงดัน</b> \(I_{\text{eff}}\cos(\theta-\phi)\) และส่วนที่<b>ตั้งฉาก</b> \(I_{\text{eff}}\sin(\theta-\phi)\): <b>\(P\) = แรงดัน × ส่วนเฟสเดียวกัน และ \(Q\) = แรงดัน × ส่วนตั้งฉาก</b> (Hayt รูป 11.16)</li>
+  <li><b>กำลังเชิงซ้อน \(\mathbf{S} = \mathbf{V}_{\text{eff}}\mathbf{I}^*_{\text{eff}} = P + jQ\)</b> สังยุค (conjugate) ของกระแสทำให้มุมเป็น \(\theta - \phi\) · ถ้าใช้เฟเซอร์ค่ายอด \(\mathbf{S} = \tfrac12\mathbf{V}\mathbf{I}^*\)</li>
+  <li><b>กำลังเชิงซ้อนคงตัว</b>: ผลรวมของ \(\mathbf{S}\) ที่แหล่งจ่ายส่งออกเท่ากับผลรวมของ \(\mathbf{S}\) ที่อุปกรณ์ทุกตัวรับ ทั้ง \(P\) และ \(Q\) แยกกัน</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Apparent power \(|\mathbf{S}| = V_{\text{eff}}I_{\text{eff}}\)</b>, in VA, sizes wires, transformers and generators, because it depends on the whole current that flows.</li>
+  <li><b>Reactive power \(Q = V_{\text{eff}}I_{\text{eff}}\sin(\theta-\phi)\)</b>, in VAR, is the size of the energy flowing back and forth, which averages zero · \(Q_R = 0\), <b>\(Q_L = I_{\text{eff}}^2X_L = V_{\text{eff}}^2/X_L > 0\)</b> and <b>\(Q_C = -I_{\text{eff}}^2X_C = -V_{\text{eff}}^2/X_C < 0\)</b> (slide p. 10).</li>
+  <li>Split the current into a part <b>in phase with the voltage</b>, \(I_{\text{eff}}\cos(\theta-\phi)\), and a part <b>at 90°</b>, \(I_{\text{eff}}\sin(\theta-\phi)\): <b>\(P\) = voltage × in-phase part and \(Q\) = voltage × 90° part</b> (Hayt Fig. 11.16).</li>
+  <li><b>Complex power \(\mathbf{S} = \mathbf{V}_{\text{eff}}\mathbf{I}^*_{\text{eff}} = P + jQ\)</b>: the conjugate of the current makes the angle \(\theta - \phi\) · with peak phasors, \(\mathbf{S} = \tfrac12\mathbf{V}\mathbf{I}^*\).</li>
+  <li><b>Complex power is conserved</b>: the total \(\mathbf{S}\) sent out by the sources equals the total \(\mathbf{S}\) taken by all the elements, for \(P\) and \(Q\) separately.</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<figure class="slide q wide"><img src="slides/ch8/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8, Apparent Power (S): the product of the effective values of the voltage and current is not the average power; it is defined as the apparent power; since cos(θ − φ) is dimensionless, apparent power has the same units as real power, but to avoid confusion the term volt-amperes, VA, is applied; S = Veff Ieff*">
+  <figcaption data-l="th">สไลด์หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 8 · tap to enlarge</figcaption></figure>
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 8 ที่ผู้สอนเขียนในห้อง (สไลด์ปี 2561)</span><span data-l="en">See slide p. 8 as written in class (2018 slides)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch8/L06a.webp" width="1100" height="664" loading="lazy" decoding="async" alt="2018 slide 8 with handwriting: Complex Power; V = 6∠30 Vrms, I = 3∠10 Arms, VI* = (6)(3)∠30 − 10 = 18∠20, |S|∠θ − φ; p.f. = cos(θ − φ); P = |Vrms||Irms| cos(θ − φ) = |S| p.f.; S = Veff Ieff* = Vrms Irms* = P + jQ = |S|∠θ − φ">
+    <figcaption data-l="th">ตัวอย่างในห้อง: \(\mathbf{V} = 6\angle 30^\circ\) V rms, \(\mathbf{I} = 3\angle 10^\circ\) A rms ได้ \(\mathbf{V}\mathbf{I}^* = 18\angle 20^\circ\) VA และ \(P = |\mathbf{S}|\cdot\text{PF}\)</figcaption><figcaption data-l="en">The class example: \(\mathbf{V} = 6\angle 30^\circ\) V rms, \(\mathbf{I} = 3\angle 10^\circ\) A rms gives \(\mathbf{V}\mathbf{I}^* = 18\angle 20^\circ\) VA, and \(P = |\mathbf{S}|\cdot\text{PF}\)</figcaption></figure></div></details>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>P และ Q ของ R ขนาน X</a><a href="#tB"><b>B</b>ทำไมต้อง I*</a><a href="#ex1"><b>1</b>สไลด์หน้า 7 ต่อ</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>P and Q of R ∥ X</a><a href="#tB"><b>B</b>Why I*</a><a href="#ex1"><b>1</b>Slide p. 7 continued</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">แยกกระแสเป็นสองส่วน: ส่วนที่ทำงานและส่วนที่ไหลไปกลับ</h2><h2 data-l="en">Split the current: the part that does work and the part that flows back and forth</h2>
+    <div class="src" data-l="th">สไลด์หน้า 9–10 · Hayt §11.5, รูป 11.16</div><div class="src" data-l="en">Slides pp. 9–10 · Hayt §11.5, Fig. 11.16</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch8/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9, Reactive Power (Q): the magnitude of the complex power is the apparent power, the real part is the average power and the imaginary part is the reactive power, which describes the rate of energy transfer into and out of reactive load components (inductors and capacitors); S = P + jQ; the unit of Q is the volt-ampere-reactive (VAR); boxed: Q = ½VmIm sin(θ − φ) = Veff Ieff sin(θ − φ) VAR">
+      <figcaption data-l="th">สไลด์หน้า 9</figcaption><figcaption data-l="en">Slide p. 9</figcaption></figure>
+    <figure class="slide"><img src="slides/ch8/p10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 10, the reactive power at each element: resistor, QR = 0; capacitor, voltage lags current by 90 degrees, Q = −Veff Ieff = −Veff²/XC = −Ieff² XC with XC = 1/ωC; inductor, voltage leads current by 90 degrees, Q = Veff Ieff = Veff²/XL = Ieff² XL with XL = ωL">
+      <figcaption data-l="th">สไลด์หน้า 10</figcaption><figcaption data-l="en">Slide p. 10</figcaption></figure></div>
+  <p class="lead" data-l="th">แหล่งจ่าย 100 V (ค่ายังผล) ต่อกับตัวต้านทานขนานกับตัวเหนี่ยวนำหรือตัวเก็บประจุ แรงดันร่วมจึงเป็นตัวอ้างอิง กระแสของตัวต้านทาน \(\mathbf{I}_R\) อยู่<b>เฟสเดียวกับ</b>แรงดัน กระแสของกิ่งรีแอกทีฟ \(\mathbf{I}_X\) <b>ตั้งฉาก</b>กับแรงดัน และ \(\mathbf{I} = \mathbf{I}_R + \mathbf{I}_X\) ตรงกับ Hayt รูป 11.16 กราฟแยก \(p(t)\) เป็นสองส่วน: \(p_R = v\,i_R\) ไม่ติดลบและเฉลี่ยได้ \(P\) ส่วน \(p_X = v\,i_X\) แกว่งรอบศูนย์ด้วยขนาด \(|Q|\) พอดี <b>นี่คือความหมายของกำลังรีแอกทีฟ: พลังงานที่ยืมไปแล้วคืนมาทุกครึ่งคาบ</b> ค่าตั้งต้นให้สามเหลี่ยม 3-4-5: \(P = 400\) W, \(Q = 300\) VAR, \(|\mathbf{S}| = 500\) VA</p>
+  <p class="lead" data-l="en">A 100 V (effective) source drives a resistor in parallel with an inductor or a capacitor, so the common voltage is the reference. The resistor current \(\mathbf{I}_R\) is <b>in phase</b> with the voltage, the reactive branch current \(\mathbf{I}_X\) is <b>at 90°</b>, and \(\mathbf{I} = \mathbf{I}_R + \mathbf{I}_X\): exactly Hayt Fig. 11.16. The graph splits \(p(t)\) in two: \(p_R = v\,i_R\) never goes negative and averages \(P\), while \(p_X = v\,i_X\) swings about zero with amplitude exactly \(|Q|\). <b>This is what reactive power means: energy lent out and returned every half cycle.</b> The defaults give a 3-4-5 triangle: \(P = 400\) W, \(Q = 300\) VAR, \(|\mathbf{S}| = 500\) VA.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 9–10 ที่ผู้สอนเขียนในห้อง (สไลด์ปี 2561)</span><span data-l="en">See slides pp. 9–10 as written in class (2018 slides)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L06b.webp" width="1100" height="656" loading="lazy" decoding="async" alt="2018 slide 9 with handwriting: VAR; QL up for XL, QC down for XC; Q = ½|Vm||Im| sin(θ − φ) = |Veff||Ieff| sin(θ − φ), with |Vrms||Irms| written under it; the boxed formula marked ##">
+      <figcaption data-l="th">\(Q_L\) เป็นบวก (\(X_L\)) และ \(Q_C\) เป็นลบ (\(X_C\))</figcaption><figcaption data-l="en">\(Q_L\) is positive (\(X_L\)) and \(Q_C\) negative (\(X_C\))</figcaption></figure>
+    <figure class="slide"><img src="slides/ch8/L07a.webp" width="1100" height="664" loading="lazy" decoding="async" alt="2018 slide 10 with handwriting: Q = ½|Vm||Im| sin(θ − φ) = |Vrms||Irms| sin(θ − φ); VR = 6∠30, IR = 3∠30 so θ − φ = 0 and QR = 0; capacitor θ − φ = −90, sin(−90) = −1; inductor θ − φ = 90, sin(90) = 1">
+      <figcaption data-l="th">\(\sin(\theta-\phi)\) เป็น 0, −1 และ +1 สำหรับ R, C และ L</figcaption><figcaption data-l="en">\(\sin(\theta-\phi)\) is 0, −1 and +1 for R, C and L</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ทำไมต้องใช้สังยุค: S = V I*</h2><h2 data-l="en">Why the conjugate: S = V I*</h2>
+    <div class="src" data-l="th">สไลด์หน้า 8 · ตัวอย่างสังยุคที่เขียนในห้อง · Hayt §11.5</div><div class="src" data-l="en">Slide p. 8 · the conjugate examples written in class · Hayt §11.5</div></div></div>
+  <p class="lead" data-l="th">ถ้าคูณ \(\mathbf{V}\mathbf{I}\) ตรง ๆ จะได้มุม \(\theta + \phi\) ซึ่งเปลี่ยนไปทันทีที่เราเลื่อนจุดเริ่มนับเวลา (การเลื่อนเวลาคือการหมุนเฟเซอร์ทั้งคู่ไปมุมเดียวกัน) แต่กำลังต้องไม่ขึ้นกับว่าเราเริ่มจับเวลาเมื่อใด การคูณด้วยสังยุค \(\mathbf{I}^* = I\angle{-\phi}\) ให้มุม \(\theta - \phi\) ซึ่ง<b>ไม่เปลี่ยน</b>เมื่อหมุนทั้งคู่ ส่วนจริงของมันคือ \(P\) และส่วนจินตภาพคือ \(Q\) กด "หมุนจุดเริ่มเวลา" แล้วดูว่าลูกศรสีเทา \(\mathbf{V}\mathbf{I}\) หมุนตาม แต่ \(\mathbf{S} = \mathbf{V}\mathbf{I}^*\) อยู่นิ่ง ตัวอย่างในห้อง: \(\mathbf{I} = 3 + j4 \Rightarrow \mathbf{I}^* = 3 - j4\) และ \(\mathbf{I} = 5\angle 30^\circ \Rightarrow \mathbf{I}^* = 5\angle{-30^\circ}\)</p>
+  <p class="lead" data-l="en">Multiplying \(\mathbf{V}\mathbf{I}\) directly gives the angle \(\theta + \phi\), which changes as soon as we move the instant we start counting time (moving the time origin turns both phasors by the same angle). But power cannot depend on when we start the clock. Multiplying by the conjugate \(\mathbf{I}^* = I\angle{-\phi}\) gives the angle \(\theta - \phi\), which <b>does not change</b> when both turn; its real part is \(P\) and its imaginary part is \(Q\). Press "turn the time origin" and watch the grey arrow \(\mathbf{V}\mathbf{I}\) turn while \(\mathbf{S} = \mathbf{V}\mathbf{I}^*\) stays still. Class examples: \(\mathbf{I} = 3 + j4 \Rightarrow \mathbf{I}^* = 3 - j4\) and \(\mathbf{I} = 5\angle 30^\circ \Rightarrow \mathbf{I}^* = 5\angle{-30^\circ}\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">สไลด์หน้า 7 ต่อ (ตามที่ทำในห้อง): หา \(Q_L\), \(Q_C\), กำลังเชิงซ้อนของแหล่งจ่าย 20 V และตัวประกอบกำลังของมัน</h2><h2 data-l="en">Slide p. 7 continued (as worked in class): find \(Q_L\), \(Q_C\), the complex power of the 20 V source and its power factor</h2>
+    <div class="src" data-l="th">วงจรของสไลด์หน้า 7 (หน้า 8.1 ข้อ 1) · Hayt Example 11.4 · เฉลยในห้องปี 2561</div><div class="src" data-l="en">The circuit of slide p. 7 (page 8.1, problem 1) · Hayt Example 11.4 · 2018 class solution</div></div></div>
+  <p class="lead" data-l="th">วงจรเดียวกับ<a href="ch8_1_inst_power.html#ex1">หน้า 8.1 ข้อ 1</a> (เฟเซอร์ค่ายอด 20∠0° V และ 10∠0° V) ในห้องหาต่อจากกำลังเฉลี่ยไปถึง \(Q\) ของตัวเหนี่ยวนำและตัวเก็บประจุ และกำลังเชิงซ้อนที่แหล่งจ่าย 20 V ส่ง ภาพด้านข้างวาดกำลังเชิงซ้อนของแต่ละอุปกรณ์ตามที่หาได้ทีละขั้น ขั้นสุดท้ายนำมา<b>ต่อหัวต่อหาง</b> แล้วปลายสุดตกที่ปลายของ \(\mathbf{S}\) ที่แหล่งจ่าย 20 V ส่งพอดี (<b>กำลังเชิงซ้อนคงตัว</b>) กราฟแสดงว่า \(p_C\) และ \(p_L\) แกว่งด้วยขนาด \(|Q|\) พอดี กระดาษจดในห้องของข้อนี้อยู่ทางขวาของหน้าเดียวกับเฉลยในหน้า 8.1 ข้อ 1</p>
+  <p class="lead" data-l="en">The same circuit as <a href="ch8_1_inst_power.html#ex1">page 8.1, problem 1</a> (peak phasors 20∠0° V and 10∠0° V). In class we went on from the average powers to \(Q\) of the inductor and the capacitor and the complex power the 20 V source sends. The side picture draws the complex power of each element as the steps find it; the last step joins them <b>head to tail</b>, and the chain ends exactly at the tip of the \(\mathbf{S}\) sent by the 20 V source (<b>complex power is conserved</b>). The graph shows \(p_C\) and \(p_L\) swinging with amplitude exactly \(|Q|\). The class notes for this problem are the right-hand column of the page shown with page 8.1, problem 1.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ค่าในข้อ 1–4 เป็นค่ายังผล</div><div class="src" data-l="en">Give at least 3 decimal places · the values in questions 1–4 are effective values</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กำลังรีแอกทีฟก็ต้องใช้สายไฟ</h3>
+    <ol><li>ส่วน A กด "L ล้วน": \(P = 0\) แต่กระแสในสายยังไหล 3 A และ \(|\mathbf{S}| = 300\) VA</li>
+    <li>แหล่งจ่ายต้องส่งกระแสนี้ทั้งที่ไม่ได้พลังงานคืนเป็นงานเลย สายไฟจึงร้อนขึ้นโดยเปล่าประโยชน์ (เรื่องนี้คือที่มาของหน้า 8.4)</li>
+    <li>กด "R ขนาน C": \(Q\) ติดลบ ลูกศร \(\mathbf{I}_X\) ชี้ขึ้น กระแสรวมนำหน้าแรงดัน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — สังยุค</h3>
+    <ol><li>ส่วน B กด "หมุนจุดเริ่มเวลา": \(\mathbf{V}\) และ \(\mathbf{I}\) หมุนไปพร้อมกัน ลูกศรเทา \(\mathbf{V}\mathbf{I}\) หมุนเร็วเป็นสองเท่า แต่ \(\mathbf{S}\) นิ่ง</li>
+    <li>ตั้ง \(\phi = \theta\): \(\mathbf{S}\) นอนบนแกนจริง \(Q = 0\) (โหลดตัวต้านทาน)</li>
+    <li>ตั้ง \(\phi = \theta - 90^\circ\): \(\mathbf{S}\) ชี้ขึ้นตรง \(P = 0\) (ตัวเหนี่ยวนำล้วน)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — สมดุลกำลังเชิงซ้อน</h3>
+    <ol><li>ข้อ 1: \(25 + j125 - j50 + (25 + j25) = 50 + j100\) VA เท่ากับที่แหล่งจ่าย 20 V ส่งออก</li>
+    <li>ชี้เมาส์ที่อุปกรณ์ในวงจรของข้อ 1 เพื่อดู \(P\) และ \(Q\) ของมัน (เฟเซอร์ค่ายอด)</li>
+    <li>ในห้องเขียน \(Q_L = 124\) VAR เพราะปัด \(\tfrac12(22.36)(11.18) = 124.99\) ลง ค่าที่ถูกคือ 125 VAR</li></ol>
+    <div class="book">สไลด์บทที่ 8 หน้า 7–10 · สไลด์ปี 2561 · Hayt §11.4–11.5 (รูป 11.16, ตาราง 11.1, Practice 11.9)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — reactive power needs wires too</h3>
+    <ol><li>In section A press "L only": \(P = 0\), yet 3 A still flows in the line and \(|\mathbf{S}| = 300\) VA.</li>
+    <li>The source must deliver this current although none of it ends up as work, so the wires heat up for nothing (this is where page 8.4 starts).</li>
+    <li>Press "R ∥ C": \(Q\) is negative, the arrow \(\mathbf{I}_X\) points up, and the total current leads the voltage.</li></ol></div>
+  <div class="card"><h3>Try this 2 — the conjugate</h3>
+    <ol><li>In section B press "turn the time origin": \(\mathbf{V}\) and \(\mathbf{I}\) turn together, the grey arrow \(\mathbf{V}\mathbf{I}\) turns twice as fast, but \(\mathbf{S}\) stays still.</li>
+    <li>Set \(\phi = \theta\): \(\mathbf{S}\) lies on the real axis, \(Q = 0\) (a resistive load).</li>
+    <li>Set \(\phi = \theta - 90^\circ\): \(\mathbf{S}\) points straight up, \(P = 0\) (a pure inductor).</li></ol></div>
+  <div class="card"><h3>Try this 3 — the complex power balance</h3>
+    <ol><li>Problem 1: \(25 + j125 - j50 + (25 + j25) = 50 + j100\) VA, equal to what the 20 V source sends out.</li>
+    <li>Hover over an element in the circuit of problem 1 to see its \(P\) and \(Q\) (peak phasors).</li>
+    <li>The class wrote \(Q_L = 124\) VAR by rounding \(\tfrac12(22.36)(11.18) = 124.99\) down; the correct value is 125 VAR.</li></ol>
+    <div class="book">Chapter 8 slides, pp. 7–10 · 2018 slides · Hayt §11.4–11.5 (Fig. 11.16, Table 11.1, Practice 11.9)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, C8 = CH8.COL, $ = id => document.getElementById(id);
+  const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+  const PINK = '#ff7eb6', PURPLE = '#c792ea', GREEN = '#7ee787', AMBER = '#ffd166', RT2 = Math.SQRT2, rms = z => Cx.scale(z, 1 / RT2);
+  CH8.problem(1, 'ex4q');
+
+  /* =================================================================== A: R in parallel with X */
+  const S1 = { mode: 'RL', R: 25, X: 100 / 3 };
+  const MODES = { RL: [true, true, 1], RC: [true, true, -1], R: [true, false, 1], L: [false, true, 1], C: [false, true, -1] };
+  const par = bd => { const c = bd.ckt, V = c.Vab('Vs'), IR = c.part('R') ? c.I('R') : cx(0), IX = c.part('X') ? c.I('X') : cx(0), I = Cx.add(IR, IX), S = Cx.scale(Cx.mul(V, Cx.conj(I)), 0.5);
+    return { c, V, IR, IX, I, S, PR: 0.5 * Cx.mul(V, Cx.conj(IR)).re, QX: 0.5 * Cx.mul(V, Cx.conj(IX)).im }; };
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, pad: 1.3, cktFrac: 0.5, topAsp: 0.42, cktAspM: 0.46, view: { acPeak: false },
+    side: (ctx, b, bd) => { const { V, IR, IX, I } = par(bd), d = CH6.wrap(CH6.deg(V) - CH6.deg(I)), vec = [{ z: rms(V), color: COL.V, label: 'V', g: 'v' }];
+      if (Cx.abs(IR) > 1e-9) vec.push({ z: rms(IR), color: GREEN, label: 'I_R', g: 'i', lmid: 1 });
+      if (Cx.abs(IX) > 1e-9) vec.push({ z: rms(IX), from: rms(IR), color: PURPLE, label: 'I_X', g: 'i', lmid: IX.im < 0 ? 1 : -1 });
+      vec.push({ z: rms(I), color: COL.I, label: 'I', g: 'i', w: 3.6 });
+      CH6.plane(ctx, b, vec, { title: bd.short ? 'I = I_R + I_X' : t('ค่ายังผล: I = I_R (เฟสเดียวกับ V) + I_X (ตั้งฉาก)', 'effective values: I = I_R (in phase with V) + I_X (at 90°)'), arcs: Math.abs(d) > 0.5 ? [{ a: vec.length - 1, b: 0, color: AMBER, r: 0.3, text: `θ − φ = ${sg(d, 1)}°` }] : [] }); },
+    waves: [{ title: ['p = p_R + p_X', 'p = p_R + p_X'],
+      sigs: bd => { const { V, IR, IX, S, PR, QX } = par(bd), mag = Math.abs(S.re) + Cx.abs(S), pR = d => CH8.atDeg(V, d) * CH8.atDeg(IR, d), pX = d => CH8.atDeg(V, d) * CH8.atDeg(IX, d), q = Math.abs(QX);
+        return [{ f: d => pR(d) + pX(d), color: C8.p, label: 'p', unit: 'W', g: 'p', mag, w: 3.2 }, { f: () => q, color: 'rgba(199,146,234,.7)', dash: [2, 4], g: 'p', mag, w: 1.6, label: '|Q|', unit: 'VAR' },
+          { f: () => -q, color: 'rgba(199,146,234,.7)', dash: [2, 4], g: 'p', mag, w: 1.6 }, { f: pR, color: GREEN, label: 'p_R', unit: 'W', g: 'p', mag, w: 2.4 },
+          { f: pX, color: PURPLE, label: 'p_X', unit: 'W', g: 'p', mag, w: 2.4 }, { f: () => PR, color: GREEN, dash: [7, 5], label: 'P', unit: 'W', g: 'p', mag, w: 2 }]; } }],
+    after: (v, bd) => { const x = v.ckt.part('X'); if (!x) return; const { V, IX } = par(bd), ph = bd.clk.ph;
+      if (x.type === 'L') { const i = CH8.at(IX, ph); CH8.tank(v, 'X', i * i / Math.max(Cx.abs(IX) ** 2, 1e-12), { label: 'w_L', color: PURPLE, dx: -0.95 }); }
+      else { const vc = CH8.at(V, ph); CH8.tank(v, 'X', vc * vc / Math.max(Cx.abs(V) ** 2, 1e-12), { label: 'w_C', color: COL.V, dx: -0.95 }); } } });
+  const pA = $('pA'), wA = $('wA');
+  function buildA() { const [useR, useX, sgn] = MODES[S1.mode];
+    BA.set(CH8C.par({ amp: 100 * RT2, phase: 0, R: S1.R, X: sgn * S1.X, useR, useX, srcName: 'v_s', srcVal: '100 V rms' }));
+    const { V, IR, IX, I, S, PR, QX } = par(BA), d = CH6.wrap(CH6.deg(V) - CH6.deg(I));
+    sR.block.style.display = useR ? '' : 'none'; sX.block.style.display = useX ? '' : 'none';
+    mA.innerHTML = ui.kv([['V', CH6.polTxt(rms(V), 'V rms', 2, 1)], ['I_R', CH6.polTxt(rms(IR), 'A rms', 3, 1)], ['I_X', CH6.polTxt(rms(IX), 'A rms', 3, 1)], ['I', CH6.polTxt(rms(I), 'A rms', 3, 2)],
+      ['P = V·I_R', `${sg(PR, 2)} W`], ['Q = V·I_X', `${sg(QX, 2)} VAR`], ['|S| = V·I', `${fd(Cx.abs(S), 2)} VA`], ['θ − φ', `${sg(d, 2)}°`]]);
+    const Ve = Cx.abs(V) / RT2, IRe = Cx.abs(IR) / RT2, IXe = Cx.abs(IX) / RT2, Ie = Cx.abs(I) / RT2, rows = [
+      R`P &= V_{\text{eff}}\,I_{R,\text{eff}} = (${fd(Ve, 2)})(${fd(IRe, 4)}) = \boxed{${fd(PR, 3)}\ \text{W}}`,
+      R`Q &= ${QX < -1e-9 ? '-' : ''}V_{\text{eff}}\,I_{X,\text{eff}} = ${QX < -1e-9 ? '-' : ''}(${fd(Ve, 2)})(${fd(IXe, 4)}) = \boxed{${fd(QX, 3)}\ \text{VAR}}`,
+      R`|\mathbf{S}| &= V_{\text{eff}}\,I_{\text{eff}} = (${fd(Ve, 2)})(${fd(Ie, 4)}) = \boxed{${fd(Cx.abs(S), 3)}\ \text{VA}}`,
+      R`|\mathbf{S}| &= \sqrt{P^2 + Q^2}`, R`\mathbf{S} &= P + jQ = ${RC(S, 3)} = ${P(S, 3, 2)}\ \text{VA}`];
+    wA.innerHTML = `<h3>${t('คำนวณจากค่าปัจจุบัน', 'Worked from the current settings')}</h3>` + tx(LS.fitIn(wA, R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`), true) +
+      `<div class="answer">${useX ? (sgn > 0 ? t('ตัวเหนี่ยวนำ: \\(Q_L = V_{\\text{eff}}^2/X_L > 0\\)', 'Inductor: \\(Q_L = V_{\\text{eff}}^2/X_L > 0\\).') : t('ตัวเก็บประจุ: \\(Q_C = -V_{\\text{eff}}^2/X_C < 0\\)', 'Capacitor: \\(Q_C = -V_{\\text{eff}}^2/X_C < 0\\).')) : t('ตัวต้านทานล้วน: \\(Q_R = 0\\)', 'A resistor alone: \\(Q_R = 0\\).')} ${t('แอมพลิจูดของ \\(p_X(t)\\) ในกราฟเท่ากับ \\(|Q|\\) พอดี และค่าเฉลี่ยของ \\(p_R(t)\\) เท่ากับ \\(P\\) พอดี', 'The amplitude of \\(p_X(t)\\) on the graph is exactly \\(|Q|\\), and the mean of \\(p_R(t)\\) is exactly \\(P\\).')}</div>`;
+    MC.renderMath(wA); }
+  ui.h2(pA, t('โหลด', 'Load'));
+  const radioA = ui.radio(pA, [{ id: 'mA_RL', label: t('R ขนาน L', 'R ∥ L'), on: true }, { id: 'mA_RC', label: t('R ขนาน C', 'R ∥ C') }, { id: 'mA_R', label: t('R ล้วน', 'R only') }, { id: 'mA_L', label: t('L ล้วน', 'L only') }, { id: 'mA_C', label: t('C ล้วน', 'C only') }],
+    id => { S1.mode = id.slice(3); buildA(); });
+  const sR = ui.slider(pA, { id: 'sAR', label: 'R', min: 5, max: 60, step: 0.01, value: S1.R, fmt: v => `${fd(v, 2)} Ω`, oninput: v => { S1.R = v; buildA(); } });
+  const sX = ui.slider(pA, { id: 'sAX', label: t('|X| ของ L หรือ C', '|X| of L or C'), min: 5, max: 60, step: 0.01, value: S1.X, fmt: v => `${fd(v, 2)} Ω`, oninput: v => { S1.X = v; buildA(); } });
+  ui.buttons(pA, [{ label: t('สามเหลี่ยม 3-4-5', '3-4-5 triangle'), onclick: () => { Object.assign(S1, { mode: 'RL', R: 25, X: 100 / 3 }); radioA.set('mA_RL'); sR.set(25); sX.set(100 / 3); buildA(); } }]);
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, BA.clk);
+  const mA = ui.metrics(pA);
+  BA.resize(); buildA(); LS.anim($('cvA'), dt => BA.frame(dt)); window.addEventListener('resize', () => { BA.resize(); buildA(); });
+  LS.onFonts(buildA); LS.watchWidth(wA, buildA);
+
+  /* =================================================================== B: S = V I* */
+  const S2 = { th: 30, I: 5, ph: -15, rot: false, a: 0 };
+  const cvB = $('cvB'); let L2 = null;
+  function resizeB() { const W = Math.max(300, Math.floor(cvB.parentElement.clientWidth - 12));
+    if (W >= 520) { const h = Math.round(Math.max(280, W * 0.52)), w2 = Math.floor((W - 6) / 2); L2 = { W, H: h, a: { x: 0, y: 0, w: w2, h }, b: { x: w2 + 6, y: 0, w: W - w2 - 6, h } }; }
+    else { const h = Math.round(W * 0.86); L2 = { W, H: 2 * h + 6, a: { x: 0, y: 0, w: W, h }, b: { x: 0, y: h + 6, w: W, h } }; }
+    L2.ctx = CK.setup(cvB, L2.W, L2.H); L2.short = L2.a.w < 420; drawB(); }
+  function drawB() { if (!L2) return; const ctx = L2.ctx, sh = L2.short; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L2.W, L2.H);
+    const V = CH6.polar(100, S2.th + S2.a), I = CH6.polar(S2.I, S2.ph + S2.a), Ic = Cx.conj(I), S = Cx.mul(V, Ic), VI = Cx.mul(V, I), m = Math.max(Cx.abs(S), 1e-9), d = sg(CH6.wrap(S2.th - S2.ph), 1);
+    CH6.plane(ctx, L2.a, [{ z: V, color: COL.V, label: 'V', g: 'v' }, { z: I, color: COL.I, label: 'I', g: 'i' }, { z: Ic, color: COL.I, label: 'I*', g: 'i', dash: [6, 5], w: 2.4 }],
+      { title: sh ? t('V, I และ I*', 'V, I and I*') : t('V, I และสังยุค I* (I สะท้อนข้ามแกนจริง)', 'V, I and the conjugate I* (I mirrored in the real axis)'), arcs: [{ a: 1, b: 0, color: AMBER, r: 0.3, text: `θ − φ = ${d}°` }] });
+    CH6.plane(ctx, L2.b, [{ z: VI, color: 'rgba(154,163,199,.7)', label: t('V I (ผิด)', 'V I (wrong)'), dash: [5, 5], w: 2.2 }, { z: cx(S.re, 0), color: GREEN, label: '', w: 2.6 }, { z: cx(0, S.im), from: cx(S.re, 0), color: PURPLE, label: '', w: 2.6 },
+      { z: S, color: PINK, label: sh ? 'S = V I*' : `S = V I* = ${CH8.cfmt(S)}`, w: 3.6 }, { z: cx(m, 0), color: 'rgba(0,0,0,0)', label: '' }],
+      { title: sh ? t('S = P + jQ', 'S = P + jQ') : t('กำลังเชิงซ้อน: P (เขียว) + jQ (ม่วง)', 'complex power: P (green) + jQ (purple)'), max: { a: m * 1.05 }, arcs: [{ a: 4, b: 3, color: AMBER, r: 0.3, text: `${d}°` }] });
+    mB.innerHTML = ui.kv([['V', CH6.polTxt(V, 'V rms', 2, 1)], ['I', CH6.polTxt(I, 'A rms', 2, 1)], ['I*', CH6.polTxt(Ic, 'A rms', 2, 1)], ['S = V I*', `${CH8.cfmt(S)}`], ['P', `${sg(S.re, 2)} W`], ['Q', `${sg(S.im, 2)} VAR`], ['|S|', `${fd(Cx.abs(S), 2)} VA`], [t('V I (มุม θ + φ)', 'V I (angle θ + φ)'), CH6.polTxt(VI, '', 1, 1)]]); }
+  const pB = $('pB');
+  ui.h2(pB, t('เฟเซอร์ (ค่ายังผล) · |V| = 100 V', 'Phasors (effective) · |V| = 100 V'));
+  const sB = {};
+  sB.th = ui.slider(pB, { id: 'sBth', label: t('มุมของ V: θ', 'angle of V: θ'), min: -180, max: 180, step: 1, value: S2.th, fmt: v => `${sg(v, 0)}°`, oninput: v => { S2.th = v; drawB(); } });
+  sB.ph = ui.slider(pB, { id: 'sBph', label: t('มุมของ I: φ', 'angle of I: φ'), min: -180, max: 180, step: 1, value: S2.ph, fmt: v => `${sg(v, 0)}°`, oninput: v => { S2.ph = v; drawB(); } });
+  sB.I = ui.slider(pB, { id: 'sBI', label: '|I|', min: 1, max: 10, step: 0.5, value: S2.I, fmt: v => `${fd(v, 1)} A`, oninput: v => { S2.I = v; drawB(); } });
+  ui.buttons(pB, [{ label: t('หมุนจุดเริ่มเวลา', 'Turn the time origin'), onclick: el => { S2.rot = !S2.rot; el.classList.toggle('on', S2.rot); if (!S2.rot) { S2.a = 0; drawB(); } } },
+    { label: t('φ = θ (โหลด R)', 'φ = θ (R load)'), onclick: () => { S2.ph = S2.th; sB.ph.set(S2.ph); drawB(); } }, { label: t('φ = θ − 90° (L ล้วน)', 'φ = θ − 90° (L only)'), onclick: () => { S2.ph = CH6.wrap(S2.th - 90); sB.ph.set(S2.ph); drawB(); } }]);
+  const mB = ui.metrics(pB);
+  resizeB(); window.addEventListener('resize', resizeB);
+  LS.anim(cvB, dt => { if (S2.rot && dt) { S2.a = (S2.a + dt * 30) % 360; drawB(); } });
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  /* Hayt Practice 11.9: 120∠0° V rms, 1 Ω in series, then −j10 Ω in parallel with 5 + j10 Ω */
+  const Zp = Cx.div(Cx.mul(cx(0, -10), cx(5, 10)), Cx.add(cx(0, -10), cx(5, 10))), I = Cx.div(cx(120), Cx.add(cx(1), Zp)), Vp = Cx.mul(I, Zp);
+  const SC = Cx.mul(Vp, Cx.conj(Cx.div(Vp, cx(0, -10)))), SZ = Cx.mul(Vp, Cx.conj(Cx.div(Vp, cx(5, 10)))), Ss = Cx.mul(cx(120), Cx.conj(I));
+  const Sq = Cx.mul(CH6.polar(100, 30), Cx.conj(CH6.polar(5, -15)));
+  CH6.quiz('quiz', [
+    { q: t('1) ตัวเหนี่ยวนำ \\(X_L = 4\\ \\Omega\\) มีกระแส 5 A (ค่ายังผล) และตัวเก็บประจุ \\(X_C = 20\\ \\Omega\\) มีแรงดันคร่อม 120 V (ค่ายังผล) จงหากำลังรีแอกทีฟของแต่ละตัว', '1) An inductor \\(X_L = 4\\ \\Omega\\) carries 5 A (effective) and a capacitor \\(X_C = 20\\ \\Omega\\) has 120 V (effective) across it. Find the reactive power of each.'),
+      fields: [{ key: 'x', lab: 'Q<sub>L</sub> =', ans: 100, unit: 'VAR' }, { key: 'y', lab: 'Q<sub>C</sub> =', ans: -720, unit: 'VAR' }], work: work(R`\begin{aligned} Q_L &= I_{\text{eff}}^2 X_L = 5^2(4) = 100\ \text{VAR} \\ Q_C &= -\frac{V_{\text{eff}}^2}{X_C} = -\frac{120^2}{20} = -720\ \text{VAR} \end{aligned}`) },
+    { q: t('2) \\(\\mathbf{V} = 100\\angle 30^\\circ\\) V และ \\(\\mathbf{I} = 5\\angle{-15^\\circ}\\) A (ค่ายังผล ตามหลักเครื่องหมายแบบพาสซีฟ) จงหา \\(P\\), \\(Q\\) และ \\(|\\mathbf{S}|\\)', '2) \\(\\mathbf{V} = 100\\angle 30^\\circ\\) V and \\(\\mathbf{I} = 5\\angle{-15^\\circ}\\) A (effective values, passive sign convention). Find \\(P\\), \\(Q\\) and \\(|\\mathbf{S}|\\).'),
+      fields: [{ key: 'x', lab: 'P =', ans: Sq.re, unit: 'W' }, { key: 'y', lab: 'Q =', ans: Sq.im, unit: 'VAR' }, { key: 'z', lab: '|S| =', ans: 500, unit: 'VA' }],
+      work: work(R`\begin{aligned} \mathbf{S} &= \mathbf{V}\mathbf{I}^* = (100\angle 30^\circ)(5\angle 15^\circ) \\ &= 500\angle 45^\circ = ${RC(Sq, 3)}\ \text{VA} \end{aligned}`) },
+    { q: t('3) Hayt Practice 11.9: แหล่งจ่าย \\(120\\angle 0^\\circ\\) V (ค่ายังผล) ต่ออนุกรมกับ 1 Ω แล้วไปยังตัวเก็บประจุ \\(-j10\\ \\Omega\\) ที่ขนานกับ \\(5 + j10\\ \\Omega\\) จงหา \\(Q\\) ของตัวเก็บประจุ และ \\(P\\), \\(Q\\) ของกิ่ง \\(5 + j10\\ \\Omega\\)', '3) Hayt Practice 11.9: a \\(120\\angle 0^\\circ\\) V (effective) source feeds 1 Ω in series, then a \\(-j10\\ \\Omega\\) capacitor in parallel with \\(5 + j10\\ \\Omega\\). Find \\(Q\\) of the capacitor and \\(P\\), \\(Q\\) of the \\(5 + j10\\ \\Omega\\) branch.'),
+      fields: [{ key: 'x', lab: 'Q<sub>C</sub> =', ans: SC.im, unit: 'VAR' }, { key: 'y', lab: 'P<sub>Z</sub> =', ans: SZ.re, unit: 'W' }, { key: 'z', lab: 'Q<sub>Z</sub> =', ans: SZ.im, unit: 'VAR' }],
+      work: work(R`\begin{aligned} Z_p &= \frac{(-j10)(5 + j10)}{5} = 20 - j10\ \Omega \\ \mathbf{I} &= \frac{120}{21 - j10} = ${P(I)}\ \text{A} \\ \mathbf{V}_p &= \mathbf{I}Z_p = ${P(Vp)}\ \text{V} \\ \mathbf{S}_C &= \frac{|\mathbf{V}_p|^2}{(-j10)^*} = ${RC(SC, 2)}\ \text{VA} \\ \mathbf{S}_Z &= \frac{|\mathbf{V}_p|^2}{(5 + j10)^*} = ${RC(SZ, 2)}\ \text{VA} \end{aligned}`,
+        `<div class="answer">${t('Hayt: \\(0 - j1331\\) VA และ \\(532 + j1065\\) VA (ตัวต้านทาน 1 Ω รับ 26.6 W)', 'Hayt: \\(0 - j1331\\) VA and \\(532 + j1065\\) VA (the 1 Ω resistor takes 26.6 W).')}</div>`) },
+    { q: t('4) ต่อจากข้อ 3: จงหากำลังเชิงซ้อนที่แหล่งจ่ายส่งออก', '4) Continuing question 3: find the complex power the source sends out.'),
+      fields: [{ key: 'x', lab: 'P =', ans: Ss.re, unit: 'W' }, { key: 'y', lab: 'Q =', ans: Ss.im, unit: 'VAR' }],
+      work: work(R`\begin{aligned} \mathbf{S}_{\text{${t('ส่ง', 'sent')}}} &= \mathbf{V}\mathbf{I}^* = 120\,(${P(Cx.conj(I))}) \\ &= ${RC(Ss, 2)}\ \text{VA} \\ &= 26.62 + (${RC(SC, 2)}) + (${RC(SZ, 2)}) \end{aligned}`,
+        `<div class="answer">${t('Hayt ตอบ \\(-559 + j266\\) VA ในฐานะกำลังที่แหล่งจ่าย<b>รับ</b> จึงมีเครื่องหมายตรงข้าม แหล่งจ่ายส่ง \\(Q\\) ติดลบ แปลว่าวงจรนี้เป็นแบบตัวเก็บประจุโดยรวม', 'Hayt answers \\(-559 + j266\\) VA as the power the source <b>absorbs</b>, hence the opposite signs. The source sends a negative \\(Q\\): the circuit is capacitive overall.')}</div>`) },
+    { q: t('5) โหลดตัวหนึ่งรับ \\(P = 1200\\) W ที่กำลังปรากฏ 1500 VA และเป็นโหลดเหนี่ยวนำ จงหา \\(Q\\)', '5) A load takes \\(P = 1200\\) W at an apparent power of 1500 VA and is inductive. Find \\(Q\\).'),
+      fields: [{ key: 'x', lab: 'Q =', ans: 900, unit: 'VAR' }], work: work(R`Q = +\sqrt{|\mathbf{S}|^2 - P^2} = \sqrt{1500^2 - 1200^2} = 900\ \text{VAR}`, `<div class="answer">${t('โหลดเหนี่ยวนำ จึงเลือก \\(Q > 0\\)', 'Inductive, so \\(Q > 0\\).')}</div>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

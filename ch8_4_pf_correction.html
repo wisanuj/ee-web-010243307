@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="8.4 — Power Factor Correction">8.4 — การปรับปรุงตัวประกอบกำลัง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8_circuits.js?v=102"></script><script src="assets/ch8.js?v=102"></script><script src="assets/ch8ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การปรับปรุงตัวประกอบกำลัง <span class="en">Power factor correction — a capacitor in parallel with the load</span></h1>
+<h1 data-l="en">Power factor correction <span class="en">A capacitor in parallel with the load</span></h1>
+
+<p class="sub" data-l="th">สไลด์ปี 2561 หน้า 17 อธิบายว่า อุปกรณ์ใช้แค่กำลังเฉลี่ย \(P\) แต่การไฟฟ้าต้องส่ง<b>กำลังปรากฏ \(|\mathbf{S}|\)</b> ผ่านสายส่ง หม้อแปลง และเครื่องกำเนิดไฟฟ้า ที่แรงดันคงที่ \(|\mathbf{S}| = V_{\text{rms}}I_{\text{rms}}\) กระแสในสายจึงเท่ากับ \(I = P/(V\cdot\text{PF})\): <b>ตัวประกอบกำลังต่ำ กระแสสูง สายร้อน และสูญเสียมาก</b> การไฟฟ้าจึงเก็บค่าปรับจากผู้ใช้รายใหญ่ที่มีตัวประกอบกำลังต่ำกว่าประมาณ 0.85 ตามหลัง (Hayt §11.5) โหลดส่วนใหญ่ เช่น มอเตอร์ เป็นโหลดเหนี่ยวนำ วิธีแก้คือ<b>ต่อตัวเก็บประจุขนานกับโหลด</b> ให้ตัวเก็บประจุจ่ายกำลังรีแอกทีฟให้มอเตอร์ในพื้นที่ แทนที่จะดึงมาจากการไฟฟ้า ฉบับแจก 2565 ไม่มีสองหน้านี้และไม่มีโจทย์บ้าน (มีเฉพาะในสไลด์ปี 2561) หน้านี้จึงนำมาใช้ทั้งหมด</p>
+<p class="sub" data-l="en">The 2018 slides, p. 17, explain that a device uses only the average power \(P\), but the utility must deliver the <b>apparent power \(|\mathbf{S}|\)</b> through its lines, transformers and generators. At a fixed voltage \(|\mathbf{S}| = V_{\text{rms}}I_{\text{rms}}\), so the line current is \(I = P/(V\cdot\text{PF})\): <b>a low power factor means a large current, hot wires and large losses</b>. Utilities therefore charge large customers whose power factor falls below about 0.85 lagging (Hayt §11.5). Most loads, motors for example, are inductive. The cure is <b>a capacitor in parallel with the load</b>: it supplies the motor's reactive power locally instead of drawing it from the utility. The 2022 handout lacks these two slides and the house problem (they exist only in the 2018 slides), so this page uses them all.</p>
+<div class="equation-box">$$ \begin{aligned} Q_C &= Q_{\text{new}} - Q_{\text{old}} \\ &= P\left[\tan(\theta-\phi)_{\text{new}} - \tan(\theta-\phi)_{\text{old}}\right] \\ C &= \frac{|Q_C|}{2\pi f\,V_{\text{rms}}^2} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li>โหลดใช้ \(P\) แต่สายต้องส่ง \(|\mathbf{S}| = P/\text{PF}\): <b>ตัวประกอบกำลังต่ำ = กระแสในสายสูง</b> (\(I = P/(V\cdot\text{PF})\)) และการสูญเสีย \(I^2R\) ในสายสูงตาม</li>
+  <li><b>ต่อตัวเก็บประจุขนานกับโหลด</b> (ไม่ใช่อนุกรม) แรงดันที่โหลดจึงไม่เปลี่ยน \(P\) และกระแสของโหลดเท่าเดิม แต่ \(Q\), \(|\mathbf{S}|\) และกระแสในสายลดลง</li>
+  <li><b>\(Q_C = P[\tan(\theta-\phi)_{\text{new}} - \tan(\theta-\phi)_{\text{old}}]\)</b> ได้ค่าลบ แปลว่าต้องใช้ตัวเก็บประจุ (สไลด์ปี 2561 หน้า 18)</li>
+  <li>ตัวเก็บประจุรับ \(Q_C = -V_{\text{rms}}^2/X_C = -2\pi f C\,V_{\text{rms}}^2\) จึงได้ <b>\(C = |Q_C|/(2\pi f V_{\text{rms}}^2)\)</b> ค่า \(C\) ขึ้นกับความถี่: ไทยใช้ 50 Hz ส่วนเฉลยของ Hayt ใช้ 60 Hz</li>
+  <li>แก้ให้ได้ 1 พอดีต้องใช้ตัวเก็บประจุใหญ่มากแต่กระแสลดลงเพิ่มอีกนิดเดียว และถ้าใส่มากเกินไปจะกลายเป็น<b>นำหน้า</b> จึงนิยมแก้ถึงประมาณ 0.9–0.95 ตามหลัง</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li>A load uses \(P\), but the line must carry \(|\mathbf{S}| = P/\text{PF}\): <b>a low power factor means a large line current</b> (\(I = P/(V\cdot\text{PF})\)) and large \(I^2R\) losses in the line.</li>
+  <li><b>Put the capacitor in parallel with the load</b> (not in series), so the load voltage does not change: \(P\) and the load current stay the same, while \(Q\), \(|\mathbf{S}|\) and the line current drop.</li>
+  <li><b>\(Q_C = P[\tan(\theta-\phi)_{\text{new}} - \tan(\theta-\phi)_{\text{old}}]\)</b> comes out negative, meaning a capacitor is needed (2018 slides, p. 18).</li>
+  <li>A capacitor takes \(Q_C = -V_{\text{rms}}^2/X_C = -2\pi f C\,V_{\text{rms}}^2\), so <b>\(C = |Q_C|/(2\pi f V_{\text{rms}}^2)\)</b>. \(C\) depends on the frequency: Thailand uses 50 Hz, Hayt's solution 60 Hz.</li>
+  <li>Correcting all the way to 1 needs a much larger capacitor for little extra drop in current, and too much makes it <b>leading</b>, so about 0.9–0.95 lagging is the usual target.</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<div class="slides"><figure class="slide"><img src="slides/ch8/L12b.webp" width="1100" height="587" loading="lazy" decoding="async" alt="2018 slide 17, How to Change Power factor (PF new), in Thai: a device uses the average power P but the utility sends the apparent power S, so raising the PF towards 1 reduces losses; the PF can be corrected by connecting L or C into the circuit; a power triangle with S old, S new, QL, QC, the old and new angles and P old = P new, beside a load on 220 V rms with a capacitor C in parallel and a question mark">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 17 (ไม่มีในฉบับแจก 2565) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2018 slide p. 17 (not in the 2022 handout) · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch8/L13a.webp" width="1100" height="703" loading="lazy" decoding="async" alt="2018 slide 18, How to Change Power factor: from the power triangle, |QC| = P[tan(θ − φ)new − tan(θ − φ)old] and C = QC/(2πf Veff²), where (θ − φ)old = cos⁻¹(PF)old and (θ − φ)new = cos⁻¹(PF)new; handwriting: QC = Qnew − Qold = P tan(θ − φ)new − P tan(θ − φ)old; XC = −1/ωC, |XC| = 1/2πfC; |QC| = |Vrms|²/|XC| = |Vrms|²/(1/2πfC)">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 18 พร้อมลายมือในห้อง: \(Q_C = Q_{\text{new}} - Q_{\text{old}}\) และ \(|Q_C| = |V_{\text{rms}}|^2/|X_C| = 2\pi f C|V_{\text{rms}}|^2\)</figcaption><figcaption data-l="en">2018 slide p. 18 with the class handwriting: \(Q_C = Q_{\text{new}} - Q_{\text{old}}\) and \(|Q_C| = |V_{\text{rms}}|^2/|X_C| = 2\pi f C|V_{\text{rms}}|^2\)</figcaption></figure></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>สไลด์หน้า 15: มอเตอร์</a><a href="#tA"><b>A</b>ลองเลือก C เอง</a><a href="#ex2"><b>2</b>บ้านหนึ่งหลัง</a><a href="#tB"><b>B</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Slide p. 15: a motor</a><a href="#tA"><b>A</b>Choose C yourself</a><a href="#ex2"><b>2</b>A house</a><a href="#tB"><b>B</b>More practice</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">มอเตอร์เหนี่ยวนำ 50 kW ที่ PF 0.8 ตามหลัง แรงดัน 230 V (ค่ายังผล): ปรับ PF เป็น 0.95 ตามหลัง</h2><h2 data-l="en">A 50 kW induction motor at a lagging PF of 0.8 on 230 V rms: raise the PF to 0.95 lagging</h2>
+    <div class="src" data-l="th">สไลด์หน้า 15 · Hayt Example 11.9 · เฉลยในห้องปี 2561 · เลือกความถี่ใต้ภาพ</div><div class="src" data-l="en">Slide p. 15 · Hayt Example 11.9 · 2018 class solution · choose the frequency under the picture</div></div></div>
+  <figure class="slide q"><img src="slides/ch8/p15q.webp" width="1101" height="643" loading="lazy" decoding="async" alt="Slide 15 practice: an industrial consumer is operating a 50 kW (67.1 hp) induction motor at a lagging PF of 0.8. The source voltage is 230 V rms. In order to obtain lower electrical rates, the customer wishes to raise the PF to 0.95 lagging. Specify a suitable solution. A source V drives S1 (motor) and S2 (corrective device) in parallel, currents I, I1, I2">
+    <figcaption data-l="th">สไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">มอเตอร์ถูกแทนด้วยอิมพีแดนซ์ \(Z_m = |\mathbf{V}|^2/\mathbf{S}_1^* = 0.677 + j0.508\ \Omega\) ที่รับ \(\mathbf{S}_1 = 50 + j37.5\) kVA พอดี ภาพจำลองเปลี่ยนตามขั้น: สามเหลี่ยมของมอเตอร์ เป้าหมาย 18.19° และลูกศร \(Q_C\) ที่ชี้ลง ในขั้นที่ 4 สวิตช์ปิด ตัวเก็บประจุต่อเข้าวงจร แล้ว<b>จุดในสายจากแหล่งจ่ายวิ่งช้าลง ทั้งที่จุดในมอเตอร์วิ่งเท่าเดิม</b> กราฟใช้สเกลคงที่จึงเห็นกระแสในสายเล็กลง</p>
+  <p class="lead" data-l="en">The motor is modelled by the impedance \(Z_m = |\mathbf{V}|^2/\mathbf{S}_1^* = 0.677 + j0.508\ \Omega\), which takes exactly \(\mathbf{S}_1 = 50 + j37.5\) kVA. The simulation follows the steps: the motor's triangle, the 18.19° target and the downward \(Q_C\) arrow. At step 4 the switch closes and the capacitor joins the circuit; <b>the dots in the line from the source slow down while the dots in the motor keep their speed</b>. The graph keeps one scale, so the line current visibly shrinks.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas><div class="ctl" id="ctl1"></div></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <div class="warnbox" data-l="th"><b>สไลด์หน้า 15 ไม่ได้บอกความถี่</b> (โจทย์ของ Hayt ก็ไม่ได้บอก) ในห้องใช้ 50 Hz ตามระบบไฟฟ้าของไทยได้ 1.267 mF ส่วนเฉลยของ Hayt ใช้ 60 Hz ได้ 1056 µF คำตอบต่างกัน 20 % จึงควรเขียนความถี่ไว้ในโจทย์</div>
+  <div class="warnbox" data-l="en"><b>Slide p. 15 does not give the frequency</b> (nor does Hayt's problem). The class uses 50 Hz, the Thai grid, and gets 1.267 mF; Hayt's solution uses 60 Hz and gets 1056 µF. The answers differ by 20 %, so the frequency should be written in the problem.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 15 และวิธีทำที่ผู้สอนเขียนในห้อง (ปี 2561)</span><span data-l="en">See slide p. 15 and the solution written in class (2018)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L10b.webp" width="1100" height="613" loading="lazy" decoding="async" alt="2018 slide 15 with handwriting: 1 hp = 746 watt; V = 230 Vrms; p.f. 0.8 lagging at the motor S1; the corrective device S2 circled with a capacitor symbol">
+      <figcaption data-l="th">1 hp = 746 W · อุปกรณ์แก้ \(S_2\) คือตัวเก็บประจุ</figcaption><figcaption data-l="en">1 hp = 746 W · the corrective device \(S_2\) is a capacitor</figcaption></figure>
+    <figure class="slide"><img src="slides/ch8/L11.webp" width="1100" height="1380" loading="lazy" decoding="async" alt="Handwritten solution of slide 15: p.f. old = 0.8, p.f. new = 0.95, P old = 50×10³ W, Vs = 230 Vrms; QC = Qnew − Qold = P[tan(θ − φ)new − tan(θ − φ)old]; (θ − φ)old = cos⁻¹ 0.8 = 36.86°, (θ − φ)new = cos⁻¹ 0.95 = 18.19°; QC = (50×10³)[tan(18.19) − tan(36.86)] = −21057.01 VAR, |QC| = 21057.01; |QC| = |Vrms|²/|XC| = 2πfC|Vrms|²; 21057.01 = 2π(50)C(230)²; C = 1.267×10⁻³ F">
+      <figcaption data-l="th">\(Q_C = -21\,057.01\) VAR และ \(C = 1.267\) mF ที่ 50 Hz (มุมปัดเป็น 36.86° และ 18.19°)</figcaption><figcaption data-l="en">\(Q_C = -21\,057.01\) VAR and \(C = 1.267\) mF at 50 Hz (angles rounded to 36.86° and 18.19°)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">ลองเลือกตัวเก็บประจุเอง: 0.95, 1 หรือมากเกินไป</h2><h2 data-l="en">Choose the capacitor yourself: 0.95, 1, or too much</h2>
+    <div class="src" data-l="th">มอเตอร์ของข้อ 1 · คลิกสวิตช์ในวงจรได้</div><div class="src" data-l="en">The motor of problem 1 · the switch in the circuit is clickable</div></div></div>
+  <p class="lead" data-l="th">เลื่อน \(C\) หรือกดปุ่ม แล้วดูสามเหลี่ยมกำลัง (\(Q_C\) ชี้ลง ดึง \(\mathbf{S}\) ให้เตี้ยลงโดย \(P\) เท่าเดิม) และกระแสในสาย กด "PF = 1": ต้องใช้ตัวเก็บประจุใหญ่ขึ้นมาก แต่กระแสลดลงอีกไม่มาก กด "มากเกินไป": สามเหลี่ยมพลิกลงล่าง PF กลายเป็นนำหน้า และกระแสในสายกลับเพิ่มขึ้น</p>
+  <p class="lead" data-l="en">Slide \(C\) or press a button, and watch the power triangle (\(Q_C\) points down and pulls \(\mathbf{S}\) lower while \(P\) stays) and the line current. Press "PF = 1": it needs a much larger capacitor, yet the current drops only a little more. Press "too much": the triangle flips down, the PF becomes leading, and the line current grows again.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">บ้านหนึ่งหลังใช้แรงดัน 220 V (ค่ายังผล) 50 Hz: หาค่ารวม แก้ PF เป็น 0.95 ตามหลัง และค่าไฟฟ้า</h2><h2 data-l="en">A house on 220 V rms, 50 Hz: the totals, the correction to PF 0.95 lagging, and the electricity bill</h2>
+    <div class="src" data-l="th">สไลด์ปี 2561 หน้า 19 · เฉลยพิมพ์ปี 2561 · ฉบับแจกใหม่ตัดออก จึงเป็นโจทย์ฝึกเพิ่ม</div><div class="src" data-l="en">2018 slides, p. 19 · the typed 2018 solution · dropped from the new handout, so it is extra practice</div></div></div>
+  <figure class="slide q"><img src="slides/ch8/L13b.webp" width="1100" height="587" loading="lazy" decoding="async" alt="2018 slide 19 practice, in Thai: a house uses 220 V rms at 50 Hz with these appliances: 1. a fridge, 5 A rms, PF = 0.8 lagging; 2. an electric stove, P = 1000 W; 3. ten 40 W lamps at PF = 0.6 lagging; 4. an air conditioner, S = 5000 VA, PF = 0.7 lagging. Find (a) the total P, Q, S, PF and current; (b) correct the PF to 0.95 lagging and find by what percentage the total current drops; (c) if everything runs 10 hours a day for 30 days, the electricity bill at 2.50 baht per unit">
+    <figcaption data-l="th">สไลด์ปี 2561 หน้า 19 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">2018 slide p. 19 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">อุปกรณ์ทุกตัวต่อขนานกับแหล่งจ่าย กำลังเชิงซ้อนของมันจึงบวกกันได้ ขั้นที่ 1–4 ต่ออุปกรณ์เข้าวงจรทีละตัวและต่อสามเหลี่ยมของมันหัวต่อหาง ขั้นที่ 6 ต่อตัวเก็บประจุ (กราฟ: เส้นประคือกระแสก่อนต่อ) ปุ่มใต้ภาพหรือสวิตช์ในวงจรใช้ทดลองเปิดปิดอุปกรณ์ได้ <b>เฉลยทีละขั้นคิดตอนเปิดครบทุกตัวตามโจทย์</b> ตัวเก็บประจุมีค่าคงที่ตามที่คำนวณสำหรับกรณีนั้น ลองปิดแอร์ดูว่า PF เป็นอย่างไร</p>
+  <p class="lead" data-l="en">All the appliances are in parallel with the source, so their complex powers add. Steps 1–4 connect the appliances one at a time and join their triangles head to tail; step 6 connects the capacitor (graph: the dashed line is the current before). The buttons under the picture, or the switches in the circuit, let you turn appliances on and off; <b>the step-by-step solution assumes everything is on, as the problem says</b>. The capacitor is fixed at the value sized for that case; turn the air conditioner off and see what happens to the PF.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas><div class="ctl" id="ctl2"></div></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่พิมพ์ไว้ (ปี 2561)</span><span data-l="en">See the typed solution (2018)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch8/L14.webp" width="1100" height="1380" loading="lazy" decoding="async" alt="Typed solution of the house problem, in Thai: a sketch of 220 Vrms 50 Hz with the fridge, stove, lamps and air conditioner in parallel; fridge S1 = 220×5 = 1100 VA, angle 36.87°, P1 = 880 W, Q1 = 660 VAR; stove P2 = 1000 W, Q2 = 0; lamps P3 = 40×10 = 400 W, angle 53.13°, Q3 = 400 tan(53.13) = 533.33 VA; air conditioner P4 = 3500 W, Q4 = 3570.71 VAR; (a) P = 5780 W, Q = 4764.04 VAR, S = 7490.29 VA, p.f. = 0.7717 lagging, I = 34.047 A; (b) old angle 39.493°, new angle 18.195°, QC = −2863.67 VAR, C = 188.33 µF, S new = 6084.21 VA, I new = 27.656 A, the current drops by 6.391 A, 18.77 %; (c) 5780×10×30 = 1734 kWh, 1734×2.5 = 4335 baht">
+      <figcaption data-l="th">เฉลยปี 2561 ทั้งข้อ ก) ข) ค)</figcaption><figcaption data-l="en">The 2018 solution of parts (a), (b) and (c)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · แรงดันและกระแสเป็นค่ายังผล</div><div class="src" data-l="en">Give at least 3 decimal places · voltages and currents are effective values</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ทำไมต้องต่อขนาน</h3>
+    <ol><li>ข้อ 1: ต่อตัวเก็บประจุแล้ว กระแสมอเตอร์ \(I_1\) เท่าเดิม 271.7 A เพราะแรงดันคร่อมมอเตอร์ยังเป็น 230 V</li>
+    <li>ถ้าต่ออนุกรม แรงดันที่มอเตอร์จะเปลี่ยน มอเตอร์ไม่ได้ทำงานที่พิกัดอีกต่อไป (Hayt: "it must be added in parallel")</li>
+    <li>กระแสในสายลดจาก 271.7 A เหลือ 228.8 A (ลดลง 15.8 %) โดยมอเตอร์ได้กำลังเท่าเดิม</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — แก้ถึง 1 คุ้มไหม</h3>
+    <ol><li>ส่วน A กด "PF = 1": ต้องใช้ \(C = 2.257\) mF มากกว่ากรณี 0.95 ถึง 78 %</li>
+    <li>แต่กระแสในสายลดจาก 228.8 A เหลือ 217.4 A อีกเพียง 5 %</li>
+    <li>กด "มากเกินไป": PF กลายเป็นนำหน้า และกระแสในสายกลับเพิ่มขึ้น</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ค่าไฟฟ้าของบ้านลดไหม</h3>
+    <ol><li>ข้อ 2: ต่อตัวเก็บประจุแล้ว \(P\) ยังเป็น 5780 W ค่าไฟฟ้า 4335 บาทเท่าเดิม <b>เพราะมิเตอร์บ้านคิดพลังงาน (kWh) ซึ่งมาจาก \(P\)</b></li>
+    <li>สิ่งที่ลดลงคือกระแสในสายไฟของบ้าน (34.05 → 27.66 A) จึงร้อนน้อยลงและสูญเสียน้อยลง</li>
+    <li>ปิดแอร์ทั้งที่ตัวเก็บประจุยังต่ออยู่: PF กลายเป็นนำหน้า ตัวเก็บประจุค่าคงที่จึงเหมาะกับโหลดที่ไม่ค่อยเปลี่ยน</li></ol>
+    <div class="book">สไลด์บทที่ 8 หน้า 15 · สไลด์ปี 2561 หน้า 17–19 · Hayt §11.5 (Practical Application, Example 11.9)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — why in parallel</h3>
+    <ol><li>Problem 1: with the capacitor connected the motor current \(I_1\) stays at 271.7 A, because the motor still sees 230 V.</li>
+    <li>In series, the motor voltage would change and the motor would no longer run at its rating (Hayt: "it must be added in parallel").</li>
+    <li>The line current drops from 271.7 A to 228.8 A (15.8 % less) while the motor gets the same power.</li></ol></div>
+  <div class="card"><h3>Try this 2 — is correcting to 1 worth it?</h3>
+    <ol><li>In section A press "PF = 1": it needs \(C = 2.257\) mF, 78 % more than for 0.95.</li>
+    <li>Yet the line current only drops from 228.8 A to 217.4 A, another 5 %.</li>
+    <li>Press "too much": the PF becomes leading and the line current grows again.</li></ol></div>
+  <div class="card"><h3>Try this 3 — does the house bill drop?</h3>
+    <ol><li>Problem 2: with the capacitor connected \(P\) is still 5780 W and the bill stays 4335 baht, <b>because a house meter counts energy (kWh), which comes from \(P\)</b>.</li>
+    <li>What drops is the current in the house wiring (34.05 → 27.66 A), so it runs cooler with smaller losses.</li>
+    <li>Turn the air conditioner off with the capacitor still in: the PF becomes leading, so a fixed capacitor suits loads that change little.</li></ol>
+    <div class="book">Chapter 8 slides, p. 15 · 2018 slides, pp. 17–19 · Hayt §11.5 (Practical Application, Example 11.9)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id);
+  const sg = (x, d = 2) => fd(x, d).replace('-', '−'), PINK = '#ff7eb6', PURPLE = '#c792ea', RT2 = Math.SQRT2;
+  const pfTxt = (S, d = 4) => { const pf = CH8C.pf(S); return Math.abs(S.im) < 1e-6 * Math.max(1, Cx.abs(S)) ? fd(pf, d) : `${fd(pf, d)} ${S.im > 0 ? t('ตามหลัง', 'lagging') : t('นำหน้า', 'leading')}`; };
+  CH8.problem(1, 'ex9'); CH8.problem(2, 'house');
+
+  /* =================================================================== A: the motor with a capacitor of your choice */
+  const E9 = CH8C.ex9, S1 = { f: 50, C: E9.C50, on: true };
+  const cur1 = bd => { const c = bd.ckt, on = c.part('Sw').closed; return { c, I: c.I('wI'), Im: c.I('M'), Ic: on ? c.I('C') : cx(0), S: Cx.neg(c.S('Vs')), Sm: c.S('M'), Sc: on ? c.S('C') : cx(0) }; };
+  const BA = new CH8.Board('cvA', { T: 4, mid: true, pad: 1.35, cktFrac: 0.5, topAsp: 0.44, cktAspM: 0.5, view: { acPeak: false, onToggle: p => { if (p.id === 'Sw') { S1.on = p.closed; buildA(); } } },
+    side: (ctx, b, bd) => { const { S, Sm, Sc } = cur1(bd), n = bd.short, segs = [{ S: Sm, color: COL.V, label: n ? 'S_1' : t(`S_1 มอเตอร์ = ${CH8.cfmt(Sm)}`, `S_1 motor = ${CH8.cfmt(Sm)}`), legs: false, dash: Cx.abs(Sc) > 1 ? [8, 5] : null, w: 3, lpos: -1 }];
+      if (Cx.abs(Sc) > 1) segs.push({ S: Sc, from: Sm, color: PURPLE, label: n ? 'Q_C' : `Q_C = ${CH8.fmt(Sc.im, 'VAR')}`, legs: false, w: 3, lpos: -1 }, { S, color: PINK, label: n ? 'S' : `S = ${CH8.cfmt(S)}`, arc: true, w: 3.6, lpos: 1, pl: '', ql: '' });
+      else segs[0].arc = true;
+      CH8.triangle(ctx, b, { title: n ? `PF = ${pfTxt(S, 3)}` : t(`สามเหลี่ยมกำลัง · PF = ${pfTxt(S, 3)}`, `power triangle · PF = ${pfTxt(S, 3)}`), segs, max: { P: Sm.re, Q: Math.max(Sm.im, 0.35 * Sm.re), Qn: Math.max(0, -S.im) }, quad: false, mr: n ? 40 : 120 }); },
+    waves: [{ title: bd => bd.short ? 'i = i_1 + i_2' : t('กระแสในสาย i = i_1 + i_2 (สเกลคงที่)', 'line current i = i_1 + i_2 (fixed scale)'), sigs: bd => { const { I, Im, Ic } = cur1(bd), s = [{ mag: Cx.abs(Im), ang: CH6.deg(Im), color: COL.V, label: 'i_1', unit: 'A', g: 'i', w: 2.2 }];
+        if (Cx.abs(Ic) > 1e-6) s.push({ mag: Cx.abs(Ic), ang: CH6.deg(Ic), color: PURPLE, label: 'i_2', unit: 'A', g: 'i', w: 2.2 });
+        s.push({ mag: Cx.abs(I), ang: CH6.deg(I), color: COL.I, label: 'i', unit: 'A', g: 'i', w: 3.4, peak: true }); return s; },
+      opts: bd => { const { I, Im, Ic } = cur1(bd); return { w: bd.ckt.w, max: { i: Math.max(Cx.abs(Im), Cx.abs(I), Cx.abs(Ic)) * 1.05 } }; } }] });
+  const pA = $('pA');
+  function buildA() { const c = BA.set(E9.spec(S1.C, S1.f, S1.on)); const { I, Im, Ic, S } = cur1(BA), Io = Cx.abs(Im) / RT2, In = Cx.abs(I) / RT2;
+    swA.textContent = S1.on ? t('ปลดตัวเก็บประจุ', 'Disconnect C') : t('ต่อตัวเก็บประจุ', 'Connect C'); swA.classList.toggle('on', S1.on);
+    mA.innerHTML = ui.kv([['f', `${S1.f} Hz`], ['C', CK.eng(S1.C, 'F', 4)], ['Q_C', S1.on ? CH8.fmt(c.S('C').im, 'VAR') : '0'], ['S', CH8.cfmt(S)], ['PF', pfTxt(S)],
+      [t('I สาย', 'I line'), `${fd(In, 2)} A rms`], [t('I₁ มอเตอร์', 'I₁ motor'), `${fd(Io, 2)} A rms`], ['I₂ (C)', `${fd(Cx.abs(Ic) / RT2, 2)} A rms`], [t('กระแสสายเทียบไม่มี C', 'line current vs no C'), `${sg((In / Io - 1) * 100, 1)} %`]]); }
+  ui.h2(pA, t('ความถี่', 'Frequency'));
+  ui.radio(pA, [{ id: 'fA_50', label: '50 Hz', on: true }, { id: 'fA_60', label: '60 Hz' }], id => { S1.f = +id.slice(3); S1.C = E9.Cfor(E9.Qc, S1.f); sC.set(S1.C * 1e3); buildA(); });
+  ui.h2(pA, t('ตัวเก็บประจุ', 'Capacitor'));
+  const swA = ui.buttons(pA, [{ id: 'swAbtn', label: t('ปลดตัวเก็บประจุ', 'Disconnect C'), on: true, onclick: () => { S1.on = !S1.on; buildA(); } }]).swAbtn;
+  const sC = ui.slider(pA, { id: 'sAC', label: 'C', min: 0.05, max: 3, step: 0.001, value: S1.C * 1e3, fmt: v => `${fd(v, 3)} mF`, oninput: v => { S1.C = v * 1e-3; S1.on = true; buildA(); } });
+  const setC = (pf, lag = true) => { S1.C = E9.Cfor(E9.need(pf, lag).Qc, S1.f); S1.on = true; sC.set(S1.C * 1e3); buildA(); };
+  ui.buttons(pA, [{ label: t('PF 0.95 ตามหลัง (โจทย์)', 'PF 0.95 lagging (the problem)'), onclick: () => setC(0.95) }, { label: 'PF = 1', onclick: () => setC(1) }, { label: t('มากเกินไป (0.95 นำหน้า)', 'too much (0.95 leading)'), onclick: () => setC(0.95, false) }]);
+  ui.h2(pA, t('การเล่น', 'Playback')); CH6.playBtns(pA, BA.clk);
+  const mA = ui.metrics(pA);
+  BA.resize(); buildA(); window.addEventListener('resize', () => BA.resize());
+  LS.anim($('cvA'), dt => { const m = BA.ckt && BA.ckt.part('M'); if (m && BA.clk.run) m.angle = (m.angle || 0) + dt * 5; BA.frame(dt); });
+
+  /* =================================================================== B: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html, H = CH8C.house, r = H.all, b = H.bill(r.P), C10 = 10000 * Math.tan(Math.acos(0.6)) / (2 * Math.PI * 50 * 220 * 220);
+  CH6.quiz('quiz', [
+    { q: t('1) ข้อ 1 ที่ 50 Hz: ค่าตัวเก็บประจุ (มิลลิฟารัด, mF)', '1) Problem 1 at 50 Hz: the capacitance (in millifarads, mF)'), fields: [{ key: 'x', lab: 'C =', ans: E9.C50 * 1e3, unit: 'mF' }],
+      work: work(R`C = \frac{${fd(-E9.Qc, 2)}}{2\pi(50)(230^2)} = ${fd(E9.C50 * 1e3, 4)}\ \text{mF}`) },
+    { q: t('2) โจทย์เดียวกันแต่ใช้ 60 Hz ตามเฉลยของ Hayt (ไมโครฟารัด, µF)', '2) The same problem at 60 Hz, as in Hayt\'s solution (in microfarads, µF)'), fields: [{ key: 'x', lab: 'C =', ans: E9.C60 * 1e6, unit: 'µF' }],
+      work: work(R`C = \frac{${fd(-E9.Qc, 2)}}{2\pi(60)(230^2)} = ${fd(E9.C60 * 1e6, 1)}\ \mu\text{F}`, `<div class="answer">Hayt: 1056 µF</div>`) },
+    { q: t('3) โจทย์เดียวกัน: กระแสในสายก่อนและหลังแก้ PF', '3) The same problem: the line current before and after the correction'), fields: [{ key: 'x', lab: t('ก่อน', 'before'), ans: E9.Iold, unit: 'A' }, { key: 'y', lab: t('หลัง', 'after'), ans: E9.Inew, unit: 'A' }],
+      work: work(R`\begin{aligned} I &= \frac{P}{V\cdot\text{PF}} \\ I_{\text{${t('ก่อน', 'before')}}} &= \frac{50\,000}{230(0.8)} = ${fd(E9.Iold, 3)}\ \text{A} \\ I_{\text{${t('หลัง', 'after')}}} &= \frac{50\,000}{230(0.95)} = ${fd(E9.Inew, 3)}\ \text{A} \end{aligned}`) },
+    { q: t('4) บ้านในข้อ 2 ข้อ ก): \\(Q\\) รวม ตัวประกอบกำลัง และกระแสรวม', '4) The house of problem 2, (a): the total \\(Q\\), the power factor and the total current'),
+      fields: [{ key: 'x', lab: 'Q =', ans: r.Q, unit: 'VAR' }, { key: 'y', lab: 'PF =', ans: r.PF }, { key: 'z', lab: 'I =', ans: r.I, unit: 'A' }], work: work(R`\begin{aligned} Q &= ${fd(r.Q, 2)}\ \text{VAR} \\ \text{PF} &= ${fd(r.PF, 4)} \\ I &= ${fd(r.I, 3)}\ \text{A} \end{aligned}`) },
+    { q: t('5) บ้านข้อ ข): ค่าตัวเก็บประจุ และเปอร์เซ็นต์ที่กระแสรวมลดลง', '5) The house, (b): the capacitance and the percentage drop of the total current'),
+      fields: [{ key: 'x', lab: 'C =', ans: r.C * 1e6, unit: 'µF' }, { key: 'y', lab: t('ลดลง', 'drop'), ans: r.dropPct, unit: '%' }], work: work(R`\begin{aligned} C &= ${fd(r.C * 1e6, 2)}\ \mu\text{F} \\ \frac{${fd(r.I, 3)} - ${fd(r.Inew, 3)}}{${fd(r.I, 3)}} &= ${fd(r.dropPct, 2)}\,\% \end{aligned}`) },
+    { q: t('6) บ้านข้อ ค): พลังงานต่อเดือนและค่าไฟฟ้า', '6) The house, (c): the energy per month and the bill'),
+      fields: [{ key: 'x', lab: 'W =', ans: b.kWh, unit: 'kWh' }, { key: 'y', lab: t('ค่าไฟ', 'bill'), ans: b.baht, unit: t('บาท', 'baht') }], work: work(R`\begin{aligned} W &= 5780 \times 10 \times 30 = 1\,734\,000\ \text{Wh} = 1734\ \text{kWh} \\ 1734 \times 2.5 &= 4335 \end{aligned}`) },
+    { q: t('7) โหลด 10 kW ที่ PF 0.6 ตามหลัง ใช้ไฟ 220 V 50 Hz ต้องใช้ตัวเก็บประจุเท่าใดจึงได้ PF = 1 (µF)', '7) A 10 kW load at PF 0.6 lagging on 220 V, 50 Hz: what capacitor gives PF = 1? (µF)'),
+      fields: [{ key: 'x', lab: 'C =', ans: C10 * 1e6, unit: 'µF' }], work: work(R`\begin{aligned} Q_C &= 10\,000[\tan 0^\circ - \tan 53.13^\circ] = -13\,333.33\ \text{VAR} \\ C &= \frac{13\,333.33}{2\pi(50)(220^2)} = ${fd(C10 * 1e6, 2)}\ \mu\text{F} \end{aligned}`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

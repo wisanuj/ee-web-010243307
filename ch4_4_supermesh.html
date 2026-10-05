@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="4.4 — The Supermesh">4.4 — ซูเปอร์เมช</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ซูเปอร์เมช และการเลือกวิธีโนดหรือเมช <span class="en">The supermesh — walk round a shared current source — and choosing nodal or mesh analysis</span></h1>
+<h1 data-l="en">The supermesh, and choosing nodal or mesh <span class="en">Walk round a shared current source, then pick the method with fewer equations</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch4/p17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 17: a supermesh is created from two meshes that have a current source as a common element; if the current source lies on the perimeter, the single mesh in which it is found is ignored; the circuit with 7 V, 1 ohm, 2 ohm, 3 ohm, a 7 A source, 2 ohm and 1 ohm, with mesh currents i1, i2, i3">
+    <figcaption data-l="th">สไลด์บทที่ 4 หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 4 slides, p. 17 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 17: <b>แหล่งจ่ายกระแสไม่บอกแรงดันของตัวเอง</b> จึงเขียน KVL ผ่านมันไม่ได้ ถ้าแหล่งจ่ายกระแสเป็นกิ่งที่สองเมชใช้ร่วมกัน ให้รวมสองเมชเป็น<b>ซูเปอร์เมช</b> (supermesh) แล้วเขียน KVL รอบขอบนอกของทั้งสองเมช<b>โดยไม่ผ่านกิ่งของแหล่งจ่ายกระแส</b> และเพิ่มสมการเงื่อนไข \(i_a - i_b = I_s\) ส่วนแหล่งจ่ายกระแสบนขอบนอกบอกกระแสเมชนั้นทันที ในภาพจำลอง <b>แหล่งจ่ายกระแสที่ใช้ร่วมถูกขีดฆ่าสีแดง</b> และ<b>เส้นประสีเหลืองเดินรอบขอบนอกของซูเปอร์เมช</b> หน้านี้มี <b>6 โจทย์ เรียงทีละข้อ</b> (ตัวอย่างในหน้า 17, Ex 9, การบ้านข้อ 3 และแบบฝึกหัด Ex.5, Ex.7, Ex.3) ตามด้วยตารางเทียบจำนวนสมการของวิธีโนดกับวิธีเมชของทุกวงจรในบทนี้</p>
+    <p class="sub" data-l="en">Slide p. 17: <b>a current source does not tell its own voltage</b>, so KVL cannot be written through it. When a current source is a branch shared by two meshes, join the two into a <b>supermesh</b>, write KVL round the outer edge of both <b>without going through the current-source branch</b>, and add the constraint \(i_a - i_b = I_s\). A current source on the outer edge still gives its mesh current at once. In the simulations <b>the shared current source is struck in red</b> and <b>a yellow dashed path walks the outer edge of the supermesh</b>. This page has <b>6 problems, one after another</b> (the example on p. 17, Ex 9, homework 3 and exercises Ex.5, Ex.7, Ex.3), then a table comparing the number of equations of nodal and mesh analysis for every circuit of the chapter.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum V = 0 \ \text{ round the outside of both meshes} \\ i_a - i_b = I_s \ \ (\text{constraint}) \\ \text{nodal: } (N - 1) - N_V \quad \text{mesh: } M - N_I \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แหล่งจ่ายกระแสไม่บอกแรงดันของตัวเอง</b> จึงเขียน KVL ผ่านมันไม่ได้ (เหมือนแหล่งจ่ายแรงดันในวิธีโนด)</li>
+  <li><b>แหล่งจ่ายกระแสอยู่ระหว่างสองเมช</b>: รวมสองเมชเป็น<b>ซูเปอร์เมช</b> แล้วเขียน KVL รอบขอบนอก <b>ไม่ผ่านกิ่งของแหล่งจ่ายกระแส</b> (ตัวต้านทานที่อนุกรมอยู่ในกิ่งเดียวกันก็ข้ามไปด้วย)</li>
+  <li><b>สมการเงื่อนไข</b>: กระแสในกิ่งของแหล่งจ่าย = ผลต่างของกระแสเมชสองข้าง \(i_a - i_b = I_s\) โดยเมชที่วนตามลูกศรเป็นตัวตั้ง</li>
+  <li>แหล่งจ่ายกระแสบนขอบนอกของเมชเดียวยังคงบอกกระแสเมชนั้นทันที (หน้า 4.3)</li>
+  <li><b>เลือกวิธีที่ต้องแก้สมการน้อยกว่า</b>: วิธีโนด \((N - 1) - N_V\) สมการ วิธีเมช \(M - N_I\) สมการ (\(N_V\), \(N_I\) = จำนวนแหล่งจ่ายแรงดันและแหล่งจ่ายกระแส)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>A current source does not tell its own voltage</b>, so KVL cannot be written through it (just like a voltage source in nodal analysis).</li>
+  <li><b>A current source between two meshes</b>: join the two into a <b>supermesh</b> and write KVL round the outer edge, <b>never through the current-source branch</b> (a resistor in series in that branch is skipped too).</li>
+  <li><b>Constraint equation</b>: the current in the source branch = the difference of the two mesh currents, \(i_a - i_b = I_s\), with the mesh running along the arrow first.</li>
+  <li>A current source on the outer edge of one mesh still gives that mesh current at once (page 4.3).</li>
+  <li><b>Pick the method with fewer equations</b>: nodal needs \((N - 1) - N_V\), mesh needs \(M - N_I\) (\(N_V\), \(N_I\) = the numbers of voltage and current sources).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>ตัวอย่างหน้า 17</a><a href="#ex2"><b>2</b>Ex 9</a><a href="#ex3"><b>3</b>การบ้านข้อ 3</a><a href="#ex4"><b>4</b>แบบฝึกหัด Ex.5</a><a href="#ex5"><b>5</b>แบบฝึกหัด Ex.7</a><a href="#ex6"><b>6</b>แบบฝึกหัด Ex.3</a><a href="#tA"><b>A</b>เลือกวิธีไหนดี</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Example, p. 17</a><a href="#ex2"><b>2</b>Ex 9</a><a href="#ex3"><b>3</b>Homework 3</a><a href="#ex4"><b>4</b>Exercise Ex.5</a><a href="#ex5"><b>5</b>Exercise Ex.7</a><a href="#ex6"><b>6</b>Exercise Ex.3</a><a href="#tA"><b>A</b>Which method?</a></nav>
+
+<div class="group-head"><h2 data-l="th">ขั้นตอนของซูเปอร์เมช (สไลด์หน้า 18)</h2><h2 data-l="en">The supermesh steps (slide p. 18)</h2></div>
+<p class="lead" data-l="th">ขั้นตอนเหมือนวิธีเมชในหน้า 4.3 เพิ่มขั้นที่ 3: <b>หาแหล่งจ่ายกระแสที่สองเมชใช้ร่วมกัน</b> แล้วเขียนสมการเงื่อนไขของแต่ละตัว ในห้องผู้สอนสรุปไว้ที่หน้าสารบัญว่า ใช้ซูเปอร์เมชเมื่อวงจรมีแหล่งจ่ายกระแสอิสระอยู่ระหว่างสองเมช</p>
+<p class="lead" data-l="en">The steps are those of mesh analysis on page 4.3 with one more, step 3: <b>find every current source shared by two meshes</b> and write its constraint. In class the teacher noted on the contents slide: use a supermesh when the circuit has an independent current source between two meshes.</p>
+<figure class="slide q wide"><img src="slides/ch4/p18.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 18: steps to use supermesh analysis. 1 identify the meshes, 2 label clockwise mesh currents, 3 identify the supermesh: current sources shared between two meshes, constraint i1 − i2 = Is, 4 apply KVL, 5 shared resistors, 6 voltage sources">
+    <figcaption data-l="th">สไลด์หน้า 18 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 18 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">ตัวอย่างซูเปอร์เมช: หากระแสเมชทั้งสามตัว</h2><h2 data-l="en">The supermesh example: find the three mesh currents</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 17 · Hayt Example 4.11</div><div class="src" data-l="en">Chapter 4 slides, p. 17 · Hayt Example 4.11</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch4/p17q.webp" width="602" height="451" loading="lazy" decoding="async" alt="The circuit of slide 17: 7 V on the left (+ at the top), 1 ohm and the 7 A source (pointing down) with a 2 ohm below it down the middle, 3 ohm across to the right branch, 2 ohm and 1 ohm down the right; mesh currents i1, i2, i3">
+    <figcaption data-l="th">วงจรจากสไลด์หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The circuit of slide p. 17 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง (ธ.ค. 2568)</span><span data-l="en">See the in-class slide (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K23.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 17: 'Aux. Eq: i1 − i3 = 7' and 'consider mesh i1 and i3 together', with the supermesh path drawn round meshes i1 and i3 and the 7 A source circled"><figcaption data-l="th">หน้า 17: สมการเงื่อนไข \(i_1 - i_3 = 7\) และพิจารณาเมช \(i_1\) กับ \(i_3\) พร้อมกัน</figcaption><figcaption data-l="en">p. 17: the constraint \(i_1 - i_3 = 7\); meshes \(i_1\) and \(i_3\) taken together</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 9: หากระแส \(i_1\)</h2><h2 data-l="en">Ex 9: find the current \(i_1\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 19 · Hayt Practice 4.9</div><div class="src" data-l="en">Chapter 4 slides, p. 19 · Hayt Practice 4.9</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p19q.webp" width="1034" height="633" loading="lazy" decoding="async" alt="Ex 9: determine the current i1. A source printed as 6 V on the left (+ at the top), 4 ohm and a 3 A source (pointing up) down the middle-left, 5 ohm across the top, 10 ohm across the middle, 7 ohm across the bottom, 9 ohm and 1 ohm down the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 19 (แหล่งจ่ายพิมพ์เป็น 6 V) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 19 (the source is printed as 6 V) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ฉบับแจกพิมพ์แหล่งจ่ายเป็น 6 V แต่ Hayt Practice 4.9 (ตอบ −1.93 A) และในห้องใช้ <b>10 V</b> หน้านี้ใช้ 10 V</div>
+    <div class="warnbox" data-l="en">The handout prints the source as 6 V, but Hayt Practice 4.9 (answer −1.93 A) and the class use <b>10 V</b>. This page uses 10 V.</div>
+    <div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K25.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 19: the 6 V source corrected to 10 V; mesh currents Ix, Iy, Iz; Aux. Eq Iz − Ix = 3 A, written (3) −1Ix + 0Iy + 1Iz = 3; KVL round mesh Iy: 5Iy + 9Iy + 10(Iy − Iz) + 4(Iy − Ix) = 0, giving (1) −4Ix + 28Iy − 10Iz = 0; KVL round meshes Ix and Iz together: −10 V + 4(Ix − Iy) + 10(Iz − Iy) + 1Iz + 7Iz = 0, giving (2) 4Ix − 14Iy + 18Iz = 10; Ix = −1.93 A, Iy = 0.105 A, Iz = 1.07 A, so I1 = Ix = −1.93 A"><figcaption data-l="th">หน้า 19: แก้ 6 V เป็น 10 V ได้ \(i_1 = I_x = -1.93\) A</figcaption><figcaption data-l="en">p. 19: 6 V corrected to 10 V, giving \(i_1 = I_x = -1.93\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">การบ้านข้อ 3: ใช้ซูเปอร์เมชหากระแสเมชทุกตัว</h2><h2 data-l="en">Homework 3: use the supermesh to find every mesh current</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 22 (ในห้องให้เป็นการบ้านโดยเขียนป้ายว่า HW 1) · วงจรเดียวกับการบ้านข้อ 2 ในหน้า 4.2</div><div class="src" data-l="en">Chapter 4 slides, p. 22 (set as homework in class, labelled "HW 1") · the circuit of homework 2 on page 4.2</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p22q.webp" width="1338" height="578" loading="lazy" decoding="async" alt="Homework 3: employing the supermesh technique, obtain the mesh currents. 6 V source on the left (+ at the top), 10 ohm across the top, 4 ohm down the middle, 5 V on the right to ground, a 2 A source pointing right between the left and middle nodes, 11 ohm and 2 ohm down to the grounded bottom wire">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 22 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 22 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ใช้ <b>1 Ω</b> ตามที่แก้ในห้อง (ฉบับแจกพิมพ์ 11 Ω เหมือนการบ้านข้อ 2) สไลด์ไม่มีคำตอบของข้อนี้ ขั้นสุดท้ายตรวจกับคำตอบของการบ้านข้อ 2</div>
+    <div class="warnbox" data-l="en">Uses <b>1 Ω</b> as corrected in class (the handout prints 11 Ω, as in homework 2). The slides give no answer here; the last step checks it against homework 2.</div>
+    <div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง (ธ.ค. 2568)</span><span data-l="en">See the in-class slide (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K28.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 22 marked 'HW 1': mesh currents ix, iy, iz drawn; Aux. Eq iz − ix = 2; hints V13 = V1 − V3 = 6 V, V3 = −(1 ohm)Iz, V4 = 2(Iz − Iy), V2 = 5 V and V24 = V2 − V4; the 11 ohm corrected to 1 ohm"><figcaption data-l="th">หน้า 22: ให้เป็นการบ้านพร้อมคำใบ้ \(i_z - i_x = 2\), \(V_3 = -(1)i_z\), \(V_4 = 2(i_z - i_y)\)</figcaption><figcaption data-l="en">p. 22: set as homework with the hints \(i_z - i_x = 2\), \(V_3 = -(1)i_z\), \(V_4 = 2(i_z - i_y)\)</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด Ex_Ch4)</h2><h2 data-l="en">More practice (exercise sheet Ex_Ch4)</h2></div>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัด Ex.5: หา \(I_1\), \(I_2\), \(I_3\) และ \(V_x\) ด้วยวิธีเมช</h2><h2 data-l="en">Exercise Ex.5: find \(I_1\), \(I_2\), \(I_3\) and \(V_x\) by mesh analysis</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.5 · เฉลยลายมือไฟล์ Ex.5</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.5 · handwritten solution, file Ex.5</div></div></div>
+  <figure class="slide q sm"><img src="slides/ch4/sx5q.webp" width="1300" height="985" loading="lazy" decoding="async" alt="Exercise Ex.5 (in Thai): show how to find I1, I2, I3 and Vx by mesh analysis. A diamond: 10 V source upper left, 10 ohm with Vx upper right, a 4 A source down the middle, 5 ohm lower left, 5 V source lower right, and along the bottom 2 ohm and a 4 A source; mesh currents I1 (bottom), I2 (left), I3 (right)">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.5 (ขั้วของแหล่งจ่ายในรูปจาง) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.5 (the source polarities are faint in the drawing) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">รูปเพชรของโจทย์ถูกวาดใหม่เป็นรูปสี่เหลี่ยม จุดต่อเหมือนเดิมทุกจุด ขั้วของแหล่งจ่ายตามเฉลย (10 V ขั้ว + อยู่ทางโนดบน, 5 V ขั้ว + อยู่ทางโนดขวา)</div>
+    <div class="warnbox" data-l="en">The diamond of the sheet is redrawn as a rectangle with every connection unchanged. The source polarities follow the solution (10 V with + towards the top node, 5 V with + towards the right node).</div>
+    <div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.5)</span><span data-l="en">See the handwritten solution (file Ex.5)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol5.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.5: 3 meshes; I1 = −4 A from the outer 4 A source; supermesh I2 and I3 (KVL): 10I3 + 5 + 5(I2 − I1) − 10 = 0, giving 5I2 + 10I3 = −15; auxiliary equation I2 − I3 = 4; I2 = 1.66667 A, I3 = −2.3333 A; Vx = 10 I3 = −23.333 V"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.5</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.5</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">แบบฝึกหัด Ex.7: หากระแสเมช \(i_1\), \(i_2\), \(i_3\) และแรงดัน \(V_x\)</h2><h2 data-l="en">Exercise Ex.7: find the mesh currents \(i_1\), \(i_2\), \(i_3\) and the voltage \(V_x\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.7 · เฉลยลายมือไฟล์ Ex.6</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.7 · handwritten solution, file Ex.6</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx7q.webp" width="1300" height="470" loading="lazy" decoding="async" alt="Exercise Ex.7: using mesh analysis determine mesh currents i1, i2, i3 and voltage Vx. 8 V on the left (+ at the top), 2 ohm with Vx (+ at the top) down the middle-top, a 4 A source (pointing down) and 1 ohm below it, 4 ohm across to the right branch, 2 ohm and 8 ohm down the right">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.7 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.6)</span><span data-l="en">See the handwritten solution (file Ex.6)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol7.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.7: KVL round mesh i3: 2i3 + 4(i3 − i2) + 2(i3 − i1) = 0, giving −2i1 − 4i2 + 8i3 = 0; supermesh i1 and i2: −8 + 2(i1 − i3) + 4(i2 − i3) + 8i2 = 0, giving 2i1 + 12i2 − 6i3 = 8; auxiliary equation i1 − i2 = 4; i1 = 4.631 A, i2 = 0.631 A, i3 = 1.473 A; Vx = 2(i1 − i3) = 6.316 V"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.7</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.7</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">แบบฝึกหัด Ex.3: หากำลังที่อุปกรณ์แต่ละตัวดูดกลืน (ค่าที่ให้เป็นความนำ)</h2><h2 data-l="en">Exercise Ex.3: find the power absorbed by each element (the values are conductances)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.3 · ไม่มีเฉลยในโฟลเดอร์</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.3 · no solution in the folder</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx3q.webp" width="1300" height="527" loading="lazy" decoding="async" alt="Exercise Ex.3: use mesh analysis to find the power absorbed by each element. 2 A pointing down on the left, 2 mho across the top, 1 mho from the left node to the middle node, a 5 A source pointing left between the middle and right nodes, 4 mho down from the middle node and 4 mho down the right">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.3 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.3 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv6"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ค่าในรูปเป็น<b>ความนำ</b> หน่วย ℧ (= ซีเมนส์ S) ความต้านทานจึงเป็น \(R = 1/G\) เช่น 4 ℧ = 0.25 Ω</div>
+    <div class="warnbox" data-l="en">The values in the drawing are <b>conductances</b> in ℧ (= siemens, S), so the resistance is \(R = 1/G\), e.g. 4 ℧ = 0.25 Ω.</div>
+    <div id="ask6"></div><div id="st6"></div></div></div>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เลือกวิธีไหนดี: นับสมการของทุกวงจรในบทนี้</h2><h2 data-l="en">Which method? Counting the equations of every circuit in this chapter</h2>
+    <div class="src" data-l="th">วงจรทั้ง 17 วงจรของหน้า 4.1–4.4 แก้ทั้งสองวิธีด้วยเศษส่วนแม่นตรง</div><div class="src" data-l="en">All 17 circuits of pages 4.1–4.4, solved both ways in exact fractions</div></div></div>
+  <p class="lead" data-l="th">นับก่อนเลือก: <b>วิธีโนด</b>ต้องแก้ \((N - 1) - N_V\) สมการพร้อมกัน (แหล่งจ่ายแรงดันแต่ละตัวลดหนึ่งสมการ) <b>วิธีเมช</b>ต้องแก้ \(M - N_I\) สมการ (แหล่งจ่ายกระแสแต่ละตัวลดหนึ่งสมการ) โดย \(M = B - N + 1\) ตารางนี้แก้ทุกวงจรของบทนี้ทั้งสองวิธี แล้วตรวจว่า<b>กระแสในตัวต้านทานทุกตัวออกมาเท่ากันพอดี</b>ไม่ว่าจะใช้วิธีไหน</p>
+  <p class="lead" data-l="en">Count before you choose: <b>nodal analysis</b> needs \((N - 1) - N_V\) simultaneous equations (each voltage source removes one), <b>mesh analysis</b> needs \(M - N_I\) (each current source removes one), with \(M = B - N + 1\). This table solves every circuit of the chapter both ways and checks that <b>the current in every resistor comes out exactly equal</b>, whichever method is used.</p>
+  <div class="card" style="padding:10px 14px"><div id="cmp"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ซูเปอร์เมชกับตัวต้านทานที่ถูกข้าม</h3>
+    <ol><li>ข้อ 1 (Hayt Example 4.11): 2 Ω ที่อนุกรมกับแหล่งจ่าย 7 A อยู่ภายในซูเปอร์เมช <b>จึงไม่อยู่ในสมการ KVL</b></li>
+    <li>ข้อ 5 (แบบฝึกหัด Ex.7) เหมือนกัน: 1 Ω ใต้แหล่งจ่าย 4 A ถูกข้าม สมการได้ \(2i_1 + 12i_2 - 6i_3 = 8\) ตรงกับเฉลย</li>
+    <li>เมื่อแก้เสร็จ ชี้เมาส์ที่ 1 Ω: กระแสของมันคือ 4 A เท่ากระแสของแหล่งจ่ายพอดี</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เมชที่รู้ค่า + ซูเปอร์เมช</h3>
+    <ol><li>ข้อ 4 (แบบฝึกหัด Ex.5): แหล่งจ่าย 4 A ด้านล่างอยู่บนขอบนอก จึงได้ \(I_1 = -4\) A ทันที ส่วน 4 A ตรงกลางทำให้ \(I_2\) กับ \(I_3\) เป็นซูเปอร์เมช</li>
+    <li>ข้อ 6 (แบบฝึกหัด Ex.3): ได้ \(i_2 = 0\) <b>ตัวต้านทาน 2 ℧ ด้านบนไม่มีกระแส</b> ดูจุดบนนั้น</li>
+    <li>ผลรวมกำลังของ Ex.3 ต้องเป็นศูนย์: ตัวต้านทานรับ 12.5 W แหล่งจ่ายสองตัวจ่าย 2.5 + 10 W</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — นับก่อนเลือก</h3>
+    <ol><li>ในตาราง A: Ex 1 วิธีโนดต้องแก้ 2 สมการ แต่วิธีเมชเหลือ<b>สมการเดียว</b> เพราะแหล่งจ่ายกระแสสองตัวบอกกระแสเมชข้างให้แล้ว</li>
+    <li>Ex 3 / Ex 7: วิธีโนดเหลือสมการเดียว (แหล่งจ่ายแรงดันสามตัวต่อกับโนดอ้างอิง) วิธีเมชต้องสองสมการ</li>
+    <li>Ex 9: วิธีเมช 2 สมการ วิธีโนด 4 สมการ Hayt จึงแก้ข้อนี้ด้วยซูเปอร์เมช</li></ol>
+    <div class="book">สไลด์บทที่ 4 หน้า 17–19, 22 · แบบฝึกหัด Ex.3, Ex.5, Ex.7 · Hayt §4.4–4.5, Example 4.11, Practice 4.9</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the supermesh and the skipped resistor</h3>
+    <ol><li>Problem 1 (Hayt Example 4.11): the 2 Ω in series with the 7 A source sits inside the supermesh, <b>so it is not in the KVL equation</b>.</li>
+    <li>Problem 5 (exercise Ex.7) is the same: the 1 Ω under the 4 A source is skipped, giving \(2i_1 + 12i_2 - 6i_3 = 8\), as in the solution.</li>
+    <li>Once solved, hover over the 1 Ω: its current is 4 A, exactly the source current.</li></ol></div>
+  <div class="card"><h3>Try this 2 — a known mesh plus a supermesh</h3>
+    <ol><li>Problem 4 (exercise Ex.5): the bottom 4 A source is on the outer edge, so \(I_1 = -4\) A at once; the middle 4 A makes \(I_2\) and \(I_3\) a supermesh.</li>
+    <li>Problem 6 (exercise Ex.3): \(i_2 = 0\), so <b>the top 2 ℧ carries no current</b>; watch for dots there.</li>
+    <li>The powers of Ex.3 must add to zero: the resistors absorb 12.5 W, the two sources deliver 2.5 + 10 W.</li></ol></div>
+  <div class="card"><h3>Try this 3 — count before you choose</h3>
+    <ol><li>In table A: Ex 1 needs 2 equations by nodal analysis but <b>only one</b> by mesh, because the two current sources already give the outer mesh currents.</li>
+    <li>Ex 3 / Ex 7: nodal needs one equation (three voltage sources go to the reference), mesh needs two.</li>
+    <li>Ex 9: mesh needs 2 equations, nodal 4, which is why Hayt solves it with a supermesh.</li></ol>
+    <div class="book">Chapter 4 slides, pp. 17–19, 22 · exercises Ex.3, Ex.5, Ex.7 · Hayt §4.4–4.5, Example 4.11, Practice 4.9</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.006, 0.004 * Math.abs(y)));
+
+/* 1: the supermesh example = Hayt Example 4.11 */
+CH4.problem(1, 'h411', 'mesh', {
+  ask: () => ({ fields: [{ label: 'i₁ =', ok: x => near(x, 9), w: 4 }, { label: 'i₂ =', ok: x => near(x, 2.5), w: 4 }, { label: 'i₃ (A) =', ok: x => near(x, 2), w: 4 }] }),
+  answer: t('\\(i_1 = 9\\) A, \\(i_2 = 2.5\\) A, \\(i_3 = 2\\) A ตรงกับ Hayt Example 4.11 และสมการเงื่อนไข \\(i_1 - i_3 = 7\\) ที่ผู้สอนเขียนในห้อง',
+    '\\(i_1 = 9\\) A, \\(i_2 = 2.5\\) A, \\(i_3 = 2\\) A, as in Hayt Example 4.11, with the constraint \\(i_1 - i_3 = 7\\) the teacher wrote in class') });
+
+/* 2: Ex 9 = Hayt Practice 4.9 (10 V as in Hayt and the class) */
+CH4.problem(2, 'ex9', 'mesh', {
+  ask: () => ({ fields: [{ label: 'i₁ (A) =', ok: x => near(x, -29 / 15, 0.006), w: 5 }],
+    check: v => near(v[0], -2.2, 0.006) ? t('นี่คือคำตอบเมื่อใช้ 6 V ตามที่พิมพ์ ข้อนี้ใช้ 10 V ตาม Hayt และในห้อง', 'That is the answer with the printed 6 V; this problem uses 10 V as in Hayt and in class') : near(v[0], 29 / 15, 0.006) ? t('ขนาดถูก แต่ \\(i_1\\) ติดลบ: กระแสจริงไหลลงผ่านแหล่งจ่าย 10 V', 'Right size, but \\(i_1\\) is negative: the real current flows down through the 10 V source') : '' }),
+  answer: t('\\(i_1 = I_x = -29/15 \\approx -1.933\\) A ตรงกับ Hayt Practice 4.9 (−1.93 A) และในห้อง · ถ้าใช้ 6 V ตามที่พิมพ์จะได้ −2.2 A',
+    '\\(i_1 = I_x = -29/15 \\approx -1.933\\) A, as in Hayt Practice 4.9 (−1.93 A) and in class · with the printed 6 V it would be −2.2 A') });
+
+/* 3: homework 3 = the circuit of homework 2 by mesh */
+CH4.problem(3, 'hw2', 'mesh', {
+  ask: () => ({ fields: [{ label: 'iₓ =', ok: x => near(x, -1 / 11, 0.003), w: 4.5 }, { label: 'i_y =', ok: x => near(x, -17 / 66, 0.003), w: 4.5 }, { label: 'i_z (A) =', ok: x => near(x, 21 / 11, 0.004), w: 4.5 }] }),
+  answer: t('\\(i_x = -1/11 \\approx -0.0909\\) A, \\(i_y = -17/66 \\approx -0.2576\\) A, \\(i_z = 21/11 \\approx 1.909\\) A · ขั้นสุดท้ายแสดงว่าได้แรงดันโนดตรงกับการบ้านข้อ 2 (หน้า 4.2 ข้อ 3) พอดี',
+    '\\(i_x = -1/11 \\approx -0.0909\\) A, \\(i_y = -17/66 \\approx -0.2576\\) A, \\(i_z = 21/11 \\approx 1.909\\) A · the last step shows the node voltages agree exactly with homework 2 (page 4.2, problem 3)') });
+
+/* 4: exercise sheet Ex.5 */
+CH4.problem(4, 'sx5', 'mesh', {
+  ask: () => ({ fields: [{ label: 'I₂ =', ok: x => near(x, 5 / 3, 0.004), w: 4.5 }, { label: 'I₃ (A) =', ok: x => near(x, -7 / 3, 0.004), w: 4.5 }, { label: 'Vₓ (V) =', ok: x => near(x, -70 / 3, 0.03), w: 4.5 }] }),
+  answer: t('\\(I_1 = -4\\) A, \\(I_2 = 5/3 \\approx 1.667\\) A, \\(I_3 = -7/3 \\approx -2.333\\) A และ \\(V_x = -70/3 \\approx -23.33\\) V ตรงกับเฉลย',
+    '\\(I_1 = -4\\) A, \\(I_2 = 5/3 \\approx 1.667\\) A, \\(I_3 = -7/3 \\approx -2.333\\) A and \\(V_x = -70/3 \\approx -23.33\\) V, as in the solution') });
+
+/* 5: exercise sheet Ex.7 */
+CH4.problem(5, 'sx7', 'mesh', {
+  ask: () => ({ fields: [{ label: 'i₁ =', ok: x => near(x, 88 / 19, 0.004), w: 4.5 }, { label: 'i₃ (A) =', ok: x => near(x, 28 / 19, 0.004), w: 4.5 }, { label: 'Vₓ (V) =', ok: x => near(x, 120 / 19, 0.01), w: 4.5 }] }),
+  answer: t('\\(i_1 = 88/19 \\approx 4.632\\) A, \\(i_2 = 12/19 \\approx 0.632\\) A, \\(i_3 = 28/19 \\approx 1.474\\) A และ \\(V_x = 120/19 \\approx 6.316\\) V ตรงกับเฉลย (4.631, 0.631, 1.473 A ตัดทศนิยม)',
+    '\\(i_1 = 88/19 \\approx 4.632\\) A, \\(i_2 = 12/19 \\approx 0.632\\) A, \\(i_3 = 28/19 \\approx 1.474\\) A and \\(V_x = 120/19 \\approx 6.316\\) V, as in the solution (4.631, 0.631, 1.473 A, truncated)') });
+
+/* 6: exercise sheet Ex.3 (conductances) */
+CH4.problem(6, 'sx3', 'mesh', {
+  ask: () => ({ fields: [{ label: 'i₁ =', ok: x => near(x, -2), w: 4 }, { label: 'i₂ =', ok: x => near(x, 0), w: 4 }, { label: 'i₃ (A) =', ok: x => near(x, -5), w: 4 }],
+    check: v => near(v[0], -2) && near(v[2], -5) ? '' : t('ระวัง: ค่าในรูปเป็นความนำ ใช้ \\(R = 1/G\\) เช่น 4 ℧ = 0.25 Ω', 'Careful: the values are conductances, so use \\(R = 1/G\\), e.g. 4 ℧ = 0.25 Ω') }),
+  answer: t('\\(i_1 = -2\\) A, \\(i_2 = 0\\), \\(i_3 = -5\\) A · ตัวต้านทานรับ 0, 4, 2.25 และ 6.25 W แหล่งจ่าย 2 A รับ −2.5 W (จ่าย 2.5 W) และแหล่งจ่าย 5 A รับ −10 W (จ่าย 10 W) ผลรวมเป็นศูนย์ · ข้อนี้ไม่มีเฉลยในโฟลเดอร์',
+    '\\(i_1 = -2\\) A, \\(i_2 = 0\\), \\(i_3 = -5\\) A · the resistors absorb 0, 4, 2.25 and 6.25 W, the 2 A source absorbs −2.5 W (delivers 2.5 W) and the 5 A source −10 W (delivers 10 W); the total is zero · there is no solution for this one in the folder') });
+
+/* A: every circuit of the chapter by both methods */
+const CMP = [['ex1', t('Ex 1', 'Ex 1'), '4.1 · 1'], ['ex2', 'Ex 2 = Ex 8', '4.1 · 2, 4.3 · 4'], ['ex3', 'Ex 3 = Ex 7', '4.1 · 3, 4.3 · 3'], ['hw1', t('การบ้านข้อ 1', 'Homework 1'), '4.1 · 4'],
+  ['sx1', t('แบบฝึกหัด Ex.1 = Ex.2', 'Exercise Ex.1 = Ex.2'), '4.1 · 5, 4.3 · 5'], ['sx6', t('แบบฝึกหัด Ex.6', 'Exercise Ex.6'), '4.1 · 6'], ['ex4', 'Ex 4', '4.2 · 1'], ['ex5', 'Ex 5', '4.2 · 2'],
+  ['hw2', t('การบ้านข้อ 2 = 3', 'Homework 2 = 3'), '4.2 · 3, 4.4 · 3'], ['sx4', t('แบบฝึกหัด Ex.4', 'Exercise Ex.4'), '4.2 · 4'], ['hm', t('วงจรแนะนำเมช', 'Mesh introduction'), '4.3 · 1'], ['ex6', 'Ex 6', '4.3 · 2'],
+  ['h411', t('ตัวอย่างซูเปอร์เมช', 'Supermesh example'), '4.4 · 1'], ['ex9', 'Ex 9', '4.4 · 2'], ['sx5', t('แบบฝึกหัด Ex.5', 'Exercise Ex.5'), '4.4 · 4'], ['sx7', t('แบบฝึกหัด Ex.7', 'Exercise Ex.7'), '4.4 · 5'], ['sx3', t('แบบฝึกหัด Ex.3', 'Exercise Ex.3'), '4.4 · 6']];
+const rows = CMP.map(([k, name, where]) => {
+  const C = CH4C[k]; const ck = new CK.Circuit({ ground: C.ground, nodes: C.nodes, parts: C.parts.map(q => ({ ...q })) }); ck.solve();
+  const N = ANA.nodal(ck, C.nodal), M = ANA.mesh(ck, C.mesh), T = N.T;
+  const nV = C.parts.filter(p => p.type === 'V').length, nI = C.parts.filter(p => p.type === 'I').length;
+  const nE = N.vars.length - N.cons.length, mE = M.vars.length - M.cons.length, raw = T.n - 1 - nV;
+  const inChain = new Set((C.nodal.series || []).flat()); let same = 0, tot = 0;
+  ck.parts.forEach(p => { if (p.type !== 'R' || inChain.has(p.id)) return; tot++;
+    const In = N.S.v(p.a).sub(N.S.v(p.b)).div(ANA.FX(p.value)); const h = M.G.H.find(x => x.part === p && x.from === p.a);
+    const Im = (h.face.mesh ? M.sol.get(h.face.mesh) : ALG.F(0)).sub(h.twin.face.mesh ? M.sol.get(h.twin.face.mesh) : ALG.F(0)); if (In.eq(Im)) same++; });
+  return { name, where, T, nV, nI, nE, mE, raw, same, tot, merged: raw !== nE }; });
+const fm = s => MC.tex(s);
+$('cmp').innerHTML = `<div style="overflow-x:auto;position:relative"><table class="tbl cmptab"><thead><tr><th>${t('โจทย์ (หน้า · ข้อ)', 'Problem (page · no.)')}</th><th>${t('วิธีโนด', 'Nodal')} ${fm('(N - 1) - N_V')}</th><th>${t('วิธีเมช', 'Mesh')} ${fm('M - N_I')}</th><th>${t('สั้นกว่า', 'Shorter')}</th><th>${t('ตรวจข้ามวิธี', 'Cross-check')}</th></tr></thead><tbody>` +
+  rows.map(r => `<tr><td><b>${r.name}</b><div class="sub2" style="margin:0">${r.where}</div></td>` +
+    `<td>${fm(`(${r.T.n} - 1) - ${r.nV} = ${r.raw}`)}${r.merged ? ` → <b>${r.nE}</b><sup>*</sup>` : ''}</td><td>${fm(`${r.T.meshes} - ${r.nI} = ${r.mE}`)}</td>` +
+    `<td>${r.nE < r.mE ? `<span class="pill good">${t('โนด', 'nodal')}</span>` : r.mE < r.nE ? `<span class="pill good">${t('เมช', 'mesh')}</span>` : `<span class="pill">${t('เท่ากัน', 'equal')}</span>`}</td>` +
+    `<td>${r.same === r.tot ? '✓' : '✗'} ${t(`ตัวต้านทาน ${r.same}/${r.tot} ตัว`, `${r.same}/${r.tot} resistors`)}</td></tr>`).join('') +
+  `</tbody></table></div><div class="sub2"><sup>*</sup> ${t('รวมตัวต้านทานที่อนุกรมกันก่อน โนดตรงกลางจึงไม่เป็นตัวแปร (ทำแบบเดียวกับเฉลยในห้อง)', 'resistors in series are combined first, so the node between them is not an unknown (as in the class solutions)')} · ${t('"ตรวจข้ามวิธี" = กระแสในตัวต้านทานแต่ละตัวจากวิธีโนด \\((v_a - v_b)/R\\) เท่ากับจากวิธีเมช (ผลต่างของกระแสเมช) พอดีแบบเศษส่วน', '"cross-check" = the current in each resistor from nodal analysis, \\((v_a - v_b)/R\\), equals the one from mesh analysis (the difference of the mesh currents) exactly, as fractions')}</div>`;
+MC.renderMath($('cmp'));
+});
+</script>
+</body>
+</html>

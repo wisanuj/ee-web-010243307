@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="9.4 — Three-Phase Power">9.4 — กำลังไฟฟ้าสามเฟส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/ch6.js?v=102"></script>
+<script src="assets/ch8.js?v=102"></script><script src="assets/ch9_circuits.js?v=102"></script><script src="assets/ch9.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">กำลังไฟฟ้าสามเฟสและวิธีวิเคราะห์ทีละเฟส <span class="en">Three-phase power and the per-phase method — one formula for Y and delta</span></h1>
+<h1 data-l="en">Three-phase power and the per-phase method <span class="en">One formula for Y and delta</span></h1>
+
+<div class="equation-box">
+  <div class="label"><span data-l="th">กำลังรวมของโหลดสามเฟสสมดุลหาได้จากแรงดันสาย กระแสสาย และมุมของอิมพีแดนซ์โหลด ไม่ว่าโหลดต่อแบบใด · ทุกค่าเป็นค่ายังผล · สไลด์บทที่ 9 หน้า 19–20 · Hayt §12.4 สมการ 4 และตาราง 12.1</span><span data-l="en">The total power of a balanced three-phase load follows from the line voltage, the line current and the load impedance angle, however the load is connected · all values are rms · chapter 9 slides, pp. 19–20 · Hayt §12.4, Eq. 4 and Table 12.1</span></div>
+  $$ P = \sqrt3\,V_LI_L\cos\theta = 3V_pI_p\cos\theta \qquad Q = \sqrt3\,V_LI_L\sin\theta \qquad |\mathbf{S}| = \sqrt3\,V_LI_L \qquad \text{PF} = \cos\theta $$
+</div>
+
+<p class="sub" data-l="th">Hayt แสดงว่าโหลดวายมี \(P_p = V_pI_L\cos\theta = (V_L/\sqrt3)I_L\cos\theta\) และโหลดเดลตามี \(P_p = V_LI_p\cos\theta = V_L(I_L/\sqrt3)\cos\theta\) <b>ทั้งสองแบบได้กำลังรวม \(P = 3P_p = \sqrt3\,V_LI_L\cos\theta\) เท่ากัน</b> จึงหากำลังรวมได้จากค่าที่วัดที่สายได้ง่าย (แรงดันสายและกระแสสาย) โดยไม่ต้องรู้ว่าข้างในต่อแบบใด ข้อควรระวังคือ \(\theta\) ในสูตรคือ<b>มุมของอิมพีแดนซ์โหลด</b> (มุมระหว่างแรงดันเฟสกับกระแสเฟสของโหลด) ไม่ใช่มุมระหว่าง \(\mathbf{V}_{ab}\) กับ \(\mathbf{I}_{aA}\) ซึ่งต่างกัน 30° หน้านี้รวมทุกอย่างเป็นวิธีทีละเฟสห้าขั้น พร้อมตารางสรุปของสไลด์หน้า 19 และการบ้านหน้า 20</p>
+<p class="sub" data-l="en">Hayt shows that a Y load has \(P_p = V_pI_L\cos\theta = (V_L/\sqrt3)I_L\cos\theta\) and a delta load \(P_p = V_LI_p\cos\theta = V_L(I_L/\sqrt3)\cos\theta\): <b>both give the same total \(P = 3P_p = \sqrt3\,V_LI_L\cos\theta\)</b>, so the total power follows from quantities that are easy to measure on the lines (line voltage and line current) without knowing how the load is connected inside. Watch out: \(\theta\) is <b>the angle of the load impedance</b> (between the phase voltage and the phase current of the load), not the angle between \(\mathbf{V}_{ab}\) and \(\mathbf{I}_{aA}\), which differs by 30°. This page gathers everything into a five-step per-phase method, with the summary table of slide p. 19 and the homework on p. 20.</p>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>\(P = \sqrt3\,V_LI_L\cos\theta\)</b> ใช้ได้ทั้งโหลดวายและเดลตา (Hayt สมการ 4) และ \(Q = \sqrt3V_LI_L\sin\theta\), \(|\mathbf{S}| = \sqrt3V_LI_L\) สามเหลี่ยมกำลังของบทที่ 8 ใช้กับกำลังรวมได้เลย</li>
+  <li>\(\theta\) คือ<b>มุมของ \(Z_p\)</b> หรือมุมระหว่างแรงดันเฟสกับกระแสเฟสของโหลด (บวกเมื่อตามหลัง ลบเมื่อนำหน้า)</li>
+  <li><b>วิธีทีละเฟส 5 ขั้น</b>: (1) แรงดันเฟสของโหลด วาย \(V_L/\sqrt3\) เดลตา \(V_L\) (2) \(P_p = P/3\) (3) \(I_p = P_p/(V_p\cos\theta)\) (4) กระแสสาย วาย \(I_p\) เดลตา \(\sqrt3I_p\) (5) \(Z_p = (V_p/I_p)\angle\theta\)</li>
+  <li><b>ลำดับเฟสไม่เปลี่ยนขนาด</b>ของกระแส กำลัง หรืออิมพีแดนซ์ เปลี่ยนเฉพาะมุมของเฟส b และ c (การบ้านหน้า 20)</li>
+  <li>ตารางสรุปของสไลด์หน้า 19 คัดมาจาก Hayt ตาราง 12.1 ซึ่ง<b>หัวคอลัมน์สุดท้ายเขียนว่า "Power per Phase" แต่สูตร \(\sqrt3V_LI_L\cos\theta\) คือกำลังรวมทั้งสามเฟส</b></li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>\(P = \sqrt3\,V_LI_L\cos\theta\)</b> holds for Y and delta loads alike (Hayt Eq. 4), with \(Q = \sqrt3V_LI_L\sin\theta\) and \(|\mathbf{S}| = \sqrt3V_LI_L\): the power triangle of chapter 8 applies to the totals directly.</li>
+  <li>\(\theta\) is <b>the angle of \(Z_p\)</b>, the angle between the load's phase voltage and phase current (positive when lagging, negative when leading).</li>
+  <li><b>Five per-phase steps</b>: (1) load phase voltage, Y \(V_L/\sqrt3\), delta \(V_L\); (2) \(P_p = P/3\); (3) \(I_p = P_p/(V_p\cos\theta)\); (4) line current, Y \(I_p\), delta \(\sqrt3I_p\); (5) \(Z_p = (V_p/I_p)\angle\theta\).</li>
+  <li><b>The phase sequence does not change the size</b> of any current, power or impedance; it only changes the angles of phases b and c (homework p. 20).</li>
+  <li>The summary table of slide p. 19 is copied from Hayt Table 12.1, whose <b>last column is headed "Power per Phase" although \(\sqrt3V_LI_L\cos\theta\) is the total power of all three phases</b>.</li></ul></section>
+<div class="conv" data-mag="rms"></div>
+
+<h2 data-l="th">ส่วนที่ 1 · เครื่องคิดเลขทีละเฟส</h2><h2 data-l="en">Part 1 · The per-phase calculator</h2>
+<p class="sub" data-l="th">เลือกการต่อโหลด ใส่แรงดันสาย กำลังรวม และตัวประกอบกำลัง แล้ววงจรจะใช้อิมพีแดนซ์ที่คำนวณได้ จุดในสายวิ่งด้วยกระแสสายที่คำนวณพอดี ภาพด้านขวาคือสามเหลี่ยมกำลังของกำลังรวม กราฟล่างแสดงแรงดันเฟสกับกระแสเฟสของโหลดเฟสหนึ่ง (วาย: \(v_{AN}, i_{AN}\) · เดลตา: \(v_{AB}, i_{AB}\)) ซึ่งห่างกันเป็นมุม \(\theta\) ในสูตร ปุ่มด้านขวาใส่ค่าของโจทย์ในสไลด์ให้</p>
+<p class="sub" data-l="en">Choose the load connection, enter the line voltage, the total power and the power factor; the circuit then uses the impedance found, and its dots run with exactly the calculated line current. On the right is the power triangle of the totals; the graph shows the phase voltage and phase current of one load phase (Y: \(v_{AN}, i_{AN}\) · delta: \(v_{AB}, i_{AB}\)), which are the angle \(\theta\) of the formula apart. The buttons enter the slide problems.</p>
+<div class="layout">
+  <div class="card canvas-card"><canvas id="cv1"></canvas></div>
+  <aside class="card panel" id="panel1"></aside>
+</div>
+<section class="card eqcard"><div id="work1"></div></section>
+
+<h2 data-l="th">ส่วนที่ 2 · ตารางสรุป (สไลด์หน้า 19)</h2><h2 data-l="en">Part 2 · Summary table (slide p. 19)</h2>
+<section class="card eqcard" data-l="th">
+  <p class="lead">โหลดสมดุล ต่อกับแหล่งจ่ายวายที่มีแรงดันเฟส \(V_p\) ลำดับบวก (Hayt ตาราง 12.1)</p>
+  <table class="tbl" style="min-width:680px"><tr><th>โหลด</th><th>แรงดันคร่อมแต่ละเฟสของโหลด</th><th>แรงดันสาย</th><th>กระแสเฟส</th><th>กระแสสาย</th><th>กำลังรวม</th></tr>
+    <tr><td><b>วาย (Y)</b></td><td>\(\mathbf{V}_{AN} = V_p\angle 0^\circ\)<br>\(\mathbf{V}_{BN} = V_p\angle{-120^\circ}\)<br>\(\mathbf{V}_{CN} = V_p\angle{-240^\circ}\)</td><td>\(\mathbf{V}_{AB} = \sqrt3\angle 30^\circ\,\mathbf{V}_{AN}\)<br>\(= \sqrt3V_p\angle 30^\circ\)</td><td>\(\mathbf{I}_{AN} = \mathbf{V}_{AN}/Z_p\)</td><td>\(\mathbf{I}_{aA} = \mathbf{I}_{AN}\)<br>(เท่ากับกระแสเฟส)</td><td rowspan="2">\(\sqrt3V_LI_L\cos\theta\)<br>\(\cos\theta\) = ตัวประกอบกำลังของโหลด</td></tr>
+    <tr><td><b>เดลตา (Δ)</b></td><td>\(\mathbf{V}_{AB} = \sqrt3V_p\angle 30^\circ\)<br>\(\mathbf{V}_{BC} = \sqrt3V_p\angle{-90^\circ}\)<br>\(\mathbf{V}_{CA} = \sqrt3V_p\angle{-210^\circ}\)</td><td>เท่ากับแรงดันคร่อมเฟส</td><td>\(\mathbf{I}_{AB} = \mathbf{V}_{AB}/Z_p\)</td><td>\(\mathbf{I}_{aA} = \sqrt3\angle{-30^\circ}\,\mathbf{I}_{AB}\)<br>\(= \mathbf{I}_{AB} - \mathbf{I}_{CA}\)</td></tr></table>
+  <div class="warnbox"><b>หัวคอลัมน์สุดท้ายของสไลด์หน้า 19 (และ Hayt ตาราง 12.1) เขียนว่า "Power per Phase"</b> แต่สูตร \(\sqrt3V_LI_L\cos\theta\) คือ<b>กำลังรวมทั้งสามเฟส</b> ตามที่ Hayt เขียนเองในย่อหน้าก่อนตาราง (\(P = 3P_p = \sqrt3V_LI_L\cos\theta\)) กำลังต่อเฟสคือ \(V_pI_p\cos\theta = \tfrac{1}{\sqrt3}V_LI_L\cos\theta\) ตารางในหน้านี้จึงเขียนหัวคอลัมน์ว่า "กำลังรวม"</div>
+</section>
+<section class="card eqcard" data-l="en">
+  <p class="lead">Balanced loads on a Y source of phase voltage \(V_p\), positive sequence (Hayt Table 12.1)</p>
+  <table class="tbl" style="min-width:680px"><tr><th>Load</th><th>Voltage across each load phase</th><th>Line voltage</th><th>Phase current</th><th>Line current</th><th>Total power</th></tr>
+    <tr><td><b>Y</b></td><td>\(\mathbf{V}_{AN} = V_p\angle 0^\circ\)<br>\(\mathbf{V}_{BN} = V_p\angle{-120^\circ}\)<br>\(\mathbf{V}_{CN} = V_p\angle{-240^\circ}\)</td><td>\(\mathbf{V}_{AB} = \sqrt3\angle 30^\circ\,\mathbf{V}_{AN}\)<br>\(= \sqrt3V_p\angle 30^\circ\)</td><td>\(\mathbf{I}_{AN} = \mathbf{V}_{AN}/Z_p\)</td><td>\(\mathbf{I}_{aA} = \mathbf{I}_{AN}\)<br>(equal to the phase current)</td><td rowspan="2">\(\sqrt3V_LI_L\cos\theta\)<br>\(\cos\theta\) = power factor of the load</td></tr>
+    <tr><td><b>Delta (Δ)</b></td><td>\(\mathbf{V}_{AB} = \sqrt3V_p\angle 30^\circ\)<br>\(\mathbf{V}_{BC} = \sqrt3V_p\angle{-90^\circ}\)<br>\(\mathbf{V}_{CA} = \sqrt3V_p\angle{-210^\circ}\)</td><td>equal to the phase voltage</td><td>\(\mathbf{I}_{AB} = \mathbf{V}_{AB}/Z_p\)</td><td>\(\mathbf{I}_{aA} = \sqrt3\angle{-30^\circ}\,\mathbf{I}_{AB}\)<br>\(= \mathbf{I}_{AB} - \mathbf{I}_{CA}\)</td></tr></table>
+  <div class="warnbox"><b>The last column of slide p. 19 (and of Hayt Table 12.1) is headed "Power per Phase"</b>, but \(\sqrt3V_LI_L\cos\theta\) is <b>the total power of all three phases</b>, as Hayt himself writes in the paragraph before the table (\(P = 3P_p = \sqrt3V_LI_L\cos\theta\)). The power per phase is \(V_pI_p\cos\theta = \tfrac{1}{\sqrt3}V_LI_L\cos\theta\), so the table on this page heads the column "Total power".</div>
+</section>
+
+<h2 data-l="th">ส่วนที่ 3 · การบ้าน (สไลด์หน้า 20)</h2><h2 data-l="en">Part 3 · Homework (slide p. 20)</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">โจทย์: <b>จงหาขนาดของกระแสสายในระบบสามเฟสที่ \(\mathbf{V}_{bn} = 220\) V rms (ลำดับลบ) ซึ่งจ่าย 3000 W ให้โหลดวายที่ตัวประกอบกำลัง 0.95 ตามหลัง และหาอิมพีแดนซ์ของแต่ละเฟส</b> (ฉบับแจกปี 2564 ใช้ชื่อว่า Quiz) ลองทำเองก่อน แล้วกดปุ่มเพื่อใส่ค่าในเครื่องคิดเลขของส่วนที่ 1</p>
+  <p class="lead" data-l="en">The problem: <b>determine the amplitude of the line current in a three-phase system with \(\mathbf{V}_{bn} = 220\) V rms (negative sequence) that supplies 3000 W to a Y-connected load at a lagging PF of 0.95, and find the impedance of each phase</b> (the 2021 handout calls it a quiz). Try it yourself first, then press the button to load it into the calculator of Part 1.</p>
+  <div id="hwBtn"></div>
+  <details><summary><span data-l="th">ดูวิธีทำ</span><span data-l="en">Show working</span></summary><ol class="steps" id="steps3"></ol></details>
+</section>
+
+<h2 data-l="th">ส่วนที่ 4 · ฝึกเพิ่ม</h2><h2 data-l="en">Part 4 · More practice</h2>
+<section class="card eqcard">
+  <p class="lead" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง · ทุกค่าเป็นค่ายังผล</p><p class="lead" data-l="en">Give at least 3 decimal places · all values are rms.</p>
+  <div id="quiz"></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — วายหรือเดลตาได้กำลังเท่ากัน</h3>
+    <ol><li>ส่วนที่ 1 กด "Ex 2" แล้วสลับเป็นเดลตา: \(I_L\) เท่าเดิม 2.887 A แต่ \(Z_p\) โตขึ้นสามเท่าเป็น 180 Ω</li>
+    <li>สูตร \(P = \sqrt3V_LI_L\cos\theta\) จึงไม่ต้องรู้การต่อภายในโหลด</li>
+    <li>ดูกราฟ: แรงดันเฟสกับกระแสเฟสห่างกันเป็นมุม \(\theta\) เสมอ ไม่ว่าวายหรือเดลตา</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — มุม θ ไม่ใช่มุมระหว่าง V_L กับ I_L</h3>
+    <ol><li>ตั้งตัวประกอบกำลังเป็น 1 (โหลดตัวต้านทาน) โหลดวาย: \(\mathbf{V}_{ab}\) ยังนำหน้า \(\mathbf{I}_{aA}\) อยู่ 30°</li>
+    <li>ถ้าเอา 30° นี้ไปใส่ในสูตร จะได้กำลังผิดไป \(\cos 30^\circ = 0.866\) เท่า</li>
+    <li>สรุป: ใช้มุมของอิมพีแดนซ์โหลดเสมอ</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ลำดับเฟสในการบ้าน</h3>
+    <ol><li>กด "การบ้าน" แล้วสลับลำดับเฟส: ขนาดของทุกค่าเท่าเดิม เปลี่ยนเฉพาะมุมของเฟส b และ c</li>
+    <li>โจทย์ให้ \(\mathbf{V}_{bn}\) แทน \(\mathbf{V}_{an}\) ก็ไม่ต่างกัน เพราะในระบบสมดุลแรงดันเฟสทุกตัวมีขนาด \(V_p\) เท่ากัน</li>
+    <li>ลำดับเฟสจะสำคัญเมื่อถามมุม หรือเมื่อโหลดไม่สมดุล</li></ol>
+    <div class="book">สไลด์บทที่ 9 หน้า 19–20 · Hayt §12.4 (สมการ 4, ตาราง 12.1)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — Y or delta, the same power</h3>
+    <ol><li>In Part 1 press "Ex 2", then switch to delta: \(I_L\) stays 2.887 A, but \(Z_p\) grows three times to 180 Ω.</li>
+    <li>So \(P = \sqrt3V_LI_L\cos\theta\) needs no knowledge of the connection inside the load.</li>
+    <li>Look at the graph: the phase voltage and phase current are always \(\theta\) apart, Y or delta.</li></ol></div>
+  <div class="card"><h3>Try this 2 — θ is not the angle between V_L and I_L</h3>
+    <ol><li>Set the power factor to 1 (a resistive load) with a Y load: \(\mathbf{V}_{ab}\) still leads \(\mathbf{I}_{aA}\) by 30°.</li>
+    <li>Putting that 30° into the formula would make the power wrong by a factor \(\cos 30^\circ = 0.866\).</li>
+    <li>Conclusion: always use the angle of the load impedance.</li></ol></div>
+  <div class="card"><h3>Try this 3 — phase sequence in the homework</h3>
+    <ol><li>Press "homework" and switch the phase sequence: every size stays the same; only the angles of phases b and c change.</li>
+    <li>Giving \(\mathbf{V}_{bn}\) instead of \(\mathbf{V}_{an}\) changes nothing either, since every phase voltage of a balanced system has the size \(V_p\).</li>
+    <li>The sequence matters when angles are asked for, or when the load is unbalanced.</li></ol>
+    <div class="book">Chapter 9 slides, pp. 19–20 · Hayt §12.4 (Eq. 4, Table 12.1)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const tx = (s, d) => MC.tex(s, d); const ui = MC.ui; const R = String.raw; const fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, C9 = CH9.COL;
+const P = (z, d = 4, ad = 2) => CH6.pol(z, d, ad), RC = (z, d = 4) => CH6.rect(z, d), sg = (x, d = 2) => fd(x, d).replace('-', '−');
+const li = (why, body, done) => `<li class="${done ? 'done' : ''}"><div><div class="why">${why}</div>${body}</div></li>`;
+const al = rows => tx(R`\begin{aligned} ${rows.join(R` \\ `)} \end{aligned}`, true);
+const RT2 = Math.SQRT2, RT3 = Math.sqrt(3), D2R = Math.PI / 180;
+const rms = z => Cx.scale(z, 1 / RT2), pt = (z, u, d = 3, ad = 1) => CH6.polTxt(rms(z), u, d, ad);
+const LET_SRC = { a: [-0.35, 0.05], b: [0.35, 0.05], c: [-0.35, 0.15], n: [-0.42, 0] };
+
+/* =================================================================== Part 1: the calculator */
+const S1 = { conn: 'Y', VL: 300, P: 1200, pf: 0.8, lead: true, seq: 1, key: 'ex2' };
+const calc = () => CH9C.perPhase({ conn: S1.conn, VL: S1.VL, P: S1.P, pf: S1.pf, lead: S1.lead });
+const ph1 = bd => { const c = bd.ckt, Y = S1.conn === 'Y'; return Y ? { v: c.Vab('ZA'), i: c.I('ZA'), vn: 'v_{AN}', iname: 'i_{AN}' } : { v: c.Vab('ZAB'), i: c.I('ZAB'), vn: 'v_{AB}', iname: 'i_{AB}' }; };
+const B1 = new CH8.Board('cv1', { T: 4, shortSpec: CH9.short, pad: 1.1, cktFrac: 0.58, topAsp: 0.46, view: { acPeak: false },
+  side: (ctx, b, bd) => { const r = calc(), S = r.S, m = Math.max(Math.abs(S.im), 0.35 * S.re);
+    CH8.triangle(ctx, b, { title: MC.t(`กำลังรวม · PF = ${fd(S1.pf, 3)} ${Math.abs(S.im) < 1e-9 ? '' : S1.lead ? 'นำหน้า' : 'ตามหลัง'}`, `total power · PF = ${fd(S1.pf, 3)} ${Math.abs(S.im) < 1e-9 ? '' : S1.lead ? 'leading' : 'lagging'}`), max: { Q: m, Qn: m }, quad: !bd.narrow,
+      segs: [{ S, color: C9.S, label: bd.narrow ? 'S' : `|S| = √3 V_L I_L = ${CH8.fmt(Cx.abs(S), 'VA')}`, arc: true, arcText: bd.narrow ? `${sg(r.th, 2)}°` : `θ = ${sg(r.th, 2)}°`, lpos: S.im >= 0 ? -1 : 1 }] }); },
+  waves: [{ title: bd => bd.narrow ? '' : MC.t('แรงดันเฟสและกระแสเฟสของโหลด ห่างกันเป็นมุม θ', 'phase voltage and phase current of the load, θ apart'),
+    sigs: bd => { const q = ph1(bd); return [{ mag: Cx.abs(q.v), ang: CH6.deg(q.v), color: C9.L, label: q.vn, unit: 'V', g: 'v', w: 2.6, peak: true }, { mag: Cx.abs(q.i), ang: CH6.deg(q.i), color: C9.a, label: q.iname, unit: 'A', g: 'i', w: 2.6, peak: true }]; } }],
+  after: (v, bd) => { const c = v.ckt, I = ['wa', 'wb', 'wc'].map(id => c.I(id)), u = v.u, tag = (txt, x, y, col) => { const [px, py] = v.P([x, y]); CH6.tag(v.ctx, txt, px, py, col, { size: Math.max(11.5, Math.min(13, u * 0.3)) }); }, val = z => bd.narrow ? '' : ` = ${pt(z, 'A', 3, 1)}`;
+    CH9.letters(v, LET_SRC); CH9.letters(v, S1.conn === 'Y' ? { A: [-0.38, 0], B: [0.38, 0], C: [-0.38, 0.1], N: [0.4, -0.05] } : { A: [-0.38, 0.05], B: [0.38, 0.05], C: [-0.38, 0.2] }, { color: '#e8ecf7' });
+    tag(`I_{aA}${val(I[0])}`, 3.5, -0.62, C9.a); tag(`I_{bB}${val(I[1])}`, 8.0, 0.05, C9.b); tag(`I_{cC}${val(I[2])}`, 5.0, 5.12, C9.c); } });
+function build1() { const r = calc(), Vs = S1.VL / RT3;
+  B1.set(S1.conn === 'Y' ? CH9C.yy({ Vp: Vs, seq: S1.seq, Z: r.Z, neutral: 'none', zt: CH9C.zp }) : CH9C.yd({ Vp: Vs, seq: S1.seq, Z: r.Z, zt: CH9C.zp }));
+  const c = B1.ckt, Pc = (S1.conn === 'Y' ? ['ZA', 'ZB', 'ZC'] : ['ZAB', 'ZBC', 'ZCA']).reduce((s, id) => s + c.S(id).re, 0);
+  m1.innerHTML = ui.kv([['V_p', `${fd(r.Vp, 3)} V`], ['P_p', `${fd(r.Pp, 2)} W`], ['θ', `${sg(r.th, 2)}°`], ['I_p', `${fd(r.Ip, 4)} A`], ['I_L', `${fd(r.IL, 4)} A`], ['Z_p', `${CH9C.zp(r.Z)}`],
+    [t('จากวงจร: I_L, P', 'from the circuit: I_L, P'), `${fd(Cx.abs(c.I('wa')) / RT2, 4)} A, ${fd(Pc, 2)} W`]]);
+  work1(r); }
+function work1(r) { const Y = r.Y, lead = S1.lead, box = document.getElementById('work1'), rows = [
+    li(MC.t(`(1) แรงดันคร่อมแต่ละเฟสของโหลด${Y ? 'วาย' : 'เดลตา'}`, `(1) Voltage across each phase of the ${Y ? 'Y' : 'delta'} load`), al([Y ? R`V_p &= \frac{V_L}{\sqrt3} = \frac{${fd(S1.VL, 2)}}{\sqrt3} = ${fd(r.Vp, 3)}\ \text{V}` : R`V_p &= V_L = ${fd(S1.VL, 2)}\ \text{V}`])),
+    li(MC.t('(2) กำลังต่อเฟส และมุมของโหลด', '(2) Power per phase and the load angle'), al([R`P_p &= \frac{P}{3} = \frac{${fd(S1.P, 2)}}{3} = ${fd(r.Pp, 3)}\ \text{W}, \qquad \theta = ${lead ? '-' : '+'}\cos^{-1}${fd(S1.pf, 4)} = ${sg(r.th, 3)}^\circ`])),
+    li(MC.t('(3) กระแสเฟส', '(3) Phase current'), al([R`I_p &= \frac{P_p}{V_p\cos\theta} = \frac{${fd(r.Pp, 3)}}{(${fd(r.Vp, 3)})(${fd(S1.pf, 4)})} = ${fd(r.Ip, 4)}\ \text{A}`])),
+    li(MC.t('(4) กระแสสาย', '(4) Line current'), al([Y ? R`I_L &= I_p = \boxed{${fd(r.IL, 4)}\ \text{A}}` : R`I_L &= \sqrt3\,I_p = \boxed{${fd(r.IL, 4)}\ \text{A}}`])),
+    li(MC.t('(5) อิมพีแดนซ์ต่อเฟส', '(5) Per-phase impedance'), al([R`Z_p &= \frac{V_p}{I_p}\angle\theta = \frac{${fd(r.Vp, 3)}}{${fd(r.Ip, 4)}}\angle{${fd(r.th, 2)}^\circ} = \boxed{${fd(r.Zm, 3)}\angle{${fd(r.th, 2)}^\circ}\ \Omega = ${RC(r.Z, 2)}\ \Omega}`])),
+    li(MC.t('ตรวจด้วยสูตรกำลังรวม', 'Check with the total-power formula'), al([R`\sqrt3\,V_LI_L\cos\theta &= \sqrt3(${fd(S1.VL, 2)})(${fd(r.IL, 4)})(${fd(S1.pf, 4)}) = ${fd(RT3 * S1.VL * r.IL * S1.pf, 2)}\ \text{W}\ \ \checkmark`])) ];
+  box.innerHTML = `<h3>${MC.t('วิธีทีละเฟสจากค่าปัจจุบัน', 'The per-phase method for the current settings')}</h3><ol class="steps">${rows.join('')}</ol>`; MC.renderMath(box); }
+const panel1 = document.getElementById('panel1');
+const PRE = { ex2: { conn: 'Y', VL: 300, P: 1200, pf: 0.8, lead: true, seq: 1 }, ex3: { conn: 'D', VL: 300, P: 1200, pf: 0.8, lead: false, seq: 1 }, q17: { conn: 'Y', VL: 300, P: 1200, pf: 0.8, lead: false, seq: 1 }, hw: { conn: 'Y', VL: 220 * RT3, P: 3000, pf: 0.95, lead: false, seq: -1 } };
+const s1 = {}, set1 = o => { Object.assign(S1, o); s1.VL.set(S1.VL); s1.P.set(S1.P); s1.pf.set(S1.pf); rc1.set(S1.conn === 'Y' ? 'c1_Y' : 'c1_D'); rl1.set(S1.lead ? 'l1_lead' : 'l1_lag'); rs1.set(S1.seq > 0 ? 'q1_p' : 'q1_n'); build1(); };
+ui.h2(panel1, t('โจทย์ในสไลด์', 'Slide problems'));
+ui.buttons(panel1, [{ label: 'Ex 2 (Y)', onclick: () => set1(PRE.ex2) }, { label: t('Ex 3 (เดลตา)', 'Ex 3 (delta)'), onclick: () => set1(PRE.ex3) }, { label: t('แบบทดสอบปี 2560', '2017 quiz'), onclick: () => set1(PRE.q17) }, { label: t('การบ้าน', 'Homework'), onclick: () => set1(PRE.hw) }]);
+ui.h2(panel1, t('การต่อโหลด', 'Load connection'));
+const rc1 = ui.radio(panel1, [{ id: 'c1_Y', label: t('วาย (Y)', 'Y'), on: true }, { id: 'c1_D', label: t('เดลตา (Δ)', 'delta (Δ)') }], id => { S1.conn = id === 'c1_Y' ? 'Y' : 'D'; build1(); });
+s1.VL = ui.slider(panel1, { id: 's1VL', label: t('V<sub>L</sub> (แรงดันสาย)', 'V<sub>L</sub> (line voltage)'), min: 100, max: 500, step: 0.01, value: S1.VL, fmt: v => `${fd(v, 2)} V`, oninput: v => { S1.VL = v; build1(); } });
+s1.P = ui.slider(panel1, { id: 's1P', label: t('P (กำลังรวม)', 'P (total power)'), min: 100, max: 10000, step: 10, value: S1.P, fmt: v => `${fd(v, 0)} W`, oninput: v => { S1.P = v; build1(); } });
+s1.pf = ui.slider(panel1, { id: 's1pf', label: t('ตัวประกอบกำลัง', 'power factor'), min: 0.3, max: 1, step: 0.01, value: S1.pf, fmt: v => fd(v, 2), oninput: v => { S1.pf = v; build1(); } });
+const rl1 = ui.radio(panel1, [{ id: 'l1_lag', label: t('ตามหลัง', 'lagging') }, { id: 'l1_lead', label: t('นำหน้า', 'leading'), on: true }], id => { S1.lead = id === 'l1_lead'; build1(); });
+ui.h2(panel1, t('ลำดับเฟส', 'Phase sequence'));
+const rs1 = ui.radio(panel1, [{ id: 'q1_p', label: t('บวก', 'positive'), on: true }, { id: 'q1_n', label: t('ลบ', 'negative') }], id => { S1.seq = id === 'q1_p' ? 1 : -1; build1(); });
+ui.h2(panel1, t('การเล่น', 'Playback')); CH6.playBtns(panel1, B1.clk);
+const m1 = ui.metrics(panel1);
+
+/* =================================================================== Part 3: homework */
+function steps3() { const H = CH9C.hw, V = H.V; let h = '';
+  h += li(MC.t('แรงดันเฟส: ระบบสมดุลมีแรงดันเฟสขนาดเท่ากันทุกตัว ลำดับลบเปลี่ยนเฉพาะมุม', 'Phase voltage: every phase voltage of a balanced system has the same size; negative sequence only changes the angles'),
+    al([R`V_p &= |\mathbf{V}_{bn}| = 220\ \text{V}\ \ (${MC.t('ถ้าให้', 'taking')}\ \mathbf{V}_{an} = ${P(V[0], 3, 0)}:\ \mathbf{V}_{bn} = ${P(V[1], 3, 0)},\ \mathbf{V}_{cn} = ${P(V[2], 3, 0)})`, R`V_L &= \sqrt3(220) = ${fd(H.VL, 2)}\ \text{V}`]));
+  h += li(MC.t('กำลังต่อเฟสและมุมของโหลด', 'Power per phase and the load angle'), al([R`P_p &= \frac{3000}{3} = 1000\ \text{W}, \qquad \theta = \cos^{-1}0.95 = ${fd(H.th, 3)}^\circ\ (${MC.t('ตามหลัง', 'lagging')})`]));
+  h += li(MC.t('กระแสสาย (โหลดวาย กระแสสาย = กระแสเฟส)', 'Line current (Y load: line current = phase current)'), al([R`I_L &= I_p = \frac{1000}{(220)(0.95)} = \boxed{${fd(H.IL, 4)}\ \text{A}}`]));
+  h += li(MC.t('อิมพีแดนซ์ของแต่ละเฟส', 'Impedance of each phase'), al([R`Z_p &= \frac{220}{${fd(H.IL, 4)}}\angle{${fd(H.th, 2)}^\circ} = \boxed{${fd(H.Zm, 2)}\angle{${fd(H.th, 2)}^\circ}\ \Omega = ${RC(H.Z, 2)}\ \Omega}`]));
+  h += li(MC.t('ตรวจ', 'Check'), al([R`\sqrt3\,V_LI_L\cos\theta &= \sqrt3(${fd(H.VL, 2)})(${fd(H.IL, 4)})(0.95) = 3000\ \text{W}\ \ \checkmark`]) +
+    `<div class="answer">${MC.t('ไม่มีเฉลยในเอกสาร คำตอบที่คำนวณ: \\(I_L = 4.785\\) A และ \\(Z_p = 45.98\\angle 18.19^\\circ\\ \\Omega\\)', 'There is no solution in the handouts; the computed answer is \\(I_L = 4.785\\) A and \\(Z_p = 45.98\\angle 18.19^\\circ\\ \\Omega\\).')}</div>`);
+  const el = document.getElementById('steps3'); el.innerHTML = h; MC.renderMath(el); }
+
+/* =================================================================== quiz */
+function quiz() { const H = CH9C.hw;
+  CH6.quiz('quiz', [
+    { q: MC.t('1) ระบบสามเฟสแรงดันสาย 400 V กระแสสาย 10 A ตัวประกอบกำลัง 0.85 ตามหลัง จงหากำลังรวมและกำลังรีแอกทีฟรวม', '1) A three-phase system has a 400 V line voltage, a 10 A line current and a power factor of 0.85 lagging. Find the total power and the total reactive power.'),
+      fields: [{ key: 'x', lab: 'P =', ans: RT3 * 4000 * 0.85, unit: 'W' }, { key: 'y', lab: 'Q =', ans: RT3 * 4000 * Math.sin(Math.acos(0.85)), unit: 'VAR' }], work: tx(R`P = \sqrt3(400)(10)(0.85) = ${fd(RT3 * 4000 * 0.85, 2)}\ \text{W}, \quad Q = \sqrt3(400)(10)\sin(31.79^\circ) = ${fd(RT3 * 4000 * Math.sin(Math.acos(0.85)), 2)}\ \text{VAR}`, true) },
+    { q: MC.t('2) มอเตอร์สามเฟส 15 kW ใช้ไฟ 380 V ที่ตัวประกอบกำลัง 0.8 ตามหลัง (ไม่คิดประสิทธิภาพ) จงหากระแสสาย', '2) A 15 kW three-phase motor runs on 380 V at a power factor of 0.8 lagging (ignore efficiency). Find the line current.'),
+      fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: 15000 / (RT3 * 380 * 0.8), unit: 'A' }], work: tx(R`I_L = \frac{15\,000}{\sqrt3(380)(0.8)} = ${fd(15000 / (RT3 * 380 * 0.8), 3)}\ \text{A}`, true) },
+    { q: MC.t('3) การบ้านหน้า 20: กระแสสาย และขนาดกับมุมของอิมพีแดนซ์ต่อเฟส', '3) Homework p. 20: the line current, and the size and angle of the per-phase impedance'),
+      fields: [{ key: 'x', lab: 'I<sub>L</sub> =', ans: H.IL, unit: 'A' }, { key: 'y', lab: '|Z<sub>p</sub>| =', ans: H.Zm, unit: 'Ω' }, { key: 'z', lab: '∠', ans: H.th, ang: true, unit: '°' }], work: tx(R`I_L = \frac{1000}{220(0.95)} = 4.785\ \text{A}, \quad Z_p = 45.98\angle 18.19^\circ\ \Omega`, true) },
+    { q: MC.t('4) โหลดเดลตาสมดุลดึงกระแสสาย 20 A จากแรงดันสาย 400 V ที่ตัวประกอบกำลัง 0.9 จงหากำลังรวม กระแสเฟส และขนาดของอิมพีแดนซ์ต่อเฟส', '4) A balanced delta load draws a 20 A line current from a 400 V line voltage at a power factor of 0.9. Find the total power, the phase current and the size of the per-phase impedance.'),
+      fields: [{ key: 'x', lab: 'P =', ans: RT3 * 400 * 20 * 0.9, unit: 'W' }, { key: 'y', lab: 'I<sub>p</sub> =', ans: 20 / RT3, unit: 'A' }, { key: 'z', lab: '|Z<sub>p</sub>| =', ans: 400 / (20 / RT3), unit: 'Ω' }],
+      work: tx(R`P = \sqrt3(400)(20)(0.9) = ${fd(RT3 * 7200, 2)}\ \text{W}, \quad I_p = \frac{20}{\sqrt3} = 11.547\ \text{A}, \quad |Z_p| = \frac{400}{11.547} = 34.641\ \Omega`, true) },
+    { q: MC.t('5) โหลดวายตัวต้านทาน (PF = 1) บนแรงดันสาย 380 V ลำดับบวก \\(\\mathbf{V}_{an}\\) ที่ 0° จงหามุมระหว่าง \\(\\mathbf{V}_{ab}\\) กับ \\(\\mathbf{I}_{aA}\\) (องศา)', '5) A resistive Y load (PF = 1) on a 380 V line voltage, positive sequence with \\(\\mathbf{V}_{an}\\) at 0°. Find the angle between \\(\\mathbf{V}_{ab}\\) and \\(\\mathbf{I}_{aA}\\) (degrees).'),
+      fields: [{ key: 'x', lab: MC.t('มุม =', 'angle ='), ans: 30, ang: true, unit: '°' }], work: tx(R`\mathbf{I}_{aA}\ \text{${MC.t('เฟสเดียวกับ', 'is in phase with')}}\ \mathbf{V}_{an}\ (0^\circ), \quad \mathbf{V}_{ab}\ \text{${MC.t('อยู่ที่', 'is at')}}\ 30^\circ \;\Rightarrow\; 30^\circ\ (${MC.t('ไม่ใช่มุม θ = 0 ในสูตรกำลัง', 'not the θ = 0 of the power formula')})`, true) } ], { wide: true });
+}
+
+document.addEventListener('mc:ready', () => {
+  B1.resize(); build1(); steps3(); quiz();
+  ui.buttons(document.getElementById('hwBtn'), [{ label: t('ใส่ค่าการบ้านในเครื่องคิดเลข', 'Load the homework into the calculator'), onclick: () => { set1(PRE.hw); document.getElementById('cv1').scrollIntoView({ behavior: 'smooth', block: 'start' }); } }]);
+  window.addEventListener('resize', () => { B1.resize(); });
+  CK.loop(dt => { B1.frame(dt); });
+});
+})();
+</script>
+</body>
+</html>

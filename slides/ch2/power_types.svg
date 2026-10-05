@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 860" width="1200" height="860" role="img" aria-labelledby="t d">
+  <title id="t">Type of Power</title>
+  <desc id="d">Absorbed power: current I enters the + terminal A of an element, P_abs = V_AB × I. Supplied power: current I leaves the + terminal A, P_supp = V_AB × I. The two are related by P_abs = −P_supp.</desc>
+  <defs>
+    <marker id="ao" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f08c00"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e03131"/></marker>
+    <!-- one two-terminal element: terminals A (+, top) and B (−, bottom) on the left, wires into a cloud-shaped element -->
+    <g id="elem">
+      <line x1="150" y1="265" x2="262" y2="265" stroke="#111" stroke-width="4"/>
+      <line x1="150" y1="345" x2="262" y2="345" stroke="#111" stroke-width="4"/>
+      <path d="M262 236 C280 203,330 208,346 222 C373 199,421 214,419 250 C449 268,446 331,421 346 C431 381,391 406,361 393 C336 416,281 411,271 386 C239 381,229 341,247 323 C226 301,239 254,262 236 Z" fill="#fff" stroke="#111" stroke-width="4.5" stroke-linejoin="round"/>
+      <text x="334" y="318" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="38" fill="#111">element</text>
+      <circle cx="150" cy="265" r="7.5" fill="#fff" stroke="#111" stroke-width="4"/>
+      <circle cx="150" cy="345" r="7.5" fill="#fff" stroke="#111" stroke-width="4"/>
+      <g font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="600" fill="#1f3fd1">
+        <text x="150" y="248" text-anchor="middle" font-size="28">A</text>
+        <text x="150" y="388" text-anchor="middle" font-size="28">B</text>
+        <circle cx="110" cy="263" r="21" fill="none" stroke="#f08c00" stroke-width="4"/>
+        <text x="110" y="275" text-anchor="middle" font-size="36" font-weight="500">+</text>
+        <text x="110" y="358" text-anchor="middle" font-size="40" font-weight="500">−</text>
+      </g>
+      <text x="104" y="313" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-size="32" fill="#1f3fd1"><tspan font-style="italic">V</tspan><tspan font-size="21" dy="7">AB</tspan></text>
+    </g>
+  </defs>
+
+  <rect width="1200" height="860" fill="#fff"/>
+
+  <!-- title -->
+  <text x="70" y="78" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#1f3fd1">Type of Power</text>
+  <line x1="70" y1="92" x2="352" y2="92" stroke="#1f3fd1" stroke-width="4"/>
+
+  <!-- divider -->
+  <line x1="600" y1="110" x2="600" y2="640" stroke="#1f3fd1" stroke-width="4.5"/>
+
+  <!-- headings -->
+  <g font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" fill="#111">
+    <circle cx="58" cy="140" r="6" fill="#111"/>
+    <text x="78" y="151">Absorbed Power (<tspan font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="36">P</tspan><tspan font-family="'Times New Roman', Times, Georgia, serif" font-size="23" dy="8">abs</tspan><tspan dy="-8">)</tspan></text>
+    <line x1="78" y1="162" x2="328" y2="162" stroke="#111" stroke-width="3"/>
+    <circle cx="638" cy="140" r="6" fill="#111"/>
+    <text x="658" y="151">Supplied Power (<tspan font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="36">P</tspan><tspan font-family="'Times New Roman', Times, Georgia, serif" font-size="23" dy="8">supp</tspan><tspan dy="-8">)</tspan></text>
+    <line x1="658" y1="162" x2="898" y2="162" stroke="#111" stroke-width="3"/>
+  </g>
+
+  <!-- left: I enters the + terminal -->
+  <use href="#elem" xlink:href="#elem"/>
+  <line x1="168" y1="218" x2="238" y2="218" stroke="#f08c00" stroke-width="5" stroke-linecap="round" marker-end="url(#ao)"/>
+  <text x="182" y="204" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="34" fill="#f08c00">I</text>
+
+  <!-- right: I leaves the + terminal -->
+  <use href="#elem" xlink:href="#elem" x="560"/>
+  <line x1="802" y1="218" x2="738" y2="218" stroke="#f08c00" stroke-width="5" stroke-linecap="round" marker-end="url(#ao)"/>
+  <text x="784" y="204" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="34" fill="#f08c00">I</text>
+
+  <!-- formulas -->
+  <g font-family="'Times New Roman', Times, Georgia, serif" font-size="46" fill="#111">
+    <rect x="40" y="436" width="350" height="104" fill="#e9ecef" stroke="#111" stroke-width="4"/>
+    <text x="215" y="502" text-anchor="middle"><tspan font-style="italic">P</tspan><tspan font-size="29" dy="10">abs</tspan><tspan dy="-10"> = </tspan><tspan font-style="italic">V</tspan><tspan font-size="29" dy="10">AB</tspan><tspan dy="-10"> × </tspan><tspan font-style="italic">I</tspan></text>
+    <rect x="640" y="436" width="350" height="104" fill="#e9ecef" stroke="#111" stroke-width="4"/>
+    <text x="815" y="502" text-anchor="middle"><tspan font-style="italic">P</tspan><tspan font-size="29" dy="10">supp</tspan><tspan dy="-10"> = </tspan><tspan font-style="italic">V</tspan><tspan font-size="29" dy="10">AB</tspan><tspan dy="-10"> × </tspan><tspan font-style="italic">I</tspan></text>
+  </g>
+  <g font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" fill="#111">
+    <text x="408" y="499">watt</text>
+    <text x="1008" y="499">watt</text>
+  </g>
+
+  <!-- the two are opposite: P_abs = −P_supp -->
+  <path d="M298 562 C318 660,540 648,600 698 C660 648,876 660,900 566" fill="none" stroke="#e03131" stroke-width="4" stroke-linecap="round" marker-end="url(#ar)"/>
+  <rect x="420" y="700" width="360" height="112" fill="#fff5f5" stroke="#e03131" stroke-width="4"/>
+  <text x="600" y="771" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-size="50" fill="#e03131"><tspan font-style="italic">P</tspan><tspan font-size="32" dy="11">abs</tspan><tspan dy="-11"> = −</tspan><tspan font-style="italic">P</tspan><tspan font-size="32" dy="11">supp</tspan></text>
+</svg>

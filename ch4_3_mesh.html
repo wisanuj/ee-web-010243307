@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="4.3 — Mesh Analysis">4.3 — การวิเคราะห์แบบเมช</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">การวิเคราะห์แบบเมช <span class="en">Mesh analysis — the unknowns are mesh currents; write KVL round every mesh</span></h1>
+<h1 data-l="en">Mesh analysis <span class="en">The unknowns are mesh currents; write KVL round every mesh</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch4/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12: the mesh is a property of a planar circuit; a mesh is a loop that does not contain any other loops within it; the two-mesh circuit with 42 V, 6 ohm, 3 ohm, 4 ohm and 10 V introduces the mesh current">
+    <figcaption data-l="th">สไลด์บทที่ 4 หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 4 slides, p. 12 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 12: วิธีเมชใช้กับ<b>วงจรระนาบ</b> (วาดได้โดยไม่มีสายไขว้กัน) <b>เมช</b> (mesh) คือลูปที่ไม่มีลูปอื่นอยู่ข้างใน เหมือนช่องหน้าต่างของรูปวงจร มีจำนวน \(M = B - N + 1\) เราให้แต่ละเมชมี<b>กระแสเมช</b>วนตามเข็มนาฬิกา แล้วเขียนกฎแรงดันของเคียร์ชอฟฟ์ (Kirchhoff's Voltage Law, KVL) รอบทุกเมช ในภาพจำลอง <b>วงแหวนสีคือกระแสเมช</b> ("?" ถ้ายังไม่รู้) ในขั้น KVL <b>เส้นประเดินรอบเมชที่กำลังเขียน</b> เริ่มที่มุมล่างซ้ายตามเข็มนาฬิกาแบบ Hayt อุปกรณ์บนทางเดินเรืองแสง เมื่อแก้เสร็จ ลูกปัดบนวงแหวนหมุนตามกระแสเมช (ทวนเข็มถ้าติดลบ) และจุดกระแสวิ่งในทุกกิ่ง หน้านี้มี <b>5 โจทย์ เรียงทีละข้อ</b>: วงจรแนะนำในหน้า 12, Ex 6–8 และแบบฝึกหัด Ex.2</p>
+    <p class="sub" data-l="en">Slide p. 12: mesh analysis works on <b>planar circuits</b> (drawable with no wires crossing). A <b>mesh</b> is a loop with no other loop inside it, like a window pane of the drawing; there are \(M = B - N + 1\) of them. Each mesh gets a clockwise <b>mesh current</b>, and Kirchhoff's Voltage Law (KVL) is written round every mesh. In the simulations <b>the coloured rings are the mesh currents</b> ("?" while unknown); in a KVL step <b>a dashed line walks round the mesh being written</b>, from the bottom-left corner clockwise as Hayt does, with the parts on the path glowing. Once solved, the beads on each ring spin with its mesh current (anticlockwise if negative) and the current dots run in every branch. This page has <b>5 problems, one after another</b>: the introduction circuit of p. 12, Ex 6–8 and exercise Ex.2.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum V = 0 \ \text{ round each mesh} \\ V_R = R\,(i_{\text{this mesh}} - i_{\text{neighbour}}) \\ M = B - N + 1 \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ใช้กับวงจรระนาบ</b> <b>เมชคือลูปที่ไม่มีลูปอื่นอยู่ข้างใน</b> = ช่องหน้าต่างของรูปวงจร มีจำนวน \(M = B - N + 1\)</li>
+  <li><b>ตั้งกระแสเมชวนตามเข็มนาฬิกาทุกช่อง</b> กิ่งบนขอบนอกมีกระแสเท่ากับกระแสเมชของมัน กิ่งที่อยู่ระหว่างสองเมชมีกระแสเป็น<b>ผลต่าง</b> เช่น \(i_1 - i_2\)</li>
+  <li><b>เขียน KVL รอบทุกเมช</b>: ตัวต้านทานเขียน \(R(i_{\text{นี้}} - i_{\text{ข้างเคียง}})\) แหล่งจ่ายแรงดันใช้กฎ <b>"เข้าขั้ว + ก่อน เขียน +V"</b> จากหน้า 3.2</li>
+  <li><b>แหล่งจ่ายกระแสบนขอบนอกของเมชเดียวบอกกระแสเมชนั้นทันที</b> (ทิศสวนกันได้ค่าติดลบ) ไม่ต้องเขียน KVL รอบเมชนั้น (Ex 8)</li>
+  <li>ได้กระแสเมชแล้ว <b>กระแสกิ่ง แรงดัน และกำลังทุกตัวหาได้</b> กระแสเมชที่ติดลบแปลว่าวนทวนเข็มนาฬิกาจริง</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>For planar circuits.</b> <b>A mesh is a loop with no other loop inside it</b> = a window pane of the drawing; there are \(M = B - N + 1\) of them.</li>
+  <li><b>Give every window a clockwise mesh current.</b> A branch on the outer edge carries its own mesh current; a branch between two meshes carries the <b>difference</b>, e.g. \(i_1 - i_2\).</li>
+  <li><b>Write KVL round every mesh</b>: a resistor is \(R(i_{\text{this}} - i_{\text{neighbour}})\); a voltage source follows the <b>"enter at + first, write +V"</b> rule of page 3.2.</li>
+  <li><b>A current source on the outer edge of one mesh gives that mesh current at once</b> (opposite directions give a negative value); no KVL is needed round that mesh (Ex 8).</li>
+  <li>With the mesh currents known, <b>every branch current, voltage and power follows</b>. A negative mesh current really circulates anticlockwise.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>วงจรแนะนำ</a><a href="#ex2"><b>2</b>Ex 6</a><a href="#ex3"><b>3</b>Ex 7</a><a href="#ex4"><b>4</b>Ex 8</a><a href="#ex5"><b>5</b>แบบฝึกหัด Ex.2</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Introduction circuit</a><a href="#ex2"><b>2</b>Ex 6</a><a href="#ex3"><b>3</b>Ex 7</a><a href="#ex4"><b>4</b>Ex 8</a><a href="#ex5"><b>5</b>Exercise Ex.2</a></nav>
+
+<div class="group-head"><h2 data-l="th">ขั้นตอนของวิธีเมช (สไลด์หน้า 13)</h2><h2 data-l="en">The steps of mesh analysis (slide p. 13)</h2></div>
+<p class="lead" data-l="th">หาเมชทุกช่อง → ตั้งกระแสเมชตามเข็มนาฬิกา → เขียน KVL (\(\sum V = 0\)) รอบแต่ละเมช → ตัวต้านทานที่ใช้ร่วมสองเมชเขียนด้วยผลต่างของกระแสเมช → แหล่งจ่ายแรงดันใส่ค่าตรง ๆ ตามขั้วที่เดินผ่าน วิธีนี้คู่กับวิธีโนดในหน้า 4.1: วิธีโนดใช้ KCL กับแรงดันโนด วิธีเมชใช้ KVL กับกระแสเมช</p>
+<p class="lead" data-l="en">Find every mesh → give each a clockwise mesh current → write KVL (\(\sum V = 0\)) round each mesh → a resistor shared by two meshes uses the difference of the mesh currents → a voltage source goes in as its value, signed by the terminal you meet first. This is the partner of nodal analysis on page 4.1: nodal analysis uses KCL with node voltages, mesh analysis uses KVL with mesh currents.</p>
+<figure class="slide q wide"><img src="slides/ch4/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13: steps to use mesh analysis. 1 identify the meshes (loops with no loop inside), 2 label clockwise mesh currents, 3 apply KVL round each mesh (sum of voltages = 0), 4 shared resistors depend on both mesh currents, 5 voltage sources enter KVL directly">
+    <figcaption data-l="th">สไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 13 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">วงจรแนะนำวิธีเมช: หากระแสเมช \(i_1\) และ \(i_2\)</h2><h2 data-l="en">The introduction circuit: find the mesh currents \(i_1\) and \(i_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 12 · Hayt รูป 4.15–4.16</div><div class="src" data-l="en">Chapter 4 slides, p. 12 · Hayt Figs. 4.15–4.16</div></div></div>
+  <figure class="slide q xs"><img src="slides/ch4/p12q.webp" width="714" height="356" loading="lazy" decoding="async" alt="The two-mesh circuit of slide 12: 42 V on the left (+ at the top), 6 ohm and 4 ohm along the top, 3 ohm down the middle, 10 V on the right (+ at the bottom)">
+    <figcaption data-l="th">วงจรจากสไลด์หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The circuit of slide p. 12 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <div id="dr1"></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง (ธ.ค. 2568)</span><span data-l="en">See the in-class slide (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 12: 'use KVL (ΣV = 0)' next to the title; the nodes labelled V_A, V_B, V_C, V_D and two clockwise mesh currents Ix and Iy drawn on the circuit"><figcaption data-l="th">หน้า 12: ใช้ KVL (\(\sum V = 0\)) ตั้งชื่อโนด \(V_A\)–\(V_D\) และกระแสเมช \(I_x, I_y\) ตามเข็มนาฬิกา</figcaption><figcaption data-l="en">p. 12: use KVL (\(\sum V = 0\)); nodes \(V_A\)–\(V_D\) and clockwise mesh currents \(I_x, I_y\)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 6: หา \(i_1\) และ \(i_2\)</h2><h2 data-l="en">Ex 6: find \(i_1\) and \(i_2\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 14 · Hayt Practice 4.6</div><div class="src" data-l="en">Chapter 4 slides, p. 14 · Hayt Practice 4.6</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p14q.webp" width="966" height="668" loading="lazy" decoding="async" alt="Ex 6: determine i1 and i2. 6 V on the left (+ at the top), 14 ohm and 10 ohm along the top, two 5 ohm resistors in series down the middle, 5 V on the right (+ at the top); clockwise mesh currents i1 and i2">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 14 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <div id="dr2"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K19.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 14: KVL round mesh I1: −6 V + 14I1 + 5(I1 − I2) + 5(I1 − I2) = 0, giving (1) 24I1 − 10I2 = 6; KVL round mesh I2: 10I2 + 5 V + 5(I2 − I1) + 5(I2 − I1) = 0, giving (2) −10I1 + 20I2 = −5; the matrix equation gives I1 = 0.184 A and I2 = −0.157 A"><figcaption data-l="th">หน้า 14: \(24I_1 - 10I_2 = 6\) และ \(-10I_1 + 20I_2 = -5\) ได้ \(I_1 = 0.184\) A, \(I_2 = -0.157\) A</figcaption><figcaption data-l="en">p. 14: \(24I_1 - 10I_2 = 6\) and \(-10I_1 + 20I_2 = -5\), so \(I_1 = 0.184\) A, \(I_2 = -0.157\) A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">Ex 7: หากำลังที่แหล่งจ่าย 2 V จ่าย (ด้วยวิธีเมช)</h2><h2 data-l="en">Ex 7: find the power supplied by the 2 V source (by mesh analysis)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 15 (วงจรเดียวกับ Ex 3 ในหน้า 4.1) · Hayt Example 4.7</div><div class="src" data-l="en">Chapter 4 slides, p. 15 (the circuit of Ex 3 on page 4.1) · Hayt Example 4.7</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p15q.webp" width="1232" height="677" loading="lazy" decoding="async" alt="Ex 7: determine the power supplied by the 2 V source. 5 V on the left (+ at the top), 4 ohm and 5 ohm along the top, 2 ohm down the middle to a 2 V source with its + at the bottom, 1 V on the right (+ at the top)">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 15 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <div id="dr3"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See the teacher's in-class working (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K20.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 15: KVL round mesh Ix: −5 V + 4Ix + 2(Ix − Iy) + (−2 V) = 0, giving (1) 6Ix − 2Iy = 7; KVL round mesh Iy: +1 V + 2 V + 2(Iy − Ix) + 5Iy = 0, giving (2) −2Ix + 7Iy = −3; Ix = 1.132 A, Iy = −0.105 A; P supplied by the 2 V source = (2 V)(Ix − Iy) = 2.474 W"><figcaption data-l="th">หน้า 15: \(I_x = 1.132\) A, \(I_y = -0.105\) A และ \(P = 2(I_x - I_y) = 2.474\) W</figcaption><figcaption data-l="en">p. 15: \(I_x = 1.132\) A, \(I_y = -0.105\) A and \(P = 2(I_x - I_y) = 2.474\) W</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">Ex 8: หาแรงดันคร่อมแหล่งจ่ายกระแสแต่ละตัว (ด้วยวิธีเมช)</h2><h2 data-l="en">Ex 8: find the voltage across each current source (by mesh analysis)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 16 (วงจรเดียวกับ Ex 2 ในหน้า 4.1) · Hayt Practice 4.2</div><div class="src" data-l="en">Chapter 4 slides, p. 16 (the circuit of Ex 2 on page 4.1) · Hayt Practice 4.2</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p16q.webp" width="1440" height="682" loading="lazy" decoding="async" alt="Ex 8: compute the voltage across each current source. 3 A pointing down on the left, 1 ohm and 4 ohm along the middle, 2 ohm across the top, 3 ohm and 5 ohm down to the bottom wire, 7 A pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 16 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 16 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <div id="dr4"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568, สองหน้า)</span><span data-l="en">See the teacher's in-class working (December 2025, two pages)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K21.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 16: IA = −3 A and ID = −7 A from the outer current sources; KVL round mesh IB: 2IB + 4(IB − IC) + 1(IB − IA) = 0, giving (1) 7IB − 4IC = −3; KVL round mesh IC: 4(IC − IB) + 5(IC − ID) + 3(IC − IA) = 0, giving (2) −4IB + 12IC = −44; IB = −3.117 A, IC = −4.706 A"><figcaption data-l="th">หน้า 16: \(I_A = -3\) A, \(I_D = -7\) A ได้ \(I_B = -3.117\) A, \(I_C = -4.706\) A</figcaption><figcaption data-l="en">p. 16: \(I_A = -3\) A, \(I_D = -7\) A, so \(I_B = -3.117\) A, \(I_C = -4.706\) A</figcaption></figure>
+      <figure class="slide"><img src="slides/ch4/K22.webp" width="900" height="956" loading="lazy" decoding="async" alt="Handwritten page after slide 16: V_CD = 5(IC − ID) = (−4.706 − (−7))(5) = 11.47 V by Ohm's law; KVL round mesh IA with V_AD as the unknown: −V_AD + 1(IA − IB) + 3(IA − IC) = 0, so V_AD = 5.236 V"><figcaption data-l="th">หน้าลายมือต่อ: \(V_{CD} = 11.47\) V และ \(V_{AD} = 5.236\) V (ปัดจากค่าที่ปัดแล้ว ค่าละเอียด 89/17 ≈ 5.235 V)</figcaption><figcaption data-l="en">Handwritten page: \(V_{CD} = 11.47\) V and \(V_{AD} = 5.236\) V (from rounded values; exactly 89/17 ≈ 5.235 V)</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด Ex_Ch4)</h2><h2 data-l="en">More practice (exercise sheet Ex_Ch4)</h2></div>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">แบบฝึกหัด Ex.2: หากำลังที่แหล่งจ่าย 12 V และแหล่งจ่าย 9 A ดูดกลืน</h2><h2 data-l="en">Exercise Ex.2: find the power absorbed by the 12 V source and by the 9 A source</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.2 (วงจรเดียวกับ Ex.1 ในหน้า 4.1) · เฉลยลายมือไฟล์ Ex.4</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.2 (the circuit of Ex.1 on page 4.1) · handwritten solution, file Ex.4</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx2q.webp" width="1300" height="626" loading="lazy" decoding="async" alt="Exercise Ex.2: use mesh analysis to find the power absorbed by the 12 V voltage source and the 9 A current source; the same circuit as exercise Ex.1">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.2 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+  <div id="dr5"></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.4)</span><span data-l="en">See the handwritten solution (file Ex.4)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol2.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.2: 4 meshes; I1 = 9 A from the 9 A source; KVL round meshes I2, I3 and I4: 11I2 − 2I3 − 5I4 = 0, −2I2 + 106I3 − 100I4 = 12, −5I2 − 100I3 + 125I4 = 0; I2 = 4.117647 A, I3 = 1.411765 A, I4 = 1.294117 A; P absorbed by the 12 V source = (12)(−I3) = −16.9418 W; Vx = 4(I2 − I1) and P absorbed by the 9 A source = −175.7647 W"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.2 (สมการ (1) เขียน = 0 ที่ถูกคือ = 36)</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.2 (equation (1) is written = 0; it should be = 36)</figcaption></figure></div></details>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — กิ่งที่ใช้ร่วม</h3>
+    <ol><li>ข้อ 1: \(i_1 = 6\) A, \(i_2 = 4\) A ตัวต้านทาน 3 Ω ตรงกลางมีกระแสลง \(i_1 - i_2 = 2\) A</li>
+    <li>สังเกตจุด: บน 6 Ω วิ่งเร็วเท่า \(i_1\) บน 4 Ω เท่า \(i_2\) แต่บน 3 Ω <b>ช้าที่สุด</b> เพราะสองเมชไหลสวนกันในกิ่งนั้น</li>
+    <li>ชี้เมาส์ที่ 3 Ω เพื่อยืนยันว่ากระแสคือ 2 A</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — กระแสเมชติดลบ</h3>
+    <ol><li>ข้อ 2 (Ex 6): ได้ \(i_2 = -157.9\) mA ลูกปัดบนวงแหวน \(i_2\) จึง<b>หมุนทวนเข็มนาฬิกา</b></li>
+    <li>ข้อ 4 (Ex 8): แหล่งจ่าย 3 A และ 7 A อยู่บนขอบนอก จึงได้ \(I_A = -3\) A และ \(I_D = -7\) A ทันที เหลือตัวแปรสองตัว</li>
+    <li>ข้อ 5 (แบบฝึกหัด Ex.2): \(I_1 = 9\) A ทำให้สมการของเมช 2 มีพจน์ \(4(I_2 - 9)\) ด้านขวาจึงเป็น 36 ไม่ใช่ 0</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — วงจรเดียวกันสองวิธี</h3>
+    <ol><li>Ex 7 คือวงจรของ Ex 3 (หน้า 4.1): ทั้งสองวิธีได้กำลังที่แหล่งจ่าย 2 V จ่าย = 47/19 ≈ 2.474 W</li>
+    <li>Ex 8 คือวงจรของ Ex 2: แรงดันคร่อม 3 A = 89/17 ≈ 5.235 V และคร่อม 7 A = 195/17 ≈ 11.47 V ทั้งสองวิธี</li>
+    <li>คำถาม: Ex 8 ด้วยวิธีเมชเหลือสองสมการ แต่วิธีโนด (Ex 2) ต้องแก้สามสมการ เพราะอะไร (ดูตารางในหน้า 4.4)</li></ol>
+    <div class="book">สไลด์บทที่ 4 หน้า 12–16 · แบบฝึกหัด Ex.2 และเฉลย · Hayt §4.3, Example 4.7, Practice 4.2, 4.6</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the shared branch</h3>
+    <ol><li>Problem 1: \(i_1 = 6\) A, \(i_2 = 4\) A, and the middle 3 Ω carries \(i_1 - i_2 = 2\) A downward.</li>
+    <li>Watch the dots: on the 6 Ω they run as fast as \(i_1\), on the 4 Ω as \(i_2\), but on the 3 Ω <b>slowest of all</b>, because the two meshes run against each other there.</li>
+    <li>Hover over the 3 Ω to confirm the current is 2 A.</li></ol></div>
+  <div class="card"><h3>Try this 2 — a negative mesh current</h3>
+    <ol><li>Problem 2 (Ex 6): \(i_2 = -157.9\) mA, so the beads on the \(i_2\) ring <b>spin anticlockwise</b>.</li>
+    <li>Problem 4 (Ex 8): the 3 A and 7 A sources are on the outer edge, so \(I_A = -3\) A and \(I_D = -7\) A at once; two unknowns are left.</li>
+    <li>Problem 5 (exercise Ex.2): \(I_1 = 9\) A puts the term \(4(I_2 - 9)\) into the equation of mesh 2, so its right side is 36, not 0.</li></ol></div>
+  <div class="card"><h3>Try this 3 — one circuit, two methods</h3>
+    <ol><li>Ex 7 is the circuit of Ex 3 (page 4.1): both methods give the power supplied by the 2 V source = 47/19 ≈ 2.474 W.</li>
+    <li>Ex 8 is the circuit of Ex 2: the voltage across the 3 A is 89/17 ≈ 5.235 V and across the 7 A 195/17 ≈ 11.47 V, either way.</li>
+    <li>Question: why does Ex 8 need only two equations by mesh analysis, while nodal analysis (Ex 2) needs three? (See the table on page 4.4.)</li></ol>
+    <div class="book">Chapter 4 slides, pp. 12–16 · exercise Ex.2 and its solution · Hayt §4.3, Example 4.7, Practice 4.2, 4.6</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t;
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.006, 0.004 * Math.abs(y)));
+
+/* 1: the introduction circuit = Hayt Figs. 4.15–4.16 */
+CH4.problem(1, 'hm', 'mesh', { drill: true,
+  ask: () => ({ fields: [{ label: 'i₁ (A) =', ok: x => near(x, 6), w: 4.5 }, { label: 'i₂ (A) =', ok: x => near(x, 4), w: 4.5 }] }),
+  answer: t('\\(i_1 = 6\\) A และ \\(i_2 = 4\\) A ตรงกับ Hayt รูป 4.16 · ตัวต้านทาน 3 Ω ตรงกลางมีกระแสลง \\(i_1 - i_2 = 2\\) A (ในห้องตั้งชื่อกระแสเมชเป็น \\(I_x, I_y\\) แต่ไม่ได้แก้ต่อ)',
+    '\\(i_1 = 6\\) A and \\(i_2 = 4\\) A, as in Hayt Fig. 4.16 · the middle 3 Ω carries \\(i_1 - i_2 = 2\\) A downward (in class the mesh currents were named \\(I_x, I_y\\) but not solved)') });
+
+/* 2: Ex 6 = Hayt Practice 4.6 */
+CH4.problem(2, 'ex6', 'mesh', { drill: true,
+  ask: () => ({ fields: [{ label: 'i₁ (A) =', ok: x => near(x, 7 / 38, 0.0015), w: 5 }, { label: 'i₂ (A) =', ok: x => near(x, -3 / 19, 0.0015), w: 5 }],
+    check: v => near(v[1], 3 / 19, 0.0015) ? t('ขนาดของ \\(i_2\\) ถูก แต่ \\(i_2\\) ติดลบ (วนทวนเข็มนาฬิกาจริง)', 'The size of \\(i_2\\) is right, but \\(i_2\\) is negative (it really circulates anticlockwise)') : '' }),
+  answer: t('\\(i_1 = 7/38 \\approx 0.1842\\) A (184.2 mA) และ \\(i_2 = -3/19 \\approx -0.1579\\) A (−157.9 mA) ตรงกับ Hayt Practice 4.6 และในห้อง (0.184 A, −0.157 A ตัดทศนิยม)',
+    '\\(i_1 = 7/38 \\approx 0.1842\\) A (184.2 mA) and \\(i_2 = -3/19 \\approx -0.1579\\) A (−157.9 mA), as in Hayt Practice 4.6 and in class (0.184 A, −0.157 A, truncated)') });
+
+/* 3: Ex 7 = the circuit of Ex 3 by mesh */
+CH4.problem(3, 'ex3', 'mesh', { drill: true,
+  ask: () => ({ fields: [{ label: t('P ที่จ่าย (W) =', 'P supplied (W) ='), ok: x => near(x, 47 / 19, 0.006), w: 5 }] }),
+  answer: t('กำลังที่แหล่งจ่าย 2 V จ่าย = \\(2(i_1 - i_2) = 47/19 \\approx 2.474\\) W เท่ากับที่หาด้วยวิธีโนดใน Ex 3 (หน้า 4.1 ข้อ 3) ตรงกับในห้องและ Hayt Example 4.7',
+    'The 2 V source supplies \\(2(i_1 - i_2) = 47/19 \\approx 2.474\\) W, the same as by nodal analysis in Ex 3 (page 4.1, problem 3), as in class and Hayt Example 4.7') });
+
+/* 4: Ex 8 = the circuit of Ex 2 by mesh */
+CH4.problem(4, 'ex2', 'mesh', { drill: true,
+  ask: () => ({ fields: [{ label: t('คร่อม 3 A (V) =', 'across 3 A (V) ='), ok: x => near(x, 89 / 17, 0.01), w: 5 }, { label: t('คร่อม 7 A (V) =', 'across 7 A (V) ='), ok: x => near(x, 195 / 17, 0.02), w: 5 }] }),
+  answer: t('แรงดันคร่อมแหล่งจ่าย 7 A = 195/17 ≈ 11.47 V และคร่อมแหล่งจ่าย 3 A = 89/17 ≈ 5.235 V เท่ากับวิธีโนดใน Ex 2 (หน้า 4.1 ข้อ 2) · ในห้องได้ 5.236 V เพราะใช้ค่าที่ปัดแล้ว',
+    'Across the 7 A source 195/17 ≈ 11.47 V and across the 3 A source 89/17 ≈ 5.235 V, the same as by nodal analysis in Ex 2 (page 4.1, problem 2) · the class got 5.236 V from rounded values') });
+
+/* 5: exercise sheet Ex.2 = the circuit of Ex.1 by mesh */
+CH4.problem(5, 'sx1', 'mesh', { drill: true,
+  ask: () => ({ fields: [{ label: t('P 12 V (W) =', 'P 12 V (W) ='), ok: x => near(x, -288 / 17, 0.02), w: 5 }, { label: t('P 9 A (W) =', 'P 9 A (W) ='), ok: x => near(x, -2988 / 17, 0.1), w: 5 }],
+    check: v => near(v[0], 288 / 17, 0.02) ? t('กระแสเมช \\(I_3\\) ไหลขึ้นผ่านแหล่งจ่าย 12 V (ออกจากขั้ว +) จึงเป็นกำลังที่จ่าย กำลังที่ดูดกลืนจึงติดลบ', 'Mesh current \\(I_3\\) flows up through the 12 V source (out of its + terminal), so it delivers power: the absorbed power is negative') : '' }),
+  answer: t('\\(P_{abs,\\,12V} = -288/17 \\approx -16.94\\) W และ \\(P_{abs,\\,9A} = -2988/17 \\approx -175.76\\) W (ค่าลบ = จ่ายกำลัง) ตรงกับเฉลย <div class="warnbox" style="margin-top:8px">เฉลยลายมือเขียนสมการ (1) เป็น \\(11I_2 - 2I_3 - 5I_4 = 0\\) และเวกเตอร์ขวา [0, 12, 0] ที่ถูกคือ <b>= 36</b> เพราะพจน์ \\(4(I_2 - I_1)\\) มี \\(I_1 = 9\\) A (ย้ายข้างได้ 36) ตัวเลขคำตอบในเฉลยคิดจาก 36 อยู่แล้วจึงถูกต้อง</div>',
+    '\\(P_{abs,\\,12V} = -288/17 \\approx -16.94\\) W and \\(P_{abs,\\,9A} = -2988/17 \\approx -175.76\\) W (negative = delivering power), as in the solution <div class="warnbox" style="margin-top:8px">The handwritten solution writes equation (1) as \\(11I_2 - 2I_3 - 5I_4 = 0\\) with right-hand side [0, 12, 0]; it should be <b>= 36</b>, because the term \\(4(I_2 - I_1)\\) has \\(I_1 = 9\\) A (36 moves across). The numbers in its answer were worked from 36, so they are right.</div>') });
+});
+</script>
+</body>
+</html>

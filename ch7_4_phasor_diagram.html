@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="7.4 — Phasor Diagrams">7.4 — แผนภาพเฟเซอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">แผนภาพเฟเซอร์ <span class="en">Phasor diagrams — every voltage and current of a circuit on one complex plane</span></h1>
+<h1 data-l="en">Phasor diagrams <span class="en">Every voltage and current of a circuit on one complex plane</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch7/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: phasor diagrams. The phasor diagram is a name given to a sketch in the complex plane showing the relationships of the phasor voltages and phasor currents throughout a specific circuit. Since phasor voltages and currents are complex numbers, they may be identified as points in a complex plane; for example V1 = 6 + j8 = 10∠53.1° V drawn on the complex voltage plane">
+    <figcaption data-l="th">สไลด์บทที่ 7 หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 7 slides, p. 9 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 9 นิยามแผนภาพเฟเซอร์ว่าเป็น<b>ภาพร่างบนระนาบเชิงซ้อนที่แสดงความสัมพันธ์ของเฟเซอร์แรงดันและเฟเซอร์กระแสทั้งวงจร</b> ตัวอย่างคือ \(\mathbf{V}_1 = 6 + j8 = 10\angle 53.1^\circ\) V เพราะเฟเซอร์เป็นจำนวนเชิงซ้อน การบวกจึงเป็นการวางลูกศรต่อหัวต่อหาง และการคูณด้วยอิมพีแดนซ์หรือแอดมิตแตนซ์คือการยืดและหมุนลูกศร ประโยชน์หลักคือ<b>เห็นทันทีว่าปริมาณไหนนำหน้า</b> และ<b>ตรวจกฎของเคียร์ชอฟฟ์ด้วยตา</b>: ลูกศรรอบวงต้องปิดพอดี หน้านี้มีภาพจำลองสองส่วน (A, B) และโจทย์วาดแผนภาพทีละขั้นสองข้อจากตำรา</p>
+    <p class="sub" data-l="en">Slide p. 9 defines a phasor diagram as <b>a sketch in the complex plane showing the relationships of the phasor voltages and phasor currents throughout a circuit</b>, for example \(\mathbf{V}_1 = 6 + j8 = 10\angle 53.1^\circ\) V. Since phasors are complex numbers, adding is placing arrows head to tail, and multiplying by an impedance or admittance stretches and turns an arrow. The main uses: <b>seeing at once which quantity leads</b>, and <b>checking Kirchhoff's laws by eye</b>: the arrows around a loop must close. This page has two simulations (A, B) and two textbook problems that build a diagram one step at a time.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{aligned} \mathbf{V}_1 &= 6 + j8 = 10\angle 53.1^\circ\ \text{V} \\ \mathbf{V}_R + \mathbf{V}_L + \mathbf{V}_C &= \mathbf{V}_s \\ \mathbf{I}_R + \mathbf{I}_L + \mathbf{I}_C &= \mathbf{I}_s \end{aligned} $$</div>
+  </div>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์แผนภาพเฟเซอร์ที่ผู้สอนเขียนในห้อง (สไลด์ปี 2561)</span><span data-l="en">See the phasor-diagram slide as written in class (2018 slides)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch7/L11a.webp" width="1100" height="643" loading="lazy" decoding="async" alt="2018 in-class phasor-diagram slide: 'Phasor Diagrams' circled and linked to 'Polar Form'; a sketch of V at angle θ and I at angle φ on axes with V∠θ and I∠φ written below; a second sketch with arrows turned anticlockwise (+) and clockwise (−)">
+    <figcaption data-l="th">ในห้องเขียนเฟเซอร์ในรูปเชิงขั้ว \(V\angle\theta\), \(I\angle\phi\) และทิศของมุม: ทวนเข็มนาฬิกาเป็นบวก ตามเข็มนาฬิกาเป็นลบ</figcaption><figcaption data-l="en">In class the phasors were written in polar form, \(V\angle\theta\) and \(I\angle\phi\), with the sense of the angle: anticlockwise positive, clockwise negative</figcaption></figure></div></details>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แผนภาพเฟเซอร์</b> วางเฟเซอร์ทั้งหมดของวงจรบนระนาบเดียว <b>แรงดันกับกระแสใช้สเกลความยาวคนละสเกล แต่ใช้มุมร่วมกัน</b> จึงอ่านได้ทันทีว่าตัวไหนนำหน้า</li>
+  <li><b>กฎแรงดันของเคียร์ชอฟฟ์ (Kirchhoff's voltage law, KVL) รอบวง</b>: เฟเซอร์แรงดันต่อหัวต่อหางแล้วกลับมาที่จุดเริ่ม · <b>กฎกระแส (KCL) ที่โนด</b>: เฟเซอร์กระแสก็ปิดเช่นกัน</li>
+  <li><b>เลือกตัวอ้างอิงให้สะดวก</b>: วงจรอนุกรมใช้กระแสร่วม \(\mathbf{I} = I_m\angle 0^\circ\) วงจรขนานใช้แรงดันร่วม \(\mathbf{V} = V_m\angle 0^\circ\)</li>
+  <li>ถ้าแหล่งจ่ายจริงไม่ตรงกับที่สมมติ ให้<b>ย่อขยายและหมุนทั้งภาพ</b> มุมระหว่างเฟเซอร์ไม่เปลี่ยน (Hayt รูป 10.41)</li>
+  <li>วาดบนแผนภาพเดียวกันได้<b>เฉพาะเฟเซอร์ความถี่เดียวกัน</b> (ต่างความถี่หมุนเร็วไม่เท่ากัน ดูหน้า 7.2)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>A phasor diagram</b> puts all the phasors of a circuit on one plane. <b>Voltages and currents use different length scales but share the angle scale</b>, so you read at once which one leads.</li>
+  <li><b>Kirchhoff's voltage law (KVL) around a loop</b>: the voltage phasors, head to tail, come back to the start · <b>KCL at a node</b>: the current phasors close too.</li>
+  <li><b>Pick a convenient reference</b>: a series circuit uses the common current \(\mathbf{I} = I_m\angle 0^\circ\), a parallel circuit the common voltage \(\mathbf{V} = V_m\angle 0^\circ\).</li>
+  <li>If the real source differs from the one assumed, <b>scale and rotate the whole picture</b>; the angles between phasors do not change (Hayt Fig. 10.41).</li>
+  <li><b>Only phasors of one frequency</b> belong on one diagram (different frequencies turn at different speeds; see page 7.2).</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>บวกและคูณเฟเซอร์</a><a href="#ex1"><b>1</b>วงจรขนาน (Hayt 10.13)</a><a href="#tB"><b>B</b>วงจรอนุกรม RLC</a><a href="#ex2"><b>2</b>อัตราส่วน (Hayt 10.17)</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Adding and multiplying</a><a href="#ex1"><b>1</b>Parallel (Hayt 10.13)</a><a href="#tB"><b>B</b>Series RLC</a><a href="#ex2"><b>2</b>A ratio (Hayt 10.17)</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เฟเซอร์คือลูกศร: บวกคือต่อหัวต่อหาง คูณคือยืดและหมุน</h2><h2 data-l="en">Phasors are arrows: adding is head to tail, multiplying stretches and turns</h2>
+    <div class="src" data-l="th">\(\mathbf{V}_1 = 6 + j8\) V ของสไลด์ · Hayt รูป 10.38</div><div class="src" data-l="en">The slide's \(\mathbf{V}_1 = 6 + j8\) V · Hayt Fig. 10.38</div></div></div>
+  <p class="lead" data-l="th">ซ้าย: \(\mathbf{V}_1 = 6 + j8\) V บวกกับ \(\mathbf{V}_2 = 3 - j4\) V ลูกศร \(\mathbf{V}_2\) ต่อจากปลาย \(\mathbf{V}_1\) ผลรวมคือลูกศรจากจุดเริ่มถึงปลายสุด ขวา: กระแส \(\mathbf{I}_1 = Y\mathbf{V}_1\) ผ่านแอดมิตแตนซ์ \(Y = 1 + j1\) S ซึ่งเท่ากับ \(\sqrt2\angle 45^\circ\) จึง<b>ยืดลูกศร \(\sqrt2\) เท่าและหมุน 45°</b> กระแสนำหน้าแรงดัน 45° (ความยาวของกระแสใช้สเกลของตัวเอง)</p>
+  <p class="lead" data-l="en">Left: \(\mathbf{V}_1 = 6 + j8\) V plus \(\mathbf{V}_2 = 3 - j4\) V; the arrow \(\mathbf{V}_2\) starts at the tip of \(\mathbf{V}_1\), and the sum runs from the start to the final tip. Right: the current \(\mathbf{I}_1 = Y\mathbf{V}_1\) through an admittance \(Y = 1 + j1\) S, which is \(\sqrt2\angle 45^\circ\), so it <b>stretches the arrow by \(\sqrt2\) and turns it by 45°</b>: the current leads the voltage by 45° (the current length uses its own scale).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">วาดแผนภาพเฟเซอร์ของวงจรขนาน แล้วหาว่า \(\mathbf{I}_s\) นำหน้า \(\mathbf{I}_R\), \(\mathbf{I}_C\) และ \(\mathbf{I}_x\) กี่องศา</h2><h2 data-l="en">Draw the phasor diagram of the parallel circuit and find by how much \(\mathbf{I}_s\) leads \(\mathbf{I}_R\), \(\mathbf{I}_C\) and \(\mathbf{I}_x\)</h2>
+    <div class="src" data-l="th">Hayt Example 10.13 (แอดมิตแตนซ์ j0.3 S, −j0.1 S, 0.2 S ขนานกัน \(\mathbf{I}_x = \mathbf{I}_L + \mathbf{I}_R\))</div><div class="src" data-l="en">Hayt Example 10.13 (admittances j0.3 S, −j0.1 S and 0.2 S in parallel; \(\mathbf{I}_x = \mathbf{I}_L + \mathbf{I}_R\))</div></div></div>
+  <p class="lead" data-l="th">วงจรขนานมีแรงดันร่วมตัวเดียว จึงสมมติ \(\mathbf{V} = 1\angle 0^\circ\) V เป็นตัวอ้างอิงก่อน แต่ละขั้นวาดลูกศรเพิ่มทีละตัวตามลำดับในตำรา ขั้นสุดท้ายเปลี่ยนเป็นแหล่งจ่ายจริง 1∠0° A แล้วดูว่าทั้งภาพหมุนและย่อขยายพร้อมกัน</p>
+  <p class="lead" data-l="en">A parallel circuit has one common voltage, so \(\mathbf{V} = 1\angle 0^\circ\) V is assumed as the reference first. Each step adds one arrow in the book's order; the last step switches to the true 1∠0° A source and the whole picture turns and rescales together.</p>
+  <div class="duo"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">วงจรอนุกรม RLC: KVL เป็นรูปหลายเหลี่ยม</h2><h2 data-l="en">Series RLC: KVL as a polygon</h2>
+    <div class="src" data-l="th">Hayt รูป 10.40 (j50 Ω, 10 Ω, −j50 Ω)</div><div class="src" data-l="en">Hayt Fig. 10.40 (j50 Ω, 10 Ω, −j50 Ω)</div></div></div>
+  <p class="lead" data-l="th">วงจรอนุกรมมีกระแสร่วมตัวเดียว จึงใช้ \(\mathbf{I} = 1\angle 0^\circ\) A เป็นตัวอ้างอิง (ลูกศรสีเหลืองนอนตามแกนจริง) \(\mathbf{V}_R\) ไปทางเดียวกับ \(\mathbf{I}\) \(\mathbf{V}_L\) ชี้ขึ้น 90° \(\mathbf{V}_C\) ชี้ลง 90° ต่อกันหัวต่อหางได้ \(\mathbf{V}_s\) เมื่อ \(X_L = X_C\) ลูกศร \(\mathbf{V}_L\) กับ \(\mathbf{V}_C\) หักล้างกันพอดี <b>แรงดันแหล่งจ่ายเท่ากับแรงดันคร่อมตัวต้านทาน</b> ทั้งที่ \(|\mathbf{V}_L|\) สูงถึง 50 V (Hayt เรียกว่าเรโซแนนซ์) เลื่อน \(X_L\), \(R\), \(X_C\) หรือเปลี่ยนตัวอ้างอิงเป็น \(\mathbf{V}_s\) ได้</p>
+  <p class="lead" data-l="en">A series circuit has a single common current, so \(\mathbf{I} = 1\angle 0^\circ\) A is the reference (the yellow arrow on the real axis). \(\mathbf{V}_R\) points along \(\mathbf{I}\), \(\mathbf{V}_L\) up by 90°, \(\mathbf{V}_C\) down by 90°, and head to tail they give \(\mathbf{V}_s\). With \(X_L = X_C\) the arrows \(\mathbf{V}_L\) and \(\mathbf{V}_C\) cancel exactly: <b>the source voltage equals the resistor voltage</b>, although \(|\mathbf{V}_L|\) is as large as 50 V (Hayt calls this resonance). Slide \(X_L\), \(R\), \(X_C\), or switch the reference to \(\mathbf{V}_s\).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">ใช้แผนภาพเฟเซอร์หาอัตราส่วน \(|\mathbf{V}_s|/|\mathbf{V}_1|\)</h2><h2 data-l="en">Use a phasor diagram to find the ratio \(|\mathbf{V}_s|/|\mathbf{V}_1|\)</h2>
+    <div class="src" data-l="th">Hayt Practice 10.17: \(V_s\) ผ่าน 2 Ω (แรงดัน \(V_1\)) ไปยังโนด จากโนดมี j2 Ω (แรงดัน \(V_2\)) และ −j1 Ω อนุกรม 2 Ω (แรงดัน \(V_R\)) ลงกราวด์</div><div class="src" data-l="en">Hayt Practice 10.17: \(V_s\) feeds a node through 2 Ω (voltage \(V_1\)); from that node j2 Ω (voltage \(V_2\)) and −j1 Ω in series with 2 Ω (voltage \(V_R\)) go to ground</div></div></div>
+  <p class="lead" data-l="th">ไม่ต้องรู้ค่าแหล่งจ่าย: ให้กระแสในกิ่งขวาสุด \(\mathbf{I}_C = 1\angle 0^\circ\) A เป็นตัวอ้างอิง แล้วสร้างแผนภาพย้อนกลับไปหาแหล่งจ่ายทีละขั้น อัตราส่วนที่ได้ใช้ได้กับแหล่งจ่ายทุกค่า</p>
+  <p class="lead" data-l="en">The source value is not needed: take the current in the rightmost branch, \(\mathbf{I}_C = 1\angle 0^\circ\) A, as the reference and build the diagram back towards the source one step at a time. The ratio holds for any source value.</p>
+  <div class="duo"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ต่อหัวต่อหาง</h3>
+    <ol><li>ส่วน A ปรับ \(\mathbf{V}_2\) ให้ชี้ทางเดียวกับ \(\mathbf{V}_1\) (มุม 53.1°): ขนาดผลรวมเท่ากับผลบวกของขนาด กรณีนี้กรณีเดียว</li>
+    <li>ปรับให้ชี้สวนกัน (มุม −126.9°): ผลรวมสั้นที่สุด</li>
+    <li>เปลี่ยน \(Y\) เป็น \(1 - j1\) S: กระแสตามหลังแรงดัน 45° แทน (แอดมิตแตนซ์แบบตัวเหนี่ยวนำ)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — เรโซแนนซ์</h3>
+    <ol><li>ส่วน B ค่าตั้งต้น \(X_L = X_C = 50\ \Omega\): \(\mathbf{V}_s = \mathbf{V}_R = 10\angle 0^\circ\) V แต่ \(|\mathbf{V}_L| = |\mathbf{V}_C| = 50\) V มากกว่าแหล่งจ่ายห้าเท่า</li>
+    <li>ดูกราฟ: \(v_L\) กับ \(v_C\) กลับเฟสกันพอดี บวกกันได้ศูนย์ทุกขณะ</li>
+    <li>เพิ่ม \(X_L\) เป็น 80 Ω: \(\mathbf{V}_s\) นำหน้า \(\mathbf{I}\) (วงจรแบบตัวเหนี่ยวนำ) ลด \(X_L\) เป็น 20 Ω: \(\mathbf{V}_s\) ตามหลัง</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ย่อขยายและหมุน</h3>
+    <ol><li>ข้อ 1 ขั้นสุดท้าย: แรงดันจริงคือ \(\mathbf{V} = 1/(0.2 + j0.2) = 3.536\angle{-45^\circ}\) V ทุกลูกศรหมุนไป −45° และยาวขึ้น 3.54 เท่า มุมระหว่างกันเท่าเดิม</li>
+    <li>ข้อ 2: อัตราส่วน 1.897 ได้โดยไม่ต้องรู้ \(V_s\) เลย</li>
+    <li>คำถาม: ทำไมเลือก \(\mathbf{V} = 1\angle 0^\circ\) ก่อนจึงสะดวกกว่าเริ่มจากแหล่งจ่ายจริง</li></ol>
+    <div class="book">สไลด์บทที่ 7 หน้า 9 · สไลด์ปี 2561 หน้า 12 · Hayt §10.8 (รูป 10.37–10.41, Example 10.13, Practice 10.17)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — head to tail</h3>
+    <ol><li>In section A point \(\mathbf{V}_2\) the same way as \(\mathbf{V}_1\) (angle 53.1°): the size of the sum equals the sum of the sizes, in this case only.</li>
+    <li>Point it the opposite way (angle −126.9°): the sum is shortest.</li>
+    <li>Change \(Y\) to \(1 - j1\) S: the current now lags the voltage by 45° (an inductive admittance).</li></ol></div>
+  <div class="card"><h3>Try this 2 — resonance</h3>
+    <ol><li>In section B the default \(X_L = X_C = 50\ \Omega\): \(\mathbf{V}_s = \mathbf{V}_R = 10\angle 0^\circ\) V, yet \(|\mathbf{V}_L| = |\mathbf{V}_C| = 50\) V, five times the source.</li>
+    <li>Look at the graph: \(v_L\) and \(v_C\) are exactly in opposite phase and add to zero at every instant.</li>
+    <li>Raise \(X_L\) to 80 Ω: \(\mathbf{V}_s\) leads \(\mathbf{I}\) (an inductive circuit); lower it to 20 Ω: \(\mathbf{V}_s\) lags.</li></ol></div>
+  <div class="card"><h3>Try this 3 — scale and rotate</h3>
+    <ol><li>The last step of problem 1: the true voltage is \(\mathbf{V} = 1/(0.2 + j0.2) = 3.536\angle{-45^\circ}\) V; every arrow turns by −45° and grows 3.54 times, and the angles between them stay the same.</li>
+    <li>Problem 2: the ratio 1.897 comes out without knowing \(V_s\) at all.</li>
+    <li>Question: why is it easier to assume \(\mathbf{V} = 1\angle 0^\circ\) first than to start from the true source?</li></ol>
+    <div class="book">Chapter 7 slides, p. 9 · 2018 slides, p. 12 · Hayt §10.8 (Figs. 10.37–10.41, Example 10.13, Practice 10.17)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const ui = MC.ui, fd = CH6.fd, COL = CH6.COL, Cx = CK.Cx, cx = Cx.c, $ = id => document.getElementById(id), sg = (x, d = 1) => fd(x, d).replace('-', '−');
+  CH7.problem(1, 'pd13'); CH7.problem(2, 'pd17');
+
+  /* =================================================================== A: sum and product */
+  const S1 = { m1: 10, a1: CH6.deg(cx(6, 8)), m2: 5, a2: CH6.deg(cx(3, -4)), G: 1, B: 1 };
+  const cv1 = $('cvA'); let L1 = null;
+  function resize1() { const W = Math.max(300, Math.floor(cv1.parentElement.clientWidth - 12));
+    if (W >= 520) { const h = Math.round(Math.max(280, W * 0.5)); L1 = { W, H: h, a: { x: 0, y: 0, w: W / 2 - 3, h }, b: { x: W / 2 + 3, y: 0, w: W / 2 - 3, h } }; }
+    else { const h = Math.round(W * 0.86); L1 = { W, H: 2 * h + 6, a: { x: 0, y: 0, w: W, h }, b: { x: 0, y: h + 6, w: W, h } }; }
+    L1.ctx = CK.setup(cv1, L1.W, L1.H); draw1(); }
+  function draw1() { if (!L1) return; const ctx = L1.ctx, narrow = L1.a.w < 330; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, L1.W, L1.H);
+    const V1 = CH6.polar(S1.m1, S1.a1), V2 = CH6.polar(S1.m2, S1.a2), S = Cx.add(V1, V2), Y = cx(S1.G, S1.B), I1 = Cx.mul(Y, V1);
+    CH6.plane(ctx, L1.a, [{ z: V2, color: 'rgba(90,209,255,.35)', w: 2, dash: [5, 4] }, { z: V1, color: COL.sig, label: narrow ? 'V_1' : `V_1 = ${CH6.rect(V1, 2).replace('-', '−')}` }, { z: V2, from: V1, color: COL.V, label: narrow ? 'V_2' : `V_2 = ${CH6.rect(V2, 2).replace('-', '−')}`, lmid: 1 },
+      { z: S, color: COL.I, label: narrow ? 'V_1 + V_2' : `V_1 + V_2 = ${CH6.polTxt(S, '', 3, 1)}`, w: 3.6 }], { title: t('บวก: ต่อหัวต่อหาง', 'sum: head to tail'), circle: false, max: { a: Math.max(Cx.abs(V1) + Cx.abs(V2), 1) } });
+    CH6.plane(ctx, L1.b, [{ z: V1, color: COL.sig, label: 'V_1' }, { z: I1, color: COL.I, label: narrow ? 'I_1 = Y V_1' : `I_1 = Y V_1 = ${CH6.polTxt(I1, '', 3, 1)}`, g: 'i' }],
+      { title: t(`คูณ: Y = ${CH6.polTxt(Y, '', 3, 1)} S`, `product: Y = ${CH6.polTxt(Y, '', 3, 1)} S`), circle: false, arcs: [{ a: 0, b: 1, color: COL.ref, r: 0.35 }] });
+    met1.innerHTML = ui.kv([['V₁', CH6.polTxt(V1, 'V', 3, 1)], ['V₂', CH6.polTxt(V2, 'V', 3, 1)], ['V₁ + V₂', `${CH6.rect(S, 3).replace('-', '−')} = ${CH6.polTxt(S, 'V', 3, 2)}`], ['|V₁| + |V₂|', `${fd(S1.m1 + S1.m2, 3)} V`], ['I₁ = Y V₁', CH6.polTxt(I1, 'A', 3, 2)]]); }
+  const panel1 = $('pA');
+  ui.h2(panel1, 'V₂');
+  const s1 = {};
+  s1.m2 = ui.slider(panel1, { id: 's1m2', label: '|V<sub>2</sub>|', min: 0, max: 10, step: 0.1, value: S1.m2, fmt: v => `${fd(v, 1)} V`, oninput: v => { S1.m2 = v; draw1(); } });
+  s1.a2 = ui.slider(panel1, { id: 's1a2', label: '∠V<sub>2</sub>', min: -180, max: 180, step: 0.1, value: S1.a2, fmt: v => `${sg(v)}°`, oninput: v => { S1.a2 = v; draw1(); } });
+  ui.h2(panel1, 'Y = G + jB');
+  s1.G = ui.slider(panel1, { id: 's1G', label: 'G', min: 0, max: 2, step: 0.05, value: S1.G, fmt: v => `${fd(v, 2)} S`, oninput: v => { S1.G = v; draw1(); } });
+  s1.B = ui.slider(panel1, { id: 's1B', label: 'B', min: -2, max: 2, step: 0.05, value: S1.B, fmt: v => `${sg(v, 2)} S`, oninput: v => { S1.B = v; draw1(); } });
+  const set1 = o => { Object.assign(S1, o); Object.keys(s1).forEach(k => s1[k].set(S1[k])); draw1(); };
+  ui.buttons(panel1, [{ label: t('ค่าของ Hayt (3 − j4, 1 + j1)', 'Hayt\'s values (3 − j4, 1 + j1)'), onclick: () => set1({ m2: 5, a2: CH6.deg(cx(3, -4)), G: 1, B: 1 }) }, { label: t('V₂ ทางเดียวกับ V₁', 'V₂ along V₁'), onclick: () => set1({ a2: S1.a1 }) }, { label: t('V₂ สวนทาง', 'V₂ opposite'), onclick: () => set1({ a2: S1.a1 - 180 }) }, { label: 'Y = 1 − j1', onclick: () => set1({ G: 1, B: -1 }) }]);
+  const met1 = ui.metrics(panel1);
+  resize1();
+
+  /* =================================================================== B: series RLC with I or V_s as the reference */
+  const S2 = { XL: 50, R: 10, XC: 50, ref: 'I' };
+  const T2 = new CH6.Trio('cvB', { T: 4, mid: true, cktFrac: 0.52, pad: 1.5,
+    vecs: tr => { const c = tr.ckt, VR = c.Vab('R'), VL = c.Vab('L'), VC = c.Vab('C'), Vs = Cx.add(Cx.add(VR, VL), VC), I = c.I('R');
+      return [{ z: Cx.add(VR, VL), color: 'rgba(126,231,135,.35)', w: 2, dash: [4, 4], proj: false }, { z: Cx.add(VR, VC), color: 'rgba(199,146,234,.35)', w: 2, dash: [4, 4], proj: false },
+        { z: VR, color: COL.V, label: 'V_R' }, { z: VL, from: VR, color: COL.ref, label: 'V_L', lmid: -1 }, { z: VC, from: Cx.add(VR, VL), color: COL.purple, label: 'V_C', lmid: -1 },
+        { z: Vs, color: COL.sig, label: 'V_s', w: 3.6 }, { z: I, color: COL.I, label: 'I', g: 'i' }]; },
+    sigs: tr => { const c = tr.ckt, f = id => { const z = c.Vab(id); return { mag: Cx.abs(z), ang: CH6.deg(z) }; }, s = Cx.add(Cx.add(c.Vab('R'), c.Vab('L')), c.Vab('C'));
+      return [{ ...f('L'), color: COL.ref, label: 'v_L', unit: 'V', w: 1.8 }, { ...f('C'), color: COL.purple, label: 'v_C', unit: 'V', w: 1.8 }, { ...f('R'), color: COL.V, label: 'v_R', unit: 'V', w: 1.8 }, { mag: Cx.abs(s), ang: CH6.deg(s), color: COL.sig, label: 'v_s', unit: 'V', w: 3 }]; },
+    after: v => { const c = v.ckt; v.polarity(c.part('L'), 's', { side: 'D', text: 'V_L', color: COL.ref, textColor: COL.ref }); v.polarity(c.part('R'), 'a2', { side: 'D', text: 'V_R', color: COL.V, textColor: COL.V }); v.polarity(c.part('C'), 'a3', { side: 'R', text: 'V_C', color: COL.purple, textColor: COL.purple }); },
+    waveTitle: tr => tr.box.wave && tr.box.wave.w < 360 ? ['v_L + v_R + v_C = v_s', 'v_L + v_R + v_C = v_s'] : ['แรงดันทั้งสี่: v_L + v_R + v_C = v_s ทุกขณะ', 'all four voltages: v_L + v_R + v_C = v_s at every instant'] });
+  T2.spin = false;
+  function build2() { const Z = cx(S2.R, S2.XL - S2.XC), Vs = S2.ref === 'I' ? Z : cx(10, 0);  // I = 1∠0 → Vs = Z ; or Vs = 10∠0
+    const L = Math.max(S2.XL, 1e-6), C = S2.XC > 1e-9 ? 1 / S2.XC : 1e6;
+    T2.set({ ground: 'g', mode: 'ac', w: 1, nodes: { s: [0, 0], a2: [2.6, 0], a3: [5.2, 0], b3: [5.2, 3], g: [0, 3] },
+      parts: [{ id: 'Vs', type: 'VAC', a: 's', b: 'g', amp: Cx.abs(Vs), phase: CH6.deg(Vs), name: 'V_s', valText: CH6.polTxt(Vs, 'V', 2, 1), side: 1 },
+        { id: 'L', type: 'L', a: 's', b: 'a2', value: L, name: `j${fd(S2.XL, 0)} Ω`, valText: '' }, { id: 'R', type: 'R', a: 'a2', b: 'a3', value: S2.R, name: `${fd(S2.R, 0)} Ω`, valText: '' },
+        { id: 'C', type: 'C', a: 'a3', b: 'b3', value: C, name: `−j${fd(S2.XC, 0)} Ω`, valText: '', side: 1 }, { type: 'W', a: 'b3', b: 'g' }] });
+    const c = T2.ckt, I = c.I('R');
+    m2.innerHTML = ui.kv([['Z', `${CH6.rect(Z, 1).replace('-', '−')} Ω`], ['I', CH6.polTxt(I, 'A', 3, 1)], ['V_s', CH6.polTxt(Vs, 'V', 3, 1)], ['V_R', CH6.polTxt(c.Vab('R'), 'V', 3, 1)], ['V_L', CH6.polTxt(c.Vab('L'), 'V', 3, 1)], ['V_C', CH6.polTxt(c.Vab('C'), 'V', 3, 1)],
+      [t('V<sub>s</sub> เทียบ I', 'V<sub>s</sub> against I'), Math.abs(S2.XL - S2.XC) < 1e-9 ? t('เฟสเดียวกัน (เรโซแนนซ์)', 'in phase (resonance)') : S2.XL > S2.XC ? t(`นำหน้า ${fd(CH6.deg(Z), 1)}°`, `leads by ${fd(CH6.deg(Z), 1)}°`) : t(`ตามหลัง ${fd(-CH6.deg(Z), 1)}°`, `lags by ${fd(-CH6.deg(Z), 1)}°`)]]); }
+  const panel2 = $('pB');
+  ui.h2(panel2, t('อุปกรณ์ (Ω)', 'Elements (Ω)'));
+  const s2 = {};
+  s2.XL = ui.slider(panel2, { id: 's2L', label: 'X<sub>L</sub>', min: 0, max: 100, step: 1, value: S2.XL, fmt: v => `j${v} Ω`, oninput: v => { S2.XL = v; build2(); } });
+  s2.R = ui.slider(panel2, { id: 's2R', label: 'R', min: 1, max: 50, step: 1, value: S2.R, fmt: v => `${v} Ω`, oninput: v => { S2.R = v; build2(); } });
+  s2.XC = ui.slider(panel2, { id: 's2C', label: 'X<sub>C</sub>', min: 1, max: 100, step: 1, value: S2.XC, fmt: v => `−j${v} Ω`, oninput: v => { S2.XC = v; build2(); } });
+  ui.buttons(panel2, [{ label: t('ค่าของ Hayt (เรโซแนนซ์)', 'Hayt\'s values (resonance)'), onclick: () => { Object.assign(S2, { XL: 50, R: 10, XC: 50 }); ['XL', 'R', 'XC'].forEach(k => s2[k].set(S2[k])); build2(); } }]);
+  ui.h2(panel2, t('ตัวอ้างอิง', 'Reference'));
+  ui.radio(panel2, [{ id: 'rf_I', label: 'I = 1∠0° A', on: true }, { id: 'rf_V', label: 'Vₛ = 10∠0° V' }], id => { S2.ref = id.slice(3); build2(); });
+  ui.h2(panel2, t('การเล่น', 'Playback')); CH6.playBtns(panel2, T2.clk, T2);
+  const m2 = ui.metrics(panel2);
+  T2.resize(); build2(); LS.anim($('cvB'), dt => T2.frame(dt));
+  window.addEventListener('resize', () => { resize1(); T2.resize(); });
+});
+</script>
+</body>
+</html>

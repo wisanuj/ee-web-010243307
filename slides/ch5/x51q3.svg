@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 520" width="1300" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Exercise 5.1 Ex.3</title>
+  <desc id="d">Ex.3: determine the current labeled i in the circuit after first transforming it so that it contains only resistors and voltage sources. A 12 V source (+ at the top) in series with 3 megaohm feeds a node with a 5 microampere source pointing down and a 2 megaohm resistor to the bottom wire; from that node a 13 megaohm resistor, carrying i to the right, goes to a 7 V source (+ at the top).</desc>
+  <rect width="1300" height="520" fill="#fff"/>
+  <g font-family="'Times New Roman', Times, Georgia, serif" fill="#111">
+    <text x="40" y="58" font-size="31">Ex.3 Determine the current labeled <tspan font-style="italic">i</tspan> in the circuit of Fig. after first transforming the circuit</text>
+    <text x="40" y="98" font-size="31">such that it contains only resistors and voltage sources.</text>
+  </g>
+  <g fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- wires -->
+    <path d="M300 281 V200 H362 M458 200 H780 M876 200 H980 V281"/>
+    <path d="M300 349 V430 H980 V349"/>
+    <path d="M520 200 V281 M520 349 V430"/>
+    <path d="M680 200 V262 M680 368 V430"/>
+    <!-- 3 MΩ -->
+    <path d="M362 200 l8 -14 l16 28 l16 -28 l16 28 l16 -28 l16 28 l8 -14"/>
+    <!-- 13 MΩ -->
+    <path d="M780 200 l8 -14 l16 28 l16 -28 l16 28 l16 -28 l16 28 l8 -14"/>
+    <!-- 2 MΩ (vertical) -->
+    <path d="M680 262 l14 9 l-28 17.7 l28 17.7 l-28 17.7 l28 17.7 l-28 17.7 l14 9"/>
+    <!-- sources -->
+    <circle cx="300" cy="315" r="34" fill="#fff"/>
+    <circle cx="520" cy="315" r="34" fill="#fff"/>
+    <circle cx="980" cy="315" r="34" fill="#fff"/>
+    <path d="M520 294 V326"/>
+  </g>
+  <path d="M510 322 L520 340 L530 322 Z" fill="#111"/>
+  <g fill="#111"><circle cx="520" cy="200" r="6"/><circle cx="680" cy="200" r="6"/><circle cx="520" cy="430" r="6"/><circle cx="680" cy="430" r="6"/></g>
+  <g font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#111" text-anchor="middle">
+    <text x="300" y="306" font-size="26">+</text><text x="300" y="338" font-size="28">−</text>
+    <text x="980" y="306" font-size="26">+</text><text x="980" y="338" font-size="28">−</text>
+  </g>
+  <g font-family="'Times New Roman', Times, Georgia, serif" font-size="30" fill="#111">
+    <text x="252" y="326" text-anchor="end">12 V</text>
+    <text x="410" y="170" text-anchor="middle">3 MΩ</text>
+    <text x="566" y="326">5 μA</text>
+    <text x="712" y="326">2 MΩ</text>
+    <text x="828" y="170" text-anchor="middle">13 MΩ</text>
+    <text x="1026" y="326">7 V</text>
+  </g>
+  <path d="M800 236 H846" stroke="#c92a2a" stroke-width="3" fill="none"/><path d="M844 228 L860 236 L844 244 Z" fill="#c92a2a"/>
+  <text x="828" y="272" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-style="italic" font-size="32" fill="#c92a2a">i</text>
+</svg>

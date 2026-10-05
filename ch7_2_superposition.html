@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="7.2 — Superposition in AC Circuits">7.2 — หลักการซ้อนทับในวงจรกระแสสลับ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script><script src="assets/ch6.js?v=102"></script><script src="assets/ch7_circuits.js?v=102"></script><script src="assets/ch7.js?v=102"></script><script src="assets/ch7ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">หลักการซ้อนทับ: ความถี่เดียวกันและความถี่ต่างกัน <span class="en">Superposition — add phasors at one frequency, add time functions across frequencies</span></h1>
+<h1 data-l="en">Superposition: same and different frequencies <span class="en">Add phasors at one frequency, add time functions across frequencies</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch7/K02.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class outline slide of chapter 7: nodal and mesh analysis marked f1 = f2; superposition marked with two stars and f1 ≠ f2, f1 = f2; Thévenin's and Norton theorems ticked; phasor diagrams leading to the polar form, with a sketch of V at angle θ and I at angle −φ on the complex plane">
+    <figcaption data-l="th">หน้าสารบัญที่ผู้สอนเขียนในห้อง: วิธีโนดและวิธีเมชใช้เมื่อ f₁ = f₂ ส่วนการซ้อนทับใช้ได้ทั้ง f₁ ≠ f₂ และ f₁ = f₂ · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The outline slide as written in class: nodal and mesh analysis need f₁ = f₂, superposition works for f₁ ≠ f₂ as well as f₁ = f₂ · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">หลักการซ้อนทับของบทที่ 5 ยังใช้ได้ เพราะวงจรที่มี R, L, C ยังเป็นวงจรเชิงเส้น: ฆ่าแหล่งจ่ายทุกตัวยกเว้นตัวเดียว (แหล่งจ่ายแรงดัน → ลัดวงจร แหล่งจ่ายกระแส → เปิดวงจร) หาผลย่อย แล้วรวมกัน ผู้สอนติดดาวหัวข้อนี้ไว้ในห้อง เพราะ<b>มีสองกรณีที่ต้องแยกให้ออก</b> ถ้าแหล่งจ่ายทุกตัวมีความถี่เดียวกัน (Ex 3) ผลย่อยเป็นเฟเซอร์ที่ ω เดียวกันและบวกกันได้ ถ้าความถี่ต่างกัน (Ex 4) อิมพีแดนซ์ของ L และ C ไม่เท่ากันในแต่ละความถี่ ต้องคิดทีละความถี่ แล้ว<b>บวกกันในรูปฟังก์ชันเวลาเท่านั้น</b></p>
+    <p class="sub" data-l="en">Superposition from chapter 5 still works, because a circuit of R, L and C is still linear: kill every source but one (voltage source → short, current source → open), find the partial response, then add. The teacher starred this topic in class, because <b>there are two cases to tell apart</b>. If all sources share one frequency (Ex 3), the partial responses are phasors at the same ω and simply add. If the frequencies differ (Ex 4), L and C have different impedances at each frequency, so each frequency is solved separately and the results <b>add only as time functions</b>.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{aligned} \omega_1 = \omega_2:&\quad \mathbf{V} = \mathbf{V}' + \mathbf{V}'' \\ \omega_1 \ne \omega_2:&\quad v(t) = v'(t) + v''(t) \end{aligned} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>ฆ่าแหล่งจ่ายแบบเดิม</b>: แหล่งจ่ายแรงดันเป็นลัดวงจร แหล่งจ่ายกระแสเป็นวงจรเปิด แล้วหาผลย่อยทีละตัว</li>
+  <li><b>ความถี่เดียวกัน</b>: \(\mathbf{V}_1 = \mathbf{V}_1' + \mathbf{V}_1''\) เป็นการบวกจำนวนเชิงซ้อน ใน Ex 3 ได้ \(1.062\angle 23.27^\circ\) V เท่ากับคำตอบของ Ex 1 พอดี</li>
+  <li><b>ความถี่ต่างกัน</b>: \(Z_L = j\omega L\) ที่ 200 rad/s คือ j1 Ω แต่ที่ 100 rad/s คือ j0.5 Ω จึงไม่มีวงจรเฟเซอร์วงเดียวที่ใช้ได้กับทุกแหล่งจ่าย <b>ซ้อนทับเป็นวิธีเดียว</b></li>
+  <li><b>ห้ามบวกเฟเซอร์ต่างความถี่</b> (เช่น 2∠180° + 0.5∠180°) ต้องแปลงเป็นฟังก์ชันเวลาก่อน แล้วบวก \(v_L = 2\sin(200t + 180^\circ) + 0.5\sin(100t + 180^\circ)\) V ซึ่ง<b>ไม่ใช่คลื่นไซน์</b></li>
+  <li>ใน Ex 4 <b>แหล่งจ่ายแรงดันที่อนุกรมกับแหล่งจ่ายกระแสไม่มีผลต่อ \(v_L\)</b> เพราะเมื่อมันทำงานตัวเดียว ไม่มีทางให้กระแสไหลครบวง</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Kill sources as before</b>: voltage sources become shorts, current sources open circuits; then find the partial responses one at a time.</li>
+  <li><b>Same frequency</b>: \(\mathbf{V}_1 = \mathbf{V}_1' + \mathbf{V}_1''\) is complex addition. Ex 3 gives \(1.062\angle 23.27^\circ\) V, exactly the answer of Ex 1.</li>
+  <li><b>Different frequencies</b>: \(Z_L = j\omega L\) is j1 Ω at 200 rad/s but j0.5 Ω at 100 rad/s, so no single phasor circuit fits every source. <b>Superposition is the only way.</b></li>
+  <li><b>Never add phasors of different frequencies</b> (such as 2∠180° + 0.5∠180°); convert to time functions first, then add: \(v_L = 2\sin(200t + 180^\circ) + 0.5\sin(100t + 180^\circ)\) V, which is <b>not a sine wave</b>.</li>
+  <li>In Ex 4, <b>the voltage source in series with the current sources has no effect on \(v_L\)</b>: alone, it finds no closed path for a current.</li></ul></section>
+<div class="conv" data-mag="peak"></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 3 ความถี่เดียวกัน</a><a href="#ex2"><b>2</b>Ex 4 ความถี่ต่างกัน</a><a href="#tB"><b>B</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 3 one frequency</a><a href="#ex2"><b>2</b>Ex 4 two frequencies</a><a href="#tB"><b>B</b>More practice</a></nav>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 3: ใช้หลักการซ้อนทับหา \(v_1\) (ความถี่เดียวกัน)</h2><h2 data-l="en">Ex 3: find \(v_1\) by superposition (one frequency)</h2>
+    <div class="src" data-l="th">สไลด์หน้า 6 · Hayt Practice 10.14 · ในห้องตั้งโจทย์ไว้แต่ยังไม่ได้คิด</div><div class="src" data-l="en">Slide p. 6 · Hayt Practice 10.14 · set up in class but not finished</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p06q.webp" width="1171" height="672" loading="lazy" decoding="async" alt="Slide 6 Ex 3: if superposition is used on the circuit of the figure, find v1. The circuit of Ex 1: 20∠0° mA into v1, j50 mS to ground, −j25 mS between v1 and v2 with 50∠−90° mA above it, 40 mS from v2 to ground">
+    <figcaption data-l="th">สไลด์หน้า 6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 6 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">วงจรเดียวกับ Ex 1 (หน้า 7.1) แยกเป็นสองภาพ: ① เหลือแหล่งจ่าย 20∠0° mA ตัวเดียว (อีกตัวเปิดวงจร วงกลมประ) และ ② เหลือแหล่งจ่าย 50∠−90° mA ตัวเดียว ภาพที่สามคือวงจรจริง ช่องสุดท้ายแสดง<b>เฟเซอร์ \(\mathbf{V}_1'\) ต่อหัวต่อหางกับ \(\mathbf{V}_1''\)</b> ทุกภาพหมุนด้วย ω เดียวกันจึงอยู่บนระนาบเดียวกันได้ เปิดเฉลยทีละขั้นแล้วภาพที่คิดเสร็จจะมีจุดวิ่ง</p>
+  <p class="lead" data-l="en">The circuit of Ex 1 (page 7.1) split into two pictures: ① with only the 20∠0° mA source left (the other one open, the dashed circle) and ② with only the 50∠−90° mA source. The third picture is the real circuit, and the last cell shows <b>\(\mathbf{V}_1'\) and \(\mathbf{V}_1''\) head to tail</b>; every picture turns at the same ω, so they share one plane. Open the solution step by step: a finished picture gets its moving dots.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 6 ที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 6 as written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K08.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 6: 20∠0 mA and 50∠−90 mA marked as the two sources, with V1 = V1′ + V1″ and V2 = V2′ + V2″ written in boxes">
+      <figcaption data-l="th">ในห้องเขียน \(V_1 = V_1' + V_1''\) และ \(V_2 = V_2' + V_2''\) แล้วหน้าถัดไปเว้นว่างไว้ (หน้านี้คิดต่อให้)</figcaption><figcaption data-l="en">In class \(V_1 = V_1' + V_1''\) and \(V_2 = V_2' + V_2''\) were written, and the next page was left blank (this page finishes it)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 4: ใช้หลักการซ้อนทับหา \(v_L\) (แหล่งจ่ายต่างความถี่)</h2><h2 data-l="en">Ex 4: find \(v_L\) by superposition (sources of different frequencies)</h2>
+    <div class="src" data-l="th">สไลด์หน้า 7 · Hayt §10.7, Example 10.12 · เฉลยในห้องหน้า 11</div><div class="src" data-l="en">Slide p. 7 · Hayt §10.7, Example 10.12 · class solution p. 11</div></div></div>
+  <figure class="slide q"><img src="slides/ch7/p07q.webp" width="1044" height="509" loading="lazy" decoding="async" alt="Slide 7 Ex 4: use superposition to find vL. Current sources is1 = 2 cos 200t A and is2 = 1 cos 100t A side by side; a voltage source vs3 = 2 sin 200t V in series with 1 Ω and a 5 mH inductor carrying vL">
+    <figcaption data-l="th">สไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 7 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">แหล่งจ่ายสามตัวมีสองความถี่ ภาพ ①–③ เหลือแหล่งจ่ายทีละตัว และ<b>แต่ละภาพหมุนด้วยความเร็วของตัวเอง</b> (ภาพที่ 200 rad/s เร็วเป็นสองเท่าของภาพที่ 100 rad/s) ภาพที่ 4 คือวงจรจริง จุดในภาพนั้นวิ่งด้วยผลรวมของ ①–③ ทุกขณะ กราฟใต้ภาพแสดง \(v_L'\), \(v_L''\) และผลรวม \(v_L\) ซึ่ง<b>ไม่ใช่คลื่นไซน์</b> ปุ่มใต้ภาพแสดงว่าถ้าบวกเฟเซอร์ 2∠180° + 0.5∠180° จะได้กราฟที่ไม่ตรงกับความจริง</p>
+  <p class="lead" data-l="en">Three sources at two frequencies. Pictures ①–③ keep one source each, and <b>each turns at its own speed</b> (the 200 rad/s pictures twice as fast as the 100 rad/s one). Picture 4 is the real circuit, whose dots move with the sum of ①–③ at every instant. The graph under the pictures shows \(v_L'\), \(v_L''\) and their sum \(v_L\), which is <b>not a sine wave</b>. The button under the picture shows that adding the phasors 2∠180° + 0.5∠180° gives a curve that does not match reality.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas><div class="ctl" id="ctl2"></div></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <div class="warnbox" data-l="th"><b>ระวัง:</b> เฉลยในห้องมีบรรทัด \(V_L = V_L' + V_L'' + V_L''' = 2\angle 180^\circ + 0.5\angle 180^\circ + 0\) ซึ่ง<b>บวกเฟเซอร์ต่างความถี่ไม่ได้</b> (Hayt Example 10.12 เตือนเรื่องนี้ไว้) ถ้าบวกจะได้ 2.5∠180° ซึ่งไม่มีความหมาย บรรทัดถัดไปในห้องเขียนเป็นผลรวมของฟังก์ชันเวลา ซึ่งถูกต้อง</div>
+  <div class="warnbox" data-l="en"><b>Careful:</b> the class solution has the line \(V_L = V_L' + V_L'' + V_L''' = 2\angle 180^\circ + 0.5\angle 180^\circ + 0\), but <b>phasors of different frequencies cannot be added</b> (Hayt Example 10.12 warns about exactly this); adding them gives 2.5∠180°, which means nothing. The next line in class writes the sum of time functions, which is correct.</div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 7 และเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See slide p. 7 and the solution written in class</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch7/K10.webp" width="1100" height="619" loading="lazy" decoding="async" alt="In-class slide 7: vs3 = 2∠0 V with ω3 = 200; vL = vL′ + vL″ + vL‴ from is1, is2, vs3; is1 = 2 sin(200t + 90°), Is1 = 2∠90° A, ω1 = 200 rad/s; is2 = 1 sin(100t + 90°), Is2 = 1∠90°, ω2 = 100 rad/s">
+      <figcaption data-l="th">แปลงแหล่งจ่ายเป็นเฟเซอร์อ้างอิงไซน์พร้อมความถี่ของแต่ละตัว: ω₁ = 200, ω₂ = 100, ω₃ = 200 rad/s</figcaption><figcaption data-l="en">Each source turned into a sine-referenced phasor with its own frequency: ω₁ = 200, ω₂ = 100, ω₃ = 200 rad/s</figcaption></figure>
+    <figure class="slide"><img src="slides/ch7/K11.webp" width="1100" height="1350" loading="lazy" decoding="async" alt="Handwritten solution of Ex 4: is1 alone, X_L1 = jω1L = j(200)(5×10⁻³) = 1j Ω, vL′ = (2∠90)(1j) = 2∠180 V; is2 alone, X_L2 = j(100)(5×10⁻³) = 0.5j Ω, vL″ = (1∠90)(0.5j) = 0.5∠180 V; vs3 alone, vL‴ = 0; vL = 2∠180 + 0.5∠180 + 0; vL = 2 sin(200t + 180°) + 0.5 sin(100t + 180°) V">
+      <figcaption data-l="th">ผลย่อยสามภาพ แล้วรวมเป็น \(v_L = 2\sin(200t + 180^\circ) + 0.5\sin(100t + 180^\circ)\) V</figcaption><figcaption data-l="en">The three partial responses, summed as \(v_L = 2\sin(200t + 180^\circ) + 0.5\sin(100t + 180^\circ)\) V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 3 ตำแหน่ง</div><div class="src" data-l="en">Give at least 3 decimal places</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — เมทริกซ์เดียวกัน ทางขวาต่างกัน</h3>
+    <ol><li>ดูขั้นที่ 1 ของ Ex 3: สัมประสิทธิ์ทางซ้ายของ ① และ ② เหมือนกันทุกตัว ต่างกันแค่ค่าทางขวา</li>
+    <li>รวมค่าทางขวาของ ① กับ ② จะได้ค่าทางขวาของ Ex 1 พอดี นี่คือเหตุผลทางพีชคณิตที่ซ้อนทับใช้ได้</li>
+    <li>ชี้เมาส์ที่อุปกรณ์ในภาพ ① หรือ ② เมื่อคิดเสร็จ เพื่ออ่านเฟเซอร์ของผลย่อย</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ความถี่ต่างกัน</h3>
+    <ol><li>Ex 4: ภาพ ① และ ③ หมุนเร็วเป็นสองเท่าของภาพ ② เพราะ 200 rad/s กับ 100 rad/s</li>
+    <li>กราฟ \(v_L\) สูงสุดไม่ถึง 2.5 V และรูปร่างซ้ำทุก 360° ของ 100t (คาบ 62.8 ms) ซึ่งเป็นคาบร่วมของทั้งสองความถี่</li>
+    <li>ภาพ ③ ไม่มีจุดวิ่งเลย: \(v_{s3}\) ทำงานตัวเดียวไม่มีวงปิดให้กระแสไหล</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ตรวจด้วยกฎกระแส (KCL)</h3>
+    <ol><li>ใน Ex 4 กระแสจากแหล่งจ่ายกระแสทั้งสองต้องไหลผ่านกิ่งอนุกรมเท่านั้น จึงได้ \(i_L = i_{s1} + i_{s2}\) ทันที</li>
+    <li>\(v_L = L\,\tfrac{d}{dt}(2\cos 200t + \cos 100t) = -2\sin 200t - 0.5\sin 100t\) V ตรงกับผลซ้อนทับ</li>
+    <li>คำถาม: ถ้า \(v_{s3}\) เป็น 20 V แทน 2 V คำตอบ \(v_L\) เปลี่ยนไหม</li></ol>
+    <div class="book">สไลด์บทที่ 7 หน้า 6–7 · ฉบับในห้อง 2569 · Hayt §10.7, Example 10.12, Practice 10.14</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — same matrix, different right side</h3>
+    <ol><li>Look at step 1 of Ex 3: the left-side coefficients of ① and ② are identical; only the right-hand values differ.</li>
+    <li>Adding the right-hand values of ① and ② gives exactly those of Ex 1. That is the algebraic reason superposition works.</li>
+    <li>Once solved, hover over a part in picture ① or ② to read the partial phasors.</li></ol></div>
+  <div class="card"><h3>Try this 2 — different frequencies</h3>
+    <ol><li>In Ex 4, pictures ① and ③ turn twice as fast as picture ②, because 200 rad/s against 100 rad/s.</li>
+    <li>The peak of \(v_L\) never reaches 2.5 V, and the shape repeats every 360° of 100t (62.8 ms), the common period of both frequencies.</li>
+    <li>Picture ③ has no moving dots: \(v_{s3}\) alone has no closed loop for a current.</li></ol></div>
+  <div class="card"><h3>Try this 3 — check with KCL</h3>
+    <ol><li>In Ex 4 the currents of both current sources must flow through the series branch, so \(i_L = i_{s1} + i_{s2}\) at once.</li>
+    <li>\(v_L = L\,\tfrac{d}{dt}(2\cos 200t + \cos 100t) = -2\sin 200t - 0.5\sin 100t\) V, as superposition says.</li>
+    <li>Question: if \(v_{s3}\) were 20 V instead of 2 V, would \(v_L\) change?</li></ol>
+    <div class="book">Chapter 7 slides, pp. 6–7 · in class, 2026 · Hayt §10.7, Example 10.12, Practice 10.14</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), R = String.raw, fd = CH6.fd, RC = (z, d = 4) => CH6.rect(z, d), E1 = CH7C.ex1;
+  CH7.problem(1, 'ex3'); CH7.problem(2, 'ex4');
+  const work = tex => tx(LS.fitIn(document.getElementById('quiz'), tex), true);
+  CH6.quiz('quiz', [
+    { q: t('1) Ex 3: \\(V_1\'\\) จากแหล่งจ่าย 20∠0° mA ตัวเดียว', '1) Ex 3: \\(V_1\'\\) from the 20∠0° mA source alone'), fields: [{ key: 'a', lab: t('ส่วนจริง', 'real'), ans: E1.sup1.V1.re, unit: 'V' }, { key: 'b', lab: t('ส่วนจินตภาพ', 'imag.'), ans: E1.sup1.V1.im, unit: 'V' }] },
+    { q: t('2) Ex 3: \\(V_2\'\'\\) จากแหล่งจ่าย 50∠−90° mA ตัวเดียว', '2) Ex 3: \\(V_2\'\'\\) from the 50∠−90° mA source alone'), fields: [{ key: 'a', lab: t('ส่วนจริง', 'real'), ans: E1.sup2.V2.re, unit: 'V' }, { key: 'b', lab: t('ส่วนจินตภาพ', 'imag.'), ans: E1.sup2.V2.im, unit: 'V' }],
+      work: work(R`V_2'' = \frac{{\begin{vmatrix} j0.025 & j0.05 \\ j0.025 & -j0.05 \end{vmatrix}}}{\Delta} = ${RC(E1.sup2.V2)}\ \text{V}`) },
+    { q: t('3) Ex 4: ถ้าเปลี่ยน L เป็น 10 mH แอมพลิจูดของส่วน 100 rad/s ใน \\(v_L\\) เป็นเท่าไร', '3) Ex 4: with L = 10 mH, what is the amplitude of the 100 rad/s part of \\(v_L\\)?'), fields: [{ key: 'v', lab: t('แอมพลิจูด =', 'amplitude ='), ans: 1, unit: 'V' }],
+      work: work(R`|\mathbf{V}_L''| = |\mathbf{I}_{s2}|\,\omega_2 L = (1)(100)(10\times10^{-3}) = 1\ \text{V}`) },
+    { q: t('4) Ex 4: ค่า \\(v_L\\) ที่ \\(t = 5\\) ms (ใส่เครื่องหมายด้วย)', '4) Ex 4: the value of \\(v_L\\) at \\(t = 5\\) ms (with its sign)'), fields: [{ key: 'v', lab: '\\(v_L\\) =', ans: -2 * Math.sin(1) - 0.5 * Math.sin(0.5), unit: 'V' }],
+      work: work(R`v_L(0.005) = -2\sin(1\ \text{rad}) - 0.5\sin(0.5\ \text{rad}) = -1.6829 - 0.2397 = ${fd(-2 * Math.sin(1) - 0.5 * Math.sin(0.5), 4)}\ \text{V}`) }], { wide: true });
+});
+</script>
+</body>
+</html>

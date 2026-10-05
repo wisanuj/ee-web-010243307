@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="4.2 — The Supernode">4.2 — ซูเปอร์โนด</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch4_circuits.js?v=102"></script><script src="assets/ch4ui.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ซูเปอร์โนด: แหล่งจ่ายแรงดันระหว่างสองโนด <span class="en">The supernode — fence the voltage source and its two nodes, write one KCL and one constraint</span></h1>
+<h1 data-l="en">The supernode: a voltage source between two nodes <span class="en">Fence the voltage source and its two nodes, write one KCL and one constraint</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch4/p08.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 8: there is no way to express the current of a voltage source as a function of the voltage; the easier method treats node 2, node 3 and the 22 V source together as a supernode (dashed region) and applies KCL to both nodes at the same time">
+    <figcaption data-l="th">สไลด์บทที่ 4 หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 4 slides, p. 8 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 8: <b>แหล่งจ่ายแรงดันไม่บอกกระแสของตัวเอง</b> จึงเขียนกระแสที่ผ่านมันด้วยแรงดันโนดไม่ได้ ถ้าแหล่งจ่ายแรงดันอยู่ระหว่างสองโนดที่ยังไม่รู้ค่า ให้ล้อมสองโนดนั้นพร้อมแหล่งจ่ายเป็น<b>ซูเปอร์โนด</b> (supernode) แล้วเขียนกฎกระแสของเคียร์ชอฟฟ์ (KCL) ของกระแสที่ข้ามเส้นประเพียงสมการเดียว และเพิ่ม<b>สมการเงื่อนไข</b> \(v_+ - v_- = V_s\) จากแหล่งจ่าย ในภาพจำลอง <b>เส้นประสีเหลืองคือขอบของซูเปอร์โนด</b> ลูกศรสีเหลืองคือกระแสที่ข้ามเส้นประออกไป และในขั้นของซูเปอร์โนดมีกล่อง "วิธีในเฉลยของอาจารย์" ที่เขียน KCL ทีละโนดโดยมีกระแสของแหล่งจ่ายแล้วนำมารวมกัน แบบที่ผู้สอนทำใน Ex 4 หน้านี้มี <b>4 โจทย์ เรียงทีละข้อ</b> (Ex 4, Ex 5, การบ้านข้อ 2 และแบบฝึกหัด Ex.4) ตามด้วยแบบฝึกนับจำนวนสมการ</p>
+    <p class="sub" data-l="en">Slide p. 8: <b>a voltage source does not tell its own current</b>, so its current cannot be written with node voltages. When a voltage source sits between two unknown nodes, fence both nodes and the source as a <b>supernode</b>, write Kirchhoff's Current Law (KCL) once for the currents crossing the dashed line, and add the <b>constraint</b> \(v_+ - v_- = V_s\) from the source. In the simulations <b>the yellow dashed line is the edge of the supernode</b>, the yellow arrows are the currents leaving across it, and the supernode step has a box "the route in the instructor's solutions" that writes KCL at each node with the source current and then adds them, as the teacher did in Ex 4. This page has <b>4 problems, one after another</b> (Ex 4, Ex 5, homework 2 and exercise Ex.4), then a drill on counting equations.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} \sum I_{\text{out}} = 0 \ \text{ round the supernode} \\ v_{+} - v_{-} = V_s \ \ (\text{constraint}) \\ \text{KCL equations} = (N - 1) - N_V \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แหล่งจ่ายแรงดันไม่บอกกระแสของตัวเอง</b> (กระแสขึ้นกับวงจรภายนอก) จึงเขียนกระแสที่ผ่านมันด้วยแรงดันโนดไม่ได้</li>
+  <li><b>แหล่งจ่ายแรงดันที่ต่อกับโนดอ้างอิง</b>: รู้แรงดันโนดอีกด้านทันที ไม่ต้องเขียน KCL ที่โนดนั้น</li>
+  <li><b>แหล่งจ่ายแรงดันระหว่างสองโนดที่ยังไม่รู้ค่า</b>: ล้อมสองโนดกับแหล่งจ่ายเป็น<b>ซูเปอร์โนด</b> แล้วเขียน KCL ของกระแสที่ข้ามเส้นประ<b>หนึ่งสมการ</b></li>
+  <li><b>เพิ่มสมการเงื่อนไข \(v_+ - v_- = V_s\)</b> (ขั้ว + ลบขั้ว − ของแหล่งจ่าย) จำนวนสมการจึงครบเท่าจำนวนตัวแปร</li>
+  <li>ตัวต้านทานที่ทั้งสองปลายอยู่ในซูเปอร์โนดเดียวกัน<b>ไม่ปรากฏในสมการ KCL ของซูเปอร์โนด</b> เพราะกระแสของมันไหลเข้าแล้วออกภายในเส้นประ (Ex 5)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>A voltage source does not tell its own current</b> (the current depends on the rest of the circuit), so its current cannot be written with node voltages.</li>
+  <li><b>A voltage source to the reference</b>: the node at its other end is known at once; no KCL is needed there.</li>
+  <li><b>A voltage source between two unknown nodes</b>: fence both nodes and the source as a <b>supernode</b> and write KCL for the currents crossing the dashed line, <b>one equation</b>.</li>
+  <li><b>Add the constraint \(v_+ - v_- = V_s\)</b> (the source's + side minus its − side), so there are as many equations as unknowns.</li>
+  <li>A resistor with both ends inside the same supernode <b>does not appear in the supernode KCL</b>: its current goes in and comes out inside the dashed line (Ex 5).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex2"><b>2</b>Ex 5</a><a href="#ex3"><b>3</b>การบ้านข้อ 2</a><a href="#ex4"><b>4</b>แบบฝึกหัด Ex.4</a><a href="#tA"><b>A</b>ต้องเขียนกี่สมการ</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex2"><b>2</b>Ex 5</a><a href="#ex3"><b>3</b>Homework 2</a><a href="#ex4"><b>4</b>Exercise Ex.4</a><a href="#tA"><b>A</b>How many equations?</a></nav>
+
+<div class="group-head"><h2 data-l="th">ขั้นตอนของซูเปอร์โนด (สไลด์หน้า 9)</h2><h2 data-l="en">The supernode steps (slide p. 9)</h2></div>
+<p class="lead" data-l="th">ขั้นตอนเหมือนวิธีโนดในหน้า 4.1 เพิ่มขั้นที่ 3: <b>หาแหล่งจ่ายแรงดันที่ไม่ได้ต่อกับโนดอ้างอิง</b> แล้วเขียนสมการเงื่อนไขของแต่ละตัว ในห้องผู้สอนสรุปไว้ที่หน้าสารบัญว่า ใช้ซูเปอร์โนดเมื่อวงจรมีแหล่งจ่ายแรงดันอิสระอยู่ระหว่างสองโนด และใช้ซูเปอร์เมช (หน้า 4.4) เมื่อมีแหล่งจ่ายกระแสอิสระอยู่ระหว่างสองเมช</p>
+<p class="lead" data-l="en">The steps are those of nodal analysis on page 4.1 with one more, step 3: <b>find every voltage source that is not connected to the reference</b> and write its constraint. In class the teacher summed it up on the contents slide: use a supernode when the circuit has an independent voltage source between two nodes, and a supermesh (page 4.4) when it has an independent current source between two meshes.</p>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch4/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9: steps to use supernode analysis. 1 identify the reference node, 2 label the node voltages, 3 identify the supernode: voltage sources not connected to the reference, constraint v1 − v2 = Vs, 4 apply KCL, 5 handle current sources, 6 solve the system">
+    <figcaption data-l="th">สไลด์หน้า 9 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 9 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch4/K02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class contents slide: next to the supernode, 'when the circuit has an independent voltage source between 2 nodes'; next to the supermesh, 'when the circuit has an independent current source between 2 meshes'">
+    <figcaption data-l="th">หน้าสารบัญฉบับในห้อง ธ.ค. 2568 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Contents slide, in class, December 2025 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูสไลด์หน้า 8 ที่ผู้สอนเขียนในห้อง (ธ.ค. 2568)</span><span data-l="en">See slide p. 8 as written in class (December 2025)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch4/K10.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 8: the currents I1 to I4 leaving node v1 drawn as arrows, and V4 = 0 written at the reference node"><figcaption data-l="th">หน้า 8: กระแส \(I_1\)–\(I_4\) ที่ออกจากโนด \(v_1\) และ \(V_4 = 0\) ที่โนดอ้างอิง</figcaption><figcaption data-l="en">p. 8: the currents \(I_1\)–\(I_4\) leaving node \(v_1\), and \(V_4 = 0\) at the reference</figcaption></figure></div></details>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 4: หาแรงดันโนด \(v_1\)</h2><h2 data-l="en">Ex 4: find the node voltage \(v_1\)</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 10 (วงจรเดียวกับรูปในหน้า 8) · Hayt Example 4.5</div><div class="src" data-l="en">Chapter 4 slides, p. 10 (the circuit drawn on p. 8) · Hayt Example 4.5</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p10q.webp" width="1521" height="657" loading="lazy" decoding="async" alt="Ex 4: determine the unknown node voltage v1. −8 A pointing up into v1, 4 ohm across the top from v1 to v3, a −3 A source pointing left from v2's side to v1's side, 3 ohm from v1 to v2, a 22 V source between v2 and v3 with its + towards v3, 1 ohm from v2 down, 5 ohm from the right of the source down, −25 A pointing down from v3">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 10 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim hscroll"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (ธ.ค. 2568, สี่หน้า)</span><span data-l="en">See the teacher's in-class working (December 2025, four pages)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 10, first page: N = 4, three equations; auxiliary equation v3 − v2 = 22; KCL at node v1: (v1 − v3)/4 + (−(−3)) + (v1 − v2)/3 + (−(−8)) = 0, giving (1) 7v1 − 4v2 − 3v3 = −132"><figcaption data-l="th">หน้า 10 (1): สมการเงื่อนไข \(v_3 - v_2 = 22\) และ KCL ที่โนด \(v_1\) ได้ \(7v_1 - 4v_2 - 3v_3 = -132\)</figcaption><figcaption data-l="en">p. 10 (1): the constraint \(v_3 - v_2 = 22\) and KCL at node \(v_1\): \(7v_1 - 4v_2 - 3v_3 = -132\)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch4/K13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Second page: KCL at node v2 with the source current I8: (−3) + (v2 − v1)/3 + v2/1 + I8 = 0, so I8 = 3 − (v2 − v1)/3 − v2/1; KCL at node v3: (v3 − v1)/4 + (−25) + v3/5 + I12 = 0, so −I12 = (v3 − v1)/4 − 25 + v3/5; and I8 = −I12"><figcaption data-l="th">หน้า 10 (2): KCL ที่ \(v_2\) และ \(v_3\) แยกกันโดยมีกระแสของแหล่งจ่าย และ \(I_8 = -I_{12}\)</figcaption><figcaption data-l="en">p. 10 (2): KCL at \(v_2\) and at \(v_3\) with the source current, and \(I_8 = -I_{12}\)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch4/K14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Third page: 0v1 − 1v2 + 1v3 = 22; from I8 = −I12: 3 − (v2 − v1)/3 − v2/1 = (v3 − v1)/4 − 25 + v3/5, leading to (3) 35v1 − 80v2 − 27v3 = −1680, and the 3 × 3 matrix equation"><figcaption data-l="th">หน้า 10 (3): ได้ \(35v_1 - 80v_2 - 27v_3 = -1680\) (บรรทัด \(9 - v_2 - v_1 - 3v_2\) ควรเป็น \(+v_1\) แต่บรรทัดถัดไปถูกแล้ว)</figcaption><figcaption data-l="en">p. 10 (3): \(35v_1 - 80v_2 - 27v_3 = -1680\) (the line \(9 - v_2 - v_1 - 3v_2\) should read \(+v_1\); the next line is right)</figcaption></figure>
+      <figure class="slide"><img src="slides/ch4/K15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Fourth page: the answers v1 = 1.071 V, v2 = 10.5 V, v3 = 32.5 V"><figcaption data-l="th">หน้า 10 (4): \(v_1 = 1.071\) V, \(v_2 = 10.5\) V, \(v_3 = 32.5\) V</figcaption><figcaption data-l="en">p. 10 (4): \(v_1 = 1.071\) V, \(v_2 = 10.5\) V, \(v_3 = 32.5\) V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 5: หาแรงดันคร่อมแหล่งจ่ายกระแสแต่ละตัว</h2><h2 data-l="en">Ex 5: find the voltage across each current source</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 11 (ในห้องให้เป็นการบ้านโดยเขียนป้ายว่า HW 3) · Hayt Practice 4.4</div><div class="src" data-l="en">Chapter 4 slides, p. 11 (set as homework in class, labelled "HW 3") · Hayt Practice 4.4</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/p11q.webp" width="1443" height="630" loading="lazy" decoding="async" alt="Ex 5: compute the voltage across each current source. 4 A pointing up on the left, 1/3 ohm across the top, a 5 V source between the two upper nodes with its + on the left, 1/2 ohm and 1/6 ohm down to the bottom wire, 9 A pointing up on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 11 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 11 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim hscroll"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง (ธ.ค. 2568)</span><span data-l="en">See the in-class slide (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 11 marked 'HW 3' with the answers V13 = 5.375 V and V23 = 0.375 V; nodes v1 and v2 labelled and v3 = 0 at the bottom wire"><figcaption data-l="th">หน้า 11: ให้เป็นการบ้านพร้อมคำตอบ \(V_{13} = 5.375\) V, \(V_{23} = 0.375\) V</figcaption><figcaption data-l="en">p. 11: set as homework with the answers \(V_{13} = 5.375\) V, \(V_{23} = 0.375\) V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">การบ้านข้อ 2: หาแรงดันโนดทั้งสี่ตัว</h2><h2 data-l="en">Homework 2: find all four node voltages</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 4 หน้า 21 (วงจรเดียวกับการบ้านข้อ 3 ในหน้า 4.4)</div><div class="src" data-l="en">Chapter 4 slides, p. 21 (the circuit of homework 3 on page 4.4)</div></div></div>
+  <figure class="slide q sm"><img src="slides/ch4/p21q.webp" width="1183" height="677" loading="lazy" decoding="async" alt="Homework 2: determine all four nodal voltages. 6 V source on the left (+ at the top), 10 ohm across the top, 4 ohm down the middle, 5 V source on the right (+ at the top) to ground, a 2 A source pointing right between the left and middle nodes, 11 ohm and 2 ohm down to the grounded bottom wire">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 21 (ปิดคำใบ้และคำตอบที่พิมพ์ไว้) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 21 (the printed hint and answers are covered) · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ฉบับแจกพิมพ์ตัวต้านทานซ้ายล่างเป็น 11 Ω แต่คำตอบในสไลด์ (\(v_3 = -1.909\) V) ได้จาก <b>1 Ω</b> และในห้องแก้เป็น 1 Ω แล้ว หน้านี้ใช้ 1 Ω</div>
+    <div class="warnbox" data-l="en">The handout prints the bottom-left resistor as 11 Ω, but the slide answer (\(v_3 = -1.909\) V) needs <b>1 Ω</b>, and it was corrected to 1 Ω in class. This page uses 1 Ω.</div>
+    <div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์ฉบับในห้อง (ธ.ค. 2568)</span><span data-l="en">See the in-class slide (December 2025)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/K27.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 21: the bottom-left 11 ohm corrected to 1 ohm, and the printed answer v1 = 4.019 V corrected to 4.091 V; the hint v2 = 5 V and v1 − v3 = 6 and the answers v2 = 5 V, v3 = −1.909 V, v4 = 4.333 V"><figcaption data-l="th">หน้า 21: แก้ 11 Ω เป็น 1 Ω และแก้ \(v_1\) ที่พิมพ์ 4.019 V เป็น 4.091 V</figcaption><figcaption data-l="en">p. 21: 11 Ω corrected to 1 Ω, and the printed \(v_1\) = 4.019 V corrected to 4.091 V</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด Ex_Ch4)</h2><h2 data-l="en">More practice (exercise sheet Ex_Ch4)</h2></div>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัด Ex.4: ใช้วิธีโนดหากระแส \(I_x\) โดยให้ \(V_4\) เป็นโนดอ้างอิง</h2><h2 data-l="en">Exercise Ex.4: with \(V_4\) as the reference, find the current \(I_x\) by nodal analysis</h2>
+    <div class="src" data-l="th">แบบฝึกหัด Ex_Ch4 ข้อ Ex.4 · เฉลยลายมือไฟล์ Ex.3 · วงจรคล้าย Ex 4 แต่เป็น 6 Ω และขั้ว + ของ 22 V อยู่ทาง \(V_2\)</div><div class="src" data-l="en">Exercise sheet Ex_Ch4, problem Ex.4 · handwritten solution, file Ex.3 · like Ex 4, but with 6 Ω and the + of the 22 V on the \(V_2\) side</div></div></div>
+  <figure class="slide q"><img src="slides/ch4/sx4q.webp" width="1300" height="643" loading="lazy" decoding="async" alt="Exercise Ex.4 (in Thai): use nodal analysis to find Ix with node V4 as the reference. The circuit of Ex 4 drawn as a diamond, with 6 ohm between V1 and V2, the 22 V source with its + towards V2, and Ix in the 4 ohm towards V1">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.4 · tap to enlarge</figcaption></figure>
+  <div class="duo"><div class="card sim hscroll"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ (ไฟล์ Ex.3)</span><span data-l="en">See the handwritten solution (file Ex.3)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch4/sol4.webp" width="1100" height="1424" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.4: V4 = 0 is the reference; auxiliary equation V2 − V3 = 22; KCL at V1 gives 5V1 − 2V2 − 3V3 = −132; KCL at V2 and V3 with the source current, I8 = −I12, gives 25V1 − 70V2 − 27V3 = −1680; V1 = −21.7667 V, V2 = 17.8833 V, V3 = −4.1667 V; Ix = (V3 − V1)/4 = 4.4 A"><figcaption data-l="th">เฉลยลายมือแบบฝึกหัด Ex.4</figcaption><figcaption data-l="en">Handwritten solution of exercise Ex.4</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">นับก่อนเขียน: ต้องเขียนกี่สมการ</h2><h2 data-l="en">Count before you write: how many equations?</h2>
+    <div class="src" data-l="th">แบบฝึกจากวงจรในหน้า 4.1–4.2</div><div class="src" data-l="en">A drill on the circuits of pages 4.1–4.2</div></div></div>
+  <p class="lead" data-l="th">ก่อนลงมือเขียน ให้นับก่อนเสมอ: โนดที่ไม่ใช่โนดอ้างอิงมี N − 1 ตัว และ<b>แหล่งจ่ายแรงดันแต่ละตัวลดสมการ KCL ลงหนึ่ง</b> ไม่ว่าจะต่อกับโนดอ้างอิง (รู้ค่าโนดทันที) หรืออยู่ระหว่างสองโนด (ซูเปอร์โนด + สมการเงื่อนไข) เติมตัวเลขสี่ช่องของแต่ละวงจรแล้วกดตรวจ (ตัวต้านทานที่อนุกรมกันให้รวมก่อน โนดตรงกลางจึงไม่นับ)</p>
+  <p class="lead" data-l="en">Before writing anything, count: there are N − 1 non-reference nodes, and <b>each voltage source removes one KCL equation</b>, whether it goes to the reference (the node is known at once) or sits between two nodes (a supernode plus a constraint). Fill in the four numbers for each circuit and press Check (resistors in series are combined first, so the node between them is not counted).</p>
+  <div class="card" style="padding:10px 14px"><div id="count"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — ตัวต้านทานที่หายไป</h3>
+    <ol><li>ข้อ 2 (Ex 5): ตัวต้านทาน 1/3 Ω ต่อขนานกับแหล่งจ่าย 5 V ทั้งสองปลายอยู่ในเส้นประ <b>จึงไม่อยู่ในสมการ KCL ของซูเปอร์โนดเลย</b></li>
+    <li>แต่ 1/3 Ω ยังมีกระแสอยู่จริง: เมื่อแก้เสร็จ ชี้เมาส์ที่ตัวมัน จะได้ \(I = 5/(1/3) = 15\) A</li>
+    <li>เปิด "วิธีในเฉลยของอาจารย์" ในขั้นซูเปอร์โนด: พจน์ \(3(v_1 - v_2)\) และ \(3(v_2 - v_1)\) หักล้างกันพร้อมกับ \(i_s\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ขั้วของแหล่งจ่าย</h3>
+    <ol><li>ข้อ 1 (Ex 4): ขั้ว + ของ 22 V อยู่ทาง \(v_3\) สมการเงื่อนไขคือ \(v_3 - v_2 = 22\)</li>
+    <li>ข้อ 4 (แบบฝึกหัด Ex.4): ขั้ว + อยู่ทาง \(V_2\) จึงเป็น \(V_2 - V_3 = 22\) และใช้ 6 Ω แทน 3 Ω ผลคือ \(V_1\) เปลี่ยนจาก 1.071 V เป็น −21.77 V</li>
+    <li>คำตอบ \(I_x = 4.4\) A ได้จาก \((V_3 - V_1)/4\) ตรงกับเฉลย</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — แหล่งจ่ายสองแบบในวงจรเดียว</h3>
+    <ol><li>ข้อ 3 (การบ้านข้อ 2): แหล่งจ่าย 5 V ต่อกับโนดอ้างอิง จึงได้ \(v_2 = 5\) V ทันที ส่วน 6 V อยู่ระหว่าง \(v_1\) กับ \(v_3\) จึงเป็นซูเปอร์โนด</li>
+    <li>ตัวแปรเหลือ 3 ตัว (\(v_1, v_3, v_4\)) = KCL 2 สมการ (ซูเปอร์โนด + โนด \(v_4\)) + เงื่อนไข 1 สมการ</li>
+    <li>คำถาม: ทำไมแรงดัน \(v_4 = 13/3\) V จึงไม่ขึ้นกับค่าของตัวต้านทานซ้ายล่าง (1 Ω หรือ 11 Ω ก็ได้ค่าเดียวกัน)</li></ol>
+    <div class="book">สไลด์บทที่ 4 หน้า 8–11, 21 · แบบฝึกหัด Ex.4 และเฉลย · Hayt §4.2, Example 4.5, Practice 4.4</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the vanishing resistor</h3>
+    <ol><li>Problem 2 (Ex 5): the 1/3 Ω sits in parallel with the 5 V source, both ends inside the dashed line, <b>so it is not in the supernode KCL at all</b>.</li>
+    <li>But the 1/3 Ω still carries current: once solved, hover over it to read \(I = 5/(1/3) = 15\) A.</li>
+    <li>Open "the route in the instructor's solutions" in the supernode step: the terms \(3(v_1 - v_2)\) and \(3(v_2 - v_1)\) cancel together with \(i_s\).</li></ol></div>
+  <div class="card"><h3>Try this 2 — the polarity of the source</h3>
+    <ol><li>Problem 1 (Ex 4): the + of the 22 V is on the \(v_3\) side, so the constraint is \(v_3 - v_2 = 22\).</li>
+    <li>Problem 4 (exercise Ex.4): the + is on the \(V_2\) side, so it is \(V_2 - V_3 = 22\), with 6 Ω instead of 3 Ω; \(V_1\) moves from 1.071 V to −21.77 V.</li>
+    <li>The answer \(I_x = 4.4\) A comes from \((V_3 - V_1)/4\), as in the solution.</li></ol></div>
+  <div class="card"><h3>Try this 3 — both kinds of source in one circuit</h3>
+    <ol><li>Problem 3 (homework 2): the 5 V source goes to the reference, so \(v_2 = 5\) V at once; the 6 V sits between \(v_1\) and \(v_3\), so it is a supernode.</li>
+    <li>Three unknowns remain (\(v_1, v_3, v_4\)) = 2 KCL equations (the supernode + node \(v_4\)) + 1 constraint.</li>
+    <li>Question: why does \(v_4 = 13/3\) V not depend on the bottom-left resistor (1 Ω or 11 Ω gives the same value)?</li></ol>
+    <div class="book">Chapter 4 slides, pp. 8–11, 21 · exercise Ex.4 and its solution · Hayt §4.2, Example 4.5, Practice 4.4</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.006, 0.004 * Math.abs(y)));
+
+/* 1: Ex 4 = Hayt Example 4.5 */
+CH4.problem(1, 'ex4', 'nodal', { minW: 560,
+  ask: () => ({ fields: [{ label: 'v₁ (V) =', ok: x => near(x, 15 / 14, 0.004), w: 5 }] }),
+  answer: t('\\(v_1 = 15/14 \\approx 1.071\\) V (และ \\(v_2 = 10.5\\) V, \\(v_3 = 32.5\\) V) ตรงกับเฉลยในห้องและ Hayt Example 4.5 · ในห้องเขียนสมการซูเปอร์โนดเป็น \\(35v_1 - 80v_2 - 27v_3 = -1680\\) คือสมการ (2) ข้างบนคูณ −1',
+    '\\(v_1 = 15/14 \\approx 1.071\\) V (with \\(v_2 = 10.5\\) V, \\(v_3 = 32.5\\) V), as in class and Hayt Example 4.5 · in class the supernode equation was written as \\(35v_1 - 80v_2 - 27v_3 = -1680\\), equation (2) above times −1') });
+
+/* 2: Ex 5 = Hayt Practice 4.4 */
+CH4.problem(2, 'ex5', 'nodal', { minW: 520,
+  ask: () => ({ fields: [{ label: t('คร่อม 4 A (V) =', 'across 4 A (V) ='), ok: x => near(x, 5.375), w: 5 }, { label: t('คร่อม 9 A (V) =', 'across 9 A (V) ='), ok: x => near(x, 0.375, 0.003), w: 5 }] }),
+  answer: t('แรงดันคร่อมแหล่งจ่าย 4 A = 43/8 = 5.375 V และคร่อมแหล่งจ่าย 9 A = 3/8 = 0.375 V (ขั้ว + ด้านบนทั้งคู่) ตรงกับคำตอบที่ผู้สอนเขียนไว้ (\\(V_{13}, V_{23}\\)) และ Hayt Practice 4.4 (5.375 V, 375 mV)',
+    'Across the 4 A source 43/8 = 5.375 V and across the 9 A source 3/8 = 0.375 V (+ at the top in both), matching the answers the teacher wrote (\\(V_{13}, V_{23}\\)) and Hayt Practice 4.4 (5.375 V, 375 mV)') });
+
+/* 3: homework 2 (1 Ω as corrected in class) */
+CH4.problem(3, 'hw2', 'nodal', {
+  ask: () => ({ fields: [{ label: 'v₁ =', ok: x => near(x, 45 / 11, 0.004), w: 4.5 }, { label: 'v₃ =', ok: x => near(x, -21 / 11, 0.004), w: 4.5 }, { label: 'v₄ (V) =', ok: x => near(x, 13 / 3, 0.004), w: 4.5 }],
+    check: v => near(v[0], -5) && near(v[1], -11) ? t('นี่คือคำตอบเมื่อใช้ 11 Ω ตามที่พิมพ์ ข้อนี้ใช้ 1 Ω ตามที่แก้ในห้อง', 'Those are the answers with the printed 11 Ω; this problem uses the 1 Ω corrected in class') : near(v[0], 4.019, 0.002) ? t('4.019 คือค่าที่พิมพ์ในสไลด์ ซึ่งสลับหลัก ค่าที่ถูกคือ 45/11 ≈ 4.091 V', '4.019 is the value printed on the slide, with two digits swapped; the right value is 45/11 ≈ 4.091 V') : '' }),
+  answer: t('\\(v_1 = 45/11 \\approx 4.091\\) V, \\(v_2 = 5\\) V, \\(v_3 = -21/11 \\approx -1.909\\) V, \\(v_4 = 13/3 \\approx 4.333\\) V <div class="warnbox" style="margin-top:8px"><b>ฉบับแจกพิมพ์ \\(v_1 = 4.019\\) V</b> ซึ่งสลับหลัก ค่าที่ถูกคือ 4.091 V (ในห้องแก้แล้ว) ส่วนค่าอื่นตรงกับสไลด์ ถ้าใช้ 11 Ω ตามที่พิมพ์จะได้ \\(v_1 = -5\\) V และ \\(v_3 = -11\\) V</div>',
+    '\\(v_1 = 45/11 \\approx 4.091\\) V, \\(v_2 = 5\\) V, \\(v_3 = -21/11 \\approx -1.909\\) V, \\(v_4 = 13/3 \\approx 4.333\\) V <div class="warnbox" style="margin-top:8px"><b>The handout prints \\(v_1 = 4.019\\) V</b>, with two digits swapped; the right value is 4.091 V (corrected in class). The other values match the slide. With the printed 11 Ω you would get \\(v_1 = -5\\) V and \\(v_3 = -11\\) V.</div>') });
+
+/* 4: exercise sheet Ex.4 */
+CH4.problem(4, 'sx4', 'nodal', { minW: 560,
+  ask: () => ({ fields: [{ label: 'Iₓ (A) =', ok: x => near(x, 4.4), w: 5 }] }),
+  answer: t('\\(I_x = 4.4\\) A ตรงกับเฉลย <div class="warnbox" style="margin-top:8px">เฉลยลายมือเขียน \\(V_2 = 17.8833\\) V ที่ถูกคือ \\(107/6 \\approx 17.8333\\) V (= \\(V_3 + 22\\)) ค่า \\(V_1\\), \\(V_3\\) และ \\(I_x\\) ในเฉลยถูกต้อง</div>',
+    '\\(I_x = 4.4\\) A, as in the solution <div class="warnbox" style="margin-top:8px">The handwritten solution writes \\(V_2 = 17.8833\\) V; it should be \\(107/6 \\approx 17.8333\\) V (= \\(V_3 + 22\\)). Its \\(V_1\\), \\(V_3\\) and \\(I_x\\) are right.</div>') });
+
+/* A: counting quiz with small drawings */
+const QK = [['ex4', t('ข้อ 1 · Ex 4', 'Problem 1 · Ex 4'), 'p10q', 1521, 657], ['ex5', t('ข้อ 2 · Ex 5', 'Problem 2 · Ex 5'), 'p11q', 1443, 630], ['hw2', t('ข้อ 3 · การบ้านข้อ 2', 'Problem 3 · homework 2'), 'p21q', 1183, 677],
+  ['sx1', t('หน้า 4.1 ข้อ 5 · แบบฝึกหัด Ex.1', 'Page 4.1, problem 5 · exercise Ex.1'), 'sx1q', 1300, 617], ['ex3', t('หน้า 4.1 ข้อ 3 · Ex 3', 'Page 4.1, problem 3 · Ex 3'), 'p07q', 1233, 677]];
+const L = [t('โนดที่ไม่ใช่โนดอ้างอิง (N − 1)', 'non-reference nodes (N − 1)'), t('แหล่งจ่ายแรงดัน', 'voltage sources'), t('สมการ KCL', 'KCL equations'), t('สมการเงื่อนไข', 'constraint equations')];
+const rows = QK.map(([k, title, img, iw, ih]) => { const C = CH4C[k]; const ck = new CK.Circuit({ ground: C.ground, nodes: C.nodes, parts: C.parts.map(q => ({ ...q })) }); ck.solve(); const A = ANA.nodal(ck, C.nodal);
+  const nv = A.els.filter(e => e.type === 'V').length; return { title, img, iw, ih, A, ans: [A.T.nets.length - 1 - (C.nodal.series ? C.nodal.series.length : 0), nv, A.groups.length, A.cons.length] }; });
+const el = $('count');
+el.innerHTML = `<div class="quiz">${rows.map((r, i) => `<div class="qrow wide"><div class="q"><b>${r.title}</b><figure class="slide" style="margin:6px 0 0"><img src="slides/ch4/${r.img}.webp" width="${r.iw}" height="${r.ih}" loading="lazy" decoding="async" alt="${MC.t('รูปวงจรของโจทย์', 'The circuit of the problem')}"></figure></div>
+  <div class="ins" style="display:grid;grid-template-columns:auto auto;gap:6px 10px;align-items:center">${L.map((l, j) => `<span>${l}</span><input data-r="${i}" data-j="${j}" inputmode="numeric" aria-label="${l}">`).join('')}</div>
+  <div class="res" id="cr${i}"></div><details><summary>${t('ดูเหตุผล', 'Show why')}</summary><div id="cw${i}"></div></details></div>`).join('')}</div>
+  <div class="toggles"><button type="button" class="btn on" id="cchk">${t('ตรวจทั้งหมด', 'Check all')}</button><button type="button" class="btn" id="cclr">${t('ล้าง', 'Clear')}</button></div>`;
+rows.forEach((r, i) => {
+  const A = r.A, known = [...A.known.keys()].filter(k => k !== A.ref).map(k => A.name[k]), sup = A.groups.filter(g => g.nets.length > 1).map(g => g.nets.map(k => A.name[k]).join(', '));
+  $('cw' + i).innerHTML = t(`N − 1 = ${r.ans[0]}, แหล่งจ่ายแรงดัน ${r.ans[1]} ตัว → KCL = ${r.ans[0]} − ${r.ans[1]} = <b>${r.ans[2]}</b> สมการ` + (known.length ? ` · ต่อกับโนดอ้างอิง (รู้ค่าทันที): \\(${known.join(',\\ ')}\\)` : '') + (sup.length ? ` · ซูเปอร์โนด \\(\\{${sup.join('\\},\\{')}\\}\\) ให้สมการเงื่อนไข <b>${r.ans[3]}</b> สมการ` : ' · ไม่มีซูเปอร์โนด จึงไม่มีสมการเงื่อนไข'),
+    `N − 1 = ${r.ans[0]}, ${r.ans[1]} voltage source${r.ans[1] > 1 ? 's' : ''} → KCL = ${r.ans[0]} − ${r.ans[1]} = <b>${r.ans[2]}</b> equation${r.ans[2] > 1 ? 's' : ''}` + (known.length ? ` · to the reference (known at once): \\(${known.join(',\\ ')}\\)` : '') + (sup.length ? ` · the supernode \\(\\{${sup.join('\\},\\{')}\\}\\) gives <b>${r.ans[3]}</b> constraint${r.ans[3] > 1 ? 's' : ''}` : ' · no supernode, so no constraint'));
+  MC.renderMath($('cw' + i)); });
+const ins = () => [...el.querySelectorAll('input')];
+$('cchk').addEventListener('click', () => rows.forEach((r, i) => { let good = 0;
+  ins().filter(x => +x.dataset.r === i).forEach(x => { const ok = x.value.trim() !== '' && +x.value === r.ans[+x.dataset.j]; x.classList.toggle('ok', ok); x.classList.toggle('no', !ok && x.value.trim() !== ''); if (ok) good++; });
+  $('cr' + i).innerHTML = good === 4 ? `<span class="pill good">✓ ${t('ถูกครบ', 'all correct')}</span>` : `<span class="pill warn">${good}/4</span>`; }));
+$('cclr').addEventListener('click', () => { ins().forEach(x => { x.value = ''; x.classList.remove('ok', 'no'); }); rows.forEach((r, i) => { $('cr' + i).innerHTML = ''; }); });
+});
+</script>
+</body>
+</html>

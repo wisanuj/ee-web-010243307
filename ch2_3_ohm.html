@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="2.3 — Resistors, Ohm's Law and Conductance">2.3 — ตัวต้านทาน กฎของโอห์ม และความนำ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script>
+<script src="assets/lesson.js?v=102"></script><script src="assets/ch2.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ตัวต้านทาน กฎของโอห์ม และความนำ <span class="en">Resistors, Ohm's law and conductance — a straight line through the origin</span></h1>
+<h1 data-l="en">Resistors, Ohm's law and conductance <span class="en">A straight line through the origin</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch2/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13: Ohm's law v = iR; the i–v graph of a linear resistor is a straight line through the origin">
+    <figcaption data-l="th">สไลด์บทที่ 2 หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 2 slides, p. 13 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th"><b>กฎของโอห์ม</b>: แรงดันคร่อมตัวนำแปรตามกระแสที่ไหลผ่านโดยตรง \(v = iR\) กราฟ \(i\)–\(v\) ของตัวต้านทานเชิงเส้นจึงเป็นเส้นตรงผ่านจุดกำเนิด ความชันคือความนำ \(G = 1/R\) หน้านี้มี <b>เครื่องมือ 2 ชิ้น (A, B)</b> และ <b>Ex 4 กับ Ex 7 (ห้าข้อย่อย) แยกทีละข้อ</b> แต่ละข้อมีวงจรของตัวเองที่กระแสจะไหลเมื่อคำนวณเสร็จ</p>
+    <p class="sub" data-l="en"><b>Ohm's law</b>: the voltage across a conductor is directly proportional to the current through it, \(v = iR\), so a linear resistor's \(i\)–\(v\) graph is a straight line through the origin whose slope is the conductance \(G = 1/R\). This page has <b>2 tools (A, B)</b> and <b>Ex 4 and the five parts of Ex 7, one at a time</b>, each with its own circuit whose current flows once you have worked it out.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ v = iR,\quad G = \frac{1}{R}\ (\text{S}),\quad p = vi = i^2R = \frac{v^2}{R} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul><li><b>\(v = iR\)</b>: กราฟ \(i\)–\(v\) เป็นเส้นตรงผ่านจุดกำเนิด ความชันคือ <b>\(G = 1/R\)</b> หน่วยซีเมนส์ (S)</li><li><b>\(p = vi = i^2R = v^2/R \ge 0\)</b>: ตัวต้านทานรับกำลังเสมอ ไม่เคยจ่ายคืน</li><li><b>แถบสี</b>: ตัวเลข ตัวเลข (ตัวเลข) ตัวคูณ ความคลาดเคลื่อน</li><li><b>อย่าปัดเลขกลางทาง</b> เก็บเลขนัยสำคัญไว้จนถึงคำตอบสุดท้าย</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul><li><b>\(v = iR\)</b>: the \(i\)–\(v\) graph is a straight line through the origin with slope <b>\(G = 1/R\)</b>, in siemens (S).</li><li><b>\(p = vi = i^2R = v^2/R \ge 0\)</b>: a resistor always absorbs power and never gives it back.</li><li><b>Colour code</b>: digit, digit, (digit), multiplier, tolerance.</li><li><b>Do not round halfway</b>; keep significant figures until the final answer.</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>แถบสี</a><a href="#tB"><b>B</b>กราฟ i–v</a><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex7"><b>7a–7e</b>Ex 7</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Colour code</a><a href="#tB"><b>B</b>The i–v line</a><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex7"><b>7a–7e</b>Ex 7</a></nav>
+
+<div class="group-head"><h2 data-l="th">ตัวต้านทานและแถบสี (สไลด์หน้า 12)</h2><h2 data-l="en">Resistors and the colour code (slide p. 12)</h2></div>
+<figure class="slide q wide"><img src="slides/ch2/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12: resistors and the 4-band and 5-band colour codes: digits, multiplier, tolerance; 56 × 1000 = 56k ±5%">
+  <figcaption data-l="th">สไลด์หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 12 · tap to enlarge</figcaption></figure>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">เครื่องมือ: ถอดรหัสแถบสีตัวต้านทาน</h2><h2 data-l="en">Tool: read a resistor's colour code</h2>
+    <div class="src" data-l="th">คลิกแถบบนตัวต้านทานเพื่อเลือก แล้วคลิกสีด้านล่างเพื่อเปลี่ยน หรือกด "สุ่มโจทย์" เพื่อฝึกอ่าน</div><div class="src" data-l="en">Click a band to select it, then click a colour below to change it, or press "Random quiz" to practise</div></div></div>
+  <div class="card solve"><div class="eqgrid">
+    <div><div class="toggles" id="ccMode"></div><div id="ccSvg"></div><div id="ccPal"></div></div>
+    <div><div id="ccOut" class="status"></div><div class="toggles"><button type="button" class="btn" id="ccQuiz"></button></div>
+      <div id="ccQ" style="display:none"><div class="matrow"><label for="ccIn">R =</label><input class="mi" id="ccIn" style="width:7em" autocomplete="off"><button type="button" class="btn on" id="ccChk"></button></div><div class="hint" id="ccMsg"></div></div></div>
+  </div></div>
+</section>
+
+<div class="group-head"><h2 data-l="th">กฎของโอห์ม กำลัง และความนำ (สไลด์หน้า 13, 14, 16)</h2><h2 data-l="en">Ohm's law, power and conductance (slides pp. 13, 14, 16)</h2></div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch2/p14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14: power absorption with the passive sign convention, p = vi = i^2 R = v^2 / R"><figcaption data-l="th">สไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 14 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch2/p16.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 16: conductance G = i/v = 1/R in siemens; p = vi = v^2 G = i^2 / G"><figcaption data-l="th">สไลด์หน้า 16</figcaption><figcaption data-l="en">Slide p. 16</figcaption></figure>
+</div>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">กราฟ \(i\)–\(v\): เส้นตรงผ่านจุดกำเนิด</h2><h2 data-l="en">The \(i\)–\(v\) graph: a straight line through the origin</h2>
+    <div class="src" data-l="th">เลื่อนแรงดันจากลบไปบวก จุดทำงานสีชมพูเลื่อนบนเส้นเดียว เปลี่ยน R แล้วความชันเปลี่ยน</div><div class="src" data-l="en">Slide the voltage from negative to positive: the pink operating point moves along one line; change R and the slope changes</div></div></div>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cvB"></canvas><div class="ctl" id="ctlB"></div></div>
+    <div class="card solve"><h3 data-l="th">อ่านค่า</h3><h3 data-l="en">Readings</h3><div class="metrics" id="roB"></div>
+      <p class="lead" data-l="th" style="margin-top:8px">\(R\) น้อย = เส้นชัน = นำไฟฟ้าดี (\(G\) มาก) · กำลังเป็นบวกเสมอไม่ว่าแรงดันจะเป็นบวกหรือลบ เพราะ \(p = v^2/R\) <b>ตัวต้านทานดูดกลืนกำลังอย่างเดียว</b></p>
+      <p class="lead" data-l="en" style="margin-top:8px">Small \(R\) = steep line = good conductor (large \(G\)) · the power is always positive, whether the voltage is positive or negative, because \(p = v^2/R\). <b>A resistor only absorbs power.</b></p></div>
+  </div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 4: ตัวต้านทานกำลัง 560 Ω มีกระแส 42.4 mA</h2><h2 data-l="en">Ex 4: a 560 Ω power resistor carrying 42.4 mA</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 2 หน้า 15 · Hayt Example 2.3</div><div class="src" data-l="en">Chapter 2 slides, p. 15 · Hayt Example 2.3</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch2/p15q.webp" width="1322" height="559" loading="lazy" decoding="async" alt="Slide 15, Ex 4: the 560 ohm resistor carries 42.4 mA. Calculate the voltage across the resistor and the power it is dissipating">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 15 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim">
+    <div class="card sim"><canvas id="cv1"></canvas>
+      <div class="simnote"><span data-l="th">ปัดแรงดันเหลือ (หลัก):</span><span data-l="en">round the voltage to (digits):</span> <input type="range" id="sf" min="2" max="6" step="1" value="3" style="width:140px;vertical-align:middle"> <b id="sfVal"></b></div><div class="readout metrics" id="ro1"></div></div>
+    <div class="card solve"><div id="ask1"></div><div id="st1"></div></div>
+  </div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 15)</span><span data-l="en">See the teacher's in-class working (slide p. 15)</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch2/L17.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 15: V = IR = 23.7 V, P = VI = 1.005 W"><figcaption data-l="th">สไลด์หน้า 15 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 15, in class</figcaption></figure></div></details>
+</section>
+
+<div class="group-head" id="ex7"><h2 data-l="th">Ex 7: กระแสผ่านตัวต้านทาน 4.7 kΩ เมื่อแรงดันเป็นแบบต่าง ๆ (สไลด์หน้า 20)</h2><h2 data-l="en">Ex 7: current through a 4.7 kΩ resistor for different voltages (slide p. 20)</h2></div>
+<figure class="slide q"><img src="slides/ch2/p20q.webp" width="1204" height="631" loading="lazy" decoding="async" alt="Slide 20, Ex 7: magnitude of the current through a 4.7 kΩ resistor if the voltage across it is (a) 1 mV (b) 10 V (c) 4e^-t V (d) 100 cos(5t) V (e) −7 V">
+  <figcaption data-l="th">โจทย์จากสไลด์หน้า 20 · Hayt ข้อ 2.38 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 20 · Hayt problem 2.38 · tap to enlarge</figcaption></figure>
+<p class="lead" data-l="th">ห้าข้อย่อยแยกกัน แต่ละข้อมีวงจรของตัวเอง <b>ตัวต้านทานไม่มีหน่วยความจำ</b> กระแสจึงเปลี่ยนตามแรงดันทันทีในรูปเดียวกัน (สังเกตข้อ c และ d)</p>
+<p class="lead" data-l="en">Five separate parts, each with its own circuit. <b>A resistor has no memory</b>, so the current follows the voltage at once, in the same shape (watch parts c and d).</p>
+<div id="items7"></div>
+<details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง (สไลด์หน้า 20)</span><span data-l="en">See the teacher's in-class working (slide p. 20)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch2/L22.webp" width="1600" height="900" loading="lazy" decoding="async" alt="In-class slide 20: I = V/R for each part"><figcaption data-l="th">สไลด์หน้า 20 ฉบับในห้อง</figcaption><figcaption data-l="en">Slide p. 20, in class</figcaption></figure></div></details>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — เส้นตรงผ่านจุดกำเนิด</h3>
+    <ol><li>เครื่องมือ B: เลื่อนแรงดันจากลบไปบวก <b>จุดทำงานเลื่อนบนเส้นตรงเส้นเดียว</b> เมื่อแรงดันติดลบ จุดในวงจรวิ่งกลับทิศ</li>
+    <li>กำลังเป็นบวกเสมอ เพราะ \(p = v^2/R\)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — แรงดันแปรตามเวลา</h3>
+    <ol><li>Ex 7(c): กระแสลดลงแบบเอกซ์โพเนนเชียลพร้อมแรงดัน จุดค่อย ๆ ช้าลงจนแทบหยุด</li>
+    <li>Ex 7(d): จุดแกว่งไปกลับทุก \(2\pi/5 \approx 1.26\) s จุดทำงานวิ่งขึ้นลงบนเส้นเดิม ไม่ล่าช้า</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — ค่าจริงไม่ตรงค่าที่เขียน</h3>
+    <ol><li>เครื่องมือ A: น้ำตาล-ดำ-แดง-ทอง = 1 kΩ ±5% <b>ตัวจริงอาจเป็นค่าใดก็ได้ระหว่าง 950 ถึง 1050 Ω</b> (Hayt ข้อ 2.39)</li>
+    <li>คำถาม: ตัวต้านทาน 560 Ω ใน Ex 4 รับได้ 50 W ถ้ากระแสเพิ่มเป็น 0.4 A จะยังปลอดภัยหรือไม่</li></ol>
+    <div class="book">ที่มา: สไลด์บทที่ 2 หน้า 12–16, 20 (ภาพอยู่ในหน้านี้แล้ว) · Hayt §2.4, Example 2.3, ข้อ 2.38–2.39</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — a line through the origin</h3>
+    <ol><li>Tool B: slide the voltage from negative to positive: <b>the operating point moves along a single straight line</b>; with a negative voltage the dots run the other way.</li>
+    <li>The power is always positive, because \(p = v^2/R\).</li></ol></div>
+  <div class="card"><h3>Try this 2 — time-varying voltages</h3>
+    <ol><li>Ex 7(c): the current decays exponentially with the voltage, and the dots slow down almost to a stop.</li>
+    <li>Ex 7(d): the dots swing back and forth every \(2\pi/5 \approx 1.26\) s; the operating point runs up and down the same line, with no lag.</li></ol></div>
+  <div class="card"><h3>Try this 3 — the real value is not the printed value</h3>
+    <ol><li>Tool A: brown-black-red-gold = 1 kΩ ±5%; <b>the actual part can be anything from 950 to 1050 Ω</b> (Hayt problem 2.39).</li>
+    <li>Question: the 560 Ω resistor in Ex 4 is rated 50 W. If the current rose to 0.4 A, would it still be safe?</li></ol>
+    <div class="book">Source: chapter 2 slides, pp. 12–16, 20 (the pictures are on this page) · Hayt §2.4, Example 2.3, problems 2.38–2.39</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const tx = (s, d) => MC.tex(s, d), t = MC.t, ui = MC.ui, fd = (x, n = 3) => ALG.fmtDec(x, n);
+const al = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* ---------- A: colour code ---------- */
+const COLORS = [['black', 'ดำ', '#111111'], ['brown', 'น้ำตาล', '#7a4a1f'], ['red', 'แดง', '#e03131'], ['orange', 'ส้ม', '#f08c00'], ['yellow', 'เหลือง', '#fcc419'], ['green', 'เขียว', '#2f9e44'], ['blue', 'น้ำเงิน', '#1c7ed6'], ['violet', 'ม่วง', '#7048e8'], ['grey', 'เทา', '#868e96'], ['white', 'ขาว', '#f1f3f5']];
+const GOLD = ['gold', 'ทอง', '#c9a227'], SILVER = ['silver', 'เงิน', '#c0c0c0'];
+const MULT = [[1, COLORS[0]], [10, COLORS[1]], [100, COLORS[2]], [1e3, COLORS[3]], [1e4, COLORS[4]], [1e5, COLORS[5]], [1e6, COLORS[6]], [0.1, GOLD], [0.01, SILVER]], TOL = [[1, COLORS[1]], [2, COLORS[2]], [5, GOLD], [10, SILVER]];
+const CC = { n: 4, d: [5, 6, 0], m: 3, tol: 2, sel: 0, quiz: null };
+const ccValue = () => { const nd = CC.n === 4 ? 2 : 3; let v = 0; for (let k = 0; k < nd; k++) v = v * 10 + CC.d[k]; return v * MULT[CC.m][0]; };
+const bands = () => { const nd = CC.n === 4 ? 2 : 3, b = []; for (let k = 0; k < nd; k++) b.push({ col: COLORS[CC.d[k]], role: 'd', k }); b.push({ col: MULT[CC.m][1], role: 'm' }); b.push({ col: TOL[CC.tol][1], role: 't' }); return b; };
+function renderCC() {
+  const bs = bands(), ink = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+  let s = `<svg viewBox="0 0 360 110" style="width:100%;max-width:420px;display:block" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="55" x2="360" y2="55" stroke="#9aa3b5" stroke-width="5"/>
+    <path d="M70,25 Q70,15 85,15 L115,15 Q125,15 130,22 L230,22 Q235,15 245,15 L275,15 Q290,15 290,25 L290,85 Q290,95 275,95 L245,95 Q235,95 230,88 L130,88 Q125,95 115,95 L85,95 Q70,95 70,85 Z" fill="#e9d3a4" stroke="${ink}" stroke-width="1.5"/>`;
+  const xs = CC.n === 4 ? [95, 125, 155, 255] : [92, 120, 148, 176, 258];
+  bs.forEach((b, j) => { const tall = j === 0 || j === bs.length - 1; s += `<rect data-band="${j}" x="${xs[j] - 8}" y="${tall ? 15 : 22}" width="16" height="${tall ? 80 : 66}" fill="${b.col[2]}" stroke="${j === CC.sel ? '#ff2d7a' : 'rgba(0,0,0,.35)'}" stroke-width="${j === CC.sel ? 3 : 1}" style="cursor:pointer"/>`; });
+  document.getElementById('ccSvg').innerHTML = s + '</svg>';
+  document.querySelectorAll('[data-band]').forEach(r => r.addEventListener('click', () => { CC.sel = +r.dataset.band; renderCC(); }));
+  const b = bs[CC.sel]; let opts = [];
+  if (b.role === 'd') opts = COLORS.map((c, k) => ({ c, k, lab: String(k) })).filter(o => !(b.k === 0 && o.k === 0));
+  if (b.role === 'm') opts = MULT.map(([m, c], k) => ({ c, k, lab: '×' + (m >= 1 ? (CK.eng(m, '').trim() || '1') : m) }));
+  if (b.role === 't') opts = TOL.map(([p, c], k) => ({ c, k, lab: '±' + p + '%' }));
+  const roleName = b.role === 'd' ? t(`แถบที่ ${CC.sel + 1}: ตัวเลข`, `band ${CC.sel + 1}: digit`) : b.role === 'm' ? t('แถบตัวคูณ', 'multiplier band') : t('แถบความคลาดเคลื่อน', 'tolerance band');
+  document.getElementById('ccPal').innerHTML = `<div class="hint">${roleName}</div><div class="toggles">` + opts.map(o => `<button type="button" class="btn" data-pick="${o.k}" style="background:${o.c[2]};color:${['black', 'brown', 'red', 'blue', 'violet', 'green'].includes(o.c[0]) ? '#fff' : '#111'};border-color:rgba(0,0,0,.3)">${t(o.c[1], o.c[0])} ${o.lab}</button>`).join('') + '</div>';
+  document.querySelectorAll('[data-pick]').forEach(btn => btn.addEventListener('click', () => { const k = +btn.dataset.pick; if (b.role === 'd') CC.d[b.k] = k; if (b.role === 'm') CC.m = k; if (b.role === 't') CC.tol = k; renderCC(); }));
+  document.getElementById('ccMode').innerHTML = [4, 5].map(n => `<button type="button" class="btn ${CC.n === n ? 'on' : ''}" data-n="${n}">${n} ${t('แถบ', 'bands')}</button>`).join('');
+  document.querySelectorAll('[data-n]').forEach(btn => btn.addEventListener('click', () => { CC.n = +btn.dataset.n; CC.sel = 0; renderCC(); }));
+  const v = ccValue(), tol = TOL[CC.tol][0], nd = CC.n === 4 ? 2 : 3;
+  document.getElementById('ccOut').innerHTML = CC.quiz ? t('ตัวต้านทานนี้มีค่าเท่าไร (ใส่เป็นโอห์ม หรือใช้ k, M เช่น 4.7k)', 'What is this resistor? (in ohms, or with k, M such as 4.7k)')
+    : `<b style="font-size:20px">${CK.eng(v, 'Ω')}</b> ±${tol}%<br>${CC.d.slice(0, nd).join('')} × ${MULT[CC.m][0]} = ${v.toLocaleString('en-US')} Ω<br>${t('ค่าจริงอยู่ระหว่าง', 'actual value between')} ${CK.eng(v * (1 - tol / 100), 'Ω')} – ${CK.eng(v * (1 + tol / 100), 'Ω')}`; }
+document.getElementById('ccQuiz').textContent = t('สุ่มโจทย์', 'Random quiz'); document.getElementById('ccChk').textContent = t('ตรวจ', 'Check');
+document.getElementById('ccQuiz').addEventListener('click', () => { const E12 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82], base = E12[Math.floor(Math.random() * 12)];
+  CC.n = 4; CC.d = [Math.floor(base / 10), base % 10, 0]; CC.m = Math.floor(Math.random() * 6); CC.tol = 2; CC.quiz = ccValue(); CC.sel = 0; document.getElementById('ccQ').style.display = ''; document.getElementById('ccIn').value = ''; document.getElementById('ccMsg').textContent = ''; renderCC(); });
+const parseOhm = s => { s = s.trim().replace(/Ω|ohm/gi, '').replace(',', '.'); const m = s.match(/^([\d.]+)\s*([kKmMgG]?)([\d]*)$/); if (!m) return NaN; if (m[3] && m[1].includes('.')) return NaN;
+  return parseFloat(m[1] + (m[3] ? '.' + m[3] : '')) * ({ '': 1, k: 1e3, K: 1e3, M: 1e6, m: 1e6, g: 1e9, G: 1e9 }[m[2]]); };
+document.getElementById('ccChk').addEventListener('click', () => { const v = parseOhm(document.getElementById('ccIn').value), ok = Math.abs(v - CC.quiz) / CC.quiz < 1e-6;
+  document.getElementById('ccMsg').innerHTML = ok ? `<span class="pill good">✓</span> ${CK.eng(CC.quiz, 'Ω')} ±5%` : `<span class="pill bad">✗</span> ${t('สองแถบแรกคือตัวเลข แถบที่สามคือจำนวนศูนย์ที่เติม', 'The first two bands are digits; the third is how many zeros to add')}`; if (ok) { CC.quiz = null; renderCC(); } });
+document.getElementById('ccIn').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('ccChk').click(); });
+renderCC();
+
+/* ---------- B: the i–v line ---------- */
+const SB = { V: 5, R: 1000 }, rFrom = v => +(Math.pow(10, 1 + v / 100 * 3)).toPrecision(2);
+const ohmB = new CH2.Ohm(document.getElementById('cvB'), { v: () => SB.V, R: SB.R, vmax: 12 });
+ui.slider(document.getElementById('ctlB'), { id: 'sVB', label: t('แรงดัน v', 'voltage v'), min: -12, max: 12, step: 0.5, value: 5, fmt: v => `${v} V`, oninput: v => { SB.V = v; } });
+ui.slider(document.getElementById('ctlB'), { id: 'sRB', label: 'R', min: 0, max: 100, step: 1, value: 67, fmt: v => CK.eng(rFrom(v), 'Ω'), oninput: v => { ohmB.o.R = rFrom(v); ohmB.trail = []; } });
+ohmB.o.R = rFrom(67);
+ohmB.onFrame = (v, i) => { const R = ohmB.o.R; document.getElementById('roB').innerHTML = ui.kv([['v', CK.eng(v, 'V')], ['i = v/R', CK.eng(i, 'A')], ['G = 1/R', CK.eng(1 / R, 'S') + ' (℧)'], ['p = vi', CK.eng(v * i, 'W')], ['p = i²R', CK.eng(i * i * R, 'W')], ['p = v²/R', CK.eng(v * v / R, 'W')]]); };
+
+/* ---------- 1: Ex 4 ---------- */
+const ohm1 = new CH2.Ohm(document.getElementById('cv1'), { i0: 0.0424, R: 560, vmax: 30, known: true, vHide: true });
+const sig = (x, n) => +x.toPrecision(n);
+const renderRound = () => { const n = +document.getElementById('sf').value, i = 0.0424, R = 560, v = i * R, vr = sig(v, n); document.getElementById('sfVal').textContent = n;
+  document.getElementById('ro1').innerHTML = ui.kv([[t('V ที่ปัดแล้ว', 'rounded V'), `${vr} V`], ['P = VI', `${fd(vr * i, 4)} W`], ['P = V²/R', `${fd(vr * vr / R, 4)} W`], ['P = I²R', `${fd(i * i * R, 4)} W ${t('(ไม่ใช้ V)', '(no V)')}`]]); };
+document.getElementById('sf').addEventListener('input', renderRound); renderRound();
+LS.ask(document.getElementById('ask1'), { fields: [{ label: 'V (V) =', ok: x => Math.abs(x - 23.744) < 0.06 }, { label: 'P (W) =', ok: x => Math.abs(x - 1.0067) < 0.006 }] });
+LS.stepper(document.getElementById('st1'), {
+  steps: [{ why: t('<b>กฎของโอห์ม</b> \\(V = IR\\) (กระแสไหลเข้าขั้ว + ของตัวต้านทาน)', '<b>Ohm\'s law</b> \\(V = IR\\) (the current enters the resistor\'s + terminal)'), tex: al(['V &= IR = (42.4\\times10^{-3})(560)', '&= 23.744\\ \\text{V} \\approx \\boxed{23.7\\ \\text{V}}']) },
+    { why: t('<b>กำลังวิธีที่ 1</b>: \\(P = VI\\)', '<b>Power, method 1</b>: \\(P = VI\\)'), tex: `P = VI = (23.744)(42.4\\times10^{-3}) = 1.0067\\ \\text{W}` },
+    { why: t('<b>วิธีที่ 2</b>: \\(P = I^2R\\) ไม่ต้องใช้แรงดันเลย จึงแม่นที่สุด', '<b>Method 2</b>: \\(P = I^2R\\) needs no voltage at all, so it is the most accurate'), tex: `P = I^2R = (42.4\\times10^{-3})^2(560) = 1.0067\\ \\text{W}` },
+    { why: t('<b>วิธีที่ 3</b>: \\(P = V^2/R\\)', '<b>Method 3</b>: \\(P = V^2/R\\)'), tex: `P = \\frac{V^2}{R} = \\frac{(23.744)^2}{560} = 1.0067\\ \\text{W}` },
+    { why: t('<b>ข้อควรระวัง: ปัดเลขกลางทาง</b> ถ้าใช้ \\(V \\approx 23.7\\) V ที่ปัดแล้ว สองสูตรแรกให้ค่าต่างกันเล็กน้อย (ในห้องได้ 1.005 W) ลองเลื่อนจำนวนหลักใต้วงจร', '<b>Watch out: rounding halfway</b>. With the rounded \\(V \\approx 23.7\\) V the first two formulas differ slightly (1.005 W in class). Try the digits slider under the circuit.'),
+      tex: al(['VI &= (23.7)(0.0424) = 1.005\\ \\text{W}', 'V^2/R &= (23.7)^2/560 = 1.003\\ \\text{W}', 'I^2R &= 1.007\\ \\text{W}']) }],
+  answer: t('<b>V ≈ 23.7 V, P ≈ 1.007 W</b> (เฉลยในห้องได้ 1.005 W จากแรงดันที่ปัดแล้ว) · ต่ำกว่าพิกัด 50 W ของตัวต้านทานตัวนี้มาก', '<b>V ≈ 23.7 V, P ≈ 1.007 W</b> (1.005 W in class, from the rounded voltage) · far below this resistor\'s 50 W rating'),
+  onStep: k => { ohm1.o.vHide = k < 1; } });
+
+/* ---------- Ex 7: five parts ---------- */
+const R7 = 4700;
+const P7 = [
+  { k: 'a', v: () => 1e-3, vmax: 0.0015, vt: '1\\ \\text{mV}', ask: ['|i| (µA) =', x => Math.abs(x - 0.2128) < 0.002],
+    steps: [{ why: t('<b>กฎของโอห์ม</b> \\(i = v/R\\)', '<b>Ohm\'s law</b> \\(i = v/R\\)'), tex: al(['i &= \\frac{v}{R} = \\frac{1\\times10^{-3}}{4.7\\times10^{3}}', '&= 2.128\\times10^{-7}\\ \\text{A} = \\boxed{0.213\\ \\mu\\text{A}}']) },
+      { why: t('<b>ขนาดเล็กมาก</b>: จุดในวงจรแทบไม่ขยับ (ภาพทำให้วิ่งช้า ๆ ให้เห็น) เครื่องมือวัดทั่วไปอ่านไม่ได้ด้วยซ้ำ', '<b>Tiny</b>: the dots hardly move (the picture lets them crawl so you can see them); an ordinary meter could not even read it') }],
+    ans: t('<b>0.213 µA</b> (ในห้องเขียน 0.21 µA)', '<b>0.213 µA</b> (0.21 µA in class)') },
+  { k: 'b', v: () => 10, vmax: 12, vt: '10\\ \\text{V}', ask: ['|i| (mA) =', x => Math.abs(x - 2.128) < 0.012],
+    steps: [{ why: t('<b>กฎของโอห์ม</b> \\(i = v/R\\)', '<b>Ohm\'s law</b> \\(i = v/R\\)'), tex: `i = \\frac{10}{4700} = 2.128\\times10^{-3}\\ \\text{A} = \\boxed{2.13\\ \\text{mA}}` }],
+    ans: t('<b>2.13 mA</b> (ในห้องเขียน 2.1 mA)', '<b>2.13 mA</b> (2.1 mA in class)') },
+  { k: 'c', v: tt => 4 * Math.exp(-tt), vmax: 5, T: 6, vt: '4e^{-t}\\ \\text{V}', ask: [t('i(t) = □ e⁻ᵗ µA, □ =', 'i(t) = □ e⁻ᵗ µA, □ ='), x => Math.abs(x - 851.06) < 1.5],
+    steps: [{ why: t('<b>กฎของโอห์มใช้ได้ทุกขณะ</b> แทนแรงดันทั้งฟังก์ชัน', '<b>Ohm\'s law holds at every instant</b>: put in the whole function'), tex: al(['i(t) &= \\frac{4e^{-t}}{4700} = 8.51\\times10^{-4}e^{-t}\\ \\text{A}', '&= \\boxed{851\\,e^{-t}\\ \\mu\\text{A}}']) },
+      { why: t('<b>กระแสลดลงพร้อมแรงดันในรูปเดียวกัน</b> เพราะตัวต้านทานไม่มีหน่วยความจำ', '<b>The current decays with the voltage, in the same shape</b>, because a resistor has no memory'), tex: al(['i(0) &= 851\\ \\mu\\text{A}', 'i(1) &= 851e^{-1} = 313\\ \\mu\\text{A}', 'i(3) &= 851e^{-3} = 42\\ \\mu\\text{A}']) }],
+    ans: t('<b>i(t) = 851 e⁻ᵗ µA</b> (ในห้องเขียน 850 e⁻ᵗ µA)', '<b>i(t) = 851 e⁻ᵗ µA</b> (850 e⁻ᵗ µA in class)') },
+  { k: 'd', v: tt => 100 * Math.cos(5 * tt), vmax: 110, vt: '100\\cos(5t)\\ \\text{V}', ask: [t('ค่ายอด (mA) =', 'peak (mA) ='), x => Math.abs(x - 21.28) < 0.12],
+    steps: [{ why: t('<b>กฎของโอห์มทุกขณะ</b>', '<b>Ohm\'s law at every instant</b>'), tex: `i(t) = \\frac{100\\cos 5t}{4700} = \\boxed{21.3\\cos(5t)\\ \\text{mA}}` },
+      { why: t('<b>ขนาดของกระแส</b>: แกว่งระหว่าง ±21.3 mA ด้วยคาบ \\(2\\pi/5\\) จุดในวงจรวิ่งไปกลับ', '<b>Its size</b>: it swings between ±21.3 mA with period \\(2\\pi/5\\); the dots run back and forth'), tex: al(['|i|_{\\max} &= 21.3\\ \\text{mA}', 'T &= \\frac{2\\pi}{5} = 1.257\\ \\text{s}']) }],
+    ans: t('<b>i(t) = 21.3 cos 5t mA</b> ขนาดสูงสุด 21.3 mA (ในห้องเขียน 21 cos 5t mA)', '<b>i(t) = 21.3 cos 5t mA</b>, largest size 21.3 mA (21 cos 5t mA in class)') },
+  { k: 'e', v: () => -7, vmax: 12, vt: '-7\\ \\text{V}', ask: ['|i| (mA) =', x => Math.abs(x - 1.489) < 0.011],
+    steps: [{ why: t('<b>กฎของโอห์ม</b>', '<b>Ohm\'s law</b>'), tex: `i = \\frac{-7}{4700} = -1.489\\ \\text{mA}` },
+      { why: t('<b>โจทย์ถาม "ขนาด"</b> ของกระแส เครื่องหมายลบบอกแค่ว่ากระแสไหลสวนทิศอ้างอิง (จุดในวงจรวิ่งกลับทิศ)', '<b>The problem asks for the "magnitude"</b>; the minus sign only says the current flows against the reference (the dots run the other way)'), tex: `|i| = \\boxed{1.49\\ \\text{mA}}` }],
+    ans: t('<b>1.49 mA</b> · ในห้องเขียน −1.5 mA ซึ่งบอกทิศด้วย แต่โจทย์ถามขนาด', '<b>1.49 mA</b> · in class it was written −1.5 mA, which also gives the direction, but the question asks for the size') }];
+const box7 = document.getElementById('items7');
+P7.forEach(p => {
+  const s = document.createElement('section'); s.className = 'prob sub-item'; s.id = 'ex7' + p.k;
+  s.innerHTML = `<div class="prob-head"><span class="prob-no">7${p.k}</span><div><h2>${t('แรงดันคร่อมตัวต้านทาน', 'voltage across the resistor')} ${tx(`v = ${p.vt}`)}</h2></div></div>
+    <div class="duo wide-sim"><div class="card sim"><canvas></canvas></div><div class="card solve"><div class="askbox"></div><div class="st"></div></div></div>`;
+  box7.appendChild(s);
+  const sim = new CH2.Ohm(s.querySelector('canvas'), { v: p.v, R: R7, vmax: p.vmax, T: p.T, known: false });
+  LS.ask(s.querySelector('.askbox'), { fields: [{ label: p.ask[0], ok: p.ask[1], w: 6.5 }] });
+  LS.stepper(s.querySelector('.st'), { steps: p.steps, answer: p.ans, onStep: (k, n) => sim.setKnown(k === n) });
+});
+});
+</script>
+</body>
+</html>

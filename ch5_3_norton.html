@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="5.3 — Norton's Theorem">5.3 — ทฤษฎีบทของนอร์ตัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script><script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script><script src="assets/alg.js?v=102"></script><script src="assets/draw.js?v=102"></script><script src="assets/lesson.js?v=102"></script>
+<script src="assets/ana.js?v=102"></script><script src="assets/ch3.js?v=102"></script><script src="assets/ch5.js?v=102"></script><script src="assets/ch5_circuits.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">ทฤษฎีบทของนอร์ตัน และการแปลงแหล่งจ่าย <span class="en">Norton's theorem — the same network as a current source in parallel with one resistor</span></h1>
+<h1 data-l="en">Norton's theorem and source transformation <span class="en">The same network as a current source in parallel with one resistor</span></h1>
+
+<div class="intro-duo">
+  <figure class="slide"><img src="slides/ch5/p12.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 12: Norton's analysis. A complex network with load RL is replaced by a current source IN in parallel with RN, feeding the same RL; Norton's theorem bears a close resemblance to Thévenin's theorem">
+    <figcaption data-l="th">สไลด์บทที่ 5 หน้า 12 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Chapter 5 slides, p. 12 · tap to enlarge</figcaption></figure>
+  <div>
+    <p class="sub" data-l="th">สไลด์หน้า 12: เครือข่ายเดียวกันแทนได้อีกแบบด้วย<b>แหล่งจ่ายกระแส \(I_N\) ขนานกับ \(R_N\)</b> ขั้นตอนเหมือนเทวินิน ต่างกันที่ขั้นที่ 2: <b>ลัดวงจรขั้ว AB แล้วหากระแสที่ไหลจาก A ไป B</b> (ในภาพจำลองเป็นแอมมิเตอร์ จุดวิ่งผ่านลวดลัด และตัวต้านทานที่ถูกลวดลัดคร่อมจะไม่มีกระแส) ส่วน \(R_N\) หาแบบเดียวกับ \(R_{th}\) และ<b>วงจรสมมูลทั้งสองแปลงไปมาได้ด้วยการแปลงแหล่งจ่าย</b> \(V_{th} = I_N R_N\) (หน้า 15) หน้านี้มี <b>6 โจทย์ เรียงทีละข้อ</b> (Ex 4, Ex 5, แบบฝึกหัด 5.1 Ex.3 เรื่องการแปลงแหล่งจ่าย และแบบฝึกหัด 5.2 Ex.2, Ex.4, Ex.6) พร้อมภาพจำลองการแปลงแหล่งจ่ายและตารางเทวินิน ⇄ นอร์ตันของทุกข้อ</p>
+    <p class="sub" data-l="en">Slide p. 12: the same network can also be replaced by <b>a current source \(I_N\) in parallel with \(R_N\)</b>. The steps match Thévenin's except step 2: <b>short terminals AB and find the current flowing from A to B</b> (in the simulations an ammeter: the dots run through the short, and a resistor bridged by the short carries nothing). \(R_N\) is found exactly like \(R_{th}\), and <b>the two equivalents turn into each other by a source transformation</b>, \(V_{th} = I_N R_N\) (p. 15). This page has <b>6 problems, one after another</b> (Ex 4, Ex 5, exercise 5.1 Ex.3 on source transformation, and exercises 5.2 Ex.2, Ex.4, Ex.6), with a source-transformation simulation and a Thévenin ⇄ Norton table of every problem.</p>
+    <div class="equation-box" style="margin:10px 0 0">$$ \begin{gathered} I_N = I_{sc} = I_{AB}\big|_{A\text{–}B\ \text{shorted}} \qquad R_N = R_{th} \\ V_{oc} = R_{th}\, i_{sc} \qquad v_s = i_s R_s \\ I_L = \frac{R_N}{R_N + R_L}\, I_N \end{gathered} $$</div>
+  </div>
+</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>\(I_N = I_{sc}\)</b>: ถอดโหลด แล้วลัดวงจรขั้ว A–B หากระแสที่ไหลจาก A ไป B ผ่านลวดลัด</li>
+  <li><b>\(R_N = R_{th}\)</b> (ฆ่าแหล่งจ่ายแล้วมองเข้าที่ A–B แบบเดียวกับเทวินิน) และ <b>\(V_{th} = I_N R_N\)</b> หาสองค่าก็ได้ค่าที่สาม</li>
+  <li><b>แหล่งจ่ายแรงดัน \(v_s\) อนุกรม \(R_s\)</b> แปลงเป็น <b>แหล่งจ่ายกระแส \(i_s = v_s/R_s\) ขนาน \(R_s\)</b> ได้ (และกลับกัน) โดยใช้ \(R_s\) ตัวเดิม ลูกศรของ \(i_s\) ชี้ไปทางขั้ว + ของ \(v_s\)</li>
+  <li>สองแบบนี้<b>สมมูลกันเฉพาะที่ขั้ว</b>: โหลดได้กระแสและแรงดันเท่ากันทุกค่า แต่กำลังที่ร้อนอยู่ใน \(R_s\) ไม่เท่ากัน</li>
+  <li>ต่อโหลดกลับเข้าวงจรสมมูลนอร์ตันแล้วใช้<b>ตัวแบ่งกระแส</b>: \(I_L = \frac{R_N}{R_N + R_L} I_N\)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>\(I_N = I_{sc}\)</b>: remove the load, short terminals A–B and find the current from A to B through the short.</li>
+  <li><b>\(R_N = R_{th}\)</b> (kill the sources and look into A–B, as for Thévenin) and <b>\(V_{th} = I_N R_N\)</b>: any two give the third.</li>
+  <li><b>A voltage source \(v_s\) in series with \(R_s\)</b> turns into <b>a current source \(i_s = v_s/R_s\) in parallel with \(R_s\)</b> (and back), with the same \(R_s\); the arrow of \(i_s\) points toward the + side of \(v_s\).</li>
+  <li>The two are <b>equivalent only at the terminals</b>: the load gets the same current and voltage for every value, but the heat in \(R_s\) differs.</li>
+  <li>Reconnect the load to the Norton equivalent and use the <b>current divider</b>: \(I_L = \frac{R_N}{R_N + R_L} I_N\).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex2"><b>2</b>Ex 5</a><a href="#tA"><b>A</b>การแปลงแหล่งจ่าย</a><a href="#ex3"><b>3</b>แบบฝึกหัด 5.1 Ex.3</a><a href="#ex4"><b>4</b>แบบฝึกหัด Ex.2</a><a href="#ex5"><b>5</b>แบบฝึกหัด Ex.4</a><a href="#ex6"><b>6</b>แบบฝึกหัด Ex.6</a><a href="#tB"><b>B</b>ตารางทุกข้อ</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#ex1"><b>1</b>Ex 4</a><a href="#ex2"><b>2</b>Ex 5</a><a href="#tA"><b>A</b>Source transformation</a><a href="#ex3"><b>3</b>Exercise 5.1 Ex.3</a><a href="#ex4"><b>4</b>Exercise Ex.2</a><a href="#ex5"><b>5</b>Exercise Ex.4</a><a href="#ex6"><b>6</b>Exercise Ex.6</a><a href="#tB"><b>B</b>Every problem</a></nav>
+
+<div class="group-head"><h2 data-l="th">ขั้นตอนของนอร์ตัน (สไลด์หน้า 13–15)</h2><h2 data-l="en">The Norton steps (slides pp. 13–15)</h2></div>
+<p class="lead" data-l="th">ขั้นตอนหกข้อเหมือนเทวินิน ต่างที่ขั้นที่ 2 (ลัดวงจรขั้วแล้วหากระแส \(I_N\)) ขั้นที่ 5 (วาด \(I_N\) ขนาน \(R_N\)) และขั้นที่ 6 ที่ใช้ตัวแบ่งกระแส \(I_{load} = I_N R_N/(R_N + R_{load})\) หน้า 15 สรุปว่าวงจรสมมูลนอร์ตันได้จากการแปลงแหล่งจ่ายของวงจรสมมูลเทวินิน จึงมีความสัมพันธ์ \(V_{oc} = R_{th} i_{sc}\)</p>
+<p class="lead" data-l="en">The six steps match Thévenin's except step 2 (short the terminals and find the current \(I_N\)), step 5 (draw \(I_N\) in parallel with \(R_N\)) and step 6, which uses the current divider \(I_{load} = I_N R_N/(R_N + R_{load})\). Page 15 sums up: the Norton equivalent is a source transformation of the Thévenin equivalent, hence \(V_{oc} = R_{th} i_{sc}\).</p>
+<div class="warnbox" data-l="th">สไลด์หน้า 13 พิมพ์หัวข้อว่า "Step to use Thevenin's Analysis" แต่เนื้อหาเป็นขั้นตอนของนอร์ตัน (หา \(I_N\) จากการลัดวงจร)</div>
+<div class="warnbox" data-l="en">Slide p. 13 is headed "Step to use Thevenin's Analysis", but its content is the Norton steps (\(I_N\) from a short circuit).</div>
+<div class="slides">
+  <figure class="slide"><img src="slides/ch5/p13.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 13 (headed 'Step to use Thevenin's Analysis'): 1 remove the load; 2 find the Norton current: create a short circuit across the terminals where the load was removed, use any method; 3 prepare to find RN: turn off all independent sources, keep dependent sources active">
+    <figcaption data-l="th">สไลด์หน้า 13 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 13 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch5/p14.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 14: 4 find the Norton resistance looking in from the load terminals (RN); 5 draw the Norton equivalent, IN in parallel with RN, connected to the load; 6 analyse with the load: current division Iload = In × Rn/(Rn + Rload), Vload = Iload × Rload, IRn = In − Iload">
+    <figcaption data-l="th">สไลด์หน้า 14 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 14 · tap to enlarge</figcaption></figure>
+  <figure class="slide"><img src="slides/ch5/p15.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 15: a statement of Norton's theorem: the Norton equivalent of a linear network is the Norton current source isc in parallel with the Thévenin resistance Rth; it can be obtained by a source transformation on the Thévenin equivalent, giving Voc = Rth isc">
+    <figcaption data-l="th">สไลด์หน้า 15 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 15 · tap to enlarge</figcaption></figure>
+</div>
+<details class="orig"><summary><span data-l="th">ดูห้าขั้นของนอร์ตันที่ผู้สอนเขียนในห้อง (พ.ศ. 2564)</span><span data-l="en">See the five Norton steps as written in class (2021)</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch5/K11a.webp" width="1100" height="695" loading="lazy" decoding="async" alt="In-class slide 14, a statement of Norton's theorem: step 1 mark terminals A and B and remove RL; step 2 short circuit at terminals A, B, current from A to B, IAB = Isc = IN; step 3 find RN the same way as Rth, RN = Rth; step 4 draw the Norton equivalent; step 5 reconnect RL at AB and find what is asked; with a drawing of IN in parallel with RN and RL">
+    <figcaption data-l="th">หน้า 14 ฉบับในห้อง: \(I_{AB} = I_{sc} = I_N\) และ \(R_N = R_{th}\)</figcaption><figcaption data-l="en">p. 14 in class: \(I_{AB} = I_{sc} = I_N\) and \(R_N = R_{th}\)</figcaption></figure></div></details>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Ex 4: วงจรเดียวกับ Ex 3 ใช้ทฤษฎีบทของนอร์ตันหากระแสผ่าน 2 Ω</h2><h2 data-l="en">Ex 4: the circuit of Ex 3; use Norton's theorem to find the current through the 2 Ω</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 16 · Hayt Practice 5.6</div><div class="src" data-l="en">Chapter 5 slides, p. 16 · Hayt Practice 5.6</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p16q.webp" width="1413" height="599" loading="lazy" decoding="async" alt="Ex 4: use Thévenin's theorem to find the current through the 2 ohm resistor (hint: designate the 2 ohm as network B); the circuit of Ex 3: 9 V, 4 ohm and 5 ohm across the top, 4 ohm down the middle, 6 ohm along the bottom left, and the 2 ohm load">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 16 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 16 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve">
+    <div class="warnbox" data-l="th">ฉบับแจกพิมพ์ว่า "Use Thevenin's theorem" ซ้ำกับ Ex 3 แต่ข้อนี้อยู่ในหัวข้อนอร์ตัน และในห้องผู้สอนทำด้วยนอร์ตัน หน้านี้จึงทำแบบนอร์ตัน</div>
+    <div class="warnbox" data-l="en">The handout prints "Use Thévenin's theorem", as in Ex 3, but this one sits in the Norton section and the teacher solved it by Norton's theorem in class, so this page does too.</div>
+    <div id="ask1"></div><div id="st1"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the teacher's in-class working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K13.webp" width="1000" height="1415" loading="lazy" decoding="async" alt="Handwritten Norton solution: step 1 mark RL = 2 ohm; step 2 short terminals AB, meshes 14Ix − 4Iy = 9 and −4Ix + 9Iy = 0 give Ix = 0.74 and Iy = 0.33 A, so IAB = Iy = 0.33 A; step 3 kill the source: (10 ∥ 4) = 2.86 and RN = Rth = 7.86 ohm; step 4 the Norton equivalent 0.33 A with 7.86 ohm; step 5 current divider IL = (7.86/(7.86 + 2))(0.33) = 0.26 A">
+      <figcaption data-l="th">\(I_N\) = 0.33 A (วิธีเมช), \(R_N\) = 7.86 Ω และตัวแบ่งกระแสได้ \(I_L\) = 0.26 A</figcaption><figcaption data-l="en">\(I_N\) = 0.33 A (meshes), \(R_N\) = 7.86 Ω, and the current divider gives \(I_L\) = 0.26 A</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">Ex 5: หาวงจรสมมูลเทวินินและนอร์ตันที่ขั้ว A–B</h2><h2 data-l="en">Ex 5: find the Thévenin and Norton equivalents at terminals A–B</h2>
+    <div class="src" data-l="th">สไลด์บทที่ 5 หน้า 17 · Hayt Practice 5.7 · ในห้องทำแบบเทวินินและให้แบบนอร์ตันเป็นการบ้าน</div><div class="src" data-l="en">Chapter 5 slides, p. 17 · Hayt Practice 5.7 · in class the Thévenin part was worked and the Norton part set as homework</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/p17q.webp" width="1450" height="513" loading="lazy" decoding="async" alt="Ex 5: determine the Thévenin and Norton equivalents of the circuit. A 3 V source, 2 kilohm across the top, a 7 mA source pointing down, 5 kilohm down, and 1 kilohm to the open terminals on the right">
+    <figcaption data-l="th">โจทย์จากสไลด์หน้า 17 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">The problem, slide p. 17 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสไลด์และเฉลยที่ผู้สอนเขียนในห้อง</span><span data-l="en">See the in-class slide and working</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/K12b.webp" width="1100" height="646" loading="lazy" decoding="async" alt="In-class slide 17: the circuit of Ex 5 with the two equivalents drawn beside it, Vth in series with Rth to A and B, and IN in parallel with RN, the Norton one marked HW">
+      <figcaption data-l="th">หน้า 17: วาดวงจรสมมูลทั้งสองแบบ และให้แบบนอร์ตันเป็นการบ้าน</figcaption><figcaption data-l="en">p. 17: both equivalents drawn, the Norton one set as homework</figcaption></figure>
+      <figure class="slide"><img src="slides/ch5/K14.webp" width="1000" height="1293" loading="lazy" decoding="async" alt="Handwritten Thévenin solution of Ex 5: step 1 remove RL and mark AB; step 2 node analysis at node VA: (VA − 3)/2k + 7m + VA/5k = 0 gives VA = −7.86 V, so VAB = −7.86 V; step 3 kill the sources: Rth = (2k ∥ 5k) + 1k = 2.43 kilohm; step 4 the Thévenin equivalent −7.86 V with 2.43 kilohm">
+      <figcaption data-l="th">แบบเทวินิน: \(V_{AB}\) = −7.86 V (วิธีโนด) และ \(R_{th}\) = 2.43 kΩ</figcaption><figcaption data-l="en">Thévenin: \(V_{AB}\) = −7.86 V (nodal) and \(R_{th}\) = 2.43 kΩ</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">การแปลงแหล่งจ่าย</h2><h2 data-l="en">Source transformation</h2></div>
+<p class="lead" data-l="th">การแปลงแหล่งจ่ายคือเครื่องมือเดียวกับที่เชื่อมเทวินินกับนอร์ตัน (หน้า 15) และเป็นทางลัดของหลายข้อ เช่น แบบฝึกหัด 5.1 Ex.2 ในหน้า 5.1 และการบ้านข้อ 2 ในหน้า 5.4</p>
+<p class="lead" data-l="en">Source transformation is the same tool that links Thévenin and Norton (p. 15), and it is a shortcut in several problems, e.g. exercise 5.1 Ex.2 on page 5.1 and homework 2 on page 5.4.</p>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">\(v_s\) อนุกรม \(R_s\) ⇄ \(i_s = v_s/R_s\) ขนาน \(R_s\)</h2><h2 data-l="en">\(v_s\) in series with \(R_s\) ⇄ \(i_s = v_s/R_s\) in parallel with \(R_s\)</h2>
+    <div class="src" data-l="th">สรุปในไฟล์เฉลยแบบฝึกหัด 5.1 (ใช้กฎของโอห์ม \(V = IR\)) · Hayt §5.2</div><div class="src" data-l="en">Summary in the solutions file of exercise sheet 5.1 (Ohm's law \(V = IR\)) · Hayt §5.2</div></div></div>
+  <p class="lead" data-l="th">ซ้ายคือแหล่งจ่ายแรงดันจริง (\(v_s\) อนุกรม \(R_s\)) ขวาคือแหล่งจ่ายกระแสจริงที่แปลงมา (\(i_s = v_s/R_s\) ขนาน \(R_s\)) ต่อกับ \(R_L\) ค่าเดียวกัน <b>เลื่อน \(R_L\) แล้วดูว่ากระแสที่โหลดเท่ากันทุกค่า</b> จากนั้นกด "เปิดวงจร" จะเห็นว่าข้างในไม่เหมือนกันเลย: วงจรซ้ายไม่มีกระแสใน \(R_s\) แต่วงจรขวามี \(i_s\) ไหลวนอยู่ใน \(R_s\) ตลอด</p>
+  <p class="lead" data-l="en">Left is a practical voltage source (\(v_s\) in series with \(R_s\)), right the practical current source it turns into (\(i_s = v_s/R_s\) in parallel with \(R_s\)), both with the same \(R_L\). <b>Slide \(R_L\) and see the load current agree for every value.</b> Then press "open": the insides are nothing alike, as the left \(R_s\) carries no current while the right one keeps \(i_s\) circulating.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูสรุปการแปลงแหล่งจ่ายที่ผู้สอนเขียนในไฟล์เฉลย</span><span data-l="en">See the teacher's summary of source transformation in the solutions file</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/st51.webp" width="1000" height="1413" loading="lazy" decoding="async" alt="Handwritten summary of source transformation: a voltage source V in series with R between A and B is equivalent to a current source I in parallel with R, related by Ohm's law V = IR">
+      <figcaption data-l="th">สรุปการแปลงแหล่งจ่าย: \(V\) อนุกรม \(R\) ⇄ \(I\) ขนาน \(R\) โดย \(V = IR\)</figcaption><figcaption data-l="en">Source transformation: \(V\) in series with \(R\) ⇄ \(I\) in parallel with \(R\), with \(V = IR\)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">แบบฝึกหัด 5.1 Ex.3: หากระแส \(i\) โดยแปลงวงจรให้เหลือแต่ตัวต้านทานกับแหล่งจ่ายแรงดันก่อน</h2><h2 data-l="en">Exercise 5.1 Ex.3: find the current \(i\) after first turning the circuit into resistors and voltage sources only</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.1 ข้อ Ex.3 · มีเฉพาะในไฟล์เฉลย (รูปโจทย์วาดใหม่จากหน้าเฉลย)</div><div class="src" data-l="en">Exercise sheet 5.1, Ex.3 · only in the solutions file (the figure is redrawn from the solution page)</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x51q3.svg" width="1300" height="520" loading="lazy" decoding="async" alt="Exercise 5.1 Ex.3: determine the current labeled i after first transforming the circuit so that it contains only resistors and voltage sources. A 12 V source in series with 3 megaohm feeds a node with a 5 microampere source pointing down and a 2 megaohm resistor; from that node 13 megaohm, carrying i to the right, goes to a 7 V source">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด 5.1 Ex.3 (วาดใหม่) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise 5.1 Ex.3 (redrawn) · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol51_3.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise 5.1 Ex.3: I = V/R = 12/3M = 4 µA in parallel with 3 M; the 4 µA up and 5 µA down combine to 1 µA down; 3M ∥ 2M = 1.2 M; V = IR = (1 µA)(1.2 M) = 1.2 V; KVL +1.2 + (1.2M)Ix + (13M)Ix + 7 = 0 gives Ix = −0.5775 µA, so i = −0.5775 µA">
+      <figcaption data-l="th">แปลง 12 V + 3 MΩ เป็น 4 µA รวมแหล่งจ่ายกระแสเหลือ 1 µA แล้วแปลงกลับเป็น 1.2 V ได้ \(i\) = −0.5775 µA</figcaption><figcaption data-l="en">12 V + 3 MΩ → 4 µA, the current sources combine to 1 µA, back to 1.2 V: \(i\) = −0.5775 µA</figcaption></figure></div></details>
+</section>
+
+<div class="group-head"><h2 data-l="th">แบบฝึกหัดเพิ่มเติม (ชุด 5.2 แบบนอร์ตัน)</h2><h2 data-l="en">More practice (exercise sheet 5.2, Norton)</h2></div>
+<p class="lead" data-l="th">สามข้อนี้ใช้วงจรเดียวกับแบบฝึกหัด Ex.1, Ex.3, Ex.5 ในหน้า 5.2 ตอนจบของแต่ละข้อตรวจด้วย \(I_N R_N = V_{th}\)</p>
+<p class="lead" data-l="en">These three use the circuits of exercises Ex.1, Ex.3 and Ex.5 on page 5.2; each ends with the check \(I_N R_N = V_{th}\).</p>
+<details class="orig"><summary><span data-l="th">ดูสรุปขั้นตอนของนอร์ตันที่ผู้สอนเขียนในไฟล์เฉลย</span><span data-l="en">See the summary of the Norton steps in the solutions file</span></summary>
+  <div class="slides"><figure class="slide"><img src="slides/ch5/sum52N.webp" width="1000" height="1413" loading="lazy" decoding="async" alt="Handwritten summary of Norton's theorem: step 1 remove RL and mark terminals A and B; step 2 short circuit AB and find the current from A to B, IAB = Isc = IN; step 3 kill the sources and find RAB = RN = Rth; step 4 draw the Norton equivalent; step 5 reconnect RL at A and B">
+    <figcaption data-l="th">สรุปห้าขั้นของนอร์ตันในไฟล์เฉลยแบบฝึกหัด 5.2</figcaption><figcaption data-l="en">The five Norton steps in the solutions file of exercise sheet 5.2</figcaption></figure></div></details>
+
+<section class="prob" id="ex4">
+  <div class="prob-head"><span class="prob-no">4</span><div><h2 data-l="th">แบบฝึกหัด Ex.2: หาวงจรสมมูลนอร์ตันที่ต่อกับ \(R_L\)</h2><h2 data-l="en">Exercise Ex.2: find the Norton equivalent connected to \(R_L\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.2 (วงจรเดียวกับ Ex.1) · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.2 (the circuit of Ex.1) · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q2.webp" width="1300" height="451" loading="lazy" decoding="async" alt="Exercise Ex.2: find the Norton equivalent connected to RL; the circuit of exercise Ex.1 with the 4 A source, 1 kilohm resistors, the 2 V source over 2 kilohm and the 3 V source to terminal A">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.2 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv4"></canvas></div><div class="card solve"><div id="ask4"></div><div id="st4"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol52_2.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.2: short AB; mesh I1 = −4 A; mesh I2: 3000I2 − 2000I3 = −4002; mesh I3: −2000I2 + 2000I3 = −1, but the matrix uses 0 on the right of the second row, giving I3 = −4.002 A = IN; RN = 2k ∥ 1k = 666.67 ohm; the Norton equivalent and Vth = IN RN">
+      <figcaption data-l="th">เฉลยได้ \(I_N\) = −4.002 A เพราะใส่ 0 แทน −1 ในเมทริกซ์ (ดูคำตอบข้างบน)</figcaption><figcaption data-l="en">The solution gets \(I_N\) = −4.002 A because the matrix has 0 instead of −1 (see the answer above)</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="ex5">
+  <div class="prob-head"><span class="prob-no">5</span><div><h2 data-l="th">แบบฝึกหัด Ex.4: หาวงจรสมมูลนอร์ตันที่ต่อกับ \(R_L\)</h2><h2 data-l="en">Exercise Ex.4: find the Norton equivalent connected to \(R_L\)</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.4 (วงจรเดียวกับ Ex.3) · ไม่มีเฉลยในโฟลเดอร์ หน้านี้คำนวณให้</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.4 (the circuit of Ex.3) · no solution in the folder; this page works it out</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q4.webp" width="1300" height="508" loading="lazy" decoding="async" alt="Exercise Ex.4: find the Norton equivalent connected to RL; the circuit of exercise Ex.3 with 6 ohm, the 8 V source across the top, and the 4 V source over 4 ohm">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.4 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv5"></canvas></div><div class="card solve"><div id="ask5"></div><div id="st5"></div></div></div>
+</section>
+
+<section class="prob" id="ex6">
+  <div class="prob-head"><span class="prob-no">6</span><div><h2 data-l="th">แบบฝึกหัด Ex.6: ใช้ทฤษฎีบทนอร์ตัน หา \(I_{sc}\), \(R_N\) และ \(V_L\) พร้อมเขียนวงจรสมมูลนอร์ตัน</h2><h2 data-l="en">Exercise Ex.6: use Norton's theorem to find \(I_{sc}\), \(R_N\) and \(V_L\), and draw the Norton equivalent</h2>
+    <div class="src" data-l="th">แบบฝึกหัด 5.2 ข้อ Ex.6 (วงจรเดียวกับ Ex.5) · มีเฉลยลายมือ</div><div class="src" data-l="en">Exercise sheet 5.2, Ex.6 (the circuit of Ex.5) · handwritten solution available</div></div></div>
+  <figure class="slide q"><img src="slides/ch5/x52q6.webp" width="1300" height="635" loading="lazy" decoding="async" alt="Exercise Ex.6 (in Thai): find Isc, RN and VL by Norton's theorem and draw the equivalent; the circuit of exercise Ex.5 with the 8 A source, 15 ohm, 20 ohm, the 40 V source, 30 ohm, 10 ohm and RL = 10 ohm">
+    <figcaption data-l="th">โจทย์แบบฝึกหัด Ex.6 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Exercise Ex.6 · tap to enlarge</figcaption></figure>
+  <div class="duo wide-sim"><div class="card sim"><canvas id="cv6"></canvas></div><div class="card solve"><div id="ask6"></div><div id="st6"></div></div></div>
+  <details class="orig"><summary><span data-l="th">ดูเฉลยลายมือ</span><span data-l="en">See the handwritten solution</span></summary>
+    <div class="slides"><figure class="slide"><img src="slides/ch5/sol52_6.webp" width="1000" height="1294" loading="lazy" decoding="async" alt="Handwritten solution of exercise Ex.6: short AB, which also shorts the 30 ohm; mesh I1 = 8 A; mesh I2: −40 + 20(I2 − I1) + 10I2 = 0 gives I2 = 6.6667 A = IN; RN = Rth = 15 ohm; the Norton equivalent with RL = 10 ohm; the current divider gives IL = 4 A and VL = ILRL = 40 V">
+      <figcaption data-l="th">\(I_N\) = 6.6667 A, \(R_N\) = 15 Ω, \(I_L\) = 4 A และ \(V_L\) = 40 V</figcaption><figcaption data-l="en">\(I_N\) = 6.6667 A, \(R_N\) = 15 Ω, \(I_L\) = 4 A and \(V_L\) = 40 V</figcaption></figure></div></details>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">เทวินิน ⇄ นอร์ตัน ของทุกข้อในบทนี้</h2><h2 data-l="en">Thévenin ⇄ Norton for every problem of the chapter</h2>
+    <div class="src" data-l="th">คำนวณแม่นตรงจากวงจรจริงของแต่ละข้อ</div><div class="src" data-l="en">Computed exactly from each real circuit</div></div></div>
+  <p class="lead" data-l="th">\(V_{oc}\) จากการเปิดวงจร \(I_{sc}\) จากการลัดวงจร และ \(R_{th}\) จากการฆ่าแหล่งจ่าย คอลัมน์สุดท้ายตรวจว่า \(V_{oc} = I_{sc} R_{th}\) จริงทุกข้อ ถ้าวัด \(V_{oc}\) และ \(I_{sc}\) ได้ ก็หา \(R_{th} = V_{oc}/I_{sc}\) ได้โดยไม่ต้องฆ่าแหล่งจ่าย</p>
+  <p class="lead" data-l="en">\(V_{oc}\) with the terminals open, \(I_{sc}\) with them shorted, and \(R_{th}\) with the sources killed. The last column checks that \(V_{oc} = I_{sc} R_{th}\) every time: with \(V_{oc}\) and \(I_{sc}\) measured, \(R_{th} = V_{oc}/I_{sc}\) without killing any source.</p>
+  <div class="card eqcard" style="overflow-x:auto;position:relative"><div id="tbl"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — สมมูลแค่ที่ขั้ว</h3>
+    <ol><li>ส่วน A ตั้ง \(v_s\) = 12 V, \(R_s\) = 4 Ω แล้วกด "ลัดวงจร": กระแสที่โหลดทั้งสองวงจร = 3 A = \(i_s\)</li>
+    <li>กด "เปิดวงจร": แรงดันที่ขั้วทั้งสองวงจร = 12 V แต่ \(R_s\) ฝั่งขวาร้อน 36 W ส่วนฝั่งซ้าย 0 W</li>
+    <li>ข้อ 3: ทุกขั้นของการแปลงทำให้ \(i\) ใน 13 MΩ เท่าเดิม (ชี้เมาส์ที่ 13 MΩ ในขั้นสุดท้ายได้ −0.5775 µA)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — ลวดลัดกับตัวต้านทานที่ถูกคร่อม</h3>
+    <ol><li>ข้อ 6 (แบบฝึกหัด Ex.6) ขั้นที่ 2: ลวดลัดคร่อม 30 Ω อยู่ <b>30 Ω จึงไม่มีกระแส</b> (ขีดฆ่า) ได้ \(I_N = I_2\) = 20/3 A</li>
+    <li>ข้อ 4 (แบบฝึกหัด Ex.2): เฉลยได้ \(I_N\) = −4.002 A เพราะใส่ 0 แทน −1 ทางขวาของสมการ (2) หน้านี้ได้ −4.0035 A ซึ่งตรงกับ \(V_{th}/R_{th}\) = −2669/666.67</li>
+    <li>ข้อ 2 (Ex 5): ลวดลัดที่ AB ทำให้ 1 kΩ ต่อลงด้านล่างโดยตรง จึงต้องเขียน KCL ที่โนดบนกลางใหม่โดยมีพจน์ \(V/1\,\text{k}\) เพิ่ม</li></ol></div>
+  <div class="card"><h3>ลองทำดู 3 — หาสองได้สาม</h3>
+    <ol><li>ข้อ 1 (Ex 4): \(I_N\) = 18/55 A และ \(R_N\) = 55/7 Ω จึงได้ \(V_{th}\) = (18/55)(55/7) = 18/7 V เท่ากับ Ex 3 ในหน้า 5.2</li>
+    <li>ตารางส่วน B: ทุกแถวมี \(V_{oc} = I_{sc} R_{th}\)</li>
+    <li>คำถาม: ถ้าเครือข่ายไม่มีแหล่งจ่ายอิสระเลย \(V_{oc}\) และ \(I_{sc}\) เป็นเท่าไร แล้วจะหา \(R_{th}\) ด้วยวิธีนี้ได้หรือไม่</li></ol>
+    <div class="book">สไลด์บทที่ 5 หน้า 12–17 · ฉบับในห้องหน้า 14, 17 · แบบฝึกหัด 5.1 Ex.3, 5.2 Ex.2, Ex.4, Ex.6 และเฉลย · Hayt §5.2–5.3, Practice 5.6, 5.7</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — equivalent only at the terminals</h3>
+    <ol><li>In section A set \(v_s\) = 12 V, \(R_s\) = 4 Ω and press "short": the load current is 3 A = \(i_s\) in both circuits.</li>
+    <li>Press "open": both terminals read 12 V, but the right \(R_s\) burns 36 W while the left one burns 0 W.</li>
+    <li>Problem 3: no transformation changes \(i\) in the 13 MΩ (hover over the 13 MΩ in the last stage: −0.5775 µA).</li></ol></div>
+  <div class="card"><h3>Try this 2 — the short and the bridged resistor</h3>
+    <ol><li>Problem 6 (exercise Ex.6), step 2: the short bridges the 30 Ω, <b>so the 30 Ω carries nothing</b> (crossed out) and \(I_N = I_2\) = 20/3 A.</li>
+    <li>Problem 4 (exercise Ex.2): the solution gets \(I_N\) = −4.002 A because it puts 0 instead of −1 on the right of equation (2); this page gets −4.0035 A, which matches \(V_{th}/R_{th}\) = −2669/666.67.</li>
+    <li>Problem 2 (Ex 5): the short at AB ties the 1 kΩ straight down, so KCL at the top-middle node is written again with an extra \(V/1\,\text{k}\) term.</li></ol></div>
+  <div class="card"><h3>Try this 3 — two give the third</h3>
+    <ol><li>Problem 1 (Ex 4): \(I_N\) = 18/55 A and \(R_N\) = 55/7 Ω give \(V_{th}\) = (18/55)(55/7) = 18/7 V, the same as Ex 3 on page 5.2.</li>
+    <li>Section B: every row has \(V_{oc} = I_{sc} R_{th}\).</li>
+    <li>Question: if the network has no independent sources at all, what are \(V_{oc}\) and \(I_{sc}\), and can \(R_{th}\) still be found this way?</li></ol>
+    <div class="book">Chapter 5 slides, pp. 12–17 · in-class slides pp. 14, 17 · exercise sheets 5.1 Ex.3, 5.2 Ex.2, Ex.4, Ex.6 and solutions · Hayt §5.2–5.3, Practice 5.6, 5.7</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+'use strict';
+const t = MC.t, $ = id => document.getElementById(id);
+const near = (x, y, tol) => Math.abs(x - y) <= (tol ?? Math.max(0.002, 0.004 * Math.abs(y)));
+const AL = rows => `\\begin{aligned} ${rows.join(' \\\\ ')} \\end{aligned}`;
+
+/* 1: Ex 4 (the circuit of Ex 3) by Norton */
+CH5.problem(1, 'nort', 'ex3', {
+  ask: () => ({ fields: [{ label: 'I<sub>N</sub> (A) =', ok: x => near(x, 18 / 55, 0.002), w: 5 }, { label: 'i₂Ω (A) =', ok: x => near(x, 6 / 23, 0.0015), w: 5 }],
+    check: v => near(v[0], 9 / 14, 0.003) ? t('นั่นคือ \\(I_x\\) ของเมชซ้าย \\(I_N\\) คือกระแสในลวดลัดที่ AB (เมชขวา)', 'That is \\(I_x\\) of the left mesh; \\(I_N\\) is the current in the short at AB (the right mesh)') : '' }),
+  answer: t('\\(I_N = 18/55 \\approx 0.3273\\) A, \\(R_N = 55/7 \\approx 7.857\\) Ω และ \\(i_{2\\Omega} = 6/23 \\approx 0.2609\\) A เท่ากับ Ex 3 ที่ทำด้วยเทวินิน ตรงกับในห้อง (0.33 A, 7.86 Ω, 0.26 A)', '\\(I_N = 18/55 \\approx 0.3273\\) A, \\(R_N = 55/7 \\approx 7.857\\) Ω and \\(i_{2\\Omega} = 6/23 \\approx 0.2609\\) A, the same as Ex 3 by Thévenin, and as in class (0.33 A, 7.86 Ω, 0.26 A)') });
+
+/* 2: Ex 5 = Hayt Practice 5.7, Thévenin then Norton */
+CH5.problem(2, 'both', 'ex5', {
+  ask: () => ({ fields: [{ label: 'V<sub>th</sub> (V) =', ok: x => near(x, -55 / 7, 0.006), w: 4.5 }, { label: 'R<sub>th</sub> (kΩ) =', ok: x => near(x, 17 / 7, 0.003), w: 4.5 }, { label: 'I<sub>N</sub> (mA) =', ok: x => near(x, -11 / 3.4, 0.003), w: 4.5 }],
+    check: v => near(v[0], 55 / 7, 0.006) ? t('ขนาดของ \\(V_{th}\\) ถูก แต่เครื่องหมาย: 7 mA ดึงกระแสลง ทำให้โนดบนติดลบ', 'The size of \\(V_{th}\\) is right, but the sign: the 7 mA pulls current down and the top node goes negative') : '' }),
+  answer: t('\\(V_{th} = -55/7 \\approx -7.857\\) V, \\(R_{th} = 17/7 \\approx 2.429\\) kΩ, \\(I_N = -11/3.4 \\approx -3.235\\) mA ตรงกับ Hayt Practice 5.7 และค่าแบบเทวินินในห้อง (−7.86 V, 2.43 kΩ)', '\\(V_{th} = -55/7 \\approx -7.857\\) V, \\(R_{th} = 17/7 \\approx 2.429\\) kΩ, \\(I_N = -11/3.4 \\approx -3.235\\) mA, as in Hayt Practice 5.7 and the class Thévenin values (−7.86 V, 2.43 kΩ)') });
+
+/* A: source transformation demo */
+const S = CH5.srcDemo({ cv: 'cvA', panel: 'pA' }); S.resize(); window.addEventListener('resize', () => S.resize()); LS.anim($('cvA'), dt => S.frame(dt));
+
+/* 3: exercise sheet 5.1 Ex.3, source transformation step by step (CH3.Stages) */
+const X = CH5X.st3, uAt = c => `${LS.u(c.I('R13').re * 1e6, 4)} µA`;
+const sim3 = new CH3.Stages($('cv3'), { ...X, aspect: 0.5, aspectN: 0.66, pad: 1.7,
+  badge: (k, c, shown) => `${k === 0 ? t('วงจรเดิม', 'original circuit') : t(`ขั้นที่ ${k} จาก 4`, `stage ${k} of 4`)} · i = ${shown ? uAt(c) : '?'}` });
+LS.ask($('ask3'), { fields: [{ label: 'i (µA) =', ok: x => near(x, -41 / 71, 0.002), w: 5 }], check: v => near(v[0], 41 / 71, 0.002) ? t('ขนาดถูก แต่ทิศ: กระแสไหลจาก 7 V เข้าโนดบน (ขวาไปซ้าย) จึงติดลบตามลูกศร \\(i\\)', 'Right size, wrong direction: the current flows from the 7 V into the top node (right to left), so it is negative along the \\(i\\) arrow') : '' });
+const st3 = LS.stepper($('st3'), { steps: () => [
+  { why: t('<b>แปลง 12 V อนุกรม 3 MΩ เป็นแหล่งจ่ายกระแส</b> ขนานกับ 3 MΩ ตัวเดิม ลูกศรชี้ไปทางขั้ว + (ชี้ขึ้น)', '<b>Turn the 12 V in series with 3 MΩ into a current source</b> in parallel with the same 3 MΩ; its arrow points to the + side (up)'), tex: 'i_s = \\frac{v_s}{R_s} = \\frac{12}{3\\,\\text{M}} = 4\\ \\mu\\text{A}' },
+  { why: t('<b>รวมแหล่งจ่ายกระแสที่ขนานกัน</b>: 4 µA ชี้ขึ้น กับ 5 µA ชี้ลง', '<b>Combine the parallel current sources</b>: 4 µA up and 5 µA down'), tex: CH5.fitIn($('st3'), 'I = 5\\ \\mu\\text{A} - 4\\ \\mu\\text{A} = 1\\ \\mu\\text{A}\\ (\\text{down})') },
+  { why: t('<b>รวมตัวต้านทานที่ขนานกัน</b>', '<b>Combine the parallel resistors</b>'), tex: CH5.fitIn($('st3'), '3\\,\\text{M} \\parallel 2\\,\\text{M} = \\frac{(3)(2)}{3 + 2}\\,\\text{M} = 1.2\\ \\text{M}\\Omega') },
+  { why: t('<b>แปลงกลับเป็นแหล่งจ่ายแรงดัน</b> อนุกรมกับ 1.2 MΩ ขั้ว + อยู่ทางที่ลูกศรของ 1 µA ชี้ไป (ด้านล่าง) ตอนนี้วงจรมีแต่ตัวต้านทานกับแหล่งจ่ายแรงดันตามที่โจทย์สั่ง', '<b>Turn it back into a voltage source</b> in series with 1.2 MΩ, its + where the 1 µA arrow points (the bottom). The circuit now has only resistors and voltage sources, as the problem asks'), tex: CH5.fitIn($('st3'), 'V = IR = (1\\ \\mu\\text{A})(1.2\\ \\text{M}\\Omega) = 1.2\\ \\text{V}') },
+  { why: t('<b>KVL รอบวงเดียว</b> ตามเข็มนาฬิกา (เข้าขั้ว + เป็นบวก) แล้วกระแสเริ่มไหล', '<b>KVL round the single loop</b>, clockwise (entering a + is positive); then the current starts to flow'), tex: CH5.fitIn($('st3'), AL(['1.2 + 1.2\\,\\text{M}\\,i + 13\\,\\text{M}\\,i + 7 &= 0', 'i &= -\\frac{8.2}{14.2\\,\\text{M}} = \\boxed{-0.5775\\ \\mu\\text{A}}'])) }],
+  answer: t('\\(i = -41/71 \\approx -0.5775\\) µA ตรงกับเฉลย: กระแสไหลใน 13 MΩ จากขวาไปซ้าย (จาก 7 V เข้าโนดบน) ตรวจด้วยวิธีโนดได้ \\(V = -36/71\\) V และ \\(i = (V - 7)/13\\,\\text{M}\\) ค่าเดียวกัน', '\\(i = -41/71 \\approx -0.5775\\) µA, as in the solution: the current in the 13 MΩ flows right to left (from the 7 V into the top node). A nodal check gives \\(V = -36/71\\) V and \\(i = (V - 7)/13\\,\\text{M}\\), the same value'),
+  onStep: (k, N) => { sim3.set(Math.min(k, 4)); sim3.reveal(k === N); } });
+CH5.onFonts(() => st3.refresh(true));
+
+/* 4–6: exercise sheet 5.2 Ex.2, Ex.4, Ex.6 */
+CH5.problem(4, 'nort', 's1', {
+  ask: () => ({ fields: [{ label: 'I<sub>N</sub> (A) =', ok: x => near(x, -8007 / 2000, 0.0004), w: 5.5 }, { label: 'R<sub>N</sub> (Ω) =', ok: x => near(x, 2000 / 3, 0.4), w: 5 }],
+    check: v => near(v[0], -4.002, 0.0003) ? t('−4.002 A คือคำตอบในเฉลยซึ่งใส่ 0 แทน −1 ในเมทริกซ์ ลองแก้สมการ (2) ให้ด้านขวาเป็น −1', '−4.002 A is the solution\'s answer, which has 0 instead of −1 in the matrix; solve with −1 on the right of equation (2)') : '' }),
+  answer: t('\\(I_N = -8007/2000 \\approx -4.0035\\) A และ \\(R_N = 2000/3 \\approx 666.67\\) Ω ตรวจ: \\(I_N R_N = -2669\\) V = \\(V_{th}\\) ของหน้า 5.2 <div class="warnbox" style="margin-top:8px">เฉลยเขียนสมการ (2) ถูกเป็น \\(-2000I_2 + 2000I_3 = -1\\) แต่ใส่ 0 ในเมทริกซ์ จึงได้ \\(I_N\\) = −4.002 A</div>',
+    '\\(I_N = -8007/2000 \\approx -4.0035\\) A and \\(R_N = 2000/3 \\approx 666.67\\) Ω. Check: \\(I_N R_N = -2669\\) V = \\(V_{th}\\) of page 5.2 <div class="warnbox" style="margin-top:8px">The solution writes equation (2) correctly as \\(-2000I_2 + 2000I_3 = -1\\) but puts 0 in the matrix, giving \\(I_N\\) = −4.002 A.</div>') });
+CH5.problem(5, 'nort', 's3', {
+  ask: () => ({ fields: [{ label: 'I<sub>N</sub> (A) =', ok: x => near(x, -1 / 3), w: 5 }, { label: 'R<sub>N</sub> (Ω) =', ok: x => near(x, 2.4), w: 5 }], check: v => near(v[0], 1 / 3) ? t('ขนาดถูก แต่ทิศ: กระแสในลวดลัดไหลจาก B ไป A', 'Right size, wrong direction: the current in the short flows from B to A') : '' }),
+  answer: t('\\(I_N = -1/3\\) A และ \\(R_N = 2.4\\) Ω ตรวจ: \\(I_N R_N = -0.8\\) V = \\(V_{th}\\) ของแบบฝึกหัด Ex.3 ในหน้า 5.2 (ข้อนี้ไม่มีเฉลยในโฟลเดอร์)', '\\(I_N = -1/3\\) A and \\(R_N = 2.4\\) Ω. Check: \\(I_N R_N = -0.8\\) V = \\(V_{th}\\) of exercise Ex.3 on page 5.2 (no solution in the folder)') });
+CH5.problem(6, 'nort', 's5', {
+  ask: () => ({ fields: [{ label: 'I<sub>sc</sub> (A) =', ok: x => near(x, 20 / 3), w: 4 }, { label: 'R<sub>N</sub> (Ω) =', ok: x => near(x, 15), w: 4 }, { label: 'V<sub>L</sub> (V) =', ok: x => near(x, 40), w: 4 }], check: v => near(v[0], 10 / 3) ? t('นั่นคือ \\(I_2\\) เมื่อขั้ว AB เปิด เมื่อลัดวงจร AB ลวดลัดคร่อม 30 Ω ด้วย', 'That is \\(I_2\\) with AB open; with AB shorted the short also bridges the 30 Ω') : '' }),
+  answer: t('\\(I_{sc} = 20/3 \\approx 6.667\\) A, \\(R_N = 15\\) Ω, \\(I_L = 4\\) A และ \\(V_L = 40\\) V ตรงกับเฉลยและกับแบบเทวินิน (หน้า 5.2)', '\\(I_{sc} = 20/3 \\approx 6.667\\) A, \\(R_N = 15\\) Ω, \\(I_L = 4\\) A and \\(V_L = 40\\) V, as in the solution and by Thévenin (page 5.2)') });
+
+/* B: the table of every network */
+const rows = [['ex3', t('Ex 3 / Ex 4 (หน้า 5.2, 5.3)', 'Ex 3 / Ex 4 (pages 5.2, 5.3)')], ['ex5', t('Ex 5 / Ex 7 (หน้า 5.3, 5.4)', 'Ex 5 / Ex 7 (pages 5.3, 5.4)')], ['s1', t('แบบฝึกหัด Ex.1 / Ex.2', 'Exercise Ex.1 / Ex.2')], ['s3', t('แบบฝึกหัด Ex.3 / Ex.4', 'Exercise Ex.3 / Ex.4')],
+  ['s5', t('แบบฝึกหัด Ex.5 / Ex.6 / Ex.7', 'Exercise Ex.5 / Ex.6 / Ex.7')], ['ex6', t('Ex 6 (หน้า 5.4, 2 kΩ)', 'Ex 6 (page 5.4, 2 kΩ)')], ['hw2', t('การบ้านข้อ 2 (หน้า 5.4)', 'Homework 2 (page 5.4)')]].map(([k, name]) => ({ name, T: CH5.solveTN(CH5T[k].spec) }));
+$('tbl').innerHTML = `<table class="tbl"><thead><tr><th>${t('โจทย์', 'Problem')}</th><th>\\(V_{oc} = V_{th}\\)</th><th>\\(I_{sc} = I_N\\)</th><th>\\(R_{th} = R_N\\)</th><th>\\(I_{sc} R_{th}\\)</th><th>${t('ตรวจ', 'check')}</th></tr></thead><tbody>` +
+  rows.map(r => `<tr><td>${r.name}</td><td>${MC.tex(CH5.vl(r.T.voc, 'V'))}</td><td>${MC.tex(CH5.amp(r.T.isc))}</td><td>${MC.tex(CH5.ohm(r.T.rth))}</td><td>${MC.tex(CH5.vl(r.T.isc.mul(r.T.rth), 'V'))}</td><td>${r.T.isc.mul(r.T.rth).eq(r.T.voc) ? '<span class="pill good">✓</span>' : '<span class="pill bad">✗</span>'}</td></tr>`).join('') + '</tbody></table>';
+MC.renderMath($('tbl'));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="Electrical Engineering — Roadmap">วิศวกรรมไฟฟ้า — แผนที่การเรียน</title>
+<meta name="description" content="แผนที่การเรียนวิชา 010243307 วิศวกรรมไฟฟ้า ภาควิชาวิศวกรรมการผลิตและหุ่นยนต์ มจพ. หน้าโต้ตอบที่เห็นเส้นทางการไหลของกระแสจริง">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/ee.css?v=102">
+<script src="assets/stops.js?v=102"></script>
+<script src="assets/shell.js?v=102"></script>
+<script src="assets/circuit.js?v=102"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar" id="mc-top"></header>
+  <div class="kicker"><span data-l="th">010243307 วิศวกรรมไฟฟ้า · Electrical Engineering (Theory)</span><span data-l="en">010243307 Electrical Engineering (Theory)</span></div>
+  <h1 data-l="th">แผนที่การเรียนวิศวกรรมไฟฟ้า <span class="en">Electrical Engineering Roadmap — see where the current actually goes, on every page</span></h1>
+  <h1 data-l="en">Electrical Engineering Roadmap <span class="en">See where the current actually goes, on every page</span></h1>
+
+  <div class="hero">
+    <div>
+      <p class="lede" data-l="th">สื่อการเรียนแบบโต้ตอบสำหรับนักศึกษาปริญญาตรี ภาควิชาวิศวกรรมการผลิตและหุ่นยนต์ ทุกวงจรบนจอถูกแก้สมการจริงในเบราว์เซอร์ แล้ววาดกระแสเป็นจุดที่วิ่งตามสายไฟ ปรับค่าอุปกรณ์เมื่อไรกระแสก็เปลี่ยนทันที ลองคลิกสวิตช์ในภาพข้าง ๆ ดูได้เลย</p>
+      <p class="lede" data-l="en">Interactive lessons for undergraduates of the Department of Production and Robotics Engineering. Every circuit on screen is actually solved in your browser and its current is drawn as dots running along the wires. Change a part and the current changes at once. Try clicking the switch in the picture.</p>
+      <div class="meta"><span><b id="mLive">4</b> <span data-l="th">หน้าพร้อมใช้</span><span data-l="en">pages ready</span></span><span><b>12</b> <span data-l="th">บทตามสไลด์</span><span data-l="en">chapters, as in the slides</span></span><span><span data-l="th">ประมาณ <b>20–30 นาที</b> ต่อหน้า</span><span data-l="en">about <b>20–30 min</b> per page</span></span><span><span data-l="th">พื้นฐาน: <b>ฟิสิกส์ 2</b></span><span data-l="en">Prerequisite: <b>Physics II</b></span></span></div>
+    </div>
+    <div class="card"><canvas id="hero"></canvas>
+      <div class="cap" data-l="th">คลิกสวิตช์เพื่อเปิด/ปิดวงจร · ชี้เมาส์ที่อุปกรณ์เพื่ออ่านแรงดัน กระแส และกำลัง</div>
+      <div class="cap" data-l="en">Click the switch to open or close the circuit · hover over a part to read its voltage, current and power</div></div>
+  </div>
+
+  <div class="progress">
+    <div class="prow"><span><span data-l="th">ความคืบหน้า:</span><span data-l="en">Progress:</span> <b id="pCount">0 / 4</b> &nbsp;·&nbsp; <a id="pNext" href="#"></a></span><button id="pReset" type="button"><span data-l="th">ล้างความคืบหน้า</span><span data-l="en">Reset progress</span></button></div>
+    <div class="bar"><div class="fill" id="pFill"></div></div>
+  </div>
+
+  <div class="howto" data-l="th"><b>อ่านภาพให้เป็นก่อนเริ่ม:</b>
+    <div class="keys" style="margin-top:8px">
+      <span class="k"><i style="background:#ffd166"></i><i style="background:#ffd166"></i></span><span><b>จุดสีเหลือง</b> คือกระแสสมมติ (conventional current) ไหลจากขั้วบวกออกไปรอบวงจรแล้วกลับเข้าขั้วลบ <b>ความเร็วของจุดแปรตามขนาดกระแส</b> จุดวิ่งเร็วแปลว่ากระแสมาก</span>
+      <span class="k"><i style="background:#5ad1ff"></i><i style="background:#5ad1ff"></i></span><span><b>จุดสีฟ้า</b> คืออิเล็กตรอนจริง ซึ่งวิ่งสวนทางกับกระแสสมมติ สลับดูได้ในทุกหน้า</span>
+      <span class="k" style="background:none;color:var(--accent2);font-weight:700">→ 2 A</span><span><b>ลูกศรพร้อมตัวเลข</b> บอกทิศและขนาดของกระแสในอุปกรณ์แต่ละตัว</span>
+      <span class="k" style="background:none">🖱</span><span>ชี้เมาส์ที่อุปกรณ์เพื่ออ่านค่า คลิกสวิตช์เพื่อเปิดปิด เลื่อนแถบควบคุมด้านขวาเพื่อเปลี่ยนค่า กลับมาหน้านี้ หน้าที่เปิดแล้วจะถูกติ๊กไว้ (บันทึกในเบราว์เซอร์เครื่องนี้)</span>
+    </div></div>
+  <div class="howto" data-l="en"><b>Learn to read the picture first:</b>
+    <div class="keys" style="margin-top:8px">
+      <span class="k"><i style="background:#ffd166"></i><i style="background:#ffd166"></i></span><span><b>Yellow dots</b> are conventional current, leaving the positive terminal, going round the circuit and returning to the negative terminal. <b>Dot speed is proportional to current</b>: fast dots mean a large current.</span>
+      <span class="k"><i style="background:#5ad1ff"></i><i style="background:#5ad1ff"></i></span><span><b>Blue dots</b> are the real electrons, which move against conventional current. Every page can switch between the two.</span>
+      <span class="k" style="background:none;color:var(--accent2);font-weight:700">→ 2 A</span><span><b>An arrow with a number</b> gives the direction and size of the current in each part.</span>
+      <span class="k" style="background:none">🖱</span><span>Hover over a part to read it, click a switch to toggle it, and use the sliders on the right to change values. Back on this page, visited pages are ticked (saved in this browser).</span>
+    </div></div>
+
+  <div class="road" id="road"></div>
+
+  <footer data-l="th">วิชา 010243307 วิศวกรรมไฟฟ้า (ทฤษฎี) 3(2-2-5) · ผศ.ดร.วิษณุ จิตวิริยะ · ตำรา: Hayt, Kemmerly &amp; Durbin, <i>Engineering Circuit Analysis</i> และ Theraja, <i>Electrical Technology Vol. I</i> · เปิด <code>index.html</code> ได้โดยตรงหรือเสิร์ฟโฟลเดอร์นี้ด้วย <code>python3 -m http.server</code> · สูตรใช้ KaTeX และฟอนต์จากเครือข่าย จึงต้องต่ออินเทอร์เน็ตครั้งแรก</footer>
+  <footer data-l="en">Course 010243307 Electrical Engineering (Theory) 3(2-2-5) · Asst. Prof. Dr. Wisanu Jitviriya · Textbooks: Hayt, Kemmerly &amp; Durbin, <i>Engineering Circuit Analysis</i>, and Theraja, <i>Electrical Technology Vol. I</i> · Open <code>index.html</code> directly or serve this folder with <code>python3 -m http.server</code> · Formulas use KaTeX and web fonts, so the first visit needs an internet connection.</footer>
+</div>
+<script>
+(function(){
+  /* ---------- roadmap ---------- */
+  const road=document.getElementById('road'); const stops=window.STOPS, stages=window.STAGES; const L=MC.lang;
+  function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  const pick=(th,en)=>MC.t(th,en);
+  const typeName={read:pick('หน้าอ่าน','Reading'),sim:pick('หน้าโต้ตอบ','Interactive'),cap:pick('แคปสโตน','Capstone'),soon:pick('กำลังสร้าง','In preparation')};
+  let html='', lastStage=null;
+  for(const s of stops){
+    if(s.stage!==lastStage){ lastStage=s.stage; const st=stages[s.stage];
+      const live=stops.some(x=>x.stage===s.stage&&!x.soon); const pinTxt=({1:'1',2:'2–5',3:'6–9',4:'10–12'})[s.stage]||'·';
+      html+=`<div class="milestone s${s.stage}${live?'':' soon'}"><div class="pin"${pinTxt.length>2?' style="font-size:13px"':''}>${pinTxt}</div><h2>${esc(pick(st.title,st.title_en))}</h2><p>${esc(pick(st.blurb,st.blurb_en))}</p></div>`; }
+    const titleMain=L==='en'?s.en:s.title, titleSub=L==='en'?'':s.en;   // English mode shows no Thai subtitle
+    if(s.soon){
+      html+=`<div class="node soon"><div class="dot"><span>${s.ch}</span></div><div class="stop"><div class="head"><span class="step">${pick('บทที่','Chapter')} ${s.ch}</span><span class="type soon">${typeName.soon}</span></div>
+        <h3>${esc(titleMain)}<span class="en">${esc(titleSub)}</span></h3><p>${esc(pick(s.blurb,s.blurb_en))}</p></div></div>`;
+      continue; }
+    const tags=pick(s.tags,s.tags_en)||s.tags;
+    html+=`<div class="node s${s.stage} ${s.type}" data-page="${s.file}" id="n-${s.file.replace(/\W/g,'_')}"><div class="dot"><span>${s.step}</span></div>
+      <a class="stop" href="${s.file}"><span class="arrow">→</span><div class="head"><span class="step">${pick('หน้า','Page')} ${s.step}</span><span class="type ${s.type}">${typeName[s.type]}</span></div>
+      <h3>${esc(titleMain)}<span class="en">${esc(titleSub)}</span></h3><p>${esc(pick(s.blurb,s.blurb_en))}</p>
+      <div class="goal"><b>${pick('จะทำได้:','You will be able to:')}</b> ${esc(pick(s.outcome,s.outcome_en))}</div>
+      <div class="topics">${esc(pick(s.book,s.book_en))}</div>
+      <div class="tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div></a></div>`;
+  }
+  road.innerHTML=html;
+  const nodes=[...road.querySelectorAll('.node[data-page]')]; document.getElementById('mLive').textContent=nodes.length;
+  function paint(){ const v=MC.visited(); let n=0; nodes.forEach(el=>{ const d=!!v[el.dataset.page]; el.classList.toggle('visited',d); if(d) n++; });
+    document.getElementById('pCount').textContent=`${n} / ${nodes.length}`; document.getElementById('pFill').style.width=Math.round(100*n/nodes.length)+'%';
+    const next=nodes.find(el=>!v[el.dataset.page]); const nx=document.getElementById('pNext');
+    if(next){ nx.innerHTML=pick('หน้าต่อไป: ','Next up: ')+'<b>'+next.querySelector('h3').childNodes[0].textContent+'</b>'; nx.href=next.querySelector('a.stop').getAttribute('href'); } else { nx.innerHTML='<b>'+pick('ทำครบทุกหน้าที่พร้อมแล้ว','All ready pages done')+'</b>'; nx.removeAttribute('href'); } }
+  nodes.forEach(el=>el.querySelector('a.stop').addEventListener('click',()=>MC.markVisited(el.dataset.page)));
+  document.getElementById('pReset').addEventListener('click',()=>{ MC.resetVisited(); paint(); });
+  paint();
+
+  /* ---------- hero: battery, switch, two lamps in parallel ---------- */
+  const cv=document.getElementById('hero');
+  const ckt=new CK.Circuit({ ground:'g',
+    nodes:{ a:[0,0], s1:[1.4,0], s2:[3.2,0], b:[5,0], c:[8,0], d:[8,2.6], e:[5,2.6], g:[0,2.6] },
+    parts:[ {id:'B',name:'9 V',type:'V',a:'a',b:'g',value:9,battery:true,valText:'',side:-1},
+            {type:'W',a:'a',b:'s1'}, {id:'S',name:pick('สวิตช์','switch'),type:'S',a:'s1',b:'s2',closed:true,valText:''},
+            {type:'W',a:'s2',b:'b'}, {type:'W',a:'b',b:'c'},
+            {id:'L1',name:pick('หลอด 1','lamp 1'),type:'lamp',a:'b',b:'e',value:18,rated:4.5,side:-1},
+            {id:'L2',name:pick('หลอด 2','lamp 2'),type:'lamp',a:'c',b:'d',value:36,rated:4.5},
+            {type:'W',a:'d',b:'e'}, {type:'W',a:'e',b:'g'} ] });
+  const view=new CK.View(cv, ckt, { speed: 70, ground:false, showI:true, pad:1.7, onToggle:()=>ckt.solve() });
+  function size(){ const r=CK.fit(cv,0.5,280); view.ctx=r.ctx; view.W=r.w; view.H=r.h; view.fit({x:4,y:6,w:r.w-8,h:r.h-12}); }
+  window.addEventListener('resize',size); size(); ckt.solve();
+  CK.loop(dt=>{ const c=view.ctx; c.fillStyle=CK.PAL.bg; c.fillRect(0,0,view.W,view.H); view.advance(dt); view.draw(); });
+})();
+</script>
+</body>
+</html>
