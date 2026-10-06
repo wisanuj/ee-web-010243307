@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="12.1 — AC Machines: Construction and the Rotating Magnetic Field">12.1 — เครื่องจักรกลไฟฟ้ากระแสสลับ: โครงสร้างและสนามแม่เหล็กหมุน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=114">
+<script src="assets/stops.js?v=114"></script><script src="assets/shell.js?v=114"></script>
+<script src="assets/circuit.js?v=114"></script><script src="assets/alg.js?v=114"></script><script src="assets/lesson.js?v=114"></script><script src="assets/ch6.js?v=114"></script>
+<script src="assets/ch8.js?v=114"></script><script src="assets/ch10.js?v=114"></script><script src="assets/ch11.js?v=114"></script><script src="assets/ch12.js?v=114"></script><script src="assets/ch12_circuits.js?v=114"></script><script src="assets/ch12ui.js?v=114"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">เครื่องจักรกลไฟฟ้ากระแสสลับ: โครงสร้างและสนามแม่เหล็กหมุน <span class="en">Three fixed coils, one turning field</span></h1>
+<h1 data-l="en">AC machines: construction and the rotating magnetic field <span class="en">Three fixed coils, one turning field</span></h1>
+
+<p class="sub" data-l="th">บทที่ 12 ใช้เอกสารประกอบการสอน "Electrical Engineering (Chapter 12) AC Machines" ของผู้สอน (11 หน้า) ซึ่งเรียงตามบทที่ 5 ของ P. C. Sen (Principles of Electric Machines and Power Electronics พิมพ์ครั้งที่ 3 หัวข้อ 5.1–5.5) และเน้นมอเตอร์เหนี่ยวนำสามเฟส (three-phase induction motor) ซึ่งเป็นมอเตอร์ที่ใช้มากที่สุดในโรงงาน เอกสารไม่มีเฉลยในห้อง ตัวเลขทุกข้อตรวจกับเฉลยของตำราแล้ว หน้านี้ครอบคลุมสไลด์หน้า 1–4: โครงสร้างของเครื่อง (ส่วน A) แล้วตอบคำถามสำคัญของบทว่า ขดลวดสามชุดที่อยู่กับที่สร้างสนามแม่เหล็กที่หมุนได้อย่างไร (ข้อ 1) และสนามหมุนเร็วเท่าใดเมื่อเปลี่ยนจำนวนขั้วหรือความถี่ (ส่วน B)</p>
+<p class="sub" data-l="en">Chapter 12 uses the instructor's handout "Electrical Engineering (Chapter 12) AC Machines" (11 slides), which follows chapter 5 of P. C. Sen, Principles of Electric Machines and Power Electronics (3rd ed., sections 5.1–5.5) and centres on the three-phase induction motor, the most common motor in industry. The handout has no class solutions; every number has been checked against the book's solutions. This page covers slides pp. 1–4: the parts of the machine (section A), then the key question of the chapter, how three coils that stay still make a magnetic field that turns (problem 1), and how fast it turns for other numbers of poles or frequencies (section B).</p>
+<div class="equation-box">$$ \begin{aligned} i_a &= I_m\cos\omega t \\ i_b &= I_m\cos(\omega t - 120^\circ) \\ i_c &= I_m\cos(\omega t + 120^\circ) \\ F(\theta, t) &= \tfrac32F_m\cos(\theta - \omega t) \\ n_s &= \frac{120f}{p} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>สเตเตอร์</b> (stator, ส่วนที่อยู่กับที่) คือแกนเหล็กแผ่นบางซ้อนกันที่มีขดลวดสามเฟสวางในร่อง ห่างกัน 120° ทางไฟฟ้า ต่อแบบวาย (Y) หรือเดลตา (Δ) ก็ได้ <b>โรเตอร์</b> (rotor, ส่วนที่หมุน) มีสองแบบ คือกรงกระรอก (squirrel cage) และแบบพันขดลวด (wound rotor) ที่ต่อออกทางวงแหวนลื่น (สไลด์หน้า 2–3, ส่วน A)</li>
+  <li><b>สนามแม่เหล็กหมุน</b>: กระแสสามเฟสที่ห่างกัน 120° ในขดลวดที่วางห่างกัน 120° รวมกันได้สนามขนาดคงที่ \(1.5F_m\) ที่หมุนรอบช่องอากาศ แม้ไม่มีชิ้นส่วนใดหมุนเลย (สไลด์หน้า 4, ข้อ 1)</li>
+  <li><b>ความเร็วซิงโครนัส</b> (synchronous speed) \(n_s = 120f/p\) รอบต่อนาที (revolutions per minute, rpm) เมื่อ p คือจำนวนขั้ว ไฟ 50 Hz: 2 ขั้ว 3000 rpm, 4 ขั้ว 1500 rpm, 6 ขั้ว 1000 rpm (ส่วน B)</li>
+  <li><b>กลับทิศหมุน</b>: สลับสายของสองเฟสใดก็ได้ ลำดับเฟสกลับ สนามจึงหมุนกลับทิศ (ข้อ 1 ขั้นที่ 5)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li>The <b>stator</b> (the part that stays still) is a core of thin steel laminations with a three-phase winding in its slots, 120 electrical degrees apart, connected in Y or Δ. The <b>rotor</b> (the part that turns) is either a squirrel cage or a wound rotor brought out through slip rings (slides pp. 2–3, section A).</li>
+  <li><b>The rotating magnetic field</b>: three-phase currents 120° apart, in windings placed 120° apart, add up to a field of constant size \(1.5F_m\) that travels round the air gap, although nothing turns (slide p. 4, problem 1).</li>
+  <li><b>The synchronous speed</b> is \(n_s = 120f/p\) revolutions per minute (rpm), with p the number of poles. On 50 Hz: 2 poles 3000 rpm, 4 poles 1500 rpm, 6 poles 1000 rpm (section B).</li>
+  <li><b>Reversing</b>: swap any two supply leads; the phase sequence reverses and so does the field (problem 1, step 5).</li></ul></section>
+
+<div class="slides"><figure class="slide q"><img src="slides/ch12/p01.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 1, AC Machines: contents: constructional features, rotating magnetic field, induced voltages, poly-phase induction machine, three modes of operation, example. The footer reads Chapter 13 AC machines">
+    <figcaption data-l="th">สไลด์หน้า 1: หัวข้อของบท (ท้ายสไลด์ทุกหน้าเขียน "Chapter 13" ซึ่งติดมาจากต้นแบบ บทนี้คือบทที่ 12) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 1: the chapter's topics (every slide's footer says "Chapter 13", left over from the template; this is chapter 12) · tap to enlarge</figcaption></figure></div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>โครงสร้างของเครื่อง</a><a href="#ex1"><b>1</b>สนามแม่เหล็กหมุน (สไลด์หน้า 4)</a><a href="#tB"><b>B</b>จำนวนขั้วและความเร็ว</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>The parts of the machine</a><a href="#ex1"><b>1</b>The rotating field (slide p. 4)</a><a href="#tB"><b>B</b>Poles and speed</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">โครงสร้างของมอเตอร์เหนี่ยวนำสามเฟส</h2><h2 data-l="en">The parts of a three-phase induction motor</h2>
+    <div class="src" data-l="th">สไลด์หน้า 2–3 · P. C. Sen หัวข้อ 5.1</div><div class="src" data-l="en">Slides pp. 2–3 · P. C. Sen, section 5.1</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch12/p02.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 2, Constructional Features: photographs of an induction machine with its enclosure and of a stator with its three-phase winding. The stator is composed of laminations of high-grade sheet steel; a three-phase winding is put in slots cut on the inner surface of the stator frame">
+      <figcaption data-l="th">สไลด์หน้า 2 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 2 · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch12/p03.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 3, Constructional Features: photographs of a squirrel-cage rotor and of a wound-rotor type; a cross-sectional view of the machine with the stator, the rotor and the coil sides a, a′, b, b′, c, c′; a Y-connected stator winding and a Δ-connected stator winding">
+      <figcaption data-l="th">สไลด์หน้า 3: โรเตอร์สองแบบ ภาพตัดขวาง และการต่อขดลวดสเตเตอร์แบบวายและเดลตา (บทที่ 9)</figcaption><figcaption data-l="en">Slide p. 3: the two rotors, a cross-section, and the stator winding in Y and in Δ (chapter 9)</figcaption></figure></div>
+  <p class="lead" data-l="th">ภาพตัดขวางของเครื่อง 2 ขั้ว: ขดลวดของเฟส a (แดง) b (เหลือง) และ c (ฟ้า) วางในร่องของสเตเตอร์ ตัวอักษรมีขีด เช่น a′ คือด้านขากลับของขดลวดเดียวกัน ⊙ คือกระแสพุ่งออกจากจอ ⊗ คือพุ่งเข้าจอ ในภาพนี้จ่ายไฟสามเฟสอยู่ แถบสีในช่องอากาศคือสนามแม่เหล็กหมุน (ส้ม = N ม่วง = S) และโรเตอร์หมุนช้ากว่าสนามเล็กน้อย จึงมีกระแสเหนี่ยวนำในแท่งตัวนำ ทางขวาคือโรเตอร์เมื่อมองด้านข้าง กดเลือกส่วนที่จะดู และสลับชนิดของโรเตอร์ได้</p>
+  <p class="lead" data-l="en">A cross-section of a 2-pole machine: the coils of phase a (red), b (yellow) and c (blue) lie in the stator slots; a primed letter such as a′ is the return side of the same coil; ⊙ is current out of the screen, ⊗ into it. The machine is on a three-phase supply here: the coloured band in the air gap is the rotating field (orange = N, purple = S), and the rotor turns a little slower than the field, so the bars carry induced currents. On the right is the rotor seen from the side. Pick a part, and switch the type of rotor.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">สไลด์หน้า 4: กระแสสามเฟสสร้างสนามแม่เหล็กหมุนได้อย่างไร</h2><h2 data-l="en">Slide p. 4: how three-phase currents make a rotating magnetic field</h2>
+    <div class="src" data-l="th">สไลด์หน้า 4 · P. C. Sen หัวข้อ 5.2 (วิธีวิเคราะห์) · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Slide p. 4 · P. C. Sen, section 5.2 (the analytical method) · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch12/p04.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 4, Rotating Magnetic Field: each phase winding will produce similar sinusoidally distributed mmf waves, but displaced by 120 electrical degrees in space from each other. Let us now consider a balanced three-phase current flowing through the three-phase windings. The currents are ia = Im cos ωt, ib = Im cos(ωt − 120°), ic = Im cos(ωt + 120°); an arrow down to n = (2/p) f 60 = 120f/p">
+    <figcaption data-l="th">สไลด์หน้า 4 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 4 · tap to enlarge</figcaption></figure>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>ขดลวดสามเฟสวางห่างกัน 120° ทางไฟฟ้า แต่ละเฟสสร้าง mmf ที่มีค่าสูงสุด \(F_m\) และกระจายแบบไซน์รอบช่องอากาศ เมื่อจ่ายกระแสสามเฟสสมดุลตามสไลด์หน้า 4 จงแสดงว่า mmf ลัพธ์มีขนาดคงที่และหมุนรอบช่องอากาศ จงหาขนาดของ mmf ลัพธ์เทียบกับ \(F_m\) และความเร็วของสนามในเครื่อง 4 ขั้วที่ใช้ไฟ 50 Hz</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>Three phase windings are placed 120 electrical degrees apart; each makes an mmf with peak \(F_m\), distributed as a sine round the air gap. With the balanced three-phase currents of slide p. 4, show that the resultant mmf has a constant size and travels round the air gap. Find the size of the resultant relative to \(F_m\), and the speed of the field in a 4-pole machine on 50 Hz.</p></div>
+  <p class="lead" data-l="th">ภาพจำลองจ่ายกระแสทีละเฟสตามขั้น: ลูกศรสีของแต่ละเฟสชี้ตามแกนของเฟสนั้นและยาวตามกระแส ลูกศรสีขาวคือลัพธ์ จุดสีขาวคือรอยที่ปลายลูกศรลัพธ์ผ่านไป กราฟข้างภาพคือกระแสตามเวลา (เส้นตั้งคือขณะนี้) และเส้นประคือขนาดของลัพธ์ ขั้นที่ 3 ครบสามเฟส ขั้นที่ 5 สลับเฟส ขั้นที่ 6 เปลี่ยนเป็น 4 ขั้ว <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The simulation adds the phases one step at a time: each phase's coloured arrow points along its axis with a length set by its current, the white arrow is the resultant and the white dots trace its tip. The graph beside it is the currents against time (the vertical line is now) and the dashed line is the size of the resultant. Step 3 has all three phases, step 5 swaps two, step 6 changes to 4 poles. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">จำนวนขั้ว ความถี่ และความเร็วซิงโครนัส</h2><h2 data-l="en">Poles, frequency and the synchronous speed</h2>
+    <div class="src" data-l="th">สไลด์หน้า 4 · P. C. Sen หัวข้อ 5.2</div><div class="src" data-l="en">Slide p. 4 · P. C. Sen, section 5.2</div></div></div>
+  <p class="lead" data-l="th">เครื่อง p ขั้วมีขดลวดของแต่ละเฟสซ้ำกัน p/2 ชุดรอบสเตเตอร์ สนามจึงมี N และ S สลับกัน p ตำแหน่ง และหมุนทางกลช้าลงเมื่อจำนวนขั้วมากขึ้น เลือกจำนวนขั้ว ความถี่ และลำดับเฟส: แถบสีในช่องอากาศหมุนให้เห็นจริง ส่วนความเร็วจริงอ่านได้ในแผง (ภาพจำลองเล่นช้าลงเท่ากันทุกกรณี ความเร็วในภาพจึงเทียบกันได้)</p>
+  <p class="lead" data-l="en">A p-pole machine repeats each phase winding p/2 times round the stator, so the field has p alternating N and S regions and turns mechanically slower as the poles increase. Pick the number of poles, the frequency and the phase sequence: the band in the air gap turns before your eyes, and the panel gives the real speed (the simulation is slowed down by the same factor every time, so its speeds compare fairly).</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 2 ตำแหน่ง</div><div class="src" data-l="en">Give at least 2 decimal places</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — โครงสร้าง</h3>
+    <ol><li>ส่วน A เลือกขดลวดสเตเตอร์: ด้านของขดลวดเรียงรอบสเตเตอร์เป็น a, c′, b, a′, c, b′ (ทวนเข็มนาฬิกา) ห่างกันทีละ 60°</li>
+    <li>สลับเป็นโรเตอร์แบบพันขดลวด: ในภาพตัดขวางเห็นขดลวดสามเฟสแทนแท่งตัวนำ และด้านข้างมีวงแหวนลื่นสามวง</li>
+    <li>คำถาม: โรเตอร์แบบกรงกระรอกไม่ได้ต่อสายกับอะไรเลย แล้วกระแสในแท่งตัวนำมาจากไหน (ดูหน้า 12.2)</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — สนามหมุน</h3>
+    <ol><li>ข้อ 1 ขั้นที่ 1 กับขั้นที่ 3: เฟสเดียวให้สนามพัลส์อยู่กับที่ สามเฟสให้สนามหมุนขนาดคงที่ 1.5 เท่า</li>
+    <li>ส่วน B เปลี่ยน 2 ขั้วเป็น 4 ขั้ว: มี N และ S อย่างละสองตำแหน่ง และสนามหมุนช้าลงครึ่งหนึ่ง (3000 → 1500 rpm ที่ 50 Hz)</li>
+    <li>เปลี่ยน 50 Hz เป็น 60 Hz: ความเร็วเพิ่ม 20 % มอเตอร์ไทย (50 Hz) กับมอเตอร์อเมริกา (60 Hz) ที่มีจำนวนขั้วเท่ากันจึงหมุนเร็วต่างกัน</li></ol>
+    <div class="book">เอกสารประกอบการสอนบทที่ 12 หน้า 1–4 · P. C. Sen บทที่ 5 (หัวข้อ 5.1–5.2)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — the parts</h3>
+    <ol><li>In section A pick the stator winding: the coil sides go round the stator as a, c′, b, a′, c, b′ (counterclockwise), 60° apart.</li>
+    <li>Switch to the wound rotor: the cross-section shows a three-phase winding instead of bars, and the side view has three slip rings.</li>
+    <li>Question: a squirrel-cage rotor is connected to nothing at all, so where does the current in its bars come from? (See page 12.2.)</li></ol></div>
+  <div class="card"><h3>Try this 2 — the rotating field</h3>
+    <ol><li>Problem 1, step 1 against step 3: one phase gives a field that pulsates in place, three phases a turning field of constant size, 1.5 times as large.</li>
+    <li>In section B change 2 poles to 4: there are two N and two S regions, and the field turns half as fast (3000 → 1500 rpm on 50 Hz).</li>
+    <li>Change 50 Hz to 60 Hz: the speed rises by 20 %, so a Thai (50 Hz) and an American (60 Hz) motor with the same poles run at different speeds.</li></ol>
+    <div class="book">Chapter 12 handout pp. 1–4 · P. C. Sen, chapter 5 (sections 5.1–5.2)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, T = CH6.text, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id), D2R = Math.PI / 180;
+  const PHC = [CH12.COL.a, CH12.COL.b, CH12.COL.c];
+  CH12.problem(1, 'rmf');
+
+  /* =================================================================== A: the parts of the machine */
+  const SA = { sel: 'winding', rotor: 'cage', run: true, wt: 0.4, rot: 0 };
+  const INFO = {
+    frame: t('<b>โครง (frame)</b> คือเปลือกนอกที่ยึดแกนสเตเตอร์ไว้และปกป้องทั้งเครื่อง มักมีครีบระบายความร้อนและฐานยึด (รูปซ้ายของสไลด์หน้า 2 คือเครื่องที่มีเปลือกครบ)', '<b>The frame</b> is the outer shell that holds the stator core and protects the whole machine, usually with cooling fins and mounting feet (the left photograph on slide p. 2 is a machine in its enclosure).'),
+    stator: t('<b>แกนสเตเตอร์ (stator core)</b> ทำจากแผ่นเหล็กกล้าเกรดสูงบางซ้อนกัน เพื่อลดกระแสไหลวน (หน้า 10.3) ผิวด้านในมีร่อง (slot) สำหรับวางขดลวดสามเฟส (สไลด์หน้า 2)', '<b>The stator core</b> is built of thin laminations of high-grade sheet steel to cut eddy currents (page 10.3); its inner surface has slots for the three-phase winding (slide p. 2).'),
+    winding: t('<b>ขดลวดสเตเตอร์สามเฟส</b>: ขดลวดของเฟส a, b, c วางในร่อง ห่างกัน 120° ทางไฟฟ้า ต่อแบบวาย (Y) หรือเดลตา (Δ) (สไลด์หน้า 3) ตัวอักษรมีขีดคือด้านขากลับของขดลวด เมื่อจ่ายไฟสามเฟส ขดลวดทั้งสามสร้างสนามแม่เหล็กหมุน (ข้อ 1) ⊙/⊗ เปลี่ยนตามกระแสขณะนั้น', '<b>The three-phase stator winding</b>: the coils of phases a, b, c lie in the slots 120 electrical degrees apart, connected in Y or Δ (slide p. 3); a primed letter is the return side of a coil. On a three-phase supply the three windings make a rotating field (problem 1); the ⊙/⊗ marks follow the currents of the moment.'),
+    gap: t('<b>ช่องอากาศ (air gap)</b> ระหว่างสเตเตอร์กับโรเตอร์แคบมากในเครื่องจริง (ภาพนี้ขยายให้เห็น) สนามแม่เหล็กหมุนอยู่ในช่องนี้ แถบสีส้มคือขั้ว N ม่วงคือขั้ว S เพราะมีช่องอากาศ มอเตอร์เหนี่ยวนำจึงต้องใช้กระแสกระตุ้นมากกว่าหม้อแปลงมาก (30–50 % ของกระแสพิกัด, P. C. Sen หัวข้อ 5.7)', '<b>The air gap</b> between stator and rotor is very narrow in a real machine (widened here). The rotating field lives in it: orange is N, purple is S. Because of the gap an induction motor needs far more magnetizing current than a transformer (30–50 % of rated current, P. C. Sen, section 5.7).'),
+    rotor: t('<b>แกนโรเตอร์ (rotor core)</b> คือแผ่นเหล็กบางซ้อนเป็นทรงกระบอกบนเพลา มีร่องที่ผิวสำหรับตัวนำของโรเตอร์ โรเตอร์ไม่ได้รับไฟจากภายนอกโดยตรง กระแสในโรเตอร์เกิดจากการเหนี่ยวนำ เครื่องนี้จึงเรียกว่ามอเตอร์เหนี่ยวนำ (induction motor)', '<b>The rotor core</b> is a cylinder of thin laminations on the shaft, with slots at its surface for the rotor conductors. The rotor gets no supply of its own: its currents are induced, which is why this is called an induction motor.'),
+    cage: t('<b>โรเตอร์กรงกระรอก (squirrel-cage rotor)</b>: แท่งตัวนำ (อะลูมิเนียมหรือทองแดง) วางในร่อง ปลายทั้งสองข้างต่อลัดวงจรกันด้วยวงแหวนปลาย (end ring) มองด้านข้างจึงเหมือนกรงกระรอก ทนทาน ราคาถูก ไม่มีแปรงถ่าน (สไลด์หน้า 3) ⊙/⊗ บนแท่งคือกระแสเหนี่ยวนำ ซึ่งเกิดเพราะโรเตอร์หมุนช้ากว่าสนาม', '<b>The squirrel-cage rotor</b>: bars (aluminium or copper) in the slots, shorted together at both ends by end rings, so from the side it looks like a squirrel cage. It is rugged, cheap and has no brushes (slide p. 3). The ⊙/⊗ marks on the bars are induced currents, which appear because the rotor turns slower than the field.'),
+    wound: t('<b>โรเตอร์แบบพันขดลวด (wound rotor)</b>: ขดลวดสามเฟสแบบเดียวกับสเตเตอร์ ปลายต่อออกมาที่วงแหวนลื่น (slip rings) สามวงที่มีแปรงถ่านแตะอยู่ จึงต่อความต้านทานภายนอกเข้าวงจรโรเตอร์ได้ (สไลด์หน้า 3) และวัดแรงดันของโรเตอร์ได้ (หน้า 12.2)', '<b>The wound rotor</b>: a three-phase winding like the stator\'s, brought out to three slip rings with brushes, so an external resistance can be put in the rotor circuit (slide p. 3) and the rotor voltage can be measured (page 12.2).'),
+    shaft: t('<b>เพลา (shaft)</b> ส่งแรงบิดของโรเตอร์ออกไปยังโหลด ขีดดำบนเพลาแสดงว่าโรเตอร์หมุนอยู่', '<b>The shaft</b> carries the rotor\'s torque out to the load; the black mark on it shows the rotor turning.') };
+  const PA = CH10.pane($('cvA'), W => W < 560 ? W * 1.3 : W * 0.6);
+  LS.anim($('cvA'), dt => { const { ctx, W, H } = PA; if (SA.run) { SA.wt += dt * 0.7; SA.rot += dt * 0.7 * 0.93; } ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    CH12.machine(ctx, { x: 0, y: 0, w: W, h: H }, { p: 2, wt: SA.wt, rot: SA.rot, slip: 0.07, rotor: SA.rotor, sel: SA.sel, side: true, title: t('ภาพตัดขวางของมอเตอร์เหนี่ยวนำ 2 ขั้ว', 'cross-section of a 2-pole induction motor') }); });
+  const pA = $('pA');
+  ui.h2(pA, t('เลือกส่วน', 'Pick a part')); ui.radio(pA, CH12.PARTS.map(([id, nm]) => ({ id: 'a_' + id, label: t(...nm.map(s => s.replace(/ \(.*\)/, ''))), on: id === SA.sel })), id => { SA.sel = id.slice(2); showA(); });
+  ui.h2(pA, t('ชนิดของโรเตอร์', 'Type of rotor')); ui.radio(pA, [{ id: 'aCage', label: t('กรงกระรอก', 'squirrel cage'), on: true }, { id: 'aWound', label: t('พันขดลวด', 'wound rotor') }], id => { SA.rotor = id === 'aCage' ? 'cage' : 'wound'; showA(); });
+  ui.buttons(pA, [{ label: t('หมุน', 'Turning'), on: true, onclick: el => { SA.run = !SA.run; el.classList.toggle('on', SA.run); } }]);
+  function showA() { const key = SA.sel === 'bars' ? SA.rotor : SA.sel; $('wA').innerHTML = `<div class="answer">${INFO[key]}</div>`; MC.renderMath($('wA')); }
+  showA();
+
+  /* =================================================================== B: poles, frequency and the synchronous speed */
+  const SB = { p: 4, f: 50, seq: 1, run: true, wt: 0, k: 1 };
+  const PB = CH10.pane($('cvB'), W => W >= 560 ? W * 0.56 : W * 1.3);
+  LS.anim($('cvB'), dt => { const { ctx, W, H } = PB, wide = W >= 560, [b1, b2] = CH12.split({ x: 0, y: 0, w: W, h: H }, wide, wide ? 0.5 : 0.56);
+    if (SB.run) SB.wt += dt * 1.2 * SB.k * (SB.f / 50);   // ωt advances ∝ f; the field's mechanical speed on screen is then ∝ f/p (one slow-down factor)
+    ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    CH12.machine(ctx, b1, { p: SB.p, wt: SB.wt, seq: SB.seq, vec: SB.p === 2, rotor: 'cage', side: false, labels: SB.p <= 4, title: W < 640 ? '' : t(`${SB.p} ขั้ว ${SB.f} Hz`, `${SB.p} poles, ${SB.f} Hz`) });
+    const sigs = [0, 1, 2].map(j => { const sh = j === 0 ? 0 : j === 1 ? -SB.seq * 120 : SB.seq * 120; return { f: d => Math.cos((d + sh) * D2R), color: PHC[j], label: ['i_a', 'i_b', 'i_c'][j], mag: 1, g: 'i', w: 2.2 }; });
+    CH6.waves(ctx, b2, sigs, { now: SB.wt, span: 720, title: W < 640 ? '' : t('กระแสสามเฟส (ลำดับ ' + (SB.seq > 0 ? 'a–b–c' : 'a–c–b') + ')', 'three-phase currents (sequence ' + (SB.seq > 0 ? 'a–b–c' : 'a–c–b') + ')') }); });
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('จำนวนขั้ว', 'Number of poles')); ui.radio(pB, [2, 4, 6, 8].map(p => ({ id: 'bp' + p, label: String(p), on: p === SB.p })), id => { SB.p = +id.slice(2); showB(); });
+  ui.h2(pB, t('ความถี่ของไฟ', 'Supply frequency')); ui.radio(pB, [50, 60].map(f => ({ id: 'bf' + f, label: `${f} Hz`, on: f === SB.f })), id => { SB.f = +id.slice(2); showB(); });
+  ui.h2(pB, t('ลำดับเฟส', 'Phase sequence')); ui.radio(pB, [{ id: 'bsA', label: 'a–b–c', on: true }, { id: 'bsB', label: t('a–c–b (สลับ b, c)', 'a–c–b (b, c swapped)') }], id => { SB.seq = id === 'bsA' ? 1 : -1; showB(); });
+  ui.h2(pB, t('ภาพจำลอง', 'Simulation')); ui.buttons(pB, [{ label: t('หยุด', 'Pause'), on: true, onclick: el => { SB.run = !SB.run; el.textContent = SB.run ? t('หยุด', 'Pause') : t('เล่นต่อ', 'Resume'); el.classList.toggle('on', SB.run); } },
+    { label: t('ช้าลง', 'Slower'), onclick: () => { SB.k = Math.max(0.25, SB.k / 2); } }, { label: t('เร็วขึ้น', 'Faster'), onclick: () => { SB.k = Math.min(4, SB.k * 2); } }]);
+  pB.appendChild(mB); mB.className = 'metrics';
+  function showB() { const ns = CH12.ns(SB.f, SB.p), wm = CH12.rad(ns);
+    mB.innerHTML = ui.kv([['n_s = 120f/p', `${fd(ns, 0)} rpm`], ['ω_m = 2πn_s/60', `${fd(wm, 2)} rad/s`], [t('หนึ่งรอบใช้เวลา', 'one turn takes'), `${fd(60000 / ns, 1)} ms`], [t('ขั้ว N / S', 'N / S regions'), `${SB.p / 2} / ${SB.p / 2}`]]);
+    $('wB').innerHTML = `<div class="answer">${t(`เครื่อง ${SB.p} ขั้วที่ ${SB.f} Hz: \\(n_s = \\dfrac{120(${SB.f})}{${SB.p}} = ${fd(ns, 0)}\\) rpm สนามหมุน${SB.seq > 0 ? 'ทวนเข็มนาฬิกา (ลำดับ a–b–c)' : 'ตามเข็มนาฬิกา เพราะสลับเฟส b กับ c'} ${SB.p > 2 ? `มุมทางไฟฟ้า 360° ครอบคลุมเพียง ${fd(720 / SB.p, 0)}° ทางกล` : 'หนึ่งรอบของกระแสคือหนึ่งรอบของสนาม'}`, `A ${SB.p}-pole machine on ${SB.f} Hz: \\(n_s = \\dfrac{120(${SB.f})}{${SB.p}} = ${fd(ns, 0)}\\) rpm, the field turning ${SB.seq > 0 ? 'counterclockwise (sequence a–b–c)' : 'clockwise, because b and c are swapped'}. ${SB.p > 2 ? `360 electrical degrees span only ${fd(720 / SB.p, 0)} mechanical degrees.` : 'One cycle of the current is one turn of the field.'}`)}</div>`;
+    MC.renderMath($('wB')); }
+  showB();
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  CH6.quiz('quiz', [
+    { q: t('1) มอเตอร์เหนี่ยวนำ 6 ขั้วต่อกับไฟ 50 Hz จงหาความเร็วซิงโครนัส', '1) A 6-pole induction motor is on a 50 Hz supply. Find its synchronous speed.'),
+      fields: [{ key: 'x', lab: 'n_s =', ans: 1000, unit: 'rpm' }], work: work(R`n_s = \frac{120(50)}{6} = 1000\ \text{rpm}`) },
+    { q: t('2) มอเตอร์เหนี่ยวนำ 60 Hz หมุน 1746 rpm ที่พิกัด จงหาจำนวนขั้ว (P. C. Sen Problem 5.2(a))', '2) A 60 Hz induction motor runs at 1746 rpm at full load. Find its number of poles (P. C. Sen Problem 5.2(a)).'),
+      fields: [{ key: 'x', lab: 'p =', ans: 4 }], work: work(R`p \approx \frac{120(60)}{1746} = 4.12 \Rightarrow p = 4,\quad n_s = 1800\ \text{rpm}`, `<p>${t('มอเตอร์เหนี่ยวนำหมุนช้ากว่าความเร็วซิงโครนัสเล็กน้อยเสมอ จำนวนขั้วจึงเป็นเลขคู่ที่ทำให้ \\(n_s\\) สูงกว่าความเร็วจริงเพียงเล็กน้อย (หน้า 12.2)', 'An induction motor always runs a little below synchronous speed, so p is the even number that puts \\(n_s\\) just above the actual speed (page 12.2).')}</p>`) },
+    { q: t('3) เครื่อง 2 ขั้ว 60 Hz จงหาความเร็วเชิงมุมทางกลของสนามหมุนในหน่วย rad/s', '3) A 2-pole machine on 60 Hz: find the mechanical angular speed of its rotating field in rad/s.'),
+      fields: [{ key: 'x', lab: 'ω_m =', ans: 2 * Math.PI * 60, unit: 'rad/s' }], work: work(R`n_s = 3600\ \text{rpm},\quad \omega_m = \frac{2\pi(3600)}{60} = ${fd(2 * Math.PI * 60, 2)}\ \text{rad/s} = \omega`) },
+    { q: t('4) แต่ละเฟสสร้าง mmf สูงสุด 600 แอมแปร์-รอบ (At) จงหาขนาดของ mmf ลัพธ์ของสามเฟส', '4) Each phase makes an mmf peak of 600 ampere-turns (At). Find the size of the three-phase resultant.'),
+      fields: [{ key: 'x', lab: 'F =', ans: 900, unit: 'At' }], work: work(R`F = \tfrac32F_m = 1.5(600) = 900\ \text{At}`) },
+    { q: t('5) ต้องการมอเตอร์ที่มีความเร็วซิงโครนัส 750 rpm บนไฟ 50 Hz ต้องมีกี่ขั้ว', '5) A motor must have a synchronous speed of 750 rpm on 50 Hz. How many poles does it need?'),
+      fields: [{ key: 'x', lab: 'p =', ans: 8 }], work: work(R`p = \frac{120(50)}{750} = 8`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

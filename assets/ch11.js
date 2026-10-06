@@ -38,8 +38,9 @@ CH11.machine = (ctx, b, o = {}) => {
   const cx = narrow ? b.x + b.w / 2 : b.x + 14 + S, cy = narrow ? b.y + top + S + 4 : b.y + top + (b.h - top - 10) / 2;
   const P = (x, y) => [cx + x * S, cy - y * S];
   /* yoke */
-  ctx.save(); sector(ctx, cx, cy, 0.86 * S, S, 0, TWO_PI); ctx.fillStyle = C11.yoke; ctx.fill(); ctx.strokeStyle = C11.edge; ctx.lineWidth = 1.2; ctx.stroke(); ctx.restore();
-  sector(ctx, cx, cy, 0.86 * S, S, 0, TWO_PI); hiFill(ctx, sel === 'yoke');
+  const yoke = () => { ctx.beginPath(); ctx.arc(cx, cy, S, 0, TWO_PI); ctx.moveTo(cx + 0.86 * S, cy); ctx.arc(cx, cy, 0.86 * S, 0, TWO_PI, true); };   // a ring without a seam line
+  ctx.save(); yoke(); ctx.fillStyle = C11.yoke; ctx.fill(); ctx.strokeStyle = C11.edge; ctx.lineWidth = 1.2; ctx.stroke(); ctx.restore();
+  yoke(); hiFill(ctx, sel === 'yoke');
   /* poles: core from the yoke inwards, shoe spreading over ±42° */
   [-1, 1].forEach(sd => { const x0 = sd < 0 ? -0.875 : 0.62, w = 0.255, h = 0.17;
     const [px, py] = P(x0, h); ctx.save(); ctx.fillStyle = C11.pole; ctx.strokeStyle = C11.edge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.rect(px, py, w * S, 2 * h * S); ctx.fill(); ctx.stroke(); ctx.restore();
@@ -184,12 +185,15 @@ CH11.ts = (ctx, b, o = {}) => {
 };
 
 /* =====================================================================================================================
-   generic xy plot. o: { x: [x0, x1], y: [y0, y1], xl, yl, curves: [{f, color, w, dash}] (f may return NaN for a gap), lines: [{pts: [[x, y], …], color, w, dash}]
+   generic xy plot. o: { x: [x0, x1], y: [y0, y1], xl, yl, curves: [{f, color, w, dash, n (samples, 200)}] (f may return NaN for a gap), lines: [{pts: [[x, y], …], color, w, dash}],
+   xbands: [{x0, x1, color, label, text}] (shaded vertical ranges with a label at the top, e.g. the modes of operation)
    (data, e.g. a time history), hlines: [{y, color, label}] (dashed levels), pts: [{x, y, color, label}], bands: [{y0, y1, color, label}]
    (shaded horizontal regions, e.g. Ia > 0 motor, Ia < 0 generator), title, xt, yt (tick steps), xfmt (tick text) } */
 CH11.plot = (ctx, b, o = {}) => {
   CH6.bg(ctx, b); const top = o.title ? 30 : 12, ml = 54, mr = 14, mb = 36, [x0, x1] = o.x, [y0, y1] = o.y;
   const X = x => b.x + ml + (b.w - ml - mr) * (x - x0) / (x1 - x0), Y = y => b.y + top + 6 + (b.h - top - mb - 6) * (1 - (y - y0) / (y1 - y0));
+  (o.xbands || []).forEach(q => { const xa = X(Math.max(x0, Math.min(x1, q.x0))), xb = X(Math.max(x0, Math.min(x1, q.x1))); ctx.save(); ctx.fillStyle = q.color; ctx.fillRect(xa, Y(y1), xb - xa, Y(y0) - Y(y1)); ctx.restore();
+    if (q.label && xb - xa > 30) CH8.lab(ctx, tt(q.label), (xa + xb) / 2, Y(y1) + 13, 'center', q.text || COL.muted, 12, { x: xa, y: b.y, w: xb - xa, h: b.h }, '600'); });
   (o.bands || []).forEach(q => { const ya = Y(Math.min(y1, Math.max(y0, q.y1))), yb = Y(Math.max(y0, Math.min(y1, q.y0))); ctx.save(); ctx.fillStyle = q.color; ctx.fillRect(X(x0), ya, X(x1) - X(x0), yb - ya); ctx.restore();
     if (q.label) T(ctx, tt(q.label), X(x0) + 8, (ya + yb) / 2, { align: 'left', color: q.text || COL.muted, size: 12.5, weight: '600' }); });
   const xs = o.xt || CH10.nice((x1 - x0) / 5), ys = o.yt || CH10.nice((y1 - y0) / 5);
@@ -202,7 +206,7 @@ CH11.plot = (ctx, b, o = {}) => {
   ctx.save(); ctx.beginPath(); ctx.rect(X(x0), Y(y1), X(x1) - X(x0), Y(y0) - Y(y1)); ctx.clip();
   (o.hlines || []).forEach(q => { ctx.save(); ctx.strokeStyle = q.color || COL.muted; ctx.lineWidth = 1.4; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.moveTo(X(x0), Y(q.y)); ctx.lineTo(X(x1), Y(q.y)); ctx.stroke(); ctx.restore(); });
   (o.curves || []).forEach(c => { ctx.save(); ctx.strokeStyle = c.color; ctx.lineWidth = c.w || 2.6; if (c.dash) ctx.setLineDash(c.dash); ctx.beginPath(); let pen = false;
-    for (let j = 0; j <= 200; j++) { const x = x0 + (x1 - x0) * j / 200, y = c.f(x); if (!isFinite(y)) { pen = false; continue; } pen ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); pen = true; } ctx.stroke(); ctx.restore(); });
+    const N = c.n || 200; for (let j = 0; j <= N; j++) { const x = x0 + (x1 - x0) * j / N, y = c.f(x); if (!isFinite(y)) { pen = false; continue; } pen ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); pen = true; } ctx.stroke(); ctx.restore(); });
   (o.lines || []).forEach(c => { if (!c.pts || c.pts.length < 2) return; ctx.save(); ctx.strokeStyle = c.color; ctx.lineWidth = c.w || 2.6; if (c.dash) ctx.setLineDash(c.dash); ctx.beginPath();
     c.pts.forEach((q, j) => j ? ctx.lineTo(X(q[0]), Y(q[1])) : ctx.moveTo(X(q[0]), Y(q[1]))); ctx.stroke(); ctx.restore(); });
   ctx.restore();

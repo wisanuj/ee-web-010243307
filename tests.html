@@ -5,18 +5,19 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=113">
-<script src="assets/stops.js?v=113"></script><script src="assets/shell.js?v=113"></script>
-<script src="assets/circuit.js?v=113"></script><script src="assets/alg.js?v=113"></script>
-<script src="assets/ana.js?v=113"></script><script src="assets/ch4_circuits.js?v=113"></script><script src="assets/ch4ui.js?v=113"></script>
-<script src="assets/ch5.js?v=113"></script><script src="assets/ch5_circuits.js?v=113"></script>
-<script src="assets/ch6.js?v=113"></script><script src="assets/ch6_circuits.js?v=113"></script>
-<script src="assets/ch7_circuits.js?v=113"></script><script src="assets/ch7.js?v=113"></script>
-<script src="assets/ch8_circuits.js?v=113"></script><script src="assets/ch8.js?v=113"></script><script src="assets/ch8ui.js?v=113"></script>
-<script src="assets/ch9_circuits.js?v=113"></script><script src="assets/ch9.js?v=113"></script>
-<script src="assets/lesson.js?v=113"></script><script src="assets/ch6ui.js?v=113"></script><script src="assets/ch7ui.js?v=113"></script><script src="assets/ch1.js?v=113"></script><script src="assets/draw.js?v=113"></script><script src="assets/ch2.js?v=113"></script><script src="assets/ch9ui.js?v=113"></script>
-<script src="assets/ch10.js?v=113"></script><script src="assets/ch10_circuits.js?v=113"></script><script src="assets/ch10ui.js?v=113"></script>
-<script src="assets/ch11.js?v=113"></script><script src="assets/ch11_circuits.js?v=113"></script><script src="assets/ch11ui.js?v=113"></script>
+<link rel="stylesheet" href="assets/ee.css?v=114">
+<script src="assets/stops.js?v=114"></script><script src="assets/shell.js?v=114"></script>
+<script src="assets/circuit.js?v=114"></script><script src="assets/alg.js?v=114"></script>
+<script src="assets/ana.js?v=114"></script><script src="assets/ch4_circuits.js?v=114"></script><script src="assets/ch4ui.js?v=114"></script>
+<script src="assets/ch5.js?v=114"></script><script src="assets/ch5_circuits.js?v=114"></script>
+<script src="assets/ch6.js?v=114"></script><script src="assets/ch6_circuits.js?v=114"></script>
+<script src="assets/ch7_circuits.js?v=114"></script><script src="assets/ch7.js?v=114"></script>
+<script src="assets/ch8_circuits.js?v=114"></script><script src="assets/ch8.js?v=114"></script><script src="assets/ch8ui.js?v=114"></script>
+<script src="assets/ch9_circuits.js?v=114"></script><script src="assets/ch9.js?v=114"></script>
+<script src="assets/lesson.js?v=114"></script><script src="assets/ch6ui.js?v=114"></script><script src="assets/ch7ui.js?v=114"></script><script src="assets/ch1.js?v=114"></script><script src="assets/draw.js?v=114"></script><script src="assets/ch2.js?v=114"></script><script src="assets/ch9ui.js?v=114"></script>
+<script src="assets/ch10.js?v=114"></script><script src="assets/ch10_circuits.js?v=114"></script><script src="assets/ch10ui.js?v=114"></script>
+<script src="assets/ch11.js?v=114"></script><script src="assets/ch11_circuits.js?v=114"></script><script src="assets/ch11ui.js?v=114"></script>
+<script src="assets/ch12.js?v=114"></script><script src="assets/ch12_circuits.js?v=114"></script><script src="assets/ch12ui.js?v=114"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -744,6 +745,43 @@ T('11.2 coil torque (CH11.coilT): one coil with a commutator averages 2/π = 0.6
 T('11 drawings: CH11.machine, coilView, flow, ts and plot draw without errors at 320, 600 and 1100 px, and the machine keeps its commutator view inside the box', (() => { let ok = true; [320, 600, 1100].forEach(w => { const c = cv8n(w), ctx = c.getContext('2d'), h = Math.round(w * (w < 560 ? 1.3 : 0.6)), b = { x: 0, y: 0, w, h };
   try { const m = CH11.machine(ctx, b, { sel: 'comm', ang: 0.3, st: { dt: 0.016 }, forces: true }); if (m.ey + m.rc * 1.9 + 18 + 6 > h + 0.5 || m.ex + m.rc > w) ok = false; CH11.coilView(ctx, b, { phi: 0.4, n: 2 }); CH11.flow(ctx, b, { Pin: 1000, cu: [{ label: 'a', v: 50 }], rot: [{ label: 'r', v: 30 }], title: 'x' });
     CH11.ts(ctx, b, { Tmax: 80, nmax: 3000, curves: [{ f: T => CH11.model('series', T).n, color: '#fff', label: 's' }], load: { f: T => 30 * T, label: 'l' }, ops: [{ T: 40, n: 1422, label: 'p' }] }); CH11.plot(ctx, b, { x: [0, 10], y: [-1, 1], curves: [{ f: x => Math.sin(x), color: '#fff' }], lines: [{ pts: [[0, 0], [5, 1]], color: '#fff' }], hlines: [{ y: 0.5, label: 'h' }], pts: [{ x: 2, y: 0, label: 'p' }] }); }
+  catch (e) { ok = false; } }); return ok; })(), 'true');
+
+/* --- chapter 12: AC machines, the three-phase induction machine (ch12.js, ch12_circuits.js, ch12ui.js) against P. C. Sen; the handout gives no solutions --- */
+const h12 = CH12C, s12 = sp => { const c = new Circuit(sp); c.solve(); return c; }, f12 = (x, d = 4) => CH6.fd(x, d), m12 = z => Math.hypot(z.re, z.im), ang12 = z => Math.atan2(z.im, z.re) * 180 / Math.PI;
+T('12.1 rotating field (slide p. 4): three phases give |F| = 1.5 Fm at every instant with the peak at θ = ωt; phases a + b alone swing between 0.5 and 1.5 (an ellipse); with b and c swapped the peak is at −ωt', (() => { const rng = on => { let lo = 9, hi = 0; for (let k = 0; k < 720; k++) { const v = CH12.vec(k * Math.PI / 360, 1, on), r = Math.hypot(v.x, v.y); lo = Math.min(lo, r); hi = Math.max(hi, r); } return `${f12(lo)}–${f12(hi)}`; };
+  const v1 = CH12.vec(0.7, 1), v2 = CH12.vec(0.7, -1); return `${rng([1, 1, 1])} ${rng([1, 1, 0])} ${f12(Math.atan2(v1.y, v1.x))} ${f12(Math.atan2(v2.y, v2.x))}`; })(), '1.5–1.5 0.5–1.5 0.7 -0.7');
+T('12.1 CH12.mmf equals 1.5 cos(θ − ωt) for all three phases (largest difference over a 72 × 72 grid)', (() => { let e = 0; for (let i = 0; i < 72; i++) for (let j = 0; j < 72; j++) { const th = i * Math.PI / 36, wt = j * Math.PI / 36; e = Math.max(e, Math.abs(CH12.mmf(th, wt) - 1.5 * Math.cos(th - wt))); } return e; })(), 0, 1e-12);
+T('12.1 synchronous speed 120f/p: 2, 4, 6, 8 poles give 3000, 1500, 1000, 750 rpm on 50 Hz and 3600, 1800, 1200, 900 rpm on 60 Hz', [50, 60].map(f => [2, 4, 6, 8].map(p => CH12.ns(f, p)).join(',')).join(' '), '3000,1500,1000,750 3600,1800,1200,900');
+{ const E = h12.ex51; T('12.2 Example 13.1 (P. C. Sen Example 5.1): n_s = 1800, n = 1710 rpm, f2 = 3 Hz, slip rpm 90, rotor field 90 / 1800 / 0 rpm, E2s = 6.64 V per phase', `${E.ns} ${E.n} ${f12(E.f2)} ${f12(E.slipRpm)} ${E.rel.rotor}/${E.rel.stator}/${E.rel.field} ${f12(E.E2s, 2)}`, '1800 1710 3 90 90/1800/0 6.64'); }
+T('12.2 P. C. Sen Problem 5.1: (a) 23 V 6 Hz (b) 437 V 114 Hz (c) 0 V 0 Hz (d) 460 V 120 Hz (e) 230 V 60 Hz, with slips 0.1, 1.9, 0, 2, −1', h12.p51.cases.map(q => `${f12(q.V, 2)},${f12(q.f2, 2)},${f12(q.s, 3)}`).join(' '), '23,6,0.1 437,114,1.9 0,0,0 460,120,2 230,60,-1');
+{ const E = h12.ex52; T('12.3 slide p. 10 (P. C. Sen Example 5.2): P_out = 11190 W, P_mech = 11940 W, s = 0.04, P_ag = 12437.5 W, P_2 = 497.5 W', `${f12(E.Pout)} ${f12(E.Pmech)} ${f12(E.s)} ${f12(E.Pag, 2)} ${f12(E.P2, 2)}`, '11190 11940 0.04 12437.5 497.5'); }
+{ const E = h12.p57; T('12.3 P. C. Sen Problems 5.7–5.8: P_in = 17926.73, P_ag = 15926.73, P_mech = 15376.73, P_out = 15076.73 W (20.21 hp), η = 84.10 %; s = 0.034533, n = 1737.8 rpm, T_d = 84.49, T_out = 82.85 N·m',
+    `${f12(E.Pin, 2)} ${f12(E.Pag, 2)} ${f12(E.Pmech, 2)} ${f12(E.Pout, 2)} ${f12(E.hp, 2)} ${f12(100 * E.eff, 2)} ${f12(E.s, 6)} ${f12(E.n, 1)} ${f12(E.Td, 2)} ${f12(E.Tout, 2)}`, '17926.73 15926.73 15376.73 15076.73 20.21 84.1 0.034533 1737.8 84.49 82.85'); }
+{ const E = h12.ex54, M = E.m; T('12.3 P. C. Sen Example 5.4(b) at the exact slip 1/30: Z1 = 6.2018∠19.71°, I1 = 42.823∠−19.71° A, PF 0.9414, T = 163.11 N·m, P_ag = 30745.5, P_2 = 1024.9, P_mech = 29720.7, P_out = 28020.7, P_in = 32120.9 W, η = 87.24 % (the book: 42.754 A, 87.5 %, from rounding s and the PF)',
+    `${f12(m12(M.Z1))}∠${f12(ang12(M.Z1), 2)} ${f12(m12(M.I1), 3)}∠${f12(ang12(M.I1), 2)} ${f12(M.pf)} ${f12(M.T, 2)} ${f12(M.Pag, 1)} ${f12(M.P2, 1)} ${f12(M.Pmech, 1)} ${f12(M.Pout, 1)} ${f12(M.Pin, 1)} ${f12(100 * M.Pout / M.Pin, 2)}`, '6.2018∠19.71 42.823∠-19.71 0.9414 163.11 30745.5 1024.9 29720.7 28020.7 32120.9 87.24');
+  T('12.3 engine: the per-phase equivalent circuit (CH12C.eqc) carries I1 = 42.823 A rms; three times the power in R′2(1−s)/s is P_mech, three times the source power is P_in', (() => { const c = s12(h12.eqc({ s: E.s })); return `${f12(m12(c.I('V1')) / Math.SQRT2, 3)} ${f12(3 * c.P('RL'), 1)} ${f12(-3 * c.P('V1'), 1)}`; })(), '42.823 29720.7 32120.9');
+  T('12.3 the same machine: starting current 244.19 A and torque 183.62 N·m; maximum torque 429.37 N·m at s = 0.1955 (the book: 245.9 A, 185.2 and 431.68 N·m at 0.1963, from rounded Thévenin values)', (() => { const P = E.par, d = P.R1 * P.R1 + (P.X1 + P.Xm) ** 2, zr = P.Xm * P.Xm * P.R1 / d, zi = P.Xm * (P.R1 * P.R1 + P.X1 * (P.X1 + P.Xm)) / d, sT = P.R2 / Math.hypot(zr, zi + P.X2);   // Thévenin impedance seen by the rotor
+    let b = 0; for (let k = 1; k <= 20000; k++) b = Math.max(b, CH12.im(P, k / 20000).T); return `${f12(m12(E.Ist), 2)} ${f12(E.Tst, 2)} ${f12(Math.max(b, CH12.im(P, sT).T), 2)} ${f12(sT, 4)}`; })(), '244.19 183.62 429.37 0.1955'); }
+T('12.3 three modes (CH12.im): T > 0 for 0 < s ≤ 1, T < 0 for s < 0 (generating), P_mech < 0 < P_ag for s > 1 (plugging), and the rotor loss P_2 > 0 at every slip', (() => { const ok = [], m = s => CH12.im(h12.par54, s);
+  ok.push([0.01, 0.2, 1].every(s => m(s).T > 0), [-0.01, -0.2, -1].every(s => m(s).T < 0), [1.2, 2].every(s => m(s).Pmech < 0 && m(s).Pag > 0), [-1, -0.1, 0.05, 1, 2].every(s => m(s).P2 > 0)); return ok.join(' '); })(), 'true true true true');
+/* chapter 12 (Oct 2026): the problems of ch12ui.js (CH12.Pic, and CH8.Prob for the equivalent circuit) */
+{ const want = { rmf: 6, ex51: 6, p51: 5, ex52: 5, p57: 6, ex54: 5 }, got = [], bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; }, bad = [];
+  Object.keys(want).forEach(k => { const d = CH12.DEF[k], p = d.ckt ? new CH8.Prob(cv8n(), d) : new CH12.Pic(cv8n(), d), n = p.steps.length;
+    if (p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body)))) bad.push(k); got.push(`${k}:${n}`); });
+  const e54 = new CH8.Prob(cv8n(), CH12.DEF.ex54), at = (e54.set(2), e54.solved) === false && (e54.set(3), e54.solved) === true;
+  T('12 new: all six chapter 12 problems build their steps (count), every formula has balanced braces, and the equivalent circuit starts its dots at step 3', `${got.join(' ')} ${bad.join(',') || 'none'} ${at}`, 'rmf:6 ex51:6 p51:5 ex52:5 p57:6 ex54:5 none true'); }
+{ const D = CH12.DEF, ok = (d, v) => { const a = d.ask(); return a.fields.every((f, i) => f.ok(v[i], v)); }, chk = (d, v) => !!d.ask().check(v), X4 = h12.ex54.m;
+  T('12 new: try-first boxes accept the answers and name the traps: 3 Fm and 3000 rpm, the line voltage and the standstill voltage, 6 Hz against the field, P_out/(1 − s), sP_mech, the core loss, ω_s for the output torque, P_mech/ω_s, 87.5 %',
+    [ok(D.rmf, [1.5, 1500]), chk(D.rmf, [3, 0]), chk(D.rmf, [1.5, 3000]), ok(D.ex51, [1710, 3, 90, 6.64]), chk(D.ex51, [0, 0, 0, 11.5]), chk(D.ex51, [0, 0, 0, 132.79]), ok(D.p51, [23, 114, 460, 60]), chk(D.p51, [0, 6, 0, 0]),
+      ok(D.ex52, [11940, 12437.5, 497.5]), chk(D.ex52, [0, 11656.25, 0]), chk(D.ex52, [0, 0, 477.6]), ok(D.p57, [15926.73, 84.1, 1737.84, 82.85]), chk(D.p57, [16826.73, 0, 0, 0]), chk(D.p57, [0, 0, 0, 79.98]),
+      ok(D.ex54, [42.82, 0.9414, 163.11, 87.24]), chk(D.ex54, [0, 0, X4.Pmech / X4.ws, 0]), chk(D.ex54, [0, 0, 0, 87.5]), ok(D.ex54, [42.82, 0.9414, 163.11, 87.5])].join(' '),
+    'true true true true true true true true true true true true true true true true true false'); }
+T('12 drawings: CH12.machine (2–8 poles, cage and wound, slip, every part picked), CH12.flow and CH12.modes draw without errors at 320, 600 and 1100 px', (() => { let ok = true; [320, 600, 1100].forEach(w => { const c = cv8n(w), ctx = c.getContext('2d'), h = Math.round(w * (w < 560 ? 1.3 : 0.6)), b = { x: 0, y: 0, w, h };
+  try { [2, 4, 6, 8].forEach(p => ['cage', 'wound'].forEach(r => CH12.machine(ctx, b, { p, wt: 0.4, rot: 0.2, slip: 0.05, rotor: r, vec: true, trace: [[1, 0], [0.9, 0.3]] })));
+    CH12.PARTS.forEach(([id]) => CH12.machine(ctx, b, { sel: id, rotor: 'wound', side: true }));
+    CH12.flow(ctx, b, { Pin: 1000, stages: [{ label: ['a', 'a'], losses: [{ label: 'x', v: 50 }] }, { label: ['b', 'b'], losses: [{ label: 'y', v: 30, hide: true }] }], names: ['P_in', 'P_ag', 'P_out'], hide: [false, true, false], title: 'f' });
+    [0.05, -0.1, 1.5, 0].forEach(s => { const m = CH12.im(h12.par54, s); CH12.modes(ctx, b, { Pag: m.Pag, P2: m.P2, Pmech: m.Pmech, s }); }); }
   catch (e) { ok = false; } }); return ok; })(), 'true');
 
 /* --- formatting regressions --- */

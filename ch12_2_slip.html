@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="12.2 — Induced Voltage, Slip and Rotor Frequency">12.2 — แรงดันเหนี่ยวนำ สลิป และความถี่ของโรเตอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=114">
+<script src="assets/stops.js?v=114"></script><script src="assets/shell.js?v=114"></script>
+<script src="assets/circuit.js?v=114"></script><script src="assets/alg.js?v=114"></script><script src="assets/lesson.js?v=114"></script><script src="assets/ch6.js?v=114"></script>
+<script src="assets/ch8.js?v=114"></script><script src="assets/ch10.js?v=114"></script><script src="assets/ch11.js?v=114"></script><script src="assets/ch12.js?v=114"></script><script src="assets/ch12_circuits.js?v=114"></script><script src="assets/ch12ui.js?v=114"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">แรงดันเหนี่ยวนำ สลิป และความถี่ของโรเตอร์ <span class="en">The rotor always lags the field a little</span></h1>
+<h1 data-l="en">Induced voltage, slip and rotor frequency <span class="en">The rotor always lags the field a little</span></h1>
+
+<p class="sub" data-l="th">สนามแม่เหล็กหมุนจากหน้า 12.1 ตัดผ่านขดลวดทั้งของสเตเตอร์และของโรเตอร์ จึงเหนี่ยวนำแรงดันขึ้นในทั้งสองส่วน ตามกฎของฟาราเดย์แบบเดียวกับหม้อแปลง (สไลด์หน้า 5) ขณะโรเตอร์อยู่นิ่ง เครื่องจึงทำงานเหมือนหม้อแปลง (สไลด์หน้า 6) เมื่อโรเตอร์หมุนตามสนาม สนามแซงตัวนำของโรเตอร์ช้าลง แรงดันและความถี่ในโรเตอร์ลดลงตามสลิป (slip) ซึ่งเป็นตัวเลขสำคัญที่สุดของมอเตอร์เหนี่ยวนำ (สไลด์หน้า 7) หน้านี้มีภาพจำลองแรงดันเหนี่ยวนำในขดลวดเฟส a (ส่วน A) ภาพจำลองที่ปรับความเร็วโรเตอร์ได้ตั้งแต่หมุนสวนสนามจนแซงสนาม (ส่วน B) Example 13.1 ของสไลด์หน้า 8 (ข้อ 1) และ Problem 5.1 ของ P. C. Sen ที่วัดแรงดันระหว่างวงแหวนลื่นที่ห้าความเร็ว (ข้อ 2)</p>
+<p class="sub" data-l="en">The rotating field of page 12.1 sweeps past the coils of both the stator and the rotor, so it induces voltages in both, by Faraday's law exactly as in a transformer (slide p. 5). At standstill the machine therefore works like a transformer (slide p. 6). Once the rotor follows the field, the field passes the rotor conductors more slowly, and the rotor's voltage and frequency shrink with the slip, the most important number of an induction motor (slide p. 7). This page has the voltage induced in phase a (section A), a rotor whose speed you set anywhere from turning against the field to overtaking it (section B), Example 13.1 of slide p. 8 (problem 1), and P. C. Sen's Problem 5.1, which measures the slip-ring voltage at five speeds (problem 2).</p>
+<div class="equation-box">$$ \begin{aligned} E_\text{rms} &= 4.44fN_{ph}\Phi_pK_W \\ s &= \frac{n_s - n}{n_s} \\ f_2 &= sf_1 \\ E_{2s} &= sE_2 \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>แรงดันเหนี่ยวนำ</b>: ฟลักซ์ต่อขั้ว \(\Phi_p\) ที่หมุนผ่านขดลวด \(N\) รอบ เหนี่ยวนำแรงดัน \(E_\text{rms} = 4.44fN\Phi_p\) สูตรเดียวกับหม้อแปลง (หน้า 10.3) ขดลวดที่กระจายในหลายร่องต้องคูณด้วยตัวประกอบการพัน (winding factor) \(K_W \approx 0.85\text{–}0.95\) (สไลด์หน้า 5, ส่วน A)</li>
+  <li><b>ขณะโรเตอร์นิ่ง</b> (s = 1) เครื่องคือหม้อแปลง \(E_1/E_2 = N_1/N_2\) ถ้าหมุนโรเตอร์แบบพันขดลวดด้วยมือ มุมระหว่าง \(E_1\) กับ \(E_2\) เปลี่ยนตาม จึงใช้เป็นเครื่องเลื่อนเฟส (phase shifter) ได้ (สไลด์หน้า 6)</li>
+  <li><b>สลิป</b> \(s = (n_s - n)/n_s\): โรเตอร์ต้องหมุนช้ากว่าสนามเสมอ ถ้าหมุนเท่าสนามพอดี (s = 0) ตัวนำไม่ตัดฟลักซ์ ไม่มีแรงดัน ไม่มีกระแส และไม่มีแรงบิด (สไลด์หน้า 7) มอเตอร์ที่พิกัดมีสลิปราว 0.01–0.05</li>
+  <li><b>ความถี่และแรงดันของโรเตอร์</b> ลดลงตามสลิป: \(f_2 = sf_1\) และ \(E_{2s} = sE_2\) สนามที่กระแสโรเตอร์สร้างหมุน \(sn_s\) เทียบกับตัวโรเตอร์ จึงหมุนเท่า \(n_s\) เทียบสเตเตอร์ ไปพร้อมสนามสเตเตอร์ (ข้อ 1–2)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Induced voltage</b>: a flux per pole \(\Phi_p\) turning past an \(N\)-turn coil induces \(E_\text{rms} = 4.44fN\Phi_p\), the transformer formula (page 10.3); a winding spread over several slots is multiplied by the winding factor \(K_W \approx 0.85\text{–}0.95\) (slide p. 5, section A).</li>
+  <li><b>At standstill</b> (s = 1) the machine is a transformer, \(E_1/E_2 = N_1/N_2\). Turning a wound rotor by hand shifts the angle between \(E_1\) and \(E_2\), so it can serve as a phase shifter (slide p. 6).</li>
+  <li><b>The slip</b> \(s = (n_s - n)/n_s\): the rotor must always turn slower than the field. At exactly the field's speed (s = 0) its conductors cut no flux, so there is no voltage, no current and no torque (slide p. 7). Motors at full load run at a slip of about 0.01–0.05.</li>
+  <li><b>The rotor's frequency and voltage</b> shrink with the slip: \(f_2 = sf_1\) and \(E_{2s} = sE_2\). The field of the rotor currents turns at \(sn_s\) relative to the rotor, so at \(n_s\) relative to the stator, together with the stator field (problems 1–2).</li></ul></section>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>แรงดันเหนี่ยวนำ</a><a href="#tB"><b>B</b>ความเร็วโรเตอร์และสลิป</a><a href="#ex1"><b>1</b>Example 13.1 (สไลด์หน้า 8)</a><a href="#ex2"><b>2</b>P. C. Sen Problem 5.1</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Induced voltage</a><a href="#tB"><b>B</b>Rotor speed and slip</a><a href="#ex1"><b>1</b>Example 13.1 (slide p. 8)</a><a href="#ex2"><b>2</b>P. C. Sen Problem 5.1</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">แรงดันที่สนามหมุนเหนี่ยวนำในขดลวดเฟส a</h2><h2 data-l="en">The voltage the rotating field induces in phase a</h2>
+    <div class="src" data-l="th">สไลด์หน้า 5–6 · P. C. Sen หัวข้อ 5.3–5.4</div><div class="src" data-l="en">Slides pp. 5–6 · P. C. Sen, sections 5.3–5.4</div></div></div>
+  <div class="slides"><figure class="slide"><img src="slides/ch12/p05.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 5, Induced Voltage: a two-pole rotor with N and S poles inside the stator coils a, a′, b, b′, c, c′, and the flux density B(θ) as a sine wave round the air gap. For most three-phase machine windings, KW is about 0.85 to 0.95. Erms = ωNΦp/√2 = (2πf/√2)NΦp = 4.44fNΦp; therefore, for a distributed phase winding, the rms voltage per phase is Erms = 4.44fNphΦpKW">
+      <figcaption data-l="th">สไลด์หน้า 5 (บรรทัด "Therefore, for a distributed phase winding…" ซ้ำสองครั้ง บรรทัดแรกควรเป็นสำหรับขดลวดแบบรวมศูนย์) · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 5 (the line "Therefore, for a distributed phase winding…" appears twice; the first should be for a concentrated winding) · tap to enlarge</figcaption></figure>
+    <figure class="slide"><img src="slides/ch12/p06.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 6, Poly-phase induction machine. Standstill operation: if the three-phase stator windings are connected to a three-phase supply, a rotating magnetic field will be produced in the air gap; the field rotates at synchronous speed ns; E1/E2 ≈ N1/N2 = turns ratio. Phase shifter: stator phase a and rotor phase a coils with E1 and E2 at an angle β, a phasor diagram and two sine waves e1 and e2 shifted in time">
+      <figcaption data-l="th">สไลด์หน้า 6: ขณะโรเตอร์นิ่ง และเครื่องเลื่อนเฟส</figcaption><figcaption data-l="en">Slide p. 6: standstill and the phase shifter</figcaption></figure></div>
+  <p class="lead" data-l="th">ภาพจำลองเครื่อง 2 ขั้วที่จ่ายไฟสามเฟส ขดลวดเฟส a มีวงสีชมพูล้อม สนามที่หมุนทำให้ฟลักซ์ที่คล้องขดลวด a เปลี่ยน: \(\lambda_a = N\Phi_p\cos\omega t\) สูงสุดเมื่อขั้ว N หันตรงแกนของเฟส a (ทางขวา) และแรงดัน \(e_a = -d\lambda_a/dt = \omega N\Phi_p\sin\omega t\) สูงสุดเมื่อสนามหมุนไปอีก 90° กราฟด้านล่างแสดงทั้งสองค่า ลองเปลี่ยนความถี่ จำนวนรอบ ฟลักซ์ต่อขั้ว และตัวประกอบการพัน แล้วดูแรงดันในแผง</p>
+  <p class="lead" data-l="en">A 2-pole machine on a three-phase supply, with phase a's coil ringed in pink. The turning field changes the flux linking coil a: \(\lambda_a = N\Phi_p\cos\omega t\) is largest when the N pole faces phase a's axis (to the right), and the voltage \(e_a = -d\lambda_a/dt = \omega N\Phi_p\sin\omega t\) peaks a quarter turn later. The graph shows both. Change the frequency, the turns, the flux per pole and the winding factor and read the voltage in the panel.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="tB">
+  <div class="prob-head"><span class="prob-no">B</span><div><h2 data-l="th">ความเร็วของโรเตอร์ สลิป และความถี่ของโรเตอร์</h2><h2 data-l="en">Rotor speed, slip and rotor frequency</h2>
+    <div class="src" data-l="th">สไลด์หน้า 7 · เครื่อง 4 ขั้ว 60 Hz ของข้อ 1–2 · P. C. Sen หัวข้อ 5.4</div><div class="src" data-l="en">Slide p. 7 · the four-pole 60 Hz machine of problems 1–2 · P. C. Sen, section 5.4</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch12/p07.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 7, Poly-phase induction machine. Running operation: the rotor will eventually reach a steady-state speed n that is less than the synchronous speed ns at which the stator rotating field rotates in the air gap. It is obvious that at n = ns there will be no induced voltage and current in the rotor circuit, and hence no torque. The difference between the rotor speed n and the synchronous speed ns of the rotating field is called the slip s and is defined as s = (ns − n)/ns; f2 = (p/120)(ns − n) = (p/120) s ns = s f1">
+    <figcaption data-l="th">สไลด์หน้า 7 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 7 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">สนามของเครื่อง 4 ขั้ว 60 Hz หมุน 1800 rpm ส่วนความเร็วของโรเตอร์ตั้งได้ตั้งแต่ −1800 rpm (หมุนสวนสนาม) ถึง 3600 rpm (แซงสนาม) ภาพเล่นช้าลงเท่ากันทั้งสนามและโรเตอร์ ⊙/⊗ บนตัวนำของโรเตอร์คือแรงดันเหนี่ยวนำ ซึ่งเกิดเฉพาะเมื่อสนามกับโรเตอร์หมุนเร็วต่างกัน แผงข้างภาพคือแรงดันระหว่างวงแหวนลื่น (โรเตอร์นิ่งวัดได้ 230 V ที่ 60 Hz ตามข้อ 2) ลองตั้งความเร็วใกล้ 1800 rpm: ตัวนำแทบไม่มีแรงดัน ความถี่ของโรเตอร์ต่ำมาก</p>
+  <p class="lead" data-l="en">The field of a four-pole 60 Hz machine turns at 1800 rpm, and the rotor speed can be set from −1800 rpm (against the field) to 3600 rpm (overtaking it); the field and the rotor are slowed down by the same factor. The ⊙/⊗ marks on the rotor conductors are the induced voltage, which appears only when the field and the rotor turn at different speeds. The side panel is the slip-ring voltage (230 V at 60 Hz at standstill, as in problem 2). Set a speed near 1800 rpm: the conductors have almost no voltage, at a very low rotor frequency.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvB"></canvas></div><div class="card solve"><div class="panel" id="pB"></div><div id="wB" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">Example 13.1: ความเร็ว ความถี่ของโรเตอร์ สลิป และแรงดันในโรเตอร์</h2><h2 data-l="en">Example 13.1: speeds, rotor frequency, slip and rotor voltage</h2>
+    <div class="src" data-l="th">สไลด์หน้า 8 · P. C. Sen Example 5.1 (สไลด์เรียกว่า Example 13.1 ตามต้นแบบ) · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Slide p. 8 · P. C. Sen Example 5.1 (the slide calls it Example 13.1, after its template) · no class solution</div></div></div>
+  <figure class="slide q"><img src="slides/ch12/p08q.webp" width="1155" height="687" loading="lazy" decoding="async" alt="Slide 8, Poly-phase induction machine, Example 13.1: a 3φ, 460 V, 100 hp, 60 Hz, four-pole induction machine delivers rated output power at a slip of 0.05. Determine the (a) synchronous speed and motor speed; (b) speed of the rotating air gap field; (c) frequency of the rotor circuit; (d) slip rpm; (e) speed of the rotor field relative to the (i) rotor structure, (ii) stator structure, (iii) stator rotating field; (f) rotor induced voltage at the operating speed, if the stator-to-rotor turns ratio is 1:0.5">
+    <figcaption data-l="th">สไลด์หน้า 8 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 8 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">มอเตอร์ 4 ขั้ว 60 Hz หมุนที่สลิป 0.05 ภาพจำลองแสดงโรเตอร์ที่หมุนตามสนามแต่ช้ากว่า 5 % สังเกตว่าลาย ⊙/⊗ บนตัวนำของโรเตอร์เคลื่อนไปพร้อมสนาม ไม่ใช่พร้อมโรเตอร์ แผงข้างภาพเปลี่ยนตามข้อย่อย (a)–(f) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">A four-pole 60 Hz motor at a slip of 0.05. The simulation shows the rotor following the field 5 % slower; notice that the ⊙/⊗ pattern on the rotor conductors moves with the field, not with the rotor. The side panel follows parts (a)–(f). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">P. C. Sen Problem 5.1: แรงดันระหว่างวงแหวนลื่นที่ห้าความเร็ว</h2><h2 data-l="en">P. C. Sen Problem 5.1: the slip-ring voltage at five speeds</h2>
+    <div class="src" data-l="th">P. C. Sen, Principles of Electric Machines and Power Electronics พิมพ์ครั้งที่ 3, Problem 5.1 · เพิ่มจากตำราเพื่อฝึกสลิปที่ติดลบและเกิน 1 (สไลด์หน้า 6, 9) · โจทย์ใหม่ของพิมพ์ครั้งที่ 3 จึงไม่มีในคู่มือเฉลย</div><div class="src" data-l="en">P. C. Sen, Principles of Electric Machines and Power Electronics, 3rd ed., Problem 5.1 · added from the book to practise negative slips and slips above 1 (slides pp. 6, 9) · new in the 3rd edition, so it is not in the solution manual</div></div></div>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>เครื่องเหนี่ยวนำ 3 เฟส 460 V 60 Hz 4 ขั้ว โรเตอร์แบบพันขดลวดต่อแบบวาย มีแรงดัน 230 V ระหว่างวงแหวนลื่นขณะโรเตอร์อยู่นิ่ง เมื่อสเตเตอร์ต่อกับแหล่งจ่าย 3 เฟส 460 V 60 Hz โรเตอร์ต่อทางกลกับมอเตอร์กระแสตรงที่ปรับความเร็วได้ จงหาขนาดและความถี่ของแรงดันระหว่างวงแหวนลื่นเมื่อขับเครื่องเหนี่ยวนำที่ความเร็ว (a) 1620 rpm ทิศเดียวกับสนามหมุน (b) 1620 rpm ทิศตรงข้ามกับสนามหมุน (c) 1800 rpm ทิศเดียวกับสนามหมุน (d) 1800 rpm ทิศตรงข้ามกับสนามหมุน (e) 3600 rpm ทิศเดียวกับสนามหมุน</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>A 3φ, 460 V, 60 Hz, 4-pole, Y-connected wound-rotor induction machine has 230 V between the slip rings at standstill when the stator is connected to a 3φ, 460 V, 60 Hz supply. The rotor is mechanically connected to a dc motor whose speed can be changed. Determine the magnitude and frequency of the voltage between the slip rings when the induction machine is driven at (a) 1620 rpm in the same direction as the rotating field; (b) 1620 rpm opposite to the rotating field; (c) 1800 rpm in the same direction; (d) 1800 rpm opposite; (e) 3600 rpm in the same direction.</p></div>
+  <p class="lead" data-l="th">แต่ละขั้นขับโรเตอร์ที่ความเร็วหนึ่ง: ภาพจำลองหมุนโรเตอร์ด้วยความเร็วนั้น (เล่นช้าลง) และแผงข้างภาพวาดแรงดันระหว่างวงแหวนลื่นในช่วง 200 ms (เส้นสีเทาคือ 230 V 60 Hz ขณะโรเตอร์นิ่ง) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">Each step drives the rotor at one speed: the simulation turns it at that speed (slowed down), and the side panel draws the slip-ring voltage over 200 ms (the grey curve is the 230 V, 60 Hz standstill voltage). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 2 ตำแหน่ง · ความเร็วที่สวนสนามให้ตอบเป็นค่าลบ</div><div class="src" data-l="en">Give at least 2 decimal places · a speed against the field is negative</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — แรงดันเหนี่ยวนำ</h3>
+    <ol><li>ส่วน A ดูเส้น \(\lambda_a\) กับ \(e_a\): แรงดันสูงสุดตอนฟลักซ์คล้องผ่านศูนย์ คือสนามหมุนไปอีก 90° จากแกนของเฟส a</li>
+    <li>เปลี่ยน 50 Hz เป็น 60 Hz: แรงดันเพิ่ม 20 % เพราะสนามหมุนเร็วขึ้น ฟลักซ์คล้องจึงเปลี่ยนเร็วขึ้น</li>
+    <li>ลด \(K_W\) จาก 1 เป็น 0.9: แรงดันลดลง 10 % เพราะแรงดันของขดลวดย่อยในหลายร่องไม่ได้เฟสเดียวกัน</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — สลิป</h3>
+    <ol><li>ส่วน B ตั้ง 1710 rpm: s = 0.05 ความถี่โรเตอร์ 3 Hz แรงดัน 11.5 V เทียบกับ 230 V ตอนโรเตอร์นิ่ง</li>
+    <li>ตั้ง 1800 rpm: ⊙/⊗ บนตัวนำหายหมด ไม่มีแรงดันและไม่มีกระแสในโรเตอร์ มอเตอร์จึงไม่มีแรงบิดที่ความเร็วนี้</li>
+    <li>คำถาม: ถ้ามอเตอร์เหนี่ยวนำไม่มีโหลดและไม่มีแรงเสียดทานเลย มันจะหมุนถึง 1800 rpm ได้หรือไม่ เพราะอะไร</li></ol>
+    <div class="book">เอกสารประกอบการสอนบทที่ 12 หน้า 5–8 · P. C. Sen บทที่ 5 (หัวข้อ 5.3–5.4, Example 5.1, Problem 5.1)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — induced voltage</h3>
+    <ol><li>In section A watch \(\lambda_a\) and \(e_a\): the voltage peaks when the flux linkage passes zero, a quarter turn after the field faces phase a's axis.</li>
+    <li>Change 50 Hz to 60 Hz: the voltage rises by 20 %, because the field turns faster and the linkage changes faster.</li>
+    <li>Lower \(K_W\) from 1 to 0.9: the voltage drops by 10 %, because the coils in different slots are not in phase.</li></ol></div>
+  <div class="card"><h3>Try this 2 — slip</h3>
+    <ol><li>In section B set 1710 rpm: s = 0.05, a rotor frequency of 3 Hz and 11.5 V, against 230 V at standstill.</li>
+    <li>Set 1800 rpm: the ⊙/⊗ marks on the conductors vanish; no voltage and no current in the rotor, so the motor has no torque at this speed.</li>
+    <li>Question: with no load and no friction at all, could an induction motor reach 1800 rpm? Why?</li></ol>
+    <div class="book">Chapter 12 handout pp. 5–8 · P. C. Sen, chapter 5 (sections 5.3–5.4, Example 5.1, Problem 5.1)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id), D2R = Math.PI / 180;
+  const AMBER = '#ffd166', PURPLE = '#c792ea', GREEN = '#7ee787', CY = '#5ad1ff', PINK = '#ff7eb6';
+  CH12.problem(1, 'ex51'); CH12.problem(2, 'p51');
+
+  /* =================================================================== A: the voltage induced in phase a */
+  const SA = { f: 50, N: 120, phi: 0.02, kw: 0.92, run: true, wt: 0 };
+  const PA = CH10.pane($('cvA'), W => W >= 560 ? W * 0.56 : W * 1.3);
+  LS.anim($('cvA'), dt => { const { ctx, W, H } = PA, wide = W >= 560, [b1, b2] = CH12.split({ x: 0, y: 0, w: W, h: H }, wide, wide ? 0.5 : 0.56);
+    if (SA.run) SA.wt += dt * 1.1 * (SA.f / 50); ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    CH12.machine(ctx, b1, { p: 2, wt: SA.wt, rotor: 'cage', bars: false, side: false, glowA: true, title: W < 640 ? '' : t('สนามหมุนผ่านขดลวดเฟส a', 'the field sweeping past phase a') });
+    CH6.waves(ctx, b2, [{ f: d => Math.cos(d * D2R), color: PURPLE, label: 'λ_a', mag: 1, g: 'l', w: 2.4, dash: [6, 4] }, { f: d => Math.sin(d * D2R), color: AMBER, label: 'e_a', mag: 1, g: 'e', w: 2.8 }],
+      { now: SA.wt, span: 720, title: W < 640 ? '' : t('ฟลักซ์คล้องและแรงดันของเฟส a', 'flux linkage and voltage of phase a') }); });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('ความถี่', 'Frequency')); ui.radio(pA, [50, 60].map(f => ({ id: 'af' + f, label: `${f} Hz`, on: f === SA.f })), id => { SA.f = +id.slice(2); showA(); });
+  ui.h2(pA, t('ขดลวดและฟลักซ์', 'Winding and flux'));
+  ui.slider(pA, { id: 'aN', label: 'N_ph', min: 40, max: 300, step: 10, value: SA.N, fmt: v => t(`${fd(v, 0)} รอบ`, `${fd(v, 0)} turns`), oninput: v => { SA.N = v; showA(); } });
+  ui.slider(pA, { id: 'aP', label: 'Φ_p', min: 0.005, max: 0.05, step: 0.001, value: SA.phi, fmt: v => `${fd(v, 3)} Wb`, oninput: v => { SA.phi = v; showA(); } });
+  ui.slider(pA, { id: 'aK', label: 'K_W', min: 0.8, max: 1, step: 0.01, value: SA.kw, fmt: v => fd(v, 2), oninput: v => { SA.kw = v; showA(); } });
+  pA.appendChild(mA); mA.className = 'metrics';
+  function showA() { const w = 2 * Math.PI * SA.f, Em = w * SA.N * SA.phi, E0 = 4.44 * SA.f * SA.N * SA.phi, E = E0 * SA.kw;
+    mA.innerHTML = ui.kv([['E_max = ωNΦ_p', `${fd(Em, 1)} V`], ['4.44fNΦ_p', `${fd(E0, 1)} V rms`], ['E_rms = 4.44fN_phΦ_pK_W', `${fd(E, 1)} V rms`]]);
+    $('wA').innerHTML = `<div class="answer">${t(`ขดลวดแบบรวมศูนย์ (ทุกรอบอยู่ในร่องเดียว) ได้ \\(4.44(${SA.f})(${SA.N})(${fd(SA.phi, 3)}) = ${fd(E0, 1)}\\) V ส่วนขดลวดที่กระจายในหลายร่องได้ \\(${fd(E, 1)}\\) V (คูณ \\(K_W = ${fd(SA.kw, 2)}\\)) สูตรนี้คือสูตรของหม้อแปลงในหน้า 10.3 แต่ \\(\\Phi_p\\) คือฟลักซ์ต่อขั้ว`, `A concentrated winding (all turns in one slot) gives \\(4.44(${SA.f})(${SA.N})(${fd(SA.phi, 3)}) = ${fd(E0, 1)}\\) V; spread over several slots it gives \\(${fd(E, 1)}\\) V (times \\(K_W = ${fd(SA.kw, 2)}\\)). It is the transformer formula of page 10.3, with \\(\\Phi_p\\) the flux per pole.`)}</div>`;
+    MC.renderMath($('wA')); }
+  showA();
+
+  /* =================================================================== B: rotor speed, slip and rotor frequency */
+  const P51 = CH12C.p51, SB = { n: 1710, wt: 0, rot: 0 };
+  const opB = () => { const s = (P51.ns - SB.n) / P51.ns; return { s, f2: Math.abs(s) * 60, V: Math.abs(s) * 230, slip: P51.ns - SB.n }; };
+  const PB = CH10.pane($('cvB'), W => W >= 560 ? W * 0.56 : W * 1.3);
+  LS.anim($('cvB'), dt => { const { ctx, W, H } = PB, wide = W >= 560, [b1, b2] = CH12.split({ x: 0, y: 0, w: W, h: H }, wide, wide ? 0.48 : 0.54), o = opB(), sh = W < 640;
+    SB.wt += dt * 0.45 * 2; SB.rot += dt * 0.45 * SB.n / P51.ns; ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    CH12.machine(ctx, b1, { p: 4, wt: SB.wt, rot: SB.rot, slip: o.s, rotor: 'wound', side: false, labels: false, title: sh ? '' : `n = ${fd(SB.n, 0).replace('-', '−')} rpm` });
+    const pk = Math.SQRT2 * o.V, ref = Math.SQRT2 * 230;
+    CH11.plot(ctx, b2, { x: [0, 200], y: [-700, 700], xt: 50, yt: 350, xl: 't (ms)', yl: 'v (V)', title: sh ? '' : t(`แรงดันระหว่างวงแหวนลื่น ${fd(o.V, 1)} V, ${fd(o.f2, 1)} Hz`, `slip-ring voltage ${fd(o.V, 1)} V, ${fd(o.f2, 1)} Hz`),
+      curves: [{ f: x => ref * Math.sin(2 * Math.PI * 60 * x / 1000), color: 'rgba(154,163,199,.4)', w: 1.2, n: 1200 }, { f: x => (o.s < 0 ? -1 : 1) * pk * Math.sin(2 * Math.PI * o.f2 * x / 1000), color: AMBER, w: 2.6, n: 1200 }] });
+    CK.badge(ctx, o.s < -1e-9 ? t('s < 0: แซงสนาม', 's < 0: ahead of the field') : o.s > 1 + 1e-9 ? t('s > 1: หมุนสวนสนาม', 's > 1: against the field') : Math.abs(o.s) < 1e-9 ? t('s = 0: ไม่มีแรงดันในโรเตอร์', 's = 0: no rotor voltage') : t(`s = ${fd(o.s, 3)}`, `s = ${fd(o.s, 3)}`), Math.abs(o.s) < 1e-9 ? 'wait' : 'ok'); });
+  const pB = $('pB'), mB = document.createElement('div');
+  ui.h2(pB, t('ความเร็วโรเตอร์ (ทิศของสนาม = บวก)', 'Rotor speed (the field\'s direction = positive)'));
+  const sN = ui.slider(pB, { id: 'bN', label: 'n', min: -1800, max: 3600, step: 10, value: SB.n, fmt: v => `${fd(v, 0).replace('-', '−')} rpm`, oninput: v => { SB.n = v; showB(); } });
+  ui.buttons(pB, [[0, t('นิ่ง', 'standstill')], [1710, '1710'], [1800, '1800'], [3600, '3600'], [-1800, '−1800']].map(([n, l]) => ({ label: l, onclick: () => { SB.n = n; sN.set(n); showB(); } })));
+  pB.appendChild(mB); mB.className = 'metrics';
+  function showB() { const o = opB();
+    mB.innerHTML = ui.kv([['s = (n_s − n)/n_s', fd(o.s, 4).replace('-', '−')], [t('สนามแซงโรเตอร์', 'field passes the rotor at'), `${fd(o.slip, 0).replace('-', '−')} rpm`], ['f_2 = |s| f_1', `${fd(o.f2, 2)} Hz`], ['|s| × 230 V', `${fd(o.V, 1)} V`]]);
+    const mode = o.s < -1e-9 ? t('โรเตอร์แซงสนาม สลิปติดลบ (ย่านเครื่องกำเนิด หน้า 12.3)', 'the rotor overtakes the field: negative slip (the generating range, page 12.3)') : o.s > 1 + 1e-9 ? t('โรเตอร์หมุนสวนสนาม สลิปเกิน 1 (ย่านเบรกแบบ plugging หน้า 12.3)', 'the rotor turns against the field: a slip above 1 (the plugging range, page 12.3)') : Math.abs(o.s) < 1e-9 ? t('โรเตอร์หมุนเท่าสนามพอดี ตัวนำไม่ตัดฟลักซ์', 'the rotor keeps pace with the field: its conductors cut no flux') : Math.abs(o.s - 1) < 1e-9 ? t('โรเตอร์นิ่ง: เครื่องทำงานเหมือนหม้อแปลง', 'standstill: the machine works like a transformer') : t('โรเตอร์หมุนตามสนามแต่ช้ากว่า (ย่านมอเตอร์)', 'the rotor follows the field, slower (the motoring range)');
+    $('wB').innerHTML = `<div class="answer">${t(`ที่ ${fd(SB.n, 0).replace('-', '−')} rpm: ${mode} แรงดันและความถี่ของโรเตอร์เป็น \\(|s| = ${fd(Math.abs(o.s), 3)}\\) เท่าของตอนนิ่ง`, `At ${fd(SB.n, 0).replace('-', '−')} rpm: ${mode}. The rotor's voltage and frequency are \\(|s| = ${fd(Math.abs(o.s), 3)}\\) times their standstill values.`)}</div>`;
+    MC.renderMath($('wB')); }
+  showB();
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  CH6.quiz('quiz', [
+    { q: t('1) มอเตอร์ 4 ขั้ว 50 Hz หมุน 1440 rpm จงหาสลิปและความถี่ของกระแสในโรเตอร์', '1) A 4-pole 50 Hz motor runs at 1440 rpm. Find the slip and the frequency of the rotor current.'),
+      fields: [{ key: 'x', lab: 's =', ans: 0.04, tol: 0.0005 }, { key: 'y', lab: 'f_2 =', ans: 2, unit: 'Hz' }], work: work(R`\begin{aligned} n_s &= 1500\ \text{rpm},\quad s = \frac{1500 - 1440}{1500} = 0.04 \\ f_2 &= sf_1 = (0.04)(50) = 2\ \text{Hz} \end{aligned}`) },
+    { q: t('2) เครื่อง 6 ขั้ว 60 Hz ทำงานที่สลิป 0.03 จงหาความเร็วของโรเตอร์และความถี่ของโรเตอร์ (P. C. Sen Problem 5.3)', '2) A 6-pole 60 Hz machine runs at a slip of 0.03. Find the rotor speed and the rotor frequency (P. C. Sen Problem 5.3).'),
+      fields: [{ key: 'x', lab: 'n =', ans: 1164, unit: 'rpm' }, { key: 'y', lab: 'f_2 =', ans: 1.8, unit: 'Hz' }], work: work(R`\begin{aligned} n_s &= 1200\ \text{rpm},\quad n = (1 - 0.03)(1200) = 1164\ \text{rpm} \\ f_2 &= (0.03)(60) = 1.8\ \text{Hz} \end{aligned}`) },
+    { q: t('3) ขดลวดต่อเฟส 120 รอบ ฟลักซ์ต่อขั้ว 0.02 Wb ไฟ 50 Hz ตัวประกอบการพัน 0.92 จงหาแรงดันเหนี่ยวนำต่อเฟส (ตรวจกับส่วน A)', '3) A phase winding of 120 turns, 0.02 Wb per pole, 50 Hz, winding factor 0.92. Find the induced voltage per phase (check with section A).'),
+      fields: [{ key: 'x', lab: 'E =', ans: 4.44 * 50 * 120 * 0.02 * 0.92, unit: 'V' }], work: work(R`E = 4.44(50)(120)(0.02)(0.92) = ${fd(4.44 * 50 * 120 * 0.02 * 0.92, 2)}\ \text{V}`) },
+    { q: t('4) โรเตอร์มีแรงดัน 120 V ต่อเฟสขณะนิ่ง (60 Hz) จงหาแรงดันและความถี่ของโรเตอร์ที่สลิป 0.04', '4) A rotor has 120 V per phase at standstill (60 Hz). Find its voltage and frequency at a slip of 0.04.'),
+      fields: [{ key: 'x', lab: 'E_2s =', ans: 4.8, unit: 'V' }, { key: 'y', lab: 'f_2 =', ans: 2.4, unit: 'Hz' }], work: work(R`E_{2s} = (0.04)(120) = 4.8\ \text{V},\quad f_2 = (0.04)(60) = 2.4\ \text{Hz}`) },
+    { q: t('5) เครื่อง 6 ขั้ว 60 Hz ทำงานที่สลิป 1.5 จงหาความเร็วของโรเตอร์ (ติดลบถ้าสวนสนาม) และความถี่ของโรเตอร์ (P. C. Sen Problem 5.5)', '5) A 6-pole 60 Hz machine runs at a slip of 1.5. Find the rotor speed (negative if against the field) and the rotor frequency (P. C. Sen Problem 5.5).'),
+      fields: [{ key: 'x', lab: 'n =', ans: -600, unit: 'rpm' }, { key: 'y', lab: 'f_2 =', ans: 90, unit: 'Hz' }], work: work(R`\begin{aligned} n &= (1 - 1.5)(1200) = -600\ \text{rpm} \\ f_2 &= (1.5)(60) = 90\ \text{Hz} \end{aligned}`, `<p>${t('ตรงกับคู่มือเฉลยของ P. C. Sen (ข้อ 5.4 ในพิมพ์ครั้งที่ 2)', 'This matches P. C. Sen\'s solution manual (problem 5.4 in the 2nd edition).')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-en="12.3 — Three Modes of Operation and Power Flow">12.3 — สามโหมดการทำงานและการไหลของกำลัง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=114">
+<script src="assets/stops.js?v=114"></script><script src="assets/shell.js?v=114"></script>
+<script src="assets/circuit.js?v=114"></script><script src="assets/alg.js?v=114"></script><script src="assets/lesson.js?v=114"></script><script src="assets/ch6.js?v=114"></script>
+<script src="assets/ch8.js?v=114"></script><script src="assets/ch10.js?v=114"></script><script src="assets/ch11.js?v=114"></script><script src="assets/ch12.js?v=114"></script><script src="assets/ch12_circuits.js?v=114"></script><script src="assets/ch12ui.js?v=114"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar" id="mc-top"></header>
+<h1 data-l="th">สามโหมดการทำงานและการไหลของกำลัง <span class="en">Motor, generator or brake: it depends on the slip</span></h1>
+<h1 data-l="en">Three modes of operation and power flow <span class="en">Motor, generator or brake: it depends on the slip</span></h1>
+
+<p class="sub" data-l="th">เครื่องเหนี่ยวนำเครื่องเดียวทำงานได้สามโหมดตามความเร็วของโรเตอร์เทียบกับสนามหมุน (สไลด์หน้า 9): เป็นมอเตอร์เมื่อหมุนตามสนามแต่ช้ากว่า (0 &lt; s &lt; 1) เป็นเครื่องกำเนิดเมื่อถูกขับให้แซงสนาม (s &lt; 0) และเป็นเบรกเมื่อถูกขับให้หมุนสวนสนาม (เบรกแบบ plugging, s &gt; 1) ทุกโหมดใช้ความสัมพันธ์ชุดเดียวกัน: กำลังที่ข้ามช่องอากาศ \(P_{ag}\) แบ่งเป็นความร้อนในโรเตอร์ \(sP_{ag}\) กับกำลังกล \((1 - s)P_{ag}\) (P. C. Sen หัวข้อ 5.7 และ 5.10) หน้านี้มีภาพจำลองเส้นแรงบิด–ความเร็วครบสามโหมด (ส่วน A) ตัวอย่างในสไลด์หน้า 10 (ข้อ 1) โจทย์การไหลของกำลังจากกระแสเข้าถึงแรงบิดที่เพลาจาก P. C. Sen (ข้อ 2) และโจทย์เพิ่มเติมที่แก้วงจรสมมูลต่อเฟสด้วยตัวแก้วงจรของเว็บนี้ (ข้อ 3)</p>
+<p class="sub" data-l="en">One induction machine works in three modes, set by the rotor's speed relative to the rotating field (slide p. 9): a motor when it follows the field more slowly (0 &lt; s &lt; 1), a generator when it is driven faster than the field (s &lt; 0), and a brake when it is driven against the field (plugging, s &gt; 1). Every mode uses the same relations: the power crossing the air gap, \(P_{ag}\), divides into rotor heat \(sP_{ag}\) and mechanical power \((1 - s)P_{ag}\) (P. C. Sen, sections 5.7 and 5.10). This page has the torque–speed curve through all three modes (section A), the example of slide p. 10 (problem 1), a P. C. Sen power-flow problem from the input current to the shaft torque (problem 2), and an extra problem that solves the per-phase equivalent circuit with this site's circuit solver (problem 3).</p>
+<div class="equation-box">$$ \begin{aligned} P_{in} &= \sqrt3V_LI_L\cos\theta \\ P_2 &= sP_{ag} \\ P_{mech} &= (1 - s)P_{ag} = T\omega_m \\ P_{out} &= P_{mech} - P_{rot} \\ T_{out} &= \frac{60P_{out}}{2\pi n_r} \end{aligned} $$</div>
+
+<section class="keypoints" data-l="th"><h2>ประเด็นสำคัญของหน้านี้</h2><ul>
+  <li><b>สามโหมด</b>: มอเตอร์ \(0 \le n \le n_s\) (\(1 \ge s \ge 0\)) เครื่องกำเนิด \(n > n_s\) (\(s < 0\)) และเบรกแบบ plugging \(n < 0\) (\(s > 1\)) ซึ่งได้จากการสลับสายสองเฟสขณะมอเตอร์หมุนอยู่ (สไลด์หน้า 9, ส่วน A)</li>
+  <li><b>การไหลของกำลังของมอเตอร์</b>: กำลังเข้า หักการสูญเสียในสเตเตอร์ (ทองแดงและแกน) เหลือกำลังในช่องอากาศ \(P_{ag}\) หักการสูญเสียในทองแดงของโรเตอร์ \(P_2 = sP_{ag}\) เหลือกำลังกล \(P_{mech}\) หักการสูญเสียจากการหมุน (ลมและแรงเสียดทาน) เหลือกำลังที่เพลา (ข้อ 1–2)</li>
+  <li><b>สลิปต่ำ = ประสิทธิภาพดี</b>: ส่วนของกำลังในช่องอากาศที่เป็นความร้อนในโรเตอร์เท่ากับสลิปพอดี มอเตอร์จึงออกแบบให้ทำงานที่สลิปต่ำ (\(1 - s\) เรียกว่าประสิทธิภาพภายใน)</li>
+  <li><b>แรงบิด</b>: แรงบิดที่พัฒนาได้ \(T = P_{ag}/\omega_s = P_{mech}/\omega_m\) และแรงบิดที่เพลา \(T_{out} = P_{out}/\omega_r\) ใช้ความเร็วเป็นเรเดียนต่อวินาทีเสมอ (สไลด์หน้า 11, ข้อ 2–3)</li></ul></section>
+<section class="keypoints" data-l="en"><h2>Key points of this page</h2><ul>
+  <li><b>Three modes</b>: motoring \(0 \le n \le n_s\) (\(1 \ge s \ge 0\)), generating \(n > n_s\) (\(s < 0\)) and plugging \(n < 0\) (\(s > 1\)), which follows from swapping two supply leads of a running motor (slide p. 9, section A).</li>
+  <li><b>The motor's power flow</b>: the input, less the stator losses (copper and core), leaves the air-gap power \(P_{ag}\); less the rotor copper loss \(P_2 = sP_{ag}\) it leaves the mechanical power \(P_{mech}\); less the rotational losses (windage and friction) it leaves the shaft power (problems 1–2).</li>
+  <li><b>Low slip = good efficiency</b>: the share of the air-gap power lost as rotor heat equals the slip, so motors are designed to run at a low slip (\(1 - s\) is called the internal efficiency).</li>
+  <li><b>Torque</b>: the developed torque is \(T = P_{ag}/\omega_s = P_{mech}/\omega_m\) and the shaft torque \(T_{out} = P_{out}/\omega_r\), always with speeds in radians per second (slide p. 11, problems 2–3).</li></ul></section>
+
+<div class="slides"><figure class="slide q"><img src="slides/ch12/p11.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 11, Summary, in red: ns = (120 × f)/P; s = (ns − nr)/ns; fr = s fs; P = VI cos(Θ − Ø); Pout = Pmech − Protor; Pmech = T ωs (1 − s); Tout = Pout/ωr = 60 Pout/2π nr">
+    <figcaption data-l="th">สไลด์หน้า 11: สรุปสูตรของบท · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 11: the chapter's formulas · tap to enlarge</figcaption></figure></div>
+<div class="warnbox" data-l="th"><b>สไลด์หน้า 11 มีสองบรรทัดที่ต้องระวัง</b> (1) \(P_{out} = P_{mech} - P_{rotor}\): ตัวที่หักคือการสูญเสียจากการหมุน \(P_{rot}\) (ลมและแรงเสียดทาน) ไม่ใช่การสูญเสียในโรเตอร์ ซึ่งถูกหักไปแล้วก่อนถึง \(P_{mech}\) (P. C. Sen Example 5.4 เขียน \(P_{out} = P_{mech} - P_{rot}\)) (2) \(P = VI\cos(\Theta - \varnothing)\) คือกำลังต่อเฟส เมื่อ Θ และ Ø คือมุมของแรงดันและกระแส กำลังเข้าทั้งสามเฟสคือ \(3V_pI_p\cos\theta = \sqrt3V_LI_L\cos\theta\) (บทที่ 9)</div>
+<div class="warnbox" data-l="en"><b>Two lines of slide p. 11 need care.</b> (1) \(P_{out} = P_{mech} - P_{rotor}\): what is taken off is the rotational loss \(P_{rot}\) (windage and friction), not the rotor loss, which was already taken off before \(P_{mech}\) (P. C. Sen Example 5.4 writes \(P_{out} = P_{mech} - P_{rot}\)). (2) \(P = VI\cos(\Theta - \varnothing)\) is the power per phase, with Θ and Ø the angles of the voltage and the current; the three-phase input is \(3V_pI_p\cos\theta = \sqrt3V_LI_L\cos\theta\) (chapter 9).</div>
+
+<nav class="toc" data-l="th"><span class="tl">ในหน้านี้:</span><a href="#tA"><b>A</b>สามโหมดบนเส้นแรงบิด–ความเร็ว</a><a href="#ex1"><b>1</b>สไลด์หน้า 10</a><a href="#ex2"><b>2</b>P. C. Sen Problems 5.7–5.8</a><a href="#ex3"><b>3</b>วงจรสมมูล (เพิ่มเติม)</a><a href="#tC"><b>C</b>ฝึกเพิ่ม</a></nav>
+<nav class="toc" data-l="en"><span class="tl">On this page:</span><a href="#tA"><b>A</b>Three modes on the torque–speed curve</a><a href="#ex1"><b>1</b>Slide p. 10</a><a href="#ex2"><b>2</b>P. C. Sen Problems 5.7–5.8</a><a href="#ex3"><b>3</b>Equivalent circuit (extra)</a><a href="#tC"><b>C</b>More practice</a></nav>
+
+<section class="prob" id="tA">
+  <div class="prob-head"><span class="prob-no">A</span><div><h2 data-l="th">สามโหมดการทำงานบนเส้นแรงบิด–ความเร็ว</h2><h2 data-l="en">The three modes on the torque–speed curve</h2>
+    <div class="src" data-l="th">สไลด์หน้า 9 · เครื่องของ P. C. Sen Example 5.4 (460 V 4 ขั้ว 60 Hz) · P. C. Sen หัวข้อ 5.5, 5.10</div><div class="src" data-l="en">Slide p. 9 · the machine of P. C. Sen Example 5.4 (460 V, four poles, 60 Hz) · P. C. Sen, sections 5.5, 5.10</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch12/p09.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Slide 9, Three modes of operation: the induction machine can be operated in three modes: motoring, generating and plugging. An induction machine on a 3φ supply mechanically coupled to a DC machine on a DC supply; three diagrams of the field speed ns and the rotor speed n: (b) motoring 0 ≤ n ≤ ns, 1 ≥ s ≥ 0; (c) generating n > ns, s < 0; (d) plugging n < 0, s > 1">
+    <figcaption data-l="th">สไลด์หน้า 9: เครื่องเหนี่ยวนำต่อทางกลกับเครื่องกระแสตรงที่ใช้ขับหรือรับภาระ · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 9: the induction machine coupled to a dc machine that drives it or loads it · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">เหมือนการทดลองในสไลด์หน้า 9: เครื่องกระแสตรงขับเครื่องเหนี่ยวนำให้หมุนที่ความเร็วใดก็ได้ ภาพบนคือแรงบิดของเครื่องเหนี่ยวนำตามความเร็ว คำนวณจากวงจรสมมูลของเครื่องในข้อ 3 แถบสีบอกโหมด ภาพล่างบอกว่ากำลังไหลไปทางใด ลูกศรม่วงคือกำลังข้ามช่องอากาศ ลูกศรเขียวคือกำลังที่เพลา และลูกศรแดงคือความร้อนในโรเตอร์ ซึ่งออกจากโรเตอร์เสมอ ลองเลื่อนความเร็วผ่าน 0 rpm และ 1800 rpm</p>
+  <p class="lead" data-l="en">As in the test of slide p. 9, a dc machine drives the induction machine at any speed. The top graph is the induction machine's torque against speed, worked out from the equivalent circuit of the machine in problem 3, with the modes shaded. The bottom picture shows which way the power flows: purple across the air gap, green at the shaft, and red, the rotor heat, which always leaves the rotor. Move the speed through 0 rpm and through 1800 rpm.</p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cvA"></canvas></div><div class="card solve"><div class="panel" id="pA"></div><div id="wA" style="margin-top:12px"></div></div></div>
+</section>
+
+<section class="prob" id="ex1">
+  <div class="prob-head"><span class="prob-no">1</span><div><h2 data-l="th">สไลด์หน้า 10: กำลังกล กำลังในช่องอากาศ และการสูญเสียในทองแดงของโรเตอร์</h2><h2 data-l="en">Slide p. 10: mechanical power, air-gap power and rotor copper loss</h2>
+    <div class="src" data-l="th">สไลด์หน้า 10 · P. C. Sen Example 5.2 · ไม่มีเฉลยในห้อง</div><div class="src" data-l="en">Slide p. 10 · P. C. Sen Example 5.2 · no class solution</div></div></div>
+  <figure class="slide q wide"><img src="slides/ch12/p10q.webp" width="1167" height="378" loading="lazy" decoding="async" alt="Slide 10, Three modes of operation: a 3φ, 15 hp, 460 V, four-pole, 60 Hz, 1728 rpm induction motor delivers full output power to a load connected to its shaft. The windage and friction loss of the motor is 750 W. Determine the (a) mechanical power developed, (b) air gap power, (c) rotor copper loss">
+    <figcaption data-l="th">สไลด์หน้า 10 · แตะรูปเพื่อขยาย</figcaption><figcaption data-l="en">Slide p. 10 · tap to enlarge</figcaption></figure>
+  <p class="lead" data-l="th">โจทย์ให้กำลังที่เพลาและความเร็ว จึงต้องคิดย้อนจากเพลากลับไปที่ช่องอากาศ แผนภาพการไหลของกำลังด้านขวาคือส่วนโรเตอร์ของรูป 5.23a ของ P. C. Sen ความกว้างของแถบเป็นไปตามกำลังจริง ส่วนตัวเลขจะปรากฏเมื่อหาได้ในแต่ละขั้น <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The problem gives the shaft power and the speed, so the work runs backwards from the shaft to the air gap. The power-flow diagram is the rotor part of P. C. Sen's Fig. 5.23a; its band widths follow the real powers, and each number appears once its step finds it. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv1"></canvas></div><div class="card solve"><div id="ask1"></div><div id="st1"></div></div></div>
+</section>
+
+<section class="prob" id="ex2">
+  <div class="prob-head"><span class="prob-no">2</span><div><h2 data-l="th">P. C. Sen Problems 5.7–5.8: จากกระแสเข้าถึงแรงบิดที่เพลา</h2><h2 data-l="en">P. C. Sen Problems 5.7–5.8: from the input current to the shaft torque</h2>
+    <div class="src" data-l="th">P. C. Sen, Principles of Electric Machines and Power Electronics พิมพ์ครั้งที่ 3, Problems 5.7 และ 5.8 · เพิ่มจากตำราเพื่อใช้สูตรในสไลด์หน้า 11 ครบทุกสูตร · โจทย์ใหม่ของพิมพ์ครั้งที่ 3 จึงไม่มีในคู่มือเฉลย</div><div class="src" data-l="en">P. C. Sen, Principles of Electric Machines and Power Electronics, 3rd ed., Problems 5.7 and 5.8 · added from the book to use every formula of slide p. 11 · new in the 3rd edition, so they are not in the solution manual</div></div></div>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>เครื่องเหนี่ยวนำ 3 เฟส 460 V 60 Hz 20 kW รับกระแส 25 A ที่ตัวประกอบกำลัง 0.9 ตามหลัง เมื่อต่อกับแหล่งจ่าย 3 เฟส 460 V 60 Hz การสูญเสียในแกน 900 W การสูญเสียในทองแดงของสเตเตอร์ 1100 W ของโรเตอร์ 550 W และการสูญเสียจากลมและแรงเสียดทาน 300 W จงหา (a) กำลังในช่องอากาศ \(P_{ag}\) (b) กำลังกลที่พัฒนาได้ \(P_{mech}\) (c) กำลังออกเป็นแรงม้า (d) ประสิทธิภาพ</p>
+    <p>Problem 5.8: เครื่องนี้มี 4 ขั้ว ที่สภาวะเดียวกัน จงหา (a) ความเร็วซิงโครนัส (b) ความเร็วของโรเตอร์ (c) แรงบิดที่พัฒนาได้ (d) แรงบิดที่เพลา</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>A 3φ, 460 V, 60 Hz, 20 kW induction machine draws 25 A at a power factor of 0.9 lagging when connected to a 3φ, 460 V, 60 Hz supply. The core loss is 900 W, the stator copper loss 1100 W, the rotor copper loss 550 W, and the friction and windage loss 300 W. Calculate (a) the air-gap power \(P_{ag}\); (b) the mechanical power developed \(P_{mech}\); (c) the output horsepower; (d) the efficiency.</p>
+    <p>Problem 5.8: the machine has 4 poles. For the same operating condition find (a) the synchronous speed; (b) the rotor speed; (c) the developed torque; (d) the output torque.</p></div>
+  <p class="lead" data-l="th">แผนภาพการไหลของกำลังครบทุกช่วง: กำลังเข้า (ฟ้า) → การสูญเสียในสเตเตอร์ → กำลังในช่องอากาศ (ม่วง) → การสูญเสียในทองแดงของโรเตอร์ → กำลังกล (ส้ม) → ลมและแรงเสียดทาน → กำลังที่เพลา (เขียว) ตัวเลขของแต่ละช่วงจะปรากฏตามขั้น ขั้นที่ 5–6 หาความเร็วและแรงบิด <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The full power-flow diagram: input (cyan) → stator losses → air-gap power (purple) → rotor copper loss → mechanical power (orange) → windage and friction → shaft power (green). Each stage's number appears with its step; steps 5–6 find the speed and the torques. <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv2"></canvas></div><div class="card solve"><div id="ask2"></div><div id="st2"></div></div></div>
+</section>
+
+<section class="prob" id="ex3">
+  <div class="prob-head"><span class="prob-no">3</span><div><h2 data-l="th">เพิ่มเติม: วงจรสมมูลต่อเฟสของมอเตอร์เหนี่ยวนำที่โหลดเต็มพิกัด</h2><h2 data-l="en">Extra: the per-phase equivalent circuit of an induction motor at full load</h2>
+    <div class="src" data-l="th">P. C. Sen Example 5.4(b) · เกินเนื้อหาของสไลด์ (วงจรสมมูลอยู่ใน P. C. Sen หัวข้อ 5.7) แต่ใช้เพียงวงจรไฟสลับของบทที่ 6–9 และหม้อแปลงของบทที่ 10</div><div class="src" data-l="en">P. C. Sen Example 5.4(b) · beyond the slides (the equivalent circuit is in P. C. Sen, section 5.7), but it needs only the AC circuits of chapters 6–9 and the transformer of chapter 10</div></div></div>
+  <div class="given" data-l="th"><div class="gl">โจทย์</div><p>มอเตอร์เหนี่ยวนำ 3 เฟส 460 V 1740 rpm 60 Hz 4 ขั้ว โรเตอร์แบบพันขดลวด มีพารามิเตอร์ต่อเฟส \(R_1 = 0.25\ \Omega\), \(R′_2 = 0.2\ \Omega\), \(X_1 = X′_2 = 0.5\ \Omega\), \(X_m = 30\ \Omega\) การสูญเสียจากการหมุน 1700 W เมื่อขั้วของโรเตอร์ลัดวงจร จงหาที่โหลดเต็มพิกัด (1740 rpm): สลิป กระแสสาย ตัวประกอบกำลัง แรงบิด และประสิทธิภาพของมอเตอร์</p></div>
+  <div class="given" data-l="en"><div class="gl">Problem</div><p>A three-phase, 460 V, 1740 rpm, 60 Hz, four-pole wound-rotor induction motor has the per-phase parameters \(R_1 = 0.25\ \Omega\), \(R′_2 = 0.2\ \Omega\), \(X_1 = X′_2 = 0.5\ \Omega\), \(X_m = 30\ \Omega\). The rotational losses are 1700 W. With the rotor terminals short-circuited, find at full load (1740 rpm) the slip, the line current, the power factor, the torque and the motor efficiency.</p></div>
+  <p class="lead" data-l="th">วงจรสมมูลต่อเฟสมีรูปเดียวกับหม้อแปลง (หน้า 10.4) ต่างกันที่ด้านโรเตอร์มีความต้านทาน \(R′_2(1 - s)/s\) ซึ่งแทนภาระทางกล: กำลังที่ตัวต้านทานนี้รับคูณสามคือกำลังกลของมอเตอร์ ตัวแก้วงจรของเว็บนี้แก้วงจรไฟสลับนี้จริง (ค่ายังผล) ชี้เมาส์ที่ชิ้นส่วนเพื่ออ่านกระแสและกำลัง จุดเริ่มวิ่งเมื่อหากระแสได้ (ขั้นที่ 3) <b>ลองตอบก่อน</b></p>
+  <p class="lead" data-l="en">The per-phase equivalent circuit has the shape of a transformer's (page 10.4); the difference is the rotor-side resistance \(R′_2(1 - s)/s\), which stands for the mechanical load: three times the power it takes is the motor's mechanical power. The site's circuit solver really solves this AC circuit (rms values); point at a part to read its current and power. The dots start once the current is found (step 3). <b>Try it first.</b></p>
+  <div class="duo big-sim"><div class="card sim"><canvas id="cv3"></canvas></div><div class="card solve"><div id="ask3"></div><div id="st3"></div></div></div>
+</section>
+
+<section class="prob" id="tC">
+  <div class="prob-head"><span class="prob-no">C</span><div><h2 data-l="th">ฝึกเพิ่ม</h2><h2 data-l="en">More practice</h2>
+    <div class="src" data-l="th">ตอบทศนิยมอย่างน้อย 2 ตำแหน่ง · ประสิทธิภาพตอบเป็นเปอร์เซ็นต์</div><div class="src" data-l="en">Give at least 2 decimal places · efficiencies in percent</div></div></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="notes" data-l="th">
+  <div class="card"><h3>ลองทำดู 1 — สามโหมด</h3>
+    <ol><li>ส่วน A ตั้ง 1740 rpm: มอเตอร์ แรงบิด 163 N·m ลูกศรม่วงและเขียวชี้ไปทางเพลา</li>
+    <li>ตั้ง 1860 rpm: สลิปติดลบ แรงบิดเป็นลบ (ต้านการขับ) ลูกศรม่วงและเขียวกลับทิศ เครื่องจ่ายไฟกลับเข้าสาย แต่ลูกศรแดง (ความร้อนในโรเตอร์) ยังชี้ออกเหมือนเดิม</li>
+    <li>ตั้ง −600 rpm: เบรกแบบ plugging ทั้งสายและเพลาส่งกำลังเข้าโรเตอร์ ความร้อนในโรเตอร์จึงเท่ากับผลรวมของทั้งสอง</li></ol></div>
+  <div class="card"><h3>ลองทำดู 2 — การไหลของกำลัง</h3>
+    <ol><li>ข้อ 1: \(P_{ag} : P_2 : P_{mech} = 12\,437.5 : 497.5 : 11\,940 = 1 : 0.04 : 0.96\)</li>
+    <li>ข้อ 2: การสูญเสียในแกน 900 W อยู่ด้านสเตเตอร์ ถ้าลืมหัก กำลังในช่องอากาศจะสูงเกินไป และสลิปที่คำนวณได้จะผิด</li>
+    <li>ข้อ 3 ชี้ที่ \(R′_2(1 - s)/s\): กำลังต่อเฟสราว 9907 W คูณสามเท่ากับ \(P_{mech}\) คำถาม: ถ้าโหลดหนักขึ้น สลิปเพิ่ม ตัวต้านทานนี้จะใหญ่ขึ้นหรือเล็กลง</li></ol>
+    <div class="book">เอกสารประกอบการสอนบทที่ 12 หน้า 9–11 · P. C. Sen บทที่ 5 (หัวข้อ 5.5, 5.7, 5.10, Examples 5.2, 5.4, Problems 5.7–5.8)</div></div>
+</section>
+<section class="notes" data-l="en">
+  <div class="card"><h3>Try this 1 — three modes</h3>
+    <ol><li>In section A set 1740 rpm: a motor at 163 N·m, the purple and green arrows pointing to the shaft.</li>
+    <li>Set 1860 rpm: a negative slip and a negative torque (opposing the drive); the purple and green arrows reverse and the machine feeds the line, but the red arrow (rotor heat) still points out.</li>
+    <li>Set −600 rpm: plugging. Both the supply and the shaft push power into the rotor, so the rotor heat is the sum of the two.</li></ol></div>
+  <div class="card"><h3>Try this 2 — power flow</h3>
+    <ol><li>Problem 1: \(P_{ag} : P_2 : P_{mech} = 12\,437.5 : 497.5 : 11\,940 = 1 : 0.04 : 0.96\).</li>
+    <li>Problem 2: the 900 W core loss belongs to the stator side; leave it out and the air-gap power comes out too high, and so does the slip worked out from it.</li>
+    <li>Problem 3, point at \(R′_2(1 - s)/s\): about 9907 W per phase, three times that is \(P_{mech}\). Question: with a heavier load the slip grows; does this resistance get larger or smaller?</li></ol>
+    <div class="book">Chapter 12 handout pp. 9–11 · P. C. Sen, chapter 5 (sections 5.5, 5.7, 5.10, Examples 5.2, 5.4, Problems 5.7–5.8)</div></div>
+</section>
+
+<nav class="navbar" id="mc-nav"></nav>
+</div>
+
+<script>
+document.addEventListener('mc:ready', () => {
+  'use strict';
+  const tx = (s, d) => MC.tex(s, d), ui = MC.ui, R = String.raw, fd = CH6.fd, COL = CH6.COL, t = (th, en) => MC.t(th, en), $ = id => document.getElementById(id);
+  const GREEN = '#7ee787', PINK = '#ff7eb6', CY = '#5ad1ff', AMBER = '#ffd166';
+  CH12.problem(1, 'ex52'); CH12.problem(2, 'p57'); CH12.problem(3, 'ex54');
+
+  /* =================================================================== A: the three modes on the torque–speed curve (P. C. Sen Example 5.4's machine) */
+  const par = CH12C.par54, NS = 1800, SA = { n: 1740 }, mOf = n => CH12.im(par, (NS - n) / NS);
+  const tq = n => mOf(n).T, nTmax = (() => { let b = 0, bn = 0; for (let n = 0; n <= NS; n += 2) { const T = tq(n); if (T > b) { b = T; bn = n; } } return bn; })();
+  const PA = CH10.pane($('cvA'), W => W >= 560 ? W * 0.72 : W * 1.25);
+  LS.anim($('cvA'), () => { const { ctx, W, H } = PA, sh = W < 640, h1 = Math.round(H * 0.6), b1 = { x: 0, y: 0, w: W, h: h1 }, b2 = { x: 0, y: h1 + 6, w: W, h: H - h1 - 6 }, m = mOf(SA.n);
+    ctx.fillStyle = CK.PAL.bg; ctx.fillRect(0, 0, W, H);
+    CH11.plot(ctx, b1, { x: [-1800, 3600], y: [-750, 500], xt: 900, yt: 250, xl: 'n (rpm)', yl: 'T (N·m)', title: sh ? '' : t('แรงบิดของเครื่องเหนี่ยวนำตามความเร็ว (n_s = 1800 rpm)', 'torque of the induction machine against speed (n_s = 1800 rpm)'),
+      xbands: [{ x0: -1800, x1: 0, color: 'rgba(255,126,182,.08)', label: t('เบรก plugging', 'plugging'), text: PINK }, { x0: 0, x1: NS, color: 'rgba(126,231,135,.07)', label: t('มอเตอร์', 'motoring'), text: GREEN }, { x0: NS, x1: 3600, color: 'rgba(90,209,255,.07)', label: t('เครื่องกำเนิด', 'generating'), text: CY }],
+      curves: [{ f: tq, color: AMBER, w: 2.6, n: 900 }], pts: [{ x: SA.n, y: m.T, color: '#e8ecf7', label: `${fd(m.T, 1).replace('-', '−')} N·m` }] });
+    CH12.modes(ctx, b2, { Pag: m.Pag, P2: m.P2, Pmech: m.Pmech, s: m.s, short: sh, ref: 120000 }); });
+  const pA = $('pA'), mA = document.createElement('div');
+  ui.h2(pA, t('ความเร็วที่เครื่องกระแสตรงขับ', 'Speed set by the dc machine'));
+  const sN = ui.slider(pA, { id: 'aN', label: 'n', min: -1800, max: 3600, step: 10, value: SA.n, fmt: v => `${fd(v, 0).replace('-', '−')} rpm`, oninput: v => { SA.n = v; showA(); } });
+  ui.buttons(pA, [[0, t('สตาร์ต 0', 'start 0')], [1740, t('พิกัด 1740', 'rated 1740')], [nTmax, t('แรงบิดสูงสุด', 'max torque')], [1860, '1860'], [-600, '−600']].map(([n, l]) => ({ label: l, onclick: () => { SA.n = n; sN.set(n); showA(); } })));
+  pA.appendChild(mA); mA.className = 'metrics';
+  function showA() { const m = mOf(SA.n), I = Math.hypot(m.I1.re, m.I1.im), f = x => `${fd(x, 1).replace('-', '−')} W`;
+    mA.innerHTML = ui.kv([['s = (n_s − n)/n_s', fd(m.s, 4).replace('-', '−')], ['T = P_ag/ω_s', `${fd(m.T, 2).replace('-', '−')} N·m`], ['P_ag', f(m.Pag)], ['P_2 = sP_ag', f(m.P2)], ['P_mech = (1 − s)P_ag', f(m.Pmech)], ['|I_1|', `${fd(I, 1)} A`]]);
+    const mode = m.s < 0 ? t('เครื่องกำเนิด: แรงบิดเป็นลบ (ต้านการขับ) กำลังกลจากเพลาข้ามช่องอากาศกลับไปที่สาย', 'generating: the torque is negative (it opposes the drive) and the shaft power crosses the air gap back to the line')
+      : m.s > 1 ? t('เบรกแบบ plugging: โรเตอร์หมุนสวนสนาม แรงบิดเป็นบวกแต่ต้านการหมุน ทั้งสายและเพลาส่งกำลังเข้าโรเตอร์ กลายเป็นความร้อนทั้งหมด', 'plugging: the rotor turns against the field; the torque is positive but opposes the motion, and both the line and the shaft push power into the rotor, all of it ending as heat')
+      : Math.abs(m.s) < 1e-9 ? t('ความเร็วซิงโครนัส: ไม่มีกระแสในโรเตอร์ แรงบิดเป็นศูนย์', 'synchronous speed: no rotor current, zero torque') : t('มอเตอร์: กำลังไหลจากสายผ่านช่องอากาศไปที่เพลา ส่วน s ของกำลังในช่องอากาศเป็นความร้อนในโรเตอร์', 'motoring: power flows from the line across the air gap to the shaft; the fraction s of the air-gap power heats the rotor');
+    $('wA').innerHTML = `<div class="answer">${t(`ที่ ${fd(SA.n, 0).replace('-', '−')} rpm: ${mode} ${SA.n === 0 ? `(กระแสสตาร์ต ${fd(I, 1)} A แรงบิดสตาร์ต ${fd(m.T, 1)} N·m)` : ''}`, `At ${fd(SA.n, 0).replace('-', '−')} rpm: ${mode}${SA.n === 0 ? ` (starting current ${fd(I, 1)} A, starting torque ${fd(m.T, 1)} N·m)` : ''}.`)}</div>`;
+    MC.renderMath($('wA')); }
+  showA();
+
+  /* =================================================================== C: more practice */
+  const work = (tex, html = '') => tx(LS.fitIn($('quiz'), tex), true) + html;
+  const w145 = CH12.rad(1450), w150 = CH12.rad(1500), s511 = 70 / 1800, Pm511 = 7460 + 320, Pag511 = Pm511 / (1 - s511), w3546 = CH12.rad(3546);
+  CH6.quiz('quiz', [
+    { q: t('1) กำลังในช่องอากาศ 10 kW ที่สลิป 0.03 จงหาการสูญเสียในทองแดงของโรเตอร์และกำลังกล', '1) The air-gap power is 10 kW at a slip of 0.03. Find the rotor copper loss and the mechanical power.'),
+      fields: [{ key: 'x', lab: 'P_2 =', ans: 300, unit: 'W' }, { key: 'y', lab: 'P_mech =', ans: 9700, unit: 'W' }], work: work(R`P_2 = sP_{ag} = 300\ \text{W},\quad P_{mech} = (1 - s)P_{ag} = 9700\ \text{W}`) },
+    { q: t('2) มอเตอร์ 4 ขั้ว 50 Hz พัฒนาแรงบิด 20 N·m ที่ 1450 rpm จงหากำลังกลและกำลังในช่องอากาศ', '2) A 4-pole 50 Hz motor develops 20 N·m at 1450 rpm. Find the mechanical power and the air-gap power.'),
+      fields: [{ key: 'x', lab: 'P_mech =', ans: 20 * w145, unit: 'W' }, { key: 'y', lab: 'P_ag =', ans: 20 * w150, unit: 'W' }],
+      work: work(R`\begin{aligned} P_{mech} &= T\omega_m = 20\left(\frac{2\pi(1450)}{60}\right) = ${fd(20 * w145, 2)}\ \text{W} \\ P_{ag} &= T\omega_s = 20\left(\frac{2\pi(1500)}{60}\right) = ${fd(20 * w150, 2)}\ \text{W} \end{aligned}`) },
+    { q: t('3) เครื่อง 4 ขั้ว 60 Hz ถูกขับที่ 1890 rpm ทิศเดียวกับสนาม จงหาสลิป (ทำงานเป็นเครื่องกำเนิดหรือไม่ ตรวจกับส่วน A)', '3) A 4-pole 60 Hz machine is driven at 1890 rpm with the field. Find the slip (is it generating? check with section A).'),
+      fields: [{ key: 'x', lab: 's =', ans: -0.05, tol: 0.0005 }], work: work(R`s = \frac{1800 - 1890}{1800} = -0.05\quad (s < 0:\ \text{generating})`) },
+    { q: t('4) มอเตอร์ 3 เฟส 2 ขั้ว 60 Hz หมุน 3546 rpm จ่ายกำลัง 20 kW ให้โหลด ไม่คิดการสูญเสีย จงหาสลิปและแรงบิดที่พัฒนาได้ (P. C. Sen Problem 5.9)', '4) A 3φ, 2-pole, 60 Hz motor runs at 3546 rpm delivering 20 kW to a load; neglect all losses. Find the slip and the developed torque (P. C. Sen Problem 5.9).'),
+      fields: [{ key: 'x', lab: 's =', ans: 0.015, tol: 0.0002 }, { key: 'y', lab: 'T =', ans: 20000 / w3546, unit: 'N·m' }], work: work(R`\begin{aligned} s &= \frac{3600 - 3546}{3600} = 0.015 \\ T &= \frac{P}{\omega_m} = \frac{20\,000}{2\pi(3546)/60} = ${fd(20000 / w3546, 2)}\ \text{N}{\cdot}\text{m} \end{aligned}`) },
+    { q: t('5) มอเตอร์ 3 เฟส 10 hp 460 V 60 Hz 4 ขั้ว หมุน 1730 rpm ที่พิกัด การสูญเสียในทองแดงของสเตเตอร์ 200 W ลมและแรงเสียดทาน 320 W จงหากำลังในช่องอากาศและประสิทธิภาพ (P. C. Sen Problem 5.11)', '5) A 3φ, 10 hp, 460 V, 60 Hz, 4-pole motor runs at 1730 rpm at full load; stator copper loss 200 W, windage and friction 320 W. Find the air-gap power and the efficiency (P. C. Sen Problem 5.11).'),
+      fields: [{ key: 'x', lab: 'P_ag =', ans: Pag511, unit: 'W', tol: 1 }, { key: 'y', lab: 'η =', ans: 100 * 7460 / (Pag511 + 200), unit: '%', tol: 0.05 }],
+      work: work(R`\begin{aligned} P_{mech} &= 10(746) + 320 = 7780\ \text{W},\quad s = \frac{70}{1800} = ${fd(s511, 5)} \\ P_{ag} &= \frac{7780}{1 - s} = ${fd(Pag511, 2)}\ \text{W},\quad P_{in} = P_{ag} + 200 = ${fd(Pag511 + 200, 2)}\ \text{W} \\ \eta &= \frac{7460}{${fd(Pag511 + 200, 2)}} = ${fd(100 * 7460 / (Pag511 + 200), 2)}\,\% \end{aligned}`, `<p>${t('โจทย์ไม่ให้การสูญเสียในแกน จึงถือว่ารวมอยู่ในการสูญเสียที่ให้มาแล้ว', 'The problem gives no core loss, so it is taken as included in the losses given.')}</p>`) } ], { wide: true });
+});
+</script>
+</body>
+</html>

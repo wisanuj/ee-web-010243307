@@ -14,8 +14,8 @@ window.STAGES = {
        blurb: 'เฟเซอร์ อิมพีแดนซ์ กำลังไฟฟ้าและตัวประกอบกำลัง และระบบสามเฟส ตอนนี้พร้อมครบทั้งบทที่ 6–9',
        blurb_en: 'Phasors, impedance, power and power factor, and three-phase systems. Chapters 6–9 are all ready.' },
   4: { title: 'บทที่ 10–12 วงจรแม่เหล็กและเครื่องจักรกลไฟฟ้า', title_en: 'Chapters 10–12 — Magnetic circuits and machines', short: 'บทที่ 10–12 เครื่องจักร', short_en: 'Ch. 10–12 machines',
-       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ ตอนนี้บทที่ 10 (วงจรแม่เหล็กและหม้อแปลง) และบทที่ 11 (เครื่องจักรกลไฟฟ้ากระแสตรง) พร้อมแล้ว บทที่ 12 กำลังสร้าง',
-       blurb_en: 'Magnetic circuits, transformers, DC and AC machines. Chapters 10 (magnetic circuits and transformers) and 11 (DC machines) are ready; chapter 12 is in preparation.' }
+       blurb: 'วงจรแม่เหล็ก หม้อแปลง เครื่องจักรกลไฟฟ้ากระแสตรงและกระแสสลับ ตอนนี้พร้อมครบทั้งบทที่ 10–12',
+       blurb_en: 'Magnetic circuits, transformers, DC and AC machines. Chapters 10–12 are all ready.' }
 };
 
 window.STOPS = [
@@ -433,6 +433,30 @@ window.STOPS = [
     book: 'เอกสารบทที่ 11 หน้า 22–28 · P. C. Sen บทที่ 4', book_en: 'Chapter 11 handout pp. 22–28 · P. C. Sen, chapter 4',
     tags: ['P_d = E_bI_a', 'P_out = P_d − P_rot', 'η = P_out/P_in'], tags_en: ['P_d = E_bI_a', 'P_out = P_d − P_rot', 'η = P_out/P_in'] },
 
-  { soon: true, step: '12', stage: 4, ch: 12, title: 'เครื่องจักรกลไฟฟ้ากระแสสลับ', en: 'AC machines',
-    blurb: 'สนามแม่เหล็กหมุน สลิป และมอเตอร์เหนี่ยวนำ', blurb_en: 'Rotating field, slip and the induction motor' }
+  { file: 'ch12_1_rotating_field.html', step: '12.1', stage: 4, ch: 12, type: 'sim',
+    title: 'เครื่องจักรกลไฟฟ้ากระแสสลับ: โครงสร้างและสนามแม่เหล็กหมุน', en: 'AC machines: construction and the rotating magnetic field',
+    blurb: 'ภาพตัดขวางของมอเตอร์เหนี่ยวนำที่เลือกดูได้ทีละส่วน สลับโรเตอร์กรงกระรอกกับแบบพันขดลวด (ส่วน A) สไลด์หน้า 4 ทีละขั้น: กระแสเฟสเดียวให้สนามพัลส์ สองเฟสหมุนแต่ขนาดไม่คงที่ สามเฟสได้สนามหมุนขนาดคงที่ 1.5F_m สลับสองเฟสแล้วหมุนกลับทิศ และเครื่อง p ขั้วหมุนที่ 120f/p (ข้อ 1) แล้วเลือกจำนวนขั้ว ความถี่ และลำดับเฟสเพื่อดูความเร็วซิงโครนัส (ส่วน B)',
+    blurb_en: 'A cross-section of an induction motor whose parts can be picked one at a time, with a squirrel-cage or a wound rotor (section A). Slide p. 4 step by step: one phase gives a pulsating field, two phases turn it but its size swings, three phases give a turning field of constant size 1.5F_m, two swapped phases reverse it, and a p-pole machine turns at 120f/p (problem 1). Then pick the poles, the frequency and the phase sequence to see the synchronous speed (section B).',
+    outcome: 'บอกส่วนประกอบของมอเตอร์เหนี่ยวนำ อธิบายว่ากระแสสามเฟสสร้างสนามแม่เหล็กหมุนได้อย่างไร และคำนวณความเร็วซิงโครนัส',
+    outcome_en: 'name the parts of an induction motor, explain how three-phase currents make a rotating magnetic field, and compute the synchronous speed',
+    book: 'เอกสารบทที่ 12 หน้า 1–4 · P. C. Sen บทที่ 5 (หัวข้อ 5.1–5.2)', book_en: 'Chapter 12 handout pp. 1–4 · P. C. Sen, chapter 5 (sections 5.1–5.2)',
+    tags: ['F = 1.5F_m cos(θ − ωt)', 'n_s = 120f/p', 'กรงกระรอก'], tags_en: ['F = 1.5F_m cos(θ − ωt)', 'n_s = 120f/p', 'squirrel cage'] },
+
+  { file: 'ch12_2_slip.html', step: '12.2', stage: 4, ch: 12, type: 'sim',
+    title: 'แรงดันเหนี่ยวนำ สลิป และความถี่ของโรเตอร์', en: 'Induced voltage, slip and rotor frequency',
+    blurb: 'สนามหมุนเหนี่ยวนำแรงดันในขดลวดเฟส a ตาม E = 4.44fN_phΦ_pK_W พร้อมกราฟฟลักซ์คล้องและแรงดัน (ส่วน A) ตั้งความเร็วโรเตอร์ได้ตั้งแต่สวนสนามจนแซงสนาม แล้วดูสลิป ความถี่ และแรงดันระหว่างวงแหวนลื่น (ส่วน B) Example 13.1 ของสไลด์หน้า 8 ทีละขั้น (1800/1710 rpm, 3 Hz, 90 rpm, 6.64 V) และ Problem 5.1 ของ P. C. Sen ที่ห้าความเร็ว (23 V 6 Hz ถึง 460 V 120 Hz)',
+    blurb_en: 'The rotating field induces a voltage in phase a by E = 4.44fN_phΦ_pK_W, with graphs of the flux linkage and the voltage (section A). Set the rotor speed anywhere from against the field to ahead of it and read the slip, the frequency and the slip-ring voltage (section B). Example 13.1 of slide p. 8 step by step (1800/1710 rpm, 3 Hz, 90 rpm, 6.64 V) and P. C. Sen\'s Problem 5.1 at five speeds (from 23 V, 6 Hz to 460 V, 120 Hz).',
+    outcome: 'คำนวณแรงดันเหนี่ยวนำ สลิป ความเร็วของโรเตอร์ ความถี่ของโรเตอร์ และแรงดันของโรเตอร์ที่ความเร็วใด ๆ',
+    outcome_en: 'compute the induced voltage, the slip, the rotor speed, the rotor frequency and the rotor voltage at any speed',
+    book: 'เอกสารบทที่ 12 หน้า 5–8 · P. C. Sen บทที่ 5 (Example 5.1, Problem 5.1)', book_en: 'Chapter 12 handout pp. 5–8 · P. C. Sen, chapter 5 (Example 5.1, Problem 5.1)',
+    tags: ['s = (n_s − n)/n_s', 'f_2 = s f_1', 'E_2s = s E_2'], tags_en: ['s = (n_s − n)/n_s', 'f_2 = s f_1', 'E_2s = s E_2'] },
+
+  { file: 'ch12_3_power_flow.html', step: '12.3', stage: 4, ch: 12, type: 'sim',
+    title: 'สามโหมดการทำงานและการไหลของกำลัง', en: 'Three modes of operation and power flow',
+    blurb: 'เส้นแรงบิด–ความเร็วครบสามโหมด (เบรก plugging มอเตอร์ เครื่องกำเนิด) พร้อมลูกศรบอกทิศของกำลังข้ามช่องอากาศ ที่เพลา และความร้อนในโรเตอร์ (ส่วน A) ตัวอย่างสไลด์หน้า 10 ที่คิดย้อนจากเพลา (11 940 W, 12 437.5 W, 497.5 W) Problems 5.7–5.8 ของ P. C. Sen ตั้งแต่กระแสเข้าถึงแรงบิดที่เพลา (η 84.10 %) และวงจรสมมูลต่อเฟสที่ตัวแก้วงจรแก้จริง (P. C. Sen Example 5.4: 42.82 A, 163.11 N·m, 87.24 %)',
+    blurb_en: 'The torque–speed curve through all three modes (plugging, motoring, generating), with arrows for the power across the air gap, at the shaft and the rotor heat (section A). The slide p. 10 example worked back from the shaft (11 940 W, 12 437.5 W, 497.5 W), P. C. Sen\'s Problems 5.7–5.8 from the input current to the shaft torque (η 84.10 %), and the per-phase equivalent circuit solved by the circuit solver (P. C. Sen Example 5.4: 42.82 A, 163.11 N·m, 87.24 %).',
+    outcome: 'บอกโหมดการทำงานจากสลิป แจกแจงการไหลของกำลังในมอเตอร์เหนี่ยวนำ และคำนวณกำลัง ประสิทธิภาพ และแรงบิด',
+    outcome_en: 'tell the mode of operation from the slip, follow the power flow of an induction motor, and compute its powers, efficiency and torques',
+    book: 'เอกสารบทที่ 12 หน้า 9–11 · P. C. Sen บทที่ 5 (Examples 5.2, 5.4, Problems 5.7–5.8)', book_en: 'Chapter 12 handout pp. 9–11 · P. C. Sen, chapter 5 (Examples 5.2, 5.4, Problems 5.7–5.8)',
+    tags: ['P_ag : P_2 : P_mech = 1 : s : 1 − s', 'P_out = P_mech − P_rot', 'T = P_ag/ω_s'], tags_en: ['P_ag : P_2 : P_mech = 1 : s : 1 − s', 'P_out = P_mech − P_rot', 'T = P_ag/ω_s'] }
 ];
