@@ -61,7 +61,8 @@ function convBox() { document.querySelectorAll('.conv[data-mag]').forEach(el => 
    pre-filled link: FEEDBACK.form = the id in docs.google.com/forms/d/e/<id>/viewform, entries = the entry.<number> of each question.
    Until form is set the box shows only on localhost, as a preview that sends nothing. FB_KINDS must match the form's choices exactly
    (th + ' / ' + en, no commas: the response sheet joins several choices with ', '). */
-const FEEDBACK = { form: '', entries: { page: '', rate: '', kind: '', text: '', device: '' } };
+const FEEDBACK = { form: '1FAIpQLSfLdLJljnjK0swHqCVuPauA0NxLTmxb952ipnd_wEOZuE2yBQ',   // set up 6 Oct 2026 (form and entries checked against the live form)
+  entries: { page: '330022572', rate: '46474145', kind: '177327890', text: '1537589529', device: '1740673236' } };
 const FB_KINDS = [['เนื้อหาหรือคำอธิบายไม่ชัด', 'unclear explanation'], ['ตัวเลขหรือเฉลยผิด', 'wrong number or answer'], ['ภาพจำลองมีปัญหาหรือเข้าใจยาก', 'simulation problem'],
   ['ใช้บนมือถือลำบาก', 'hard to use on a phone'], ['อยากให้เพิ่มโจทย์หรือเนื้อหา', 'more problems or topics'], ['ชอบส่วนนี้', 'I liked this']];
 MC.FEEDBACK = FEEDBACK; MC.FB_KINDS = FB_KINDS;
