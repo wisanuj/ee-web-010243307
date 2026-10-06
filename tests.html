@@ -5,19 +5,19 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=122">
-<script src="assets/stops.js?v=122"></script><script src="assets/shell.js?v=122"></script>
-<script src="assets/circuit.js?v=122"></script><script src="assets/alg.js?v=122"></script>
-<script src="assets/ana.js?v=122"></script><script src="assets/ch4_circuits.js?v=122"></script><script src="assets/ch4ui.js?v=122"></script>
-<script src="assets/ch5.js?v=122"></script><script src="assets/ch5_circuits.js?v=122"></script>
-<script src="assets/ch6.js?v=122"></script><script src="assets/ch6_circuits.js?v=122"></script>
-<script src="assets/ch7_circuits.js?v=122"></script><script src="assets/ch7.js?v=122"></script>
-<script src="assets/ch8_circuits.js?v=122"></script><script src="assets/ch8.js?v=122"></script><script src="assets/ch8ui.js?v=122"></script>
-<script src="assets/ch9_circuits.js?v=122"></script><script src="assets/ch9.js?v=122"></script>
-<script src="assets/lesson.js?v=122"></script><script src="assets/ch6ui.js?v=122"></script><script src="assets/ch7ui.js?v=122"></script><script src="assets/ch1.js?v=122"></script><script src="assets/draw.js?v=122"></script><script src="assets/ch2.js?v=122"></script><script src="assets/ch9ui.js?v=122"></script>
-<script src="assets/ch10.js?v=122"></script><script src="assets/ch10_circuits.js?v=122"></script><script src="assets/ch10ui.js?v=122"></script>
-<script src="assets/ch11.js?v=122"></script><script src="assets/ch11_circuits.js?v=122"></script><script src="assets/ch11ui.js?v=122"></script>
-<script src="assets/ch12.js?v=122"></script><script src="assets/ch12_circuits.js?v=122"></script><script src="assets/ch12ui.js?v=122"></script>
+<link rel="stylesheet" href="assets/ee.css?v=123">
+<script src="assets/stops.js?v=123"></script><script src="assets/shell.js?v=123"></script>
+<script src="assets/circuit.js?v=123"></script><script src="assets/alg.js?v=123"></script>
+<script src="assets/ana.js?v=123"></script><script src="assets/ch4_circuits.js?v=123"></script><script src="assets/ch4ui.js?v=123"></script>
+<script src="assets/ch5.js?v=123"></script><script src="assets/ch5_circuits.js?v=123"></script>
+<script src="assets/ch6.js?v=123"></script><script src="assets/ch6_circuits.js?v=123"></script>
+<script src="assets/ch7_circuits.js?v=123"></script><script src="assets/ch7.js?v=123"></script>
+<script src="assets/ch8_circuits.js?v=123"></script><script src="assets/ch8.js?v=123"></script><script src="assets/ch8ui.js?v=123"></script>
+<script src="assets/ch9_circuits.js?v=123"></script><script src="assets/ch9.js?v=123"></script>
+<script src="assets/lesson.js?v=123"></script><script src="assets/ch6ui.js?v=123"></script><script src="assets/ch7ui.js?v=123"></script><script src="assets/ch1.js?v=123"></script><script src="assets/draw.js?v=123"></script><script src="assets/ch2.js?v=123"></script><script src="assets/ch9ui.js?v=123"></script>
+<script src="assets/ch10.js?v=123"></script><script src="assets/ch10_circuits.js?v=123"></script><script src="assets/ch10ui.js?v=123"></script>
+<script src="assets/ch11.js?v=123"></script><script src="assets/ch11_circuits.js?v=123"></script><script src="assets/ch11ui.js?v=123"></script>
+<script src="assets/ch12.js?v=123"></script><script src="assets/ch12_circuits.js?v=123"></script><script src="assets/ch12ui.js?v=123"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -723,7 +723,10 @@ T('10 CH10.sci / sciTex: 6.4627×10⁻⁴, 9.9472×10⁶, 0.4308, 1909.9; TeX 6.
   const B = v.P('B'), wire = [(v.P('G')[0] + v.P('G2')[0]) / 2, v.P('G')[1] + 3], R1 = v.mid(v.path(ckt.byId.R1));
   const r1 = drag('red', B[0] + 2, B[1] + 2), r2 = drag('black', wire[0], wire[1]), read = v.mtRead(S).v, c1 = drag('clamp', R1[0] + 3, R1[1] + 2), rd = v.mtRead(S),
     r3 = drag('red', B[0] - v.u * 1.5, B[1] + v.u * 1.2), read2 = v.mtRead(S).v;
-  T('meter on every circuit: the closed meter shows its button; red probe on B and black on the ground wire read 8.000 V (12 V across 3 Ω + 6 Ω); the clamp on R1 reads 1.333 A with its arrow from A to B; a probe let go away from the circuit goes back', `${closedHit} ${r1} ${r2} ${read} ${c1} ${rd.i} ${!!rd.arrow && rd.arrow[0] > 0.9} ${r3} ${read2}`, 'icon B G2 8.000 V R1 1.333 A true parked – – –');
+  /* the meter itself is dragged by its body: from the top right to the bottom left, and the parked clamp follows it */
+  S.clamp = null; const D0 = v.mtLayout().dock, cp0 = v.mtClampPt(S, v.mtLayout()); v.mtDown(ev('mousedown', D0.x + 12, D0.y + D0.h / 2)); v.mtMove(ev('mousemove', 12 + 2, 320 - D0.h / 2 - 2)); v.mtUp(); v.draw();
+  const L1 = v.mtLayout(), D1 = L1.dock, cp1 = v.mtClampPt(S, L1), pr1 = v.mtTip('red', S, L1), moved = `${D0.x > 300} ${D1.x < 10} ${D1.y > 150} ${Math.round(cp1[0] - D1.x) === Math.round(cp0[0] - D0.x)} ${pr1[1] <= 320 && cp1[1] + v.mtClampR() <= 320}`;   // the parked probes and clamp stay inside the box
+  T('meter on every circuit: the closed meter shows its button; red probe on B and black on the ground wire read 8.000 V (12 V across 3 Ω + 6 Ω); the clamp on R1 reads 1.333 A with its arrow from A to B; a probe let go away from the circuit goes back; the meter moves by its body to the bottom left, its parked clamp with it and the parked probes still inside the box', `${closedHit} ${r1} ${r2} ${read} ${c1} ${rd.i} ${!!rd.arrow && rd.arrow[0] > 0.9} ${r3} ${read2} | ${moved}`, 'icon B G2 8.000 V R1 1.333 A true parked – – – | true true true true true');
   /* in a problem the meter waits for the solution: LS.stepper marks its section data-sol, 0 before the first step */
   const sec = document.createElement('section'), d2 = document.createElement('div'), c2 = document.createElement('canvas'), sd = document.createElement('div'); d2.style.width = '420px'; d2.appendChild(c2); sec.appendChild(d2); sec.appendChild(sd); box8.appendChild(sec);
   const v2 = new CK.View(c2, ckt, { pad: 1.2 }); v2.ctx = CK.setup(c2, 400, 240); v2.fit({ x: 0, y: 0, w: 400, h: 240 }); const stp = LS.stepper(sd, { steps: [{ why: 'a' }, { why: 'b' }], scroll: false });

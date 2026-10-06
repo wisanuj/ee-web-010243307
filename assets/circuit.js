@@ -582,16 +582,17 @@ class View {
   pickNode(x, y) { let best = null, bd = Math.max(10, this.u * 0.2); for (const n in this.ckt.nodes) { const [px, py] = this.P(n); const d = Math.hypot(px - x, py - y); if (d < bd) { bd = d; best = n; } } return best; }
   pos(e) { const r = this.canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
   onMove(e) { const [x, y] = this.pos(e); if (MT.drag) { this.hover = null; return; } this.hover = this.pick(x, y); this.canvas.style.cursor = this.hover && (this.hover.type === 'S' || this.o.onClick) ? 'pointer' : 'default'; this.mx = x; this.my = y;
-    const h = this.mtHit(x, y); if (h === 'icon' || h === 'close') this.canvas.style.cursor = 'pointer'; else if (h === 'red' || h === 'black') this.canvas.style.cursor = 'grab'; }
+    const h = this.mtHit(x, y); if (h === 'icon' || h === 'close') this.canvas.style.cursor = 'pointer'; else if (h === 'red' || h === 'black' || h === 'clamp') this.canvas.style.cursor = 'grab'; else if (h === 'dock') this.canvas.style.cursor = 'move'; }
   onClick(e) { const [x, y] = this.pos(e); if (performance.now() < MT.skipUntil) return;   // the click that ends a probe drag
-    const mh = this.mtHit(x, y); if (mh === 'icon' || mh === 'close' || mh === 'dock') { const S = this.mtState(); if (mh === 'icon') S.open = true; if (mh === 'close') { S.open = false; S.red = S.black = null; } return; }
+    const mh = this.mtHit(x, y); if (mh === 'icon' || mh === 'close' || mh === 'dock') { const S = this.mtState(); if (mh === 'icon') S.open = true; if (mh === 'close') { S.open = false; S.red = S.black = S.clamp = null; } return; }   // closing keeps where the meter was moved to
     const n = this.pickNode(x, y); const p = this.pick(x, y);
     if (p && p.type === 'S' && !(n && this.o.nodeFirst)) { p.closed = !p.closed; if (this.o.onToggle) this.o.onToggle(p); return; }
     if (this.o.onClick) this.o.onClick(n && this.o.nodeFirst ? { node: n } : p ? { part: p } : n ? { node: n } : null); }
   /* ---------- the meter of every circuit (Oct 2026): a button at the top right opens a multimeter with two probes for voltage and a
      current clamp. The probes are dragged onto a node or anywhere on a wire (a wire is one node) and read V(red) − V(black); the clamp is
      dropped on a wire or an element and reads the current through it (DC: its size, with an arrow the way it flows; AC: the phasor along
-     the arrow, peak or rms as the page writes them). Anything let go away from the circuit goes back to the meter. In a problem (a section
+     the arrow, peak or rms as the page writes them). Anything let go away from the circuit goes back to the meter; the meter itself is
+     dragged by its body to wherever it is in the way least (kept in S.pos, also after closing). In a problem (a section
      with a solution stepper) the button shows only once the solution has been opened (LS.stepper marks the section data-sol).
      Option meter: false turns it off (magnetic circuits, a page with its own multimeter). The state sits on the canvas (canvas.__mt), so
      a view rebuilt in the same place keeps it, and only its owner answers the mouse. ---------- */
@@ -605,8 +606,10 @@ class View {
     return this._mt; }
   mtLayout() { const b = this.box, sm = b.w < 380, ac = this.ckt.mode === 'ac', label = MCt('วัด V/A', 'V/A meter'), ctx = this.ctx;
     ctx.save(); ctx.font = `700 12.5px ${/[ก-๙]/.test(label) ? FONT_TH : FONT}`; const iw = Math.ceil(ctx.measureText(label).width) + 18; ctx.restore();
-    const w = (ac ? 176 : 150) - (sm ? 24 : 0), h = sm ? 58 : 62, x = b.x + b.w - w - 6, y = b.y + 6;   // smaller on a phone, wider for AC phasors
-    return { label, icon: { x: b.x + b.w - iw - 6, y: b.y + 6, w: iw, h: 22 }, dock: { x, y, w, h }, close: { x: x + w - 19, y: y + 3, w: 16, h: 16 },
+    const w = (ac ? 176 : 150) - (sm ? 24 : 0), h = sm ? 58 : 62, P0 = this._mt && this._mt.pos;   // smaller on a phone, wider for AC phasors
+    const park = Math.max(this.mtSize().L + 16, 2 * this.mtClampR() + 18), room = { w: Math.max(0, b.w - w - 4), h: Math.max(0, b.h - h - park - 4) };   // the parked probes hang below the meter, inside the box
+    const x = P0 ? b.x + 2 + P0.fx * room.w : b.x + b.w - w - 6, y = P0 ? b.y + 2 + P0.fy * room.h : b.y + 6;   // where the user moved it, else top right
+    return { label, room, icon: { x: b.x + b.w - iw - 6, y: b.y + 6, w: iw, h: 22 }, dock: { x, y, w, h }, close: { x: x + w - 19, y: y + 3, w: 16, h: 16 },
       jack: { red: [x + 26, y + h], clamp: [x + w / 2, y + h], black: [x + w - 26, y + h] } }; }
   mtSize() { const L = Math.max(26, Math.min(40, this.u * 0.7)), f = L / 40; return { L, N: 11 * f, w: 9 * f }; }
   mtClampR() { return Math.max(8, Math.min(12, this.u * 0.2)); }
@@ -640,12 +643,16 @@ class View {
     const R = this.mtClampR(), [cx, cy] = this.mtClampPt(S, L); if (segProjCK(x, y, [cx, cy], [cx, cy - R - 8]).d < R + 6) return 'clamp';
     const Z = this.mtSize(); for (const k of ['red', 'black']) { const [tx, ty] = this.mtTip(k, S, L), [ux, uy] = this.mtDir(k, S); if (segProjCK(x, y, [tx, ty], [tx + ux * Z.L, ty + uy * Z.L]).d < 16) return k; }
     return inR(L.dock) ? 'dock' : null; }
-  mtDown(e) { const [x, y] = this.pos(mtEv(e)), h = this.mtHit(x, y); if (h !== 'red' && h !== 'black' && h !== 'clamp') return;
+  mtDown(e) { const [x, y] = this.pos(mtEv(e)), h = this.mtHit(x, y); if (h !== 'red' && h !== 'black' && h !== 'clamp' && h !== 'dock') return;
+    if (h === 'dock') { const D = this.mtLayout().dock; MT.drag = { view: this, k: 'dock', dx: D.x - x, dy: D.y - y }; this.hover = null; this.canvas.style.cursor = 'grabbing'; e.preventDefault(); e.stopImmediatePropagation(); return; }   // move the meter
     const S = this.mtState(), L = this.mtLayout(), [tx, ty] = h === 'clamp' ? this.mtClampPt(S, L) : this.mtTip(h, S, L); MT.drag = { view: this, k: h, dx: tx - x, dy: ty - y, at: [tx, ty], snap: null };
     S[h] = null; this.hover = null; this.canvas.style.cursor = 'grabbing'; e.preventDefault(); e.stopImmediatePropagation(); }
-  mtMove(e) { const d = MT.drag, [x, y] = this.pos(mtEv(e)), tx = x + d.dx, ty = y + d.dy, s = d.k === 'clamp' ? this.mtSnapPart(tx, ty) : this.mtSnap(tx, ty);
+  mtMove(e) { const d = MT.drag, [x, y] = this.pos(mtEv(e)), tx = x + d.dx, ty = y + d.dy;
+    if (d.k === 'dock') { const b = this.box, R = this.mtLayout().room, cl = v => Math.max(0, Math.min(1, v)); this.mtState().pos = { fx: cl((tx - b.x - 2) / Math.max(1, R.w)), fy: cl((ty - b.y - 2) / Math.max(1, R.h)) }; this.hover = null; e.preventDefault(); return; }
+    const s = d.k === 'clamp' ? this.mtSnapPart(tx, ty) : this.mtSnap(tx, ty);
     d.snap = s; d.at = s ? s.px : [tx, ty]; this.hover = null; e.preventDefault(); }
   mtUp() { const d = MT.drag, S = this.mtState(); MT.drag = null; MT.skipUntil = performance.now() + 350;   // no click toggles after a drag
+    if (d.k === 'dock') { this.canvas.style.cursor = ''; return; }
     const g = s => ({ x: (s.px[0] - this.ox) / this.u, y: (s.px[1] - this.oy) / this.u });
     if (d.k === 'clamp') S.clamp = d.snap ? { part: d.snap.part, ...g(d.snap) } : null; else S[d.k] = d.snap ? { node: d.snap.node, ...g(d.snap) } : null;
     this.canvas.style.cursor = ''; }
