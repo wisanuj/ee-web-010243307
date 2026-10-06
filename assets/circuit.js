@@ -372,7 +372,7 @@ const SUB_RE = /_(\{[^}]*\}|[A-Za-z0-9]+)/, SUB_G = /_(\{[^}]*\}|[A-Za-z0-9]+)/g
 CK.vColor = (f) => { f = Math.max(0, Math.min(1, f)); const lo = [70, 140, 255], mid = [150, 160, 190], hi = [255, 85, 85];
   const m = f < 0.5 ? lo.map((c, i) => c + (mid[i] - c) * f * 2) : mid.map((c, i) => c + (hi[i] - c) * (f - 0.5) * 2); return `rgb(${m.map(Math.round).join(',')})`; };
 
-/* voltmeter helpers (View.drawMeter): one drag at a time across the page, a 4-digit meter reading, point-to-segment projection */
+/* meter helpers (View.drawMeter): one drag at a time across the page, a 4-digit meter reading, point-to-segment projection */
 const MT = { drag: null, skipUntil: 0 };
 const dmm = (x, unit) => { if (!isFinite(x)) return '– – –'; const a = Math.abs(x); if (a < 1e-12) return '0.000 ' + unit;
   const pre = [[1e6, 'M'], [1e3, 'k'], [1, ''], [1e-3, 'm'], [1e-6, 'µ'], [1e-9, 'n']], q = pre.find(r => a >= r[0] * 0.99995) || pre[pre.length - 1], v = a / q[0];
@@ -470,7 +470,7 @@ class View {
     }
     // current labels
     if (this.o.showI) c.parts.forEach(p => { if (p.showI === false || (this.o.showI !== 'all' && !p.showI && (p.type === 'W' || p.type === 'S'))) return; if (p.type === 'VM') return; this.drawILabel(p); });
-    // the voltmeter (opened with the button at the top right)
+    // the meter (voltage probes and a current clamp, opened with the button at the top right)
     this._drawT = performance.now(); this.drawMeter();
     // hover tooltip
     if (this.hover && this.o.tips !== false) this.drawTip(this.hover);
@@ -588,71 +588,106 @@ class View {
     const n = this.pickNode(x, y); const p = this.pick(x, y);
     if (p && p.type === 'S' && !(n && this.o.nodeFirst)) { p.closed = !p.closed; if (this.o.onToggle) this.o.onToggle(p); return; }
     if (this.o.onClick) this.o.onClick(n && this.o.nodeFirst ? { node: n } : p ? { part: p } : n ? { node: n } : null); }
-  /* ---------- the voltmeter of every circuit (Oct 2026): a "V" button at the top right opens a multimeter whose probes are dragged
-     onto a node or anywhere on a wire; the screen shows V(red) − V(black) (DC volts, or the AC phasor as the page writes it, peak or rms).
-     A probe let go away from the circuit goes back to the meter. Option meter: false turns it off (magnetic circuits, a page with its
-     own multimeter). The state sits on the canvas (canvas.__mt), so a view rebuilt in the same place keeps it. ---------- */
-  mtOn() { const b = this.box; return this.o.meter !== false && !!b && b.w >= 220 && b.h >= 130 && !!this.u; }
+  /* ---------- the meter of every circuit (Oct 2026): a button at the top right opens a multimeter with two probes for voltage and a
+     current clamp. The probes are dragged onto a node or anywhere on a wire (a wire is one node) and read V(red) − V(black); the clamp is
+     dropped on a wire or an element and reads the current through it (DC: its size, with an arrow the way it flows; AC: the phasor along
+     the arrow, peak or rms as the page writes them). Anything let go away from the circuit goes back to the meter. In a problem (a section
+     with a solution stepper) the button shows only once the solution has been opened (LS.stepper marks the section data-sol).
+     Option meter: false turns it off (magnetic circuits, a page with its own multimeter). The state sits on the canvas (canvas.__mt), so
+     a view rebuilt in the same place keeps it, and only its owner answers the mouse. ---------- */
+  mtLocked() { if (this._mtSec === undefined) this._mtSec = this.canvas.closest ? this.canvas.closest('section') : null; return !!this._mtSec && this._mtSec.dataset.sol === '0'; }
+  mtOn() { const b = this.box; return this.o.meter !== false && !!b && b.w >= 220 && b.h >= 130 && !!this.u && !this.mtLocked(); }
   mtLive() { return performance.now() - (this._drawT || -1e9) < 2500; }   // drawn lately (a hidden tab draws about once a second)
   mtState() { if (this._mt) return this._mt; const list = this.canvas.__mt || (this.canvas.__mt = []), b = this.box;
     /* a view built where an older one stood (a stepper changing the circuit) takes over its meter */
     const old = list.find(e => e.view !== this && (e.view._drawT || 0) <= this._born && e.view.box && Math.abs(e.view.box.x - b.x) < 24 && Math.abs(e.view.box.y - b.y) < 24);
-    if (old) { old.view = this; this._mt = old.st; this._mt.owner = this; } else { this._mt = { open: false, red: null, black: null, owner: this }; list.push({ view: this, st: this._mt }); }
+    if (old) { old.view = this; this._mt = old.st; this._mt.owner = this; } else { this._mt = { open: false, red: null, black: null, clamp: null, owner: this }; list.push({ view: this, st: this._mt }); }
     return this._mt; }
-  mtLayout() { const b = this.box, label = MCt('วัด V', 'V meter'), iw = label.length > 5 ? 70 : 54, sm = b.w < 380, w = sm ? 118 : 136, h = sm ? 50 : 54, x = b.x + b.w - w - 6, y = b.y + 6;   // smaller on a phone
+  mtLayout() { const b = this.box, sm = b.w < 380, ac = this.ckt.mode === 'ac', label = MCt('วัด V/A', 'V/A meter'), ctx = this.ctx;
+    ctx.save(); ctx.font = `700 12.5px ${/[ก-๙]/.test(label) ? FONT_TH : FONT}`; const iw = Math.ceil(ctx.measureText(label).width) + 18; ctx.restore();
+    const w = (ac ? 176 : 150) - (sm ? 24 : 0), h = sm ? 58 : 62, x = b.x + b.w - w - 6, y = b.y + 6;   // smaller on a phone, wider for AC phasors
     return { label, icon: { x: b.x + b.w - iw - 6, y: b.y + 6, w: iw, h: 22 }, dock: { x, y, w, h }, close: { x: x + w - 19, y: y + 3, w: 16, h: 16 },
-      jack: { red: [x + 30, y + h], black: [x + w - 30, y + h] } }; }
+      jack: { red: [x + 26, y + h], clamp: [x + w / 2, y + h], black: [x + w - 26, y + h] } }; }
   mtSize() { const L = Math.max(26, Math.min(40, this.u * 0.7)), f = L / 40; return { L, N: 11 * f, w: 9 * f }; }
+  mtClampR() { return Math.max(8, Math.min(12, this.u * 0.2)); }
   mtNodes() { if (this._mtN) return this._mtN; const s = new Set(); this.ckt.parts.forEach(p => ['a', 'b', 'c', 'd'].forEach(k => { if (p[k] !== undefined && this.ckt.nodes[p[k]]) s.add(p[k]); })); return (this._mtN = s); }
-  /* a probe on a node that no longer exists goes back to the meter; one that no longer sits on its node or one of its wires moves to the node */
+  mtParts() { return this.ckt.parts.filter(p => p.type !== 'VM' && p.type !== 'XF'); }   // the clamp goes round wires and elements
+  /* after a rebuild: a probe on a node that is gone, or the clamp on a part that is gone, goes back to the meter; one that no longer sits
+     where it was moves to its node, or to the middle of its part */
   mtCheck(S) { ['red', 'black'].forEach(k => { const q = S[k]; if (!q) return; if (!this.mtNodes().has(q.node)) { S[k] = null; return; }
-    const [nx, ny] = this.ckt.nodes[q.node]; if (Math.hypot(q.x - nx, q.y - ny) < 0.05) return;
-    const onWire = this.ckt.parts.some(p => p.type === 'W' && (p.a === q.node || p.b === q.node) && segProjCK(q.x, q.y, this.ckt.nodes[p.a], this.ckt.nodes[p.b]).d < 0.05);
-    if (!onWire) { q.x = nx; q.y = ny; } }); }
-  /* the point a probe tip (x, y px) attaches to: a node within reach, else the nearest point of a wire (the whole wire is that node) */
+      const [nx, ny] = this.ckt.nodes[q.node]; if (Math.hypot(q.x - nx, q.y - ny) < 0.05) return;
+      const onWire = this.ckt.parts.some(p => p.type === 'W' && (p.a === q.node || p.b === q.node) && segProjCK(q.x, q.y, this.ckt.nodes[p.a], this.ckt.nodes[p.b]).d < 0.05);
+      if (!onWire) { q.x = nx; q.y = ny; } });
+    const c = S.clamp; if (!c) return; const p = this.ckt.byId[c.part]; if (!p || p.type === 'VM' || p.type === 'XF') { S.clamp = null; return; }
+    const pts = this.path(p), [px, py] = this.P([c.x, c.y]); let d = Infinity; for (let i = 1; i < pts.length; i++) d = Math.min(d, segProjCK(px, py, pts[i - 1], pts[i]).d);
+    if (d > 2) { const [mx, my] = this.mid(pts); c.x = (mx - this.ox) / this.u; c.y = (my - this.oy) / this.u; } }
+  /* where a probe tip (x, y px) attaches: a node within reach, else the nearest point of a wire (the whole wire is that node) */
   mtSnap(x, y) { let best = null, bd = Math.max(16, this.u * 0.3);
     this.mtNodes().forEach(n => { const [px, py] = this.P(n), d = Math.hypot(px - x, py - y); if (d < bd) { bd = d; best = { node: n, px: [px, py] }; } });
     if (best) return best; bd = Math.max(10, this.u * 0.2);
     this.ckt.parts.forEach(p => { if (p.type !== 'W') return; const pts = this.path(p); for (let i = 1; i < pts.length; i++) { const q = segProjCK(x, y, pts[i - 1], pts[i]); if (q.d < bd) { bd = q.d; best = { node: p.a, px: q.pt }; } } });
     return best; }
+  /* where the clamp (centre at x, y px) closes: the nearest point of a wire or an element */
+  mtSnapPart(x, y) { let best = null, bd = Math.max(14, this.u * 0.3);
+    this.mtParts().forEach(p => { const pts = this.path(p); if (!pts) return; for (let i = 1; i < pts.length; i++) { const q = segProjCK(x, y, pts[i - 1], pts[i]); if (q.d < bd) { bd = q.d; best = { part: p.id, px: q.pt }; } } });
+    return best; }
   mtTip(k, S, L) { const d = MT.drag; if (d && d.view === this && d.k === k) return d.at;
     if (S[k]) return this.P([S[k].x, S[k].y]); const j = L.jack[k]; return [j[0], j[1] + this.mtSize().L + 14]; }
   mtDir(k, S) { const d = MT.drag, held = d && d.view === this && d.k === k; return (S[k] || (held && d.snap)) ? (k === 'red' ? [-0.36, -0.93] : [0.36, -0.93]) : [0, -1]; }
+  mtClampPt(S, L) { const d = MT.drag; if (d && d.view === this && d.k === 'clamp') return d.at; if (S.clamp) return this.P([S.clamp.x, S.clamp.y]); const j = L.jack.clamp; return [j[0], j[1] + this.mtClampR() + 16]; }
   mtHit(x, y) { if (!this.mtOn() || !this.mtLive()) return null; const S = this.mtState(); if (S.owner !== this) return null; const L = this.mtLayout(), inR = r => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
     if (!S.open) return inR(L.icon) ? 'icon' : null; if (inR(L.close)) return 'close';
+    const R = this.mtClampR(), [cx, cy] = this.mtClampPt(S, L); if (segProjCK(x, y, [cx, cy], [cx, cy - R - 8]).d < R + 6) return 'clamp';
     const Z = this.mtSize(); for (const k of ['red', 'black']) { const [tx, ty] = this.mtTip(k, S, L), [ux, uy] = this.mtDir(k, S); if (segProjCK(x, y, [tx, ty], [tx + ux * Z.L, ty + uy * Z.L]).d < 16) return k; }
     return inR(L.dock) ? 'dock' : null; }
-  mtDown(e) { const [x, y] = this.pos(mtEv(e)), h = this.mtHit(x, y); if (h !== 'red' && h !== 'black') return;
-    const S = this.mtState(), [tx, ty] = this.mtTip(h, S, this.mtLayout()); MT.drag = { view: this, k: h, dx: tx - x, dy: ty - y, at: [tx, ty], snap: null, from: S[h] };
+  mtDown(e) { const [x, y] = this.pos(mtEv(e)), h = this.mtHit(x, y); if (h !== 'red' && h !== 'black' && h !== 'clamp') return;
+    const S = this.mtState(), L = this.mtLayout(), [tx, ty] = h === 'clamp' ? this.mtClampPt(S, L) : this.mtTip(h, S, L); MT.drag = { view: this, k: h, dx: tx - x, dy: ty - y, at: [tx, ty], snap: null };
     S[h] = null; this.hover = null; this.canvas.style.cursor = 'grabbing'; e.preventDefault(); e.stopImmediatePropagation(); }
-  mtMove(e) { const d = MT.drag, [x, y] = this.pos(mtEv(e)), tx = x + d.dx, ty = y + d.dy, s = this.mtSnap(tx, ty); d.snap = s; d.at = s ? s.px : [tx, ty]; this.hover = null; e.preventDefault(); }
-  mtUp() { const d = MT.drag, S = this.mtState(); MT.drag = null; MT.skipUntil = performance.now() + 350;
-    S[d.k] = d.snap ? { node: d.snap.node, x: (d.snap.px[0] - this.ox) / this.u, y: (d.snap.px[1] - this.oy) / this.u } : null; this.canvas.style.cursor = ''; }
-  /* the reading V(red) − V(black): [main line, second line] */
-  mtRead(S) { const d = MT.drag, held = d && d.view === this ? d : null, node = k => S[k] ? S[k].node : held && held.k === k && held.snap ? held.snap.node : null, a = node('red'), b = node('black');
-    if (!a || !b) return ['– – –', '']; const v = Cx.sub(this.ckt.V(a), this.ckt.V(b));
-    if (this.ckt.mode !== 'ac') return [dmm(v.re, 'V'), MCt('แดง − ดำ', 'red − black')];
-    const m = Cx.abs(v) * this.acK(); if (m < 1e-12) return [dmm(0, 'V'), ''];
-    return [dmm(m, 'V') + (this.o.acPeak ? '' : ' rms'), `∠ ${(Cx.arg(v) * 180 / Math.PI).toFixed(1).replace('-', '−')}°`]; }
-  drawMeter() { if (!this.mtOn()) return; const ctx = this.ctx, S = this.mtState(), L = this.mtLayout(), d = MT.drag, held = d && d.view === this ? d : null; this.mtCheck(S);
+  mtMove(e) { const d = MT.drag, [x, y] = this.pos(mtEv(e)), tx = x + d.dx, ty = y + d.dy, s = d.k === 'clamp' ? this.mtSnapPart(tx, ty) : this.mtSnap(tx, ty);
+    d.snap = s; d.at = s ? s.px : [tx, ty]; this.hover = null; e.preventDefault(); }
+  mtUp() { const d = MT.drag, S = this.mtState(); MT.drag = null; MT.skipUntil = performance.now() + 350;   // no click toggles after a drag
+    const g = s => ({ x: (s.px[0] - this.ox) / this.u, y: (s.px[1] - this.oy) / this.u });
+    if (d.k === 'clamp') S.clamp = d.snap ? { part: d.snap.part, ...g(d.snap) } : null; else S[d.k] = d.snap ? { node: d.snap.node, ...g(d.snap) } : null;
+    this.canvas.style.cursor = ''; }
+  /* the readings: v (probes), i (clamp), and the clamp's arrow (unit vector, px) the current is counted along */
+  mtRead(S) { const d = MT.drag, held = d && d.view === this ? d : null, ac = this.ckt.mode === 'ac', K = this.acK(), rms = ac && !this.o.acPeak ? ' rms' : '';
+    const node = k => S[k] ? S[k].node : held && held.k === k && held.snap ? held.snap.node : null, a = node('red'), b = node('black');
+    const cl = S.clamp ? S.clamp : held && held.k === 'clamp' && held.snap ? { part: held.snap.part, px: held.snap.px } : null;
+    const ph = z => ` ∠${(Cx.arg(z) * 180 / Math.PI).toFixed(1).replace('-', '−')}°`, out = { v: '– – –', i: '– – –', arrow: null };
+    if (a && b) { const z = Cx.sub(this.ckt.V(a), this.ckt.V(b)), m = Cx.abs(z) * K; out.v = !ac ? dmm(z.re, 'V') : m < 1e-12 ? dmm(0, 'V') : dmm(m, 'V') + rms + ph(z); }
+    if (cl) { const z = this.ckt.I(cl.part), m = Cx.abs(z) * K, sgn = ac ? 1 : Math.sign(z.re);
+      out.i = !ac ? dmm(Math.abs(z.re), 'A') : m < 1e-12 ? dmm(0, 'A') : dmm(m, 'A') + rms + ph(z);
+      const pts = this.path(this.ckt.byId[cl.part]), [px, py] = cl.px || this.P([cl.x, cl.y]); let best = Infinity, dir = null;
+      for (let i = 1; i < pts.length; i++) { const q = segProjCK(px, py, pts[i - 1], pts[i]); if (q.d < best) { best = q.d; const dx = pts[i][0] - pts[i - 1][0], dy = pts[i][1] - pts[i - 1][1], l = Math.hypot(dx, dy) || 1; dir = [dx / l, dy / l]; } }
+      if (dir && sgn && (ac || Math.abs(z.re) > 1e-12)) out.arrow = [dir[0] * sgn, dir[1] * sgn]; }
+    return out; }
+  drawMeter() { if (this.mtLocked()) { const S = this._mt; if (S && S.open) { S.open = false; S.red = S.black = S.clamp = null; } return; }   // a problem not opened yet
+    if (!this.mtOn()) return; const ctx = this.ctx, S = this.mtState(), L = this.mtLayout(), d = MT.drag, held = d && d.view === this ? d : null; this.mtCheck(S);
     const rr = (r, rad) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(r.x, r.y, r.w, r.h, rad); else ctx.rect(r.x, r.y, r.w, r.h); };
     ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     if (!S.open) { rr(L.icon, 11); ctx.fillStyle = '#ffcc33'; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = '#2b2b2b'; ctx.stroke();
       ctx.fillStyle = '#1b2614'; ctx.font = `700 12.5px ${/[ก-๙]/.test(L.label) ? FONT_TH : FONT}`; ctx.fillText(L.label, L.icon.x + L.icon.w / 2, L.icon.y + L.icon.h / 2 + 0.5); ctx.restore(); return; }
-    const Z = this.mtSize();
+    const Z = this.mtSize(), rd = this.mtRead(S);
     ['black', 'red'].forEach(k => { const [x, y] = this.mtTip(k, S, L), [ux, uy] = this.mtDir(k, S), hx = x + ux * Z.L, hy = y + uy * Z.L, [jx, jy] = L.jack[k], col = k === 'red' ? ['#ff6b6b', '#e5484d', '#ffc2c2'] : ['#cfd6ec', '#262b36', '#cfd6ec'];
       ctx.lineCap = 'round'; ctx.strokeStyle = col[0]; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.moveTo(jx, jy); ctx.bezierCurveTo(jx, jy + 34, hx + ux * 34, hy + uy * 34, hx, hy); ctx.stroke(); ctx.globalAlpha = 1;
-      ctx.strokeStyle = '#e8ecf4'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + ux * Z.N, y + uy * Z.N); ctx.stroke();
+      ctx.strokeStyle = '#e8ecf4'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + ux * Z.N, y + uy * Z.N); ctx.stroke();   // metal needle
       [[col[2], Z.w + 2.4], [col[1], Z.w]].forEach(([c2, w]) => { ctx.strokeStyle = c2; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x + ux * (Z.N + 1), y + uy * (Z.N + 1)); ctx.lineTo(hx, hy); ctx.stroke(); });
       const on = S[k] || (held && held.k === k && held.snap); if (on) { ctx.strokeStyle = col[0]; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, held && held.k === k ? 8 : 5, 0, 2 * Math.PI); ctx.stroke(); } });
+    /* the clamp: a jaw open at the bottom, its handle up to the cable; on a part it shows the arrow the current is counted along */
+    { const R = this.mtClampR(), [cx, cy] = this.mtClampPt(S, L), [jx, jy] = L.jack.clamp, top = cy - R - 8, OR = '#ffa552';
+      ctx.lineCap = 'round'; ctx.strokeStyle = OR; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.moveTo(jx, jy); ctx.bezierCurveTo(jx, jy + 30, cx, top - 30, cx, top); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = '#3a3f4b'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, top); ctx.stroke();
+      ctx.strokeStyle = OR; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cx, cy, R, Math.PI / 2 + 0.45, Math.PI / 2 - 0.45 + 2 * Math.PI); ctx.stroke();
+      if (rd.arrow) { const [ax, ay] = rd.arrow, s0 = R * 1.7, x1 = cx - ax * s0, y1 = cy - ay * s0, x2 = cx + ax * s0, y2 = cy + ay * s0, an = Math.atan2(ay, ax);
+        ctx.strokeStyle = '#ffd166'; ctx.fillStyle = '#ffd166'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x2 + ax * 3, y2 + ay * 3); ctx.lineTo(x2 - 8 * Math.cos(an - 0.5), y2 - 8 * Math.sin(an - 0.5)); ctx.lineTo(x2 - 8 * Math.cos(an + 0.5), y2 - 8 * Math.sin(an + 0.5)); ctx.closePath(); ctx.fill(); } }
     const D = L.dock; rr(D, 9); ctx.fillStyle = '#ffcc33'; ctx.fill(); ctx.lineWidth = 1.6; ctx.strokeStyle = '#2b2b2b'; ctx.stroke();
-    const sc = { x: D.x + 8, y: D.y + 6, w: D.w - 32, h: D.h - 20 }; ctx.fillStyle = '#c9d8b6'; ctx.fillRect(sc.x, sc.y, sc.w, sc.h); ctx.strokeStyle = '#4b5a3c'; ctx.lineWidth = 1; ctx.strokeRect(sc.x, sc.y, sc.w, sc.h);
-    const [l1, l2] = this.mtRead(S); ctx.fillStyle = '#1b2614'; ctx.textAlign = 'right';
-    const big = Math.min(15, sc.w / Math.max(6, l1.length) * 1.55);   // the longest AC reading still fits the screen
-    ctx.font = `700 ${big.toFixed(1)}px ${FONT}`; ctx.fillText(l1, sc.x + sc.w - 5, sc.y + (l2 ? sc.h * 0.36 : sc.h / 2 + 0.5));
-    if (l2) { ctx.font = `600 10.5px ${/[ก-๙]/.test(l2) ? FONT_TH : FONT}`; ctx.fillText(l2, sc.x + sc.w - 5, sc.y + sc.h * 0.77); }
+    const sc = { x: D.x + 8, y: D.y + 6, w: D.w - 32, h: D.h - 22 }; ctx.fillStyle = '#c9d8b6'; ctx.fillRect(sc.x, sc.y, sc.w, sc.h); ctx.strokeStyle = '#4b5a3c'; ctx.lineWidth = 1; ctx.strokeRect(sc.x, sc.y, sc.w, sc.h);
+    [['V', rd.v, 0.3], ['A', rd.i, 0.74]].forEach(([lab, val, f]) => { const yy = sc.y + sc.h * f;
+      ctx.textAlign = 'left'; ctx.fillStyle = '#4b5a3c'; ctx.font = `700 10px ${FONT}`; ctx.fillText(lab, sc.x + 4, yy);
+      ctx.textAlign = 'right'; ctx.fillStyle = '#1b2614'; ctx.font = `700 ${Math.min(13.5, (sc.w - 18) / Math.max(6, val.length) * 1.62).toFixed(1)}px ${FONT}`; ctx.fillText(val, sc.x + sc.w - 4, yy + 0.5); });
     const C = L.close; ctx.textAlign = 'center'; ctx.fillStyle = '#2b2b2b'; ctx.font = `700 14px ${FONT}`; ctx.fillText('×', C.x + C.w / 2, C.y + C.h / 2 + 0.5);
-    ctx.font = `700 9.5px ${FONT}`; ctx.fillText('+', L.jack.red[0], D.y + D.h - 6); ctx.fillText('COM', L.jack.black[0], D.y + D.h - 6);
+    ctx.font = `700 9.5px ${FONT}`; ctx.fillText('+', L.jack.red[0], D.y + D.h - 7); ctx.fillText('A', L.jack.clamp[0], D.y + D.h - 7); ctx.fillText('COM', L.jack.black[0], D.y + D.h - 7);
     ctx.restore(); }
   drawTip(p) {
     if (p.type === 'W' && !this.o.wireTips) return; const c = this.ckt, ac = c.mode === 'ac';

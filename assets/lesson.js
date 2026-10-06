@@ -41,6 +41,7 @@ LS.stepper = (el, o = {}) => {
     bar.querySelector('.pdots').innerHTML = n <= 16 ? steps.map((_, i) => `<i class="${i < k ? 'on' : ''}"></i>`).join('') : '';
     bar.querySelector('.ctext').textContent = `${t('ขั้นที่', 'step')} ${k} / ${n}`;
     if (o.onStep) o.onStep(k, n);
+    el.dataset.k = k; const sec = el.closest('section'); if (sec) sec.dataset.sol = [...sec.querySelectorAll('.stepper')].some(s => +(s.dataset.k || 0) > 0) ? '1' : '0';   // circuit.js shows the meter once a solution is opened
   }
   /* keep the button bar where it was on screen (so repeated presses land on it) and make sure the new step shows above it */
   const keep = (fn, li) => { if (o.scroll === false) { fn(); return; } const y0 = bar.getBoundingClientRect().top; const out = fn();
