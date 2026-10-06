@@ -125,7 +125,7 @@ CH10.core = (ctx, b, geo, st = {}) => {
       A = [c.x + w * 0.15, yt]; B = [c.x + c.w - w * 0.15, yt]; const ta = [A[0] - 0.6, yt - (c.leadLen ?? 1.0)], tb = [B[0] + 0.6, yt - (c.leadLen ?? 1.0)];
       [[A, ta], [B, tb]].forEach(([p, q]) => { const [px, py] = P(...p), [qx, qy] = P(...q); ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(qx, qy); ctx.stroke(); ctx.save(); ctx.fillStyle = CK.PAL.bg; ctx.strokeStyle = col; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(qx, qy, Math.max(3, s * 0.13), 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); ctx.restore(); });
       ctx.restore();
-      if (c.cur) { const [px, py] = P(...A), [qx, qy] = P(...ta), mx = (px + qx) / 2, my = (py + qy) / 2; arrowHead(ctx, mx, my, Math.atan2(py - qy, px - qx), COL.I, 9); T(ctx, tt(c.cur), mx - 12, my - 8, { color: COL.I, size: Math.max(12, Math.min(14, s * 0.55)), weight: '700', align: 'right' }); }
+      if (c.cur) { const [px, py] = P(...A), [qx, qy] = P(...ta), mx = (px + qx) / 2, my = (py + qy) / 2; arrowHead(ctx, mx, my, Math.atan2(py - qy, px - qx), COL.I, 9); T(ctx, tt(c.cur), qx - 10, qy, { color: COL.I, size: Math.max(12, Math.min(14, s * 0.55)), weight: '700', align: 'right' }); }   // left of the lead's end
       if (c.name) { const [qx, qy] = P(c.x + c.w / 2, yt - (c.nameOff ?? 1.3)); T(ctx, tt(c.name), qx, qy, { color: col, size: Math.max(12, Math.min(14, s * 0.55)), weight: '700' }); } }
   });
   (geo.dims || []).forEach(d => dim(ctx, P, d, s));

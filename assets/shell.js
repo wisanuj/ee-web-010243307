@@ -1,5 +1,5 @@
 /* shell.js — page chrome shared by every stop: language (TH/EN), reading theme, top bar, prev/next links,
-   visited-marking for the roadmap, KaTeX auto-render, small UI builders and an animation loop.
+   visited-marking for the roadmap, KaTeX auto-render, the anonymous feedback box, small UI builders and an animation loop.
    Load in <head> (not deferred) so the theme and language apply before first paint.
    Bilingual convention: static HTML uses data-l="th" / data-l="en" blocks (CSS hides the other);
    script strings use t('ไทย', 'English'). Switching the language reloads the page. */
@@ -56,7 +56,46 @@ function convBox() { document.querySelectorAll('.conv[data-mag]').forEach(el => 
     `<span class="cf">${MC.t('อ้างอิง sin', 'Sine reference')}: \\(v(t) = V_m\\sin(\\omega t + \\theta) \\;\\Longleftrightarrow\\; \\mathbf{V} = ${rms ? '\\tfrac{V_m}{\\sqrt2}' : 'V_m'}\\angle\\theta\\)</span>` +
     `<span class="cm">${rms ? MC.t('ขนาดของเฟเซอร์ = ค่ายังผล (root mean square, rms)', 'phasor size = rms (effective) value') : MC.t('ขนาดของเฟเซอร์ = ค่ายอด', 'phasor size = peak value')}</span>` +
     `<span class="cx">${MC.t('โจทย์ที่ให้มาเป็น cos (เช่นจากตำรา Hayt) <b>ต้องแปลงเป็น sin ก่อน</b>เขียนเฟเซอร์: \\(\\cos x = \\sin(x + 90^\\circ)\\) · ถ้าโจทย์ให้เฟเซอร์มาเลย ให้อ่านกลับเป็นฟังก์ชัน sin และเขียนคำตอบในโดเมนเวลาด้วย sin', 'A problem given with cos (e.g. from the Hayt textbook) <b>must be turned into sin first</b>, before writing the phasor: \\(\\cos x = \\sin(x + 90^\\circ)\\). A phasor given directly is read back as a sine, and time-domain answers are written with sin.')}</span>`; }); }
-document.addEventListener('DOMContentLoaded', () => { pageTitle(); topbar(); navbar(); const here = MC.here(); if (here) MC.markVisited(here.file); convBox(); MC.renderMath(); document.dispatchEvent(new Event('mc:ready')); });
+/* feedback box at the end of every stop page and of the roadmap: anonymous (no name, e-mail or student id), sent straight to the
+   instructor's Google Form (fetch no-cors to formResponse). Set it up with feedback/create_form.gs, which creates the form and logs a
+   pre-filled link: FEEDBACK.form = the id in docs.google.com/forms/d/e/<id>/viewform, entries = the entry.<number> of each question.
+   Until form is set the box shows only on localhost, as a preview that sends nothing. FB_KINDS must match the form's choices exactly
+   (th + ' / ' + en, no commas: the response sheet joins several choices with ', '). */
+const FEEDBACK = { form: '', entries: { page: '', rate: '', kind: '', text: '', device: '' } };
+const FB_KINDS = [['เนื้อหาหรือคำอธิบายไม่ชัด', 'unclear explanation'], ['ตัวเลขหรือเฉลยผิด', 'wrong number or answer'], ['ภาพจำลองมีปัญหาหรือเข้าใจยาก', 'simulation problem'],
+  ['ใช้บนมือถือลำบาก', 'hard to use on a phone'], ['อยากให้เพิ่มโจทย์หรือเนื้อหา', 'more problems or topics'], ['ชอบส่วนนี้', 'I liked this']];
+MC.FEEDBACK = FEEDBACK; MC.FB_KINDS = FB_KINDS;
+function feedbackBox() {
+  const live = !!FEEDBACK.form, local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname); if (!live && !local) return;
+  const here = MC.here(), home = MC.file() === 'index.html', nav = document.getElementById('mc-nav');
+  const host = here ? nav : home ? document.querySelector('.wrap > footer') : null; if (!host) return;
+  const T = MC.t, page = here ? `${here.step} ${here.file}` : 'index.html';
+  const box = document.createElement('section'); box.className = 'fb'; box.id = 'mc-fb';
+  box.innerHTML = `<h2>${home ? T('ความเห็นต่อสื่อการสอนนี้', 'Feedback on this website') : T('ความเห็นต่อหน้านี้', 'Feedback on this page')} <span class="fb-anon">${T('ไม่ระบุตัวตน', 'anonymous')}</span></h2>` +
+    `<p class="fb-q">${home ? T('เว็บนี้ช่วยให้เข้าใจเนื้อหาแค่ไหน', 'How much does this website help you understand the course?') : T('หน้านี้ช่วยให้เข้าใจเนื้อหาแค่ไหน', 'How much did this page help you understand?')}</p>` +
+    `<div class="fb-rate" role="radiogroup" aria-label="${T('คะแนน 1 ถึง 5', 'score 1 to 5')}">${[1, 2, 3, 4, 5].map(v => `<button type="button" role="radio" aria-checked="false" data-v="${v}">${v}</button>`).join('')}` +
+    `<span class="fb-ends">${T('1 = ไม่ช่วยเลย · 5 = ช่วยมาก', '1 = not at all · 5 = a lot')}</span></div>` +
+    `<div class="fb-kind">${FB_KINDS.map((k, i) => `<label><input type="checkbox" value="${i}"> ${T(k[0], k[1])}</label>`).join('')}</div>` +
+    `<textarea rows="3" maxlength="2000" aria-label="${T('ความเห็น', 'comment')}" placeholder="${T('ส่วนไหนยังงง หรืออยากให้ปรับอะไร (ไม่บังคับ)', 'What was confusing, or what should change? (optional)')}"></textarea>` +
+    `<div class="fb-row"><button type="button" class="fb-send">${T('ส่งความเห็น', 'Send')}</button><span class="fb-msg" role="status"></span></div>` +
+    `<p class="fb-note">${T('ไม่เก็บชื่อ อีเมล หรือรหัสนักศึกษา ความเห็นใช้ปรับปรุงสื่อการสอนนี้เท่านั้น', 'No name, e-mail or student ID is collected; the feedback is used only to improve this material.')}` +
+    `${live ? '' : ' · ' + T('ตัวอย่างบนเครื่อง: ยังไม่ได้ตั้งค่าแบบฟอร์ม จึงไม่ส่งจริง', 'local preview: the form is not set up yet, so nothing is sent')}</p>`;
+  host.parentNode.insertBefore(box, host);
+  let rate = 0; const msg = box.querySelector('.fb-msg'), send = box.querySelector('.fb-send'), ta = box.querySelector('textarea'), rb = [...box.querySelectorAll('.fb-rate button')];
+  rb.forEach(b => b.addEventListener('click', () => { rate = +b.dataset.v; rb.forEach(x => { const on = +x.dataset.v === rate; x.classList.toggle('on', on); x.setAttribute('aria-checked', String(on)); }); }));
+  send.addEventListener('click', async () => {
+    const kinds = [...box.querySelectorAll('.fb-kind input:checked')].map(c => FB_KINDS[+c.value].join(' / ')), text = ta.value.trim();
+    if (!rate && !kinds.length && !text) { msg.textContent = T('เลือกคะแนนหรือเขียนความเห็นก่อนส่ง', 'Pick a score or write a comment first.'); return; }
+    const E = FEEDBACK.entries, body = new URLSearchParams();
+    body.append('entry.' + E.page, page); if (rate) body.append('entry.' + E.rate, String(rate)); kinds.forEach(k => body.append('entry.' + E.kind, k));
+    if (text) body.append('entry.' + E.text, text); body.append('entry.' + E.device, `${lang} · ${innerWidth}×${innerHeight} · ${theme}`);
+    send.disabled = true; msg.textContent = T('กำลังส่ง…', 'Sending…');
+    if (!live) { console.log('[feedback preview]', [...body.entries()]); msg.textContent = T('ตัวอย่าง: ไม่ได้ส่งจริง', 'Preview: nothing was sent.'); send.disabled = false; return; }
+    try { await fetch(`https://docs.google.com/forms/d/e/${FEEDBACK.form}/formResponse`, { method: 'POST', mode: 'no-cors', body });
+      msg.textContent = T('ส่งแล้ว ขอบคุณครับ', 'Sent. Thank you!'); ta.value = ''; box.querySelectorAll('.fb-kind input').forEach(c => { c.checked = false; }); setTimeout(() => { send.disabled = false; }, 4000); }
+    catch (e) { msg.innerHTML = T('ส่งไม่สำเร็จ ลองอีกครั้ง หรือ', 'Could not send. Try again, or ') + `<a href="https://docs.google.com/forms/d/e/${FEEDBACK.form}/viewform?usp=pp_url&entry.${E.page}=${encodeURIComponent(page)}" target="_blank" rel="noopener">${T('เปิดแบบฟอร์ม', 'open the form')}</a>`; send.disabled = false; } });
+}
+document.addEventListener('DOMContentLoaded', () => { pageTitle(); topbar(); navbar(); const here = MC.here(); if (here) MC.markVisited(here.file); convBox(); feedbackBox(); MC.renderMath(); document.dispatchEvent(new Event('mc:ready')); });
 
 /* ---------- small UI builders for the control panel ---------- */
 const ui = {};

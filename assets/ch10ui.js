@@ -2,7 +2,7 @@
    Built on ch10.js (MagBoard, core and toroid drawings, B–H curves), ch10_circuits.js (CH10C numbers, geometries and specs), ch8.js (CH8.Prob,
    CH8.wire, bars, triangle) and lesson.js. Magnetic problems run on CH10.MagBoard: the iron core with its flux dots on top, the magnetic
    equivalent circuit (the engine, flux = current) and a side panel under it. Transformer problems are AC with rms values.
-   CH10.DEF: toroid cast (page 10.1), ex102 relay thick twin (10.2), sine (10.3), speaker s220 (10.4), hayt (10.5)
+   CH10.DEF: toroid cast (page 10.1), ex102 relay thick uplate twin (10.2), sine (10.3), speaker s220 (10.4), hayt (10.5)
    CH10.problem(n, key) wires a section like CH8.problem */
 (function (global) {
 'use strict';
@@ -151,6 +151,51 @@ DEF.thick = { ...MAG(3), spec: SP_TK, core: core(GTK, () => ({ m: TK.Phi })),
   ask: () => ({ fields: [num(t('Φ (mWb) =', 'Φ (mWb) ='), TK.Phi * 1e3), num('B<sub>thick</sub> (T) =', TK.BT), num('B<sub>thin</sub> (T) =', TK.BN)],
     check: v => near(v[0], 500 / TK.R * 1e3, 0.02) ? t('โจทย์ในแผ่นทบทวนใช้ N = 300 รอบ (ไม่ใช่ 500)', 'The review sheet uses N = 300 turns (not 500).') : '' }),
   answer: () => t('\\(\\Phi = 5.95\\times10^{-3}\\) Wb, \\(B_\\text{thick} = 0.397\\) T, \\(B_\\text{thin} = 0.595\\) T · ไม่มีเฉลยในห้อง', '\\(\\Phi = 5.95\\times10^{-3}\\) Wb, \\(B_\\text{thick} = 0.397\\) T, \\(B_\\text{thin} = 0.595\\) T · there is no class solution.') };
+
+/* review sheet 1: a U core over a bottom plate, two 0.025 m air gaps (as labelled), μr 10 000, N 100, i 1 A */
+const UP = C.uplate, SP_UP = C.series(UP.F, [{ id: 'RU', name: 'ℛ_U', value: UP.RU }, { id: 'Rg1', name: 'ℛ_g', value: UP.Rg }, { id: 'Rp', name: 'ℛ_p', value: UP.Rp }, { id: 'Rg2', name: 'ℛ_g', value: UP.Rg }], { h: 4, fText: '100 At' });
+/* tooltips with the exact series flux (at 10⁸ At/Wb the solver's 1e-12 S node leak moves the fourth figure) and mmf drops to 0.001 At */
+const uTip = p => { const name = p.name ?? p.id;
+  if (p.type === 'V') return [name, 'F = 100 At', `Φ = ${sc(UP.Phi, 4)} Wb`];
+  if (p.type === 'R') return [name, `ℛ = ${sc(p.value, 4)} At/Wb`, `Φ = ${sc(UP.Phi, 4)} Wb`, t(`mmf ที่ใช้ = ${fd(UP.Phi * p.value, 3)} At`, `mmf drop = ${fd(UP.Phi * p.value, 3)} At`)]; return null; };
+const GUP = G.uplate({ gapLabel: 'l_g = 2.5 cm', cur: 'i = 1 A', name: 'N = 100', labels: [{ x: 5, y: 3.0, text: 'μr = 10 000', color: '#9aa3c7', size: 13 },
+  { x: 5, y: 4.1, text: ['ทุกชิ้นลึก 1 cm', 'all parts 1 cm deep'], color: '#9aa3c7', size: 12.5 }, { x: 5, y: 8.75, text: ['แผ่นล่าง หนา 0.5 cm', 'bottom plate, 0.5 cm thick'], color: '#9aa3c7', size: 12.5 }] });
+DEF.uplate = { ...MAG(5, { coreAsp: 0.56, coreAspN: 0.95 }), view: { ...CH10.mview, tip: uTip }, spec: SP_UP,
+  core: core(GUP, () => ({ m: UP.Phi }), { hi: k => k === 2 ? ['top', 'left', 'right', 'plate'] : k === 3 ? ['g1', 'g2'] : k === 5 ? ['coil'] : k === 6 ? ['plate'] : null }),
+  glow: k => k === 2 ? ['RU', 'Rp'] : k === 3 ? ['Rg1', 'Rg2'] : k === 5 ? ['F'] : k === 6 ? ['Rp'] : null,
+  side: (ctx, b, bd, k) => { const sh = bd.short;
+    if (k < 2) return CH8.empty(ctx, b, ['แกนตัว U ช่องอากาศสองช่อง และแผ่นล่างต่ออนุกรมกัน ฟลักซ์เดียวกันไหลผ่านทุกช่วง', 'the U core, the two air gaps and the bottom plate are in series: one flux runs through them all']);
+    if (k < 5) return CH8.bars(ctx, b, [{ label: 'ℛ_U', v: UP.RU / 1e6, color: CY, sub: t('แกนตัว U', 'U core') }, { label: 'ℛ_g', v: k >= 3 ? UP.Rg / 1e6 : 0, color: PINK, sub: t('ช่องขวา', 'right gap') },
+      { label: 'ℛ_p', v: UP.Rp / 1e6, color: CY, sub: t('แผ่นล่าง', 'plate') }, { label: 'ℛ_g', v: k >= 3 ? UP.Rg / 1e6 : 0, color: PINK, sub: t('ช่องซ้าย', 'left gap') }],
+      { title: sh ? 'ℛ (×10⁶ At/Wb)' : t('รีลักแตนซ์ (×10⁶ At/Wb)', 'reluctance (×10⁶ At/Wb)'), fmt: v => fd(v, v < 1 ? 4 : 1), sub: !sh });
+    if (k < 6) return CH8.bars(ctx, b, [{ label: 'F_U', v: UP.Phi * UP.RU, color: CY, sub: 'Φℛ_U' }, { label: 'F_g', v: UP.Phi * UP.Rg, color: PINK, sub: 'Φℛ_g' }, { label: 'F_p', v: UP.Phi * UP.Rp, color: CY, sub: 'Φℛ_p' }, { label: 'F_g', v: UP.Phi * UP.Rg, color: PINK, sub: 'Φℛ_g' }],
+      { title: sh ? 'mmf (At)' : t('mmf ที่แต่ละช่วงใช้ (At)', 'mmf used by each part (At)'), unit: 'At', sum: true, fmt: v => fd(v, Math.abs(v) < 1 ? 3 : 2), sub: !sh });
+    CH8.bars(ctx, b, [{ label: t('แกน U', 'U core'), v: UP.BU * 1e3, color: CY, sub: 'Φ/1 cm²' }, { label: t('ช่องอากาศ', 'air gap'), v: UP.BU * 1e3, color: PINK, sub: 'Φ/1 cm²' }, { label: t('แผ่นล่าง', 'plate'), v: UP.Bp * 1e3, color: AMBER, sub: 'Φ/0.5 cm²' }],
+      { title: sh ? 'B (mT)' : t('ความหนาแน่นฟลักซ์ (mT)', 'flux density (mT)'), fmt: v => fd(v, 3), sub: !sh }); },
+  steps: () => [step(t('<b>ความยาวเส้นทางเฉลี่ยและพื้นที่หน้าตัด</b> (เส้นทางเฉลี่ยผ่านกลางเนื้อเหล็ก ทุกชิ้นลึก 1 cm) ในแผ่นล่างฟลักซ์วิ่งจากใต้ขาหนึ่งไปใต้อีกขาหนึ่ง ช่องอากาศยาว 0.025 m ตามป้ายในรูป และมีพื้นที่เท่าหน้าขาแกน (ไม่คิดการแผ่ของฟลักซ์ที่ขอบช่อง)',
+      '<b>Mean path lengths and cross-sectional areas</b> (the mean path runs through the middle of the iron; every part is 1 cm deep). In the plate the flux runs from under one leg to under the other. The gaps are 0.025 m long, as labelled in the figure, with the area of a leg face (no fringing)'),
+      block([R`l_U &= 2(0.05 - 0.005) + (0.1 - 0.01) = 0.18\ \text{m}`, R`A_U &= (0.01)(0.01) = 1\times10^{-4}\ \text{m}^2`, R`l_p &= 0.1 - 0.01 = 0.09\ \text{m}`, R`A_p &= (0.005)(0.01) = 5\times10^{-5}\ \text{m}^2`, R`l_g &= 0.025\ \text{m},\ \ A_g = A_U`])),
+    step(t('<b>รีลักแตนซ์ของเหล็ก</b> \\(\\mathcal{R} = l/(\\mu_r\\mu_0A)\\) (แกนตัว U และแผ่นล่างเรืองแสง)', '<b>The reluctance of the iron</b>, \\(\\mathcal{R} = l/(\\mu_r\\mu_0A)\\) (the U core and the plate glow)'),
+      block([R`\mathcal{R}_U &= \frac{0.18}{(10^4)(4\pi\times10^{-7})(1\times10^{-4})} = ${S(UP.RU, 4)}\ \text{At/Wb}`, R`\mathcal{R}_p &= \frac{0.09}{(10^4)(4\pi\times10^{-7})(5\times10^{-5})} = ${S(UP.Rp, 4)}\ \text{At/Wb}`]),
+      t('แผ่นล่างยาวครึ่งหนึ่งของแกนตัว U และมีพื้นที่ครึ่งเดียว รีลักแตนซ์จึงเท่ากัน', 'The plate is half as long as the U core and has half its area, so the two reluctances are equal.')),
+    step(t('<b>รีลักแตนซ์ของช่องอากาศ</b> ช่องละ (\\(\\mu_r = 1\\)) ช่องอากาศทั้งสองเรืองแสง', '<b>The reluctance of each air gap</b> (\\(\\mu_r = 1\\)); both gaps glow'),
+      block([R`\mathcal{R}_g &= \frac{0.025}{(4\pi\times10^{-7})(1\times10^{-4})} = ${S(UP.Rg, 4)}\ \text{At/Wb}`]),
+      t(`ช่องเดียวมีรีลักแตนซ์ ${fd(UP.Rg / UP.RU, 0)} เท่าของแกนตัว U ทั้งชิ้น เพราะอากาศมี \\(\\mu_r = 1\\) ส่วนเหล็กมี 10 000 และช่องยาวถึง 2.5 cm`, `One gap has ${fd(UP.Rg / UP.RU, 0)} times the reluctance of the whole U core: air has \\(\\mu_r = 1\\) against the iron's 10 000, and the gap is 2.5 cm long.`)),
+    step(t('<b>รีลักแตนซ์สมมูล</b>: แกนตัว U ช่องอากาศสองช่อง และแผ่นล่างต่ออนุกรมกัน (วงจรสมมูลใต้ภาพ)', '<b>The equivalent reluctance</b>: the U core, the two gaps and the plate are in series (the equivalent circuit under the picture)'),
+      block([R`\mathcal{R}_{eq} &= \mathcal{R}_U + 2\mathcal{R}_g + \mathcal{R}_p`, R`&= ${S(UP.RU, 4)} + 2(${S(UP.Rg, 4)}) + ${S(UP.Rp, 4)}`, R`&= \boxed{${S(UP.R, 4)}\ \text{At/Wb}}`]),
+      t(`ช่องอากาศสองช่องคิดเป็น ${fd(100 * UP.gapShare, 2)} % ของรีลักแตนซ์ทั้งหมด`, `The two gaps make up ${fd(100 * UP.gapShare, 2)} % of the total reluctance.`)),
+    step(t('<b>ฟลักซ์</b> \\(\\Phi = Ni/\\mathcal{R}_{eq}\\) (ขดลวดเรืองแสง ฟลักซ์เริ่มไหล)', '<b>The flux</b>, \\(\\Phi = Ni/\\mathcal{R}_{eq}\\) (the coil glows; the flux starts)'),
+      block([R`\Phi &= \frac{Ni}{\mathcal{R}_{eq}} = \frac{(100)(1)}{${S(UP.R, 4)}} = ${S(UP.Phi, 4)}\ \text{Wb}`]),
+      t(`แผงข้างภาพ: mmf 100 At แทบทั้งหมดใช้ไปกับช่องอากาศ (ช่องละ ${fd(UP.Phi * UP.Rg, 2)} At) เหล็กทั้งสองชิ้นใช้รวมกันเพียง ${fd(UP.Phi * (UP.RU + UP.Rp), 3)} At`, `The side panel: nearly all of the 100 At goes to the gaps (${fd(UP.Phi * UP.Rg, 2)} At each); the two iron parts use only ${fd(UP.Phi * (UP.RU + UP.Rp), 3)} At together.`)),
+    step(t('<b>ความหนาแน่นฟลักซ์ในแผ่นล่าง</b>: ฟลักซ์เดียวกันผ่านหน้าตัดเพียง 0.5 cm² (แผ่นล่างเรืองแสง)', '<b>The flux density in the bottom plate</b>: the same flux crosses a cross section of only 0.5 cm² (the plate glows)'),
+      block([R`B_p &= \frac{\Phi}{A_p} = \frac{${S(UP.Phi, 4)}}{5\times10^{-5}} = \boxed{${S(UP.Bp, 4)}\ \text{T}}`, R`B_U &= B_g = \frac{\Phi}{A_U} = ${S(UP.BU, 4)}\ \text{T}`]),
+      t(`แผ่นล่างหนาเพียงครึ่งหนึ่งของขาแกน B จึงเป็นสองเท่า ตรวจคร่าว ๆ โดยไม่คิดเหล็กเลย: \\(B_g \\approx \\mu_0Ni/(2l_g) = ${fd(UP.Bq * 1e3, 3)}\\) mT · ช่องอากาศยาว 2.5 cm ขณะที่หน้าขาแกนกว้างเพียง 1 cm ในแกนจริงฟลักซ์จะแผ่ออกที่ขอบมาก คำตอบนี้จึงเป็นไปตามสมมติฐานของโจทย์ที่ไม่คิดการแผ่ของฟลักซ์`,
+        `The plate is half as thick as a leg, so its B is twice as large. A rough check that ignores the iron: \\(B_g \\approx \\mu_0Ni/(2l_g) = ${fd(UP.Bq * 1e3, 3)}\\) mT · the gaps are 2.5 cm long while a leg face is only 1 cm wide, so in a real core the flux would spread a lot at the edges; this answer follows the problem's no-fringing assumption.`))],
+  ask: () => ({ fields: [num(t('ℛ<sub>eq</sub> (×10⁸ At/Wb) =', 'ℛ<sub>eq</sub> (×10⁸ At/Wb) ='), UP.R / 1e8), num(t('B ในแผ่นล่าง (mT) =', 'B in the plate (mT) ='), UP.Bp * 1e3)],
+    check: v => near(v[1], UP.BU * 1e3, 0.03) ? t('นั่นคือ B ในแกนตัว U แผ่นล่างหนาเพียง 0.5 cm พื้นที่หน้าตัดจึงเหลือครึ่งเดียว', 'That is B in the U core; the plate is only 0.5 cm thick, so its cross section is half as large.')
+      : near(v[0], (UP.R - UP.Rg) / 1e8, 0.02) ? t('ฟลักซ์ต้องข้ามช่องอากาศสองช่อง ใต้ขาซ้ายและใต้ขาขวา', 'The flux crosses two gaps, one under each leg.')
+      : near(v[0], (UP.RU + UP.Rp + 0.4 * UP.Rg) / 1e8, 0.005) ? t('ช่องอากาศยาว 0.025 m ตามป้ายในรูป (0.005 m คือความหนาของแผ่นล่าง)', 'The gaps are 0.025 m long, as labelled (0.005 m is the thickness of the plate).') : '' }),
+  answer: () => t('\\(\\mathcal{R}_{eq} = 3.98\\times10^8\\) At/Wb, \\(\\Phi = 2.51\\times10^{-7}\\) Wb, \\(B_p = 5.02\\times10^{-3}\\) T (5.02 mT) · ไม่มีเฉลยในห้อง ใช้ช่องอากาศ 0.025 m ตามป้ายในรูป', '\\(\\mathcal{R}_{eq} = 3.98\\times10^8\\) At/Wb, \\(\\Phi = 2.51\\times10^{-7}\\) Wb, \\(B_p = 5.02\\times10^{-3}\\) T (5.02 mT) · there is no class solution; the gaps are 0.025 m, as labelled in the figure.') };
 
 /* 2017 Example 10.2 = review sheet 4 (P. C. Sen Ex 1.3): two coils, a gap in the centre leg */
 const TW = C.twin, SP_TW = C.twinSpec();

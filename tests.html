@@ -5,19 +5,19 @@
 <title data-en="Numeric Tests">ชุดทดสอบตัวเลข</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
-<link rel="stylesheet" href="assets/ee.css?v=115">
-<script src="assets/stops.js?v=115"></script><script src="assets/shell.js?v=115"></script>
-<script src="assets/circuit.js?v=115"></script><script src="assets/alg.js?v=115"></script>
-<script src="assets/ana.js?v=115"></script><script src="assets/ch4_circuits.js?v=115"></script><script src="assets/ch4ui.js?v=115"></script>
-<script src="assets/ch5.js?v=115"></script><script src="assets/ch5_circuits.js?v=115"></script>
-<script src="assets/ch6.js?v=115"></script><script src="assets/ch6_circuits.js?v=115"></script>
-<script src="assets/ch7_circuits.js?v=115"></script><script src="assets/ch7.js?v=115"></script>
-<script src="assets/ch8_circuits.js?v=115"></script><script src="assets/ch8.js?v=115"></script><script src="assets/ch8ui.js?v=115"></script>
-<script src="assets/ch9_circuits.js?v=115"></script><script src="assets/ch9.js?v=115"></script>
-<script src="assets/lesson.js?v=115"></script><script src="assets/ch6ui.js?v=115"></script><script src="assets/ch7ui.js?v=115"></script><script src="assets/ch1.js?v=115"></script><script src="assets/draw.js?v=115"></script><script src="assets/ch2.js?v=115"></script><script src="assets/ch9ui.js?v=115"></script>
-<script src="assets/ch10.js?v=115"></script><script src="assets/ch10_circuits.js?v=115"></script><script src="assets/ch10ui.js?v=115"></script>
-<script src="assets/ch11.js?v=115"></script><script src="assets/ch11_circuits.js?v=115"></script><script src="assets/ch11ui.js?v=115"></script>
-<script src="assets/ch12.js?v=115"></script><script src="assets/ch12_circuits.js?v=115"></script><script src="assets/ch12ui.js?v=115"></script>
+<link rel="stylesheet" href="assets/ee.css?v=116">
+<script src="assets/stops.js?v=116"></script><script src="assets/shell.js?v=116"></script>
+<script src="assets/circuit.js?v=116"></script><script src="assets/alg.js?v=116"></script>
+<script src="assets/ana.js?v=116"></script><script src="assets/ch4_circuits.js?v=116"></script><script src="assets/ch4ui.js?v=116"></script>
+<script src="assets/ch5.js?v=116"></script><script src="assets/ch5_circuits.js?v=116"></script>
+<script src="assets/ch6.js?v=116"></script><script src="assets/ch6_circuits.js?v=116"></script>
+<script src="assets/ch7_circuits.js?v=116"></script><script src="assets/ch7.js?v=116"></script>
+<script src="assets/ch8_circuits.js?v=116"></script><script src="assets/ch8.js?v=116"></script><script src="assets/ch8ui.js?v=116"></script>
+<script src="assets/ch9_circuits.js?v=116"></script><script src="assets/ch9.js?v=116"></script>
+<script src="assets/lesson.js?v=116"></script><script src="assets/ch6ui.js?v=116"></script><script src="assets/ch7ui.js?v=116"></script><script src="assets/ch1.js?v=116"></script><script src="assets/draw.js?v=116"></script><script src="assets/ch2.js?v=116"></script><script src="assets/ch9ui.js?v=116"></script>
+<script src="assets/ch10.js?v=116"></script><script src="assets/ch10_circuits.js?v=116"></script><script src="assets/ch10ui.js?v=116"></script>
+<script src="assets/ch11.js?v=116"></script><script src="assets/ch11_circuits.js?v=116"></script><script src="assets/ch11ui.js?v=116"></script>
+<script src="assets/ch12.js?v=116"></script><script src="assets/ch12_circuits.js?v=116"></script><script src="assets/ch12ui.js?v=116"></script>
 <style>.t-ok{color:var(--good)}.t-bad{color:var(--bad);font-weight:700}table.tbl td{font-family:"IBM Plex Mono",monospace;font-size:13px}</style>
 </head>
 <body>
@@ -670,6 +670,8 @@ T('10.2 engine solves the magnetic circuit of Example 10.2 as a DC circuit: flux
   return `${CH10.sci(P, 4)} ${f10(P * h10.ex102.Rc, 2)} ${f10(P * h10.ex102.Rg, 2)}`; })(), '6.4627×10⁻⁴ 57.14 342.86');
 T('10.2 relay (2017 Ex 10.1 = P. C. Sen Ex 1.1): Fc = 183.6, Fg = 1909.86 At, i = 4.1869 A, μr = 1248.3, no gap 0.3672 A', `${f10(h10.relay.Fc, 1)} ${f10(h10.relay.Fg, 2)} ${f10(h10.relay.i)} ${f10(h10.relay.mur, 1)} ${f10(h10.relay.i0)}`, '183.6 1909.86 4.1869 1248.3 0.3672');
 T('10.2 review sheet 2 (N = 300): ℛ = 18568.1 + 31831 At/Wb, Φ = 5.9525×10⁻³ Wb, B = 0.3968 and 0.5952 T; with P. C. Sen\'s 500 turns Φ = 9.9208×10⁻³ Wb', `${f10(h10.thick.RT, 1)} ${f10(h10.thick.RN, 1)} ${CH10.sci(h10.thick.Phi, 4)} ${f10(h10.thick.BT)} ${f10(h10.thick.BN)} ${CH10.sci(500 / h10.thick.R, 4)}`, '18568.1 31831 5.9525×10⁻³ 0.3968 0.5952 9.9208×10⁻³');
+{ const u = h10.uplate; T('10.2 review sheet 1 (two 0.025 m gaps, as labelled): ℛU = ℛp = 1.4324×10⁵, ℛg = 1.9894×10⁸, ℛeq = 3.9817×10⁸ At/Wb, Φ = 2.5115×10⁻⁷ Wb, B = 5.0229×10⁻³ T in the plate and 2.5115×10⁻³ T in the U core; the gaps hold 99.93 % of ℛ', `${CH10.sci(u.RU, 4)} ${CH10.sci(u.Rp, 4)} ${CH10.sci(u.Rg, 4)} ${CH10.sci(u.R, 4)} ${CH10.sci(u.Phi, 4)} ${CH10.sci(u.Bp, 4)} ${CH10.sci(u.BU, 4)} ${f10(100 * u.gapShare, 2)}`, '1.4324×10⁵ 1.4324×10⁵ 1.9894×10⁸ 3.9817×10⁸ 2.5115×10⁻⁷ 5.0229×10⁻³ 2.5115×10⁻³ 99.93');
+  T('10.2 engine: the four reluctances of review sheet 1 in series carry that flux (largest relative difference; the solver\'s 1e-12 S node leak at 10⁸ At/Wb)', (() => { const c = s10(CH10.DEF.uplate.spec); return Math.max(...['RU', 'Rg1', 'Rp', 'Rg2'].map(id => Math.abs(Math.abs(c.I(id).re) / u.Phi - 1))); })(), 0, 2e-3); }
 T('10.2 three-leg core (P. C. Sen Ex 1.3): ℛbafe = 2.5863×10⁶, ℛbe = 8.538×10⁵, ℛg = 9.9472×10⁶ At/Wb; Φ1 = Φ2 = 2.0671×10⁻⁴, Φg = 4.1342×10⁻⁴ Wb, Bg = 1.0336 T, Hg = 8.2248×10⁵ At/m', `${CH10.sci(h10.twin.Ro, 4)} ${CH10.sci(h10.twin.Rbe, 4)} ${CH10.sci(h10.twin.Rg, 4)} ${CH10.sci(h10.twin.P1, 4)} ${CH10.sci(h10.twin.Pg, 4)} ${f10(h10.twin.Bg)} ${CH10.sci(h10.twin.Hg, 4)}`, '2.5863×10⁶ 8.538×10⁵ 9.9472×10⁶ 2.0671×10⁻⁴ 4.1342×10⁻⁴ 1.0336 8.2248×10⁵');
 T('10.2 engine: the two-source equivalent circuit carries Φg in the gap and Φ1 = Φ2 in the outer legs (loop equations = solver; largest relative difference, the solver\'s 1e-12 S node leak at 5000 At)', (() => { const c = s10(h10.twinSpec()), Tw = h10.twin; return Math.max(Math.abs(Math.abs(c.I('Rg').re) / Tw.Pg - 1), Math.abs(Math.abs(c.I('Ro1').re) / Tw.P1 - 1), Math.abs(Math.abs(c.I('Ro2').re) / Tw.P2 - 1)); })(), 0, 1e-4);
 T('10.2 flux divider (parSpec): without a gap the centre leg takes 3/4 of the flux, with a 5 mm gap 19.3 %', (() => { const Tw = h10.twin, fr = lg => { const Rc = (0.52 - lg) / (Tw.mur * CH10.MU0 * Tw.A) + lg / (CH10.MU0 * Tw.A), c = s10(h10.parSpec(5000, Tw.Ro, Rc, Tw.Ro)); return Math.abs(c.I('Ra').re) / Math.abs(c.I('R0').re); };
@@ -692,15 +694,18 @@ T('10 CH10.sci / sciTex: 6.4627×10⁻⁴, 9.9472×10⁶, 0.4308, 1909.9; TeX 6.
 { const B = new CH10.MagBoard(cv8n(790), { core: () => {}, side: () => {}, waves: [{ sigs: () => [] }] }); B.resize(); const b = B.box, B2 = new CH10.MagBoard(cv8n(372), { core: () => {}, side: () => {} }); B2.resize(); const c = B2.box;
   T('10 MagBoard: at 778 px the core spans the width, the circuit and the side panel sit side by side under it, the wave panel below; at 360 px everything stacks', `${b.core.w === B.W} ${b.cktPanel.y === b.side.y && b.side.x > b.cktPanel.x} ${b.waves[0].y > b.side.y} | ${c.cktPanel.w === B2.W && c.side.y > c.cktPanel.y}`, 'true true true | true'); }
 /* chapter 10 (Oct 2026): the problems of ch10ui.js on CH8.Prob (magnetic ones on CH10.MagBoard) */
-{ const want = { toroid: [5, 3], cast: [5, 2], ex102: [5, 4], relay: [5, 3], thick: [4, 3], twin: [6, 5], sine: [5, 2], speaker: [5, 1], s220: [5, 2], hayt: [5, 2] }, got = [], bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; }, bad = [];
+{ const want = { toroid: [5, 3], cast: [5, 2], ex102: [5, 4], relay: [5, 3], thick: [4, 3], uplate: [6, 5], twin: [6, 5], sine: [5, 2], speaker: [5, 1], s220: [5, 2], hayt: [5, 2] }, got = [], bal = s => { let d = 0; for (let i = 0; i < s.length; i++) { const ch = s[i]; if (ch === '\\') { i++; continue; } if (ch === '{') d++; else if (ch === '}') { d--; if (d < 0) return false; } } return d === 0; }, bad = [];
   Object.keys(want).forEach(k => { const d = CH10.DEF[k], p = new CH8.Prob(cv8n(), d), n = p.steps.length, at = (p.set(want[k][1] - 1), p.solved) === false && (p.set(want[k][1]), p.solved) === true;
     if (p.steps.some(s => (s.tex && !bal(s.tex)) || (typeof s.body === 'string' && !bal(s.body)))) bad.push(k); got.push(`${k}:${n}${at ? '' : '!'}`); });
-  T('10 new: all ten chapter 10 problems build their steps (count), the dots start at the step that finds the flux or current, and every formula has balanced braces', `${got.join(' ')} ${bad.join(',') || 'none'}`, 'toroid:5 cast:5 ex102:5 relay:5 thick:4 twin:6 sine:5 speaker:5 s220:5 hayt:5 none'); }
+  T('10 new: all eleven chapter 10 problems build their steps (count), the dots start at the step that finds the flux or current, and every formula has balanced braces', `${got.join(' ')} ${bad.join(',') || 'none'}`, 'toroid:5 cast:5 ex102:5 relay:5 thick:4 uplate:6 twin:6 sine:5 speaker:5 s220:5 hayt:5 none'); }
 { const D = CH10.DEF, ok = (d, v) => { const a = d.ask(); return a.fields.every((f, i) => f.ok(v[i], v)); }, chk = (d, v) => !!d.ask().check(v);
   T('10 new: try-first boxes: quiz B = 1.225 T, L = 0.2405 H accepted, B = μ₀H named; Example 10.2 accepts 6.4627, 0.4308, 0.2585 and names 0.25 H; Example 10.4 names the 120 V-as-peak flux', `${ok(D.toroid, [1.225, 0.2405])} ${chk(D.toroid, [0.000556, 0.24])} ${ok(D.ex102, [6.4627, 0.4308, 0.2585])} ${chk(D.ex102, [6.4627, 0.4308, 0.25])} ${chk(D.sine, [1.5926, 0.7963, 1.2673])}`, 'true true true true true');
+  T('10 new: review sheet 1 accepts ℛeq = 3.9817 (×10⁸ At/Wb) and B = 5.023 mT, names B of the U core (2.51 mT), a single gap and the 0.005 m gap, and does not accept 2.51 mT', `${ok(D.uplate, [3.9817, 5.023])} ${chk(D.uplate, [3.9817, 2.5115])} ${chk(D.uplate, [1.9923, 5.023])} ${chk(D.uplate, [0.79864, 25.04])} ${ok(D.uplate, [3.9817, 2.5115])}`, 'true true true true false');
   T('10 new: try-first boxes: speaker 9 W, 25 W accepted and a = 3 named; 220/110 V names the load current 22 A; Hayt V2 = 250∠180° (or −250∠0°) accepted, 250∠0° rejected and named', `${ok(D.speaker, [9, 25])} ${chk(D.speaker, [9, 100 / 82])} ${chk(D.s220, [2420, 1452, 1936, 22, 2])} ${ok(D.hayt, [25, 250, 180, 6.25])} ${ok(D.hayt, [25, -250, 0, 6.25])} ${ok(D.hayt, [25, 250, 0, 6.25])} ${chk(D.hayt, [25, 250, 0, 6.25])}`, 'true true true true true false true'); }
 { const d = CH10.DEF.ex102, p = new CH8.Prob(cv8n(), d), g = k => (d.glow(k) || []).join(',');
   T('10 new: Example 10.2 glows the mmf source, then ℛc, then ℛg, one per step; the relay closes its gaps at step 5 (one reluctance left)', `${g(1)} ${g(2)} ${g(3)} ${(p.set(4), g(4)) || '-'} ${CH10.DEF.relay.spec(5).parts.filter(x => x.type === 'R').length}`, 'F Rc Rg - 1'); }
+
+T('feedback box (shell.js): six choices written "Thai / English" with no commas, since the response sheet joins several choices with ", " (they must match feedback/create_form.gs)', `${MC.FB_KINDS.length} ${MC.FB_KINDS.every(k => k.length === 2 && !/,/.test(k.join(' / ')))}`, '6 true');
 
 /* --- chapter 11: DC machines (ch11.js, ch11_circuits.js, ch11ui.js) against P. C. Sen and hand calculations; the handout gives no solutions --- */
 const h11 = CH11C, s11 = sp => { const c = new Circuit(sp); c.solve(); return c; }, f11 = (x, d = 4) => CH6.fd(x, d);

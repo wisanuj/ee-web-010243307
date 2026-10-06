@@ -5,6 +5,7 @@
      toroid  (10.1, handout slide 20 quiz = P. C. Sen Ex 1.5)   cast    (10.1, review sheet 3 = P. C. Sen P1.9)
      ex102   (10.2, handout slide 14 = P. C. Sen Ex 1.4)        relay   (10.2, 2017 Example 10.1 = P. C. Sen Ex 1.1)
      thick   (10.2, review sheet 2 = P. C. Sen P1.2, N = 300)   twin    (10.2, 2017 Example 10.2 = review sheet 4 = P. C. Sen Ex 1.3)
+     uplate  (10.2, review sheet 1: a U core over a bottom plate, two 0.025 m air gaps)
      sine    (10.3, 2017 Example 10.4 = P. C. Sen Ex 1.6)
      speaker (10.4, transformer slide 9 = P. C. Sen Ex 2.1)     s220    (10.4, transformer slide 16)
      hayt    (10.5, transformer slide 15 = Hayt Example 13.7) */
@@ -33,6 +34,12 @@ CH10C.relay = (() => { const N = 500, lc = 0.36, lg = 1.5e-3, B = 0.8, Hc = 510,
 CH10C.thick = (() => { const N = 300, i = 1, mur = 2000, d = 0.10, lT = 2 * (0.25 + 0.10), lN = 2 * (0.25 + 0.15), AT = 0.15 * d, AN = 0.10 * d;
   const RT = rel(lT, mur, AT), RN = rel(lN, mur, AN), R = RT + RN, Phi = N * i / R;
   return { N, i, mur, d, lT, lN, AT, AN, RT, RN, R, Phi, BT: Phi / AT, BN: Phi / AN, F: N * i }; })();
+/* review sheet 1: a U core (10 cm wide, 5 cm high, 1 cm bars) over a bottom plate (10 × 0.5 cm), all 1 cm deep, μr 10 000, N 100, i 1 A, and two
+   0.025 m air gaps as labelled (the figure draws them about as thin as the plate; the instructor confirmed 0.025 m on 6 Oct 2026). Mean paths run
+   through the middle of the iron: the U core 2(5 − 0.5) + (10 − 1) = 18 cm, the plate 10 − 1 = 9 cm between the leg centres; gap area = leg face */
+CH10C.uplate = (() => { const N = 100, i = 1, mur = 1e4, d = 0.01, t = 0.01, W = 0.1, H = 0.05, tp = 0.005, lg = 0.025;
+  const lU = 2 * (H - t / 2) + (W - t), lp = W - t, AU = t * d, Ap = tp * d, RU = rel(lU, mur, AU), Rp = rel(lp, mur, Ap), Rg = rel(lg, 1, AU), R = RU + Rp + 2 * Rg, Phi = N * i / R;
+  return { N, i, mur, d, t, W, H, tp, lg, lU, lp, AU, Ap, RU, Rp, Rg, R, Phi, F: N * i, BU: Phi / AU, Bp: Phi / Ap, gapShare: 2 * Rg / R, Bq: MU0 * N * i / (2 * lg) }; })();
 /* 2017 Example 10.2 = review sheet 4 (P. C. Sen Ex 1.3): two 500-turn coils at 10 A, μr 1200, 2 × 2 cm cross section, 0.5 cm centre gap */
 CH10C.twin = (() => { const F1 = 5000, F2 = 5000, mur = 1200, A = 4e-4, lo = 3 * 0.52, lbe = 0.52 - 0.005, lg = 0.005;
   const Ro = rel(lo, mur, A), Rbe = rel(lbe, mur, A), Rg = rel(lg, 1, A), Rm = Rbe + Rg;
@@ -81,6 +88,14 @@ G.thick = () => { const tv = 3, t = 2, W = 3 + 5 + 3, H = 2 + 5 + 2;
     gaps: [], coils: [{ id: 'coil', x: 0, y: t + 0.5, w: tv, h: H - 2 * t - 1, n: 5, lead: 'left', cur: 'i', dir: 1, name: 'N', leadLen: 1.3, nameOff: 1.8 }],
     paths: [{ id: 'm', pts: [[tv / 2, t / 2], [W - tv / 2, t / 2], [W - tv / 2, H - t / 2], [tv / 2, H - t / 2], [tv / 2, t / 2]], label: 'Φ', lpos: [W / 2, t + 0.9] }],
     labels: [{ x: W / 2, y: H / 2, text: '25 × 25 cm', color: '#9aa3c7', size: 12.5 }], dims: [] }; };
+/* review sheet 1, to scale in cm: the U core (1 cm bars), two 2.5 cm air gaps under its legs, the 0.5 cm bottom plate, the coil on the top bar */
+G.uplate = (o = {}) => { const W = 10, H = 5, t = 1, g = 2.5, tp = 0.5, yp = H + g;
+  return { ext: [-1.6, -2.4, W + 1.6, yp + tp + 1.3],
+    iron: [{ id: 'top', x: 0, y: 0, w: W, h: t }, { id: 'left', x: 0, y: t, w: t, h: H - t }, { id: 'right', x: W - t, y: t, w: t, h: H - t }, { id: 'plate', x: 0, y: yp, w: W, h: tp }],
+    gaps: [{ id: 'g1', x: 0, y: H, w: t, h: g, label: o.gapLabel ?? 'l_g' }, { id: 'g2', x: W - t, y: H, w: t, h: g }],   // the label sits in the open space between the legs
+    coils: [{ id: 'coil', x: 3, y: 0, w: 4, h: t, n: 5, orient: 'h', cur: o.cur ?? 'i', dir: 1, name: o.name ?? 'N', leadLen: 0.9, nameOff: 1.5 }],
+    paths: [{ id: 'm', pts: [[t / 2, t / 2], [W - t / 2, t / 2], [W - t / 2, yp + tp / 2], [t / 2, yp + tp / 2], [t / 2, t / 2]], label: 'Φ', lpos: [W / 2, 1.75] }],
+    labels: o.labels || [], dims: [] }; };
 /* 2017 Example 10.2: three legs, a coil on each outer leg, a gap in the centre leg (drawn thicker than 2 cm for clarity) */
 G.twin = (o = {}) => { const t = 1.6, w = 10, W = 3 * t + 2 * w, H = 2 * t + w, cx0 = t + w, g = o.gap ?? 0.7, gy = (H - g) / 2;
   const iron = [{ id: 'top', x: 0, y: 0, w: W, h: t }, { id: 'bot', x: 0, y: H - t, w: W, h: t }, { id: 'left', x: 0, y: t, w: t, h: H - 2 * t }, { id: 'right', x: W - t, y: t, w: t, h: H - 2 * t }];
