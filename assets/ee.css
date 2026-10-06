@@ -139,6 +139,7 @@ a.stop:hover{transform:translateX(4px);border-color:var(--accent)}
 .stop .topics b{color:var(--purple);font-weight:600}
 .tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
 .tag{font-size:13.5px;color:var(--accent);background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:1px 9px}
+.stop .katex{font-size:1.1em;color:inherit}   /* roadmap cards: math in the colour of its own text, sized to sit with the Thai font */
 .arrow{position:absolute;top:14px;right:16px;color:var(--muted);font-size:21px}
 footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:15px}
 /* ---- phone ---- */

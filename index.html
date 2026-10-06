@@ -7,10 +7,13 @@
 <meta name="description" content="แผนที่การเรียนวิชา 010243307 วิศวกรรมไฟฟ้า ภาควิชาวิศวกรรมการผลิตและหุ่นยนต์ มจพ. หน้าโต้ตอบที่เห็นเส้นทางการไหลของกระแสจริง">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/ee.css?v=114">
-<script src="assets/stops.js?v=114"></script>
-<script src="assets/shell.js?v=114"></script>
-<script src="assets/circuit.js?v=114"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="assets/ee.css?v=115">
+<script src="assets/stops.js?v=115"></script>
+<script src="assets/shell.js?v=115"></script>
+<script src="assets/circuit.js?v=115"></script>
 </head>
 <body>
 <div class="wrap">
@@ -98,7 +101,7 @@
             {type:'W',a:'a',b:'s1'}, {id:'S',name:pick('สวิตช์','switch'),type:'S',a:'s1',b:'s2',closed:true,valText:''},
             {type:'W',a:'s2',b:'b'}, {type:'W',a:'b',b:'c'},
             {id:'L1',name:pick('หลอด 1','lamp 1'),type:'lamp',a:'b',b:'e',value:18,rated:4.5,side:-1},
-            {id:'L2',name:pick('หลอด 2','lamp 2'),type:'lamp',a:'c',b:'d',value:36,rated:4.5},
+            {id:'L2',name:pick('หลอด 2','lamp 2'),type:'lamp',a:'c',b:'d',value:36,rated:4.5,iAt:-1},   // its current label sits high, clear of lamp 1's low one
             {type:'W',a:'d',b:'e'}, {type:'W',a:'e',b:'g'} ] });
   const view=new CK.View(cv, ckt, { speed: 70, ground:false, showI:true, pad:1.7, onToggle:()=>ckt.solve() });
   function size(){ const r=CK.fit(cv,0.5,280); view.ctx=r.ctx; view.W=r.w; view.H=r.h; view.fit({x:4,y:6,w:r.w-8,h:r.h-12}); }
