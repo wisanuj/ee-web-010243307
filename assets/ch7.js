@@ -46,7 +46,7 @@ CH7.Grid = class {
     let im = 0; this.items.forEach(it => { if (!it.sum) im = Math.max(im, CH6.imax(it.ckt)); });
     this.items.forEach(it => {
       const v = new CK.View(this.cv, it.ckt, Object.assign({ speed: (this.o.speed || 90) / Math.max(im, 1e-9), ground: false, showI: false, pad: it.pad ?? 1.5, tips: !it.sum, acPeak: true,
-        acTime: () => this.clk.at(it.ckt.w), dotMin: it.sum ? -1 : 1e-9 }, this.o.view || {}));
+        acTime: () => this.clk.at(it.ckt.w), dotMin: it.sum ? -1 : 1e-9, meter: !it.sum }, this.o.view || {}));   // a sum panel has no single circuit to measure
       if (it.sum) { const src = it.sum.map(k => this.items[k]); v.instI = id => src.reduce((s, q) => s + (q.ckt.result && q.ckt.result.I[id] ? Cx.inst(q.ckt.result.I[id], q.ckt.w, this.clk.at(q.ckt.w)) : 0), 0); }
       it.view = v; });
     this.resize();

@@ -246,7 +246,7 @@ CH10.pane = (cv, hOf) => { const p = { cv }; p.fit = () => { p.W = Math.max(300,
 /* a round number at or above x (axis tops) */
 CH10.nice = x => { if (!(x > 0)) return 1; const e = Math.pow(10, Math.floor(Math.log10(x))); return [1, 2, 2.5, 5, 10].map(m => m * e).find(v => v >= x * 0.999); };
 /* view options for a magnetic equivalent circuit: cyan flux dots, At/Wb tooltips, tiny fluxes still move */
-CH10.mview = { dotColor: '#5ad1ff', dotMin: 1e-15, tip: (p, c) => CH10.mtip(p, c), acPeak: false, acPower: false };
+CH10.mview = { dotColor: '#5ad1ff', dotMin: 1e-15, tip: (p, c) => CH10.mtip(p, c), acPeak: false, acPower: false, meter: false };   // no voltmeter: the "voltages" are mmf
 
 /* =====================================================================================================================
    4) tooltips of a magnetic equivalent circuit: V = mmf source (At), R = reluctance (At/Wb), current = flux (Wb) */

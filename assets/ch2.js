@@ -1,7 +1,7 @@
 /* ch2.js — chapter 2 building blocks for the problem-by-problem pages (needs circuit.js, draw.js, alg.js, lesson.js):
    CH2.Ladder     a ladder of SI prefixes: moving one rung moves the decimal point three places (Ex 1, Ex 2)
    CH2.Tube       a wire with charges crossing a cross-section, with i(t) (area shaded) and q(t) = area (Ex 5, exercise 3)
-   CH2.Probe      a circuit coloured by potential, with a multimeter whose probes you place by clicking nodes
+   CH2.Probe      a circuit coloured by potential, with a multimeter whose probes you drag onto a node or a wire
    CH2.Blob       a two-terminal element with polarity marks and voltmeters (slide p. 10, Ex 3)
    CH2.SourceLoad an ideal voltage source, a real battery or an ideal current source driving a load, with the V–I graph
    CH2.Dep        Hayt Example 2.2: a voltage-controlled voltage source
@@ -135,16 +135,25 @@ CH2.Tube = class {
 };
 
 /* ---------------- 3) probes on a circuit coloured by potential ---------------- */
+/* the multimeter's two probes are dragged (mouse or finger) onto a node or anywhere along a wire, which is all one node; a probe let go
+   away from the circuit goes back to where it was. S.red / S.black hold the node each probe touches (a page may set them, e.g. after a
+   quiz answer, and the probe follows); tip[k] = {node, x, y} is where its needle touches, in grid units (a wire may be touched anywhere) */
+const segProj = (x, y, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy || 1, f = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / L2)), px = a[0] + f * dx, py = a[1] + f * dy;
+  return { d: Math.hypot(x - px, y - py), pt: [px, py] }; };
+const PROBE = { red: { lead: '#ff6b6b', body: '#e5484d', edge: '#ffc2c2', dir: [-0.39, 0.92] }, black: { lead: '#cfd6ec', body: '#262b36', edge: '#cfd6ec', dir: [0.39, 0.92] } };
+/* probe size in px from the circuit scale u: metal needle N, handle end L (where the lead leaves), handle width w (smaller on phones) */
+const probeSize = u => { const L = Math.max(30, Math.min(46, u * 0.78)), f = L / 46; return { N: 12 * f, L, w: 10.5 * f }; };
 CH2.Probe = class {
   constructor(canvas, panel) {
-    this.canvas = canvas; this.S = { V1: 12, R1: 3, red: 'A', black: 'C', next: 'red' };
+    this.canvas = canvas; this.S = { V1: 12, R1: 3, red: 'A', black: 'C' }; this.tip = {}; this.drag = null;
     this.ckt = new CK.Circuit({ ground: 'G', nodes: { A: [0, 0], B: [3.6, 0], C: [7.2, 0], G: [0, 3.2], Gm: [3.6, 3.2], Gr: [7.2, 3.2] },
       parts: [{ id: 'V1', name: 'V₁', type: 'V', a: 'A', b: 'G', value: 12, battery: true, side: -1 }, { id: 'R1', name: 'R₁', type: 'R', a: 'A', b: 'B', value: 3 },
         { id: 'R2', name: 'R₂', type: 'R', a: 'B', b: 'Gm', value: 6, side: -1 }, { id: 'R3', name: 'R₃', type: 'R', a: 'B', b: 'C', value: 3 },
         { id: 'R4', name: 'R₄', type: 'R', a: 'C', b: 'Gr', value: 3, side: 1 }, { type: 'W', a: 'G', b: 'Gm' }, { type: 'W', a: 'Gm', b: 'Gr' }] });
     this.ckt.solve();
-    this.view = new CK.View(canvas, this.ckt, { speed: 26, ground: true, showI: true, potential: true, pad: 1.5,
-      onClick: hit => { if (!hit) return; const node = hit.node || (hit.part && hit.part.type === 'W' ? hit.part.a : null); if (!node) return; this.S[this.S.next] = node; this.S.next = this.S.next === 'red' ? 'black' : 'red'; if (this.nb) this.nb.set(this.S.next === 'red' ? 'pRed' : 'pBlack'); } });
+    this.view = new CK.View(canvas, this.ckt, { speed: 26, ground: true, showI: true, potential: true, pad: 1.5, meter: false });   // its own multimeter
+    MC.drag(canvas, { hit: p => this.grab(p), move: (k, p) => this.move(k, p), up: k => this.drop(k) });
+    canvas.addEventListener('mousemove', e => { if (!this.drag && this.grabAt(this.view.pos(e))) canvas.style.cursor = 'grab'; });   // after the view's own cursor
     this.resize(); window.addEventListener('resize', () => this.resize()); LS.anim(canvas, dt => this.frame(dt));
     if (panel) this.controls(panel);
   }
@@ -154,10 +163,28 @@ CH2.Probe = class {
     const cw = narrow ? r.w : Math.round(r.w * 0.74); this.view.fit({ x: 0, y: 30, w: cw, h: Math.round((r.h - 34) * (narrow ? 0.5 : 0.68)) });
     this.lad = narrow ? { x: 6, y: Math.round(r.h * 0.56), w: Math.round(r.w * 0.4), h: Math.round(r.h * 0.42) } : { x: cw + 6, y: 30, w: r.w - cw - 12, h: r.h - 44 };
     this.meter = narrow ? { x: Math.round(r.w * 0.5), y: Math.round(r.h * 0.66) } : { x: Math.round(cw / 2 - 75), y: r.h - 92 }; }
-  drawProbes() { const c = this.view.ctx, mw = 150, mh = 80, mx = this.meter.x, my = this.meter.y, rd = this.V(this.S.red) - this.V(this.S.black);
-    [['red', '#ff6b6b'], ['black', '#cfd6ec']].forEach(([k, col], j) => { const [x, y] = this.view.P(this.S[k]), sx = mx + 40 + j * 70, sy = my;
-      c.save(); c.strokeStyle = col; c.lineWidth = 3; c.globalAlpha = 0.9; c.beginPath(); c.moveTo(sx, sy); c.bezierCurveTo(sx, sy - 70, x, y + 80, x, y + 10); c.stroke();
-      c.fillStyle = col; c.beginPath(); c.moveTo(x, y + 2); c.lineTo(x - 5, y + 16); c.lineTo(x + 5, y + 16); c.closePath(); c.fill(); c.restore(); });
+  /* where probe k touches, in px; a probe whose node was changed from outside jumps to that node */
+  tipPx(k) { let q = this.tip[k]; if (!q || q.node !== this.S[k]) { const [x, y] = this.ckt.nodes[this.S[k]]; q = this.tip[k] = { node: this.S[k], x, y }; } return this.view.P([q.x, q.y]); }
+  grabAt([x, y]) { const L = probeSize(this.view.u).L; for (const k of ['red', 'black']) { const [tx, ty] = this.tipPx(k), [ux, uy] = PROBE[k].dir; if (segProj(x, y, [tx, ty], [tx + ux * L, ty + uy * L]).d < 20) return k; } return null; }
+  /* the node under a probe tip at (x, y) px: a node within reach first, else the nearest point of a wire */
+  snapAt(x, y) { const v = this.view; let best = null, bd = Math.max(18, v.u * 0.32);
+    for (const n in this.ckt.nodes) { const [px, py] = v.P(n), d = Math.hypot(px - x, py - y); if (d < bd) { bd = d; best = { node: n, px: [px, py] }; } }
+    if (best) return best; bd = Math.max(12, v.u * 0.2);
+    this.ckt.parts.forEach(p => { if (p.type !== 'W') return; const pts = v.path(p); for (let i = 1; i < pts.length; i++) { const q = segProj(x, y, pts[i - 1], pts[i]); if (q.d < bd) { bd = q.d; best = { node: p.a, px: q.pt }; } } });
+    return best; }
+  grab(p) { const k = this.grabAt([p.x, p.y]); if (!k) return null; const [tx, ty] = this.tipPx(k);
+    this.drag = { k, dx: tx - p.x, dy: ty - p.y, from: this.S[k], at: [tx, ty], snap: null }; this.canvas.style.cursor = 'grabbing'; return k; }
+  move(k, p) { const d = this.drag; if (!d) return; const x = p.x + d.dx, y = p.y + d.dy, s = this.snapAt(x, y), v = this.view; d.snap = s; d.at = s ? s.px : [x, y];
+    this.S[k] = s ? s.node : d.from; this.tip[k] = { node: this.S[k], x: (d.at[0] - v.ox) / v.u, y: (d.at[1] - v.oy) / v.u }; v.hover = null; }
+  drop(k) { const d = this.drag; if (!d) return; if (!d.snap) { const [x, y] = this.ckt.nodes[d.from]; this.S[k] = d.from; this.tip[k] = { node: d.from, x, y }; }
+    this.drag = null; this.canvas.style.cursor = ''; }
+  drawProbes() { const c = this.view.ctx, mw = 150, mh = 80, mx = this.meter.x, my = this.meter.y, rd = this.V(this.S.red) - this.V(this.S.black), d = this.drag, Z = probeSize(this.view.u);
+    ['black', 'red'].forEach(k => { const P = PROBE[k], [x, y] = this.tipPx(k), [ux, uy] = P.dir, hx = x + ux * Z.L, hy = y + uy * Z.L, sx = mx + 40 + (k === 'red' ? 0 : 70), sy = my;
+      c.save(); c.lineCap = 'round'; c.strokeStyle = P.lead; c.lineWidth = 3; c.globalAlpha = 0.9; c.beginPath(); c.moveTo(sx, sy); c.bezierCurveTo(sx, sy - 60, hx + ux * 50, hy + uy * 50, hx, hy); c.stroke(); c.globalAlpha = 1;
+      c.strokeStyle = '#e8ecf4'; c.lineWidth = 2.6; c.beginPath(); c.moveTo(x, y); c.lineTo(x + ux * Z.N, y + uy * Z.N); c.stroke();   // metal needle
+      [[P.edge, Z.w + 2.5], [P.body, Z.w]].forEach(([col, w]) => { c.strokeStyle = col; c.lineWidth = w; c.beginPath(); c.moveTo(x + ux * (Z.N + 1), y + uy * (Z.N + 1)); c.lineTo(hx, hy); c.stroke(); });
+      const held = d && d.k === k; if (!held || d.snap) { c.strokeStyle = P.lead; c.lineWidth = 2; c.beginPath(); c.arc(x, y, held ? 9 : 5.5, 0, 2 * Math.PI); c.stroke(); }   // touching a node
+      c.restore(); });
     c.save(); c.fillStyle = '#ffcc33'; c.strokeStyle = '#2b2b2b'; c.lineWidth = 2; c.beginPath(); if (c.roundRect) c.roundRect(mx, my, mw, mh, 10); else c.rect(mx, my, mw, mh); c.fill(); c.stroke();
     c.fillStyle = '#c9d8b6'; c.fillRect(mx + 10, my + 10, mw - 20, 34); c.strokeStyle = '#4b5a3c'; c.strokeRect(mx + 10, my + 10, mw - 20, 34);
     c.fillStyle = '#1b2614'; c.font = '600 22px "IBM Plex Mono", monospace'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(`${rd < -1e-9 ? '−' : ''}${Math.abs(rd).toFixed(2)} V`, mx + mw - 16, my + 28);
@@ -171,11 +198,11 @@ CH2.Probe = class {
     c.save(); c.strokeStyle = '#ff7eb6'; c.lineWidth = 2; c.beginPath(); c.moveTo(xb - 8, yb); c.lineTo(xb, yb); c.lineTo(xb, yr); c.lineTo(xb - 8, yr); c.stroke(); c.restore(); }
   frame(dt) { const c = this.view.ctx; c.fillStyle = PAL.bg; c.fillRect(0, 0, this.W, this.H); this.view.advance(dt); this.view.o.vRange = [0, Math.max(1, this.S.V1)]; this.view.draw(); this.drawLadder(); this.drawProbes();
     ['A', 'B', 'C'].forEach(n => { const [x, y] = this.view.P(n); this.view.text(n, x - 12, y - 14, { color: '#ffffff', size: 15.5, weight: '700' }); });
-    CK.badge(c, t('คลิกโนดเพื่อวางโพรบ', 'click a node to place a probe'), 'ok'); if (this.onFrame) this.onFrame(); }
+    CK.badge(c, t('ลากปลายโพรบไปแตะโนดหรือลวด', 'drag a probe onto a node or wire'), 'ok'); if (this.onFrame) this.onFrame(); }
   controls(el) { const ui = MC.ui;
-    ui.html(el, t('คลิกโนดบนวงจรเพื่อวางโพรบ โพรบที่จะวางถัดไป:', 'Click a node on the circuit to place a probe. Next probe:'), 'simnote');
-    this.nb = ui.radio(el, [{ id: 'pRed', label: t('แดง (+)', 'red (+)'), on: true }, { id: 'pBlack', label: t('ดำ (COM)', 'black (COM)') }], id => { this.S.next = id === 'pRed' ? 'red' : 'black'; });
-    ui.buttons(el, [{ label: t('สลับโพรบ ⇄', 'Swap probes ⇄'), cls: 'on', onclick: () => { [this.S.red, this.S.black] = [this.S.black, this.S.red]; } }]);
+    ui.html(el, t('ลากโพรบสีแดง (+) และสีดำ (COM) ไปแตะโนดหรือลวดเส้นที่ต้องการวัด (ลวดเส้นเดียวกันคือโนดเดียวกัน แตะตรงไหนก็ได้) ถ้าปล่อยห่างจากวงจร โพรบจะกลับที่เดิม',
+      'Drag the red (+) and black (COM) probes onto the node or wire you want to measure (a wire is one node, so touch it anywhere). Let go away from the circuit and the probe goes back.'), 'simnote');
+    ui.buttons(el, [{ label: t('สลับโพรบ ⇄', 'Swap probes ⇄'), cls: 'on', onclick: () => { [this.S.red, this.S.black] = [this.S.black, this.S.red]; [this.tip.red, this.tip.black] = [this.tip.black, this.tip.red]; } }]);
     const box = ui.html(el, '', 'ctl');
     ui.slider(box, { id: 'prV1', label: 'V₁', min: 0, max: 24, step: 1, value: 12, fmt: v => `${v} V`, oninput: v => { this.S.V1 = v; this.ckt.set('V1', 'value', v); this.ckt.solve(); } });
     ui.slider(box, { id: 'prR1', label: 'R₁', min: 1, max: 12, step: 1, value: 3, fmt: v => `${v} Ω`, oninput: v => { this.S.R1 = v; this.ckt.set('R1', 'value', v); this.ckt.solve(); } }); }

@@ -372,6 +372,17 @@ const SUB_RE = /_(\{[^}]*\}|[A-Za-z0-9]+)/, SUB_G = /_(\{[^}]*\}|[A-Za-z0-9]+)/g
 CK.vColor = (f) => { f = Math.max(0, Math.min(1, f)); const lo = [70, 140, 255], mid = [150, 160, 190], hi = [255, 85, 85];
   const m = f < 0.5 ? lo.map((c, i) => c + (mid[i] - c) * f * 2) : mid.map((c, i) => c + (hi[i] - c) * (f - 0.5) * 2); return `rgb(${m.map(Math.round).join(',')})`; };
 
+/* voltmeter helpers (View.drawMeter): one drag at a time across the page, a 4-digit meter reading, point-to-segment projection */
+const MT = { drag: null, skipUntil: 0 };
+const dmm = (x, unit) => { if (!isFinite(x)) return '– – –'; const a = Math.abs(x); if (a < 1e-12) return '0.000 ' + unit;
+  const pre = [[1e6, 'M'], [1e3, 'k'], [1, ''], [1e-3, 'm'], [1e-6, 'µ'], [1e-9, 'n']], q = pre.find(r => a >= r[0] * 0.99995) || pre[pre.length - 1], v = a / q[0];
+  return (x < 0 ? '−' : '') + v.toFixed(v >= 100 ? 1 : v >= 10 ? 2 : 3) + ' ' + q[1] + unit; };
+const segProjCK = (x, y, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy || 1, f = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / L2)), px = a[0] + f * dx, py = a[1] + f * dy;
+  return { d: Math.hypot(x - px, y - py), pt: [px, py] }; };
+const mtEv = e => (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+if (typeof window !== 'undefined') { const mv = e => { if (MT.drag) MT.drag.view.mtMove(e); }, up = () => { if (MT.drag) MT.drag.view.mtUp(); };
+  window.addEventListener('mousemove', mv); window.addEventListener('touchmove', mv, { passive: false }); window.addEventListener('mouseup', up); window.addEventListener('touchend', up); window.addEventListener('touchcancel', up); }
+
 class View {
   /* canvas: <canvas>; ckt: Circuit; o: { aspect, flow:'conv'|'elec', speed (px/s per ampere), minV (slowest visible dot speed, px/s), showI, showV, potential, labels, onClick(part|node), box:{x,y,w,h},
      acTime (clock for AC dots), acPeak (AC readouts as peak phasors, as chapter 6 writes them, instead of rms),
@@ -382,6 +393,7 @@ class View {
     this.ctx = canvas.getContext('2d');
     canvas.addEventListener('mousemove', e => this.onMove(e)); canvas.addEventListener('mouseleave', () => { this.hover = null; });
     canvas.addEventListener('click', e => this.onClick(e));
+    this._born = performance.now(); canvas.addEventListener('mousedown', e => this.mtDown(e)); canvas.addEventListener('touchstart', e => this.mtDown(e), { passive: false });   // voltmeter probes
   }
   /* grid → px transform for the given box (default: whole canvas) */
   fit(box) {
@@ -458,6 +470,8 @@ class View {
     }
     // current labels
     if (this.o.showI) c.parts.forEach(p => { if (p.showI === false || (this.o.showI !== 'all' && !p.showI && (p.type === 'W' || p.type === 'S'))) return; if (p.type === 'VM') return; this.drawILabel(p); });
+    // the voltmeter (opened with the button at the top right)
+    this._drawT = performance.now(); this.drawMeter();
     // hover tooltip
     if (this.hover && this.o.tips !== false) this.drawTip(this.hover);
     if (c.result && c.result.error === 'short') this.banner(MCt('⚠ ลัดวงจร: แหล่งจ่ายแรงดันถูกต่อคร่อมด้วยลวด', '⚠ Short circuit: a voltage source is shorted by a wire'));
@@ -567,10 +581,79 @@ class View {
   }
   pickNode(x, y) { let best = null, bd = Math.max(10, this.u * 0.2); for (const n in this.ckt.nodes) { const [px, py] = this.P(n); const d = Math.hypot(px - x, py - y); if (d < bd) { bd = d; best = n; } } return best; }
   pos(e) { const r = this.canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
-  onMove(e) { const [x, y] = this.pos(e); this.hover = this.pick(x, y); this.canvas.style.cursor = this.hover && (this.hover.type === 'S' || this.o.onClick) ? 'pointer' : 'default'; this.mx = x; this.my = y; }
-  onClick(e) { const [x, y] = this.pos(e); const n = this.pickNode(x, y); const p = this.pick(x, y);
+  onMove(e) { const [x, y] = this.pos(e); if (MT.drag) { this.hover = null; return; } this.hover = this.pick(x, y); this.canvas.style.cursor = this.hover && (this.hover.type === 'S' || this.o.onClick) ? 'pointer' : 'default'; this.mx = x; this.my = y;
+    const h = this.mtHit(x, y); if (h === 'icon' || h === 'close') this.canvas.style.cursor = 'pointer'; else if (h === 'red' || h === 'black') this.canvas.style.cursor = 'grab'; }
+  onClick(e) { const [x, y] = this.pos(e); if (performance.now() < MT.skipUntil) return;   // the click that ends a probe drag
+    const mh = this.mtHit(x, y); if (mh === 'icon' || mh === 'close' || mh === 'dock') { const S = this.mtState(); if (mh === 'icon') S.open = true; if (mh === 'close') { S.open = false; S.red = S.black = null; } return; }
+    const n = this.pickNode(x, y); const p = this.pick(x, y);
     if (p && p.type === 'S' && !(n && this.o.nodeFirst)) { p.closed = !p.closed; if (this.o.onToggle) this.o.onToggle(p); return; }
     if (this.o.onClick) this.o.onClick(n && this.o.nodeFirst ? { node: n } : p ? { part: p } : n ? { node: n } : null); }
+  /* ---------- the voltmeter of every circuit (Oct 2026): a "V" button at the top right opens a multimeter whose probes are dragged
+     onto a node or anywhere on a wire; the screen shows V(red) − V(black) (DC volts, or the AC phasor as the page writes it, peak or rms).
+     A probe let go away from the circuit goes back to the meter. Option meter: false turns it off (magnetic circuits, a page with its
+     own multimeter). The state sits on the canvas (canvas.__mt), so a view rebuilt in the same place keeps it. ---------- */
+  mtOn() { const b = this.box; return this.o.meter !== false && !!b && b.w >= 220 && b.h >= 130 && !!this.u; }
+  mtLive() { return performance.now() - (this._drawT || -1e9) < 2500; }   // drawn lately (a hidden tab draws about once a second)
+  mtState() { if (this._mt) return this._mt; const list = this.canvas.__mt || (this.canvas.__mt = []), b = this.box;
+    /* a view built where an older one stood (a stepper changing the circuit) takes over its meter */
+    const old = list.find(e => e.view !== this && (e.view._drawT || 0) <= this._born && e.view.box && Math.abs(e.view.box.x - b.x) < 24 && Math.abs(e.view.box.y - b.y) < 24);
+    if (old) { old.view = this; this._mt = old.st; this._mt.owner = this; } else { this._mt = { open: false, red: null, black: null, owner: this }; list.push({ view: this, st: this._mt }); }
+    return this._mt; }
+  mtLayout() { const b = this.box, label = MCt('วัด V', 'V meter'), iw = label.length > 5 ? 70 : 54, sm = b.w < 380, w = sm ? 118 : 136, h = sm ? 50 : 54, x = b.x + b.w - w - 6, y = b.y + 6;   // smaller on a phone
+    return { label, icon: { x: b.x + b.w - iw - 6, y: b.y + 6, w: iw, h: 22 }, dock: { x, y, w, h }, close: { x: x + w - 19, y: y + 3, w: 16, h: 16 },
+      jack: { red: [x + 30, y + h], black: [x + w - 30, y + h] } }; }
+  mtSize() { const L = Math.max(26, Math.min(40, this.u * 0.7)), f = L / 40; return { L, N: 11 * f, w: 9 * f }; }
+  mtNodes() { if (this._mtN) return this._mtN; const s = new Set(); this.ckt.parts.forEach(p => ['a', 'b', 'c', 'd'].forEach(k => { if (p[k] !== undefined && this.ckt.nodes[p[k]]) s.add(p[k]); })); return (this._mtN = s); }
+  /* a probe on a node that no longer exists goes back to the meter; one that no longer sits on its node or one of its wires moves to the node */
+  mtCheck(S) { ['red', 'black'].forEach(k => { const q = S[k]; if (!q) return; if (!this.mtNodes().has(q.node)) { S[k] = null; return; }
+    const [nx, ny] = this.ckt.nodes[q.node]; if (Math.hypot(q.x - nx, q.y - ny) < 0.05) return;
+    const onWire = this.ckt.parts.some(p => p.type === 'W' && (p.a === q.node || p.b === q.node) && segProjCK(q.x, q.y, this.ckt.nodes[p.a], this.ckt.nodes[p.b]).d < 0.05);
+    if (!onWire) { q.x = nx; q.y = ny; } }); }
+  /* the point a probe tip (x, y px) attaches to: a node within reach, else the nearest point of a wire (the whole wire is that node) */
+  mtSnap(x, y) { let best = null, bd = Math.max(16, this.u * 0.3);
+    this.mtNodes().forEach(n => { const [px, py] = this.P(n), d = Math.hypot(px - x, py - y); if (d < bd) { bd = d; best = { node: n, px: [px, py] }; } });
+    if (best) return best; bd = Math.max(10, this.u * 0.2);
+    this.ckt.parts.forEach(p => { if (p.type !== 'W') return; const pts = this.path(p); for (let i = 1; i < pts.length; i++) { const q = segProjCK(x, y, pts[i - 1], pts[i]); if (q.d < bd) { bd = q.d; best = { node: p.a, px: q.pt }; } } });
+    return best; }
+  mtTip(k, S, L) { const d = MT.drag; if (d && d.view === this && d.k === k) return d.at;
+    if (S[k]) return this.P([S[k].x, S[k].y]); const j = L.jack[k]; return [j[0], j[1] + this.mtSize().L + 14]; }
+  mtDir(k, S) { const d = MT.drag, held = d && d.view === this && d.k === k; return (S[k] || (held && d.snap)) ? (k === 'red' ? [-0.36, -0.93] : [0.36, -0.93]) : [0, -1]; }
+  mtHit(x, y) { if (!this.mtOn() || !this.mtLive()) return null; const S = this.mtState(); if (S.owner !== this) return null; const L = this.mtLayout(), inR = r => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
+    if (!S.open) return inR(L.icon) ? 'icon' : null; if (inR(L.close)) return 'close';
+    const Z = this.mtSize(); for (const k of ['red', 'black']) { const [tx, ty] = this.mtTip(k, S, L), [ux, uy] = this.mtDir(k, S); if (segProjCK(x, y, [tx, ty], [tx + ux * Z.L, ty + uy * Z.L]).d < 16) return k; }
+    return inR(L.dock) ? 'dock' : null; }
+  mtDown(e) { const [x, y] = this.pos(mtEv(e)), h = this.mtHit(x, y); if (h !== 'red' && h !== 'black') return;
+    const S = this.mtState(), [tx, ty] = this.mtTip(h, S, this.mtLayout()); MT.drag = { view: this, k: h, dx: tx - x, dy: ty - y, at: [tx, ty], snap: null, from: S[h] };
+    S[h] = null; this.hover = null; this.canvas.style.cursor = 'grabbing'; e.preventDefault(); e.stopImmediatePropagation(); }
+  mtMove(e) { const d = MT.drag, [x, y] = this.pos(mtEv(e)), tx = x + d.dx, ty = y + d.dy, s = this.mtSnap(tx, ty); d.snap = s; d.at = s ? s.px : [tx, ty]; this.hover = null; e.preventDefault(); }
+  mtUp() { const d = MT.drag, S = this.mtState(); MT.drag = null; MT.skipUntil = performance.now() + 350;
+    S[d.k] = d.snap ? { node: d.snap.node, x: (d.snap.px[0] - this.ox) / this.u, y: (d.snap.px[1] - this.oy) / this.u } : null; this.canvas.style.cursor = ''; }
+  /* the reading V(red) − V(black): [main line, second line] */
+  mtRead(S) { const d = MT.drag, held = d && d.view === this ? d : null, node = k => S[k] ? S[k].node : held && held.k === k && held.snap ? held.snap.node : null, a = node('red'), b = node('black');
+    if (!a || !b) return ['– – –', '']; const v = Cx.sub(this.ckt.V(a), this.ckt.V(b));
+    if (this.ckt.mode !== 'ac') return [dmm(v.re, 'V'), MCt('แดง − ดำ', 'red − black')];
+    const m = Cx.abs(v) * this.acK(); if (m < 1e-12) return [dmm(0, 'V'), ''];
+    return [dmm(m, 'V') + (this.o.acPeak ? '' : ' rms'), `∠ ${(Cx.arg(v) * 180 / Math.PI).toFixed(1).replace('-', '−')}°`]; }
+  drawMeter() { if (!this.mtOn()) return; const ctx = this.ctx, S = this.mtState(), L = this.mtLayout(), d = MT.drag, held = d && d.view === this ? d : null; this.mtCheck(S);
+    const rr = (r, rad) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(r.x, r.y, r.w, r.h, rad); else ctx.rect(r.x, r.y, r.w, r.h); };
+    ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    if (!S.open) { rr(L.icon, 11); ctx.fillStyle = '#ffcc33'; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = '#2b2b2b'; ctx.stroke();
+      ctx.fillStyle = '#1b2614'; ctx.font = `700 12.5px ${/[ก-๙]/.test(L.label) ? FONT_TH : FONT}`; ctx.fillText(L.label, L.icon.x + L.icon.w / 2, L.icon.y + L.icon.h / 2 + 0.5); ctx.restore(); return; }
+    const Z = this.mtSize();
+    ['black', 'red'].forEach(k => { const [x, y] = this.mtTip(k, S, L), [ux, uy] = this.mtDir(k, S), hx = x + ux * Z.L, hy = y + uy * Z.L, [jx, jy] = L.jack[k], col = k === 'red' ? ['#ff6b6b', '#e5484d', '#ffc2c2'] : ['#cfd6ec', '#262b36', '#cfd6ec'];
+      ctx.lineCap = 'round'; ctx.strokeStyle = col[0]; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.moveTo(jx, jy); ctx.bezierCurveTo(jx, jy + 34, hx + ux * 34, hy + uy * 34, hx, hy); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = '#e8ecf4'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + ux * Z.N, y + uy * Z.N); ctx.stroke();
+      [[col[2], Z.w + 2.4], [col[1], Z.w]].forEach(([c2, w]) => { ctx.strokeStyle = c2; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x + ux * (Z.N + 1), y + uy * (Z.N + 1)); ctx.lineTo(hx, hy); ctx.stroke(); });
+      const on = S[k] || (held && held.k === k && held.snap); if (on) { ctx.strokeStyle = col[0]; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, held && held.k === k ? 8 : 5, 0, 2 * Math.PI); ctx.stroke(); } });
+    const D = L.dock; rr(D, 9); ctx.fillStyle = '#ffcc33'; ctx.fill(); ctx.lineWidth = 1.6; ctx.strokeStyle = '#2b2b2b'; ctx.stroke();
+    const sc = { x: D.x + 8, y: D.y + 6, w: D.w - 32, h: D.h - 20 }; ctx.fillStyle = '#c9d8b6'; ctx.fillRect(sc.x, sc.y, sc.w, sc.h); ctx.strokeStyle = '#4b5a3c'; ctx.lineWidth = 1; ctx.strokeRect(sc.x, sc.y, sc.w, sc.h);
+    const [l1, l2] = this.mtRead(S); ctx.fillStyle = '#1b2614'; ctx.textAlign = 'right';
+    const big = Math.min(15, sc.w / Math.max(6, l1.length) * 1.55);   // the longest AC reading still fits the screen
+    ctx.font = `700 ${big.toFixed(1)}px ${FONT}`; ctx.fillText(l1, sc.x + sc.w - 5, sc.y + (l2 ? sc.h * 0.36 : sc.h / 2 + 0.5));
+    if (l2) { ctx.font = `600 10.5px ${/[ก-๙]/.test(l2) ? FONT_TH : FONT}`; ctx.fillText(l2, sc.x + sc.w - 5, sc.y + sc.h * 0.77); }
+    const C = L.close; ctx.textAlign = 'center'; ctx.fillStyle = '#2b2b2b'; ctx.font = `700 14px ${FONT}`; ctx.fillText('×', C.x + C.w / 2, C.y + C.h / 2 + 0.5);
+    ctx.font = `700 9.5px ${FONT}`; ctx.fillText('+', L.jack.red[0], D.y + D.h - 6); ctx.fillText('COM', L.jack.black[0], D.y + D.h - 6);
+    ctx.restore(); }
   drawTip(p) {
     if (p.type === 'W' && !this.o.wireTips) return; const c = this.ckt, ac = c.mode === 'ac';
     if (this.o.tip) { const L = this.o.tip(p, c); if (L && L.length) this.tipBox(L); return; }   // o.tip(part, circuit) → lines (first line = title)
