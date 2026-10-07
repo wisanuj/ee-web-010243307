@@ -33,6 +33,28 @@ class Static {
   tick() { if (!this.dirty) return; this.dirty = false; this.draw(); }
   redraw() { this.dirty = true; }
 }
+/* ---------- text kept inside the canvas ----------
+   View.fit pads the nodes by `pad` grid units on every side, but the name and value of a vertical part are drawn 0.62u beside it at no less
+   than 11.5 px, so in a narrow box a long label ("แหล่งจ่าย", "E = 12 V", "−12 V", "500 Ω") ran past the canvas edge (canvas-text sweep,
+   6 Oct 2026). CH2.inkBox: the box (px) of the text that fn() draws through view.ctx, measured instead of drawn (a stand-in context records
+   the fillText calls). CH2.labelBox: the box of all the part labels as View.drawLabel draws them; wide = {part id: value text} measures a
+   label that a slider changes at its widest */
+CH2.inkBox = (view, fn) => { const c = view.ctx, b = { l: Infinity, r: -Infinity, t: Infinity, b: -Infinity };
+  const rec = (s, x, y) => { const m = c.measureText(s); b.l = Math.min(b.l, x - m.actualBoundingBoxLeft); b.r = Math.max(b.r, x + m.actualBoundingBoxRight);
+    b.t = Math.min(b.t, y - m.actualBoundingBoxAscent); b.b = Math.max(b.b, y + m.actualBoundingBoxDescent); };
+  view.ctx = new Proxy(c, { get: (o, k) => k === 'fillText' ? rec : typeof o[k] === 'function' ? o[k].bind(o) : o[k], set: (o, k, v) => { o[k] = v; return true; } }); c.save();
+  try { fn(); } finally { c.restore(); view.ctx = c; }
+  return b; };
+CH2.labelBox = (view, wide = {}) => CH2.inkBox(view, () => view.ckt.parts.forEach(p => { if (!view.o.labels || p.label === false || p.hidden || ['W', 'A', 'XF'].includes(p.type)) return;
+  const [ax, ay] = view.P(p.a), [bx, by] = view.P(p.b), own = 'valText' in p, keep = p.valText; if (p.id in wide) p.valText = wide[p.id];
+  try { view.drawLabel(p, Math.atan2(by - ay, bx - ax), (ax + bx) / 2, (ay + by) / 2); } finally { if (own) p.valText = keep; else delete p.valText; } }));
+/* the view fitted into box with every part label at least m px inside it: the box is narrowed on each side a label crosses and the view
+   fitted again, a few rounds since u and the label size depend on each other. Labels that already fit leave the layout exactly as View.fit
+   made it; the view keeps the whole box for its meter button and tooltips */
+CH2.fitLabels = (view, box, wide, m = 4) => { let f = box;
+  for (let k = 0; k < 12; k++) { view.fit(f); const L = CH2.labelBox(view, wide), d = [box.x + m - L.l, L.r - (box.x + box.w - m), box.y + m - L.t, L.b - (box.y + box.h - m)].map(v => Math.max(0, v));
+    if (Math.max(...d) < 0.25) break; const g = { x: f.x + d[0], y: f.y + d[2], w: f.w - d[0] - d[1], h: f.h - d[2] - d[3] }; if (g.w < box.w / 2 || g.h < box.h / 2) break; f = g; }
+  view.box = box; };
 
 /* ---------------- 1) prefix ladder ----------------
    o: { rungs: [{e, sym}] from the largest unit down, value (in the base unit), from (e of the given unit), opts: [{e, text, label}] }
@@ -252,11 +274,14 @@ CH2.SourceLoad = class {
     if (this.kind === 'B') { parts.push({ id: 'S', name: 'E = 12 V', type: 'V', a: 'm', b: 'g', value: 12, side: -1, valText: '', battery: true }); parts.push({ id: 'Ri', name: 'r = 1 Ω', type: 'R', a: 'a', b: 'm', value: 1, side: -1, valText: '' }); }
     if (this.kind === 'I') parts.push({ id: 'S', name: t('แหล่งจ่าย', 'source'), type: 'I', a: 'g', b: 'a', value: 2, side: -1, valText: '2 A' });
     parts.push({ type: 'W', a: 'a', b: 't' }); parts.push({ id: 'RL', name: 'R_L', type: 'R', a: 't', b: 'h', value: RLv, side: 1, showI: false, valText: this.short ? '0 Ω' : this.open ? '∞' : CK.eng(this.RL, 'Ω') }); parts.push({ type: 'W', a: 'h', b: 'g' });
-    this.ckt = new CK.Circuit({ ground: 'g', nodes, parts }); this.ckt.solve(); this.view = new CK.View(this.canvas, this.ckt, { speed: 16, ground: false, showI: true, pad: 2.0 }); if (this.W) { this.view.ctx = this.ctx; this.view.fit(this.B.ckt); } }
+    this.ckt = new CK.Circuit({ ground: 'g', nodes, parts }); this.ckt.solve(); this.view = new CK.View(this.canvas, this.ckt, { speed: 16, ground: false, showI: true, pad: 2.0 }); if (this.W) { this.view.ctx = this.ctx; this.fit(); } }
   resize() { const w = this.canvas.parentElement.clientWidth - 12, narrow = w < 480; const r = CK.fit(this.canvas, narrow ? 1.1 : 0.56, 280); this.ctx = r.ctx; this.W = r.w; this.H = r.h;
     this.B = narrow ? { ckt: { x: 0, y: 6, w: r.w, h: Math.round(r.h * 0.48) }, plot: { x: 0, y: Math.round(r.h * 0.5), w: r.w, h: r.h - Math.round(r.h * 0.5) - 4 } }
       : { ckt: { x: 0, y: 6, w: Math.round(r.w * 0.42), h: r.h - 12 }, plot: { x: Math.round(r.w * 0.44), y: 6, w: r.w - Math.round(r.w * 0.44) - 6, h: r.h - 12 } };
-    this.view.ctx = this.ctx; this.view.fit(this.B.ckt); }
+    this.view.ctx = this.ctx; this.fit(); }
+  /* beside the plot the circuit box is narrow, and the source's label ("แหล่งจ่าย", "E = 12 V") crossed the left edge of the canvas. R_L is
+     measured at the widest value the slider gives (6 characters: "500 mΩ", "10.3 Ω"), so the circuit keeps its size while the slider moves */
+  fit() { CH2.fitLabels(this.view, this.B.ckt, { RL: '10.3 Ω' }); }
   frame(dt) { const c = this.ctx; c.fillStyle = PAL.bg; c.fillRect(0, 0, this.W, this.H); this.view.advance(dt); this.view.draw();
     const V = this.ckt.V('a').re - this.ckt.V('g').re, I = this.ckt.I('RL').re;
     const p = new DRAW.Plot(c, this.B.plot, { xlim: [0, 14], ylim: [0, 30], title: t('ลักษณะ V–I ของแหล่งจ่าย และเส้นโหลด', 'source V–I curve and load line'), xlabel: 'I (A)', ylabel: 'V (V)' }); p.frame();
@@ -266,7 +291,9 @@ CH2.SourceLoad = class {
     p.legend([{ label: t('แหล่งจ่าย', 'source'), color: '#5ad1ff' }, { label: t('โหลด V = R_L I', 'load V = R_L I'), color: '#ffd166', dash: [6, 4] }]);
     let warn = ''; if (this.kind === 'V' && this.short) warn = t('⚠ ลัดวงจรแหล่งจ่ายแรงดันอุดมคติ: กระแสต้องเป็นอนันต์', '⚠ Ideal voltage source shorted: the current would be infinite');
     if (this.kind === 'I' && this.open) warn = t('⚠ เปิดวงจรแหล่งจ่ายกระแสอุดมคติ: แรงดันต้องเป็นอนันต์', '⚠ Ideal current source opened: the voltage would be infinite');
-    if (warn) { c.save(); c.fillStyle = 'rgba(192,57,43,.92)'; c.fillRect(8, 8, this.W - 16, 26); c.restore(); this.view.text(warn, this.W / 2, 21, { color: '#fff', size: 13.5, weight: '600' }); }
+    if (warn) { const o = { color: '#fff', size: 13.5, weight: '600' }, wd = s => { const b = CH2.inkBox(this.view, () => this.view.text(s, 0, 0, o)); return b.r - b.l; }, room = this.W - 36;
+      const ls = wd(warn) > room ? warn.replace(': ', ':\n').split('\n') : [warn], sz = 13.5 * Math.min(1, room / Math.max(...ls.map(wd)));   // the English one is 490 px wide: two lines on a phone
+      c.save(); c.fillStyle = 'rgba(192,57,43,.92)'; c.fillRect(8, 8, this.W - 16, 8 + 18 * ls.length); c.restore(); ls.forEach((s, k) => this.view.text(s, this.W / 2, 21 + 18 * k, { ...o, size: sz })); }
     if (this.met) this.met.innerHTML = MC.ui.kv([[t('แรงดันที่ขั้ว V', 'terminal voltage V'), warn && this.kind === 'I' ? '∞' : CK.eng(V, 'V')], [t('กระแส I', 'current I'), warn && this.kind === 'V' ? '∞' : CK.eng(I, 'A')], [t('กำลังที่โหลดได้', 'load power'), warn ? '∞' : CK.eng(V * I, 'W')]]); }
   controls(el) { const ui = MC.ui, rl = v => Math.round(Math.pow(10, -0.3 + v / 100 * 2.3) * 10) / 10; this.RL = rl(50); this.build();
     ui.slider(el, { id: 'sl' + this.kind, label: 'R_L', min: 0, max: 100, step: 1, value: 50, fmt: v => CK.eng(rl(v), 'Ω'), oninput: v => { this.RL = rl(v); this.open = this.short = false; this.build(); } });
@@ -284,7 +311,8 @@ CH2.Dep = class {
         { id: 'RL', name: 'R_L', type: 'R', a: 'e', b: 'f', value: 100, side: 1 }, { type: 'W', a: 'f', b: 'd' }] }); this.ckt.solve();
     this.view = new CK.View(canvas, this.ckt, { speed: 900, ground: false, showI: false, pad: 1.4 });
     this.resize(); window.addEventListener('resize', () => this.resize()); LS.anim(canvas, dt => this.frame(dt)); }
-  resize() { const w = this.canvas.parentElement.clientWidth - 12; const r = CK.fit(this.canvas, w < 480 ? 0.7 : 0.5, 280); this.ctx = r.ctx; this.W = r.w; this.H = r.h; this.view.ctx = r.ctx; this.view.fit({ x: 0, y: 30, w: r.w, h: r.h - 60 }); }
+  resize() { const w = this.canvas.parentElement.clientWidth - 12; const r = CK.fit(this.canvas, w < 480 ? 0.7 : 0.5, 280); this.ctx = r.ctx; this.W = r.w; this.H = r.h; this.view.ctx = r.ctx;
+    CH2.fitLabels(this.view, { x: 0, y: 30, w: r.w, h: r.h - 60 }, { Vs: '−12 V', RL: '500 Ω' }); }   // labels at the widest values of the page's sliders (V_s −12…12 V, R_L 20…500 Ω): on a phone "100 Ω" crossed the right edge
   frame(dt) { const c = this.ctx; c.fillStyle = PAL.bg; c.fillRect(0, 0, this.W, this.H); if (this.known && this.fade < 1) this.fade = Math.min(1, this.fade + dt * 1.6); this.view.o.fade = this.known ? this.fade : 0; this.view.advance(dt); this.view.draw();
     const [x1, y1] = this.view.P([3.5, 0.8]), [x2, y2] = this.view.P([5.5, 0.8]); c.save(); c.setLineDash([6, 5]); c.strokeStyle = '#c792ea'; c.lineWidth = 2; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); c.restore();
     arrow(c, x2 - 10, y2, x2, y2, '#c792ea', 2, 9); this.view.text(t('ควบคุม', 'controls'), (x1 + x2) / 2, y1 - 12, { color: '#c792ea', size: 13, weight: '600' });

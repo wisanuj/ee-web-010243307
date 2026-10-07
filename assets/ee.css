@@ -47,6 +47,10 @@ html[data-lang="th"] [data-l="en"]{display:none !important}
 .katex{color:var(--ink);max-width:100%}
 .katex-display{overflow-x:auto;overflow-y:hidden;margin:8px 0}
 .equation-box .katex{font-size:1.04em}
+/* a box of several short formulas ($$…$$ $$…$$): one line when there is room, wrapped on a phone. The 2 px pad holds the 2 px sliver KaTeX
+   leaves after a final subscript (.vlist-s), which would make a shrink-wrapped formula scroll sideways */
+.equation-box.eqwrap{display:flex;flex-wrap:wrap;justify-content:center;column-gap:2em}
+.eqwrap .katex-display{padding:0 2px}
 /* ---- layout ---- */
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;align-items:start;margin-top:10px}
 @media (max-width:1000px){.layout{grid-template-columns:minmax(0,1fr)}}
